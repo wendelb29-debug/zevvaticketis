@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Mail, Apple, Ticket, Store, ChevronRight, ShieldCheck } from "lucide-react";
+import { Mail, Ticket, Store, ChevronRight, ShieldCheck } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
@@ -141,7 +141,7 @@ export function AuthModal({ isOpen, onClose, defaultView = 'login' }: AuthModalP
     }
   };
 
-  const handleSocialLogin = async (provider: 'google' | 'apple') => {
+  const handleSocialLogin = async (provider: 'google') => {
     setSocialError(null);
     try {
       const { error } = await supabase.auth.signInWithOAuth({
@@ -158,7 +158,7 @@ export function AuthModal({ isOpen, onClose, defaultView = 'login' }: AuthModalP
         if (error.message?.toLowerCase().includes('unsupported provider') || 
             error.message?.toLowerCase().includes('missing oauth secret') ||
             (error as any).status === 400) {
-          setSocialError(`${provider === 'google' ? 'Google' : 'Apple'} temporariamente indisponível — tente com e-mail e senha, ou volte em breve.`);
+          setSocialError(`Login com Google temporariamente indisponível — tente com e-mail e senha, ou volte em breve.`);
         } else {
           toast.error(`Erro ao entrar com ${provider}`);
         }
@@ -188,34 +188,27 @@ export function AuthModal({ isOpen, onClose, defaultView = 'login' }: AuthModalP
                   {socialError}
                 </div>
               )}
-              <Button 
-                variant="outline" 
-                onClick={() => handleSocialLogin('google')}
-                className="w-full justify-start gap-4 h-14 rounded-[16px] border-line font-extrabold text-navy hover:bg-surface transition-all group"
-              >
-                <img src="https://www.google.com/favicon.ico" alt="Google" className="w-5 h-5" />
-                Continuar com Google
-              </Button>
+              <div className="grid grid-cols-2 gap-4">
+                <Button 
+                  variant="outline" 
+                  onClick={() => handleSocialLogin('google')}
+                  className="w-full justify-start gap-3 h-14 rounded-[16px] border-line font-extrabold text-navy hover:bg-surface transition-all group"
+                >
+                  <img src="https://www.google.com/favicon.ico" alt="Google" className="w-5 h-5" />
+                  Google
+                </Button>
 
-              <Button 
-                variant="outline" 
-                onClick={() => handleSocialLogin('apple')}
-                className="w-full justify-start gap-4 h-14 rounded-[16px] bg-[#000000] text-white hover:bg-black/90 border-black font-extrabold transition-all"
-              >
-                <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg" alt="Apple" className="w-5 h-5 invert" />
-                Continuar com Apple
-              </Button>
-
-              {!showEmailFields ? (
                 <Button 
                   variant="outline" 
                   onClick={() => setShowEmailFields(true)}
-                  className="w-full justify-start gap-4 h-14 rounded-[16px] border-line font-extrabold text-navy hover:bg-surface transition-all"
+                  className="w-full justify-start gap-3 h-14 rounded-[16px] border-line font-extrabold text-navy hover:bg-surface transition-all"
                 >
                   <Mail className="w-5 h-5 text-muted" />
-                  Continuar com e-mail
+                  E-mail
                 </Button>
-              ) : (
+              </div>
+
+              {showEmailFields && (
                 <form onSubmit={handleLogin} className="space-y-4 pt-2 animate-in fade-in slide-in-from-top-2">
                   <Input 
                     placeholder="Seu e-mail" 
