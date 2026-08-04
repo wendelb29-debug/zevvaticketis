@@ -341,8 +341,10 @@ function NewEventWizard() {
                           value={ticket.price}
                           onChange={(e) => {
                             const newTickets = [...tickets];
-                            newTickets[index].price = Number(e.target.value);
-                            setTickets(newTickets);
+                            if (newTickets[index]) {
+                              newTickets[index].price = Number(e.target.value);
+                              setTickets(newTickets);
+                            }
                           }}
                           className="h-12 rounded-xl"
                         />
@@ -354,8 +356,10 @@ function NewEventWizard() {
                           value={ticket.quantity}
                           onChange={(e) => {
                             const newTickets = [...tickets];
-                            newTickets[index].quantity = Number(e.target.value);
-                            setTickets(newTickets);
+                            if (newTickets[index]) {
+                              newTickets[index].quantity = Number(e.target.value);
+                              setTickets(newTickets);
+                            }
                           }}
                           className="h-12 rounded-xl"
                         />
