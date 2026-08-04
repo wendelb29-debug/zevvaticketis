@@ -81,7 +81,7 @@ function ProdutorDashboard() {
       </div>
 
       {/* Info Banner */}
-      <div className="relative overflow-hidden bg-navy rounded-[32px] p-8 sm:p-12 text-white">
+      <div className="relative overflow-hidden rounded-[32px] p-8 sm:p-12 text-white dark-panel">
         <div className="absolute top-0 right-0 w-1/2 h-full bg-gold/10 -skew-x-12 translate-x-1/4 pointer-events-none" />
         <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div className="space-y-8">
@@ -114,7 +114,7 @@ function ProdutorDashboard() {
 
           <div className="hidden lg:grid grid-cols-2 gap-4">
             {stats.map((stat) => (
-              <div key={stat.label} className="bg-white/10 backdrop-blur-md p-6 rounded-2xl border-2 border-white/20 text-center shadow-lg">
+              <div key={stat.label} className="glass-panel backdrop-blur-md p-6 rounded-2xl text-center shadow-lg bg-white/5">
                 <p className="text-3xl font-heading font-extrabold mb-1 text-white">{stat.value}</p>
                 <p className="text-[10px] uppercase tracking-widest font-extrabold text-white/90">{stat.label}</p>
               </div>
