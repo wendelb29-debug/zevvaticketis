@@ -65,34 +65,34 @@
   --radius: 0.7rem;
 
   --bg: #FFFFFF;
-  --surface: #FAF8F3;
-  --surface-2: #F2EDE0;
-  --line: rgba(20,24,42,0.09);
-  --gold: #C99A3E;
-  --gold-bright: #E4BA6C;
-  --gold-deep: #A97C24;
-  --navy: #14182A;
-  --muted: #6B7280;
-  --good: #2F9E6B;
+  --surface: #F9FAFB;
+  --surface-2: #F3F4F6;
+  --line: #E5E7EB;
+  --gold: #B48A30; /* Adjusted for better contrast on white */
+  --gold-bright: #C99A3E;
+  --gold-deep: #8E6B20;
+  --navy: #0F172A;
+  --muted: #4B5563; /* Medium-dark gray for legibility */
+  --good: #166534;
 
   --background: var(--bg);
   --foreground: var(--navy);
-  --card: var(--surface);
+  --card: #FFFFFF;
   --card-foreground: var(--navy);
-  --popover: var(--surface);
+  --popover: #FFFFFF;
   --popover-foreground: var(--navy);
   --primary: var(--gold);
   --primary-foreground: #FFFFFF;
-  --secondary: #4B5563;
-  --secondary-foreground: var(--navy);
+  --secondary: #334155;
+  --secondary-foreground: #FFFFFF;
   --muted: var(--surface-2);
-  --muted-foreground: #6B7280;
+  --muted-foreground: #475569;
   --accent: var(--gold-bright);
   --accent-foreground: #FFFFFF;
-  --destructive: #E2685A;
+  --destructive: #BE123C;
   --destructive-foreground: #FFFFFF;
-  --border: var(--line);
-  --input: var(--line);
+  --border: #D1D5DB;
+  --input: #D1D5DB;
   --ring: var(--gold);
 }
 

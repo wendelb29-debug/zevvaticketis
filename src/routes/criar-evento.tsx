@@ -138,7 +138,9 @@ function CriarEventoWizard() {
           <Link
             key={item.label}
             to={item.href}
-            className="flex items-center gap-3 px-4 py-3.5 rounded-xl text-sm font-bold text-muted hover:bg-surface hover:text-navy transition-all duration-200"
+            className="flex items-center gap-3 px-4 py-3.5 rounded-xl text-sm font-extrabold transition-all duration-200"
+            activeProps={{ className: "bg-gold text-white shadow-lg shadow-gold/30" }}
+            inactiveProps={{ className: "text-navy hover:bg-surface-2 hover:text-navy" }}
           >
             <item.icon className="w-5 h-5" />
             {item.label}
@@ -168,7 +170,7 @@ function CriarEventoWizard() {
                 <label className="text-sm font-bold text-navy uppercase tracking-wider">Título do evento *</label>
                 <Input 
                   placeholder="Ex: Festival de Música Zevva" 
-                  className="h-14 rounded-xl border-line focus-visible:ring-gold"
+                  className="h-14 rounded-xl border-2 border-input focus-visible:ring-gold"
                   value={formData.title}
                   onChange={(e) => setFormData((prev: any) => ({ ...prev, title: e.target.value }))}
                 />
@@ -177,7 +179,7 @@ function CriarEventoWizard() {
                 <label className="text-sm font-bold text-navy uppercase tracking-wider">Descrição do evento *</label>
                 <Textarea 
                   placeholder="Descreva todos os detalhes do seu evento..." 
-                  className="min-h-[200px] rounded-xl border-line focus-visible:ring-gold"
+                  className="min-h-[200px] rounded-xl border-2 border-input focus-visible:ring-gold"
                   value={formData.description}
                   onChange={(e) => setFormData((prev: any) => ({ ...prev, description: e.target.value }))}
                 />
@@ -188,7 +190,7 @@ function CriarEventoWizard() {
                   value={formData.category}
                   onValueChange={(val) => setFormData((prev: any) => ({ ...prev, category: val }))}
                 >
-                  <SelectTrigger className="h-14 rounded-xl border-line">
+                  <SelectTrigger className="h-14 rounded-xl border-2 border-input font-bold text-navy">
                     <SelectValue placeholder="Selecione uma categoria" />
                   </SelectTrigger>
                   <SelectContent>

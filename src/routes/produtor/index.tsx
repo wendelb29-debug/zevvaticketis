@@ -82,7 +82,7 @@ function ProdutorDashboard() {
 
       {/* Info Banner */}
       <div className="relative overflow-hidden bg-navy rounded-[32px] p-8 sm:p-12 text-white">
-        <div className="absolute top-0 right-0 w-1/2 h-full bg-gold/5 -skew-x-12 translate-x-1/4 pointer-events-none" />
+        <div className="absolute top-0 right-0 w-1/2 h-full bg-gold/10 -skew-x-12 translate-x-1/4 pointer-events-none" />
         <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div className="space-y-8">
             <div className="space-y-4">
@@ -114,9 +114,9 @@ function ProdutorDashboard() {
 
           <div className="hidden lg:grid grid-cols-2 gap-4">
             {stats.map((stat) => (
-              <div key={stat.label} className="bg-white/5 backdrop-blur-md p-6 rounded-2xl border border-white/10 text-center">
-                <p className="text-3xl font-heading font-extrabold mb-1">{stat.value}</p>
-                <p className="text-[10px] uppercase tracking-widest font-bold text-white/50">{stat.label}</p>
+              <div key={stat.label} className="bg-white/10 backdrop-blur-md p-6 rounded-2xl border-2 border-white/20 text-center shadow-lg">
+                <p className="text-3xl font-heading font-extrabold mb-1 text-white">{stat.value}</p>
+                <p className="text-[10px] uppercase tracking-widest font-extrabold text-white/90">{stat.label}</p>
               </div>
             ))}
           </div>
