@@ -23,6 +23,7 @@ export function AuthModal({ isOpen, onClose, defaultView = 'login' }: AuthModalP
   const [role, setRole] = useState<'participante' | 'produtor' | null>(null);
   const [loading, setLoading] = useState(false);
   const [showEmailFields, setShowEmailFields] = useState(false);
+  const [socialError, setSocialError] = useState<string | null>(null);
   const navigate = useNavigate();
 
   // Registration Form State
