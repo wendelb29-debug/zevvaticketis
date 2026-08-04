@@ -271,14 +271,19 @@ function Index() {
                     >
                       <div className="aspect-[4/3] bg-surface relative overflow-hidden">
                         <div className="absolute top-3 right-3 z-10 flex gap-2">
+                          <button 
+                            onClick={(e) => { e.preventDefault(); toggleFavorite(event.id); }}
+                            className="glass-panel w-8 h-8 rounded-full flex items-center justify-center shadow-md hover:scale-110 active:scale-95 transition-all"
+                          >
+                            <Heart 
+                              className={cn(
+                                "w-4 h-4 transition-colors", 
+                                favorites.includes(event.id) ? "fill-error text-error" : "text-white"
+                              )} 
+                            />
+                          </button>
                           <span className="glass-panel text-white text-[10px] font-extrabold px-3 py-1.5 rounded-full shadow-md uppercase tracking-widest bg-navy/40">
                             {event.lote}
-                          </span>
-                          <span 
-                            className="text-white text-[10px] font-extrabold px-3 py-1.5 rounded-full shadow-md uppercase tracking-widest flex items-center gap-1"
-                            style={{ backgroundColor: theme.accentColor }}
-                          >
-                            <Icon className="w-3 h-3" /> {event.categoria || 'Evento'}
                           </span>
                         </div>
                         <img 
