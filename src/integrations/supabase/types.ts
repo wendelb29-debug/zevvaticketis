@@ -94,6 +94,35 @@ export type Database = {
         }
         Relationships: []
       }
+      event_favorites: {
+        Row: {
+          created_at: string | null
+          event_id: string
+          id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          event_id: string
+          id?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          event_id?: string
+          id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "event_favorites_event_id_fkey"
+            columns: ["event_id"]
+            isOneToOne: false
+            referencedRelation: "events"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       events: {
         Row: {
           category: string | null
@@ -102,6 +131,7 @@ export type Database = {
           cover_image: string | null
           created_at: string | null
           description: string | null
+          destaque: boolean | null
           end_date: string | null
           event_type: string | null
           falta_automatica_ativa: boolean | null
@@ -121,6 +151,7 @@ export type Database = {
           cover_image?: string | null
           created_at?: string | null
           description?: string | null
+          destaque?: boolean | null
           end_date?: string | null
           event_type?: string | null
           falta_automatica_ativa?: boolean | null
@@ -140,6 +171,7 @@ export type Database = {
           cover_image?: string | null
           created_at?: string | null
           description?: string | null
+          destaque?: boolean | null
           end_date?: string | null
           event_type?: string | null
           falta_automatica_ativa?: boolean | null
