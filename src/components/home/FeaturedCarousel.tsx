@@ -119,19 +119,19 @@ export function FeaturedCarousel({ events }: FeaturedCarouselProps) {
         <div className="space-y-1">
           <Link 
             to="/eventos" 
-            search={{ id: currentEvent.id } as any}
+            search={{ id: currentEvent?.id } as any}
             className="text-2xl font-manrope font-extrabold text-navy uppercase tracking-wider hover:text-gold transition-colors"
           >
-            {currentEvent.title}
+            {currentEvent?.title}
           </Link>
           <div className="flex items-center justify-center gap-6 text-sm font-bold text-muted">
             <div className="flex items-center gap-1.5">
               <MapPin className="w-4 h-4 text-gold" />
-              {currentEvent.city}, {currentEvent.state}
+              {currentEvent?.city}, {currentEvent?.state}
             </div>
             <div className="flex items-center gap-1.5">
               <Calendar className="w-4 h-4 text-gold" />
-              {currentEvent.date}
+              {currentEvent?.date}
             </div>
           </div>
         </div>
