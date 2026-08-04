@@ -119,7 +119,7 @@ function RootShell({ children }: { children: ReactNode }) {
       <head>
         <HeadContent />
       </head>
-      <body className="echo &#34;# zevva-tickets&#34; >> README.md &#10;git init &#10;git add README.md &#10;git commit -m &#34;primeiro commit&#34; &#10;git branch -M main &#10;git remote add origin https://github.com/wendelb29-debug/zevva-tickets.git&#10; git push -u origin main">
+      <body>
         {children}
         <Scripts />
       </body>
