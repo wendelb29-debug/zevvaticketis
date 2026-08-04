@@ -165,7 +165,7 @@ function NewEventWizard() {
             <div 
               className={cn(
                 "w-12 h-12 rounded-full flex items-center justify-center border-2 transition-all duration-300",
-                step === s.id ? "bg-gold border-gold text-white shadow-lg shadow-gold/30" : 
+                step === s.id ? "bg-coral border-coral text-white shadow-lg shadow-coral/30" : 
                 step > s.id ? "bg-navy border-navy text-white" : "bg-white border-line text-muted"
               )}
             >
@@ -173,7 +173,7 @@ function NewEventWizard() {
             </div>
             <span className={cn(
               "text-[10px] uppercase tracking-widest font-extrabold",
-              step === s.id ? "text-gold" : "text-muted"
+              step === s.id ? "text-coral" : "text-muted"
             )}>
               {s.title}
             </span>
@@ -195,7 +195,7 @@ function NewEventWizard() {
                   <label className="text-sm font-bold text-navy uppercase tracking-wider">Nome do Evento</label>
                   <Input 
                     placeholder="Ex: Conferência Internacional de Fé 2024" 
-                    className="h-14 rounded-xl border-line focus-visible:ring-gold" 
+                    className="h-14 rounded-xl border-line focus-visible:ring-coral" 
                     value={formData.title}
                     onChange={(e) => setFormData({...formData, title: e.target.value})}
                   />
@@ -204,7 +204,7 @@ function NewEventWizard() {
                   <label className="text-sm font-bold text-navy uppercase tracking-wider">Descrição</label>
                   <Textarea 
                     placeholder="Descreva todos os detalhes do seu evento..." 
-                    className="min-h-[150px] rounded-xl border-line focus-visible:ring-gold" 
+                    className="min-h-[150px] rounded-xl border-line focus-visible:ring-coral" 
                     value={formData.description}
                     onChange={(e) => setFormData({...formData, description: e.target.value})}
                   />

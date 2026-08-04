@@ -52,7 +52,7 @@ function ProdutorDashboard() {
 
   const stats = [
     { label: "Eventos publicados", value: "0", color: "text-navy" },
-    { label: "Ingressos vendidos", value: "0", color: "text-gold" },
+    { label: "Ingressos vendidos", value: "0", color: "text-coral" },
     { label: "Receita total", value: "US$ 0,00", color: "text-good" },
   ];
 
@@ -70,14 +70,14 @@ function ProdutorDashboard() {
       {/* Action Buttons */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
         {[
-          { label: "Criar evento presencial", icon: MapPin, desc: "Viagens, caravanas e shows", color: "from-gold/10 to-gold/5" },
+          { label: "Criar evento presencial", icon: MapPin, desc: "Viagens, caravanas e shows", color: "from-coral/10 to-coral/5" },
           { label: "Criar evento online", icon: Video, desc: "Lives, webinars e reuniões", color: "from-navy/10 to-navy/5" },
           { label: "Criar conteúdo digital", icon: Smartphone, desc: "E-books, cursos e guias", color: "from-good/10 to-good/5" },
         ].map((item) => (
           <button 
             key={item.label}
             onClick={() => navigate({ to: '/criar-evento' })}
-            className="group flex flex-col items-start p-6 rounded-[24px] border border-line bg-white hover:border-gold/30 hover:shadow-xl transition-all duration-300 text-left"
+            className="group flex flex-col items-start p-6 rounded-[24px] border border-line bg-white hover:border-coral/30 hover:shadow-xl transition-all duration-300 text-left"
           >
             <div className={cn("p-3 rounded-2xl mb-4 group-hover:scale-110 transition-transform bg-gradient-to-br", item.color)}>
               <item.icon className="w-6 h-6 text-navy" />
@@ -88,11 +88,11 @@ function ProdutorDashboard() {
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
           <div className="space-y-1">
             <h2 className="text-xl font-manrope font-extrabold text-navy flex items-center gap-2">
-              <Sparkles className="w-5 h-5 text-gold" /> Prévia de Temas Visuais
+              <Sparkles className="w-5 h-5 text-coral" /> Prévia de Temas Visuais
             </h2>
             <p className="text-xs text-muted font-medium uppercase tracking-widest">Veja como seu evento aparecerá para os participantes</p>
           </div>
-          <Link to="/eventos" className="text-[10px] font-extrabold text-gold uppercase tracking-widest hover:underline">
+          <Link to="/eventos" className="text-[10px] font-extrabold text-coral uppercase tracking-widest hover:underline">
             Ver página pública completa
           </Link>
         </div>
@@ -131,7 +131,7 @@ function ProdutorDashboard() {
 
       {/* Info Banner */}
       <div className="relative overflow-hidden rounded-[32px] p-8 sm:p-12 text-white dark-panel">
-        <div className="absolute top-0 right-0 w-1/2 h-full bg-gold/5 -skew-x-12 translate-x-1/4 pointer-events-none" />
+        <div className="absolute top-0 right-0 w-1/2 h-full bg-coral/5 -skew-x-12 translate-x-1/4 pointer-events-none" />
         <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div className="space-y-8">
             <div className="space-y-4">
@@ -150,13 +150,13 @@ function ProdutorDashboard() {
                 "Gerencie tudo diretamente pela Zevva Tickets."
               ].map((text) => (
                 <li key={text} className="flex items-center gap-3 font-semibold text-white/90">
-                  <CheckCircle2 className="w-5 h-5 text-gold flex-shrink-0" />
+                  <CheckCircle2 className="w-5 h-5 text-coral flex-shrink-0" />
                   {text}
                 </li>
               ))}
             </ul>
 
-            <Button className="h-14 px-10 bg-gradient-to-r from-gold-bright to-gold text-white font-extrabold rounded-xl shadow-lg shadow-gold/20 hover:opacity-90 border-0 uppercase tracking-widest text-sm">
+            <Button className="h-14 px-10 bg-gradient-to-r from-coral to-coral-dark text-white font-extrabold rounded-xl shadow-lg shadow-coral/20 hover:opacity-90 border-0 uppercase tracking-widest text-sm">
               Começar agora
             </Button>
           </div>
@@ -214,7 +214,7 @@ function ProdutorDashboard() {
                 <Button 
                   variant="outline" 
                   onClick={() => navigate({ to: '/criar-evento' })}
-                  className="h-11 px-8 rounded-xl font-bold border-gold text-gold hover:bg-gold hover:text-white transition-all"
+                  className="h-11 px-8 rounded-xl font-bold border-coral text-coral hover:bg-coral hover:text-white transition-all"
                 >
                   Criar meu primeiro evento
                 </Button>

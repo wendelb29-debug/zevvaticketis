@@ -35,7 +35,7 @@ function EventPage() {
           <Link to="/" className="text-muted hover:text-navy transition-colors">
             <ArrowLeft className="w-5 h-5" />
           </Link>
-          <Link to="/" className="text-xl font-manrope font-extrabold text-gold tracking-tighter">
+          <Link to="/" className="text-xl font-manrope font-extrabold text-coral tracking-tighter">
             ZEVVA <span className="text-navy">TICKETS</span>
           </Link>
         </div>
@@ -44,7 +44,7 @@ function EventPage() {
             <input 
               type="text" 
               placeholder="Buscar caravanas..." 
-              className="w-full bg-surface h-10 px-10 rounded-full text-sm border-2 border-line focus:ring-1 focus:ring-gold outline-none"
+              className="w-full bg-surface h-10 px-10 rounded-full text-sm border-2 border-line focus:ring-1 focus:ring-coral outline-none"
             />
             <svg className="absolute left-3 top-2.5 w-4 h-4 text-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />

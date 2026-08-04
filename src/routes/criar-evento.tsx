@@ -132,7 +132,7 @@ function CriarEventoWizard() {
   const SidebarContent = () => (
     <div className="flex flex-col h-full bg-white border-r border-line py-8 font-inter">
       <div className="px-6 mb-12">
-        <Link to="/" className="text-2xl font-manrope font-extrabold text-gold tracking-tighter">
+        <Link to="/" className="text-2xl font-manrope font-extrabold text-coral tracking-tighter">
           ZEVVA <span className="text-navy">TICKETS</span>
         </Link>
       </div>
@@ -143,7 +143,7 @@ function CriarEventoWizard() {
             key={item.label}
             to={item.href}
             className="flex items-center gap-3 px-4 py-3.5 rounded-xl text-sm font-extrabold transition-all duration-200"
-            activeProps={{ className: "bg-gold text-white shadow-lg shadow-gold/30" }}
+            activeProps={{ className: "bg-coral text-white shadow-lg shadow-coral/30" }}
             inactiveProps={{ className: "text-navy hover:bg-surface-2 hover:text-navy" }}
           >
             <item.icon className="w-5 h-5" />
@@ -174,7 +174,7 @@ function CriarEventoWizard() {
                 <label className="text-sm font-bold text-navy uppercase tracking-wider">Título do evento *</label>
                 <Input 
                   placeholder="Ex: Festival de Música Zevva" 
-                  className="h-14 rounded-xl border-2 border-input focus-visible:ring-gold"
+                  className="h-14 rounded-xl border-2 border-input focus-visible:ring-coral"
                   value={formData.title}
                   onChange={(e) => setFormData((prev: any) => ({ ...prev, title: e.target.value }))}
                 />
@@ -183,14 +183,14 @@ function CriarEventoWizard() {
                 <label className="text-sm font-bold text-navy uppercase tracking-wider">Descrição do evento *</label>
                 <Textarea 
                   placeholder="Descreva todos os detalhes do seu evento..." 
-                  className="min-h-[200px] rounded-xl border-2 border-input focus-visible:ring-gold"
+                  className="min-h-[200px] rounded-xl border-2 border-input focus-visible:ring-coral"
                   value={formData.description}
                   onChange={(e) => setFormData((prev: any) => ({ ...prev, description: e.target.value }))}
                 />
               </div>
               <div className="space-y-4">
                 <label className="text-sm font-bold text-navy uppercase tracking-wider flex items-center gap-2">
-                  Categoria & Tema Visual <Sparkles className="w-4 h-4 text-gold" />
+                  Categoria & Tema Visual <Sparkles className="w-4 h-4 text-coral" />
                 </label>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <Select 
@@ -231,7 +231,7 @@ function CriarEventoWizard() {
                           <p className="font-bold text-navy text-xs">{formData.category}</p>
                         </div>
                       </div>
-                      <div className="flex items-center gap-2 text-gold font-extrabold text-[10px] uppercase tracking-widest">
+                      <div className="flex items-center gap-2 text-coral font-extrabold text-[10px] uppercase tracking-widest">
                         <Eye className="w-3.5 h-3.5" /> Ver prévia
                       </div>
                     </div>
@@ -240,9 +240,9 @@ function CriarEventoWizard() {
               </div>
               <div className="space-y-2">
                 <label className="text-sm font-bold text-navy uppercase tracking-wider">Imagem principal</label>
-                <div className="border-2 border-dashed border-line rounded-[24px] p-12 text-center group hover:border-gold/50 transition-colors cursor-pointer bg-surface/50">
+                <div className="border-2 border-dashed border-line rounded-[24px] p-12 text-center group hover:border-coral/50 transition-colors cursor-pointer bg-surface/50">
                   <div className="flex flex-col items-center gap-4">
-                    <div className="w-16 h-16 rounded-full bg-white shadow-sm border border-line flex items-center justify-center text-gold group-hover:scale-110 transition-transform">
+                    <div className="w-16 h-16 rounded-full bg-white shadow-sm border border-line flex items-center justify-center text-coral group-hover:scale-110 transition-transform">
                       <Plus className="w-8 h-8" />
                     </div>
                     <div>
@@ -266,19 +266,19 @@ function CriarEventoWizard() {
                     onClick={() => setFormData((prev: any) => ({ ...prev, event_type: "presencial" }))}
                     className={cn(
                       "h-14 rounded-xl border-2 font-bold flex items-center justify-center gap-2 transition-all",
-                      formData.event_type === "presencial" ? "border-gold bg-gold/5 text-navy" : "border-line text-muted hover:bg-surface"
+                      formData.event_type === "presencial" ? "border-coral bg-coral/5 text-navy" : "border-line text-muted hover:bg-surface"
                     )}
                   >
-                    <MapPin className={cn("w-5 h-5", formData.event_type === "presencial" ? "text-gold" : "")} /> Presencial
+                    <MapPin className={cn("w-5 h-5", formData.event_type === "presencial" ? "text-coral" : "")} /> Presencial
                   </button>
                   <button 
                     onClick={() => setFormData((prev: any) => ({ ...prev, event_type: "online" }))}
                     className={cn(
                       "h-14 rounded-xl border-2 font-bold flex items-center justify-center gap-2 transition-all",
-                      formData.event_type === "online" ? "border-gold bg-gold/5 text-navy" : "border-line text-muted hover:bg-surface"
+                      formData.event_type === "online" ? "border-coral bg-coral/5 text-navy" : "border-line text-muted hover:bg-surface"
                     )}
                   >
-                    <Globe className={cn("w-5 h-5", formData.event_type === "online" ? "text-gold" : "")} /> Online
+                    <Globe className={cn("w-5 h-5", formData.event_type === "online" ? "text-coral" : "")} /> Online
                   </button>
                 </div>
               </div>
