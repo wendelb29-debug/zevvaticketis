@@ -91,8 +91,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "twitter:site", content: "@ZevvaTickets" },
       { name: "twitter:title", content: "Zevva Tickets | Marketplace de Eventos Internacionais" },
       { name: "twitter:description", content: "A melhor plataforma para compra e venda de ingressos para eventos internacionais." },
-      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/a0a3fc5c-9359-41f2-93f1-2890a5ed6818" },
-      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/a0a3fc5c-9359-41f2-93f1-2890a5ed6818" },
+      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/3fa6d61b-9b1f-4710-ad60-b544a373fe58" },
+      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/3fa6d61b-9b1f-4710-ad60-b544a373fe58" },
     ],
     links: [
       {
