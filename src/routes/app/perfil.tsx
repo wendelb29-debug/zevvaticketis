@@ -34,6 +34,8 @@ function UserProfile() {
   const [profile, setProfile] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [uploading, setUploading] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     fetchProfile();
@@ -53,6 +55,77 @@ function UserProfile() {
     setLoading(false);
   }
 
+  const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    // Validation
+    const allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
+    if (!allowedTypes.includes(file.type)) {
+      toast.error("Formato inválido. Use JPG, PNG ou WebP.");
+      return;
+    }
+    if (file.size > 5 * 1024 * 1024) {
+      toast.error("Arquivo muito grande. Máximo 5MB.");
+      return;
+    }
+
+    setUploading(true);
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) throw new Error("Usuário não autenticado");
+
+      const fileExt = file.name.split('.').pop();
+      const filePath = `${user.id}/avatar.${fileExt}`;
+
+      // Upload file
+      const { error: uploadError } = await supabase.storage
+        .from('avatars')
+        .upload(filePath, file, { upsert: true });
+
+      if (uploadError) throw uploadError;
+
+      // Get public URL
+      const { data: { publicUrl } } = supabase.storage
+        .from('avatars')
+        .getPublicUrl(filePath);
+
+      // Update profile
+      const { error: updateError } = await supabase
+        .from('profiles')
+        .update({ avatar_url: publicUrl })
+        .eq('id', user.id);
+
+      if (updateError) throw updateError;
+
+      setProfile({ ...profile, avatar_url: publicUrl });
+      toast.success("Foto atualizada com sucesso!");
+    } catch (error: any) {
+      toast.error("Erro ao fazer upload: " + error.message);
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  const handleRemovePhoto = async () => {
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) throw new Error("Usuário não autenticado");
+
+      const { error } = await supabase
+        .from('profiles')
+        .update({ avatar_url: null })
+        .eq('id', user.id);
+
+      if (error) throw error;
+
+      setProfile({ ...profile, avatar_url: null });
+      toast.success("Foto removida.");
+    } catch (error: any) {
+      toast.error("Erro ao remover foto: " + error.message);
+    }
+  };
+
   const handleSave = async () => {
     setSaving(true);
     try {
@@ -60,6 +133,9 @@ function UserProfile() {
         .from("profiles")
         .update({
           nome: profile.nome,
+          notif_lembrete_evento: profile.notif_lembrete_evento,
+          notif_mudancas_evento: profile.notif_mudancas_evento,
+          notif_novidades: profile.notif_novidades,
         })
         .eq("id", profile.id);
 
@@ -71,6 +147,10 @@ function UserProfile() {
       setSaving(false);
     }
   };
+
+  const initials = profile?.nome 
+    ? profile.nome.split(' ').map((n: string) => n[0]).join('').toUpperCase().slice(0, 2)
+    : profile?.email?.slice(0, 2).toUpperCase();
 
   if (loading) return (
     <div className="flex flex-col items-center justify-center py-20">
