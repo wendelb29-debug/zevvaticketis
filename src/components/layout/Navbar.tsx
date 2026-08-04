@@ -5,6 +5,7 @@ import { AccountMenu } from "./AccountMenu";
 import { useUI } from "@/hooks/use-ui";
 import { supabase } from "@/integrations/supabase/client";
 import { cn } from "@/lib/utils";
+import logoAsset from "@/assets/logo-zevva.png.asset.json";
 
 interface NavbarProps {
   onOpenAuth: () => void;
@@ -53,8 +54,8 @@ export function Navbar({ selectedCity }: { selectedCity?: string | null }) {
         )}>
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2 group">
-            <div className="w-10 h-10 bg-coral rounded-xl flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform">
-              <span className="text-white font-manrope font-extrabold text-2xl">Z</span>
+            <div className="w-12 h-12 flex items-center justify-center transition-transform group-hover:scale-105">
+              <img src={logoAsset.url} alt="Zevva" className="w-full h-full object-contain" />
             </div>
             {!isScrolled && (
               <span className="text-xl font-manrope font-extrabold text-coral tracking-tighter animate-in fade-in slide-in-from-left-2 duration-300">

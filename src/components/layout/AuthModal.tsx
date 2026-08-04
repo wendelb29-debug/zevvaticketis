@@ -9,6 +9,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 import { useNavigate } from "@tanstack/react-router";
+import logoAsset from "@/assets/logo-zevva.png.asset.json";
 
 interface AuthModalProps {
   isOpen: boolean;
@@ -147,6 +148,9 @@ export function AuthModal({ isOpen, onClose, defaultView = 'login' }: AuthModalP
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
       <DialogContent className="sm:max-w-[440px] p-0 rounded-[24px] bg-white border-0 shadow-2xl overflow-hidden">
         <div className="p-8 space-y-6 max-h-[90vh] overflow-y-auto">
+          <div className="flex justify-center">
+            <img src={logoAsset.url} alt="Zevva" className="h-16 w-auto" />
+          </div>
           <DialogTitle className="text-2xl font-manrope font-extrabold text-navy text-center">
             {view === 'login' ? "Que bom ter você aqui!" : (step === 1 ? "Como quer usar a Zevva?" : "Crie sua conta")}
           </DialogTitle>
