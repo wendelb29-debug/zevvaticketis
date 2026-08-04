@@ -1,4 +1,16 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useSearch } from "@tanstack/react-router";
+import { getThemeByCategory } from "@/lib/categoryThemes";
+import { cn } from "@/lib/utils";
+import { 
+  Calendar, 
+  MapPin, 
+  Share2, 
+  ArrowLeft,
+  Info,
+  ShieldCheck,
+  Clock,
+  Ticket as TicketIcon
+} from "lucide-react";
 
 export const Route = createFileRoute("/eventos")({
   component: EventPage,
