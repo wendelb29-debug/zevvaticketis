@@ -35,7 +35,7 @@ function EventPage() {
           <Link to="/" className="text-muted hover:text-navy transition-colors">
             <ArrowLeft className="w-5 h-5" />
           </Link>
-          <Link to="/" className="text-xl font-manrope font-extrabold text-coral tracking-tighter">
+          <Link to="/" className="text-xl font-manrope font-extrabold text-gold tracking-tighter">
             ZEVVA <span className="text-navy">TICKETS</span>
           </Link>
         </div>
