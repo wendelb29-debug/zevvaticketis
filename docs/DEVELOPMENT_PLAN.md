@@ -366,3 +366,9 @@ Nesse ponto o MVP dos 90 dias está funcionalmente completo. Antes de ir pra pro
 - Rodar o checklist de segurança (2FA, captcha no cadastro público, backup automático do Supabase)
 - Configurar domínio próprio (.com) antes de tentar habilitar o modo "live" do Stripe
 - Testar o fluxo ponta a ponta com cartão de teste do Stripe antes de qualquer transação real
+
+O modelo de dados de lotes + tipos de ingresso + vaga por veículo (estrutura para caravanas de ônibus/van)
+O fluxo de checkout passo a passo (do carrinho ao ingresso com QR code)
+O painel do organizador/produtor (o que precisa ter: criação de evento, financeiro, check-in, relatórios)
+As funcionalidades extras específicas para igrejas internacionais (multi-moeda, lista de espera, comunicação via WhatsApp etc.)
+Outra coisa que você tinha em mente: botão de voltar para página anterior ao acessar outra página ou aba.
