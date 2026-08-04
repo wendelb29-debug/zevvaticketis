@@ -1,7 +1,17 @@
-import { createFileRoute, Outlet, redirect, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Outlet, redirect, useNavigate, Link } from "@tanstack/react-router";
 import { supabase } from "@/integrations/supabase/client";
 import { useEffect, useState } from "react";
 import { UserMenu } from "@/components/auth/UserMenu";
+import { 
+  LayoutDashboard, 
+  CheckSquare, 
+  Users, 
+  CreditCard, 
+  Globe, 
+  Settings,
+  ShieldCheck
+} from "lucide-react";
+import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/admin")({
   beforeLoad: async () => {
