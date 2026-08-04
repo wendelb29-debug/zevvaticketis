@@ -307,7 +307,7 @@ function Index() {
           <section className="bg-gradient-to-br from-surface to-surface-2 rounded-3xl p-12 border border-line shadow-sm overflow-hidden relative">
             <div className="absolute top-0 right-0 w-1/3 h-full bg-gold/5 -skew-x-12 translate-x-1/2" />
             <div className="max-w-2xl space-y-8 relative z-10">
-              <h2 className="text-4xl font-heading font-extrabold leading-tight text-navy">Crie eventos, divulgue e vender seu evento."</h2>
+              <h2 className="text-4xl font-heading font-extrabold leading-tight text-navy">Crie eventos, divulgar e vender seu evento."</h2>
               <ul className="space-y-4">
                 {[
                   "Publicação gratuita e intuitiva",
