@@ -50,6 +50,7 @@ function HomePage() {
         .from("events")
         .select("*")
         .eq("status", "publicado")
+        .order('created_at', { ascending: false })
         .limit(8);
 
       if (featured) setFeaturedEvents(featured);
