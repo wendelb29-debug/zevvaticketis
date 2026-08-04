@@ -7,10 +7,11 @@ import {
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
-import { useEffect, useState, type ReactNode } from "react";
+import { useEffect, useState, useRef, type ReactNode } from "react";
 import { AuthModal } from "@/components/layout/AuthModal";
 import { useUI } from "@/hooks/use-ui";
 import { LocationModal } from "@/components/home/LocationModal";
+
 
 
 import appCss from "../styles.css?url";
@@ -122,7 +123,23 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 });
 
 function RootShell({ children }: { children: ReactNode }) {
-  const { language } = useUI();
+  const { language, activeOverlay, closeOverlay } = useUI();
+
+  useEffect(() => {
+    const handleOutsideClick = (event: MouseEvent) => {
+      if (activeOverlay === 'language') {
+        const target = event.target as HTMLElement;
+        const isClickInsideLanguageDropdown = target.closest('.language-dropdown-container');
+        if (!isClickInsideLanguageDropdown) {
+          closeOverlay();
+        }
+      }
+    };
+
+    document.addEventListener("mousedown", handleOutsideClick);
+    return () => document.removeEventListener("mousedown", handleOutsideClick);
+  }, [activeOverlay, closeOverlay]);
+
   return (
     <html lang={language}>
       <head>
@@ -136,11 +153,28 @@ function RootShell({ children }: { children: ReactNode }) {
   );
 }
 
+
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
-  const { activeOverlay, authView, closeOverlay, openOverlay, language } = useUI();
+  const { activeOverlay, authView, closeOverlay, language } = useUI();
   const router = useRouter();
   const [isNavigating, setIsNavigating] = useState(false);
+
+  useEffect(() => {
+    const handleOutsideClick = (event: MouseEvent) => {
+      // Check if the click was outside any active dropdown/overlay logic
+      if (activeOverlay === 'language') {
+        const target = event.target as HTMLElement;
+        const isClickInsideLanguageDropdown = target.closest('.language-dropdown-container');
+        if (!isClickInsideLanguageDropdown) {
+          closeOverlay();
+        }
+      }
+    };
+
+    document.addEventListener("mousedown", handleOutsideClick);
+    return () => document.removeEventListener("mousedown", handleOutsideClick);
+  }, [activeOverlay, closeOverlay]);
 
   useEffect(() => {
     return router.subscribe('onBeforeNavigate', () => setIsNavigating(true));
@@ -149,6 +183,7 @@ function RootComponent() {
   useEffect(() => {
     return router.subscribe('onLoad', () => setIsNavigating(false));
   }, [router]);
+
 
   return (
     <QueryClientProvider client={queryClient}>

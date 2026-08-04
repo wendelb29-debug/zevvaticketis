@@ -107,10 +107,11 @@ export function Navbar({ selectedCity }: { selectedCity?: string | null }) {
             
             <div 
               onClick={() => openOverlay('language')}
-              className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-line bg-surface hover:bg-line transition-colors cursor-pointer group relative"
+              className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-line bg-surface hover:bg-line transition-colors cursor-pointer group relative language-dropdown-container"
             >
               <Globe className="w-4 h-4 text-navy group-hover:text-coral transition-colors" />
               {activeOverlay === 'language' && (
+
                 <div className="absolute top-full right-0 mt-2 w-48 bg-white border border-line rounded-xl shadow-xl p-2 z-[60] animate-in fade-in zoom-in-95 duration-200">
                   {[
                     { id: 'pt', label: '🇧🇷 Português' },
