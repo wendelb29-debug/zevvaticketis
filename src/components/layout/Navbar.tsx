@@ -58,8 +58,8 @@ export function Navbar({ selectedCity }: { selectedCity?: string | null }) {
               <img src={logoAsset.url} alt="Zevva" className="w-full h-full object-contain" />
             </div>
             {!isScrolled && (
-              <span className="text-xl font-manrope font-extrabold text-coral tracking-tighter animate-in fade-in slide-in-from-left-2 duration-300">
-                ZEVVA <span className="text-navy">TICKETS</span>
+              <span className="text-xl font-['Montserrat'] font-light text-coral tracking-tighter animate-in fade-in slide-in-from-left-2 duration-300">
+                ZEVVA <span className="text-navy font-['Montserrat']">TICKETS</span>
               </span>
             )}
           </Link>
