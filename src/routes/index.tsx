@@ -1,15 +1,62 @@
-import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate, useSearch } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
 import { AuthModal } from "@/components/auth/AuthModal";
+import { LocationModal } from "@/components/ui/LocationModal";
 import { supabase } from "@/integrations/supabase/client";
+import { MapPin } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/")({
+  validateSearch: (search: Record<string, unknown>) => {
+    return {
+      cidade: (search['cidade'] as string) || undefined,
+    };
+  },
   component: Index,
 });
 
 function Index() {
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const [isLocationModalOpen, setIsLocationModalOpen] = useState(false);
+  const [nearbyError, setNearbyError] = useState(false);
+  const [filteredEvents, setFilteredEvents] = useState<any[]>([]);
+  const [loadingEvents, setLoadingEvents] = useState(true);
   const navigate = useNavigate();
+  const search = useSearch({ from: "/" }) as any;
+  const selectedCity = search?.cidade;
+
+  useEffect(() => {
+    async function fetchEvents() {
+      setLoadingEvents(true);
+      let query = supabase.from("events").select("*").eq("status", "publicado");
+      
+      if (selectedCity) {
+        query = query.ilike("city", `%${selectedCity}%`);
+      }
+      
+      const { data, error } = await query.limit(4);
+      if (data) {
+        // Map database fields to UI component fields
+        const formatted = data.map((event: any) => ({
+          id: event.id,
+          title: event.title,
+          location: `${event.city || ''}, ${event.country_id || ''}`,
+          cityKey: event.city?.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""),
+          date: event.start_date ? new Date(event.start_date).toLocaleDateString('pt-BR', { month: 'long', year: 'numeric' }) : 'Data a definir',
+          price: `US$ ${event.min_price || '0'}`,
+          image: "https://images.unsplash.com/photo-1544971587-b842c27f8e14?auto=format&fit=crop&q=80&w=800",
+          lote: "Lote 1"
+        }));
+        setFilteredEvents(formatted);
+      } else if (error) {
+        console.error("Error fetching events:", error);
+      }
+      setLoadingEvents(false);
+    }
+    
+    fetchEvents();
+  }, [selectedCity]);
 
   const handleAuthClick = async (e: React.MouseEvent) => {
     e.preventDefault();
@@ -30,6 +77,27 @@ function Index() {
       }
     } else {
       setIsAuthModalOpen(true);
+    }
+  };
+
+  const cn = (...inputs: any[]) => inputs.filter(Boolean).join(' ');
+
+  const handleLocationSelect = (city: string | null) => {
+    setIsLocationModalOpen(false);
+    setNearbyError(false);
+
+    if (city === "nearby") {
+      // Simulate geolocation matching none
+      setNearbyError(true);
+      navigate({ to: '.', search: (prev: any) => ({ ...prev, cidade: undefined }) });
+    } else {
+      navigate({ 
+        to: '.',
+        search: (prev: any) => ({ 
+          ...prev, 
+          cidade: city ? city.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "") : undefined 
+        }) 
+      });
     }
   };
 
@@ -64,12 +132,14 @@ function Index() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
             </svg>
           </div>
-          <div className="flex items-center gap-2 bg-surface h-11 px-5 rounded-full text-sm font-semibold whitespace-nowrap cursor-pointer hover:bg-surface-2 transition-colors border border-line">
-            <svg className="w-4 h-4 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-            </svg>
-            <span>Localização</span>
+          <div 
+            onClick={() => setIsLocationModalOpen(true)}
+            className="flex items-center gap-2 bg-surface h-11 px-5 rounded-full text-sm font-semibold whitespace-nowrap cursor-pointer hover:bg-surface-2 transition-colors border border-line"
+          >
+            <MapPin className={cn("w-4 h-4", selectedCity ? "text-gold" : "text-gold")} />
+            <span className={cn(selectedCity && "text-gold")}>
+              {selectedCity ? `📍 ${selectedCity.charAt(0).toUpperCase() + selectedCity.slice(1)}` : "Localização"}
+            </span>
           </div>
         </div>
 
@@ -91,7 +161,20 @@ function Index() {
         onClose={() => setIsAuthModalOpen(false)} 
       />
 
+      <LocationModal 
+        isOpen={isLocationModalOpen}
+        onClose={() => setIsLocationModalOpen(false)}
+        onSelect={handleLocationSelect}
+      />
+
       <main className="pt-24 pb-12 space-y-12">
+        {nearbyError && (
+          <div className="px-6 max-w-7xl mx-auto">
+            <div className="bg-surface rounded-2xl p-6 border border-line flex items-center justify-center text-navy font-bold text-center">
+              Nenhum evento perto de você ainda — veja os mais buscados no mundo todo
+            </div>
+          </div>
+        )}
         <div className="px-6 max-w-7xl mx-auto">
           {/* Hero Carousel */}
           <div className="relative w-full aspect-[21/9] bg-surface-2 rounded-2xl overflow-hidden group shadow-md border border-line">
@@ -159,44 +242,12 @@ function Index() {
             
             
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-              {[
-                {
-                  id: 1,
-                  title: "Terra Santa: Passos de Jesus",
-                  location: "Jerusalém, Israel",
-                  date: "Dezembro 2026",
-                  price: "US$ 4.500",
-                  image: "https://images.unsplash.com/photo-1544971587-b842c27f8e14?auto=format&fit=crop&q=80&w=800",
-                  lote: "Lote 1"
-                },
-                {
-                  id: 2,
-                  title: "Grand Tour: Europa Medieval",
-                  location: "Paris, França",
-                  date: "Julho 2026",
-                  price: "US$ 5.200",
-                  image: "https://images.unsplash.com/photo-1511739001486-6bfe10ce785f?auto=format&fit=crop&q=80&w=800",
-                  lote: "Lote 2"
-                },
-                {
-                  id: 3,
-                  title: "Retiro de Jovens: Conexão",
-                  location: "Atibaia, SP",
-                  date: "Janeiro 2026",
-                  price: "R$ 850",
-                  image: "https://images.unsplash.com/photo-1523580494863-6f3031224c94?auto=format&fit=crop&q=80&w=800",
-                  lote: "Últimas vagas"
-                },
-                {
-                  id: 4,
-                  title: "Conferência Internacional de Fé",
-                  location: "Orlando, FL",
-                  date: "Março 2026",
-                  price: "US$ 350",
-                  image: "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&q=80&w=800",
-                  lote: "Promoção"
-                }
-              ].map((event) => (
+              {loadingEvents ? (
+                Array.from({ length: 4 }).map((_, i) => (
+                  <div key={i} className="bg-surface animate-pulse rounded-[14px] aspect-[3/4]" />
+                ))
+              ) : filteredEvents.length > 0 ? (
+                filteredEvents.map((event) => (
                 <div key={event.id} className="bg-white rounded-[14px] overflow-hidden border border-line shadow-sm hover:shadow-xl transition-all duration-300 group">
                   <div className="aspect-[4/3] bg-surface relative overflow-hidden">
                     <div className="absolute top-3 right-3 z-10">
@@ -238,7 +289,17 @@ function Index() {
                     </div>
                   </div>
                 </div>
-              ))}
+                ))
+              ) : (
+                <div className="col-span-full py-20 text-center space-y-4">
+                  <div className="text-6xl text-surface-2">📍</div>
+                  <h3 className="text-xl font-bold text-navy">Nenhum evento encontrado</h3>
+                  <p className="text-muted max-w-xs mx-auto">Não encontramos caravanas para esta localização no momento.</p>
+                  <Button variant="outline" className="rounded-full" onClick={() => handleLocationSelect(null)}>
+                    Ver todas as caravanas
+                  </Button>
+                </div>
+              )}
             </div>
           </section>
 
