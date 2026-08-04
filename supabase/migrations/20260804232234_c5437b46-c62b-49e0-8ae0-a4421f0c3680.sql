@@ -1,0 +1,1 @@
+CREATE UNIQUE INDEX IF NOT EXISTS idx_events_title_producer_unique ON public.events (title, producer_id);
