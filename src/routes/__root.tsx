@@ -138,9 +138,25 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
-  const { activeOverlay, authView, closeOverlay, openOverlay, language } = useUI();
+  const { activeOverlay, authView, closeOverlay, language } = useUI();
   const router = useRouter();
   const [isNavigating, setIsNavigating] = useState(false);
+
+  useEffect(() => {
+    const handleOutsideClick = (event: MouseEvent) => {
+      // Check if the click was outside any active dropdown/overlay logic
+      if (activeOverlay === 'language') {
+        const target = event.target as HTMLElement;
+        const isClickInsideLanguageDropdown = target.closest('.language-dropdown-container');
+        if (!isClickInsideLanguageDropdown) {
+          closeOverlay();
+        }
+      }
+    };
+
+    document.addEventListener("mousedown", handleOutsideClick);
+    return () => document.removeEventListener("mousedown", handleOutsideClick);
+  }, [activeOverlay, closeOverlay]);
 
   useEffect(() => {
     return router.subscribe('onBeforeNavigate', () => setIsNavigating(true));
@@ -149,6 +165,7 @@ function RootComponent() {
   useEffect(() => {
     return router.subscribe('onLoad', () => setIsNavigating(false));
   }, [router]);
+
 
   return (
     <QueryClientProvider client={queryClient}>
