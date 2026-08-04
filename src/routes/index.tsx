@@ -181,7 +181,7 @@ function Index() {
             <div className="absolute inset-0 bg-gradient-to-r from-navy/40 to-transparent" />
             <div className="absolute inset-0 flex items-center px-12">
               <div className="max-w-xl text-white">
-                <span className="inline-block bg-gold px-3 py-1 rounded-full text-[10px] font-extrabold uppercase tracking-widest mb-4">Destaque</span>
+                <span className="inline-block bg-gold text-white px-3 py-1 rounded-full text-[10px] font-extrabold uppercase tracking-widest mb-4 border border-white/20 shadow-sm">Destaque</span>
                 <h2 className="text-4xl md:text-5xl font-heading font-extrabold mb-4 leading-tight">Grand Tour 2026: Europa Medieval</h2>
                 <p className="text-lg text-white/90 mb-8 font-medium leading-relaxed">Uma jornada inesquecível pelas catedrais e castelos mais icônicos do velho continente.</p>
                 <button className="bg-gradient-to-r from-gold-bright to-gold text-white px-10 py-4 rounded-[11px] font-extrabold hover:opacity-90 transition-all shadow-[0_6px_20px_rgba(201,154,62,0.3)] text-sm uppercase tracking-wider">Ver Detalhes</button>
@@ -224,7 +224,7 @@ function Index() {
                   <div className="aspect-square rounded-2xl bg-gradient-to-br from-surface to-surface-2 border border-line flex items-center justify-center text-3xl shadow-sm group-hover:shadow-md group-hover:border-gold/30 transition-all">
                     {cat.icon}
                   </div>
-                  <h3 className="text-xs font-extrabold text-navy uppercase tracking-wider line-clamp-2 leading-relaxed">{cat.name}</h3>
+                  <h3 className="text-xs font-extrabold text-navy uppercase tracking-wider line-clamp-2 leading-relaxed bg-surface/50 px-2 py-1 rounded-md">{cat.name}</h3>
                 </div>
               ))}
             </div>
@@ -307,7 +307,7 @@ function Index() {
           <section className="bg-gradient-to-br from-surface to-surface-2 rounded-3xl p-12 border border-line shadow-sm overflow-hidden relative">
             <div className="absolute top-0 right-0 w-1/3 h-full bg-gold/5 -skew-x-12 translate-x-1/2" />
             <div className="max-w-2xl space-y-8 relative z-10">
-              <h2 className="text-4xl font-heading font-extrabold leading-tight">Crie eventos, divulgue e venda ingressos em qualquer moeda</h2>
+              <h2 className="text-4xl font-heading font-extrabold leading-tight text-navy">Crie eventos, divulgue e vender seu evento."</h2>
               <ul className="space-y-4">
                 {[
                   "Publicação gratuita e intuitiva",
@@ -342,7 +342,7 @@ function Index() {
                 { q: "O preço do ingresso muda conforme o país de compra?", a: "O valor base é fixo na moeda do evento, mas a conversão segue a cotação oficial do dia do pagamento." }
               ].map((faq, idx) => (
                 <details key={idx} className="group bg-surface rounded-2xl border border-line">
-                  <summary className="flex justify-between items-center p-6 cursor-pointer list-none font-extrabold text-navy">
+                  <summary className="flex justify-between items-center p-6 cursor-pointer list-none font-extrabold text-navy hover:text-gold transition-colors">
                     {faq.q}
                     <span className="text-gold group-open:rotate-180 transition-transform">
                       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" /></svg>
