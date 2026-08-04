@@ -1,5 +1,5 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { 
   ChevronLeft, 
   ChevronRight, 
@@ -10,7 +10,9 @@ import {
   DollarSign, 
   CheckCircle2,
   Trash2,
-  Plus
+  Plus,
+  Settings,
+  AlertTriangle
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -24,6 +26,8 @@ import {
 } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { cn } from "@/lib/utils";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
 
 export const Route = createFileRoute("/produtor/novo-evento")({
   component: NewEventWizard,
@@ -31,15 +35,109 @@ export const Route = createFileRoute("/produtor/novo-evento")({
 
 function NewEventWizard() {
   const [step, setStep] = useState(1);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  
+
+  // Form State
+  const [formData, setFormData] = useState({
+    title: "",
+    subtitle: "",
+    description: "",
+    category: "caravana",
+    event_type: "presencial",
+    location: "",
+    city: "",
+    country_id: "BR",
+    start_date: "",
+    end_date: "",
+    falta_automatica_ativa: false,
+    falta_automatica_minutos: 60,
+  });
+
+  const [tickets, setTickets] = useState([
+    { name: "Lote 1", price: 0, quantity: 100 }
+  ]);
+
+  // Load draft
+  useEffect(() => {
+    const draft = localStorage.getItem("event_draft");
+    if (draft) {
+      try {
+        const parsed = JSON.parse(draft);
+        setFormData(parsed.formData || formData);
+        setTickets(parsed.tickets || tickets);
+      } catch (e) {
+        console.error("Error loading draft", e);
+      }
+    }
+  }, []);
+
+  // Save draft
+  useEffect(() => {
+    localStorage.setItem("event_draft", JSON.stringify({ formData, tickets }));
+  }, [formData, tickets]);
+
   const steps = [
     { id: 1, title: "Básico", icon: Info },
     { id: 2, title: "Local e Data", icon: MapPin },
-    { id: 3, title: "Regional", icon: Globe },
-    { id: 4, title: "Mídia", icon: ImageIcon },
-    { id: 5, title: "Políticas", icon: CheckCircle2 },
+    { id: 3, title: "Ingressos", icon: DollarSign },
+    { id: 4, title: "Configurações", icon: Settings },
+    { id: 5, title: "Revisão", icon: CheckCircle2 },
   ];
+
+  const handlePublish = async () => {
+    setLoading(true);
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) throw new Error("Usuário não autenticado");
+
+      // 1. Create Event
+      const { data: event, error: eventError } = await supabase
+        .from("events")
+        .insert({
+          producer_id: user.id,
+          title: formData.title,
+          description: formData.description,
+          category: formData.category,
+          event_type: formData.event_type,
+          location: formData.location,
+          city: formData.city,
+          country_id: formData.country_id,
+          start_date: formData.start_date,
+          end_date: formData.end_date,
+          falta_automatica_ativa: formData.falta_automatica_ativa,
+          falta_automatica_minutos: formData.falta_automatica_minutos,
+          status: "publicado"
+        })
+        .select()
+        .single();
+
+      if (eventError) throw eventError;
+
+      // 2. Create Tickets
+      const ticketsToInsert = tickets.map(t => ({
+        event_id: event.id,
+        name: t.name,
+        price: t.price,
+        quantity: t.quantity
+      }));
+
+      const { error: ticketsError } = await supabase
+        .from("tickets")
+        .insert(ticketsToInsert);
+
+      if (ticketsError) throw ticketsError;
+
+      toast.success("Evento publicado com sucesso!");
+      localStorage.removeItem("event_draft");
+      navigate({ to: "/produtor" });
+    } catch (err: any) {
+      toast.error(`Erro ao publicar: ${err.message}`);
+    } finally {
+      setLoading(false);
+    }
+  };
+
 
   const nextStep = () => setStep((s) => Math.min(s + 1, 5));
   const prevStep = () => setStep((s) => Math.max(s - 1, 1));
