@@ -28,7 +28,7 @@ interface AccountMenuProps {
   user: any;
   onLogout: () => void;
   onNavigate: (path: string) => void;
-  onOpenAuth: () => void;
+  onOpenAuth: (view?: 'login' | 'register') => void;
 }
 
 export function AccountMenu({ user, onLogout, onNavigate, onOpenAuth }: AccountMenuProps) {
