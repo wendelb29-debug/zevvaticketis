@@ -72,6 +72,7 @@ function AdminLayout() {
     { label: "Planos", icon: CreditCard, href: "/admin/planos" },
     { label: "Países e Moedas", icon: Globe, href: "/admin/paises-moedas" },
     { label: "Configurações", icon: Settings, href: "/admin/configuracoes" },
+    { label: "Admin Access", icon: ShieldCheck, href: "/admin/configuracoes" },
   ];
 
   const SidebarContent = () => (
