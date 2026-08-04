@@ -77,7 +77,7 @@ function AdminLayout() {
   const SidebarContent = () => (
     <div className="flex flex-col h-full bg-white border-r border-line py-8 font-inter">
       <div className="px-6 mb-12">
-        <Link to="/" className="text-xl font-manrope font-extrabold text-coral tracking-tighter">
+        <Link to="/" className="text-xl font-manrope font-extrabold text-gold tracking-tighter">
           ZEVVA <span className="text-navy">ADMIN</span>
         </Link>
       </div>

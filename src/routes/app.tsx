@@ -44,7 +44,7 @@ function AppLayout() {
               >
                 <ArrowLeft className="w-5 h-5" />
               </button>
-              <Link to="/" className="text-xl font-manrope font-extrabold text-coral tracking-tighter">
+              <Link to="/" className="text-xl font-manrope font-extrabold text-gold tracking-tighter">
                 ZEVVA <span className="text-navy">APP</span>
               </Link>
             </div>

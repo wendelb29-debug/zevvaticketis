@@ -171,7 +171,7 @@ function EventPage() {
                       <div className="text-right">
                         <span className="block font-extrabold text-navy text-lg">{ticket.price}</span>
                         {ticket.id === 1 && (
-                          <span className="text-[9px] bg-coral/10 text-coral px-2 py-0.5 rounded-full font-extrabold uppercase mt-1 inline-block">Popular</span>
+                          <span className="text-[9px] bg-gold/10 text-gold px-2 py-0.5 rounded-full font-extrabold uppercase mt-1 inline-block">VIP</span>
                         )}
                       </div>
                     </div>
