@@ -22,6 +22,7 @@ import { Route as ProdutorPendenteRouteImport } from './routes/produtor-pendente
 import { Route as AppIndexRouteImport } from './routes/app/index'
 import { Route as AppHistoricoRouteImport } from './routes/app/historico'
 import { Route as AppPerfilRouteImport } from './routes/app/perfil'
+import { Route as AuthCallbackRouteImport } from './routes/auth/callback'
 import { Route as ProdutorIndexRouteImport } from './routes/produtor/index'
 import { Route as ProdutorConfiguracoesRouteImport } from './routes/produtor/configuracoes'
 import { Route as ProdutorEquipeRouteImport } from './routes/produtor/equipe'
@@ -92,6 +93,11 @@ const AppPerfilRoute = AppPerfilRouteImport.update({
   path: '/perfil',
   getParentRoute: () => AppRoute,
 } as any)
+const AuthCallbackRoute = AuthCallbackRouteImport.update({
+  id: '/auth/callback',
+  path: '/auth/callback',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ProdutorIndexRoute = ProdutorIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -126,6 +132,7 @@ export interface FileRoutesByFullPath {
   '/produtor-pendente': typeof ProdutorPendenteRoute
   '/app/historico': typeof AppHistoricoRoute
   '/app/perfil': typeof AppPerfilRoute
+  '/auth/callback': typeof AuthCallbackRoute
   '/produtor/configuracoes': typeof ProdutorConfiguracoesRoute
   '/produtor/equipe': typeof ProdutorEquipeRoute
   '/produtor/novo-evento': typeof ProdutorNovoEventoRoute
@@ -143,6 +150,7 @@ export interface FileRoutesByTo {
   '/produtor-pendente': typeof ProdutorPendenteRoute
   '/app/historico': typeof AppHistoricoRoute
   '/app/perfil': typeof AppPerfilRoute
+  '/auth/callback': typeof AuthCallbackRoute
   '/produtor/configuracoes': typeof ProdutorConfiguracoesRoute
   '/produtor/equipe': typeof ProdutorEquipeRoute
   '/produtor/novo-evento': typeof ProdutorNovoEventoRoute
@@ -163,6 +171,7 @@ export interface FileRoutesById {
   '/produtor-pendente': typeof ProdutorPendenteRoute
   '/app/historico': typeof AppHistoricoRoute
   '/app/perfil': typeof AppPerfilRoute
+  '/auth/callback': typeof AuthCallbackRoute
   '/produtor/configuracoes': typeof ProdutorConfiguracoesRoute
   '/produtor/equipe': typeof ProdutorEquipeRoute
   '/produtor/novo-evento': typeof ProdutorNovoEventoRoute
@@ -184,6 +193,7 @@ export interface FileRouteTypes {
     | '/produtor-pendente'
     | '/app/historico'
     | '/app/perfil'
+    | '/auth/callback'
     | '/produtor/configuracoes'
     | '/produtor/equipe'
     | '/produtor/novo-evento'
@@ -201,6 +211,7 @@ export interface FileRouteTypes {
     | '/produtor-pendente'
     | '/app/historico'
     | '/app/perfil'
+    | '/auth/callback'
     | '/produtor/configuracoes'
     | '/produtor/equipe'
     | '/produtor/novo-evento'
@@ -220,6 +231,7 @@ export interface FileRouteTypes {
     | '/produtor-pendente'
     | '/app/historico'
     | '/app/perfil'
+    | '/auth/callback'
     | '/produtor/configuracoes'
     | '/produtor/equipe'
     | '/produtor/novo-evento'
@@ -238,6 +250,7 @@ export interface RootRouteChildren {
   LoginRoute: typeof LoginRoute
   ProdutorRoute: typeof ProdutorRouteWithChildren
   ProdutorPendenteRoute: typeof ProdutorPendenteRoute
+  AuthCallbackRoute: typeof AuthCallbackRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -333,6 +346,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppPerfilRouteImport
       parentRoute: typeof AppRoute
     }
+    '/auth/callback': {
+      id: '/auth/callback'
+      path: '/auth/callback'
+      fullPath: '/auth/callback'
+      preLoaderRoute: typeof AuthCallbackRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/produtor/': {
       id: '/produtor/'
       path: '/'
@@ -407,6 +427,7 @@ const rootRouteChildren: RootRouteChildren = {
   LoginRoute: LoginRoute,
   ProdutorRoute: ProdutorRouteWithChildren,
   ProdutorPendenteRoute: ProdutorPendenteRoute,
+  AuthCallbackRoute: AuthCallbackRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
