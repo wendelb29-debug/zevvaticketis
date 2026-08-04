@@ -188,25 +188,55 @@ function CriarEventoWizard() {
                   onChange={(e) => setFormData((prev: any) => ({ ...prev, description: e.target.value }))}
                 />
               </div>
-              <div className="space-y-2">
-                <label className="text-sm font-bold text-navy uppercase tracking-wider">Categoria</label>
-                <Select 
-                  value={formData.category}
-                  onValueChange={(val) => setFormData((prev: any) => ({ ...prev, category: val }))}
-                >
-                  <SelectTrigger className="h-14 rounded-xl border-2 border-input font-bold text-navy">
-                    <SelectValue placeholder="Selecione uma categoria" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="evento">Evento</SelectItem>
-                    <SelectItem value="festa">Festa</SelectItem>
-                    <SelectItem value="show">Show</SelectItem>
-                    <SelectItem value="curso">Curso</SelectItem>
-                    <SelectItem value="viagem">Viagem</SelectItem>
-                    <SelectItem value="experiencia">Experiência</SelectItem>
-                    <SelectItem value="outro">Outro</SelectItem>
-                  </SelectContent>
-                </Select>
+              <div className="space-y-4">
+                <label className="text-sm font-bold text-navy uppercase tracking-wider flex items-center gap-2">
+                  Categoria & Tema Visual <Sparkles className="w-4 h-4 text-gold" />
+                </label>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <Select 
+                    value={formData.category}
+                    onValueChange={(val) => setFormData((prev: any) => ({ ...prev, category: val }))}
+                  >
+                    <SelectTrigger className="h-14 rounded-xl border-2 border-input font-bold text-navy">
+                      <SelectValue placeholder="Selecione uma categoria" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {Object.keys(CATEGORY_THEMES).map((cat) => (
+                        <SelectItem key={cat} value={cat}>{cat}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+
+                  {formData.category && (
+                    <div 
+                      className={cn(
+                        "p-4 rounded-xl border-2 flex items-center justify-between group cursor-pointer transition-all",
+                        getThemeByCategory(formData.category).customClass?.includes('animate-pulse-subtle') && "animate-pulse-subtle"
+                      )}
+                      style={{ 
+                        borderColor: getThemeByCategory(formData.category).accentColor + '40',
+                        backgroundColor: getThemeByCategory(formData.category).accentColor + '05'
+                      }}
+                      onClick={() => navigate({ to: '/eventos', search: { categoria: formData.category } as any })}
+                    >
+                      <div className="flex items-center gap-3">
+                        <div 
+                          className="w-10 h-10 rounded-lg flex items-center justify-center text-white"
+                          style={{ backgroundColor: getThemeByCategory(formData.category).accentColor }}
+                        >
+                          {React.createElement(getThemeByCategory(formData.category).icon, { className: "w-5 h-5" })}
+                        </div>
+                        <div>
+                          <p className="text-[10px] font-extrabold uppercase tracking-widest text-navy">Tema aplicado</p>
+                          <p className="font-bold text-navy text-xs">{formData.category}</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-2 text-gold font-extrabold text-[10px] uppercase tracking-widest">
+                        <Eye className="w-3.5 h-3.5" /> Ver prévia
+                      </div>
+                    </div>
+                  )}
+                </div>
               </div>
               <div className="space-y-2">
                 <label className="text-sm font-bold text-navy uppercase tracking-wider">Imagem principal</label>
