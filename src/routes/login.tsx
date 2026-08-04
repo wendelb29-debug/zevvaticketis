@@ -1,16 +1,22 @@
-import { createFileRoute, useNavigate, Link } from '@tanstack/react-router';
-import { useState } from 'react';
-import { supabase } from '@/integrations/supabase/client';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Checkbox } from '@/components/ui/checkbox';
-import { ArrowLeft, Mail, Lock, AlertCircle, Quote } from 'lucide-react';
-import { toast } from 'sonner';
+import { createFileRoute, useNavigate } from '@tanstack/react-router';
+import { useEffect } from 'react';
+import { useUI } from '@/hooks/use-ui';
 
 export const Route = createFileRoute('/login')({
   component: LoginPage,
 });
+
+function LoginPage() {
+  const navigate = useNavigate();
+  const { openOverlay } = useUI();
+
+  useEffect(() => {
+    openOverlay('auth', 'login');
+    navigate({ to: '/' });
+  }, []);
+
+  return null;
+}
 
 function LoginPage() {
   const [email, setEmail] = useState('');

@@ -1,31 +1,22 @@
-import { createFileRoute, useNavigate, Link } from '@tanstack/react-router';
-import { useState, useEffect } from 'react';
-import { supabase } from '@/integrations/supabase/client';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Badge } from '@/components/ui/badge';
-import { 
-  ArrowLeft, 
-  Mail, 
-  Lock, 
-  User, 
-  Building2, 
-  Globe, 
-  FileText, 
-  ShieldCheck, 
-  Quote,
-  Ticket,
-  Store,
-  ChevronRight
-} from 'lucide-react';
-import { toast } from 'sonner';
-import { cn } from '@/lib/utils';
+import { createFileRoute, useNavigate } from '@tanstack/react-router';
+import { useEffect } from 'react';
+import { useUI } from '@/hooks/use-ui';
 
 export const Route = createFileRoute('/cadastro')({
   component: RegistrationPage,
 });
+
+function RegistrationPage() {
+  const navigate = useNavigate();
+  const { openOverlay } = useUI();
+
+  useEffect(() => {
+    openOverlay('auth', 'register');
+    navigate({ to: '/' });
+  }, []);
+
+  return null;
+}
 
 function RegistrationPage() {
   const [step, setStep] = useState(1);
