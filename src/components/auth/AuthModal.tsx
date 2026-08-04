@@ -68,25 +68,8 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
 
       toast.success("Login realizado com sucesso.");
       
-      // Get user profile to determine redirect
-      const { data: profile } = await supabase
-        .from("profiles")
-        .select("*")
-        .eq("id", data.user.id)
-        .single();
-
-      // Also check organization membership for producer role
-      const { data: member } = await supabase
-        .from("organization_members")
-        .select("role")
-        .eq("user_id", data.user.id)
-        .single();
-
-      if (member) {
-        navigate({ to: "/produtor" });
-      } else {
-        navigate({ to: "/app" });
-      }
+      const path = await fetchRedirectPath();
+      navigate({ to: path as any });
       onClose();
     } catch (err: any) {
       toast.error("Ocorreu um erro inesperado.");
