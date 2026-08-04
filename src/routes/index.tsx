@@ -61,7 +61,8 @@ function Index() {
           date: event.start_date ? new Date(event.start_date).toLocaleDateString('pt-BR', { month: 'long', year: 'numeric' }) : 'Data a definir',
           price: `US$ ${event.min_price || '0'}`,
           image: "https://images.unsplash.com/photo-1544971587-b842c27f8e14?auto=format&fit=crop&q=80&w=800",
-          lote: "Lote 1"
+          lote: "Lote 1",
+          categoria: event.categoria
         }));
         setFilteredEvents(formatted);
       } else if (error) {
@@ -243,7 +244,7 @@ function Index() {
           <section className="space-y-8">
             <div className="text-center space-y-2">
               <h2 className="text-3xl font-heading font-extrabold">Explore por Categoria</h2>
-              <p className="text-muted font-medium">Encontre a experiência ideal para o seu ministério</p>
+              <p className="text-navy font-bold">Encontre a experiência ideal para o seu ministério</p>
             </div>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
               {categories.map((cat) => (
@@ -274,49 +275,77 @@ function Index() {
                   <div key={i} className="bg-surface animate-pulse rounded-[14px] aspect-[3/4]" />
                 ))
               ) : filteredEvents.length > 0 ? (
-                filteredEvents.map((event) => (
-                <div key={event.id} className="bg-white rounded-[14px] overflow-hidden border border-line shadow-sm hover-lift group">
-                  <div className="aspect-[4/3] bg-surface relative overflow-hidden">
-                    <div className="absolute top-3 right-3 z-10">
-                      <span className="glass-panel text-gold text-[10px] font-extrabold px-3 py-1.5 rounded-full shadow-md uppercase tracking-widest">
-                        {event.lote}
-                      </span>
-                    </div>
-                    <img 
-                      src={event.image} 
-                      alt={event.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
-                  </div>
-                  <div className="p-6 space-y-4">
-                    <h3 className="font-heading font-extrabold text-lg text-navy leading-tight line-clamp-2 min-h-[3.5rem] group-hover:text-gold transition-colors">
-                      {event.title}
-                    </h3>
-                    <div className="space-y-2">
-                      <div className="flex items-center gap-2 text-sm text-navy font-bold">
-                        <svg className="w-4 h-4 text-gold-deep" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /></svg>
-                        {event.location}
+                filteredEvents.map((event) => {
+                  const theme = getThemeByCategory(event.categoria);
+                  const Icon = theme.icon;
+                  
+                  return (
+                    <div 
+                      key={event.id} 
+                      className={cn(
+                        "bg-white rounded-[14px] overflow-hidden border border-line shadow-sm hover-lift group",
+                        theme.cardAnimation,
+                        theme.customClass?.includes('animate-pulse-subtle') && "animate-pulse-subtle"
+                      )}
+                      style={{ 
+                        borderColor: theme.accentColor + '30',
+                      }}
+                    >
+                      <div className="aspect-[4/3] bg-surface relative overflow-hidden">
+                        <div className="absolute top-3 right-3 z-10 flex gap-2">
+                          <span className="glass-panel text-white text-[10px] font-extrabold px-3 py-1.5 rounded-full shadow-md uppercase tracking-widest bg-navy/40">
+                            {event.lote}
+                          </span>
+                          <span 
+                            className="text-white text-[10px] font-extrabold px-3 py-1.5 rounded-full shadow-md uppercase tracking-widest flex items-center gap-1"
+                            style={{ backgroundColor: theme.accentColor }}
+                          >
+                            <Icon className="w-3 h-3" /> {event.categoria || 'Evento'}
+                          </span>
+                        </div>
+                        <img 
+                          src={event.image} 
+                          alt={event.title}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        />
                       </div>
-                      <div className="flex items-center gap-2 text-sm text-navy font-bold">
-                        <svg className="w-4 h-4 text-gold-deep" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
-                        {event.date}
+                      <div className={cn("p-6 space-y-4", theme.fontFamily)}>
+                        <h3 
+                          className="font-heading font-extrabold text-lg text-navy leading-tight line-clamp-2 min-h-[3.5rem] group-hover:text-gold transition-colors"
+                          style={{ color: theme.customClass?.includes('animate-pulse-subtle') ? theme.accentColor : undefined }}
+                        >
+                          {event.title}
+                        </h3>
+                        <div className="space-y-2">
+                          <div className="flex items-center gap-2 text-sm text-navy font-bold">
+                            <MapPinIcon className="w-4 h-4" style={{ color: theme.accentColor }} />
+                            {event.location}
+                          </div>
+                          <div className="flex items-center gap-2 text-sm text-navy font-bold">
+                            <Calendar className="w-4 h-4" style={{ color: theme.accentColor }} />
+                            {event.date}
+                          </div>
+                        </div>
+                        <div className="pt-4 border-t border-line flex justify-between items-center">
+                          <div className="space-y-0.5">
+                            <span className="block text-[10px] text-muted-foreground font-extrabold uppercase tracking-widest">A partir de</span>
+                            <span className="text-xl font-extrabold text-navy">{event.price}</span>
+                          </div>
+                          <Link 
+                            to="/eventos" 
+                            className={cn(
+                              "w-10 h-10 rounded-full bg-surface flex items-center justify-center transition-all shadow-md border border-line",
+                              theme.buttonRadius
+                            )}
+                            style={{ color: theme.accentColor }}
+                          >
+                            <ArrowRight className="w-5 h-5" />
+                          </Link>
+                        </div>
                       </div>
                     </div>
-                    <div className="pt-4 border-t border-line flex justify-between items-center">
-                      <div className="space-y-0.5">
-                        <span className="block text-[10px] text-muted-foreground font-extrabold uppercase tracking-widest">A partir de</span>
-                        <span className="text-xl font-extrabold text-navy">{event.price}</span>
-                      </div>
-                      <Link 
-                        to="/eventos" 
-                        className="w-10 h-10 rounded-full bg-surface flex items-center justify-center text-gold group-hover:bg-gold group-hover:text-white transition-all shadow-md border border-line"
-                      >
-                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" /></svg>
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-                ))
+                  );
+                })
               ) : (
                 <div className="col-span-full py-20 text-center space-y-4">
                   <div className="text-6xl text-surface-2">📍</div>
