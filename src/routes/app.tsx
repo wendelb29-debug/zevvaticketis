@@ -1,6 +1,6 @@
-import { createFileRoute, Outlet, redirect, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Outlet, redirect, useNavigate, Link } from "@tanstack/react-router";
 import { supabase } from "@/integrations/supabase/client";
-import { ArrowLeft, User as UserIcon } from "lucide-react";
+import { ArrowLeft, User as UserIcon, Ticket, User, History } from "lucide-react";
 import { useState, useEffect } from "react";
 import { UserMenu } from "@/components/auth/UserMenu";
 
