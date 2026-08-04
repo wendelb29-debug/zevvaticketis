@@ -15,7 +15,7 @@ export function CityTicker() {
         {tickerItems.map((city, index) => (
           <div key={index} className="flex items-center mx-8">
             <span className="text-[10px] font-black text-navy uppercase tracking-widest">{city}</span>
-            <div className="w-1 h-1 rounded-full bg-gold mx-8" />
+            <div className="w-1 h-1 rounded-full bg-coral mx-8" />
           </div>
         ))}
       </div>

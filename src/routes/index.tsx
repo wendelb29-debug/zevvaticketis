@@ -130,13 +130,13 @@ function HomePage() {
             <div className="flex justify-between items-end">
               <div className="space-y-2">
                 <h2 className="text-3xl font-manrope font-extrabold text-navy flex items-center gap-3">
-                  <TrendingUp className="w-8 h-8 text-gold" /> Próximos Eventos
+                  <TrendingUp className="w-8 h-8 text-coral" /> Próximos Eventos
                 </h2>
                 <p className="text-muted font-medium">As melhores experiências selecionadas para você.</p>
               </div>
               <Link 
                 to="/eventos" 
-                className="group flex items-center gap-2 text-gold font-bold hover:underline"
+                className="group flex items-center gap-2 text-coral font-bold hover:underline"
               >
                 Ver todos <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Link>

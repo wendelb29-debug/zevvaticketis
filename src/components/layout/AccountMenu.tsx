@@ -73,7 +73,7 @@ export function AccountMenu({ user, onLogout, onNavigate, onOpenAuth }: AccountM
     return (
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <button className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-line hover:border-gold/30 hover:shadow-sm transition-all outline-none bg-white">
+          <button className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-line hover:border-coral/30 hover:shadow-sm transition-all outline-none bg-white">
             <Menu className="w-4 h-4 text-navy" />
             <div className="w-8 h-8 rounded-full bg-surface flex items-center justify-center border border-line">
               <UserIcon className="w-4 h-4 text-navy/40" />
@@ -85,14 +85,14 @@ export function AccountMenu({ user, onLogout, onNavigate, onOpenAuth }: AccountM
             onClick={() => onOpenAuth('login')}
             className="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-extrabold text-navy cursor-pointer hover:bg-surface transition-colors"
           >
-            <UserCircle className="w-4 h-4 text-gold" />
+            <UserCircle className="w-4 h-4 text-coral" />
             Entrar
           </DropdownMenuItem>
           <DropdownMenuItem 
             onClick={() => onOpenAuth('register')}
             className="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-extrabold text-navy cursor-pointer hover:bg-surface transition-colors"
           >
-            <PlusCircle className="w-4 h-4 text-gold" />
+            <PlusCircle className="w-4 h-4 text-coral" />
             Cadastrar
           </DropdownMenuItem>
           <DropdownMenuSeparator className="bg-line mx-2" />
@@ -110,9 +110,9 @@ export function AccountMenu({ user, onLogout, onNavigate, onOpenAuth }: AccountM
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <button className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-line hover:border-gold/30 hover:shadow-sm transition-all outline-none bg-white">
+        <button className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-line hover:border-coral/30 hover:shadow-sm transition-all outline-none bg-white">
           <Menu className="w-4 h-4 text-navy" />
-          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-gold/20 to-gold/40 flex items-center justify-center border border-gold/30">
+          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-coral/20 to-coral/40 flex items-center justify-center border border-coral/30">
             <span className="text-[10px] font-extrabold text-navy">{initials}</span>
           </div>
         </button>
@@ -121,7 +121,7 @@ export function AccountMenu({ user, onLogout, onNavigate, onOpenAuth }: AccountM
       <DropdownMenuContent align="end" className="w-[280px] mt-2 rounded-[16px] p-0 border-line shadow-xl overflow-hidden font-manrope bg-white animate-in fade-in zoom-in-95 duration-200">
         {/* Header */}
         <div className="p-4 flex items-center gap-3 bg-surface/30">
-          <div className="w-12 h-12 rounded-full bg-gradient-to-br from-gold/20 to-gold/40 flex items-center justify-center border border-gold/30 shadow-sm">
+          <div className="w-12 h-12 rounded-full bg-gradient-to-br from-coral/20 to-coral/40 flex items-center justify-center border border-coral/30 shadow-sm">
             <span className="text-sm font-extrabold text-navy">{initials}</span>
           </div>
           <div className="flex flex-col">
@@ -141,25 +141,25 @@ export function AccountMenu({ user, onLogout, onNavigate, onOpenAuth }: AccountM
           <div className="p-3">
             <div className="bg-navy rounded-xl p-4 text-white space-y-3">
               <div className="flex gap-2">
-                <HelpCircle className="w-4 h-4 text-gold shrink-0" />
+                <HelpCircle className="w-4 h-4 text-coral shrink-0" />
                 <p className="text-[11px] font-bold leading-relaxed">
-                  Complete seus dados para <span className="font-extrabold text-gold">garantir</span> mais segurança no acesso à sua conta!
+                  Complete seus dados para <span className="font-extrabold text-coral">garantir</span> mais segurança no acesso à sua conta!
                 </p>
               </div>
               
               <div className="flex items-center gap-3">
                 <div className="flex-1 h-1.5 bg-white/10 rounded-full overflow-hidden">
                   <div 
-                    className="h-full bg-gradient-to-r from-gold to-gold-deep transition-all duration-1000" 
+                    className="h-full bg-gradient-to-r from-coral to-coral-dark transition-all duration-1000" 
                     style={{ width: `${completionPercentage}%` }}
                   />
                 </div>
-                <span className="text-[10px] font-extrabold text-gold">{completionPercentage}%</span>
+                <span className="text-[10px] font-extrabold text-coral">{completionPercentage}%</span>
               </div>
 
               <button 
                 onClick={() => onNavigate("/app/perfil")}
-                className="w-full bg-gold hover:bg-gold-deep text-navy text-[11px] font-extrabold py-2 rounded-lg transition-colors"
+                className="w-full bg-coral hover:bg-coral-dark text-white text-[11px] font-extrabold py-2 rounded-lg transition-colors"
               >
                 Completar dados
               </button>
@@ -173,7 +173,7 @@ export function AccountMenu({ user, onLogout, onNavigate, onOpenAuth }: AccountM
             onClick={() => onNavigate("/app/perfil")}
             className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-extrabold text-navy cursor-pointer hover:bg-surface group"
           >
-            <UserCircle className="w-4 h-4 text-navy/40 group-hover:text-gold transition-colors" />
+            <UserCircle className="w-4 h-4 text-navy/40 group-hover:text-coral transition-colors" />
             Minha conta
           </DropdownMenuItem>
           
@@ -181,7 +181,7 @@ export function AccountMenu({ user, onLogout, onNavigate, onOpenAuth }: AccountM
             onClick={() => onNavigate("/app/favoritos")}
             className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-extrabold text-navy cursor-pointer hover:bg-surface group"
           >
-            <Heart className="w-4 h-4 text-navy/40 group-hover:text-gold transition-colors" />
+            <Heart className="w-4 h-4 text-navy/40 group-hover:text-coral transition-colors" />
             Favoritos
           </DropdownMenuItem>
 
@@ -189,7 +189,7 @@ export function AccountMenu({ user, onLogout, onNavigate, onOpenAuth }: AccountM
             onClick={() => onNavigate(isProducer ? "/criar-evento" : "/cadastro")}
             className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-extrabold text-navy cursor-pointer hover:bg-surface group"
           >
-            <PlusCircle className="w-4 h-4 text-navy/40 group-hover:text-gold transition-colors" />
+            <PlusCircle className="w-4 h-4 text-navy/40 group-hover:text-coral transition-colors" />
             Criar evento
           </DropdownMenuItem>
 
@@ -198,7 +198,7 @@ export function AccountMenu({ user, onLogout, onNavigate, onOpenAuth }: AccountM
               onClick={() => onNavigate("/produtor")}
               className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-extrabold text-navy cursor-pointer hover:bg-surface group"
             >
-              <Calendar className="w-4 h-4 text-navy/40 group-hover:text-gold transition-colors" />
+              <Calendar className="w-4 h-4 text-navy/40 group-hover:text-coral transition-colors" />
               Meus eventos
             </DropdownMenuItem>
           )}
@@ -209,7 +209,7 @@ export function AccountMenu({ user, onLogout, onNavigate, onOpenAuth }: AccountM
             onClick={() => onNavigate("/ajuda")}
             className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-extrabold text-navy cursor-pointer hover:bg-surface group"
           >
-            <HelpCircle className="w-4 h-4 text-navy/40 group-hover:text-gold transition-colors" />
+            <HelpCircle className="w-4 h-4 text-navy/40 group-hover:text-coral transition-colors" />
             Central de Ajuda
           </DropdownMenuItem>
 
