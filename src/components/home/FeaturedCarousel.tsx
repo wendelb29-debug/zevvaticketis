@@ -90,7 +90,7 @@ export function FeaturedCarousel({ events }: FeaturedCarouselProps) {
                 <div className="absolute top-6 right-6">
                   <div className="bg-white/90 backdrop-blur px-4 py-2 rounded-full shadow-lg border border-white/20">
                     <span className="text-xs font-extrabold text-navy uppercase tracking-widest">A partir de</span>
-                    <p className="text-lg font-extrabold text-gold leading-none">{event.min_price ? `US$ ${event.min_price}` : "Sob consulta"}</p>
+                    <p className="text-lg font-extrabold text-coral leading-none">{event.min_price ? `US$ ${event.min_price}` : "Sob consulta"}</p>
                   </div>
                 </div>
               </Link>
@@ -119,17 +119,17 @@ export function FeaturedCarousel({ events }: FeaturedCarouselProps) {
           <Link 
             to="/eventos" 
             search={{ id: currentEvent?.id } as any}
-            className="text-2xl font-manrope font-extrabold text-navy uppercase tracking-wider hover:text-gold transition-colors"
+            className="text-2xl font-manrope font-extrabold text-navy uppercase tracking-wider hover:text-coral transition-colors"
           >
             {currentEvent?.title}
           </Link>
           <div className="flex items-center justify-center gap-6 text-sm font-bold text-muted">
             <div className="flex items-center gap-1.5">
-              <MapPin className="w-4 h-4 text-gold" />
+              <MapPin className="w-4 h-4 text-coral" />
               {currentEvent?.city}
             </div>
             <div className="flex items-center gap-1.5">
-              <Calendar className="w-4 h-4 text-gold" />
+              <Calendar className="w-4 h-4 text-coral" />
               {currentEvent?.start_date ? new Date(currentEvent.start_date).toLocaleDateString() : ""}
             </div>
           </div>
@@ -143,7 +143,7 @@ export function FeaturedCarousel({ events }: FeaturedCarouselProps) {
               onClick={() => { handleManualInteraction(); setCurrentIndex(index); }}
               className={cn(
                 "w-2.5 h-2.5 rounded-full transition-all duration-300",
-                currentIndex === index ? "bg-gold w-6" : "bg-line hover:bg-muted"
+                currentIndex === index ? "bg-coral w-6" : "bg-line hover:bg-muted"
               )}
             />
           ))}

@@ -39,7 +39,7 @@ export interface CategoryTheme {
 export const CATEGORY_THEMES: Record<CategoryType, CategoryTheme> = {
   "CONFERÊNCIAS": {
     name: "Conferências",
-    accentColor: "#C99A3E", // Gold
+    accentColor: "#B8925A", // Gold (VIP/Premium)
     icon: LayoutDashboard,
     animationSpeed: "duration-200",
   },
