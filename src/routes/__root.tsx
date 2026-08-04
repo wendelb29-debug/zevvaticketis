@@ -7,7 +7,7 @@ import {
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
-import { useEffect, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { AuthModal } from "@/components/layout/AuthModal";
 import { useUI } from "@/hooks/use-ui";
 import { LocationModal } from "@/components/home/LocationModal";
@@ -146,11 +146,16 @@ function RootComponent() {
   }, [router]);
 
   useEffect(() => {
-    return router.subscribe('onSettled', () => setIsNavigating(false));
+    return router.subscribe('onLoad', () => setIsNavigating(false));
   }, [router]);
 
   return (
     <QueryClientProvider client={queryClient}>
+      {isNavigating && (
+        <div className="fixed top-0 left-0 right-0 h-1 z-[9999] bg-gold/20 overflow-hidden">
+          <div className="h-full bg-gold w-1/2 animate-progress" />
+        </div>
+      )}
       <Outlet />
       
       <AuthModal 
