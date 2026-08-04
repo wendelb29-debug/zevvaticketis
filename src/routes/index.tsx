@@ -50,6 +50,7 @@ function HomePage() {
         .from("events")
         .select("*")
         .eq("status", "publicado")
+        .order('created_at', { ascending: false })
         .limit(8);
 
       if (featured) setFeaturedEvents(featured);
@@ -163,11 +164,15 @@ function HomePage() {
         </section>
 
         {/* FAQ Section */}
-        <section className="px-6 py-20 bg-navy text-white">
+        <section className="px-6 py-24 bg-surface/30">
           <div className="max-w-3xl mx-auto space-y-12">
             <div className="text-center space-y-4">
-              <h2 className="text-4xl font-manrope font-extrabold">Dúvidas Frequentes</h2>
-              <p className="text-white/60 font-medium">Tudo o que você precisa saber sobre a Zevva Tickets.</p>
+              <h2 className="text-4xl font-manrope font-extrabold text-navy">
+                Dúvidas Frequentes
+              </h2>
+              <p className="text-muted font-medium">
+                Tudo o que você precisa saber sobre a Zevva Tickets.
+              </p>
             </div>
             <FAQAccordion />
           </div>
