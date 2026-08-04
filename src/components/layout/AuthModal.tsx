@@ -169,9 +169,9 @@ export function AuthModal({ isOpen, onClose, defaultView = 'login' }: AuthModalP
               <Button 
                 variant="outline" 
                 onClick={() => handleSocialLogin('apple')}
-                className="w-full justify-start gap-4 h-14 rounded-[16px] bg-navy text-white hover:bg-navy/90 border-navy font-extrabold transition-all"
+                className="w-full justify-start gap-4 h-14 rounded-[16px] bg-[#000000] text-white hover:bg-black/90 border-black font-extrabold transition-all"
               >
-                <Apple className="w-5 h-5 fill-current" />
+                <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg" alt="Apple" className="w-5 h-5 invert" />
                 Continuar com Apple
               </Button>
 
