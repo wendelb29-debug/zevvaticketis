@@ -1,6 +1,16 @@
 @import "tailwindcss";
 
 @theme {
+  --animate-marquee: marquee 30s linear infinite;
+  
+  @keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+}
+
+
+@theme {
   --font-fredoka: "Fredoka", sans-serif;
   --font-baloo: "Baloo 2", sans-serif;
   --font-manrope: "Manrope", sans-serif;
