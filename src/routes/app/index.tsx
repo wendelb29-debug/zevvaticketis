@@ -16,7 +16,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 
-export const Route = createFileRoute("/app/index")({
+export const Route = createFileRoute("/app/")({
   beforeLoad: async () => {
     const { data: { session } } = await supabase.auth.getSession();
     if (!session) {

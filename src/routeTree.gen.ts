@@ -19,6 +19,7 @@ import { Route as EventosRouteImport } from './routes/eventos'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as ProdutorRouteImport } from './routes/produtor'
 import { Route as ProdutorPendenteRouteImport } from './routes/produtor-pendente'
+import { Route as AppIndexRouteImport } from './routes/app/index'
 import { Route as ProdutorIndexRouteImport } from './routes/produtor/index'
 import { Route as ProdutorNovoEventoRouteImport } from './routes/produtor/novo-evento'
 
@@ -72,6 +73,11 @@ const ProdutorPendenteRoute = ProdutorPendenteRouteImport.update({
   path: '/produtor-pendente',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AppIndexRoute = AppIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AppRoute,
+} as any)
 const ProdutorIndexRoute = ProdutorIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -86,7 +92,7 @@ const ProdutorNovoEventoRoute = ProdutorNovoEventoRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
-  '/app': typeof AppRoute
+  '/app': typeof AppRouteWithChildren
   '/cadastro': typeof CadastroRoute
   '/checkin': typeof CheckinRoute
   '/criar-evento': typeof CriarEventoRoute
@@ -95,12 +101,12 @@ export interface FileRoutesByFullPath {
   '/produtor': typeof ProdutorRouteWithChildren
   '/produtor-pendente': typeof ProdutorPendenteRoute
   '/produtor/novo-evento': typeof ProdutorNovoEventoRoute
+  '/app/': typeof AppIndexRoute
   '/produtor/': typeof ProdutorIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
-  '/app': typeof AppRoute
   '/cadastro': typeof CadastroRoute
   '/checkin': typeof CheckinRoute
   '/criar-evento': typeof CriarEventoRoute
@@ -108,13 +114,14 @@ export interface FileRoutesByTo {
   '/login': typeof LoginRoute
   '/produtor-pendente': typeof ProdutorPendenteRoute
   '/produtor/novo-evento': typeof ProdutorNovoEventoRoute
+  '/app': typeof AppIndexRoute
   '/produtor': typeof ProdutorIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
-  '/app': typeof AppRoute
+  '/app': typeof AppRouteWithChildren
   '/cadastro': typeof CadastroRoute
   '/checkin': typeof CheckinRoute
   '/criar-evento': typeof CriarEventoRoute
@@ -123,6 +130,7 @@ export interface FileRoutesById {
   '/produtor': typeof ProdutorRouteWithChildren
   '/produtor-pendente': typeof ProdutorPendenteRoute
   '/produtor/novo-evento': typeof ProdutorNovoEventoRoute
+  '/app/': typeof AppIndexRoute
   '/produtor/': typeof ProdutorIndexRoute
 }
 export interface FileRouteTypes {
@@ -139,12 +147,12 @@ export interface FileRouteTypes {
     | '/produtor'
     | '/produtor-pendente'
     | '/produtor/novo-evento'
+    | '/app/'
     | '/produtor/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/admin'
-    | '/app'
     | '/cadastro'
     | '/checkin'
     | '/criar-evento'
@@ -152,6 +160,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/produtor-pendente'
     | '/produtor/novo-evento'
+    | '/app'
     | '/produtor'
   id:
     | '__root__'
@@ -166,13 +175,14 @@ export interface FileRouteTypes {
     | '/produtor'
     | '/produtor-pendente'
     | '/produtor/novo-evento'
+    | '/app/'
     | '/produtor/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AdminRoute: typeof AdminRoute
-  AppRoute: typeof AppRoute
+  AppRoute: typeof AppRouteWithChildren
   CadastroRoute: typeof CadastroRoute
   CheckinRoute: typeof CheckinRoute
   CriarEventoRoute: typeof CriarEventoRoute
@@ -254,6 +264,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProdutorPendenteRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/app/': {
+      id: '/app/'
+      path: '/'
+      fullPath: '/app/'
+      preLoaderRoute: typeof AppIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/produtor/': {
       id: '/produtor/'
       path: '/'
@@ -270,6 +287,16 @@ declare module '@tanstack/react-router' {
     }
   }
 }
+
+interface AppRouteChildren {
+  AppIndexRoute: typeof AppIndexRoute
+}
+
+const AppRouteChildren: AppRouteChildren = {
+  AppIndexRoute: AppIndexRoute,
+}
+
+const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
 
 interface ProdutorRouteChildren {
   ProdutorNovoEventoRoute: typeof ProdutorNovoEventoRoute
@@ -288,7 +315,7 @@ const ProdutorRouteWithChildren = ProdutorRoute._addFileChildren(
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminRoute: AdminRoute,
-  AppRoute: AppRoute,
+  AppRoute: AppRouteWithChildren,
   CadastroRoute: CadastroRoute,
   CheckinRoute: CheckinRoute,
   CriarEventoRoute: CriarEventoRoute,
