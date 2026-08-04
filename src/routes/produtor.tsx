@@ -206,7 +206,7 @@ function ProdutorLayout() {
       </div>
       
       <nav className="flex-1 space-y-1 px-4">
-        {menuItems.map((item) => (
+        {filteredMenuItems.map((item) => (
           <Link
             key={item.label}
             to={item.href}
