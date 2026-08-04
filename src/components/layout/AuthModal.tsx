@@ -66,7 +66,8 @@ export function AuthModal({ isOpen, onClose, defaultView = 'login' }: AuthModalP
       });
       if (error) throw error;
       // Completes producer signup securely once the user is authenticated
-      await supabase.rpc('ensure_producer_organization');
+      const { ensureProducerOrganization } = await import("@/lib/organizations.functions");
+      await ensureProducerOrganization();
       toast.success('Login realizado com sucesso!');
       
       const { getRedirectPath } = await import("@/lib/auth.functions");
@@ -117,9 +118,9 @@ export function AuthModal({ isOpen, onClose, defaultView = 'login' }: AuthModalP
 
       if (role === 'produtor') {
         if (authData.session) {
-          // Already authenticated: create the organization as the signed-in user
-          const { error: rpcError } = await supabase.rpc('ensure_producer_organization');
-          if (rpcError) throw rpcError;
+          // Already authenticated: create the organization server-side
+          const { ensureProducerOrganization } = await import("@/lib/organizations.functions");
+          await ensureProducerOrganization();
           toast.success('Cadastro enviado para aprovação!');
           navigate({ to: '/produtor-pendente' });
         } else {
