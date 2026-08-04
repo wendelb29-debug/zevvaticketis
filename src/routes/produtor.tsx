@@ -1,13 +1,37 @@
-import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
+import { createFileRoute, Outlet, redirect, useNavigate, Link } from "@tanstack/react-router";
 import { supabase } from "@/integrations/supabase/client";
 import { useEffect, useState } from "react";
+import { 
+  LayoutDashboard, 
+  User as UserIcon, 
+  Globe, 
+  Users, 
+  BarChart3, 
+  LogOut, 
+  Bell,
+  Menu,
+  X,
+  ChevronRight
+} from "lucide-react";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import { 
+  DropdownMenu, 
+  DropdownMenuContent, 
+  DropdownMenuItem, 
+  DropdownMenuLabel, 
+  DropdownMenuSeparator, 
+  DropdownMenuTrigger 
+} from "@/components/ui/dropdown-menu";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/produtor")({
   beforeLoad: async () => {
     const { data: { session } } = await supabase.auth.getSession();
     if (!session) {
       throw redirect({
-        to: "/login",
+        to: "/", // Redirecting to home so they can use the auth modal
       });
     }
   },
@@ -17,11 +41,18 @@ export const Route = createFileRoute("/produtor")({
 function ProdutorLayout() {
   const [status, setStatus] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState<any>(null);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    async function checkOrgStatus() {
+    async function getUserData() {
       const { data: { user } } = await supabase.auth.getUser();
-      if (!user) return;
+      if (!user) {
+        setLoading(false);
+        return;
+      }
+      setUser(user);
 
       const { data: memberData } = await supabase
         .from("organization_members")
@@ -40,27 +71,40 @@ function ProdutorLayout() {
       }
       setLoading(false);
     }
-    checkOrgStatus();
+    getUserData();
   }, []);
 
-  if (loading) return <div className="min-h-screen bg-background flex items-center justify-center">Carregando...</div>;
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    navigate({ to: "/" });
+  };
+
+  if (loading) return <div className="min-h-screen bg-white flex items-center justify-center font-sans">
+    <div className="flex flex-col items-center gap-4">
+      <div className="w-8 h-8 border-4 border-gold border-t-transparent rounded-full animate-spin"></div>
+      <p className="text-navy font-bold">Carregando painel...</p>
+    </div>
+  </div>;
 
   if (status === "pendente") {
     return (
-      <div className="min-h-screen bg-background flex items-center justify-center p-6 text-center">
-        <div className="max-w-md space-y-6">
-          <div className="text-6xl">⏳</div>
-          <h1 className="text-3xl font-heading font-bold text-foreground">Cadastro em Análise</h1>
-          <p className="text-secondary">
-            Sua organização foi cadastrada com sucesso e está sendo revisada por nossa equipe. 
-            Você receberá um e-mail assim que for aprovado.
-          </p>
-          <button 
-            onClick={() => supabase.auth.signOut()}
-            className="text-primary hover:underline"
+      <div className="min-h-screen bg-surface flex items-center justify-center p-6 text-center font-sans">
+        <div className="max-w-md space-y-8 bg-white p-12 rounded-[24px] shadow-xl border border-line">
+          <div className="text-6xl animate-bounce">⏳</div>
+          <div className="space-y-4">
+            <h1 className="text-3xl font-heading font-extrabold text-navy">Cadastro em Análise</h1>
+            <p className="text-muted font-medium leading-relaxed">
+              Sua organização foi cadastrada com sucesso e está sendo revisada por nossa equipe. 
+              Você receberá um e-mail assim que for aprovado para começar a vender.
+            </p>
+          </div>
+          <Button 
+            variant="ghost"
+            onClick={handleLogout}
+            className="text-gold font-bold hover:text-gold-deep"
           >
             Sair da conta
-          </button>
+          </Button>
         </div>
       </div>
     );
@@ -68,28 +112,147 @@ function ProdutorLayout() {
 
   if (status === "bloqueado") {
     return (
-      <div className="min-h-screen bg-background flex items-center justify-center p-6 text-center text-error">
-        <div className="max-w-md space-y-4">
-          <h1 className="text-2xl font-bold">Acesso Bloqueado</h1>
-          <p>Sua organização foi bloqueada. Entre em contato com o suporte.</p>
+      <div className="min-h-screen bg-surface flex items-center justify-center p-6 text-center font-sans">
+        <div className="max-w-md space-y-8 bg-white p-12 rounded-[24px] shadow-xl border border-destructive/20">
+          <div className="text-6xl">🚫</div>
+          <div className="space-y-4">
+            <h1 className="text-3xl font-heading font-extrabold text-destructive">Acesso Bloqueado</h1>
+            <p className="text-muted font-medium leading-relaxed">
+              Infelizmente sua conta de produtor foi bloqueada. <br />
+              Por favor, entre em contato com nosso suporte para mais informações.
+            </p>
+          </div>
+          <Button 
+            variant="ghost"
+            onClick={handleLogout}
+            className="text-navy font-bold hover:text-gold"
+          >
+            Sair da conta
+          </Button>
         </div>
       </div>
     );
   }
 
+  const menuItems = [
+    { label: "Início", icon: LayoutDashboard, href: "/produtor" },
+    { label: "Meus dados", icon: UserIcon, href: "/produtor/dados" },
+    { label: "Minha página", icon: Globe, href: "/produtor/pagina" },
+    { label: "Lista de interessados", icon: Users, href: "/produtor/interessados" },
+    { label: "Gestão financeira", icon: BarChart3, href: "/produtor/financeiro" },
+  ];
+
+  const SidebarContent = () => (
+    <div className="flex flex-col h-full bg-white border-r border-line py-8 font-sans">
+      <div className="px-6 mb-12">
+        <Link to="/" className="text-2xl font-heading font-extrabold text-gold tracking-tighter">
+          ZEVVA <span className="text-navy">TICKETS</span>
+        </Link>
+      </div>
+      
+      <nav className="flex-1 space-y-1 px-4">
+        {menuItems.map((item) => (
+          <Link
+            key={item.label}
+            to={item.href}
+            className="flex items-center gap-3 px-4 py-3.5 rounded-xl text-sm font-bold transition-all duration-200"
+            activeProps={{ className: "bg-gold text-white shadow-lg shadow-gold/20" }}
+            inactiveProps={{ className: "text-muted hover:bg-surface hover:text-navy" }}
+          >
+            <item.icon className="w-5 h-5" />
+            {item.label}
+          </Link>
+        ))}
+      </nav>
+
+      <div className="px-4 mt-auto">
+        <button 
+          onClick={handleLogout}
+          className="flex items-center gap-3 w-full px-4 py-3.5 rounded-xl text-sm font-bold text-destructive hover:bg-destructive/5 transition-colors"
+        >
+          <LogOut className="w-5 h-5" />
+          Sair
+        </button>
+      </div>
+    </div>
+  );
+
   return (
-    <div className="min-h-screen bg-background text-foreground">
-      <header className="border-b border-white/5 bg-card/50 backdrop-blur-md">
-        <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-          <div className="text-xl font-heading font-bold text-primary tracking-tighter">
-            ZEVVA <span className="text-foreground">PRODUTOR</span>
+    <div className="min-h-screen bg-surface flex">
+      {/* Desktop Sidebar */}
+      <aside className="hidden lg:block w-72 h-screen sticky top-0">
+        <SidebarContent />
+      </aside>
+
+      <div className="flex-1 flex flex-col min-h-screen">
+        <header className="h-20 bg-white/80 backdrop-blur-md border-b border-line sticky top-0 z-40 px-6 sm:px-10 flex items-center justify-between font-sans">
+          <div className="flex items-center gap-4">
+            <Sheet>
+              <SheetTrigger asChild>
+                <Button variant="ghost" size="icon" className="lg:hidden text-navy">
+                  <Menu className="w-6 h-6" />
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="left" className="p-0 w-72">
+                <SidebarContent />
+              </SheetContent>
+            </Sheet>
+            
+            <div className="hidden lg:flex items-center gap-2">
+              <span className="text-xs font-extrabold uppercase tracking-widest text-gold bg-gold/5 px-3 py-1 rounded-full border border-gold/10">
+                Área do Produtor
+              </span>
+            </div>
           </div>
-          <button onClick={() => supabase.auth.signOut()} className="text-sm text-muted-foreground">Sair</button>
-        </div>
-      </header>
-      <main className="max-w-7xl mx-auto px-6 py-8">
-        <Outlet />
-      </main>
+
+          <div className="flex items-center gap-3 sm:gap-6">
+            <button className="relative p-2 text-muted hover:text-navy transition-colors">
+              <Bell className="w-5 h-5" />
+              <span className="absolute top-2 right-2 w-2 h-2 bg-gold rounded-full border-2 border-white"></span>
+            </button>
+
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button className="flex items-center gap-3 hover:opacity-80 transition-opacity">
+                  <div className="text-right hidden sm:block">
+                    <p className="text-sm font-bold text-navy truncate max-w-[150px]">
+                      {user?.user_metadata?.nome || user?.email}
+                    </p>
+                    <p className="text-[10px] font-bold text-muted uppercase tracking-wider">Produtor</p>
+                  </div>
+                  <Avatar className="w-10 h-10 border-2 border-surface shadow-sm">
+                    <AvatarImage src={user?.user_metadata?.avatar_url} />
+                    <AvatarFallback className="bg-gold text-white font-bold">
+                      {(user?.user_metadata?.nome || user?.email || 'U').charAt(0).toUpperCase()}
+                    </AvatarFallback>
+                  </Avatar>
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-56 p-2 rounded-xl">
+                <DropdownMenuLabel className="font-bold px-3 py-2">Minha Conta</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem className="rounded-lg font-medium px-3 py-2 cursor-pointer" onClick={() => navigate({to: '/produtor/dados'})}>
+                  Meus dados
+                </DropdownMenuItem>
+                <DropdownMenuItem className="rounded-lg font-medium px-3 py-2 cursor-pointer" onClick={() => navigate({to: '/produtor/ajuda'})}>
+                  Ajuda
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem 
+                  className="rounded-lg font-bold px-3 py-2 text-destructive focus:text-destructive cursor-pointer"
+                  onClick={handleLogout}
+                >
+                  Sair
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+        </header>
+
+        <main className="p-6 sm:p-10">
+          <Outlet />
+        </main>
+      </div>
     </div>
   );
 }
