@@ -659,6 +659,7 @@ function CriarEventoWizard() {
                             location: formData.location,
                             start_date: `${formData.start_date}T${formData.start_time || '00:00'}:00`,
                             end_date: `${formData.end_date}T${formData.end_time || '00:00'}:00`,
+                            min_price: tickets.length > 0 ? tickets[0].price : 0,
                             status: 'publicado'
                           })
                           .select()
