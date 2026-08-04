@@ -166,15 +166,28 @@ function CriarEventoWizard() {
             <div className="space-y-6">
               <div className="space-y-2">
                 <label className="text-sm font-bold text-navy uppercase tracking-wider">Título do evento *</label>
-                <Input placeholder="Ex: Festival de Música Zevva" className="h-14 rounded-xl border-line focus-visible:ring-gold" />
+                <Input 
+                  placeholder="Ex: Festival de Música Zevva" 
+                  className="h-14 rounded-xl border-line focus-visible:ring-gold"
+                  value={formData.title}
+                  onChange={(e) => setFormData((prev: any) => ({ ...prev, title: e.target.value }))}
+                />
               </div>
               <div className="space-y-2">
                 <label className="text-sm font-bold text-navy uppercase tracking-wider">Descrição do evento *</label>
-                <Textarea placeholder="Descreva todos os detalhes do seu evento..." className="min-h-[200px] rounded-xl border-line focus-visible:ring-gold" />
+                <Textarea 
+                  placeholder="Descreva todos os detalhes do seu evento..." 
+                  className="min-h-[200px] rounded-xl border-line focus-visible:ring-gold"
+                  value={formData.description}
+                  onChange={(e) => setFormData((prev: any) => ({ ...prev, description: e.target.value }))}
+                />
               </div>
               <div className="space-y-2">
                 <label className="text-sm font-bold text-navy uppercase tracking-wider">Categoria</label>
-                <Select>
+                <Select 
+                  value={formData.category}
+                  onValueChange={(val) => setFormData((prev: any) => ({ ...prev, category: val }))}
+                >
                   <SelectTrigger className="h-14 rounded-xl border-line">
                     <SelectValue placeholder="Selecione uma categoria" />
                   </SelectTrigger>
@@ -213,72 +226,238 @@ function CriarEventoWizard() {
               <div className="space-y-2">
                 <label className="text-sm font-bold text-navy uppercase tracking-wider">Tipo de evento</label>
                 <div className="grid grid-cols-2 gap-4">
-                  <button className="h-14 rounded-xl border-2 border-gold bg-gold/5 text-navy font-bold flex items-center justify-center gap-2">
-                    <MapPin className="w-5 h-5 text-gold" /> Presencial
+                  <button 
+                    onClick={() => setFormData((prev: any) => ({ ...prev, event_type: "presencial" }))}
+                    className={cn(
+                      "h-14 rounded-xl border-2 font-bold flex items-center justify-center gap-2 transition-all",
+                      formData.event_type === "presencial" ? "border-gold bg-gold/5 text-navy" : "border-line text-muted hover:bg-surface"
+                    )}
+                  >
+                    <MapPin className={cn("w-5 h-5", formData.event_type === "presencial" ? "text-gold" : "")} /> Presencial
                   </button>
-                  <button className="h-14 rounded-xl border border-line text-muted font-bold flex items-center justify-center gap-2 hover:bg-surface">
-                    <Globe className="w-5 h-5" /> Online
+                  <button 
+                    onClick={() => setFormData((prev: any) => ({ ...prev, event_type: "online" }))}
+                    className={cn(
+                      "h-14 rounded-xl border-2 font-bold flex items-center justify-center gap-2 transition-all",
+                      formData.event_type === "online" ? "border-gold bg-gold/5 text-navy" : "border-line text-muted hover:bg-surface"
+                    )}
+                  >
+                    <Globe className={cn("w-5 h-5", formData.event_type === "online" ? "text-gold" : "")} /> Online
                   </button>
                 </div>
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="space-y-2"><label className="text-sm font-bold text-navy uppercase tracking-wider">País</label><Input className="h-14 rounded-xl" /></div>
-                <div className="space-y-2"><label className="text-sm font-bold text-navy uppercase tracking-wider">Estado</label><Input className="h-14 rounded-xl" /></div>
-                <div className="space-y-2"><label className="text-sm font-bold text-navy uppercase tracking-wider">Cidade</label><Input className="h-14 rounded-xl" /></div>
-                <div className="space-y-2"><label className="text-sm font-bold text-navy uppercase tracking-wider">CEP</label><Input className="h-14 rounded-xl" /></div>
-              </div>
-              <div className="space-y-2">
-                <label className="text-sm font-bold text-navy uppercase tracking-wider">Endereço completo</label>
-                <Input className="h-14 rounded-xl" />
-              </div>
+
+              {formData.event_type === "presencial" ? (
+                <div className="space-y-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="space-y-2">
+                      <label className="text-sm font-bold text-navy uppercase tracking-wider">País</label>
+                      <Input 
+                        className="h-14 rounded-xl" 
+                        value={formData.country_id}
+                        onChange={(e) => setFormData((prev: any) => ({ ...prev, country_id: e.target.value }))}
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <label className="text-sm font-bold text-navy uppercase tracking-wider">Cidade</label>
+                      <Input 
+                        className="h-14 rounded-xl" 
+                        value={formData.city}
+                        onChange={(e) => setFormData((prev: any) => ({ ...prev, city: e.target.value }))}
+                      />
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-sm font-bold text-navy uppercase tracking-wider">Endereço completo</label>
+                    <Input 
+                      className="h-14 rounded-xl" 
+                      value={formData.location}
+                      onChange={(e) => setFormData((prev: any) => ({ ...prev, location: e.target.value }))}
+                    />
+                  </div>
+                </div>
+              ) : (
+                <div className="space-y-2">
+                  <label className="text-sm font-bold text-navy uppercase tracking-wider">Link de transmissão</label>
+                  <Input 
+                    placeholder="Zoom, Google Meet, YouTube..." 
+                    className="h-14 rounded-xl" 
+                    value={formData.location}
+                    onChange={(e) => setFormData((prev: any) => ({ ...prev, location: e.target.value }))}
+                  />
+                </div>
+              )}
+
               <div className="grid grid-cols-2 gap-6">
-                <div className="space-y-2"><label className="text-sm font-bold text-navy uppercase tracking-wider">Data Inicial</label><Input type="date" className="h-14 rounded-xl" /></div>
-                <div className="space-y-2"><label className="text-sm font-bold text-navy uppercase tracking-wider">Hora Inicial</label><Input type="time" className="h-14 rounded-xl" /></div>
-                <div className="space-y-2"><label className="text-sm font-bold text-navy uppercase tracking-wider">Data Final</label><Input type="date" className="h-14 rounded-xl" /></div>
-                <div className="space-y-2"><label className="text-sm font-bold text-navy uppercase tracking-wider">Hora Final</label><Input type="time" className="h-14 rounded-xl" /></div>
+                <div className="space-y-2">
+                  <label className="text-sm font-bold text-navy uppercase tracking-wider">Data Inicial</label>
+                  <Input 
+                    type="date" 
+                    className="h-14 rounded-xl" 
+                    value={formData.start_date}
+                    onChange={(e) => setFormData((prev: any) => ({ ...prev, start_date: e.target.value }))}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-sm font-bold text-navy uppercase tracking-wider">Hora Inicial</label>
+                  <Input 
+                    type="time" 
+                    className="h-14 rounded-xl" 
+                    value={formData.start_time}
+                    onChange={(e) => setFormData((prev: any) => ({ ...prev, start_time: e.target.value }))}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-sm font-bold text-navy uppercase tracking-wider">Data Final</label>
+                  <Input 
+                    type="date" 
+                    className="h-14 rounded-xl" 
+                    value={formData.end_date}
+                    onChange={(e) => setFormData((prev: any) => ({ ...prev, end_date: e.target.value }))}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-sm font-bold text-navy uppercase tracking-wider">Hora Final</label>
+                  <Input 
+                    type="time" 
+                    className="h-14 rounded-xl" 
+                    value={formData.end_time}
+                    onChange={(e) => setFormData((prev: any) => ({ ...prev, end_time: e.target.value }))}
+                  />
+                </div>
               </div>
             </div>
           </div>
         );
       case 3:
         return (
-          <div className="space-y-8 animate-in fade-in zoom-in-95 duration-500 text-center py-10">
-            <div className="w-20 h-20 bg-surface rounded-full flex items-center justify-center mx-auto text-gold mb-6">
-              <Ticket className="w-10 h-10" />
+          <div className="space-y-8 animate-in fade-in zoom-in-95 duration-500">
+            <div className="flex justify-between items-center mb-6">
+              <h3 className="text-xl font-bold text-navy">Gerenciamento de Ingressos</h3>
+              <Button 
+                onClick={() => setTickets([...tickets, { id: Date.now(), name: "Novo Lote", description: "", price: 0, quantity: 100, sale_start: "", sale_end: "", limit_per_buyer: 5 }])}
+                className="bg-navy text-white font-bold"
+              >
+                <Plus className="w-4 h-4 mr-2" /> Adicionar ingresso
+              </Button>
             </div>
-            <h3 className="text-2xl font-bold text-navy">Gerenciamento de Ingressos</h3>
-            <p className="text-muted font-medium mb-8">Crie lotes e defina preços para seu evento.</p>
-            <Button className="h-14 px-10 rounded-xl bg-navy text-white font-bold">
-              <Plus className="w-5 h-5 mr-2" /> Adicionar ingresso
-            </Button>
+            
+            <div className="space-y-4">
+              {tickets.map((ticket, index) => (
+                <div key={ticket.id} className="p-6 rounded-2xl border border-line bg-surface/30 space-y-4">
+                  <div className="flex justify-between items-center">
+                    <h4 className="font-bold text-navy">Ingresso #{index + 1}</h4>
+                    {tickets.length > 1 && (
+                      <button 
+                        onClick={() => setTickets(tickets.filter(t => t.id !== ticket.id))}
+                        className="text-destructive font-bold text-xs hover:underline"
+                      >
+                        Remover
+                      </button>
+                    )}
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="space-y-1">
+                      <label className="text-xs font-bold text-muted uppercase">Nome do ingresso</label>
+                      <Input 
+                        value={ticket.name}
+                        onChange={(e) => {
+                          const newTickets = [...tickets];
+                          newTickets[index].name = e.target.value;
+                          setTickets(newTickets);
+                        }}
+                        placeholder="Ex: VIP, Pista"
+                        className="bg-white"
+                      />
+                    </div>
+                    <div className="space-y-1">
+                      <label className="text-xs font-bold text-muted uppercase">Preço</label>
+                      <Input 
+                        type="number"
+                        value={ticket.price}
+                        onChange={(e) => {
+                          const newTickets = [...tickets];
+                          newTickets[index].price = parseFloat(e.target.value);
+                          setTickets(newTickets);
+                        }}
+                        className="bg-white"
+                      />
+                    </div>
+                    <div className="space-y-1">
+                      <label className="text-xs font-bold text-muted uppercase">Quantidade</label>
+                      <Input 
+                        type="number"
+                        value={ticket.quantity}
+                        onChange={(e) => {
+                          const newTickets = [...tickets];
+                          newTickets[index].quantity = parseInt(e.target.value);
+                          setTickets(newTickets);
+                        }}
+                        className="bg-white"
+                      />
+                    </div>
+                    <div className="space-y-1">
+                      <label className="text-xs font-bold text-muted uppercase">Limite por comprador</label>
+                      <Input 
+                        type="number"
+                        value={ticket.limit_per_buyer}
+                        onChange={(e) => {
+                          const newTickets = [...tickets];
+                          newTickets[index].limit_per_buyer = parseInt(e.target.value);
+                          setTickets(newTickets);
+                        }}
+                        className="bg-white"
+                      />
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         );
       case 4:
         return (
           <div className="space-y-8 animate-in fade-in slide-in-from-right-4 duration-500">
             <div className="space-y-6">
-              <div className="space-y-2">
-                <label className="text-sm font-bold text-navy uppercase tracking-wider">URL do Vídeo (YouTube / Vimeo)</label>
-                <Input placeholder="https://youtube.com/watch?v=..." className="h-14 rounded-xl" />
-              </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="space-y-2"><label className="text-sm font-bold text-navy uppercase tracking-wider">Instagram</label><Input placeholder="@seuusuario" className="h-14 rounded-xl" /></div>
-                <div className="space-y-2"><label className="text-sm font-bold text-navy uppercase tracking-wider">Facebook</label><Input placeholder="fb.com/suapagina" className="h-14 rounded-xl" /></div>
+                <div className="space-y-2">
+                  <label className="text-sm font-bold text-navy uppercase tracking-wider">Instagram</label>
+                  <Input 
+                    placeholder="@seuusuario" 
+                    className="h-14 rounded-xl" 
+                    value={formData.instagram}
+                    onChange={(e) => setFormData((prev: any) => ({ ...prev, instagram: e.target.value }))}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-sm font-bold text-navy uppercase tracking-wider">WhatsApp</label>
+                  <Input 
+                    placeholder="(00) 00000-0000" 
+                    className="h-14 rounded-xl" 
+                    value={formData.whatsapp}
+                    onChange={(e) => setFormData((prev: any) => ({ ...prev, whatsapp: e.target.value }))}
+                  />
+                </div>
               </div>
               <div className="space-y-2">
-                <label className="text-sm font-bold text-navy uppercase tracking-wider">Tags (separadas por vírgula)</label>
-                <Input placeholder="Viagem, Conferência, Terra Santa" className="h-14 rounded-xl" />
+                <label className="text-sm font-bold text-navy uppercase tracking-wider">Site / Link externo</label>
+                <Input 
+                  placeholder="https://seusite.com" 
+                  className="h-14 rounded-xl" 
+                  value={formData.site}
+                  onChange={(e) => setFormData((prev: any) => ({ ...prev, site: e.target.value }))}
+                />
               </div>
-              <div className="p-6 rounded-2xl bg-surface border border-line space-y-4">
-                <h4 className="font-bold text-navy">Configurações de SEO</h4>
-                <div className="space-y-2">
-                  <label className="text-xs font-bold text-muted uppercase">Título da página</label>
-                  <Input className="bg-white" />
-                </div>
-                <div className="space-y-2">
-                  <label className="text-xs font-bold text-muted uppercase">Descrição para buscadores</label>
-                  <Textarea className="bg-white" />
-                </div>
+              
+              <div className="flex items-center gap-3 p-6 rounded-2xl bg-gold/5 border border-gold/10">
+                <Checkbox 
+                  id="featured" 
+                  checked={formData.featured}
+                  onCheckedChange={(checked) => setFormData((prev: any) => ({ ...prev, featured: !!checked }))}
+                />
+                <label htmlFor="featured" className="text-sm font-bold text-navy cursor-pointer">
+                  Destacar este evento no marketplace (Exige aprovação)
+                </label>
               </div>
             </div>
           </div>
@@ -292,10 +471,16 @@ function CriarEventoWizard() {
                   <ImageIcon className="w-8 h-8" />
                 </div>
                 <div className="space-y-1">
-                  <h3 className="text-xl font-bold text-navy">Título do seu evento aparecerá aqui</h3>
+                  <h3 className="text-xl font-bold text-navy">{formData.title || "Título do seu evento aparecerá aqui"}</h3>
                   <div className="flex items-center gap-4 text-sm text-muted font-medium">
-                    <span className="flex items-center gap-1"><Calendar className="w-4 h-4" /> 20 Dez, 2026</span>
-                    <span className="flex items-center gap-1"><MapPin className="w-4 h-4" /> Jerusalém, Israel</span>
+                    <span className="flex items-center gap-1">
+                      <Calendar className="w-4 h-4" /> 
+                      {formData.start_date ? new Date(formData.start_date).toLocaleDateString() : "Data não definida"}
+                    </span>
+                    <span className="flex items-center gap-1">
+                      <MapPin className="w-4 h-4" /> 
+                      {formData.city || "Localização não definida"}
+                    </span>
                   </div>
                 </div>
               </div>
@@ -303,25 +488,27 @@ function CriarEventoWizard() {
               <div className="grid grid-cols-3 gap-6">
                 <div className="p-4 bg-white rounded-xl border border-line text-center">
                   <p className="text-[10px] font-extrabold text-muted uppercase tracking-widest mb-1">Status</p>
-                  <Badge variant="outline" className="text-gold border-gold/30 bg-gold/5">Rascunho</Badge>
+                  <Badge variant="outline" className="text-gold border-gold/30 bg-gold/5">{formData.status}</Badge>
                 </div>
                 <div className="p-4 bg-white rounded-xl border border-line text-center">
                   <p className="text-[10px] font-extrabold text-muted uppercase tracking-widest mb-1">Visibilidade</p>
                   <p className="font-bold text-navy">Público</p>
                 </div>
                 <div className="p-4 bg-white rounded-xl border border-line text-center">
-                  <p className="text-[10px] font-extrabold text-muted uppercase tracking-widest mb-1">Taxas</p>
-                  <p className="font-bold text-navy">Por conta do comprador</p>
+                  <p className="text-[10px] font-extrabold text-muted uppercase tracking-widest mb-1">Total de Lotes</p>
+                  <p className="font-bold text-navy">{tickets.length}</p>
                 </div>
               </div>
 
               <div className="space-y-4">
                 <h4 className="font-bold text-navy border-b border-line pb-2">Ingressos configurados</h4>
                 <div className="space-y-2">
-                  <div className="flex justify-between items-center p-3 bg-white rounded-lg border border-line">
-                    <span className="font-medium text-navy text-sm">Pacote Premium Individual</span>
-                    <span className="font-bold text-gold">US$ 4.500,00</span>
-                  </div>
+                  {tickets.map(t => (
+                    <div key={t.id} className="flex justify-between items-center p-3 bg-white rounded-lg border border-line">
+                      <span className="font-medium text-navy text-sm">{t.name}</span>
+                      <span className="font-bold text-gold">US$ {t.price.toFixed(2)}</span>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
