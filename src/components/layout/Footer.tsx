@@ -12,7 +12,7 @@ export function Footer() {
             <div className="w-10 h-10 flex items-center justify-center transition-transform group-hover:scale-105">
               <img src={logoAsset.url} alt="Zevva" className="w-full h-full object-contain" />
             </div>
-            <span className="text-lg font-['Montserrat'] font-light text-coral tracking-tighter">
+            <span className="text-lg font-['Montserrat'] font-medium text-coral tracking-tighter">
               ZEVVA <span className="text-navy font-['Montserrat']">TICKETS</span>
             </span>
           </Link>
