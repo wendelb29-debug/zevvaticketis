@@ -68,7 +68,11 @@ export function AuthModal({ isOpen, onClose, defaultView = 'login' }: AuthModalP
       toast.success('Login realizado com sucesso!');
       onClose();
     } catch (error: any) {
-      toast.error(error.message || 'Erro ao fazer login');
+      if (error.message?.includes('Email not confirmed')) {
+        toast.error('E-mail ainda não confirmado. Verifique sua caixa de entrada ou spam.');
+      } else {
+        toast.error(error.message || 'Erro ao fazer login');
+      }
     } finally {
       setLoading(false);
     }
@@ -224,9 +228,29 @@ export function AuthModal({ isOpen, onClose, defaultView = 'login' }: AuthModalP
                   <Button disabled={loading} className="w-full h-14 rounded-[16px] bg-coral hover:bg-coral-dark font-extrabold text-white shadow-lg shadow-coral/20">
                     {loading ? "Entrando..." : "Entrar"}
                   </Button>
-                  <button type="button" onClick={() => setShowEmailFields(false)} className="w-full text-center text-xs font-bold text-muted hover:text-navy py-1">
-                    Voltar para opções sociais
-                  </button>
+                  <div className="flex flex-col gap-2 pt-1">
+                    <button type="button" onClick={() => setShowEmailFields(false)} className="w-full text-center text-[10px] font-bold text-muted hover:text-navy">
+                      Voltar para opções sociais
+                    </button>
+                    <button 
+                      type="button" 
+                      onClick={async () => {
+                        if (!formData.email) {
+                          toast.error("Digite seu e-mail para reenviar o código.");
+                          return;
+                        }
+                        const { error } = await supabase.auth.resend({
+                          type: 'signup',
+                          email: formData.email,
+                        });
+                        if (error) toast.error(error.message);
+                        else toast.success("E-mail de confirmação reenviado!");
+                      }} 
+                      className="w-full text-center text-[10px] font-bold text-coral hover:text-coral-dark"
+                    >
+                      Não chegou o e-mail? Clique aqui para reenviar
+                    </button>
+                  </div>
                 </form>
               )}
             </div>
