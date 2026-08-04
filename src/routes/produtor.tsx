@@ -237,41 +237,13 @@ function ProdutorLayout() {
               <span className="absolute top-2 right-2 w-2 h-2 bg-gold rounded-full border-2 border-white"></span>
             </button>
 
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <button className="flex items-center gap-3 hover:opacity-80 transition-opacity">
-                  <div className="text-right hidden sm:block">
-                    <p className="text-sm font-bold text-navy truncate max-w-[150px]">
-                      {user?.user_metadata?.nome || user?.email}
-                    </p>
-                    <p className="text-[10px] font-bold text-muted uppercase tracking-wider">Produtor</p>
-                  </div>
-                  <Avatar className="w-10 h-10 border-2 border-surface shadow-sm">
-                    <AvatarImage src={user?.user_metadata?.avatar_url} />
-                    <AvatarFallback className="bg-gold text-white font-bold">
-                      {(user?.user_metadata?.nome || user?.email || 'U').charAt(0).toUpperCase()}
-                    </AvatarFallback>
-                  </Avatar>
-                </button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-56 p-2 rounded-xl">
-                <DropdownMenuLabel className="font-bold px-3 py-2">Minha Conta</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem className="rounded-lg font-medium px-3 py-2 cursor-pointer" onClick={() => navigate({to: '/produtor/dados'})}>
-                  Meus dados
-                </DropdownMenuItem>
-                <DropdownMenuItem className="rounded-lg font-medium px-3 py-2 cursor-pointer" onClick={() => navigate({to: '/produtor/ajuda'})}>
-                  Ajuda
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem 
-                  className="rounded-lg font-bold px-3 py-2 text-destructive focus:text-destructive cursor-pointer"
-                  onClick={handleLogout}
-                >
-                  Sair
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+            {user && (
+              <UserMenu 
+                user={user}
+                onLogout={handleLogout}
+                onNavigate={(path) => navigate({ to: path as any })}
+              />
+            )}
           </div>
         </header>
 
