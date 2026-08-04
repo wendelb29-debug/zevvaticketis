@@ -36,16 +36,46 @@ function AppLayout() {
     <div className="min-h-screen bg-bg text-navy font-sans">
       <header className="bg-white border-b border-line h-16 flex items-center px-6 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto w-full flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <button 
-              onClick={() => window.history.back()}
-              className="p-2 hover:bg-surface rounded-full transition-colors text-muted hover:text-navy lg:hidden"
-            >
-              <ArrowLeft className="w-5 h-5" />
-            </button>
-            <div className="text-xl font-heading font-extrabold text-gold tracking-tighter">
-              ZEVVA <span className="text-navy">APP</span>
+          <div className="flex items-center gap-8">
+            <div className="flex items-center gap-4">
+              <button 
+                onClick={() => window.history.back()}
+                className="p-2 hover:bg-surface rounded-full transition-colors text-muted hover:text-navy lg:hidden"
+              >
+                <ArrowLeft className="w-5 h-5" />
+              </button>
+              <Link to="/" className="text-xl font-heading font-extrabold text-gold tracking-tighter">
+                ZEVVA <span className="text-navy">APP</span>
+              </Link>
             </div>
+
+            <nav className="hidden md:flex items-center gap-1">
+              <Link 
+                to="/app" 
+                activeOptions={{ exact: true }}
+                className="px-4 py-2 rounded-full text-sm font-bold transition-all"
+                activeProps={{ className: "bg-gold/10 text-gold" }}
+                inactiveProps={{ className: "text-muted hover:text-navy" }}
+              >
+                Meus Ingressos
+              </Link>
+              <Link 
+                to="/app/perfil" 
+                className="px-4 py-2 rounded-full text-sm font-bold transition-all"
+                activeProps={{ className: "bg-gold/10 text-gold" }}
+                inactiveProps={{ className: "text-muted hover:text-navy" }}
+              >
+                Meu Perfil
+              </Link>
+              <Link 
+                to="/app/historico" 
+                className="px-4 py-2 rounded-full text-sm font-bold transition-all"
+                activeProps={{ className: "bg-gold/10 text-gold" }}
+                inactiveProps={{ className: "text-muted hover:text-navy" }}
+              >
+                Histórico
+              </Link>
+            </nav>
           </div>
           <nav className="flex items-center gap-6">
             {user && (
