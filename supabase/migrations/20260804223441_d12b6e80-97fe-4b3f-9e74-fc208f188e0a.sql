@@ -1,0 +1,5 @@
+UPDATE public.events SET title = 'Conferência Águas Vivas 2026', category = 'Conferências', min_price = 450, location = 'Orlando, EUA', start_date = '2026-05-15' WHERE id = 'a2cdab9d-a1fa-4fde-ad58-8665f76ae189';
+UPDATE public.events SET title = 'Caravana Terra Santa: Passos de Jesus', category = 'Caravanas', min_price = 2800, location = 'Jerusalém, Israel', start_date = '2026-10-10' WHERE id = '061148c8-7221-4b1c-b0d0-672e84442156';
+UPDATE public.events SET title = 'Retiro Monte Sinai', category = 'Retiros', min_price = 1200, location = 'Península do Sinai, Egito', start_date = '2026-07-20' WHERE id = 'a5cf81dc-574c-4bcd-ba4a-2d179ffb4198';
+UPDATE public.events SET title = 'Encontro de Líderes Vinha', category = 'Missões', min_price = 320, location = 'Lisboa, Portugal', start_date = '2026-03-05' WHERE id = '34d21246-c062-433c-b30a-62f6688bedbb';
+UPDATE public.events SET title = 'Grand Tour 2026: Europa Medieval', category = 'Caravanas', min_price = 3500, location = 'Praga, República Tcheca', start_date = '2026-06-12' WHERE id = '6a421500-5a3d-4915-9950-9ebe96dbd5c7';
