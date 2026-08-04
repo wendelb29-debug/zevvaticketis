@@ -13,7 +13,7 @@ Cole **uma wave por vez**, nessa ordem. Espere a wave terminar de construir, tes
 ## Wave 0 — Setup inicial
 
 ```
-Quero criar o projeto Zevva Tickets, uma plataforma marketplace de eventos internacionais.
+Quero criar o projeto Zevva Tickets, uma plataforma marketplace de eventos internacionais focada em caravanas e igrejas.
 
 1. Conecte este projeto a um projeto Supabase externo (não use o Lovable Cloud padrão) — vou fornecer a URL e a chave do meu projeto Supabase.
 
