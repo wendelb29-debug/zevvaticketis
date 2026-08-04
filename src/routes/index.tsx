@@ -4,9 +4,10 @@ import { AuthModal } from "@/components/auth/AuthModal";
 import { UserMenu } from "@/components/auth/UserMenu";
 import { LocationModal } from "@/components/ui/LocationModal";
 import { supabase } from "@/integrations/supabase/client";
-import { MapPin, LogIn } from "lucide-react";
+import { MapPin, LogIn, Calendar, MapPin as MapPinIcon, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { getThemeByCategory } from "@/lib/categoryThemes";
 
 export const Route = createFileRoute("/")({
   validateSearch: (search: Record<string, unknown>) => {
