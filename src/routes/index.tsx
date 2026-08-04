@@ -8,6 +8,31 @@ export const Route = createFileRoute("/")({
 });
 
 function Index() {
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const navigate = useNavigate();
+
+  const handleAuthClick = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    const { data: { session } } = await supabase.auth.getSession();
+    
+    if (session) {
+      // User is already logged in, redirect based on role
+      const { data: member } = await supabase
+        .from("organization_members")
+        .select("role")
+        .eq("user_id", session.user.id)
+        .single();
+      
+      if (member) {
+        navigate({ to: "/produtor" });
+      } else {
+        navigate({ to: "/app" });
+      }
+    } else {
+      setIsAuthModalOpen(true);
+    }
+  };
+
   const categories = [
     { name: "Conferências", icon: "✨" },
     { name: "Shows Gospel", icon: "🎸" },
