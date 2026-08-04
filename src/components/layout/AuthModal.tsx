@@ -68,7 +68,11 @@ export function AuthModal({ isOpen, onClose, defaultView = 'login' }: AuthModalP
       toast.success('Login realizado com sucesso!');
       onClose();
     } catch (error: any) {
-      toast.error(error.message || 'Erro ao fazer login');
+      if (error.message?.includes('Email not confirmed')) {
+        toast.error('E-mail ainda não confirmado. Verifique sua caixa de entrada ou spam.');
+      } else {
+        toast.error(error.message || 'Erro ao fazer login');
+      }
     } finally {
       setLoading(false);
     }
