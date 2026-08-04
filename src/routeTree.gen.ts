@@ -17,6 +17,7 @@ import { Route as CheckinRouteImport } from './routes/checkin'
 import { Route as EventosRouteImport } from './routes/eventos'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as ProdutorRouteImport } from './routes/produtor'
+import { Route as ProdutorIndexRouteImport } from './routes/produtor/index'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -58,6 +59,11 @@ const ProdutorRoute = ProdutorRouteImport.update({
   path: '/produtor',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ProdutorIndexRoute = ProdutorIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => ProdutorRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -67,7 +73,8 @@ export interface FileRoutesByFullPath {
   '/checkin': typeof CheckinRoute
   '/eventos': typeof EventosRoute
   '/login': typeof LoginRoute
-  '/produtor': typeof ProdutorRoute
+  '/produtor': typeof ProdutorRouteWithChildren
+  '/produtor/': typeof ProdutorIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -77,7 +84,7 @@ export interface FileRoutesByTo {
   '/checkin': typeof CheckinRoute
   '/eventos': typeof EventosRoute
   '/login': typeof LoginRoute
-  '/produtor': typeof ProdutorRoute
+  '/produtor': typeof ProdutorIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -88,7 +95,8 @@ export interface FileRoutesById {
   '/checkin': typeof CheckinRoute
   '/eventos': typeof EventosRoute
   '/login': typeof LoginRoute
-  '/produtor': typeof ProdutorRoute
+  '/produtor': typeof ProdutorRouteWithChildren
+  '/produtor/': typeof ProdutorIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -101,6 +109,7 @@ export interface FileRouteTypes {
     | '/eventos'
     | '/login'
     | '/produtor'
+    | '/produtor/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -121,6 +130,7 @@ export interface FileRouteTypes {
     | '/eventos'
     | '/login'
     | '/produtor'
+    | '/produtor/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -131,7 +141,7 @@ export interface RootRouteChildren {
   CheckinRoute: typeof CheckinRoute
   EventosRoute: typeof EventosRoute
   LoginRoute: typeof LoginRoute
-  ProdutorRoute: typeof ProdutorRoute
+  ProdutorRoute: typeof ProdutorRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
@@ -192,8 +202,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProdutorRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/produtor/': {
+      id: '/produtor/'
+      path: '/'
+      fullPath: '/produtor/'
+      preLoaderRoute: typeof ProdutorIndexRouteImport
+      parentRoute: typeof ProdutorRoute
+    }
   }
 }
+
+interface ProdutorRouteChildren {
+  ProdutorIndexRoute: typeof ProdutorIndexRoute
+}
+
+const ProdutorRouteChildren: ProdutorRouteChildren = {
+  ProdutorIndexRoute: ProdutorIndexRoute,
+}
+
+const ProdutorRouteWithChildren = ProdutorRoute._addFileChildren(
+  ProdutorRouteChildren,
+)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
@@ -203,7 +232,7 @@ const rootRouteChildren: RootRouteChildren = {
   CheckinRoute: CheckinRoute,
   EventosRoute: EventosRoute,
   LoginRoute: LoginRoute,
-  ProdutorRoute: ProdutorRoute,
+  ProdutorRoute: ProdutorRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
