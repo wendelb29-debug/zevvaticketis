@@ -120,10 +120,11 @@ export function AuthModal({ isOpen, onClose, defaultView = 'login' }: AuthModalP
         toast.success('Cadastro enviado para aprovação!');
         navigate({ to: '/produtor-pendente' });
       } else {
-        toast.success('Conta criada com sucesso!');
-        navigate({ to: '/app' });
+        toast.success('Conta criada com sucesso! Verifique seu e-mail para confirmar o cadastro.');
+        setView('login');
+        setShowEmailFields(true);
       }
-      onClose();
+      // onClose(); // Do not close yet so they can see the message
     } catch (error: any) {
       toast.error(error.message || 'Erro ao realizar cadastro');
     } finally {
