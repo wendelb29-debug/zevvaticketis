@@ -22,7 +22,11 @@ import { Route as ProdutorRouteImport } from './routes/produtor'
 import { Route as ProdutorPendenteRouteImport } from './routes/produtor-pendente'
 import { Route as Char91DotmcpChar93ListToolsRouteImport } from './routes/[.mcp]/list-tools'
 import { Route as Char91DotwellKnownChar93OauthProtectedResourceRouteImport } from './routes/[.well-known]/oauth-protected-resource'
+import { Route as AdminAprovacoesRouteImport } from './routes/admin/aprovacoes'
 import { Route as AdminConfiguracoesRouteImport } from './routes/admin/configuracoes'
+import { Route as AdminPaisesMoedasRouteImport } from './routes/admin/paises-moedas'
+import { Route as AdminPlanosRouteImport } from './routes/admin/planos'
+import { Route as AdminProdutoresRouteImport } from './routes/admin/produtores'
 import { Route as AppIndexRouteImport } from './routes/app/index'
 import { Route as AppHistoricoRouteImport } from './routes/app/historico'
 import { Route as AppPerfilRouteImport } from './routes/app/perfil'
@@ -103,9 +107,29 @@ const Char91DotwellKnownChar93OauthProtectedResourceRoute =
     path: '/.well-known/oauth-protected-resource',
     getParentRoute: () => rootRouteImport,
   } as any)
+const AdminAprovacoesRoute = AdminAprovacoesRouteImport.update({
+  id: '/aprovacoes',
+  path: '/aprovacoes',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminConfiguracoesRoute = AdminConfiguracoesRouteImport.update({
   id: '/configuracoes',
   path: '/configuracoes',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminPaisesMoedasRoute = AdminPaisesMoedasRouteImport.update({
+  id: '/paises-moedas',
+  path: '/paises-moedas',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminPlanosRoute = AdminPlanosRouteImport.update({
+  id: '/planos',
+  path: '/planos',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminProdutoresRoute = AdminProdutoresRouteImport.update({
+  id: '/produtores',
+  path: '/produtores',
   getParentRoute: () => AdminRoute,
 } as any)
 const AppIndexRoute = AppIndexRouteImport.update({
@@ -184,7 +208,11 @@ export interface FileRoutesByFullPath {
   '/produtor-pendente': typeof ProdutorPendenteRoute
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
+  '/admin/aprovacoes': typeof AdminAprovacoesRoute
   '/admin/configuracoes': typeof AdminConfiguracoesRoute
+  '/admin/paises-moedas': typeof AdminPaisesMoedasRoute
+  '/admin/planos': typeof AdminPlanosRoute
+  '/admin/produtores': typeof AdminProdutoresRoute
   '/app/historico': typeof AppHistoricoRoute
   '/app/perfil': typeof AppPerfilRoute
   '/auth/callback': typeof AuthCallbackRoute
@@ -210,7 +238,11 @@ export interface FileRoutesByTo {
   '/produtor-pendente': typeof ProdutorPendenteRoute
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
+  '/admin/aprovacoes': typeof AdminAprovacoesRoute
   '/admin/configuracoes': typeof AdminConfiguracoesRoute
+  '/admin/paises-moedas': typeof AdminPaisesMoedasRoute
+  '/admin/planos': typeof AdminPlanosRoute
+  '/admin/produtores': typeof AdminProdutoresRoute
   '/app/historico': typeof AppHistoricoRoute
   '/app/perfil': typeof AppPerfilRoute
   '/auth/callback': typeof AuthCallbackRoute
@@ -239,7 +271,11 @@ export interface FileRoutesById {
   '/produtor-pendente': typeof ProdutorPendenteRoute
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
+  '/admin/aprovacoes': typeof AdminAprovacoesRoute
   '/admin/configuracoes': typeof AdminConfiguracoesRoute
+  '/admin/paises-moedas': typeof AdminPaisesMoedasRoute
+  '/admin/planos': typeof AdminPlanosRoute
+  '/admin/produtores': typeof AdminProdutoresRoute
   '/app/historico': typeof AppHistoricoRoute
   '/app/perfil': typeof AppPerfilRoute
   '/auth/callback': typeof AuthCallbackRoute
@@ -269,7 +305,11 @@ export interface FileRouteTypes {
     | '/produtor-pendente'
     | '/.mcp/list-tools'
     | '/.well-known/oauth-protected-resource'
+    | '/admin/aprovacoes'
     | '/admin/configuracoes'
+    | '/admin/paises-moedas'
+    | '/admin/planos'
+    | '/admin/produtores'
     | '/app/historico'
     | '/app/perfil'
     | '/auth/callback'
@@ -295,7 +335,11 @@ export interface FileRouteTypes {
     | '/produtor-pendente'
     | '/.mcp/list-tools'
     | '/.well-known/oauth-protected-resource'
+    | '/admin/aprovacoes'
     | '/admin/configuracoes'
+    | '/admin/paises-moedas'
+    | '/admin/planos'
+    | '/admin/produtores'
     | '/app/historico'
     | '/app/perfil'
     | '/auth/callback'
@@ -323,7 +367,11 @@ export interface FileRouteTypes {
     | '/produtor-pendente'
     | '/.mcp/list-tools'
     | '/.well-known/oauth-protected-resource'
+    | '/admin/aprovacoes'
     | '/admin/configuracoes'
+    | '/admin/paises-moedas'
+    | '/admin/planos'
+    | '/admin/produtores'
     | '/app/historico'
     | '/app/perfil'
     | '/auth/callback'
@@ -450,11 +498,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof Char91DotwellKnownChar93OauthProtectedResourceRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/aprovacoes': {
+      id: '/admin/aprovacoes'
+      path: '/aprovacoes'
+      fullPath: '/admin/aprovacoes'
+      preLoaderRoute: typeof AdminAprovacoesRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/configuracoes': {
       id: '/admin/configuracoes'
       path: '/configuracoes'
       fullPath: '/admin/configuracoes'
       preLoaderRoute: typeof AdminConfiguracoesRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/paises-moedas': {
+      id: '/admin/paises-moedas'
+      path: '/paises-moedas'
+      fullPath: '/admin/paises-moedas'
+      preLoaderRoute: typeof AdminPaisesMoedasRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/planos': {
+      id: '/admin/planos'
+      path: '/planos'
+      fullPath: '/admin/planos'
+      preLoaderRoute: typeof AdminPlanosRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/produtores': {
+      id: '/admin/produtores'
+      path: '/produtores'
+      fullPath: '/admin/produtores'
+      preLoaderRoute: typeof AdminProdutoresRouteImport
       parentRoute: typeof AdminRoute
     }
     '/app/': {
@@ -545,11 +621,19 @@ declare module '@tanstack/react-router' {
 }
 
 interface AdminRouteChildren {
+  AdminAprovacoesRoute: typeof AdminAprovacoesRoute
   AdminConfiguracoesRoute: typeof AdminConfiguracoesRoute
+  AdminPaisesMoedasRoute: typeof AdminPaisesMoedasRoute
+  AdminPlanosRoute: typeof AdminPlanosRoute
+  AdminProdutoresRoute: typeof AdminProdutoresRoute
 }
 
 const AdminRouteChildren: AdminRouteChildren = {
+  AdminAprovacoesRoute: AdminAprovacoesRoute,
   AdminConfiguracoesRoute: AdminConfiguracoesRoute,
+  AdminPaisesMoedasRoute: AdminPaisesMoedasRoute,
+  AdminPlanosRoute: AdminPlanosRoute,
+  AdminProdutoresRoute: AdminProdutoresRoute,
 }
 
 const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
