@@ -35,27 +35,68 @@ function Index() {
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
       setUser(session?.user ?? null);
+      if (session?.user) fetchFavorites(session.user.id);
     });
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       setUser(session?.user ?? null);
+      if (session?.user) fetchFavorites(session.user.id);
+      else setFavorites([]);
     });
 
     return () => subscription.unsubscribe();
   }, []);
 
+  async function fetchFavorites(userId: string) {
+    const { data } = await supabase.from("event_favorites").select("event_id").eq("user_id", userId);
+    if (data) setFavorites(data.map(f => f.event_id));
+  }
+
+  const toggleFavorite = async (eventId: string) => {
+    if (!user) {
+      setIsAuthModalOpen(true);
+      return;
+    }
+
+    if (favorites.includes(eventId)) {
+      await supabase.from("event_favorites").delete().eq("user_id", user.id).eq("event_id", eventId);
+      setFavorites(prev => prev.filter(id => id !== eventId));
+    } else {
+      await supabase.from("event_favorites").insert({ user_id: user.id, event_id: eventId });
+      setFavorites(prev => [...prev, eventId]);
+    }
+  };
+
   useEffect(() => {
     async function fetchEvents() {
       setLoadingEvents(true);
-      let query = supabase.from("events").select("*").eq("status", "publicado");
       
-      if (selectedCity) {
-        query = query.ilike("city", `%${selectedCity}%`);
+      // Fetch Featured Events
+      const { data: featuredData } = await supabase
+        .from("events")
+        .select("*")
+        .eq("status", "publicado")
+        .eq("destaque", true)
+        .limit(5);
+
+      if (featuredData) {
+        setFeaturedEvents(featuredData.map((e: any) => ({
+          id: e.id,
+          title: e.title,
+          city: e.city || 'Cidade',
+          state: e.country_id || 'Estado',
+          date: e.start_date ? new Date(e.start_date).toLocaleDateString('pt-BR', { day: '2-digit', month: 'short' }) : 'Em breve',
+          price: `US$ ${e.min_price || '0'}`,
+          image: "https://images.unsplash.com/photo-1544971587-b842c27f8e14?auto=format&fit=crop&q=80&w=800"
+        })));
       }
+
+      // Fetch Normal Events
+      let query = supabase.from("events").select("*").eq("status", "publicado");
+      if (selectedCity) query = query.ilike("city", `%${selectedCity}%`);
       
-      const { data, error } = await query.limit(4);
+      const { data, error } = await query.limit(8);
       if (data) {
-        // Map database fields to UI component fields
         const formatted = data.map((event: any) => ({
           id: event.id,
           title: event.title,
@@ -68,8 +109,6 @@ function Index() {
           categoria: event.categoria
         }));
         setFilteredEvents(formatted);
-      } else if (error) {
-        console.error("Error fetching events:", error);
       }
       setLoadingEvents(false);
     }
