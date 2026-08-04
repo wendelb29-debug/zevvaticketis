@@ -3,6 +3,8 @@
 @theme {
   --font-fredoka: "Fredoka", sans-serif;
   --font-baloo: "Baloo 2", sans-serif;
+  --font-manrope: "Manrope", sans-serif;
+  --font-inter: "Inter", sans-serif;
 
   --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
   
@@ -31,11 +33,11 @@
 
 @layer base {
   body {
-    @apply font-sans;
+    @apply font-inter;
   }
   
   h1, h2, h3, h4, h5, h6 {
-    @apply font-heading;
+    @apply font-manrope;
   }
 }
 
