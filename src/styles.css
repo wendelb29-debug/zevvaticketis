@@ -83,10 +83,10 @@
   --popover-foreground: var(--navy);
   --primary: var(--gold);
   --primary-foreground: #FFFFFF;
-  --secondary: var(--muted);
+  --secondary: #4B5563;
   --secondary-foreground: var(--navy);
   --muted: var(--surface-2);
-  --muted-foreground: var(--muted);
+  --muted-foreground: #6B7280;
   --accent: var(--gold-bright);
   --accent-foreground: #FFFFFF;
   --destructive: #E2685A;
