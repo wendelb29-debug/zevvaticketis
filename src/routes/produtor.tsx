@@ -31,9 +31,31 @@ export const Route = createFileRoute("/produtor")({
   beforeLoad: async () => {
     const { data: { session } } = await supabase.auth.getSession();
     if (!session) {
-      throw redirect({
-        to: "/", // Redirecting to home so they can use the auth modal
-      });
+      throw redirect({ to: "/" });
+    }
+
+    const { data: member } = await supabase
+      .from("organization_members")
+      .select("organization_id")
+      .eq("user_id", session.user.id)
+      .maybeSingle();
+
+    if (!member) {
+      throw redirect({ to: "/app" });
+    }
+
+    const { data: org } = await supabase
+      .from("organizations")
+      .select("status")
+      .eq("id", member.organization_id)
+      .maybeSingle();
+
+    if (org?.status === "pendente") {
+      throw redirect({ to: "/produtor-pendente" });
+    }
+
+    if (org?.status === "bloqueado") {
+      // Keep it here to show the blocked UI or redirect to a blocked page
     }
   },
   component: ProdutorLayout,
