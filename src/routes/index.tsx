@@ -4,6 +4,7 @@ import { AuthModal } from "@/components/auth/AuthModal";
 import { LocationModal } from "@/components/ui/LocationModal";
 import { supabase } from "@/integrations/supabase/client";
 import { MapPin } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/")({
@@ -35,15 +36,15 @@ function Index() {
       }
       
       const { data, error } = await query.limit(4);
-      if (!error && data) {
+      if (data) {
         // Map database fields to UI component fields
-        const formatted = data.map(event => ({
+        const formatted = data.map((event: any) => ({
           id: event.id,
           title: event.title,
           location: `${event.city || ''}, ${event.country_id || ''}`,
           cityKey: event.city?.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""),
-          date: new Date(event.start_date).toLocaleDateString('pt-BR', { month: 'long', year: 'numeric' }),
-          price: `US$ ${event.price || '0'}`,
+          date: event.start_date ? new Date(event.start_date).toLocaleDateString('pt-BR', { month: 'long', year: 'numeric' }) : 'Data a definir',
+          price: `US$ ${event.min_price || '0'}`,
           image: "https://images.unsplash.com/photo-1544971587-b842c27f8e14?auto=format&fit=crop&q=80&w=800",
           lote: "Lote 1"
         }));
