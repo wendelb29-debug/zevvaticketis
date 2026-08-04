@@ -1,6 +1,7 @@
 import { createFileRoute, Outlet, redirect, useNavigate, Link } from "@tanstack/react-router";
 import { supabase } from "@/integrations/supabase/client";
 import { useEffect, useState } from "react";
+import { UserMenu } from "@/components/auth/UserMenu";
 import { 
   LayoutDashboard, 
   User as UserIcon, 
@@ -31,9 +32,31 @@ export const Route = createFileRoute("/produtor")({
   beforeLoad: async () => {
     const { data: { session } } = await supabase.auth.getSession();
     if (!session) {
-      throw redirect({
-        to: "/", // Redirecting to home so they can use the auth modal
-      });
+      throw redirect({ to: "/" });
+    }
+
+    const { data: member } = await supabase
+      .from("organization_members")
+      .select("organization_id")
+      .eq("user_id", session.user.id)
+      .maybeSingle();
+
+    if (!member) {
+      throw redirect({ to: "/app" });
+    }
+
+    const { data: org } = await supabase
+      .from("organizations")
+      .select("status")
+      .eq("id", member.organization_id)
+      .maybeSingle();
+
+    if (org?.status === "pendente") {
+      throw redirect({ to: "/produtor-pendente" });
+    }
+
+    if (org?.status === "bloqueado") {
+      // Keep it here to show the blocked UI or redirect to a blocked page
     }
   },
   component: ProdutorLayout,
@@ -214,41 +237,13 @@ function ProdutorLayout() {
               <span className="absolute top-2 right-2 w-2 h-2 bg-gold rounded-full border-2 border-white"></span>
             </button>
 
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <button className="flex items-center gap-3 hover:opacity-80 transition-opacity">
-                  <div className="text-right hidden sm:block">
-                    <p className="text-sm font-bold text-navy truncate max-w-[150px]">
-                      {user?.user_metadata?.nome || user?.email}
-                    </p>
-                    <p className="text-[10px] font-bold text-muted uppercase tracking-wider">Produtor</p>
-                  </div>
-                  <Avatar className="w-10 h-10 border-2 border-surface shadow-sm">
-                    <AvatarImage src={user?.user_metadata?.avatar_url} />
-                    <AvatarFallback className="bg-gold text-white font-bold">
-                      {(user?.user_metadata?.nome || user?.email || 'U').charAt(0).toUpperCase()}
-                    </AvatarFallback>
-                  </Avatar>
-                </button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-56 p-2 rounded-xl">
-                <DropdownMenuLabel className="font-bold px-3 py-2">Minha Conta</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem className="rounded-lg font-medium px-3 py-2 cursor-pointer" onClick={() => navigate({to: '/produtor/dados'})}>
-                  Meus dados
-                </DropdownMenuItem>
-                <DropdownMenuItem className="rounded-lg font-medium px-3 py-2 cursor-pointer" onClick={() => navigate({to: '/produtor/ajuda'})}>
-                  Ajuda
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem 
-                  className="rounded-lg font-bold px-3 py-2 text-destructive focus:text-destructive cursor-pointer"
-                  onClick={handleLogout}
-                >
-                  Sair
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+            {user && (
+              <UserMenu 
+                user={user}
+                onLogout={handleLogout}
+                onNavigate={(path) => navigate({ to: path as any })}
+              />
+            )}
           </div>
         </header>
 

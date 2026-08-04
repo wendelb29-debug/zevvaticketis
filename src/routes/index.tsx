@@ -1,9 +1,10 @@
 import { createFileRoute, Link, useNavigate, useSearch } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
 import { AuthModal } from "@/components/auth/AuthModal";
+import { UserMenu } from "@/components/auth/UserMenu";
 import { LocationModal } from "@/components/ui/LocationModal";
 import { supabase } from "@/integrations/supabase/client";
-import { MapPin } from "lucide-react";
+import { MapPin, LogIn } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
@@ -22,9 +23,22 @@ function Index() {
   const [nearbyError, setNearbyError] = useState(false);
   const [filteredEvents, setFilteredEvents] = useState<any[]>([]);
   const [loadingEvents, setLoadingEvents] = useState(true);
+  const [user, setUser] = useState<any>(null);
   const navigate = useNavigate();
   const search = useSearch({ from: "/" }) as any;
   const selectedCity = search?.cidade;
+
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setUser(session?.user ?? null);
+    });
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
 
   useEffect(() => {
     async function fetchEvents() {
@@ -144,18 +158,28 @@ function Index() {
         </div>
 
         <div className="flex-1 flex justify-end items-center gap-3">
-          <button 
-            onClick={handleAuthClick}
-            className="text-sm font-bold text-navy hover:text-gold transition-colors px-4"
-          >
-            Entrar
-          </button>
-          <button 
-            onClick={handleAuthClick}
-            className="text-sm font-extrabold px-6 py-2.5 rounded-[11px] bg-[image:var(--grad-cta)] text-white hover:brightness-110 transition-all shadow-[0_8px_20px_-4px_rgba(201,154,62,0.4)] border border-gold/20 active:scale-[0.97]"
-          >
-            Inscrever-se
-          </button>
+          {user ? (
+            <UserMenu 
+              user={user} 
+              onLogout={() => supabase.auth.signOut()} 
+              onNavigate={(path) => navigate({ to: path as any })} 
+            />
+          ) : (
+            <>
+              <button 
+                onClick={handleAuthClick}
+                className="text-sm font-bold text-navy hover:text-gold transition-colors px-4"
+              >
+                Entrar
+              </button>
+              <button 
+                onClick={handleAuthClick}
+                className="text-sm font-extrabold px-6 py-2.5 rounded-[11px] bg-[image:var(--grad-cta)] text-white hover:brightness-110 transition-all shadow-[0_8px_20px_-4px_rgba(201,154,62,0.4)] border border-gold/20 active:scale-[0.97]"
+              >
+                Inscrever-se
+              </button>
+            </>
+          )}
         </div>
       </header>
 

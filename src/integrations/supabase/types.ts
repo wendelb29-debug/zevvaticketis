@@ -14,6 +14,38 @@ export type Database = {
   }
   public: {
     Tables: {
+      checkin_logs: {
+        Row: {
+          id: string
+          operator_id: string
+          resultado: string
+          scanned_at: string | null
+          ticket_id: string
+        }
+        Insert: {
+          id?: string
+          operator_id: string
+          resultado: string
+          scanned_at?: string | null
+          ticket_id: string
+        }
+        Update: {
+          id?: string
+          operator_id?: string
+          resultado?: string
+          scanned_at?: string | null
+          ticket_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "checkin_logs_ticket_id_fkey"
+            columns: ["ticket_id"]
+            isOneToOne: false
+            referencedRelation: "tickets"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       countries: {
         Row: {
           ativo: boolean | null
@@ -72,6 +104,8 @@ export type Database = {
           description: string | null
           end_date: string | null
           event_type: string | null
+          falta_automatica_ativa: boolean | null
+          falta_automatica_minutos: number | null
           id: string
           location: string | null
           min_price: number | null
@@ -89,6 +123,8 @@ export type Database = {
           description?: string | null
           end_date?: string | null
           event_type?: string | null
+          falta_automatica_ativa?: boolean | null
+          falta_automatica_minutos?: number | null
           id?: string
           location?: string | null
           min_price?: number | null
@@ -106,6 +142,8 @@ export type Database = {
           description?: string | null
           end_date?: string | null
           event_type?: string | null
+          falta_automatica_ativa?: boolean | null
+          falta_automatica_minutos?: number | null
           id?: string
           location?: string | null
           min_price?: number | null
@@ -266,37 +304,58 @@ export type Database = {
       }
       tickets: {
         Row: {
+          attendance_source: string | null
+          checked_in_at: string | null
           created_at: string | null
           description: string | null
           event_id: string
           id: string
           name: string
+          order_id: string | null
+          owner_id: string | null
           price: number
+          qr_code: string | null
           quantity: number
           sale_end: string | null
           sale_start: string | null
+          status: string | null
+          ticket_type_id: string | null
         }
         Insert: {
+          attendance_source?: string | null
+          checked_in_at?: string | null
           created_at?: string | null
           description?: string | null
           event_id: string
           id?: string
           name: string
+          order_id?: string | null
+          owner_id?: string | null
           price?: number
+          qr_code?: string | null
           quantity?: number
           sale_end?: string | null
           sale_start?: string | null
+          status?: string | null
+          ticket_type_id?: string | null
         }
         Update: {
+          attendance_source?: string | null
+          checked_in_at?: string | null
           created_at?: string | null
           description?: string | null
           event_id?: string
           id?: string
           name?: string
+          order_id?: string | null
+          owner_id?: string | null
           price?: number
+          qr_code?: string | null
           quantity?: number
           sale_end?: string | null
           sale_start?: string | null
+          status?: string | null
+          ticket_type_id?: string | null
         }
         Relationships: [
           {

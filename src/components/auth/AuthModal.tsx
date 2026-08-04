@@ -14,6 +14,8 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { useNavigate } from "@tanstack/react-router";
 import { Eye, EyeOff, Mail, ArrowLeft, Loader2 } from "lucide-react";
+import { getRedirectPath } from "@/lib/auth.functions";
+import { useServerFn } from "@tanstack/react-start";
 
 interface AuthModalProps {
   isOpen: boolean;
@@ -30,6 +32,7 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
   const [loading, setLoading] = useState(false);
   const [rememberMe, setRememberMe] = useState(true);
   const navigate = useNavigate();
+  const fetchRedirectPath = useServerFn(getRedirectPath);
 
   useEffect(() => {
     if (!isOpen) {
@@ -65,25 +68,8 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
 
       toast.success("Login realizado com sucesso.");
       
-      // Get user profile to determine redirect
-      const { data: profile } = await supabase
-        .from("profiles")
-        .select("*")
-        .eq("id", data.user.id)
-        .single();
-
-      // Also check organization membership for producer role
-      const { data: member } = await supabase
-        .from("organization_members")
-        .select("role")
-        .eq("user_id", data.user.id)
-        .single();
-
-      if (member) {
-        navigate({ to: "/produtor" });
-      } else {
-        navigate({ to: "/app" });
-      }
+      const path = await fetchRedirectPath();
+      navigate({ to: path as any });
       onClose();
     } catch (err: any) {
       toast.error("Ocorreu um erro inesperado.");

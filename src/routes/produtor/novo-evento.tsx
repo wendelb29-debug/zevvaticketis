@@ -1,5 +1,5 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { 
   ChevronLeft, 
   ChevronRight, 
@@ -10,7 +10,10 @@ import {
   DollarSign, 
   CheckCircle2,
   Trash2,
-  Plus
+  Plus,
+  Settings,
+  AlertTriangle,
+  Loader2
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -24,6 +27,8 @@ import {
 } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { cn } from "@/lib/utils";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
 
 export const Route = createFileRoute("/produtor/novo-evento")({
   component: NewEventWizard,
@@ -31,15 +36,109 @@ export const Route = createFileRoute("/produtor/novo-evento")({
 
 function NewEventWizard() {
   const [step, setStep] = useState(1);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  
+
+  // Form State
+  const [formData, setFormData] = useState({
+    title: "",
+    subtitle: "",
+    description: "",
+    category: "caravana",
+    event_type: "presencial",
+    location: "",
+    city: "",
+    country_id: "BR",
+    start_date: "",
+    end_date: "",
+    falta_automatica_ativa: false,
+    falta_automatica_minutos: 60,
+  });
+
+  const [tickets, setTickets] = useState([
+    { name: "Lote 1", price: 0, quantity: 100 }
+  ]);
+
+  // Load draft
+  useEffect(() => {
+    const draft = localStorage.getItem("event_draft");
+    if (draft) {
+      try {
+        const parsed = JSON.parse(draft);
+        setFormData(parsed.formData || formData);
+        setTickets(parsed.tickets || tickets);
+      } catch (e) {
+        console.error("Error loading draft", e);
+      }
+    }
+  }, []);
+
+  // Save draft
+  useEffect(() => {
+    localStorage.setItem("event_draft", JSON.stringify({ formData, tickets }));
+  }, [formData, tickets]);
+
   const steps = [
     { id: 1, title: "Básico", icon: Info },
     { id: 2, title: "Local e Data", icon: MapPin },
-    { id: 3, title: "Regional", icon: Globe },
-    { id: 4, title: "Mídia", icon: ImageIcon },
-    { id: 5, title: "Políticas", icon: CheckCircle2 },
+    { id: 3, title: "Ingressos", icon: DollarSign },
+    { id: 4, title: "Configurações", icon: Settings },
+    { id: 5, title: "Revisão", icon: CheckCircle2 },
   ];
+
+  const handlePublish = async () => {
+    setLoading(true);
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) throw new Error("Usuário não autenticado");
+
+      // 1. Create Event
+      const { data: event, error: eventError } = await supabase
+        .from("events")
+        .insert({
+          producer_id: user.id,
+          title: formData.title,
+          description: formData.description,
+          category: formData.category,
+          event_type: formData.event_type,
+          location: formData.location,
+          city: formData.city,
+          country_id: formData.country_id,
+          start_date: formData.start_date,
+          end_date: formData.end_date,
+          falta_automatica_ativa: formData.falta_automatica_ativa,
+          falta_automatica_minutos: formData.falta_automatica_minutos,
+          status: "publicado"
+        })
+        .select()
+        .single();
+
+      if (eventError) throw eventError;
+
+      // 2. Create Tickets
+      const ticketsToInsert = tickets.map(t => ({
+        event_id: event.id,
+        name: t.name,
+        price: t.price,
+        quantity: t.quantity
+      }));
+
+      const { error: ticketsError } = await supabase
+        .from("tickets")
+        .insert(ticketsToInsert);
+
+      if (ticketsError) throw ticketsError;
+
+      toast.success("Evento publicado com sucesso!");
+      localStorage.removeItem("event_draft");
+      navigate({ to: "/produtor" });
+    } catch (err: any) {
+      toast.error(`Erro ao publicar: ${err.message}`);
+    } finally {
+      setLoading(false);
+    }
+  };
+
 
   const nextStep = () => setStep((s) => Math.min(s + 1, 5));
   const prevStep = () => setStep((s) => Math.max(s - 1, 1));
@@ -94,20 +193,29 @@ function NewEventWizard() {
               <div className="grid gap-6">
                 <div className="space-y-2">
                   <label className="text-sm font-bold text-navy uppercase tracking-wider">Nome do Evento</label>
-                  <Input placeholder="Ex: Conferência Internacional de Fé 2024" className="h-14 rounded-xl border-line focus-visible:ring-gold" />
-                </div>
-                <div className="space-y-2">
-                  <label className="text-sm font-bold text-navy uppercase tracking-wider">Subtítulo (Opcional)</label>
-                  <Input placeholder="Um resumo curto do evento" className="h-14 rounded-xl border-line focus-visible:ring-gold" />
+                  <Input 
+                    placeholder="Ex: Conferência Internacional de Fé 2024" 
+                    className="h-14 rounded-xl border-line focus-visible:ring-gold" 
+                    value={formData.title}
+                    onChange={(e) => setFormData({...formData, title: e.target.value})}
+                  />
                 </div>
                 <div className="space-y-2">
                   <label className="text-sm font-bold text-navy uppercase tracking-wider">Descrição</label>
-                  <Textarea placeholder="Descreva todos os detalhes do seu evento..." className="min-h-[150px] rounded-xl border-line focus-visible:ring-gold" />
+                  <Textarea 
+                    placeholder="Descreva todos os detalhes do seu evento..." 
+                    className="min-h-[150px] rounded-xl border-line focus-visible:ring-gold" 
+                    value={formData.description}
+                    onChange={(e) => setFormData({...formData, description: e.target.value})}
+                  />
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   <div className="space-y-2">
                     <label className="text-sm font-bold text-navy uppercase tracking-wider">Categoria</label>
-                    <Select>
+                    <Select 
+                      value={formData.category}
+                      onValueChange={(val) => setFormData({...formData, category: val})}
+                    >
                       <SelectTrigger className="h-14 rounded-xl border-line">
                         <SelectValue placeholder="Selecione uma categoria" />
                       </SelectTrigger>
@@ -121,7 +229,10 @@ function NewEventWizard() {
                   </div>
                   <div className="space-y-2">
                     <label className="text-sm font-bold text-navy uppercase tracking-wider">Tipo</label>
-                    <Select defaultValue="presencial">
+                    <Select 
+                      value={formData.event_type}
+                      onValueChange={(val) => setFormData({...formData, event_type: val})}
+                    >
                       <SelectTrigger className="h-14 rounded-xl border-line">
                         <SelectValue placeholder="Selecione o tipo" />
                       </SelectTrigger>
@@ -144,35 +255,208 @@ function NewEventWizard() {
                 <p className="text-muted font-medium">Onde e quando o evento irá acontecer.</p>
               </div>
               <div className="grid gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                   <div className="space-y-2">
+                    <label className="text-sm font-bold text-navy uppercase tracking-wider">Cidade</label>
+                    <Input 
+                      placeholder="Ex: Orlando" 
+                      className="h-14 rounded-xl border-line" 
+                      value={formData.city}
+                      onChange={(e) => setFormData({...formData, city: e.target.value})}
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-sm font-bold text-navy uppercase tracking-wider">País (ID)</label>
+                    <Input 
+                      placeholder="Ex: US" 
+                      className="h-14 rounded-xl border-line" 
+                      value={formData.country_id}
+                      onChange={(e) => setFormData({...formData, country_id: e.target.value})}
+                    />
+                  </div>
+                </div>
                 <div className="space-y-2">
                   <label className="text-sm font-bold text-navy uppercase tracking-wider">Endereço Completo</label>
                   <div className="relative">
                     <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted" />
-                    <Input placeholder="Pesquisar endereço no Google Maps..." className="h-14 pl-12 rounded-xl border-line" />
+                    <Input 
+                      placeholder="Logradouro, número, bairro..." 
+                      className="h-14 pl-12 rounded-xl border-line" 
+                      value={formData.location}
+                      onChange={(e) => setFormData({...formData, location: e.target.value})}
+                    />
                   </div>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   <div className="space-y-2">
                     <label className="text-sm font-bold text-navy uppercase tracking-wider">Início do Evento</label>
-                    <Input type="datetime-local" className="h-14 rounded-xl border-line" />
+                    <Input 
+                      type="datetime-local" 
+                      className="h-14 rounded-xl border-line" 
+                      value={formData.start_date}
+                      onChange={(e) => setFormData({...formData, start_date: e.target.value})}
+                    />
                   </div>
                   <div className="space-y-2">
                     <label className="text-sm font-bold text-navy uppercase tracking-wider">Término do Evento</label>
-                    <Input type="datetime-local" className="h-14 rounded-xl border-line" />
+                    <Input 
+                      type="datetime-local" 
+                      className="h-14 rounded-xl border-line" 
+                      value={formData.end_date}
+                      onChange={(e) => setFormData({...formData, end_date: e.target.value})}
+                    />
                   </div>
                 </div>
               </div>
             </div>
           )}
 
-          {/* Steps 3, 4, 5 placeholders for now or briefly implemented */}
-          {step > 2 && (
-            <div className="flex flex-col items-center justify-center py-20 text-center space-y-4 animate-in zoom-in-95 duration-300">
-              <div className="w-16 h-16 bg-surface rounded-full flex items-center justify-center text-gold">
-                <Info className="w-8 h-8" />
+          {step === 3 && (
+            <div className="space-y-8 animate-in fade-in slide-in-from-right-4 duration-500">
+              <div className="space-y-2">
+                <h2 className="text-2xl font-bold text-navy">Ingressos</h2>
+                <p className="text-muted font-medium">Configure os lotes e preços dos ingressos.</p>
               </div>
-              <h3 className="text-xl font-bold text-navy">Configurações do Passo {step}</h3>
-              <p className="text-muted font-medium">Esta seção está pronta para receber os campos específicos do checkout internacional.</p>
+              <div className="space-y-4">
+                {tickets.map((ticket, index) => (
+                  <div key={index} className="p-6 rounded-2xl border border-line bg-surface/30 space-y-4 relative group">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                      <div className="space-y-2">
+                        <label className="text-[10px] font-extrabold uppercase tracking-widest text-muted">Nome do Lote</label>
+                        <Input 
+                          value={ticket.name}
+                          onChange={(e) => {
+                            const newTickets = [...tickets];
+                            if (newTickets[index]) {
+                              newTickets[index].name = e.target.value;
+                              setTickets(newTickets);
+                            }
+                          }}
+                          className="h-12 rounded-xl"
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <label className="text-[10px] font-extrabold uppercase tracking-widest text-muted">Preço (US$)</label>
+                        <Input 
+                          type="number"
+                          value={ticket.price}
+                          onChange={(e) => {
+                            const newTickets = [...tickets];
+                            if (newTickets[index]) {
+                              newTickets[index].price = Number(e.target.value);
+                              setTickets(newTickets);
+                            }
+                          }}
+                          className="h-12 rounded-xl"
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <label className="text-[10px] font-extrabold uppercase tracking-widest text-muted">Quantidade</label>
+                        <Input 
+                          type="number"
+                          value={ticket.quantity}
+                          onChange={(e) => {
+                            const newTickets = [...tickets];
+                            if (newTickets[index]) {
+                              newTickets[index].quantity = Number(e.target.value);
+                              setTickets(newTickets);
+                            }
+                          }}
+                          className="h-12 rounded-xl"
+                        />
+                      </div>
+                    </div>
+                    {tickets.length > 1 && (
+                      <button 
+                        onClick={() => setTickets(tickets.filter((_, i) => i !== index))}
+                        className="absolute -top-2 -right-2 w-8 h-8 bg-white border border-line rounded-full flex items-center justify-center text-destructive shadow-sm hover:bg-destructive hover:text-white transition-all opacity-0 group-hover:opacity-100"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </button>
+                    )}
+                  </div>
+                ))}
+                <Button 
+                  variant="outline" 
+                  onClick={() => setTickets([...tickets, { name: `Lote ${tickets.length + 1}`, price: 0, quantity: 100 }])}
+                  className="w-full h-14 rounded-xl border-dashed border-2 border-line text-muted font-bold hover:text-navy hover:border-navy transition-all"
+                >
+                  <Plus className="w-5 h-5 mr-2" /> Adicionar outro lote
+                </Button>
+              </div>
+            </div>
+          )}
+
+          {step === 4 && (
+            <div className="space-y-8 animate-in fade-in slide-in-from-right-4 duration-500">
+              <div className="space-y-2">
+                <h2 className="text-2xl font-bold text-navy">Configurações Avançadas</h2>
+                <p className="text-muted font-medium">Políticas de presença e falta automática.</p>
+              </div>
+              <div className="p-8 rounded-[24px] border border-line bg-surface/20 space-y-8">
+                <div className="flex items-center justify-between">
+                  <div className="space-y-1">
+                    <h4 className="font-bold text-navy">Falta Automática (No-show)</h4>
+                    <p className="text-xs text-muted font-medium">Marcar participante como 'falta' automaticamente após o início.</p>
+                  </div>
+                  <Switch 
+                    checked={formData.falta_automatica_ativa}
+                    onCheckedChange={(val) => setFormData({...formData, falta_automatica_ativa: val})}
+                  />
+                </div>
+                
+                {formData.falta_automatica_ativa && (
+                  <div className="space-y-4 animate-in slide-in-from-top-2 duration-300">
+                    <div className="space-y-2">
+                      <label className="text-sm font-bold text-navy uppercase tracking-wider">Tempo de tolerância (minutos)</label>
+                      <Input 
+                        type="number"
+                        className="h-14 rounded-xl border-line" 
+                        value={formData.falta_automatica_minutos}
+                        onChange={(e) => setFormData({...formData, falta_automatica_minutos: Number(e.target.value)})}
+                      />
+                      <p className="text-[10px] text-muted font-medium flex items-center gap-1">
+                        <AlertTriangle className="w-3 h-3 text-gold" />
+                        O sistema mudará o status dos ingressos não validados após este período.
+                      </p>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+
+          {step === 5 && (
+            <div className="space-y-8 animate-in fade-in slide-in-from-right-4 duration-500">
+              <div className="space-y-2">
+                <h2 className="text-2xl font-bold text-navy">Revisão Final</h2>
+                <p className="text-muted font-medium">Confira os dados antes de publicar.</p>
+              </div>
+              <div className="grid gap-4">
+                <div className="p-6 rounded-2xl border border-line bg-surface/10 space-y-4">
+                  <div className="flex justify-between items-start">
+                    <div>
+                      <h3 className="text-xl font-extrabold text-navy">{formData.title || "Sem título"}</h3>
+                      <p className="text-sm text-muted font-medium">{formData.city}, {formData.country_id}</p>
+                    </div>
+                    <span className="px-3 py-1 bg-gold text-white text-[10px] font-extrabold uppercase tracking-widest rounded-full">Público</span>
+                  </div>
+                  <div className="grid grid-cols-2 gap-4 pt-4 border-t border-line/50">
+                    <div className="space-y-1">
+                      <p className="text-[10px] uppercase font-extrabold text-muted tracking-widest">Início</p>
+                      <p className="text-sm font-bold text-navy">{formData.start_date ? new Date(formData.start_date).toLocaleString() : "Não definido"}</p>
+                    </div>
+                    <div className="space-y-1">
+                      <p className="text-[10px] uppercase font-extrabold text-muted tracking-widest">Lotes</p>
+                      <p className="text-sm font-bold text-navy">{tickets.length} tipos de ingresso</p>
+                    </div>
+                  </div>
+                </div>
+                <div className="bg-good/5 border border-good/20 p-4 rounded-xl flex items-center gap-3">
+                  <CheckCircle2 className="w-5 h-5 text-good" />
+                  <p className="text-sm font-bold text-good">Tudo pronto! Seu evento será publicado instantaneamente.</p>
+                </div>
+              </div>
             </div>
           )}
         </div>
@@ -196,9 +480,11 @@ function NewEventWizard() {
             </Button>
           ) : (
             <Button 
+              onClick={handlePublish}
+              disabled={loading}
               className="h-14 px-10 rounded-xl bg-gold hover:bg-gold-deep text-white font-extrabold shadow-lg shadow-gold/20"
             >
-              Publicar Evento
+              {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : "Publicar Evento"}
             </Button>
           )}
         </div>
