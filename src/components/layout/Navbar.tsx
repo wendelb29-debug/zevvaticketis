@@ -15,7 +15,7 @@ interface NavbarProps {
 export function Navbar({ selectedCity }: { selectedCity?: string | null }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [user, setUser] = useState<any>(null);
-  const { openOverlay } = useUI();
+  const { openOverlay, activeOverlay } = useUI();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -103,8 +103,27 @@ export function Navbar({ selectedCity }: { selectedCity?: string | null }) {
               Meus ingressos
             </Link>
             
-            <div className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-line bg-surface hover:bg-line transition-colors cursor-pointer group">
+            <div 
+              onClick={() => openOverlay('language')}
+              className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-line bg-surface hover:bg-line transition-colors cursor-pointer group relative"
+            >
               <Globe className="w-4 h-4 text-navy group-hover:text-gold transition-colors" />
+              {activeOverlay === 'language' && (
+                <div className="absolute top-full right-0 mt-2 w-40 bg-white border border-line rounded-xl shadow-xl p-2 z-[60] animate-in fade-in zoom-in-95 duration-200">
+                  {['🇧🇷 Português', '🇺🇸 English', '🇪🇸 Español'].map((lang, idx) => (
+                    <button 
+                      key={lang}
+                      className={cn(
+                        "w-full text-left px-3 py-2 rounded-lg text-xs font-bold transition-colors flex items-center justify-between",
+                        idx === 0 ? "bg-gold/10 text-gold" : "text-navy hover:bg-surface"
+                      )}
+                    >
+                      {lang}
+                      {idx === 0 && <div className="w-1 h-1 rounded-full bg-gold" />}
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
 
             <AccountMenu 
