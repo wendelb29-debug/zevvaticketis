@@ -1,10 +1,11 @@
 import { createFileRoute, Link, useNavigate, useSearch } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
 import { AuthModal } from "@/components/auth/AuthModal";
-import { UserMenu } from "@/components/auth/UserMenu";
+import { Navbar } from "@/components/layout/Navbar";
+import { FeaturedCarousel } from "@/components/home/FeaturedCarousel";
 import { LocationModal } from "@/components/ui/LocationModal";
 import { supabase } from "@/integrations/supabase/client";
-import { MapPin, LogIn, Calendar, MapPin as MapPinIcon, ArrowRight } from "lucide-react";
+import { MapPin, Calendar, MapPin as MapPinIcon, ArrowRight, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { getThemeByCategory } from "@/lib/categoryThemes";
