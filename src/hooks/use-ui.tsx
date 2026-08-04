@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-type OverlayType = 'auth' | 'location' | 'account' | null;
+type OverlayType = 'auth' | 'location' | 'account' | 'language' | null;
 
 interface UIStore {
   activeOverlay: OverlayType;
@@ -12,6 +12,9 @@ interface UIStore {
 export const useUI = create<UIStore>((set) => ({
   activeOverlay: null,
   authView: 'login',
-  openOverlay: (type, view = 'login') => set({ activeOverlay: type, authView: view }),
+  openOverlay: (type, view = 'login') => {
+    // Only one overlay open at a time
+    set({ activeOverlay: type, authView: view });
+  },
   closeOverlay: () => set({ activeOverlay: null }),
 }));
