@@ -74,14 +74,22 @@ function Index() {
         </div>
 
         <div className="flex-1 flex justify-end items-center gap-3">
-          <Link to="/login" className="text-sm font-bold text-navy hover:text-gold transition-colors px-4">
+          <button 
+            onClick={handleAuthClick}
+            className="text-sm font-bold text-navy hover:text-gold transition-colors px-4"
+          >
             Entrar
-          </Link>
+          </button>
           <Link to="/cadastro" className="text-sm font-bold px-6 py-2.5 rounded-[11px] bg-gradient-to-r from-gold-bright to-gold text-white hover:opacity-90 transition-all shadow-[0_4px_12px_rgba(201,154,62,0.25)]">
             Cadastrar
           </Link>
         </div>
       </header>
+
+      <AuthModal 
+        isOpen={isAuthModalOpen} 
+        onClose={() => setIsAuthModalOpen(false)} 
+      />
 
       <main className="pt-24 pb-12 space-y-12">
         <div className="px-6 max-w-7xl mx-auto">
