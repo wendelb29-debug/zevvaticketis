@@ -46,7 +46,7 @@ Não implemente lógica de negócio ainda, só a base visual e de roteamento.
 ## Wave 1 — Autenticação e cadastro (participante + produtor)
 
 ```
-Agora vamos implementar autenticação e cadastro. Contexto: esta é uma plataforma marketplace with 4 papéis — Admin da Plataforma, Produtor, Equipe (staff de um produtor) e Participante.
+Agora vamos implementar autenticação e cadastro. Contexto: esta é uma plataforma marketplace com 4 papéis — Admin da Plataforma, Produtor, Equipe (staff de um produtor) e Participante.
 
 1. Configure Supabase Auth com email/senha e login social via Google.
 
