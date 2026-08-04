@@ -1,0 +1,164 @@
+{
+  "version": 1,
+  "sdk_version": "0.26.1",
+  "path": "/mcp",
+  "auth": {
+    "type": "oauth",
+    "issuer": "https://bydlqomcndvjfxrxuwmq.supabase.co/auth/v1",
+    "accepted_audiences": [
+      "authenticated"
+    ]
+  },
+  "mcp": {
+    "server": {
+      "name": "build-your-system",
+      "version": "0.1.0",
+      "title": "Build Your System"
+    },
+    "tools": [
+      {
+        "name": "search_events",
+        "title": "Buscar eventos",
+        "description": "Search published events on Zevva Tickets by text, city or category. Returns title, city, dates and starting price.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "query": {
+              "description": "Free text matched against the event title.",
+              "type": "string"
+            },
+            "city": {
+              "description": "Filter by city name.",
+              "type": "string"
+            },
+            "category": {
+              "description": "Filter by event category.",
+              "type": "string"
+            },
+            "limit": {
+              "description": "Maximum number of events to return (default 10).",
+              "type": "integer",
+              "minimum": -9007199254740991,
+              "maximum": 9007199254740991
+            }
+          }
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "get_event",
+        "title": "Detalhes do evento",
+        "description": "Get full details of one published event on Zevva Tickets, including its available ticket types and prices.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "event_id": {
+              "type": "string",
+              "description": "The event id (UUID)."
+            }
+          },
+          "required": [
+            "event_id"
+          ]
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "list_my_tickets",
+        "title": "Meus ingressos",
+        "description": "List the tickets owned by the signed-in Zevva Tickets user, with the event each ticket belongs to.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {}
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "list_my_events",
+        "title": "Meus eventos (produtor)",
+        "description": "List the events the signed-in producer owns on Zevva Tickets, including drafts and published events.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {}
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "create_event_draft",
+        "title": "Criar rascunho de evento",
+        "description": "Create a draft event for the signed-in producer on Zevva Tickets. The draft is not published; the producer reviews and publishes it in the app.",
+        "annotations": {
+          "readOnlyHint": false,
+          "destructiveHint": false,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "title": {
+              "type": "string",
+              "description": "Event title."
+            },
+            "description": {
+              "description": "Short description of the event or caravan.",
+              "type": "string"
+            },
+            "city": {
+              "description": "City where the event happens.",
+              "type": "string"
+            },
+            "location": {
+              "description": "Venue or meeting point.",
+              "type": "string"
+            },
+            "category": {
+              "description": "Event category, e.g. caravana, conferencia, retiro.",
+              "type": "string"
+            },
+            "start_date": {
+              "description": "Start date in ISO 8601 format.",
+              "type": "string"
+            },
+            "end_date": {
+              "description": "End date in ISO 8601 format.",
+              "type": "string"
+            },
+            "min_price": {
+              "description": "Starting price in the organization currency.",
+              "type": "number"
+            }
+          },
+          "required": [
+            "title"
+          ]
+        },
+        "outputSchema": null
+      }
+    ]
+  }
+}
