@@ -86,11 +86,14 @@ function ProdutorLayout() {
 
       const { data: memberData } = await supabase
         .from("organization_members")
-        .select("organization_id")
+        .select("organization_id, role, permissions")
         .eq("user_id", user.id)
         .single();
 
       if (memberData) {
+        setMemberRole(memberData.role);
+        setPermissions(memberData.permissions as string[] || []);
+        
         const { data: orgData } = await supabase
           .from("organizations")
           .select("status")
