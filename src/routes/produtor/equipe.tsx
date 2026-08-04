@@ -139,10 +139,10 @@ function TeamManagement() {
   );
 
   return (
-    <div className="space-y-8 font-sans max-w-6xl mx-auto">
+    <div className="space-y-8 font-inter max-w-6xl mx-auto">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div className="space-y-1">
-          <h1 className="text-3xl font-heading font-extrabold text-navy">Minha Equipe</h1>
+          <h1 className="text-3xl font-manrope font-extrabold text-navy">Minha Equipe</h1>
           <p className="text-muted font-medium">Gerencie membros e permissões da sua organização.</p>
         </div>
 
@@ -154,7 +154,7 @@ function TeamManagement() {
           </DialogTrigger>
           <DialogContent className="rounded-[32px] sm:max-w-md p-8">
             <DialogHeader>
-              <DialogTitle className="text-2xl font-heading font-extrabold text-navy">Convidar para Equipe</DialogTitle>
+              <DialogTitle className="text-2xl font-manrope font-extrabold text-navy">Convidar para Equipe</DialogTitle>
               <p className="text-muted font-medium pt-2">
                 Envie um convite por e-mail e defina as permissões de acesso.
               </p>

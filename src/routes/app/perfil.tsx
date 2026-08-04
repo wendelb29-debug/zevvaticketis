@@ -73,9 +73,9 @@ function UserProfile() {
   );
 
   return (
-    <div className="space-y-10 font-sans max-w-2xl mx-auto pb-20">
+    <div className="space-y-10 font-inter max-w-2xl mx-auto pb-20">
       <div className="space-y-1">
-        <h1 className="text-3xl font-heading font-extrabold text-navy">Meu Perfil</h1>
+        <h1 className="text-3xl font-manrope font-extrabold text-navy">Meu Perfil</h1>
         <p className="text-muted font-medium">Gerencie suas informações pessoais e preferências.</p>
       </div>
 
@@ -86,7 +86,7 @@ function UserProfile() {
             <div className="p-3 bg-gold/10 rounded-2xl text-gold">
               <User className="w-6 h-6" />
             </div>
-            <h2 className="text-xl font-heading font-extrabold text-navy">Dados Pessoais</h2>
+            <h2 className="text-xl font-manrope font-extrabold text-navy">Dados Pessoais</h2>
           </div>
 
           <div className="space-y-6">
@@ -116,7 +116,7 @@ function UserProfile() {
             <div className="p-3 bg-navy/5 rounded-2xl text-navy">
               <Shield className="w-6 h-6" />
             </div>
-            <h2 className="text-xl font-heading font-extrabold text-navy">Privacidade e LGPD</h2>
+            <h2 className="text-xl font-manrope font-extrabold text-navy">Privacidade e LGPD</h2>
           </div>
 
           <div className="space-y-6">
@@ -143,7 +143,7 @@ function UserProfile() {
             <div className="p-3 bg-good/5 rounded-2xl text-good">
               <Lock className="w-6 h-6" />
             </div>
-            <h2 className="text-xl font-heading font-extrabold text-navy">Segurança</h2>
+            <h2 className="text-xl font-manrope font-extrabold text-navy">Segurança</h2>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

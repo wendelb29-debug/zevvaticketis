@@ -43,9 +43,9 @@ function CheckinApp() {
   };
 
   return (
-    <div className="min-h-screen bg-navy text-white font-sans flex flex-col">
+    <div className="min-h-screen bg-navy text-white font-inter flex flex-col">
       <header className="h-16 border-b border-white/10 px-6 flex items-center justify-between sticky top-0 z-50 bg-navy">
-        <div className="text-xl font-heading font-extrabold text-gold tracking-tighter">
+        <div className="text-xl font-manrope font-extrabold text-gold tracking-tighter">
           ZEVVA <span className="text-white">CHECK-IN</span>
         </div>
         
@@ -69,7 +69,7 @@ function CheckinApp() {
         </div>
 
         <div className="text-center space-y-2">
-          <div className="text-5xl font-heading font-extrabold text-gold">{checkinCount}</div>
+          <div className="text-5xl font-manrope font-extrabold text-gold">{checkinCount}</div>
           <p className="text-xs font-extrabold uppercase tracking-widest text-white/40">Check-ins Realizados</p>
         </div>
 

@@ -78,7 +78,7 @@ export function UserMenu({ user, onLogout, onNavigate }: UserMenuProps) {
           </div>
         </button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-56 mt-2 rounded-xl p-2 border-line shadow-xl font-sans">
+      <DropdownMenuContent align="end" className="w-56 mt-2 rounded-xl p-2 border-line shadow-xl font-inter">
         <DropdownMenuLabel className="px-3 py-3">
           <div className="flex flex-col gap-1">
             <p className="text-sm font-extrabold text-navy truncate">

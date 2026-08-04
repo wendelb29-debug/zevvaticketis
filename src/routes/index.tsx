@@ -129,10 +129,10 @@ function Index() {
   const cities = ["ORLANDO", "LISBOA", "UBERLÂNDIA", "MIAMI", "SÃO PAULO", "MADRI", "NOVA YORK", "BUENOS AIRES"];
 
   return (
-    <div className="min-h-screen bg-bg text-navy font-sans text-base">
+    <div className="min-h-screen bg-bg text-navy font-inter text-base">
       <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-line h-20 flex items-center px-6">
         <div className="flex-1 flex items-center">
-          <Link to="/" className="text-xl font-heading font-extrabold text-gold tracking-tighter">
+          <Link to="/" className="text-xl font-manrope font-extrabold text-gold tracking-tighter">
             ZEVVA <span className="text-navy">TICKETS</span>
           </Link>
         </div>
@@ -210,7 +210,7 @@ function Index() {
             <div className="absolute inset-0 flex items-center px-12">
               <div className="max-w-xl text-white">
                 <span className="inline-block bg-gold text-white px-3 py-1 rounded-full text-[10px] font-extrabold uppercase tracking-widest mb-4 border border-white/20 shadow-sm">Destaque</span>
-                <h2 className="text-4xl md:text-5xl font-heading font-extrabold mb-4 leading-tight">Grand Tour 2026: Europa Medieval</h2>
+                <h2 className="text-4xl md:text-5xl font-manrope font-extrabold mb-4 leading-tight">Grand Tour 2026: Europa Medieval</h2>
                 <p className="text-lg text-white/90 mb-8 font-medium leading-relaxed">Uma jornada inesquecível pelas catedrais e castelos mais icônicos do velho continente.</p>
                 <Button className="bg-[image:var(--grad-cta)] text-white px-10 py-6 rounded-xl font-extrabold transition-all uppercase tracking-wider text-sm shadow-[0_8px_20px_-4px_rgba(201,154,62,0.4)]">Ver Detalhes</Button>
               </div>
@@ -243,7 +243,7 @@ function Index() {
           {/* Categories Section */}
           <section className="space-y-8">
             <div className="text-center space-y-2">
-              <h2 className="text-3xl font-heading font-extrabold">Explore por Categoria</h2>
+              <h2 className="text-3xl font-manrope font-extrabold">Explore por Categoria</h2>
               <p className="text-navy font-bold">Encontre a experiência ideal para o seu ministério</p>
             </div>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
@@ -262,7 +262,7 @@ function Index() {
           <section className="space-y-8">
             <div className="flex justify-between items-end border-b border-line pb-4">
               <div className="space-y-1">
-                <h2 className="text-3xl font-heading font-extrabold tracking-tight">Próximas Caravanas</h2>
+                <h2 className="text-3xl font-manrope font-extrabold tracking-tight">Próximas Caravanas</h2>
                 <p className="text-muted font-medium">Saídas confirmadas para os próximos meses</p>
               </div>
               <Link to="/eventos" className="text-gold text-sm font-extrabold hover:underline uppercase tracking-widest pb-1">Ver tudo</Link>
@@ -311,7 +311,7 @@ function Index() {
                       </div>
                       <div className={cn("p-6 space-y-4", theme.fontFamily)}>
                         <h3 
-                          className="font-heading font-extrabold text-lg text-navy leading-tight line-clamp-2 min-h-[3.5rem] group-hover:text-gold transition-colors"
+                          className="font-manrope font-extrabold text-lg text-navy leading-tight line-clamp-2 min-h-[3.5rem] group-hover:text-gold transition-colors"
                           style={{ color: theme.customClass?.includes('animate-pulse-subtle') ? theme.accentColor : undefined }}
                         >
                           {event.title}
@@ -363,7 +363,7 @@ function Index() {
           <section className="bg-gradient-to-br from-surface to-surface-2 rounded-3xl p-12 border border-line shadow-sm overflow-hidden relative group hover:border-gold/20 transition-all">
             <div className="absolute top-0 right-0 w-1/3 h-full bg-gold/5 -skew-x-12 translate-x-1/2" />
             <div className="max-w-2xl space-y-8 relative z-10">
-              <h2 className="text-4xl font-heading font-extrabold leading-tight text-navy">Crie eventos, divulgar e vender seu evento."</h2>
+              <h2 className="text-4xl font-manrope font-extrabold leading-tight text-navy">Crie eventos, divulgar e vender seu evento."</h2>
               <ul className="space-y-4">
                 {[
                   "Publicação gratuita e intuitiva",
@@ -387,7 +387,7 @@ function Index() {
           {/* FAQ Section */}
           <section className="max-w-3xl mx-auto space-y-12">
             <div className="text-center space-y-2">
-              <h2 className="text-3xl font-heading font-extrabold">Dúvidas Frequentes</h2>
+              <h2 className="text-3xl font-manrope font-extrabold">Dúvidas Frequentes</h2>
               <p className="text-muted font-medium">Tudo o que você precisa saber sobre a sua próxima viagem</p>
             </div>
             <div className="space-y-4">

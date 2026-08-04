@@ -33,7 +33,7 @@ function AppLayout() {
   };
 
   return (
-    <div className="min-h-screen bg-bg text-navy font-sans">
+    <div className="min-h-screen bg-bg text-navy font-inter">
       <header className="bg-white border-b border-line h-16 flex items-center px-6 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto w-full flex items-center justify-between">
           <div className="flex items-center gap-8">
@@ -44,7 +44,7 @@ function AppLayout() {
               >
                 <ArrowLeft className="w-5 h-5" />
               </button>
-              <Link to="/" className="text-xl font-heading font-extrabold text-gold tracking-tighter">
+              <Link to="/" className="text-xl font-manrope font-extrabold text-gold tracking-tighter">
                 ZEVVA <span className="text-navy">APP</span>
               </Link>
             </div>

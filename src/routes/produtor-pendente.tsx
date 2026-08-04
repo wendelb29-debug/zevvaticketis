@@ -22,11 +22,11 @@ function PendenteLayout() {
   };
 
   return (
-    <div className="min-h-screen bg-surface flex items-center justify-center p-6 text-center font-sans">
+    <div className="min-h-screen bg-surface flex items-center justify-center p-6 text-center font-inter">
       <div className="max-w-md space-y-8 bg-white p-12 rounded-[24px] shadow-xl border border-line">
         <div className="text-6xl animate-bounce">⏳</div>
         <div className="space-y-4">
-          <h1 className="text-3xl font-heading font-extrabold text-navy">Seu cadastro está em análise</h1>
+          <h1 className="text-3xl font-manrope font-extrabold text-navy">Seu cadastro está em análise</h1>
           <p className="text-muted font-medium leading-relaxed">
             Sua organização foi cadastrada com sucesso e está sendo revisada por nossa equipe. 
             Você receberá um e-mail assim que for aprovado para começar a vender.

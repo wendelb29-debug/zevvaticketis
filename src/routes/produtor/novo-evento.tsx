@@ -144,7 +144,7 @@ function NewEventWizard() {
   const prevStep = () => setStep((s) => Math.max(s - 1, 1));
 
   return (
-    <div className="max-w-4xl mx-auto font-sans">
+    <div className="max-w-4xl mx-auto font-inter">
       <div className="flex items-center gap-4 mb-10">
         <Button 
           variant="ghost" 
@@ -154,7 +154,7 @@ function NewEventWizard() {
         >
           <ChevronLeft className="w-6 h-6" />
         </Button>
-        <h1 className="text-3xl font-heading font-extrabold text-navy">Criar novo evento</h1>
+        <h1 className="text-3xl font-manrope font-extrabold text-navy">Criar novo evento</h1>
       </div>
 
       {/* Stepper */}

@@ -219,7 +219,7 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
       <DialogContent className="sm:max-w-[440px] p-8 rounded-[20px] bg-white border-0 shadow-2xl backdrop-blur-xl">
         <DialogHeader className="text-center space-y-2">
-          <DialogTitle className="text-2xl font-heading font-extrabold text-navy">
+          <DialogTitle className="text-2xl font-manrope font-extrabold text-navy">
             Crie sua conta ou faça login
           </DialogTitle>
           <DialogDescription className="text-muted font-medium">

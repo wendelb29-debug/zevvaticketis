@@ -29,13 +29,13 @@ function EventPage() {
   const Icon = theme.icon;
 
   return (
-    <div className={cn("min-h-screen bg-bg text-navy font-sans", theme.fontFamily)}>
+    <div className={cn("min-h-screen bg-bg text-navy font-inter", theme.fontFamily)}>
       <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-line h-20 flex items-center px-6">
         <div className="flex-1 flex items-center gap-4">
           <Link to="/" className="text-muted hover:text-navy transition-colors">
             <ArrowLeft className="w-5 h-5" />
           </Link>
-          <Link to="/" className="text-xl font-heading font-extrabold text-gold tracking-tighter">
+          <Link to="/" className="text-xl font-manrope font-extrabold text-gold tracking-tighter">
             ZEVVA <span className="text-navy">TICKETS</span>
           </Link>
         </div>
@@ -67,7 +67,7 @@ function EventPage() {
           >
             <Icon className="w-3.5 h-3.5" /> {theme.name}
           </div>
-          <h1 className="text-4xl md:text-5xl font-heading font-extrabold leading-tight text-navy">
+          <h1 className="text-4xl md:text-5xl font-manrope font-extrabold leading-tight text-navy">
             Caravana para a Terra Santa 2026: Uma Jornada Espiritual
           </h1>
         </div>
@@ -124,7 +124,7 @@ function EventPage() {
 
             <div className="space-y-8 prose max-w-none">
               <section className="space-y-4">
-                <h2 className="text-2xl font-heading font-extrabold text-navy flex items-center gap-2">
+                <h2 className="text-2xl font-manrope font-extrabold text-navy flex items-center gap-2">
                   <Info className="w-5 h-5" style={{ color: theme.accentColor }} /> Sobre o evento
                 </h2>
                 <p className="text-muted font-medium leading-relaxed text-lg">
@@ -133,7 +133,7 @@ function EventPage() {
               </section>
               
               <section className="space-y-4">
-                <h2 className="text-2xl font-heading font-extrabold text-navy flex items-center gap-2">
+                <h2 className="text-2xl font-manrope font-extrabold text-navy flex items-center gap-2">
                   <ShieldCheck className="w-5 h-5" style={{ color: theme.accentColor }} /> Políticas
                 </h2>
                 <p className="text-muted font-medium leading-relaxed">
@@ -153,7 +153,7 @@ function EventPage() {
               style={{ transitionDuration: theme.animationSpeed.split('-')[1] + 'ms' }}
             >
               <div className="flex justify-between items-center">
-                <h3 className="text-xl font-heading font-extrabold text-navy">Ingressos</h3>
+                <h3 className="text-xl font-manrope font-extrabold text-navy">Ingressos</h3>
                 <TicketIcon className="w-6 h-6" style={{ color: theme.accentColor }} />
               </div>
               

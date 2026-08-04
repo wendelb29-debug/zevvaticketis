@@ -56,9 +56,9 @@ function ProdutorDashboard() {
   ];
 
   return (
-    <div className="space-y-10 font-sans max-w-6xl mx-auto">
+    <div className="space-y-10 font-inter max-w-6xl mx-auto">
       <div className="space-y-2">
-        <h1 className="text-3xl font-heading font-extrabold text-navy">
+        <h1 className="text-3xl font-manrope font-extrabold text-navy">
           {getTimeGreeting()}, {user?.user_metadata?.nome?.split(' ')[0] || user?.email?.split('@')[0]}!
         </h1>
         <p className="text-muted font-medium">Já publicou seu evento?</p>
@@ -84,7 +84,7 @@ function ProdutorDashboard() {
       <div className="bg-white rounded-[32px] border border-line p-8 space-y-8 shadow-sm">
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
           <div className="space-y-1">
-            <h2 className="text-xl font-heading font-extrabold text-navy flex items-center gap-2">
+            <h2 className="text-xl font-manrope font-extrabold text-navy flex items-center gap-2">
               <Sparkles className="w-5 h-5 text-gold" /> Prévia de Temas Visuais
             </h2>
             <p className="text-xs text-muted font-medium uppercase tracking-widest">Veja como seu evento aparecerá para os participantes</p>
@@ -132,7 +132,7 @@ function ProdutorDashboard() {
         <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div className="space-y-8">
             <div className="space-y-4">
-              <h2 className="text-3xl sm:text-4xl font-heading font-extrabold leading-tight">
+              <h2 className="text-3xl sm:text-4xl font-manrope font-extrabold leading-tight">
                 Seu evento pode vender ainda mais!
               </h2>
               <p className="text-white/70 font-medium text-lg">
@@ -161,7 +161,7 @@ function ProdutorDashboard() {
           <div className="hidden lg:grid grid-cols-2 gap-4">
             {stats.map((stat) => (
               <div key={stat.label} className="glass-panel backdrop-blur-md p-6 rounded-2xl text-center shadow-lg bg-white/5">
-                <p className="text-3xl font-heading font-extrabold mb-1 text-white">{stat.value}</p>
+                <p className="text-3xl font-manrope font-extrabold mb-1 text-white">{stat.value}</p>
                 <p className="text-[10px] uppercase tracking-widest font-extrabold text-white/90">{stat.label}</p>
               </div>
             ))}

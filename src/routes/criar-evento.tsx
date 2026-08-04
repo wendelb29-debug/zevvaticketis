@@ -130,9 +130,9 @@ function CriarEventoWizard() {
   ];
 
   const SidebarContent = () => (
-    <div className="flex flex-col h-full bg-white border-r border-line py-8 font-sans">
+    <div className="flex flex-col h-full bg-white border-r border-line py-8 font-inter">
       <div className="px-6 mb-12">
-        <Link to="/" className="text-2xl font-heading font-extrabold text-gold tracking-tighter">
+        <Link to="/" className="text-2xl font-manrope font-extrabold text-gold tracking-tighter">
           ZEVVA <span className="text-navy">TICKETS</span>
         </Link>
       </div>
@@ -570,7 +570,7 @@ function CriarEventoWizard() {
       </aside>
 
       <div className="flex-1 flex flex-col min-h-screen">
-        <header className="h-20 bg-white/80 backdrop-blur-md border-b border-line sticky top-0 z-40 px-6 sm:px-10 flex items-center justify-between font-sans">
+        <header className="h-20 bg-white/80 backdrop-blur-md border-b border-line sticky top-0 z-40 px-6 sm:px-10 flex items-center justify-between font-inter">
           <div className="flex items-center gap-4">
             <Sheet>
               <SheetTrigger asChild>
@@ -599,14 +599,14 @@ function CriarEventoWizard() {
           </div>
         </header>
 
-        <main className="p-6 sm:p-10 max-w-5xl mx-auto w-full font-sans">
+        <main className="p-6 sm:p-10 max-w-5xl mx-auto w-full font-inter">
           <div className="mb-10 space-y-4">
             <div className="flex items-center gap-4">
               <Link to="/produtor" className="p-2 hover:bg-white rounded-full transition-colors text-muted hover:text-navy">
                 <ArrowLeft className="w-6 h-6" />
               </Link>
               <div>
-                <h1 className="text-3xl font-heading font-extrabold text-navy tracking-tight">Criar Novo Evento</h1>
+                <h1 className="text-3xl font-manrope font-extrabold text-navy tracking-tight">Criar Novo Evento</h1>
                 <p className="text-muted font-medium">Siga as etapas para publicar sua caravana ou evento.</p>
               </div>
             </div>

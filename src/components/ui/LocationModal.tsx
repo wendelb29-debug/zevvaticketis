@@ -71,7 +71,7 @@ export function LocationModal({ isOpen, onClose, onSelect }: LocationModalProps)
       <DialogContent className="sm:max-w-[480px] p-0 rounded-[16px] bg-white border-0 shadow-2xl overflow-hidden gap-0">
         <DialogHeader className="p-6 pb-2">
           <div className="flex items-center justify-between">
-            <DialogTitle className="text-2xl font-heading font-extrabold text-navy">Localização</DialogTitle>
+            <DialogTitle className="text-2xl font-manrope font-extrabold text-navy">Localização</DialogTitle>
           </div>
         </DialogHeader>
 
