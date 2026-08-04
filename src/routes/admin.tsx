@@ -1,10 +1,50 @@
-import { createFileRoute, Outlet } from "@tanstack/react-router";
+import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
+import { supabase } from "@/integrations/supabase/client";
+import { useEffect, useState } from "react";
 
 export const Route = createFileRoute("/admin")({
-  component: () => (
-    <div className="p-8">
-      <h1 className="text-2xl font-heading text-primary">Painel Administrativo</h1>
-      <Outlet />
-    </div>
-  ),
+  beforeLoad: async () => {
+    const { data: { session } } = await supabase.auth.getSession();
+    if (!session) {
+      throw redirect({ to: "/login" });
+    }
+  },
+  component: AdminLayout,
 });
+
+function AdminLayout() {
+  const [isAdmin, setIsAdmin] = useState<boolean | null>(null);
+
+  useEffect(() => {
+    async function checkAdmin() {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
+      
+      const { data } = await supabase
+        .from("platform_admins")
+        .select("id")
+        .eq("user_id", user.id)
+        .single();
+      
+      setIsAdmin(!!data);
+    }
+    checkAdmin();
+  }, []);
+
+  if (isAdmin === null) return null;
+  if (isAdmin === false) throw redirect({ to: "/" });
+
+  return (
+    <div className="min-h-screen bg-background text-foreground">
+      <nav className="border-b border-white/5 p-4 bg-card">
+        <div className="max-w-7xl mx-auto flex justify-between items-center">
+          <div className="font-heading font-bold text-primary">ZEVVA ADMIN</div>
+          <button onClick={() => supabase.auth.signOut()} className="text-sm">Sair</button>
+        </div>
+      </nav>
+      <div className="max-w-7xl mx-auto p-8">
+        <Outlet />
+      </div>
+    </div>
+  );
+}
