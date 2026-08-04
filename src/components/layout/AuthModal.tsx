@@ -132,6 +132,7 @@ export function AuthModal({ isOpen, onClose, defaultView = 'login' }: AuthModalP
   };
 
   const handleSocialLogin = async (provider: 'google' | 'apple') => {
+    setSocialError(null);
     try {
       const { error } = await supabase.auth.signInWithOAuth({
         provider,
@@ -139,8 +140,22 @@ export function AuthModal({ isOpen, onClose, defaultView = 'login' }: AuthModalP
           redirectTo: `${window.location.origin}/auth/callback`,
         },
       });
-      if (error) throw error;
+      
+      if (error) {
+        console.error(`OAuth error for ${provider}:`, error);
+        
+        // Handle specific configuration errors gracefully
+        if (error.message?.toLowerCase().includes('unsupported provider') || 
+            error.message?.toLowerCase().includes('missing oauth secret') ||
+            (error as any).status === 400) {
+          setSocialError(`${provider === 'google' ? 'Google' : 'Apple'} temporariamente indisponível — tente com e-mail e senha, ou volte em breve.`);
+        } else {
+          toast.error(`Erro ao entrar com ${provider}`);
+        }
+        return;
+      }
     } catch (error: any) {
+      console.error(`Catch OAuth error for ${provider}:`, error);
       toast.error(`Erro ao entrar com ${provider}`);
     }
   };
