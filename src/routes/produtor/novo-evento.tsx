@@ -326,8 +326,10 @@ function NewEventWizard() {
                           value={ticket.name}
                           onChange={(e) => {
                             const newTickets = [...tickets];
-                            newTickets[index].name = e.target.value;
-                            setTickets(newTickets);
+                            if (newTickets[index]) {
+                              newTickets[index].name = e.target.value;
+                              setTickets(newTickets);
+                            }
                           }}
                           className="h-12 rounded-xl"
                         />
