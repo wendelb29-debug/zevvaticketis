@@ -171,8 +171,8 @@ function ProdutorLayout() {
     { label: "Dashboard", icon: LayoutDashboard, href: "/produtor", activeOptions: { exact: true } },
     { label: "Meus Eventos", icon: Plus, href: "/produtor/eventos", permission: "owner" },
     { label: "Financeiro", icon: BarChart3, href: "/produtor/financeiro", permission: "financeiro" },
-    { label: "Relatórios", icon: BarChart3, href: "/produtor/relatorios", permission: "financeiro" },
-    { label: "Check-in", icon: QrCodeIcon, href: "/checkin", external: true },
+    { label: "Relatórios", icon: FileText, href: "/produtor/relatorios", permission: "financeiro" },
+    { label: "Check-in", icon: ShieldCheck, href: "/checkin", external: true },
     { label: "Marketing", icon: Globe, href: "/produtor/marketing", permission: "marketing" },
     { label: "Suporte", icon: Users, href: "/produtor/suporte", permission: "suporte" },
     { label: "Minha Equipe", icon: Users, href: "/produtor/equipe", permission: "owner" },
@@ -184,18 +184,19 @@ function ProdutorLayout() {
     if (memberRole === 'produtor_owner') return true;
     
     // Team members see based on permissions
-    // But some pages are exclusive to owner
-    if (item.label === "Minha Equipe" || item.label === "Configurações") {
-      return memberRole === 'produtor_owner';
+    // Check permission for specific tab
+    if (item.permission) {
+      if (item.permission === "owner") return memberRole === 'produtor_owner';
+      return permissions.includes(item.permission);
+    }
+
+    // Special case for Check-in
+    if (item.label === "Check-in") {
+      return permissions.includes('checkin');
     }
     
     // If it's the dashboard, everyone sees it
     if (item.label === "Dashboard") return true;
-    
-    // Check permission for specific tab
-    if (item.permission) {
-      return permissions.includes(item.permission);
-    }
     
     return false;
   });
