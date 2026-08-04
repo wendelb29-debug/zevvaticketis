@@ -32,6 +32,7 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
   const [loading, setLoading] = useState(false);
   const [rememberMe, setRememberMe] = useState(true);
   const navigate = useNavigate();
+  const fetchRedirectPath = useServerFn(getRedirectPath);
 
   useEffect(() => {
     if (!isOpen) {
