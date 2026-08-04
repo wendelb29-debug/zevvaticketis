@@ -1,6 +1,7 @@
 import { createFileRoute, Link, useSearch } from "@tanstack/react-router";
 import { getThemeByCategory } from "@/lib/categoryThemes";
 import { cn } from "@/lib/utils";
+import { useState, useEffect } from "react";
 import { 
   Calendar, 
   MapPin, 
@@ -10,8 +11,22 @@ import {
   Info,
   ShieldCheck,
   Clock,
-  Ticket as TicketIcon
+  Ticket as TicketIcon,
+  ChevronRight,
+  ChevronLeft,
+  Star,
+  Zap,
+  CheckCircle2,
+  Users,
+  Plane,
+  Hotel,
+  Utensils
 } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { getEventDetails } from "@/lib/events.functions";
+import { useServerFn } from "@tanstack/react-start";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export const Route = createFileRoute("/eventos")({
   validateSearch: (search: Record<string, unknown>) => {
