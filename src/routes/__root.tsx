@@ -8,7 +8,6 @@ import {
   Scripts,
 } from "@tanstack/react-router";
 import { useEffect, type ReactNode } from "react";
-import { Toaster } from "@/components/ui/sonner";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
@@ -81,11 +80,15 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { title: "Zevva Tickets | Marketplace de Eventos Internacionais" },
       { name: "description", content: "A melhor plataforma para compra e venda de ingressos para eventos internacionais." },
       { name: "author", content: "Zevva" },
-      { property: "og:title", content: "Zevva Tickets" },
-      { property: "og:description", content: "Marketplace de eventos internacionais." },
+      { property: "og:title", content: "Zevva Tickets | Marketplace de Eventos Internacionais" },
+      { property: "og:description", content: "A melhor plataforma para compra e venda de ingressos para eventos internacionais." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:site", content: "@ZevvaTickets" },
+      { name: "twitter:title", content: "Zevva Tickets | Marketplace de Eventos Internacionais" },
+      { name: "twitter:description", content: "A melhor plataforma para compra e venda de ingressos para eventos internacionais." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/c02bb44c-2349-483b-9f0a-835ed1f5d1e7/id-preview-ab517681--7712cd0a-8aef-4478-85d0-5e64a49c39bb.lovable.app-1785873460721.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/c02bb44c-2349-483b-9f0a-835ed1f5d1e7/id-preview-ab517681--7712cd0a-8aef-4478-85d0-5e64a49c39bb.lovable.app-1785873460721.png" },
     ],
     links: [
       {
@@ -135,7 +138,6 @@ function RootComponent() {
     <QueryClientProvider client={queryClient}>
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
       <Outlet />
-      <Toaster />
     </QueryClientProvider>
   );
 }
