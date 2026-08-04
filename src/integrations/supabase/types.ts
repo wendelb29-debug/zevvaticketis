@@ -473,32 +473,44 @@ export type Database = {
       }
       profiles: {
         Row: {
+          avatar_url: string | null
           created_at: string | null
           documento: string | null
           email: string | null
           id: string
           idioma_preferido: string | null
           nome: string | null
+          notif_lembrete_evento: boolean | null
+          notif_mudancas_evento: boolean | null
+          notif_novidades: boolean | null
           pais_id: string | null
           telefone: string | null
         }
         Insert: {
+          avatar_url?: string | null
           created_at?: string | null
           documento?: string | null
           email?: string | null
           id: string
           idioma_preferido?: string | null
           nome?: string | null
+          notif_lembrete_evento?: boolean | null
+          notif_mudancas_evento?: boolean | null
+          notif_novidades?: boolean | null
           pais_id?: string | null
           telefone?: string | null
         }
         Update: {
+          avatar_url?: string | null
           created_at?: string | null
           documento?: string | null
           email?: string | null
           id?: string
           idioma_preferido?: string | null
           nome?: string | null
+          notif_lembrete_evento?: boolean | null
+          notif_mudancas_evento?: boolean | null
+          notif_novidades?: boolean | null
           pais_id?: string | null
           telefone?: string | null
         }
