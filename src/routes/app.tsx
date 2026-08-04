@@ -6,10 +6,11 @@ export const Route = createFileRoute("/app")({
   beforeLoad: async () => {
     const { data: { session } } = await supabase.auth.getSession();
     if (!session) {
-      throw redirect({
-        to: "/",
-      });
+      throw redirect({ to: "/" });
     }
+
+    // Participants should be able to access /app even if they are also producers/admins
+    // But we might want to check if they should be redirected to their main dashboard if they only have one role
   },
   component: AppLayout,
 });
