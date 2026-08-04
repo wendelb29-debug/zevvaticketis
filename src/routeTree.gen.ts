@@ -30,6 +30,7 @@ import { Route as AuthCallbackRouteImport } from './routes/auth/callback'
 import { Route as ProdutorIndexRouteImport } from './routes/produtor/index'
 import { Route as ProdutorConfiguracoesRouteImport } from './routes/produtor/configuracoes'
 import { Route as ProdutorEquipeRouteImport } from './routes/produtor/equipe'
+import { Route as ProdutorMarketingRouteImport } from './routes/produtor/marketing'
 import { Route as ProdutorNovoEventoRouteImport } from './routes/produtor/novo-evento'
 import { Route as DotlovableOauthConsentRouteImport } from './routes/[.]lovable.oauth.consent'
 import { Route as Char91DotmcpChar93InvokeToolToolRouteImport } from './routes/[.mcp]/invoke-tool/$tool'
@@ -141,6 +142,11 @@ const ProdutorEquipeRoute = ProdutorEquipeRouteImport.update({
   path: '/equipe',
   getParentRoute: () => ProdutorRoute,
 } as any)
+const ProdutorMarketingRoute = ProdutorMarketingRouteImport.update({
+  id: '/marketing',
+  path: '/marketing',
+  getParentRoute: () => ProdutorRoute,
+} as any)
 const ProdutorNovoEventoRoute = ProdutorNovoEventoRouteImport.update({
   id: '/novo-evento',
   path: '/novo-evento',
@@ -178,6 +184,7 @@ export interface FileRoutesByFullPath {
   '/auth/callback': typeof AuthCallbackRoute
   '/produtor/configuracoes': typeof ProdutorConfiguracoesRoute
   '/produtor/equipe': typeof ProdutorEquipeRoute
+  '/produtor/marketing': typeof ProdutorMarketingRoute
   '/produtor/novo-evento': typeof ProdutorNovoEventoRoute
   '/app/': typeof AppIndexRoute
   '/produtor/': typeof ProdutorIndexRoute
@@ -202,6 +209,7 @@ export interface FileRoutesByTo {
   '/auth/callback': typeof AuthCallbackRoute
   '/produtor/configuracoes': typeof ProdutorConfiguracoesRoute
   '/produtor/equipe': typeof ProdutorEquipeRoute
+  '/produtor/marketing': typeof ProdutorMarketingRoute
   '/produtor/novo-evento': typeof ProdutorNovoEventoRoute
   '/app': typeof AppIndexRoute
   '/produtor': typeof ProdutorIndexRoute
@@ -229,6 +237,7 @@ export interface FileRoutesById {
   '/auth/callback': typeof AuthCallbackRoute
   '/produtor/configuracoes': typeof ProdutorConfiguracoesRoute
   '/produtor/equipe': typeof ProdutorEquipeRoute
+  '/produtor/marketing': typeof ProdutorMarketingRoute
   '/produtor/novo-evento': typeof ProdutorNovoEventoRoute
   '/app/': typeof AppIndexRoute
   '/produtor/': typeof ProdutorIndexRoute
@@ -257,6 +266,7 @@ export interface FileRouteTypes {
     | '/auth/callback'
     | '/produtor/configuracoes'
     | '/produtor/equipe'
+    | '/produtor/marketing'
     | '/produtor/novo-evento'
     | '/app/'
     | '/produtor/'
@@ -281,6 +291,7 @@ export interface FileRouteTypes {
     | '/auth/callback'
     | '/produtor/configuracoes'
     | '/produtor/equipe'
+    | '/produtor/marketing'
     | '/produtor/novo-evento'
     | '/app'
     | '/produtor'
@@ -307,6 +318,7 @@ export interface FileRouteTypes {
     | '/auth/callback'
     | '/produtor/configuracoes'
     | '/produtor/equipe'
+    | '/produtor/marketing'
     | '/produtor/novo-evento'
     | '/app/'
     | '/produtor/'
@@ -482,6 +494,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProdutorEquipeRouteImport
       parentRoute: typeof ProdutorRoute
     }
+    '/produtor/marketing': {
+      id: '/produtor/marketing'
+      path: '/marketing'
+      fullPath: '/produtor/marketing'
+      preLoaderRoute: typeof ProdutorMarketingRouteImport
+      parentRoute: typeof ProdutorRoute
+    }
     '/produtor/novo-evento': {
       id: '/produtor/novo-evento'
       path: '/novo-evento'
@@ -533,6 +552,7 @@ const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
 interface ProdutorRouteChildren {
   ProdutorConfiguracoesRoute: typeof ProdutorConfiguracoesRoute
   ProdutorEquipeRoute: typeof ProdutorEquipeRoute
+  ProdutorMarketingRoute: typeof ProdutorMarketingRoute
   ProdutorNovoEventoRoute: typeof ProdutorNovoEventoRoute
   ProdutorIndexRoute: typeof ProdutorIndexRoute
 }
@@ -540,6 +560,7 @@ interface ProdutorRouteChildren {
 const ProdutorRouteChildren: ProdutorRouteChildren = {
   ProdutorConfiguracoesRoute: ProdutorConfiguracoesRoute,
   ProdutorEquipeRoute: ProdutorEquipeRoute,
+  ProdutorMarketingRoute: ProdutorMarketingRoute,
   ProdutorNovoEventoRoute: ProdutorNovoEventoRoute,
   ProdutorIndexRoute: ProdutorIndexRoute,
 }
