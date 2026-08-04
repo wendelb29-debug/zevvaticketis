@@ -35,7 +35,7 @@ export function CategoryGrid() {
               <Icon className="w-8 h-8" />
             </div>
 
-            <h3 className="text-[11px] font-black text-navy uppercase tracking-widest text-center leading-tight relative z-10">
+            <h3 className="text-[11px] font-black text-navy uppercase tracking-widest text-center leading-tight relative z-10 group-hover:text-navy/70">
               {theme.name}
             </h3>
 

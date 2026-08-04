@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate, useSearch } from "@tanstack/react-router";
-import { MapPin, Search, Ticket } from "lucide-react";
+import { MapPin, Search, Ticket, Globe, Menu } from "lucide-react";
 import { AccountMenu } from "./AccountMenu";
+import { useUI } from "@/hooks/use-ui";
 import { supabase } from "@/integrations/supabase/client";
 import { cn } from "@/lib/utils";
 
@@ -11,9 +12,10 @@ interface NavbarProps {
   selectedCity?: string | null;
 }
 
-export function Navbar({ onOpenAuth, onOpenLocation, selectedCity }: NavbarProps) {
+export function Navbar({ selectedCity }: { selectedCity?: string | null }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [user, setUser] = useState<any>(null);
+  const { openOverlay, activeOverlay } = useUI();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -73,7 +75,7 @@ export function Navbar({ onOpenAuth, onOpenLocation, selectedCity }: NavbarProps
                 <Search className="absolute left-3.5 top-3 w-3.5 h-3.5 text-muted" />
               </div>
               <div 
-                onClick={onOpenLocation}
+                onClick={() => openOverlay('location')}
                 className="flex items-center gap-2 bg-surface h-10 px-4 rounded-full text-xs font-extrabold cursor-pointer hover:bg-line transition-all border border-line text-navy"
               >
                 <MapPin className="w-3.5 h-3.5 text-gold" />
@@ -88,6 +90,7 @@ export function Navbar({ onOpenAuth, onOpenLocation, selectedCity }: NavbarProps
           <div className="flex items-center gap-4">
             <Link 
               to={user ? "/criar-evento" : "/cadastro"} 
+              onClick={(e) => { if (!user) { e.preventDefault(); openOverlay('auth', 'register'); } }}
               className="hidden md:flex items-center gap-2 text-xs font-extrabold text-navy hover:text-gold transition-colors uppercase tracking-widest"
             >
               Criar evento
@@ -100,11 +103,34 @@ export function Navbar({ onOpenAuth, onOpenLocation, selectedCity }: NavbarProps
               Meus ingressos
             </Link>
             
+            <div 
+              onClick={() => openOverlay('language')}
+              className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-line bg-surface hover:bg-line transition-colors cursor-pointer group relative"
+            >
+              <Globe className="w-4 h-4 text-navy group-hover:text-gold transition-colors" />
+              {activeOverlay === 'language' && (
+                <div className="absolute top-full right-0 mt-2 w-40 bg-white border border-line rounded-xl shadow-xl p-2 z-[60] animate-in fade-in zoom-in-95 duration-200">
+                  {['🇧🇷 Português', '🇺🇸 English', '🇪🇸 Español'].map((lang, idx) => (
+                    <button 
+                      key={lang}
+                      className={cn(
+                        "w-full text-left px-3 py-2 rounded-lg text-xs font-bold transition-colors flex items-center justify-between",
+                        idx === 0 ? "bg-gold/10 text-gold" : "text-navy hover:bg-surface"
+                      )}
+                    >
+                      {lang}
+                      {idx === 0 && <div className="w-1 h-1 rounded-full bg-gold" />}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+
             <AccountMenu 
               user={user}
               onLogout={() => supabase.auth.signOut()}
               onNavigate={(path) => navigate({ to: path as any })}
-              onOpenAuth={() => navigate({ to: "/login" })}
+              onOpenAuth={() => openOverlay('auth', 'login')}
             />
           </div>
         </div>
@@ -123,7 +149,7 @@ export function Navbar({ onOpenAuth, onOpenLocation, selectedCity }: NavbarProps
               </div>
               
               <div 
-                onClick={onOpenLocation}
+                onClick={() => openOverlay('location')}
                 className="flex-[1] flex items-center gap-3 bg-white h-12 px-5 rounded-xl text-sm font-extrabold cursor-pointer hover:border-gold/30 transition-all border-2 border-line text-navy shadow-sm"
               >
                 <MapPin className="w-4 h-4 text-gold" />

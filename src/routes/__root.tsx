@@ -7,7 +7,11 @@ import {
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
-import { useEffect, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
+import { AuthModal } from "@/components/layout/AuthModal";
+import { useUI } from "@/hooks/use-ui";
+import { LocationModal } from "@/components/home/LocationModal";
+
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
@@ -133,11 +137,42 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const { activeOverlay, authView, closeOverlay, openOverlay } = useUI();
+  const router = useRouter();
+  const [isNavigating, setIsNavigating] = useState(false);
+
+  useEffect(() => {
+    return router.subscribe('onBeforeNavigate', () => setIsNavigating(true));
+  }, [router]);
+
+  useEffect(() => {
+    return router.subscribe('onLoad', () => setIsNavigating(false));
+  }, [router]);
 
   return (
     <QueryClientProvider client={queryClient}>
-      {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+      {isNavigating && (
+        <div className="fixed top-0 left-0 right-0 h-1 z-[9999] bg-gold/20 overflow-hidden">
+          <div className="h-full bg-gold w-1/2 animate-progress" />
+        </div>
+      )}
       <Outlet />
+      
+      <AuthModal 
+        isOpen={activeOverlay === 'auth'} 
+        onClose={closeOverlay} 
+        defaultView={authView}
+      />
+      
+      <LocationModal 
+        isOpen={activeOverlay === 'location'}
+        onClose={closeOverlay}
+        onSelect={(city) => {
+          // In a real app we'd dispatch this to a global state or search params
+          console.log("Selected city:", city);
+          closeOverlay();
+        }}
+      />
     </QueryClientProvider>
   );
 }

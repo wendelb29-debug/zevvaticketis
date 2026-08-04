@@ -1,15 +1,16 @@
 import { 
+  LayoutDashboard,
   Mic2, 
-  Music, 
   TreePine, 
-  Leaf, 
   Globe2, 
-  Plane, 
   BookOpen, 
-  Award, 
-  Baby, 
-  Palette,
-  LayoutDashboard
+  Baby,
+  Users,
+  Utensils,
+  Heart,
+  Plane,
+  GraduationCap,
+  Music
 } from "lucide-react";
 import React from "react";
 
@@ -45,7 +46,7 @@ export const CATEGORY_THEMES: Record<CategoryType, CategoryTheme> = {
   "SHOWS GOSPEL": {
     name: "Shows Gospel",
     accentColor: "#E85D4C", // Warm Coral
-    icon: Mic2,
+    icon: Music,
     animationSpeed: "duration-300",
     customClass: "animate-pulse-subtle shadow-[0_0_15px_rgba(232,93,76,0.3)]",
     cardAnimation: "hover:shadow-[0_0_25px_rgba(232,93,76,0.5)] transition-shadow duration-1000",
@@ -61,14 +62,14 @@ export const CATEGORY_THEMES: Record<CategoryType, CategoryTheme> = {
   "CARAVANAS INTERNACIONAIS": {
     name: "Caravanas Internacionais",
     accentColor: "#2C6E7F", // Petrol Blue
-    icon: Globe2,
+    icon: Plane,
     animationSpeed: "duration-300",
     heroPattern: "bg-[url('https://www.transparenttextures.com/patterns/world-map.png')] bg-fixed opacity-10",
   },
   "CURSOS E WORKSHOPS": {
     name: "Cursos e Workshops",
     accentColor: "#4A5FC1", // Indigo
-    icon: BookOpen,
+    icon: GraduationCap,
     animationSpeed: "duration-200",
     customClass: "grid-cols-1 md:grid-cols-3 gap-2 text-sm", // Denser layout idea
   },
