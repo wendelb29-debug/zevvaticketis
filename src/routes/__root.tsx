@@ -123,7 +123,7 @@ function RootShell({ children }: { children: ReactNode }) {
       <head>
         <HeadContent />
       </head>
-      <body className="O modelo de dados de lotes + tipos de ingresso + vaga por veículo (estrutura para caravanas de ônibus/van) O fluxo de checkout passo a passo (do carrinho ao ingresso com QR code) O painel do organizador/produtor (o que precisa ter: criação de evento, financeiro, check-in, relatórios) As funcionalidades extras específicas para igrejas internacionais (multi-moeda, lista de espera, comunicação via WhatsApp etc.) Outra coisa que você tinha em mente botão de voltar para pagina anterior ao acessar outra pagina ou aba">
+      <body>
         {children}
         <Scripts />
       </body>
