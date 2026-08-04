@@ -104,10 +104,12 @@ function TeamManagement() {
         .eq("user_id", user?.id)
         .single();
 
+      if (!member?.organization_id) throw new Error("Organização não encontrada");
+
       const { error } = await supabase
         .from("team_invites")
         .insert({
-          organization_id: member?.organization_id as string,
+          organization_id: member.organization_id,
           email: inviteEmail,
           permissions: selectedPermissions,
           status: 'pendente'
