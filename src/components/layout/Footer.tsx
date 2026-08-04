@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { Mail, Phone, Instagram, Facebook, Globe } from "lucide-react";
+import logoAsset from "@/assets/logo-zevva.png.asset.json";
 
 export function Footer() {
   return (
@@ -8,8 +9,8 @@ export function Footer() {
         {/* Brand */}
         <div className="space-y-6 col-span-1 md:col-span-1">
           <Link to="/" className="flex items-center gap-2 group">
-            <div className="w-8 h-8 bg-coral rounded-lg flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform">
-              <span className="text-white font-manrope font-extrabold text-lg">Z</span>
+            <div className="w-10 h-10 flex items-center justify-center transition-transform group-hover:scale-105">
+              <img src={logoAsset.url} alt="Zevva" className="w-full h-full object-contain" />
             </div>
             <span className="text-lg font-manrope font-extrabold text-coral tracking-tighter">
               ZEVVA <span className="text-navy">TICKETS</span>
