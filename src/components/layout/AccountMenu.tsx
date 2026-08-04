@@ -48,7 +48,7 @@ export function AccountMenu({ user, onLogout, onNavigate, onOpenAuth }: AccountM
       setProfile(profileData);
 
       if (profileData) {
-        const fields = ["nome", "telefone", "documento", "pais_id", "idioma_preferido"];
+        const fields = ["nome", "telefone", "documento", "pais_id", "idioma_preferido"] as const;
         const filledFields = fields.filter(f => profileData[f]);
         setCompletionPercentage(filledFields.length * 20);
       }
