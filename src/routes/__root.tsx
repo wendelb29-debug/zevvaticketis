@@ -122,8 +122,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 });
 
 function RootShell({ children }: { children: ReactNode }) {
+  const { language } = useUI();
   return (
-    <html lang="en">
+    <html lang={language}>
       <head>
         <HeadContent />
       </head>
@@ -137,7 +138,7 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
-  const { activeOverlay, authView, closeOverlay, openOverlay } = useUI();
+  const { activeOverlay, authView, closeOverlay, openOverlay, language } = useUI();
   const router = useRouter();
   const [isNavigating, setIsNavigating] = useState(false);
 
