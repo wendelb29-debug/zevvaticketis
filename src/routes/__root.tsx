@@ -119,7 +119,7 @@ function RootShell({ children }: { children: ReactNode }) {
       <head>
         <HeadContent />
       </head>
-      <body>
+      <body className="chat conecta no GitHub">
         {children}
         <Scripts />
       </body>
