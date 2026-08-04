@@ -68,7 +68,7 @@ function ProdutorDashboard() {
         ].map((item) => (
           <button 
             key={item.label}
-            onClick={() => navigate({ to: '/produtor/novo-evento' })}
+            onClick={() => navigate({ to: '/criar-evento' })}
             className="group flex flex-col items-start p-6 rounded-[24px] border border-line bg-white hover:border-gold/30 hover:shadow-xl transition-all duration-300 text-left"
           >
             <div className={cn("p-3 rounded-2xl mb-4 group-hover:scale-110 transition-transform bg-gradient-to-br", item.color)}>
@@ -133,7 +133,7 @@ function ProdutorDashboard() {
             </TabsList>
             
             <Button 
-              onClick={() => navigate({ to: '/produtor/novo-evento' })}
+              onClick={() => navigate({ to: '/criar-evento' })}
               className="bg-navy hover:bg-navy/90 text-white font-bold rounded-xl h-11 px-6"
             >
               <Plus className="w-4 h-4 mr-2" /> Criar novo evento
@@ -164,7 +164,7 @@ function ProdutorDashboard() {
                 </div>
                 <Button 
                   variant="outline" 
-                  onClick={() => navigate({ to: '/produtor/novo-evento' })}
+                  onClick={() => navigate({ to: '/criar-evento' })}
                   className="h-11 px-8 rounded-xl font-bold border-gold text-gold hover:bg-gold hover:text-white transition-all"
                 >
                   Criar meu primeiro evento

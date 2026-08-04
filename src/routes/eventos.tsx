@@ -6,12 +6,11 @@ export const Route = createFileRoute("/eventos")({
 
 function EventPage() {
   return (
-    <div className="min-h-screen bg-background text-foreground font-sans">
-      {/* Reusing Header structure for consistency */}
-      <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border h-16 flex items-center px-6">
+    <div className="min-h-screen bg-bg text-navy font-sans">
+      <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-line h-20 flex items-center px-6">
         <div className="flex-1">
-          <Link to="/" className="text-xl font-heading font-bold text-primary tracking-tighter">
-            ZEVVA <span className="text-foreground">TICKETS</span>
+          <Link to="/" className="text-xl font-heading font-extrabold text-gold tracking-tighter">
+            ZEVVA <span className="text-navy">TICKETS</span>
           </Link>
         </div>
         <div className="flex-1 max-w-xl flex items-center">
@@ -38,9 +37,11 @@ function EventPage() {
           {/* Main Column */}
           <div className="space-y-8">
             <div className="aspect-video bg-card rounded-2xl overflow-hidden shadow-lg">
-              <div className="w-full h-full bg-muted flex items-center justify-center">
-                <span className="text-muted-foreground font-semibold">Banner do Evento</span>
-              </div>
+              <img 
+                src="https://images.unsplash.com/photo-1544971587-b842c27f8e14?auto=format&fit=crop&q=80&w=1600" 
+                alt="Caravana Terra Santa"
+                className="w-full h-full object-cover"
+              />
             </div>
 
             <div className="space-y-4">
@@ -76,25 +77,49 @@ function EventPage() {
               <h3 className="text-xl font-heading font-bold">Ingressos</h3>
               
               <div className="space-y-4">
-                {[1, 2].map((i) => (
-                  <div key={i} className="p-4 rounded-xl border border-white/5 bg-background/50 space-y-3">
+                {[
+                  { 
+                    id: 1, 
+                    name: "Pacote Premium Individual", 
+                    price: "US$ 4.500,00", 
+                    desc: "Alojamento 5 estrelas + Aéreo",
+                    vagas: 12
+                  },
+                  { 
+                    id: 2, 
+                    name: "Pacote Econômico Duplo", 
+                    price: "US$ 3.200,00", 
+                    desc: "Alojamento 3 estrelas + Aéreo",
+                    vagas: 8
+                  },
+                  { 
+                    id: 3, 
+                    name: "Somente Ingresso (Sem Viagem)", 
+                    price: "US$ 1.500,00", 
+                    desc: "Acesso total à conferência",
+                    vagas: 45
+                  },
+                ].map((ticket) => (
+                  <div key={ticket.id} className="p-4 rounded-xl border border-line bg-white space-y-3 shadow-sm hover:border-gold/30 transition-all">
                     <div className="flex justify-between items-start">
-                      <div>
-                        <h4 className="font-bold text-foreground">Pacote Premium Individual</h4>
-                        <span className="text-xs text-secondary">Alojamento 5 estrelas + Aéreo</span>
+                      <div className="flex-1">
+                        <h4 className="font-bold text-navy leading-tight">{ticket.name}</h4>
+                        <span className="text-xs text-muted font-medium mt-1 block">{ticket.desc}</span>
                       </div>
-                      <div className="text-right">
-                        <span className="block font-bold text-primary">US$ 4.500,00</span>
-                        <span className="text-[10px] bg-success/20 text-success-foreground px-2 py-0.5 rounded-sm font-bold">parcele em 12x</span>
+                      <div className="text-right ml-4">
+                        <span className="block font-extrabold text-gold">{ticket.price}</span>
+                        {ticket.id === 1 && (
+                          <span className="text-[10px] bg-gold/10 text-gold px-2 py-0.5 rounded-sm font-bold uppercase mt-1 inline-block">Mais vendido</span>
+                        )}
                       </div>
                     </div>
                     
-                    <div className="flex items-center justify-between pt-2 border-t border-white/5">
-                      <span className="text-xs text-muted-foreground">Disponibilidade: 15 vagas</span>
-                      <div className="flex items-center gap-3">
-                        <button className="w-8 h-8 rounded-full border border-primary text-primary flex items-center justify-center hover:bg-primary hover:text-background transition-colors">–</button>
-                        <span className="font-bold w-4 text-center">0</span>
-                        <button className="w-8 h-8 rounded-full border border-primary text-primary flex items-center justify-center hover:bg-primary hover:text-background transition-colors">+</button>
+                    <div className="flex items-center justify-between pt-3 border-t border-line">
+                      <span className="text-[10px] text-muted font-extrabold uppercase tracking-widest">Vagas: {ticket.vagas}</span>
+                      <div className="flex items-center border border-line rounded-lg overflow-hidden bg-surface group/stepper">
+                        <button className="w-9 h-9 flex items-center justify-center text-navy hover:bg-gold hover:text-white transition-colors font-bold">–</button>
+                        <span className="font-bold w-10 text-center text-sm text-navy border-x border-line py-2 bg-white">0</span>
+                        <button className="w-9 h-9 flex items-center justify-center text-navy hover:bg-gold hover:text-white transition-colors font-bold">+</button>
                       </div>
                     </div>
                   </div>
@@ -107,7 +132,7 @@ function EventPage() {
                   <button className="text-xs font-bold text-primary hover:underline px-2">APLICAR</button>
                 </div>
                 
-                <button className="w-full bg-primary text-background h-14 rounded-full font-bold hover:bg-accent transition-all shadow-lg text-lg">
+                <button className="w-full bg-gradient-to-r from-gold-bright to-gold text-white h-14 rounded-xl font-extrabold hover:opacity-90 transition-all shadow-[0_6px_20px_rgba(201,154,62,0.3)] text-lg uppercase tracking-wider">
                   Comprar agora
                 </button>
                 
@@ -124,7 +149,7 @@ function EventPage() {
       </main>
 
       {/* Floating Help Bubble */}
-      <button className="fixed bottom-6 right-6 w-12 h-12 bg-primary text-background rounded-full shadow-2xl flex items-center justify-center hover:scale-110 transition-transform z-50">
+      <button className="fixed bottom-8 right-8 w-14 h-14 bg-gradient-to-r from-gold-bright to-gold text-white rounded-full shadow-[0_8px_25px_rgba(201,154,62,0.4)] flex items-center justify-center hover:scale-110 transition-transform z-50">
         <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
         </svg>

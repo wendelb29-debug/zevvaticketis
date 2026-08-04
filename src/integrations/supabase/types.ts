@@ -62,6 +62,51 @@ export type Database = {
         }
         Relationships: []
       }
+      events: {
+        Row: {
+          category: string | null
+          cover_image: string | null
+          created_at: string | null
+          description: string | null
+          end_date: string | null
+          event_type: string | null
+          id: string
+          location: string | null
+          producer_id: string
+          start_date: string | null
+          status: string | null
+          title: string
+        }
+        Insert: {
+          category?: string | null
+          cover_image?: string | null
+          created_at?: string | null
+          description?: string | null
+          end_date?: string | null
+          event_type?: string | null
+          id?: string
+          location?: string | null
+          producer_id: string
+          start_date?: string | null
+          status?: string | null
+          title: string
+        }
+        Update: {
+          category?: string | null
+          cover_image?: string | null
+          created_at?: string | null
+          description?: string | null
+          end_date?: string | null
+          event_type?: string | null
+          id?: string
+          location?: string | null
+          producer_id?: string
+          start_date?: string | null
+          status?: string | null
+          title?: string
+        }
+        Relationships: []
+      }
       organization_members: {
         Row: {
           created_at: string | null
@@ -206,6 +251,50 @@ export type Database = {
             columns: ["pais_id"]
             isOneToOne: false
             referencedRelation: "countries"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      tickets: {
+        Row: {
+          created_at: string | null
+          description: string | null
+          event_id: string
+          id: string
+          name: string
+          price: number
+          quantity: number
+          sale_end: string | null
+          sale_start: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          description?: string | null
+          event_id: string
+          id?: string
+          name: string
+          price?: number
+          quantity?: number
+          sale_end?: string | null
+          sale_start?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          description?: string | null
+          event_id?: string
+          id?: string
+          name?: string
+          price?: number
+          quantity?: number
+          sale_end?: string | null
+          sale_start?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "tickets_event_id_fkey"
+            columns: ["event_id"]
+            isOneToOne: false
+            referencedRelation: "events"
             referencedColumns: ["id"]
           },
         ]

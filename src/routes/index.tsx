@@ -157,36 +157,84 @@ function Index() {
               <Link to="/eventos" className="text-gold text-sm font-extrabold hover:underline uppercase tracking-widest pb-1">Ver tudo</Link>
             </div>
             
-            {/* Note: In a real scenario, these would be fetched. Current UI shows 4 identical mocks which might look like a bug. */}
+            
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-              {[1, 2, 3, 4].map((i) => (
-                <div key={i} className="bg-white rounded-[14px] overflow-hidden border border-line shadow-sm hover:shadow-xl transition-all duration-300 group">
+              {[
+                {
+                  id: 1,
+                  title: "Terra Santa: Passos de Jesus",
+                  location: "Jerusalém, Israel",
+                  date: "Dezembro 2026",
+                  price: "US$ 4.500",
+                  image: "https://images.unsplash.com/photo-1544971587-b842c27f8e14?auto=format&fit=crop&q=80&w=800",
+                  lote: "Lote 1"
+                },
+                {
+                  id: 2,
+                  title: "Grand Tour: Europa Medieval",
+                  location: "Paris, França",
+                  date: "Julho 2026",
+                  price: "US$ 5.200",
+                  image: "https://images.unsplash.com/photo-1511739001486-6bfe10ce785f?auto=format&fit=crop&q=80&w=800",
+                  lote: "Lote 2"
+                },
+                {
+                  id: 3,
+                  title: "Retiro de Jovens: Conexão",
+                  location: "Atibaia, SP",
+                  date: "Janeiro 2026",
+                  price: "R$ 850",
+                  image: "https://images.unsplash.com/photo-1523580494863-6f3031224c94?auto=format&fit=crop&q=80&w=800",
+                  lote: "Últimas vagas"
+                },
+                {
+                  id: 4,
+                  title: "Conferência Internacional de Fé",
+                  location: "Orlando, FL",
+                  date: "Março 2026",
+                  price: "US$ 350",
+                  image: "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&q=80&w=800",
+                  lote: "Promoção"
+                }
+              ].map((event) => (
+                <div key={event.id} className="bg-white rounded-[14px] overflow-hidden border border-line shadow-sm hover:shadow-xl transition-all duration-300 group">
                   <div className="aspect-[4/3] bg-surface relative overflow-hidden">
                     <div className="absolute top-3 right-3 z-10">
-                      <span className="bg-white/90 backdrop-blur-sm text-gold text-[10px] font-extrabold px-3 py-1.5 rounded-full shadow-sm border border-line uppercase tracking-widest">Lote 1</span>
+                      <span className="bg-white/95 backdrop-blur-sm text-gold text-[10px] font-extrabold px-3 py-1.5 rounded-full shadow-sm border border-line uppercase tracking-widest">
+                        {event.lote}
+                      </span>
                     </div>
-                    <div className="w-full h-full bg-surface-2 group-hover:scale-105 transition-transform duration-500" />
+                    <img 
+                      src={event.image} 
+                      alt={event.title}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
                   </div>
                   <div className="p-6 space-y-4">
-                    <h3 className="font-heading font-extrabold text-lg text-navy leading-tight line-clamp-2 min-h-[3.5rem]">Terra Santa: Passos de Jesus</h3>
+                    <h3 className="font-heading font-extrabold text-lg text-navy leading-tight line-clamp-2 min-h-[3.5rem] group-hover:text-gold transition-colors">
+                      {event.title}
+                    </h3>
                     <div className="space-y-2">
                       <div className="flex items-center gap-2 text-sm text-muted font-semibold">
                         <svg className="w-4 h-4 text-gold-deep" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /></svg>
-                        Israel & Jordânia
+                        {event.location}
                       </div>
                       <div className="flex items-center gap-2 text-sm text-muted font-semibold">
                         <svg className="w-4 h-4 text-gold-deep" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
-                        Dezembro 2026
+                        {event.date}
                       </div>
                     </div>
                     <div className="pt-4 border-t border-line flex justify-between items-center">
                       <div className="space-y-0.5">
                         <span className="block text-[10px] text-muted font-bold uppercase tracking-widest">A partir de</span>
-                        <span className="text-xl font-extrabold text-navy">US$ 4.500</span>
+                        <span className="text-xl font-extrabold text-navy">{event.price}</span>
                       </div>
-                      <div className="w-10 h-10 rounded-full bg-surface flex items-center justify-center text-gold group-hover:bg-gold group-hover:text-white transition-all">
+                      <Link 
+                        to="/eventos" 
+                        className="w-10 h-10 rounded-full bg-surface flex items-center justify-center text-gold group-hover:bg-gold group-hover:text-white transition-all shadow-sm"
+                      >
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" /></svg>
-                      </div>
+                      </Link>
                     </div>
                   </div>
                 </div>
