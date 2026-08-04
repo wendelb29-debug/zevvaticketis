@@ -8,6 +8,7 @@ import {
   Users, 
   BarChart3, 
   LogOut, 
+  Plus,
   Bell,
   Menu,
   X,
