@@ -20,13 +20,13 @@ const faqs = [
   },
   {
     question: "É seguro comprar na Zevva Tickets?",
-    answer: "Sim. Utilizamos tecnologia de ponta para processamento de pagamentos e criptografia de dados, garantindo que sua experiência seja 100% protegida."
+    answer: "Sim. Utilizamos tecnologia de ponta para processamento de pagamentos e criptografia de dados, garantindo que sua experiênca seja 100% protegida."
   }
 ];
 
 export function FAQAccordion() {
   return (
-    <Accordion type="single" collapsible className="w-full space-y-4">
+    <Accordion type="single" collapsible className="w-full">
       {faqs.map((faq, index) => (
         <AccordionItem 
           key={index} 
