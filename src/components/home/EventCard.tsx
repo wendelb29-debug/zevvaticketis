@@ -50,11 +50,11 @@ export function EventCard({ event, onToggleFavorite }: EventCardProps) {
 
       <div className="p-6 space-y-4">
         <div className="space-y-2">
-          <div className="flex items-center gap-2 text-gold font-bold text-[10px] uppercase tracking-widest">
+          <div className="flex items-center gap-2 text-coral font-bold text-[10px] uppercase tracking-widest">
             <Calendar className="w-3.5 h-3.5" />
             {formatDate(event.start_date)}
           </div>
-          <h3 className="text-lg font-manrope font-extrabold text-navy line-clamp-2 leading-tight group-hover:text-gold transition-colors">
+          <h3 className="text-lg font-manrope font-extrabold text-navy line-clamp-2 leading-tight group-hover:text-coral transition-colors">
             {event.title}
           </h3>
           <div className="flex items-center gap-1.5 text-muted font-medium text-xs">
@@ -72,7 +72,7 @@ export function EventCard({ event, onToggleFavorite }: EventCardProps) {
           </div>
           <Link 
             to="/eventos" 
-            className="w-10 h-10 rounded-full bg-surface border border-line flex items-center justify-center text-navy group-hover:bg-gold group-hover:border-gold group-hover:text-white transition-all shadow-sm"
+            className="w-10 h-10 rounded-full bg-surface border border-line flex items-center justify-center text-navy group-hover:bg-coral group-hover:border-coral group-hover:text-white transition-all shadow-sm"
           >
             <ArrowRight className="w-5 h-5" />
           </Link>
