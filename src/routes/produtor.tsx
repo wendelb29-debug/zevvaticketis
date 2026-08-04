@@ -68,6 +68,8 @@ export const Route = createFileRoute("/produtor")({
 
 function ProdutorLayout() {
   const [status, setStatus] = useState<string | null>(null);
+  const [memberRole, setMemberRole] = useState<string | null>(null);
+  const [permissions, setPermissions] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState<any>(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
