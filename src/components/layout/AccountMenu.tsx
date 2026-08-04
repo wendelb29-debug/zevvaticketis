@@ -10,7 +10,8 @@ import {
   Settings,
   LogOut,
   ChevronRight,
-  UserCircle
+  UserCircle,
+  Globe
 } from "lucide-react";
 import { 
   DropdownMenu, 
@@ -79,19 +80,27 @@ export function AccountMenu({ user, onLogout, onNavigate, onOpenAuth }: AccountM
             </div>
           </button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent align="end" className="w-48 mt-2 rounded-[16px] p-2 border-line shadow-xl font-manrope">
+        <DropdownMenuContent align="end" className="w-56 mt-2 rounded-[20px] p-2 border-line shadow-2xl font-manrope bg-white">
           <DropdownMenuItem 
             onClick={() => onNavigate("/login")}
-            className="px-4 py-2.5 rounded-xl text-sm font-extrabold text-navy cursor-pointer hover:bg-surface"
+            className="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-extrabold text-navy cursor-pointer hover:bg-surface transition-colors"
           >
+            <UserCircle className="w-4 h-4 text-gold" />
             Entrar
           </DropdownMenuItem>
           <DropdownMenuItem 
             onClick={() => onNavigate("/cadastro")}
-            className="px-4 py-2.5 rounded-xl text-sm font-extrabold text-navy cursor-pointer hover:bg-surface"
+            className="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-extrabold text-navy cursor-pointer hover:bg-surface transition-colors"
           >
+            <PlusCircle className="w-4 h-4 text-gold" />
             Cadastrar
           </DropdownMenuItem>
+          <DropdownMenuSeparator className="bg-line mx-2" />
+          <DropdownMenuItem 
+            className="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-extrabold text-navy cursor-pointer hover:bg-surface transition-colors"
+          >
+            <Globe className="w-4 h-4 text-muted" />
+            Português (BR)
         </DropdownMenuContent>
       </DropdownMenu>
     );
