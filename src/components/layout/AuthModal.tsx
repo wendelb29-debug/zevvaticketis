@@ -68,10 +68,16 @@ export function AuthModal({ isOpen, onClose, defaultView = 'login' }: AuthModalP
       // Completes producer signup securely once the user is authenticated
       await supabase.rpc('ensure_producer_organization');
       toast.success('Login realizado com sucesso!');
+      
+      const { getRedirectPath } = await import("@/lib/auth.functions");
+      const redirectPath = await getRedirectPath();
       onClose();
+      navigate({ to: redirectPath as any });
     } catch (error: any) {
       if (error.message?.includes('Email not confirmed')) {
         toast.error('E-mail ainda não confirmado. Verifique sua caixa de entrada ou spam.');
+      } else if (error.message?.includes('Invalid login credentials')) {
+        toast.error('E-mail ou senha incorretos. Por favor, verifique seus dados.');
       } else {
         toast.error(error.message || 'Erro ao fazer login');
       }
