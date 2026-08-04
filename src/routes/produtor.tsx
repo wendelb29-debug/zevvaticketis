@@ -156,6 +156,7 @@ function ProdutorLayout() {
           <Link
             key={item.label}
             to={item.href}
+            activeOptions={item.activeOptions}
             className="flex items-center gap-3 px-4 py-3.5 rounded-xl text-sm font-bold transition-all duration-200"
             activeProps={{ className: "bg-gold text-white shadow-lg shadow-gold/20" }}
             inactiveProps={{ className: "text-muted hover:bg-surface hover:text-navy" }}
