@@ -20,7 +20,7 @@ function Index() {
   const [isLocationModalOpen, setIsLocationModalOpen] = useState(false);
   const [nearbyError, setNearbyError] = useState(false);
   const navigate = useNavigate();
-  const { cidade: selectedCity } = useSearch({ from: "/" });
+  const { cidade: selectedCity } = useSearch({ from: "/" }) as { cidade?: string };
 
   const handleAuthClick = async (e: React.MouseEvent) => {
     e.preventDefault();
@@ -53,13 +53,12 @@ function Index() {
     if (city === "nearby") {
       // Simulate geolocation matching none
       setNearbyError(true);
-      navigate({ search: (prev) => ({ ...prev, cidade: undefined }) });
+      navigate({ search: { cidade: undefined } });
     } else {
       navigate({ 
-        search: (prev) => ({ 
-          ...prev, 
+        search: { 
           cidade: city ? city.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "") : undefined 
-        }) 
+        } 
       });
     }
   };
