@@ -9,7 +9,7 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/")({
   validateSearch: (search: Record<string, unknown>) => {
     return {
-      cidade: (search.cidade as string) || undefined,
+      cidade: (search['cidade'] as string) || undefined,
     };
   },
   component: Index,
