@@ -192,20 +192,29 @@ function NewEventWizard() {
               <div className="grid gap-6">
                 <div className="space-y-2">
                   <label className="text-sm font-bold text-navy uppercase tracking-wider">Nome do Evento</label>
-                  <Input placeholder="Ex: Conferência Internacional de Fé 2024" className="h-14 rounded-xl border-line focus-visible:ring-gold" />
-                </div>
-                <div className="space-y-2">
-                  <label className="text-sm font-bold text-navy uppercase tracking-wider">Subtítulo (Opcional)</label>
-                  <Input placeholder="Um resumo curto do evento" className="h-14 rounded-xl border-line focus-visible:ring-gold" />
+                  <Input 
+                    placeholder="Ex: Conferência Internacional de Fé 2024" 
+                    className="h-14 rounded-xl border-line focus-visible:ring-gold" 
+                    value={formData.title}
+                    onChange={(e) => setFormData({...formData, title: e.target.value})}
+                  />
                 </div>
                 <div className="space-y-2">
                   <label className="text-sm font-bold text-navy uppercase tracking-wider">Descrição</label>
-                  <Textarea placeholder="Descreva todos os detalhes do seu evento..." className="min-h-[150px] rounded-xl border-line focus-visible:ring-gold" />
+                  <Textarea 
+                    placeholder="Descreva todos os detalhes do seu evento..." 
+                    className="min-h-[150px] rounded-xl border-line focus-visible:ring-gold" 
+                    value={formData.description}
+                    onChange={(e) => setFormData({...formData, description: e.target.value})}
+                  />
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   <div className="space-y-2">
                     <label className="text-sm font-bold text-navy uppercase tracking-wider">Categoria</label>
-                    <Select>
+                    <Select 
+                      value={formData.category}
+                      onValueChange={(val) => setFormData({...formData, category: val})}
+                    >
                       <SelectTrigger className="h-14 rounded-xl border-line">
                         <SelectValue placeholder="Selecione uma categoria" />
                       </SelectTrigger>
@@ -219,7 +228,10 @@ function NewEventWizard() {
                   </div>
                   <div className="space-y-2">
                     <label className="text-sm font-bold text-navy uppercase tracking-wider">Tipo</label>
-                    <Select defaultValue="presencial">
+                    <Select 
+                      value={formData.event_type}
+                      onValueChange={(val) => setFormData({...formData, event_type: val})}
+                    >
                       <SelectTrigger className="h-14 rounded-xl border-line">
                         <SelectValue placeholder="Selecione o tipo" />
                       </SelectTrigger>
