@@ -76,6 +76,8 @@ export function AuthModal({ isOpen, onClose, defaultView = 'login' }: AuthModalP
     } catch (error: any) {
       if (error.message?.includes('Email not confirmed')) {
         toast.error('E-mail ainda não confirmado. Verifique sua caixa de entrada ou spam.');
+      } else if (error.message?.includes('Invalid login credentials')) {
+        toast.error('E-mail ou senha incorretos. Por favor, verifique seus dados.');
       } else {
         toast.error(error.message || 'Erro ao fazer login');
       }
