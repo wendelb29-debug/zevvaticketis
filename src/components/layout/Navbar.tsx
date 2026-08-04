@@ -110,17 +110,28 @@ export function Navbar({ selectedCity }: { selectedCity?: string | null }) {
             >
               <Globe className="w-4 h-4 text-navy group-hover:text-coral transition-colors" />
               {activeOverlay === 'language' && (
-                <div className="absolute top-full right-0 mt-2 w-40 bg-white border border-line rounded-xl shadow-xl p-2 z-[60] animate-in fade-in zoom-in-95 duration-200">
-                  {['🇧🇷 Português', '🇺🇸 English', '🇪🇸 Español'].map((lang, idx) => (
+                <div className="absolute top-full right-0 mt-2 w-48 bg-white border border-line rounded-xl shadow-xl p-2 z-[60] animate-in fade-in zoom-in-95 duration-200">
+                  {[
+                    { id: 'pt', label: '🇧🇷 Português' },
+                    { id: 'en', label: '🇺🇸 English' },
+                    { id: 'es', label: '🇪🇸 Español' },
+                    { id: 'ja', label: '🇯🇵 日本語' },
+                    { id: 'zh', label: '🇨🇳 中文' },
+                    { id: 'ar', label: '🇸🇦 العربية' }
+                  ].map((lang) => (
                     <button 
-                      key={lang}
+                      key={lang.id}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setLanguage(lang.id as any);
+                      }}
                       className={cn(
                         "w-full text-left px-3 py-2 rounded-lg text-xs font-bold transition-colors flex items-center justify-between",
-                        idx === 0 ? "bg-coral/10 text-coral" : "text-navy hover:bg-surface"
+                        language === lang.id ? "bg-coral/10 text-coral" : "text-navy hover:bg-surface"
                       )}
                     >
-                      {lang}
-                      {idx === 0 && <div className="w-1 h-1 rounded-full bg-coral" />}
+                      {lang.label}
+                      {language === lang.id && <div className="w-1.5 h-1.5 rounded-full bg-coral" />}
                     </button>
                   ))}
                 </div>
