@@ -177,14 +177,13 @@ function Index() {
         )}
         <div className="px-6 max-w-7xl mx-auto">
           {/* Hero Carousel */}
-          <div className="relative w-full aspect-[21/9] bg-surface-2 rounded-2xl overflow-hidden group shadow-md border border-line">
-            <div className="absolute inset-0 bg-gradient-to-r from-navy/40 to-transparent" />
+          <div className="relative w-full aspect-[21/9] rounded-2xl overflow-hidden group shadow-md border border-line dark-panel">
             <div className="absolute inset-0 flex items-center px-12">
               <div className="max-w-xl text-white">
                 <span className="inline-block bg-gold text-white px-3 py-1 rounded-full text-[10px] font-extrabold uppercase tracking-widest mb-4 border border-white/20 shadow-sm">Destaque</span>
                 <h2 className="text-4xl md:text-5xl font-heading font-extrabold mb-4 leading-tight">Grand Tour 2026: Europa Medieval</h2>
                 <p className="text-lg text-white/90 mb-8 font-medium leading-relaxed">Uma jornada inesquecível pelas catedrais e castelos mais icônicos do velho continente.</p>
-                <button className="bg-gradient-to-r from-gold-bright to-gold text-white px-10 py-4 rounded-[11px] font-extrabold hover:opacity-90 transition-all shadow-[0_6px_20px_rgba(201,154,62,0.3)] text-sm uppercase tracking-wider">Ver Detalhes</button>
+                <Button className="bg-[image:var(--grad-cta)] text-white px-10 py-6 rounded-xl font-extrabold transition-all uppercase tracking-wider text-sm shadow-[0_8px_20px_-4px_rgba(201,154,62,0.4)]">Ver Detalhes</Button>
               </div>
             </div>
             
@@ -248,10 +247,10 @@ function Index() {
                 ))
               ) : filteredEvents.length > 0 ? (
                 filteredEvents.map((event) => (
-                <div key={event.id} className="bg-white rounded-[14px] overflow-hidden border border-line shadow-sm hover:shadow-xl transition-all duration-300 group">
+                <div key={event.id} className="bg-white rounded-[14px] overflow-hidden border border-line shadow-sm hover-lift group">
                   <div className="aspect-[4/3] bg-surface relative overflow-hidden">
                     <div className="absolute top-3 right-3 z-10">
-                      <span className="bg-white text-gold text-[10px] font-extrabold px-3 py-1.5 rounded-full shadow-md border-2 border-gold/20 uppercase tracking-widest">
+                      <span className="glass-panel text-gold text-[10px] font-extrabold px-3 py-1.5 rounded-full shadow-md uppercase tracking-widest">
                         {event.lote}
                       </span>
                     </div>
@@ -304,7 +303,7 @@ function Index() {
           </section>
 
           {/* Producers Banner */}
-          <section className="bg-gradient-to-br from-surface to-surface-2 rounded-3xl p-12 border border-line shadow-sm overflow-hidden relative">
+          <section className="bg-gradient-to-br from-surface to-surface-2 rounded-3xl p-12 border border-line shadow-sm overflow-hidden relative group hover:border-gold/20 transition-all">
             <div className="absolute top-0 right-0 w-1/3 h-full bg-gold/5 -skew-x-12 translate-x-1/2" />
             <div className="max-w-2xl space-y-8 relative z-10">
               <h2 className="text-4xl font-heading font-extrabold leading-tight text-navy">Crie eventos, divulgar e vender seu evento."</h2>
