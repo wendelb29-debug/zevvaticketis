@@ -159,12 +159,12 @@ function TeamManagement() {
             <div className="space-y-6 py-6">
               <div className="space-y-2">
                 <label className="text-[10px] font-extrabold uppercase tracking-widest text-muted">E-mail do convidado</label>
-                <Input 
-                  placeholder="exemplo@email.com" 
-                  value={inviteEmail}
-                  onChange={(e) => setInviteEmail(e.target.value)}
-                  className="h-12 rounded-xl"
-                />
+        <Input 
+          placeholder="exemplo@email.com" 
+          value={inviteEmail}
+          onChange={(e) => setInviteEmail(e.target.value)}
+          className="h-12 rounded-xl"
+        />
               </div>
 
               <div className="space-y-4">
