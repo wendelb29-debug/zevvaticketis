@@ -6,6 +6,7 @@ import {
   MapPin, 
   Share2, 
   ArrowLeft,
+  ArrowRight,
   Info,
   ShieldCheck,
   Clock,
