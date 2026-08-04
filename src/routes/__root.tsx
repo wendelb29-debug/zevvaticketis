@@ -119,7 +119,7 @@ function RootShell({ children }: { children: ReactNode }) {
       <head>
         <HeadContent />
       </head>
-      <body className="chat conecta no GitHub">
+      <body className="cria um ripositorio no github do zevva tickets">
         {children}
         <Scripts />
       </body>
