@@ -14,6 +14,8 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { useNavigate } from "@tanstack/react-router";
 import { Eye, EyeOff, Mail, ArrowLeft, Loader2 } from "lucide-react";
+import { getRedirectPath } from "@/lib/auth.functions";
+import { useServerFn } from "@tanstack/react-start";
 
 interface AuthModalProps {
   isOpen: boolean;
