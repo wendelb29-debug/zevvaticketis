@@ -188,23 +188,85 @@ function CriarEventoWizard() {
             </div>
           </div>
         );
-      case 3:
+      case 4:
         return (
-          <div className="space-y-8 animate-in fade-in zoom-in-95 duration-500 text-center py-10">
-            <div className="w-20 h-20 bg-surface rounded-full flex items-center justify-center mx-auto text-gold mb-6">
-              <Ticket className="w-10 h-10" />
+          <div className="space-y-8 animate-in fade-in slide-in-from-right-4 duration-500">
+            <div className="space-y-6">
+              <div className="space-y-2">
+                <label className="text-sm font-bold text-navy uppercase tracking-wider">URL do Vídeo (YouTube / Vimeo)</label>
+                <Input placeholder="https://youtube.com/watch?v=..." className="h-14 rounded-xl" />
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-2"><label className="text-sm font-bold text-navy uppercase tracking-wider">Instagram</label><Input placeholder="@seuusuario" className="h-14 rounded-xl" /></div>
+                <div className="space-y-2"><label className="text-sm font-bold text-navy uppercase tracking-wider">Facebook</label><Input placeholder="fb.com/suapagina" className="h-14 rounded-xl" /></div>
+              </div>
+              <div className="space-y-2">
+                <label className="text-sm font-bold text-navy uppercase tracking-wider">Tags (separadas por vírgula)</label>
+                <Input placeholder="Viagem, Conferência, Terra Santa" className="h-14 rounded-xl" />
+              </div>
+              <div className="p-6 rounded-2xl bg-surface border border-line space-y-4">
+                <h4 className="font-bold text-navy">Configurações de SEO</h4>
+                <div className="space-y-2">
+                  <label className="text-xs font-bold text-muted uppercase">Título da página</label>
+                  <Input className="bg-white" />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-xs font-bold text-muted uppercase">Descrição para buscadores</label>
+                  <Textarea className="bg-white" />
+                </div>
+              </div>
             </div>
-            <h3 className="text-2xl font-bold text-navy">Gerenciamento de Ingressos</h3>
-            <p className="text-muted font-medium mb-8">Crie lotes e defina preços para seu evento.</p>
-            <Button className="h-14 px-10 rounded-xl bg-navy text-white font-bold">
-              <Plus className="w-5 h-5 mr-2" /> Adicionar ingresso
-            </Button>
           </div>
         );
-      default:
+      case 5:
         return (
-          <div className="py-20 text-center text-muted font-medium">
-            Em breve: Conteúdo da etapa {step}
+          <div className="space-y-8 animate-in fade-in zoom-in-95 duration-500">
+            <div className="p-8 rounded-[24px] bg-surface/50 border border-line space-y-8">
+              <div className="flex items-center gap-6">
+                <div className="w-32 h-20 bg-line rounded-lg flex items-center justify-center text-muted">
+                  <ImageIcon className="w-8 h-8" />
+                </div>
+                <div className="space-y-1">
+                  <h3 className="text-xl font-bold text-navy">Título do seu evento aparecerá aqui</h3>
+                  <div className="flex items-center gap-4 text-sm text-muted font-medium">
+                    <span className="flex items-center gap-1"><Calendar className="w-4 h-4" /> 20 Dez, 2026</span>
+                    <span className="flex items-center gap-1"><MapPin className="w-4 h-4" /> Jerusalém, Israel</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-3 gap-6">
+                <div className="p-4 bg-white rounded-xl border border-line text-center">
+                  <p className="text-[10px] font-extrabold text-muted uppercase tracking-widest mb-1">Status</p>
+                  <Badge variant="outline" className="text-gold border-gold/30 bg-gold/5">Rascunho</Badge>
+                </div>
+                <div className="p-4 bg-white rounded-xl border border-line text-center">
+                  <p className="text-[10px] font-extrabold text-muted uppercase tracking-widest mb-1">Visibilidade</p>
+                  <p className="font-bold text-navy">Público</p>
+                </div>
+                <div className="p-4 bg-white rounded-xl border border-line text-center">
+                  <p className="text-[10px] font-extrabold text-muted uppercase tracking-widest mb-1">Taxas</p>
+                  <p className="font-bold text-navy">Por conta do comprador</p>
+                </div>
+              </div>
+
+              <div className="space-y-4">
+                <h4 className="font-bold text-navy border-b border-line pb-2">Ingressos configurados</h4>
+                <div className="space-y-2">
+                  <div className="flex justify-between items-center p-3 bg-white rounded-lg border border-line">
+                    <span className="font-medium text-navy text-sm">Pacote Premium Individual</span>
+                    <span className="font-bold text-gold">US$ 4.500,00</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div className="flex items-start gap-3 p-4 bg-blue-50 rounded-xl border border-blue-100">
+              <CheckCircle2 className="w-5 h-5 text-blue-600 mt-0.5" />
+              <p className="text-sm text-blue-800 font-medium">
+                Ao publicar, seu evento ficará disponível imediatamente para venda em nosso marketplace.
+              </p>
+            </div>
           </div>
         );
     }
