@@ -101,6 +101,7 @@ export function AccountMenu({ user, onLogout, onNavigate, onOpenAuth }: AccountM
           >
             <Globe className="w-4 h-4 text-muted" />
             Português (BR)
+          </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
     );
