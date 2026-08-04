@@ -107,7 +107,7 @@ function TeamManagement() {
       const { error } = await supabase
         .from("team_invites")
         .insert({
-          organization_id: member?.organization_id,
+          organization_id: member?.organization_id as string,
           email: inviteEmail,
           permissions: selectedPermissions,
           status: 'pendente'
