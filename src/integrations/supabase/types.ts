@@ -816,7 +816,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      promote_to_platform_admin: {
+        Args: { target_email: string }
+        Returns: Json
+      }
     }
     Enums: {
       [_ in never]: never
