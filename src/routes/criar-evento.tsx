@@ -18,7 +18,10 @@ import {
   Calendar,
   Ticket,
   Plus,
-  ArrowLeft
+  ArrowLeft,
+  Sparkles,
+  ArrowRight,
+  Eye
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -35,6 +38,7 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
 import { cn } from "@/lib/utils";
+import { CATEGORY_THEMES, getThemeByCategory } from "@/lib/categoryThemes";
 
 export const Route = createFileRoute("/criar-evento")({
   beforeLoad: async () => {
