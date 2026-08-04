@@ -816,6 +816,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      ensure_producer_organization_admin: {
+        Args: { _uid: string }
+        Returns: Json
+      }
       promote_to_platform_admin: {
         Args: { target_email: string }
         Returns: Json
