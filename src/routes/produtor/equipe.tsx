@@ -98,10 +98,12 @@ function TeamManagement() {
     
     try {
       const { data: { user } } = await supabase.auth.getUser();
+      if (!user) throw new Error("Usuário não autenticado");
+
       const { data: member } = await supabase
         .from("organization_members")
         .select("organization_id")
-        .eq("user_id", user?.id)
+        .eq("user_id", user.id)
         .single();
 
       if (!member?.organization_id) throw new Error("Organização não encontrada");
