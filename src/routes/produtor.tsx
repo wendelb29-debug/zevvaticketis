@@ -169,10 +169,13 @@ function ProdutorLayout() {
 
   const allMenuItems = [
     { label: "Dashboard", icon: LayoutDashboard, href: "/produtor", activeOptions: { exact: true } },
-    { label: "Meus Eventos", icon: Plus, href: "/produtor/eventos", permission: "eventos" },
+    { label: "Meus Eventos", icon: Plus, href: "/produtor/eventos", permission: "owner" },
     { label: "Financeiro", icon: BarChart3, href: "/produtor/financeiro", permission: "financeiro" },
-    { label: "Relatórios", icon: FileText, href: "/produtor/relatorios", permission: "relatorios" },
-    { label: "Minha Equipe", icon: Users, href: "/produtor/equipe", permission: "equipe" },
+    { label: "Relatórios", icon: FileText, href: "/produtor/relatorios", permission: "financeiro" },
+    { label: "Check-in", icon: ShieldCheck, href: "/checkin", external: true },
+    { label: "Marketing", icon: Globe, href: "/produtor/marketing", permission: "marketing" },
+    { label: "Suporte", icon: Users, href: "/produtor/suporte", permission: "suporte" },
+    { label: "Minha Equipe", icon: Users, href: "/produtor/equipe", permission: "owner" },
     { label: "Configurações", icon: SettingsIcon, href: "/produtor/configuracoes", permission: "owner" },
   ];
 
@@ -181,18 +184,19 @@ function ProdutorLayout() {
     if (memberRole === 'produtor_owner') return true;
     
     // Team members see based on permissions
-    // But some pages are exclusive to owner
-    if (item.label === "Minha Equipe" || item.label === "Configurações") {
-      return memberRole === 'produtor_owner';
+    // Check permission for specific tab
+    if (item.permission) {
+      if (item.permission === "owner") return memberRole === 'produtor_owner';
+      return permissions.includes(item.permission);
+    }
+
+    // Special case for Check-in
+    if (item.label === "Check-in") {
+      return permissions.includes('checkin');
     }
     
     // If it's the dashboard, everyone sees it
     if (item.label === "Dashboard") return true;
-    
-    // Check permission for specific tab
-    if (item.permission) {
-      return permissions.includes(item.permission);
-    }
     
     return false;
   });
@@ -206,19 +210,33 @@ function ProdutorLayout() {
       </div>
       
       <nav className="flex-1 space-y-1 px-4">
-        {filteredMenuItems.map((item) => (
-          <Link
-            key={item.label}
-            to={item.href}
-            {...(item.activeOptions ? { activeOptions: item.activeOptions } : {})}
-            className="flex items-center gap-3 px-4 py-3.5 rounded-xl text-sm font-extrabold transition-all duration-200"
-            activeProps={{ className: "bg-coral text-white shadow-lg shadow-coral/30" }}
-            inactiveProps={{ className: "text-navy hover:bg-surface-2 hover:text-navy" }}
-          >
-            <item.icon className="w-5 h-5" />
-            {item.label}
-          </Link>
-        ))}
+        {filteredMenuItems.map((item) => {
+          const isExternal = (item as any).external;
+          const LinkComponent = isExternal ? 'a' : Link;
+          const linkProps = isExternal 
+            ? { href: item.href, target: "_blank", rel: "noopener noreferrer" }
+            : { to: item.href, ...(item.activeOptions ? { activeOptions: item.activeOptions } : {}) };
+
+          return (
+            <LinkComponent
+              key={item.label}
+              {...(linkProps as any)}
+              className={cn(
+                "flex items-center gap-3 px-4 py-3.5 rounded-xl text-sm font-extrabold transition-all duration-200",
+                !isExternal && "inactive-class" // Placeholder for actual logic below
+              )}
+              {...(!isExternal ? {
+                activeProps: { className: "bg-coral text-white shadow-lg shadow-coral/30" },
+                inactiveProps: { className: "text-navy hover:bg-surface-2 hover:text-navy" }
+              } : {
+                className: "flex items-center gap-3 px-4 py-3.5 rounded-xl text-sm font-extrabold text-navy hover:bg-surface-2 transition-all duration-200"
+              })}
+            >
+              <item.icon className="w-5 h-5" />
+              {item.label}
+            </LinkComponent>
+          );
+        })}
       </nav>
 
       <div className="px-4 mt-auto">

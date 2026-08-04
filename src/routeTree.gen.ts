@@ -22,7 +22,11 @@ import { Route as ProdutorRouteImport } from './routes/produtor'
 import { Route as ProdutorPendenteRouteImport } from './routes/produtor-pendente'
 import { Route as Char91DotmcpChar93ListToolsRouteImport } from './routes/[.mcp]/list-tools'
 import { Route as Char91DotwellKnownChar93OauthProtectedResourceRouteImport } from './routes/[.well-known]/oauth-protected-resource'
+import { Route as AdminAprovacoesRouteImport } from './routes/admin/aprovacoes'
 import { Route as AdminConfiguracoesRouteImport } from './routes/admin/configuracoes'
+import { Route as AdminPaisesMoedasRouteImport } from './routes/admin/paises-moedas'
+import { Route as AdminPlanosRouteImport } from './routes/admin/planos'
+import { Route as AdminProdutoresRouteImport } from './routes/admin/produtores'
 import { Route as AppIndexRouteImport } from './routes/app/index'
 import { Route as AppHistoricoRouteImport } from './routes/app/historico'
 import { Route as AppPerfilRouteImport } from './routes/app/perfil'
@@ -30,7 +34,9 @@ import { Route as AuthCallbackRouteImport } from './routes/auth/callback'
 import { Route as ProdutorIndexRouteImport } from './routes/produtor/index'
 import { Route as ProdutorConfiguracoesRouteImport } from './routes/produtor/configuracoes'
 import { Route as ProdutorEquipeRouteImport } from './routes/produtor/equipe'
+import { Route as ProdutorMarketingRouteImport } from './routes/produtor/marketing'
 import { Route as ProdutorNovoEventoRouteImport } from './routes/produtor/novo-evento'
+import { Route as ProdutorSuporteRouteImport } from './routes/produtor/suporte'
 import { Route as DotlovableOauthConsentRouteImport } from './routes/[.]lovable.oauth.consent'
 import { Route as Char91DotmcpChar93InvokeToolToolRouteImport } from './routes/[.mcp]/invoke-tool/$tool'
 
@@ -101,9 +107,29 @@ const Char91DotwellKnownChar93OauthProtectedResourceRoute =
     path: '/.well-known/oauth-protected-resource',
     getParentRoute: () => rootRouteImport,
   } as any)
+const AdminAprovacoesRoute = AdminAprovacoesRouteImport.update({
+  id: '/aprovacoes',
+  path: '/aprovacoes',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminConfiguracoesRoute = AdminConfiguracoesRouteImport.update({
   id: '/configuracoes',
   path: '/configuracoes',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminPaisesMoedasRoute = AdminPaisesMoedasRouteImport.update({
+  id: '/paises-moedas',
+  path: '/paises-moedas',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminPlanosRoute = AdminPlanosRouteImport.update({
+  id: '/planos',
+  path: '/planos',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminProdutoresRoute = AdminProdutoresRouteImport.update({
+  id: '/produtores',
+  path: '/produtores',
   getParentRoute: () => AdminRoute,
 } as any)
 const AppIndexRoute = AppIndexRouteImport.update({
@@ -141,9 +167,19 @@ const ProdutorEquipeRoute = ProdutorEquipeRouteImport.update({
   path: '/equipe',
   getParentRoute: () => ProdutorRoute,
 } as any)
+const ProdutorMarketingRoute = ProdutorMarketingRouteImport.update({
+  id: '/marketing',
+  path: '/marketing',
+  getParentRoute: () => ProdutorRoute,
+} as any)
 const ProdutorNovoEventoRoute = ProdutorNovoEventoRouteImport.update({
   id: '/novo-evento',
   path: '/novo-evento',
+  getParentRoute: () => ProdutorRoute,
+} as any)
+const ProdutorSuporteRoute = ProdutorSuporteRouteImport.update({
+  id: '/suporte',
+  path: '/suporte',
   getParentRoute: () => ProdutorRoute,
 } as any)
 const DotlovableOauthConsentRoute = DotlovableOauthConsentRouteImport.update({
@@ -172,13 +208,19 @@ export interface FileRoutesByFullPath {
   '/produtor-pendente': typeof ProdutorPendenteRoute
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
+  '/admin/aprovacoes': typeof AdminAprovacoesRoute
   '/admin/configuracoes': typeof AdminConfiguracoesRoute
+  '/admin/paises-moedas': typeof AdminPaisesMoedasRoute
+  '/admin/planos': typeof AdminPlanosRoute
+  '/admin/produtores': typeof AdminProdutoresRoute
   '/app/historico': typeof AppHistoricoRoute
   '/app/perfil': typeof AppPerfilRoute
   '/auth/callback': typeof AuthCallbackRoute
   '/produtor/configuracoes': typeof ProdutorConfiguracoesRoute
   '/produtor/equipe': typeof ProdutorEquipeRoute
+  '/produtor/marketing': typeof ProdutorMarketingRoute
   '/produtor/novo-evento': typeof ProdutorNovoEventoRoute
+  '/produtor/suporte': typeof ProdutorSuporteRoute
   '/app/': typeof AppIndexRoute
   '/produtor/': typeof ProdutorIndexRoute
   '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
@@ -196,13 +238,19 @@ export interface FileRoutesByTo {
   '/produtor-pendente': typeof ProdutorPendenteRoute
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
+  '/admin/aprovacoes': typeof AdminAprovacoesRoute
   '/admin/configuracoes': typeof AdminConfiguracoesRoute
+  '/admin/paises-moedas': typeof AdminPaisesMoedasRoute
+  '/admin/planos': typeof AdminPlanosRoute
+  '/admin/produtores': typeof AdminProdutoresRoute
   '/app/historico': typeof AppHistoricoRoute
   '/app/perfil': typeof AppPerfilRoute
   '/auth/callback': typeof AuthCallbackRoute
   '/produtor/configuracoes': typeof ProdutorConfiguracoesRoute
   '/produtor/equipe': typeof ProdutorEquipeRoute
+  '/produtor/marketing': typeof ProdutorMarketingRoute
   '/produtor/novo-evento': typeof ProdutorNovoEventoRoute
+  '/produtor/suporte': typeof ProdutorSuporteRoute
   '/app': typeof AppIndexRoute
   '/produtor': typeof ProdutorIndexRoute
   '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
@@ -223,13 +271,19 @@ export interface FileRoutesById {
   '/produtor-pendente': typeof ProdutorPendenteRoute
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
+  '/admin/aprovacoes': typeof AdminAprovacoesRoute
   '/admin/configuracoes': typeof AdminConfiguracoesRoute
+  '/admin/paises-moedas': typeof AdminPaisesMoedasRoute
+  '/admin/planos': typeof AdminPlanosRoute
+  '/admin/produtores': typeof AdminProdutoresRoute
   '/app/historico': typeof AppHistoricoRoute
   '/app/perfil': typeof AppPerfilRoute
   '/auth/callback': typeof AuthCallbackRoute
   '/produtor/configuracoes': typeof ProdutorConfiguracoesRoute
   '/produtor/equipe': typeof ProdutorEquipeRoute
+  '/produtor/marketing': typeof ProdutorMarketingRoute
   '/produtor/novo-evento': typeof ProdutorNovoEventoRoute
+  '/produtor/suporte': typeof ProdutorSuporteRoute
   '/app/': typeof AppIndexRoute
   '/produtor/': typeof ProdutorIndexRoute
   '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
@@ -251,13 +305,19 @@ export interface FileRouteTypes {
     | '/produtor-pendente'
     | '/.mcp/list-tools'
     | '/.well-known/oauth-protected-resource'
+    | '/admin/aprovacoes'
     | '/admin/configuracoes'
+    | '/admin/paises-moedas'
+    | '/admin/planos'
+    | '/admin/produtores'
     | '/app/historico'
     | '/app/perfil'
     | '/auth/callback'
     | '/produtor/configuracoes'
     | '/produtor/equipe'
+    | '/produtor/marketing'
     | '/produtor/novo-evento'
+    | '/produtor/suporte'
     | '/app/'
     | '/produtor/'
     | '/.lovable/oauth/consent'
@@ -275,13 +335,19 @@ export interface FileRouteTypes {
     | '/produtor-pendente'
     | '/.mcp/list-tools'
     | '/.well-known/oauth-protected-resource'
+    | '/admin/aprovacoes'
     | '/admin/configuracoes'
+    | '/admin/paises-moedas'
+    | '/admin/planos'
+    | '/admin/produtores'
     | '/app/historico'
     | '/app/perfil'
     | '/auth/callback'
     | '/produtor/configuracoes'
     | '/produtor/equipe'
+    | '/produtor/marketing'
     | '/produtor/novo-evento'
+    | '/produtor/suporte'
     | '/app'
     | '/produtor'
     | '/.lovable/oauth/consent'
@@ -301,13 +367,19 @@ export interface FileRouteTypes {
     | '/produtor-pendente'
     | '/.mcp/list-tools'
     | '/.well-known/oauth-protected-resource'
+    | '/admin/aprovacoes'
     | '/admin/configuracoes'
+    | '/admin/paises-moedas'
+    | '/admin/planos'
+    | '/admin/produtores'
     | '/app/historico'
     | '/app/perfil'
     | '/auth/callback'
     | '/produtor/configuracoes'
     | '/produtor/equipe'
+    | '/produtor/marketing'
     | '/produtor/novo-evento'
+    | '/produtor/suporte'
     | '/app/'
     | '/produtor/'
     | '/.lovable/oauth/consent'
@@ -426,11 +498,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof Char91DotwellKnownChar93OauthProtectedResourceRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/aprovacoes': {
+      id: '/admin/aprovacoes'
+      path: '/aprovacoes'
+      fullPath: '/admin/aprovacoes'
+      preLoaderRoute: typeof AdminAprovacoesRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/configuracoes': {
       id: '/admin/configuracoes'
       path: '/configuracoes'
       fullPath: '/admin/configuracoes'
       preLoaderRoute: typeof AdminConfiguracoesRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/paises-moedas': {
+      id: '/admin/paises-moedas'
+      path: '/paises-moedas'
+      fullPath: '/admin/paises-moedas'
+      preLoaderRoute: typeof AdminPaisesMoedasRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/planos': {
+      id: '/admin/planos'
+      path: '/planos'
+      fullPath: '/admin/planos'
+      preLoaderRoute: typeof AdminPlanosRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/produtores': {
+      id: '/admin/produtores'
+      path: '/produtores'
+      fullPath: '/admin/produtores'
+      preLoaderRoute: typeof AdminProdutoresRouteImport
       parentRoute: typeof AdminRoute
     }
     '/app/': {
@@ -482,11 +582,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProdutorEquipeRouteImport
       parentRoute: typeof ProdutorRoute
     }
+    '/produtor/marketing': {
+      id: '/produtor/marketing'
+      path: '/marketing'
+      fullPath: '/produtor/marketing'
+      preLoaderRoute: typeof ProdutorMarketingRouteImport
+      parentRoute: typeof ProdutorRoute
+    }
     '/produtor/novo-evento': {
       id: '/produtor/novo-evento'
       path: '/novo-evento'
       fullPath: '/produtor/novo-evento'
       preLoaderRoute: typeof ProdutorNovoEventoRouteImport
+      parentRoute: typeof ProdutorRoute
+    }
+    '/produtor/suporte': {
+      id: '/produtor/suporte'
+      path: '/suporte'
+      fullPath: '/produtor/suporte'
+      preLoaderRoute: typeof ProdutorSuporteRouteImport
       parentRoute: typeof ProdutorRoute
     }
     '/.lovable/oauth/consent': {
@@ -507,11 +621,19 @@ declare module '@tanstack/react-router' {
 }
 
 interface AdminRouteChildren {
+  AdminAprovacoesRoute: typeof AdminAprovacoesRoute
   AdminConfiguracoesRoute: typeof AdminConfiguracoesRoute
+  AdminPaisesMoedasRoute: typeof AdminPaisesMoedasRoute
+  AdminPlanosRoute: typeof AdminPlanosRoute
+  AdminProdutoresRoute: typeof AdminProdutoresRoute
 }
 
 const AdminRouteChildren: AdminRouteChildren = {
+  AdminAprovacoesRoute: AdminAprovacoesRoute,
   AdminConfiguracoesRoute: AdminConfiguracoesRoute,
+  AdminPaisesMoedasRoute: AdminPaisesMoedasRoute,
+  AdminPlanosRoute: AdminPlanosRoute,
+  AdminProdutoresRoute: AdminProdutoresRoute,
 }
 
 const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
@@ -533,14 +655,18 @@ const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
 interface ProdutorRouteChildren {
   ProdutorConfiguracoesRoute: typeof ProdutorConfiguracoesRoute
   ProdutorEquipeRoute: typeof ProdutorEquipeRoute
+  ProdutorMarketingRoute: typeof ProdutorMarketingRoute
   ProdutorNovoEventoRoute: typeof ProdutorNovoEventoRoute
+  ProdutorSuporteRoute: typeof ProdutorSuporteRoute
   ProdutorIndexRoute: typeof ProdutorIndexRoute
 }
 
 const ProdutorRouteChildren: ProdutorRouteChildren = {
   ProdutorConfiguracoesRoute: ProdutorConfiguracoesRoute,
   ProdutorEquipeRoute: ProdutorEquipeRoute,
+  ProdutorMarketingRoute: ProdutorMarketingRoute,
   ProdutorNovoEventoRoute: ProdutorNovoEventoRoute,
+  ProdutorSuporteRoute: ProdutorSuporteRoute,
   ProdutorIndexRoute: ProdutorIndexRoute,
 }
 
