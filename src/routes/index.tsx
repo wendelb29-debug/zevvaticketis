@@ -18,7 +18,6 @@ import {
 } from "lucide-react";
 import { Navbar } from "@/components/layout/Navbar";
 import { FeaturedCarousel } from "@/components/home/FeaturedCarousel";
-import { LocationModal } from "@/components/home/LocationModal";
 import { EventCard } from "@/components/home/EventCard";
 import { CategoryGrid } from "@/components/home/CategoryGrid";
 import { FAQAccordion } from "@/components/home/FAQAccordion";
@@ -35,7 +34,6 @@ function HomePage() {
   const [featuredEvents, setFeaturedEvents] = useState<any[]>([]);
   const [events, setEvents] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const [isLocationModalOpen, setIsLocationModalOpen] = useState(false);
   const [selectedCity, setSelectedCity] = useState<string | null>(null);
   const navigate = useNavigate();
 
@@ -100,11 +98,7 @@ function HomePage() {
 
   return (
     <div className="min-h-screen bg-white">
-      <Navbar 
-        onOpenAuth={() => navigate({ to: '/login' })} 
-        onOpenLocation={() => setIsLocationModalOpen(true)}
-        selectedCity={selectedCity}
-      />
+      <Navbar selectedCity={selectedCity} />
 
       <main className="pt-36">
         {/* City Ticker */}
@@ -182,11 +176,6 @@ function HomePage() {
 
       <Footer />
 
-      <LocationModal 
-        isOpen={isLocationModalOpen}
-        onClose={() => setIsLocationModalOpen(false)}
-        onSelect={setSelectedCity}
-      />
     </div>
   );
 }

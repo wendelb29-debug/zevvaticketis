@@ -6,11 +6,10 @@ import { cn } from "@/lib/utils";
 interface FeaturedEvent {
   id: string;
   title: string;
-  city: string;
-  state: string;
-  date: string;
-  price: string;
-  image: string;
+  city: string | null;
+  min_price: number | null;
+  cover_image: string | null;
+  start_date: string | null;
 }
 
 interface FeaturedCarouselProps {
@@ -81,7 +80,7 @@ export function FeaturedCarousel({ events }: FeaturedCarouselProps) {
                 )}
               >
                 <img 
-                  src={event.image} 
+                  src={event.cover_image || "/placeholder.jpg"} 
                   alt={event.title}
                   className="w-full h-full object-cover"
                 />
@@ -91,7 +90,7 @@ export function FeaturedCarousel({ events }: FeaturedCarouselProps) {
                 <div className="absolute top-6 right-6">
                   <div className="bg-white/90 backdrop-blur px-4 py-2 rounded-full shadow-lg border border-white/20">
                     <span className="text-xs font-extrabold text-navy uppercase tracking-widest">A partir de</span>
-                    <p className="text-lg font-extrabold text-gold leading-none">{event.price}</p>
+                    <p className="text-lg font-extrabold text-gold leading-none">{event.min_price ? `US$ ${event.min_price}` : "Sob consulta"}</p>
                   </div>
                 </div>
               </Link>
@@ -127,11 +126,11 @@ export function FeaturedCarousel({ events }: FeaturedCarouselProps) {
           <div className="flex items-center justify-center gap-6 text-sm font-bold text-muted">
             <div className="flex items-center gap-1.5">
               <MapPin className="w-4 h-4 text-gold" />
-              {currentEvent?.city}, {currentEvent?.state}
+              {event.city}
             </div>
             <div className="flex items-center gap-1.5">
               <Calendar className="w-4 h-4 text-gold" />
-              {currentEvent?.date}
+              {event.start_date ? new Date(event.start_date).toLocaleDateString() : ""}
             </div>
           </div>
         </div>
