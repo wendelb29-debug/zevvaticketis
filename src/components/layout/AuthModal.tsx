@@ -65,6 +65,8 @@ export function AuthModal({ isOpen, onClose, defaultView = 'login' }: AuthModalP
         password: formData.senha 
       });
       if (error) throw error;
+      // Completes producer signup securely once the user is authenticated
+      await supabase.rpc('ensure_producer_organization');
       toast.success('Login realizado com sucesso!');
       onClose();
     } catch (error: any) {
@@ -93,36 +95,32 @@ export function AuthModal({ isOpen, onClose, defaultView = 'login' }: AuthModalP
         options: {
           data: {
             nome: `${formData.nome} ${formData.sobrenome}`,
-            role: role
+            role: role,
+            ...(role === 'produtor'
+              ? {
+                  org_nome: formData.orgNome,
+                  org_documento: formData.orgDocumento,
+                  org_pais_id: formData.paisId || null,
+                }
+              : {}),
           }
         }
       });
 
       if (authError) throw authError;
 
-      if (role === 'produtor' && authData.user) {
-        const { data: orgData, error: orgError } = await supabase
-          .from('organizations')
-          .insert({
-            nome: formData.orgNome,
-            documento: formData.orgDocumento,
-            pais_id: formData.paisId || null,
-            status: 'pendente'
-          })
-          .select()
-          .single();
-
-        if (orgError) throw orgError;
-
-        const { error: memberError } = await supabase.from('organization_members').insert({
-          organization_id: orgData.id,
-          user_id: authData.user.id,
-          role: 'produtor_owner'
-        });
-        if (memberError) throw memberError;
-
-        toast.success('Cadastro enviado para aprovação!');
-        navigate({ to: '/produtor-pendente' });
+      if (role === 'produtor') {
+        if (authData.session) {
+          // Already authenticated: create the organization as the signed-in user
+          const { error: rpcError } = await supabase.rpc('ensure_producer_organization');
+          if (rpcError) throw rpcError;
+          toast.success('Cadastro enviado para aprovação!');
+          navigate({ to: '/produtor-pendente' });
+        } else {
+          toast.success('Confirme seu e-mail para concluir o cadastro de produtor.');
+          setView('login');
+          setShowEmailFields(true);
+        }
       } else {
         toast.success('Conta criada com sucesso! Verifique seu e-mail para confirmar o cadastro.');
         setView('login');

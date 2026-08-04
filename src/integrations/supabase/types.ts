@@ -816,6 +816,9 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      ensure_producer_organization: { Args: never; Returns: Json }
+      is_org_member: { Args: { _org_id: string }; Returns: boolean }
+      org_has_members: { Args: { _org_id: string }; Returns: boolean }
       promote_to_platform_admin: {
         Args: { target_email: string }
         Returns: Json
