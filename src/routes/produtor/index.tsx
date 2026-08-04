@@ -24,6 +24,7 @@ export const Route = createFileRoute("/produtor/")({
 function ProdutorDashboard() {
   const [user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function getData() {
