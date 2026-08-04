@@ -78,7 +78,48 @@ function ProdutorDashboard() {
           >
             <div className={cn("p-3 rounded-2xl mb-4 group-hover:scale-110 transition-transform bg-gradient-to-br", item.color)}>
               <item.icon className="w-6 h-6 text-navy" />
-            </div>
+      </div>
+
+      {/* Theme Preview Section */}
+      <div className="bg-white rounded-[32px] border border-line p-8 space-y-8 shadow-sm">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+          <div className="space-y-1">
+            <h2 className="text-xl font-heading font-extrabold text-navy flex items-center gap-2">
+              <Sparkles className="w-5 h-5 text-gold" /> Prévia de Temas Visuais
+            </h2>
+            <p className="text-xs text-muted font-medium uppercase tracking-widest">Veja como seu evento aparecerá para os participantes</p>
+          </div>
+          <Link to="/eventos" className="text-[10px] font-extrabold text-gold uppercase tracking-widest hover:underline">
+            Ver página pública completa
+          </Link>
+        </div>
+
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+          {(Object.keys(CATEGORY_THEMES) as CategoryType[]).map((catName) => {
+            const theme = CATEGORY_THEMES[catName];
+            const Icon = theme.icon;
+            return (
+              <button 
+                key={catName}
+                onClick={() => navigate({ to: '/eventos', search: { categoria: catName } as any })}
+                className="group p-4 rounded-2xl border-2 border-line hover:border-navy transition-all text-center space-y-3 bg-surface/30 active:scale-95"
+                style={{ borderColor: theme.accentColor + '40' }}
+              >
+                <div 
+                  className="w-12 h-12 rounded-xl mx-auto flex items-center justify-center text-white shadow-lg group-hover:scale-110 transition-transform"
+                  style={{ backgroundColor: theme.accentColor }}
+                >
+                  <Icon className="w-6 h-6" />
+                </div>
+                <p className="text-[9px] font-extrabold uppercase tracking-widest text-navy leading-tight">{theme.name}</p>
+                <div className="pt-2 flex justify-center">
+                  <Eye className="w-3.5 h-3.5 text-muted group-hover:text-navy" />
+                </div>
+              </button>
+            );
+          })}
+        </div>
+      </div>
             <h3 className="font-bold text-navy mb-1">{item.label}</h3>
             <p className="text-xs text-muted font-medium">{item.desc}</p>
           </button>
