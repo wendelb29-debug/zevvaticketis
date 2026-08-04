@@ -8,6 +8,10 @@ import {
   Scripts,
 } from "@tanstack/react-router";
 import { useEffect, type ReactNode } from "react";
+import { AuthModal } from "@/components/layout/AuthModal";
+import { useUI } from "@/hooks/use-ui";
+import { LocationModal } from "@/components/home/LocationModal";
+
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
