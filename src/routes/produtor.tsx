@@ -169,10 +169,13 @@ function ProdutorLayout() {
 
   const allMenuItems = [
     { label: "Dashboard", icon: LayoutDashboard, href: "/produtor", activeOptions: { exact: true } },
-    { label: "Meus Eventos", icon: Plus, href: "/produtor/eventos", permission: "eventos" },
+    { label: "Meus Eventos", icon: Plus, href: "/produtor/eventos", permission: "owner" },
     { label: "Financeiro", icon: BarChart3, href: "/produtor/financeiro", permission: "financeiro" },
-    { label: "Relatórios", icon: FileText, href: "/produtor/relatorios", permission: "relatorios" },
-    { label: "Minha Equipe", icon: Users, href: "/produtor/equipe", permission: "equipe" },
+    { label: "Relatórios", icon: BarChart3, href: "/produtor/relatorios", permission: "financeiro" },
+    { label: "Check-in", icon: QrCodeIcon, href: "/checkin", external: true },
+    { label: "Marketing", icon: Globe, href: "/produtor/marketing", permission: "marketing" },
+    { label: "Suporte", icon: Users, href: "/produtor/suporte", permission: "suporte" },
+    { label: "Minha Equipe", icon: Users, href: "/produtor/equipe", permission: "owner" },
     { label: "Configurações", icon: SettingsIcon, href: "/produtor/configuracoes", permission: "owner" },
   ];
 
