@@ -74,6 +74,7 @@ export type Database = {
           event_type: string | null
           id: string
           location: string | null
+          min_price: number | null
           producer_id: string
           start_date: string | null
           status: string | null
@@ -90,6 +91,7 @@ export type Database = {
           event_type?: string | null
           id?: string
           location?: string | null
+          min_price?: number | null
           producer_id: string
           start_date?: string | null
           status?: string | null
@@ -106,6 +108,7 @@ export type Database = {
           event_type?: string | null
           id?: string
           location?: string | null
+          min_price?: number | null
           producer_id?: string
           start_date?: string | null
           status?: string | null
