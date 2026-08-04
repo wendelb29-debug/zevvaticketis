@@ -6,7 +6,17 @@ export const Route = createFileRoute("/admin")({
   beforeLoad: async () => {
     const { data: { session } } = await supabase.auth.getSession();
     if (!session) {
-      throw redirect({ to: "/login" });
+      throw redirect({ to: "/" });
+    }
+
+    const { data: isAdmin } = await supabase
+      .from("platform_admins")
+      .select("id")
+      .eq("user_id", session.user.id)
+      .maybeSingle();
+
+    if (!isAdmin) {
+      throw redirect({ to: "/app" });
     }
   },
   component: AdminLayout,
