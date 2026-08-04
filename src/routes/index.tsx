@@ -19,9 +19,43 @@ function Index() {
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [isLocationModalOpen, setIsLocationModalOpen] = useState(false);
   const [nearbyError, setNearbyError] = useState(false);
+  const [filteredEvents, setFilteredEvents] = useState<any[]>([]);
+  const [loadingEvents, setLoadingEvents] = useState(true);
   const navigate = useNavigate();
   const search = useSearch({ from: "/" }) as any;
   const selectedCity = search?.cidade;
+
+  useEffect(() => {
+    async function fetchEvents() {
+      setLoadingEvents(true);
+      let query = supabase.from("events").select("*").eq("status", "publicado");
+      
+      if (selectedCity) {
+        query = query.ilike("city", `%${selectedCity}%`);
+      }
+      
+      const { data, error } = await query.limit(4);
+      if (!error && data) {
+        // Map database fields to UI component fields
+        const formatted = data.map(event => ({
+          id: event.id,
+          title: event.title,
+          location: `${event.city || ''}, ${event.country_id || ''}`,
+          cityKey: event.city?.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""),
+          date: new Date(event.start_date).toLocaleDateString('pt-BR', { month: 'long', year: 'numeric' }),
+          price: `US$ ${event.price || '0'}`,
+          image: "https://images.unsplash.com/photo-1544971587-b842c27f8e14?auto=format&fit=crop&q=80&w=800",
+          lote: "Lote 1"
+        }));
+        setFilteredEvents(formatted);
+      } else if (error) {
+        console.error("Error fetching events:", error);
+      }
+      setLoadingEvents(false);
+    }
+    
+    fetchEvents();
+  }, [selectedCity]);
 
   const handleAuthClick = async (e: React.MouseEvent) => {
     e.preventDefault();
@@ -207,50 +241,12 @@ function Index() {
             
             
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-              {[
-                {
-                  id: 1,
-                  title: "Terra Santa: Passos de Jesus",
-                  location: "Jerusalém, Israel",
-                  cityKey: "jerusalem",
-                  date: "Dezembro 2026",
-                  price: "US$ 4.500",
-                  image: "https://images.unsplash.com/photo-1544971587-b842c27f8e14?auto=format&fit=crop&q=80&w=800",
-                  lote: "Lote 1"
-                },
-                {
-                  id: 2,
-                  title: "Grand Tour: Europa Medieval",
-                  location: "Paris, França",
-                  cityKey: "paris",
-                  date: "Julho 2026",
-                  price: "US$ 5.200",
-                  image: "https://images.unsplash.com/photo-1511739001486-6bfe10ce785f?auto=format&fit=crop&q=80&w=800",
-                  lote: "Lote 2"
-                },
-                {
-                  id: 3,
-                  title: "Retiro de Jovens: Conexão",
-                  location: "Atibaia, SP",
-                  cityKey: "atibaia",
-                  date: "Janeiro 2026",
-                  price: "R$ 850",
-                  image: "https://images.unsplash.com/photo-1523580494863-6f3031224c94?auto=format&fit=crop&q=80&w=800",
-                  lote: "Últimas vagas"
-                },
-                {
-                  id: 4,
-                  title: "Conferência Internacional de Fé",
-                  location: "Orlando, FL",
-                  cityKey: "orlando",
-                  date: "Março 2026",
-                  price: "US$ 350",
-                  image: "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&q=80&w=800",
-                  lote: "Promoção"
-                }
-              ]
-              .filter(e => !selectedCity || e.cityKey === selectedCity)
-              .map((event) => (
+              {loadingEvents ? (
+                Array.from({ length: 4 }).map((_, i) => (
+                  <div key={i} className="bg-surface animate-pulse rounded-[14px] aspect-[3/4]" />
+                ))
+              ) : filteredEvents.length > 0 ? (
+                filteredEvents.map((event) => (
                 <div key={event.id} className="bg-white rounded-[14px] overflow-hidden border border-line shadow-sm hover:shadow-xl transition-all duration-300 group">
                   <div className="aspect-[4/3] bg-surface relative overflow-hidden">
                     <div className="absolute top-3 right-3 z-10">
@@ -292,7 +288,17 @@ function Index() {
                     </div>
                   </div>
                 </div>
-              ))}
+                ))
+              ) : (
+                <div className="col-span-full py-20 text-center space-y-4">
+                  <div className="text-6xl text-surface-2">📍</div>
+                  <h3 className="text-xl font-bold text-navy">Nenhum evento encontrado</h3>
+                  <p className="text-muted max-w-xs mx-auto">Não encontramos caravanas para esta localização no momento.</p>
+                  <Button variant="outline" className="rounded-full" onClick={() => handleLocationSelect(null)}>
+                    Ver todas as caravanas
+                  </Button>
+                </div>
+              )}
             </div>
           </section>
 
