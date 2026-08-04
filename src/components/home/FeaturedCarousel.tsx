@@ -126,11 +126,11 @@ export function FeaturedCarousel({ events }: FeaturedCarouselProps) {
           <div className="flex items-center justify-center gap-6 text-sm font-bold text-muted">
             <div className="flex items-center gap-1.5">
               <MapPin className="w-4 h-4 text-gold" />
-              {event.city}
+              {currentEvent?.city}
             </div>
             <div className="flex items-center gap-1.5">
               <Calendar className="w-4 h-4 text-gold" />
-              {event.start_date ? new Date(event.start_date).toLocaleDateString() : ""}
+              {currentEvent?.start_date ? new Date(currentEvent.start_date).toLocaleDateString() : ""}
             </div>
           </div>
         </div>
