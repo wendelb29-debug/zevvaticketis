@@ -39,6 +39,15 @@ export const Route = createFileRoute("/criar-evento")({
   beforeLoad: async () => {
     const { data: { session } } = await supabase.auth.getSession();
     if (!session) throw redirect({ to: "/" });
+    
+    // Check if user is a producer (has organization membership)
+    const { data: member } = await supabase
+      .from("organization_members")
+      .select("organization_id")
+      .eq("user_id", session.user.id)
+      .single();
+      
+    if (!member) throw redirect({ to: "/" });
   },
   component: CriarEventoWizard,
 });
@@ -47,11 +56,52 @@ function CriarEventoWizard() {
   const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState<any>(null);
+  const [formData, setFormData] = useState<any>({
+    title: "",
+    description: "",
+    category: "",
+    event_type: "presencial",
+    country_id: "Brasil",
+    city: "",
+    location: "",
+    start_date: "",
+    start_time: "",
+    end_date: "",
+    end_time: "",
+    instagram: "",
+    whatsapp: "",
+    site: "",
+    featured: false,
+    status: "rascunho"
+  });
+  const [tickets, setTickets] = useState<any[]>([
+    { id: 1, name: "Lote 1", description: "", price: 0, quantity: 100, sale_start: "", sale_end: "", limit_per_buyer: 5 }
+  ]);
+
   const navigate = useNavigate();
 
   useEffect(() => {
     supabase.auth.getUser().then(({ data }) => setUser(data.user));
+    
+    // Simple autosave simulation
+    const saved = localStorage.getItem("zevva_event_draft");
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        setFormData(prev => ({ ...prev, ...parsed.formData }));
+        if (parsed.tickets) setTickets(parsed.tickets);
+      } catch (e) {
+        console.error("Failed to load draft", e);
+      }
+    }
   }, []);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      localStorage.setItem("zevva_event_draft", JSON.stringify({ formData, tickets }));
+    }, 1000);
+    return () => clearTimeout(timeout);
+  }, [formData, tickets]);
 
   const steps = [
     { id: 1, title: "Informações básicas" },
