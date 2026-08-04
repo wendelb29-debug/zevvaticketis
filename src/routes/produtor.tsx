@@ -158,9 +158,9 @@ function ProdutorLayout() {
             key={item.label}
             to={item.href}
             {...(item.activeOptions ? { activeOptions: item.activeOptions } : {})}
-            className="flex items-center gap-3 px-4 py-3.5 rounded-xl text-sm font-bold transition-all duration-200"
-            activeProps={{ className: "bg-gold text-white shadow-lg shadow-gold/20" }}
-            inactiveProps={{ className: "text-muted hover:bg-surface hover:text-navy" }}
+            className="flex items-center gap-3 px-4 py-3.5 rounded-xl text-sm font-extrabold transition-all duration-200"
+            activeProps={{ className: "bg-gold text-white shadow-lg shadow-gold/30" }}
+            inactiveProps={{ className: "text-navy hover:bg-surface-2 hover:text-navy" }}
           >
             <item.icon className="w-5 h-5" />
             {item.label}
