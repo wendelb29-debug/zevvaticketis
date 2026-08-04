@@ -1,4 +1,4 @@
-# Prompts de Desenvolvimento — Zevva Tickets (Lovable)
+# Zevva Tickets — Caravanas e Igrejas Internacionais (Inspirado no Sympla)
 
 ## Como usar
 
