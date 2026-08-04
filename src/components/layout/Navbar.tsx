@@ -167,7 +167,7 @@ export function Navbar({ selectedCity }: { selectedCity?: string | null }) {
               >
                 <MapPin className="w-4 h-4 text-coral" />
                 <span className="flex-1 truncate">
-                  {selectedCity ? selectedCity.toUpperCase() : "Cidade ou país"}
+                  {selectedCity ? selectedCity.toUpperCase() : translations[language].nav.cityCountry}
                 </span>
               </div>
 
