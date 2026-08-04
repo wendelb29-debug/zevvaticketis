@@ -261,6 +261,24 @@ export type Database = {
         }
         Relationships: []
       }
+      platform_settings: {
+        Row: {
+          default_platform_fee: number
+          id: string
+          updated_at: string
+        }
+        Insert: {
+          default_platform_fee?: number
+          id?: string
+          updated_at?: string
+        }
+        Update: {
+          default_platform_fee?: number
+          id?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           created_at: string | null
@@ -298,6 +316,41 @@ export type Database = {
             columns: ["pais_id"]
             isOneToOne: false
             referencedRelation: "countries"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      team_invites: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          organization_id: string
+          permissions: Json
+          status: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          organization_id: string
+          permissions?: Json
+          status?: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          organization_id?: string
+          permissions?: Json
+          status?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "team_invites_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
             referencedColumns: ["id"]
           },
         ]

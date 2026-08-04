@@ -1,7 +1,17 @@
-import { createFileRoute, Outlet, redirect, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Outlet, redirect, useNavigate, Link } from "@tanstack/react-router";
 import { supabase } from "@/integrations/supabase/client";
 import { useEffect, useState } from "react";
 import { UserMenu } from "@/components/auth/UserMenu";
+import { 
+  LayoutDashboard, 
+  CheckSquare, 
+  Users, 
+  CreditCard, 
+  Globe, 
+  Settings,
+  ShieldCheck
+} from "lucide-react";
+import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/admin")({
   beforeLoad: async () => {
@@ -55,22 +65,70 @@ function AdminLayout() {
   };
 
 
-  return (
-    <div className="min-h-screen bg-background text-foreground">
-      <nav className="border-b border-white/5 p-4 bg-card">
-        <div className="max-w-7xl mx-auto flex justify-between items-center">
-          <div className="font-heading font-bold text-primary">ZEVVA ADMIN</div>
-          {user && (
-            <UserMenu 
-              user={user}
-              onLogout={handleLogout}
-              onNavigate={(path) => navigate({ to: path as any })}
-            />
-          )}
-        </div>
+  const menuItems = [
+    { label: "Dashboard", icon: LayoutDashboard, href: "/admin", activeOptions: { exact: true } },
+    { label: "Aprovações", icon: CheckSquare, href: "/admin/aprovacoes" },
+    { label: "Produtores", icon: Users, href: "/admin/produtores" },
+    { label: "Planos", icon: CreditCard, href: "/admin/planos" },
+    { label: "Países e Moedas", icon: Globe, href: "/admin/paises-moedas" },
+    { label: "Configurações", icon: Settings, href: "/admin/configuracoes" },
+  ];
+
+  const SidebarContent = () => (
+    <div className="flex flex-col h-full bg-white border-r border-line py-8 font-sans">
+      <div className="px-6 mb-12">
+        <Link to="/" className="text-xl font-heading font-extrabold text-gold tracking-tighter">
+          ZEVVA <span className="text-navy">ADMIN</span>
+        </Link>
+      </div>
+      
+      <nav className="flex-1 space-y-1 px-4">
+        {menuItems.map((item) => (
+          <Link
+            key={item.label}
+            to={item.href}
+            {...(item.activeOptions ? { activeOptions: item.activeOptions } : {})}
+            className="flex items-center gap-3 px-4 py-3.5 rounded-xl text-sm font-extrabold transition-all duration-200"
+            activeProps={{ className: "bg-gold text-white shadow-lg shadow-gold/30" }}
+            inactiveProps={{ className: "text-navy hover:bg-surface-2 hover:text-navy" }}
+          >
+            <item.icon className="w-5 h-5" />
+            {item.label}
+          </Link>
+        ))}
       </nav>
-      <div className="max-w-7xl mx-auto p-8">
-        <Outlet />
+    </div>
+  );
+
+  return (
+    <div className="min-h-screen bg-surface flex">
+      {/* Desktop Sidebar */}
+      <aside className="hidden lg:block w-72 h-screen sticky top-0">
+        <SidebarContent />
+      </aside>
+
+      <div className="flex-1 flex flex-col min-h-screen">
+        <header className="h-20 bg-white/80 backdrop-blur-md border-b border-line sticky top-0 z-40 px-6 sm:px-10 flex items-center justify-between font-sans">
+          <div className="flex items-center gap-4">
+            <span className="text-xs font-extrabold uppercase tracking-widest text-gold bg-gold/5 px-3 py-1 rounded-full border border-gold/10">
+              Gestão Global
+            </span>
+          </div>
+
+          <div className="flex items-center gap-3 sm:gap-6">
+            {user && (
+              <UserMenu 
+                user={user}
+                onLogout={handleLogout}
+                onNavigate={(path) => navigate({ to: path as any })}
+              />
+            )}
+          </div>
+        </header>
+
+        <main className="p-6 sm:p-10">
+          <Outlet />
+        </main>
       </div>
     </div>
   );

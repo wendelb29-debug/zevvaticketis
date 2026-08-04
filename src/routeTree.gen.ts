@@ -20,7 +20,11 @@ import { Route as LoginRouteImport } from './routes/login'
 import { Route as ProdutorRouteImport } from './routes/produtor'
 import { Route as ProdutorPendenteRouteImport } from './routes/produtor-pendente'
 import { Route as AppIndexRouteImport } from './routes/app/index'
+import { Route as AppHistoricoRouteImport } from './routes/app/historico'
+import { Route as AppPerfilRouteImport } from './routes/app/perfil'
 import { Route as ProdutorIndexRouteImport } from './routes/produtor/index'
+import { Route as ProdutorConfiguracoesRouteImport } from './routes/produtor/configuracoes'
+import { Route as ProdutorEquipeRouteImport } from './routes/produtor/equipe'
 import { Route as ProdutorNovoEventoRouteImport } from './routes/produtor/novo-evento'
 
 const IndexRoute = IndexRouteImport.update({
@@ -78,9 +82,29 @@ const AppIndexRoute = AppIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AppRoute,
 } as any)
+const AppHistoricoRoute = AppHistoricoRouteImport.update({
+  id: '/historico',
+  path: '/historico',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppPerfilRoute = AppPerfilRouteImport.update({
+  id: '/perfil',
+  path: '/perfil',
+  getParentRoute: () => AppRoute,
+} as any)
 const ProdutorIndexRoute = ProdutorIndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => ProdutorRoute,
+} as any)
+const ProdutorConfiguracoesRoute = ProdutorConfiguracoesRouteImport.update({
+  id: '/configuracoes',
+  path: '/configuracoes',
+  getParentRoute: () => ProdutorRoute,
+} as any)
+const ProdutorEquipeRoute = ProdutorEquipeRouteImport.update({
+  id: '/equipe',
+  path: '/equipe',
   getParentRoute: () => ProdutorRoute,
 } as any)
 const ProdutorNovoEventoRoute = ProdutorNovoEventoRouteImport.update({
@@ -100,6 +124,10 @@ export interface FileRoutesByFullPath {
   '/login': typeof LoginRoute
   '/produtor': typeof ProdutorRouteWithChildren
   '/produtor-pendente': typeof ProdutorPendenteRoute
+  '/app/historico': typeof AppHistoricoRoute
+  '/app/perfil': typeof AppPerfilRoute
+  '/produtor/configuracoes': typeof ProdutorConfiguracoesRoute
+  '/produtor/equipe': typeof ProdutorEquipeRoute
   '/produtor/novo-evento': typeof ProdutorNovoEventoRoute
   '/app/': typeof AppIndexRoute
   '/produtor/': typeof ProdutorIndexRoute
@@ -113,6 +141,10 @@ export interface FileRoutesByTo {
   '/eventos': typeof EventosRoute
   '/login': typeof LoginRoute
   '/produtor-pendente': typeof ProdutorPendenteRoute
+  '/app/historico': typeof AppHistoricoRoute
+  '/app/perfil': typeof AppPerfilRoute
+  '/produtor/configuracoes': typeof ProdutorConfiguracoesRoute
+  '/produtor/equipe': typeof ProdutorEquipeRoute
   '/produtor/novo-evento': typeof ProdutorNovoEventoRoute
   '/app': typeof AppIndexRoute
   '/produtor': typeof ProdutorIndexRoute
@@ -129,6 +161,10 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/produtor': typeof ProdutorRouteWithChildren
   '/produtor-pendente': typeof ProdutorPendenteRoute
+  '/app/historico': typeof AppHistoricoRoute
+  '/app/perfil': typeof AppPerfilRoute
+  '/produtor/configuracoes': typeof ProdutorConfiguracoesRoute
+  '/produtor/equipe': typeof ProdutorEquipeRoute
   '/produtor/novo-evento': typeof ProdutorNovoEventoRoute
   '/app/': typeof AppIndexRoute
   '/produtor/': typeof ProdutorIndexRoute
@@ -146,6 +182,10 @@ export interface FileRouteTypes {
     | '/login'
     | '/produtor'
     | '/produtor-pendente'
+    | '/app/historico'
+    | '/app/perfil'
+    | '/produtor/configuracoes'
+    | '/produtor/equipe'
     | '/produtor/novo-evento'
     | '/app/'
     | '/produtor/'
@@ -159,6 +199,10 @@ export interface FileRouteTypes {
     | '/eventos'
     | '/login'
     | '/produtor-pendente'
+    | '/app/historico'
+    | '/app/perfil'
+    | '/produtor/configuracoes'
+    | '/produtor/equipe'
     | '/produtor/novo-evento'
     | '/app'
     | '/produtor'
@@ -174,6 +218,10 @@ export interface FileRouteTypes {
     | '/login'
     | '/produtor'
     | '/produtor-pendente'
+    | '/app/historico'
+    | '/app/perfil'
+    | '/produtor/configuracoes'
+    | '/produtor/equipe'
     | '/produtor/novo-evento'
     | '/app/'
     | '/produtor/'
@@ -271,11 +319,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppIndexRouteImport
       parentRoute: typeof AppRoute
     }
+    '/app/historico': {
+      id: '/app/historico'
+      path: '/historico'
+      fullPath: '/app/historico'
+      preLoaderRoute: typeof AppHistoricoRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/perfil': {
+      id: '/app/perfil'
+      path: '/perfil'
+      fullPath: '/app/perfil'
+      preLoaderRoute: typeof AppPerfilRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/produtor/': {
       id: '/produtor/'
       path: '/'
       fullPath: '/produtor/'
       preLoaderRoute: typeof ProdutorIndexRouteImport
+      parentRoute: typeof ProdutorRoute
+    }
+    '/produtor/configuracoes': {
+      id: '/produtor/configuracoes'
+      path: '/configuracoes'
+      fullPath: '/produtor/configuracoes'
+      preLoaderRoute: typeof ProdutorConfiguracoesRouteImport
+      parentRoute: typeof ProdutorRoute
+    }
+    '/produtor/equipe': {
+      id: '/produtor/equipe'
+      path: '/equipe'
+      fullPath: '/produtor/equipe'
+      preLoaderRoute: typeof ProdutorEquipeRouteImport
       parentRoute: typeof ProdutorRoute
     }
     '/produtor/novo-evento': {
@@ -289,21 +365,29 @@ declare module '@tanstack/react-router' {
 }
 
 interface AppRouteChildren {
+  AppHistoricoRoute: typeof AppHistoricoRoute
+  AppPerfilRoute: typeof AppPerfilRoute
   AppIndexRoute: typeof AppIndexRoute
 }
 
 const AppRouteChildren: AppRouteChildren = {
+  AppHistoricoRoute: AppHistoricoRoute,
+  AppPerfilRoute: AppPerfilRoute,
   AppIndexRoute: AppIndexRoute,
 }
 
 const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
 
 interface ProdutorRouteChildren {
+  ProdutorConfiguracoesRoute: typeof ProdutorConfiguracoesRoute
+  ProdutorEquipeRoute: typeof ProdutorEquipeRoute
   ProdutorNovoEventoRoute: typeof ProdutorNovoEventoRoute
   ProdutorIndexRoute: typeof ProdutorIndexRoute
 }
 
 const ProdutorRouteChildren: ProdutorRouteChildren = {
+  ProdutorConfiguracoesRoute: ProdutorConfiguracoesRoute,
+  ProdutorEquipeRoute: ProdutorEquipeRoute,
   ProdutorNovoEventoRoute: ProdutorNovoEventoRoute,
   ProdutorIndexRoute: ProdutorIndexRoute,
 }
