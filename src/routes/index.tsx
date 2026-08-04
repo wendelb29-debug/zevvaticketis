@@ -25,6 +25,8 @@ import { CityTicker } from "@/components/home/CityTicker";
 import { Footer } from "@/components/layout/Footer";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { useUI } from "@/hooks/use-ui";
+import { translations } from "@/lib/translations";
 
 export const Route = createFileRoute("/")({
   component: HomePage,
@@ -36,6 +38,8 @@ function HomePage() {
   const [loading, setLoading] = useState(true);
   const [selectedCity, setSelectedCity] = useState<string | null>(null);
   const navigate = useNavigate();
+  const { language } = useUI();
+  const t = translations[language].home;
 
   useEffect(() => {
     async function fetchEvents() {
@@ -98,7 +102,7 @@ function HomePage() {
   };
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className={cn("min-h-screen bg-white", language === 'ar' ? "rtl" : "ltr")} dir={language === 'ar' ? "rtl" : "ltr"}>
       <Navbar selectedCity={selectedCity} />
 
       <main className="pt-36">
@@ -117,8 +121,8 @@ function HomePage() {
           <div className="max-w-7xl mx-auto space-y-10">
             <div className="flex justify-between items-end">
               <div className="space-y-2">
-                <h2 className="text-3xl font-manrope font-extrabold text-navy">Categorias</h2>
-                <p className="text-muted font-medium">Encontre o evento perfeito para seu momento.</p>
+                <h2 className="text-3xl font-manrope font-extrabold text-navy">{t.categories}</h2>
+                <p className="text-muted font-medium">{t.categoriesSubtitle}</p>
               </div>
             </div>
             <CategoryGrid />
@@ -131,15 +135,15 @@ function HomePage() {
             <div className="flex justify-between items-end">
               <div className="space-y-2">
                 <h2 className="text-3xl font-manrope font-extrabold text-navy flex items-center gap-3">
-                  <TrendingUp className="w-8 h-8 text-coral" /> Próximos Eventos
+                  <TrendingUp className="w-8 h-8 text-coral" /> {t.nextEvents}
                 </h2>
-                <p className="text-muted font-medium">As melhores experiências selecionadas para você.</p>
+                <p className="text-muted font-medium">{t.nextEventsSubtitle}</p>
               </div>
               <Link 
                 to="/eventos" 
                 className="group flex items-center gap-2 text-coral font-bold hover:underline"
               >
-                Ver todos <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                {t.viewAll} <ArrowRight className={cn("w-4 h-4 group-hover:translate-x-1 transition-transform", language === 'ar' && "rotate-180 group-hover:-translate-x-1")} />
               </Link>
             </div>
 
@@ -168,10 +172,10 @@ function HomePage() {
           <div className="max-w-3xl mx-auto space-y-12">
             <div className="text-center space-y-4">
               <h2 className="text-4xl font-manrope font-extrabold text-navy">
-                Dúvidas Frequentes
+                {t.faq}
               </h2>
               <p className="text-muted font-medium">
-                Tudo o que você precisa saber sobre a Zevva Tickets.
+                {t.faqSubtitle}
               </p>
             </div>
             <FAQAccordion />

@@ -6,6 +6,7 @@ import { useUI } from "@/hooks/use-ui";
 import { supabase } from "@/integrations/supabase/client";
 import { cn } from "@/lib/utils";
 import logoAsset from "@/assets/logo-zevva.png.asset.json";
+import { translations } from "@/lib/translations";
 
 interface NavbarProps {
   onOpenAuth: () => void;
@@ -46,7 +47,7 @@ export function Navbar({ selectedCity }: { selectedCity?: string | null }) {
         isScrolled ? "h-16 backdrop-blur-md bg-white/90" : "h-36"
       )}
     >
-      <div className="max-w-7xl mx-auto px-6 h-full flex flex-col justify-center">
+      <div className={cn("max-w-7xl mx-auto px-6 h-full flex flex-col justify-center", language === 'ar' ? "text-right" : "text-left")}>
         {/* Row 1: Logo & Nav Links */}
         <div className={cn(
           "flex items-center justify-between transition-all duration-300",
@@ -70,7 +71,7 @@ export function Navbar({ selectedCity }: { selectedCity?: string | null }) {
                <div className="relative flex-1">
                 <input 
                   type="text" 
-                  placeholder="O que você procura?" 
+                  placeholder={translations[language].nav.searchPlaceholder} 
                   className="w-full bg-surface h-10 px-10 rounded-full text-xs border border-line focus:ring-1 focus:ring-coral outline-none text-navy font-bold"
                 />
                 <Search className="absolute left-3.5 top-3 w-3.5 h-3.5 text-muted" />
@@ -81,7 +82,7 @@ export function Navbar({ selectedCity }: { selectedCity?: string | null }) {
               >
                 <MapPin className="w-3.5 h-3.5 text-coral" />
                 <span className="truncate max-w-[100px]">
-                  {selectedCity ? selectedCity.toUpperCase() : "Localização"}
+                  {selectedCity ? selectedCity.toUpperCase() : translations[language].nav.location}
                 </span>
               </div>
             </div>
@@ -94,14 +95,14 @@ export function Navbar({ selectedCity }: { selectedCity?: string | null }) {
               onClick={(e) => { if (!user) { e.preventDefault(); openOverlay('auth', 'register'); } }}
               className="hidden md:flex items-center gap-2 text-xs font-extrabold text-navy hover:text-coral transition-colors uppercase tracking-widest"
             >
-              Criar evento
+              {translations[language].nav.createEvent}
             </Link>
             <Link 
               to="/app" 
               className="flex items-center gap-2 text-xs font-extrabold text-navy hover:text-coral transition-colors uppercase tracking-widest"
             >
               <Ticket className="w-4 h-4 text-coral" />
-              Meus ingressos
+              {translations[language].nav.myTickets}
             </Link>
             
             <div 
@@ -154,7 +155,7 @@ export function Navbar({ selectedCity }: { selectedCity?: string | null }) {
               <div className="relative flex-[2]">
                 <input 
                   type="text" 
-                  placeholder="O que você procura? (ex: Caravanas, Shows, Cursos)" 
+                  placeholder={translations[language].nav.searchPlaceholder} 
                   className="w-full bg-white h-12 px-12 rounded-xl text-sm border-2 border-line focus:ring-2 focus:ring-coral focus:border-coral outline-none text-navy placeholder:text-muted font-bold shadow-sm"
                 />
                 <Search className="absolute left-4 top-4 w-4 h-4 text-muted" />
@@ -171,7 +172,7 @@ export function Navbar({ selectedCity }: { selectedCity?: string | null }) {
               </div>
 
               <button className="h-12 px-8 rounded-xl bg-coral text-white text-xs font-extrabold uppercase tracking-widest hover:bg-coral-dark transition-all active:scale-95 shadow-md">
-                Buscar
+                {translations[language].nav.search}
               </button>
             </div>
           </div>
