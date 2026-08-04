@@ -108,11 +108,12 @@ export function AuthModal({ isOpen, onClose, defaultView = 'login' }: AuthModalP
 
         if (orgError) throw orgError;
 
-        await supabase.from('organization_members').insert({
+        const { error: memberError } = await supabase.from('organization_members').insert({
           organization_id: orgData.id,
           user_id: authData.user.id,
           role: 'produtor_owner'
         });
+        if (memberError) throw memberError;
 
         toast.success('Cadastro enviado para aprovação!');
         navigate({ to: '/produtor-pendente' });
