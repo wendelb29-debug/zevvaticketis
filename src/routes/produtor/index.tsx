@@ -114,9 +114,9 @@ function ProdutorDashboard() {
 
           <div className="hidden lg:grid grid-cols-2 gap-4">
             {stats.map((stat) => (
-              <div key={stat.label} className="bg-white/5 backdrop-blur-md p-6 rounded-2xl border border-white/10 text-center">
-                <p className="text-3xl font-heading font-extrabold mb-1">{stat.value}</p>
-                <p className="text-[10px] uppercase tracking-widest font-bold text-white/50">{stat.label}</p>
+              <div key={stat.label} className="bg-white/10 backdrop-blur-md p-6 rounded-2xl border-2 border-white/20 text-center shadow-lg">
+                <p className="text-3xl font-heading font-extrabold mb-1 text-white">{stat.value}</p>
+                <p className="text-[10px] uppercase tracking-widest font-extrabold text-white/90">{stat.label}</p>
               </div>
             ))}
           </div>

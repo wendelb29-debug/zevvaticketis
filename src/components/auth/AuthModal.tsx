@@ -112,7 +112,7 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
     <div className="space-y-4 pt-4">
       <Button 
         variant="outline" 
-        className="w-full h-12 justify-start px-6 rounded-[12px] border-line hover:bg-surface transition-all font-medium text-navy"
+        className="w-full h-12 justify-start px-6 rounded-[12px] border-2 border-line hover:border-gold/50 hover:bg-surface transition-all font-bold text-navy"
         onClick={() => setView("email_login")}
         disabled={loading}
       >
@@ -122,7 +122,7 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
 
       <Button 
         variant="outline" 
-        className="w-full h-12 justify-start px-6 rounded-[12px] border-line hover:bg-surface transition-all font-medium text-navy"
+        className="w-full h-12 justify-start px-6 rounded-[12px] border-2 border-line hover:border-gold/50 hover:bg-surface transition-all font-bold text-navy"
         onClick={() => handleOAuthLogin('google')}
         disabled={loading}
       >
@@ -132,7 +132,7 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
 
       <Button 
         variant="outline" 
-        className="w-full h-12 justify-start px-6 rounded-[12px] border-line hover:bg-surface transition-all font-medium text-navy"
+        className="w-full h-12 justify-start px-6 rounded-[12px] border-2 border-line hover:border-gold/50 hover:bg-surface transition-all font-bold text-navy"
         onClick={() => handleOAuthLogin('apple')}
         disabled={loading}
       >
