@@ -24,6 +24,8 @@ function Index() {
   const [isLocationModalOpen, setIsLocationModalOpen] = useState(false);
   const [nearbyError, setNearbyError] = useState(false);
   const [filteredEvents, setFilteredEvents] = useState<any[]>([]);
+  const [featuredEvents, setFeaturedEvents] = useState<any[]>([]);
+  const [favorites, setFavorites] = useState<string[]>([]);
   const [loadingEvents, setLoadingEvents] = useState(true);
   const [user, setUser] = useState<any>(null);
   const navigate = useNavigate();
