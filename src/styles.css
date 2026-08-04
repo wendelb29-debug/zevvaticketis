@@ -62,107 +62,58 @@
 }
 
 :root {
-  --radius: 0.5rem;
+  --radius: 0.7rem;
 
-  /* Zevva Tickets - Brand Palette */
-  /* Dark navy (almost black) - primary background */
-  --background: oklch(0.10 0.018 260);
+  --bg: #FFFFFF;
+  --surface: #FAF8F3;
+  --surface-2: #F2EDE0;
+  --line: rgba(20,24,42,0.09);
+  --gold: #C99A3E;
+  --gold-bright: #E4BA6C;
+  --gold-deep: #A97C24;
+  --navy: #14182A;
+  --muted: #6B7280;
+  --good: #2F9E6B;
 
-  /* Main text on dark background - creme/off-white */
-  --foreground: oklch(0.96 0.008 80);
-
-  /* Secondary panel/card background */
-  --card: oklch(0.17 0.028 260);
-  --card-foreground: oklch(0.96 0.008 80);
-
-  /* Popover */
-  --popover: oklch(0.17 0.028 260);
-  --popover-foreground: oklch(0.96 0.008 80);
-
-  /* Gold primary (highlight, CTAs, icons) */
-  --primary: oklch(0.73 0.12 85);
-  --primary-foreground: oklch(0.10 0.018 260);
-
-  /* Soft gold (secondary text) */
-  --secondary: oklch(0.72 0.08 80);
-  --secondary-foreground: oklch(0.10 0.018 260);
-
-  /* Creme (light section background) */
-  --muted: oklch(0.93 0.008 80);
-  --muted-foreground: oklch(0.40 0.02 260);
-
-  /* Light gold (hover states) */
-  --accent: oklch(0.83 0.15 85);
-  --accent-foreground: oklch(0.10 0.018 260);
-
-  /* Success state */
-  --success: oklch(0.70 0.15 160);
-  --success-foreground: oklch(0.96 0.008 80);
-
-  /* Error state */
-  --destructive: oklch(0.58 0.18 25);
-  --destructive-foreground: oklch(0.96 0.008 80);
-
-  --error: oklch(0.58 0.18 25);
-  --error-foreground: oklch(0.96 0.008 80);
-
-  /* Borders and inputs */
-  --border: oklch(1 0 0 / 0.08);
-  --input: oklch(1 0 0 / 0.1);
-  --ring: oklch(0.73 0.12 85);
-
-  /* Chart colors */
-  --chart-1: oklch(0.73 0.12 85); /* Gold */
-  --chart-2: oklch(0.70 0.15 160); /* Success */
-  --chart-3: oklch(0.58 0.18 25); /* Error */
-  --chart-4: oklch(0.83 0.15 85); /* Light gold */
-  --chart-5: oklch(0.72 0.08 80); /* Soft gold */
-
-  /* Sidebar */
-  --sidebar: oklch(0.17 0.028 260);
-  --sidebar-foreground: oklch(0.96 0.008 80);
-  --sidebar-primary: oklch(0.73 0.12 85);
-  --sidebar-primary-foreground: oklch(0.10 0.018 260);
-  --sidebar-accent: oklch(0.83 0.15 85);
-  --sidebar-accent-foreground: oklch(0.10 0.018 260);
-  --sidebar-border: oklch(1 0 0 / 0.08);
-  --sidebar-ring: oklch(0.73 0.12 85);
+  --background: var(--bg);
+  --foreground: var(--navy);
+  --card: var(--surface);
+  --card-foreground: var(--navy);
+  --popover: var(--surface);
+  --popover-foreground: var(--navy);
+  --primary: var(--gold);
+  --primary-foreground: #FFFFFF;
+  --secondary: var(--muted);
+  --secondary-foreground: var(--navy);
+  --muted: var(--surface-2);
+  --muted-foreground: var(--muted);
+  --accent: var(--gold-bright);
+  --accent-foreground: #FFFFFF;
+  --destructive: #E2685A;
+  --destructive-foreground: #FFFFFF;
+  --border: var(--line);
+  --input: var(--line);
+  --ring: var(--gold);
 }
 
-.dark {
-  /* Dark mode is default; explicit override for consistency */
-  --background: oklch(0.10 0.018 260);
-  --foreground: oklch(0.96 0.008 80);
-  --card: oklch(0.17 0.028 260);
-  --card-foreground: oklch(0.96 0.008 80);
-  --popover: oklch(0.17 0.028 260);
-  --popover-foreground: oklch(0.96 0.008 80);
-  --primary: oklch(0.73 0.12 85);
-  --primary-foreground: oklch(0.10 0.018 260);
-  --secondary: oklch(0.72 0.08 80);
-  --secondary-foreground: oklch(0.10 0.018 260);
-  --muted: oklch(0.93 0.008 80);
-  --muted-foreground: oklch(0.40 0.02 260);
-  --accent: oklch(0.83 0.15 85);
-  --accent-foreground: oklch(0.10 0.018 260);
-  --destructive: oklch(0.58 0.18 25);
-  --destructive-foreground: oklch(0.96 0.008 80);
-  --border: oklch(1 0 0 / 0.08);
-  --input: oklch(1 0 0 / 0.1);
-  --ring: oklch(0.73 0.12 85);
-  --chart-1: oklch(0.73 0.12 85);
-  --chart-2: oklch(0.70 0.15 160);
-  --chart-3: oklch(0.58 0.18 25);
-  --chart-4: oklch(0.83 0.15 85);
-  --chart-5: oklch(0.72 0.08 80);
-  --sidebar: oklch(0.17 0.028 260);
-  --sidebar-foreground: oklch(0.96 0.008 80);
-  --sidebar-primary: oklch(0.73 0.12 85);
-  --sidebar-primary-foreground: oklch(0.10 0.018 260);
-  --sidebar-accent: oklch(0.83 0.15 85);
-  --sidebar-accent-foreground: oklch(0.10 0.018 260);
-  --sidebar-border: oklch(1 0 0 / 0.08);
-  --sidebar-ring: oklch(0.73 0.12 85);
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+
+  html {
+    font-family: "Inter", sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: "Manrope", sans-serif;
+    font-weight: 800;
+  }
+
+  body {
+    background-color: var(--bg);
+    color: var(--navy);
+  }
 }
 
 @layer base {
