@@ -137,7 +137,17 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
-  const { activeOverlay, authView, closeOverlay } = useUI();
+  const { activeOverlay, authView, closeOverlay, openOverlay } = useUI();
+  const router = useRouter();
+  const [isNavigating, setIsNavigating] = useState(false);
+
+  useEffect(() => {
+    return router.subscribe('onBeforeNavigate', () => setIsNavigating(true));
+  }, [router]);
+
+  useEffect(() => {
+    return router.subscribe('onSettled', () => setIsNavigating(false));
+  }, [router]);
 
   return (
     <QueryClientProvider client={queryClient}>

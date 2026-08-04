@@ -82,14 +82,14 @@ export function AccountMenu({ user, onLogout, onNavigate, onOpenAuth }: AccountM
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="w-56 mt-2 rounded-[20px] p-2 border-line shadow-2xl font-manrope bg-white">
           <DropdownMenuItem 
-            onClick={() => onNavigate("/login")}
+            onClick={() => onOpenAuth('login')}
             className="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-extrabold text-navy cursor-pointer hover:bg-surface transition-colors"
           >
             <UserCircle className="w-4 h-4 text-gold" />
             Entrar
           </DropdownMenuItem>
           <DropdownMenuItem 
-            onClick={() => onNavigate("/cadastro")}
+            onClick={() => onOpenAuth('register')}
             className="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-extrabold text-navy cursor-pointer hover:bg-surface transition-colors"
           >
             <PlusCircle className="w-4 h-4 text-gold" />
