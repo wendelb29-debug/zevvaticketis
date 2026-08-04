@@ -150,9 +150,12 @@ function Index() {
           >
             Entrar
           </button>
-          <Link to="/cadastro" className="text-sm font-extrabold px-6 py-2.5 rounded-[11px] bg-gradient-to-r from-gold-bright to-gold text-white hover:brightness-110 transition-all shadow-[0_4px_12px_rgba(201,154,62,0.3)] border border-gold/20">
-            Cadastrar
-          </Link>
+          <button 
+            onClick={handleAuthClick}
+            className="text-sm font-extrabold px-6 py-2.5 rounded-[11px] bg-[image:var(--grad-cta)] text-white hover:brightness-110 transition-all shadow-[0_8px_20px_-4px_rgba(201,154,62,0.4)] border border-gold/20 active:scale-[0.97]"
+          >
+            Inscrever-se
+          </button>
         </div>
       </header>
 
