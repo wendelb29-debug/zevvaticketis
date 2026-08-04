@@ -13,7 +13,7 @@ Cole **uma wave por vez**, nessa ordem. Espere a wave terminar de construir, tes
 ## Wave 0 — Setup inicial
 
 ```
-Quero criar o projeto Zevva Tickets, uma plataforma marketplace de eventos internacionais.
+Quero criar o projeto Zevva Tickets, uma plataforma marketplace de eventos internacionais focada em caravanas e igrejas.
 
 1. Conecte este projeto a um projeto Supabase externo (não use o Lovable Cloud padrão) — vou fornecer a URL e a chave do meu projeto Supabase.
 
@@ -48,9 +48,33 @@ Não implemente lógica de negócio ainda, só a base visual e de roteamento.
 ```
 Agora vamos implementar autenticação e cadastro. Contexto: esta é uma plataforma marketplace com 4 papéis — Admin da Plataforma, Produtor, Equipe (staff de um produtor) e Participante.
 
-1. Configure Supabase Auth com email/senha e login social via Google.
+0. DESIGN — padrão visual premium para as telas de auth:
+   - Layout em split-screen: painel esquerdo (40%) com fundo gradiente escuro (navy #14182A para #241f3a), com o símbolo Z da marca em destaque, um headline de boas-vindas e uma citação bíblica curta no rodapé do painel. Painel direito (60%) branco, com o formulário centralizado, max-width 400px.
+   - Em telas menores que 860px, esconda o painel esquerdo e mostre só o formulário.
+   - Cards, inputs e botões com border-radius 11-14px (não pill/100px — isso é reservado pros botões da home pública). Sombras suaves e difusas (nunca sombra dura). Cor de destaque dourada (#C99A3E / #A97C24 no texto, gradiente #E4BA6C→#C99A3E nos botões primários) sobre fundo branco.
+   - Adicione um botão "Voltar" (ícone de seta + texto) fixo no topo das páginas de login e cadastro.
 
-2. Crie estas tabelas (com RLS habilitado em todas):
+1. Configure Supabase Auth com email/senha, login social via Google e login com Apple (Sign in with Apple).
+
+2. Crie a tela de Login (/login):
+   - Botão "Continuar com Google" (branco, borda cinza, logo oficial colorido do Google, texto em preto)
+   - Botão "Continuar com Apple" (fundo preto/navy, ícone da maçã branco, texto branco)
+   - Divisor "ou com e-mail"
+   - Campos de e-mail e senha, checkbox "manter conectado", link "esqueci a senha"
+   - Botão de submit em gradiente dourado
+   - Link no rodapé "Não tem conta? Cadastre-se" apontando pra /cadastro
+
+3. Crie a tela de Cadastro (/cadastro):
+   - Primeiro passo: dois cards clicáveis lado a lado — "Quero comprar ingressos" (participante) e "Quero vender ingressos" (produtor) — o card selecionado fica com borda dourada
+   - Os mesmos botões de Google e Apple do login
+   - Campos: nome, sobrenome, e-mail, senha
+   - Se "produtor" estiver selecionado, revele campos extras: nome da organização, país, CNPJ/documento — com um aviso "sua organização passa por aprovação da plataforma antes de publicar eventos"
+   - Checkbox obrigatório de aceite dos Termos de Uso e LGPD
+   - Texto do botão de submit muda conforme o papel: "Criar minha conta" (participante) ou "Enviar cadastro pra aprovação" (produtor)
+
+4. Configure Supabase Auth com email/senha e login social via Google.
+
+5. Crie estas tabelas (com RLS habilitado em todas):
 
 platform_admins
   id uuid, user_id uuid (fk auth.users), created_at
@@ -342,3 +366,9 @@ Nesse ponto o MVP dos 90 dias está funcionalmente completo. Antes de ir pra pro
 - Rodar o checklist de segurança (2FA, captcha no cadastro público, backup automático do Supabase)
 - Configurar domínio próprio (.com) antes de tentar habilitar o modo "live" do Stripe
 - Testar o fluxo ponta a ponta com cartão de teste do Stripe antes de qualquer transação real
+
+O modelo de dados de lotes + tipos de ingresso + vaga por veículo (estrutura para caravanas de ônibus/van)
+O fluxo de checkout passo a passo (do carrinho ao ingresso com QR code)
+O painel do organizador/produtor (o que precisa ter: criação de evento, financeiro, check-in, relatórios)
+As funcionalidades extras específicas para igrejas internacionais (multi-moeda, lista de espera, comunicação via WhatsApp etc.)
+Outra coisa que você tinha em mente: botão de voltar para página anterior ao acessar outra página ou aba.
