@@ -13,7 +13,11 @@ import {
   Bell,
   Menu,
   X,
-  ChevronRight
+  ChevronRight,
+  Settings as SettingsIcon,
+  ShieldCheck,
+  FileText,
+  UserPlus
 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
