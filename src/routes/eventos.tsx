@@ -78,26 +78,47 @@ function EventPage() {
               
               <div className="space-y-4">
                 {[
-                  { id: 1, name: "Pacote Premium Individual", price: "US$ 4.500,00", desc: "Alojamento 5 estrelas + Aéreo" },
-                  { id: 2, name: "Pacote Standard Duplo", price: "US$ 3.800,00", desc: "Alojamento 4 estrelas + Aéreo" },
+                  { 
+                    id: 1, 
+                    name: "Pacote Premium Individual", 
+                    price: "US$ 4.500,00", 
+                    desc: "Alojamento 5 estrelas + Aéreo",
+                    vagas: 12
+                  },
+                  { 
+                    id: 2, 
+                    name: "Pacote Econômico Duplo", 
+                    price: "US$ 3.200,00", 
+                    desc: "Alojamento 3 estrelas + Aéreo",
+                    vagas: 8
+                  },
+                  { 
+                    id: 3, 
+                    name: "Somente Ingresso (Sem Viagem)", 
+                    price: "US$ 1.500,00", 
+                    desc: "Acesso total à conferência",
+                    vagas: 45
+                  },
                 ].map((ticket) => (
-                  <div key={ticket.id} className="p-4 rounded-xl border border-line bg-white space-y-3 shadow-sm">
+                  <div key={ticket.id} className="p-4 rounded-xl border border-line bg-white space-y-3 shadow-sm hover:border-gold/30 transition-all">
                     <div className="flex justify-between items-start">
-                      <div>
-                        <h4 className="font-bold text-navy">{ticket.name}</h4>
-                        <span className="text-xs text-muted font-medium">{ticket.desc}</span>
+                      <div className="flex-1">
+                        <h4 className="font-bold text-navy leading-tight">{ticket.name}</h4>
+                        <span className="text-xs text-muted font-medium mt-1 block">{ticket.desc}</span>
                       </div>
-                      <div className="text-right">
-                        <span className="block font-bold text-gold">{ticket.price}</span>
-                        <span className="text-[10px] bg-good/10 text-good px-2 py-0.5 rounded-sm font-bold uppercase">parcele em 12x</span>
+                      <div className="text-right ml-4">
+                        <span className="block font-extrabold text-gold">{ticket.price}</span>
+                        {ticket.id === 1 && (
+                          <span className="text-[10px] bg-gold/10 text-gold px-2 py-0.5 rounded-sm font-bold uppercase mt-1 inline-block">Mais vendido</span>
+                        )}
                       </div>
                     </div>
                     
                     <div className="flex items-center justify-between pt-3 border-t border-line">
-                      <span className="text-xs text-muted font-bold">QTD:</span>
-                      <div className="flex items-center border border-line rounded-lg overflow-hidden bg-surface">
+                      <span className="text-[10px] text-muted font-extrabold uppercase tracking-widest">Vagas: {ticket.vagas}</span>
+                      <div className="flex items-center border border-line rounded-lg overflow-hidden bg-surface group/stepper">
                         <button className="w-9 h-9 flex items-center justify-center text-navy hover:bg-gold hover:text-white transition-colors font-bold">–</button>
-                        <span className="font-bold w-10 text-center text-sm text-navy border-x border-line py-2">0</span>
+                        <span className="font-bold w-10 text-center text-sm text-navy border-x border-line py-2 bg-white">0</span>
                         <button className="w-9 h-9 flex items-center justify-center text-navy hover:bg-gold hover:text-white transition-colors font-bold">+</button>
                       </div>
                     </div>
