@@ -167,14 +167,35 @@ function ProdutorLayout() {
     );
   }
 
-  const menuItems = [
-    { label: "Início", icon: LayoutDashboard, href: "/produtor", activeOptions: { exact: true } },
-    { label: "Novo Evento", icon: Plus, href: "/produtor/novo-evento" },
-    { label: "Meus dados", icon: UserIcon, href: "/produtor/dados" },
-    { label: "Minha página", icon: Globe, href: "/produtor/pagina" },
-    { label: "Lista de interessados", icon: Users, href: "/produtor/interessados" },
-    { label: "Gestão financeira", icon: BarChart3, href: "/produtor/financeiro" },
+  const allMenuItems = [
+    { label: "Dashboard", icon: LayoutDashboard, href: "/produtor", activeOptions: { exact: true } },
+    { label: "Meus Eventos", icon: Plus, href: "/produtor/eventos", permission: "eventos" },
+    { label: "Financeiro", icon: BarChart3, href: "/produtor/financeiro", permission: "financeiro" },
+    { label: "Relatórios", icon: FileText, href: "/produtor/relatorios", permission: "relatorios" },
+    { label: "Minha Equipe", icon: Users, href: "/produtor/equipe", permission: "equipe" },
+    { label: "Configurações", icon: SettingsIcon, href: "/produtor/configuracoes", permission: "configuracoes" },
   ];
+
+  const filteredMenuItems = allMenuItems.filter(item => {
+    // Owner sees everything
+    if (memberRole === 'produtor_owner') return true;
+    
+    // Team members see based on permissions
+    // But some pages are exclusive to owner
+    if (item.label === "Minha Equipe" || item.label === "Configurações") {
+      return memberRole === 'produtor_owner';
+    }
+    
+    // If it's the dashboard, everyone sees it
+    if (item.label === "Dashboard") return true;
+    
+    // Check permission for specific tab
+    if (item.permission) {
+      return permissions.includes(item.permission);
+    }
+    
+    return false;
+  });
 
   const SidebarContent = () => (
     <div className="flex flex-col h-full bg-white border-r border-line py-8 font-sans">
