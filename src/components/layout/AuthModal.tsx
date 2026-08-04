@@ -66,7 +66,8 @@ export function AuthModal({ isOpen, onClose, defaultView = 'login' }: AuthModalP
       });
       if (error) throw error;
       // Completes producer signup securely once the user is authenticated
-      await supabase.rpc('ensure_producer_organization');
+      const { ensureProducerOrganization } = await import("@/lib/organizations.functions");
+      await ensureProducerOrganization();
       toast.success('Login realizado com sucesso!');
       
       const { getRedirectPath } = await import("@/lib/auth.functions");

@@ -23,7 +23,8 @@ function AuthCallbackPage() {
       }
 
       // Completes producer signup securely once authenticated
-      await supabase.rpc('ensure_producer_organization');
+      const { ensureProducerOrganization } = await import('@/lib/organizations.functions');
+      await ensureProducerOrganization();
 
       // Get the correct redirect path based on user role
       try {
