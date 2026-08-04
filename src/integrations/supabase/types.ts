@@ -14,7 +14,202 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      countries: {
+        Row: {
+          ativo: boolean | null
+          codigo_iso: string
+          created_at: string | null
+          id: string
+          nome: string
+        }
+        Insert: {
+          ativo?: boolean | null
+          codigo_iso: string
+          created_at?: string | null
+          id?: string
+          nome: string
+        }
+        Update: {
+          ativo?: boolean | null
+          codigo_iso?: string
+          created_at?: string | null
+          id?: string
+          nome?: string
+        }
+        Relationships: []
+      }
+      currencies: {
+        Row: {
+          ativo: boolean | null
+          codigo: string
+          created_at: string | null
+          id: string
+          simbolo: string
+        }
+        Insert: {
+          ativo?: boolean | null
+          codigo: string
+          created_at?: string | null
+          id?: string
+          simbolo: string
+        }
+        Update: {
+          ativo?: boolean | null
+          codigo?: string
+          created_at?: string | null
+          id?: string
+          simbolo?: string
+        }
+        Relationships: []
+      }
+      organization_members: {
+        Row: {
+          created_at: string | null
+          id: string
+          organization_id: string
+          permissions: Json | null
+          role: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          organization_id: string
+          permissions?: Json | null
+          role: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          organization_id?: string
+          permissions?: Json | null
+          role?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "organization_members_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      organizations: {
+        Row: {
+          created_at: string | null
+          documento: string | null
+          id: string
+          moeda_padrao_id: string | null
+          nome: string
+          pais_id: string | null
+          plan_id: string | null
+          status: string | null
+          stripe_account_id: string | null
+          taxa_percentual_custom: number | null
+        }
+        Insert: {
+          created_at?: string | null
+          documento?: string | null
+          id?: string
+          moeda_padrao_id?: string | null
+          nome: string
+          pais_id?: string | null
+          plan_id?: string | null
+          status?: string | null
+          stripe_account_id?: string | null
+          taxa_percentual_custom?: number | null
+        }
+        Update: {
+          created_at?: string | null
+          documento?: string | null
+          id?: string
+          moeda_padrao_id?: string | null
+          nome?: string
+          pais_id?: string | null
+          plan_id?: string | null
+          status?: string | null
+          stripe_account_id?: string | null
+          taxa_percentual_custom?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "organizations_moeda_padrao_id_fkey"
+            columns: ["moeda_padrao_id"]
+            isOneToOne: false
+            referencedRelation: "currencies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "organizations_pais_id_fkey"
+            columns: ["pais_id"]
+            isOneToOne: false
+            referencedRelation: "countries"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      platform_admins: {
+        Row: {
+          created_at: string | null
+          id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          created_at: string | null
+          documento: string | null
+          email: string | null
+          id: string
+          idioma_preferido: string | null
+          nome: string | null
+          pais_id: string | null
+          telefone: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          documento?: string | null
+          email?: string | null
+          id: string
+          idioma_preferido?: string | null
+          nome?: string | null
+          pais_id?: string | null
+          telefone?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          documento?: string | null
+          email?: string | null
+          id?: string
+          idioma_preferido?: string | null
+          nome?: string | null
+          pais_id?: string | null
+          telefone?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "profiles_pais_id_fkey"
+            columns: ["pais_id"]
+            isOneToOne: false
+            referencedRelation: "countries"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
