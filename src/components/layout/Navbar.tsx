@@ -16,7 +16,7 @@ interface NavbarProps {
 export function Navbar({ selectedCity }: { selectedCity?: string | null }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [user, setUser] = useState<any>(null);
-  const { openOverlay, activeOverlay } = useUI();
+  const { openOverlay, activeOverlay, language, setLanguage } = useUI();
   const navigate = useNavigate();
 
   useEffect(() => {
