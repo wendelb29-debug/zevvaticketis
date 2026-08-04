@@ -60,10 +60,10 @@ function OrderHistory() {
   );
 
   return (
-    <div className="space-y-10 font-sans max-w-4xl mx-auto pb-20">
+    <div className="space-y-10 font-inter max-w-4xl mx-auto pb-20">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div className="space-y-1">
-          <h1 className="text-3xl font-heading font-extrabold text-navy">Histórico de Pedidos</h1>
+          <h1 className="text-3xl font-manrope font-extrabold text-navy">Histórico de Pedidos</h1>
           <p className="text-muted font-medium">Veja seus ingressos usados e pedidos passados.</p>
         </div>
         
@@ -102,7 +102,7 @@ function OrderHistory() {
 
               <div className="flex-grow space-y-2 text-center sm:text-left">
                 <div className="flex flex-col sm:flex-row sm:items-center gap-2">
-                  <h3 className="font-heading font-extrabold text-lg text-navy">{order.events?.title}</h3>
+                  <h3 className="font-manrope font-extrabold text-lg text-navy">{order.events?.title}</h3>
                   <Badge variant="outline" className="w-fit mx-auto sm:mx-0 font-extrabold text-[10px] uppercase border-line text-muted">
                     {order.status}
                   </Badge>
@@ -114,7 +114,7 @@ function OrderHistory() {
               </div>
 
               <div className="flex flex-col items-center sm:items-end gap-2">
-                <p className="text-xl font-heading font-extrabold text-navy">
+                <p className="text-xl font-manrope font-extrabold text-navy">
                   {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(order.price || 0)}
                 </p>
                 <Button variant="ghost" size="sm" className="font-bold text-gold hover:text-gold-deep h-10 px-4 rounded-lg">

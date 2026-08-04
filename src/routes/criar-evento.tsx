@@ -1,6 +1,6 @@
 import { createFileRoute, redirect, useNavigate, Link, Outlet } from "@tanstack/react-router";
 import { supabase } from "@/integrations/supabase/client";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { 
   ChevronLeft, 
   ChevronRight, 
@@ -18,7 +18,10 @@ import {
   Calendar,
   Ticket,
   Plus,
-  ArrowLeft
+  ArrowLeft,
+  Sparkles,
+  ArrowRight,
+  Eye
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -35,6 +38,7 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
 import { cn } from "@/lib/utils";
+import { CATEGORY_THEMES, getThemeByCategory } from "@/lib/categoryThemes";
 
 export const Route = createFileRoute("/criar-evento")({
   beforeLoad: async () => {
@@ -126,9 +130,9 @@ function CriarEventoWizard() {
   ];
 
   const SidebarContent = () => (
-    <div className="flex flex-col h-full bg-white border-r border-line py-8 font-sans">
+    <div className="flex flex-col h-full bg-white border-r border-line py-8 font-inter">
       <div className="px-6 mb-12">
-        <Link to="/" className="text-2xl font-heading font-extrabold text-gold tracking-tighter">
+        <Link to="/" className="text-2xl font-manrope font-extrabold text-gold tracking-tighter">
           ZEVVA <span className="text-navy">TICKETS</span>
         </Link>
       </div>
@@ -184,25 +188,55 @@ function CriarEventoWizard() {
                   onChange={(e) => setFormData((prev: any) => ({ ...prev, description: e.target.value }))}
                 />
               </div>
-              <div className="space-y-2">
-                <label className="text-sm font-bold text-navy uppercase tracking-wider">Categoria</label>
-                <Select 
-                  value={formData.category}
-                  onValueChange={(val) => setFormData((prev: any) => ({ ...prev, category: val }))}
-                >
-                  <SelectTrigger className="h-14 rounded-xl border-2 border-input font-bold text-navy">
-                    <SelectValue placeholder="Selecione uma categoria" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="evento">Evento</SelectItem>
-                    <SelectItem value="festa">Festa</SelectItem>
-                    <SelectItem value="show">Show</SelectItem>
-                    <SelectItem value="curso">Curso</SelectItem>
-                    <SelectItem value="viagem">Viagem</SelectItem>
-                    <SelectItem value="experiencia">Experiência</SelectItem>
-                    <SelectItem value="outro">Outro</SelectItem>
-                  </SelectContent>
-                </Select>
+              <div className="space-y-4">
+                <label className="text-sm font-bold text-navy uppercase tracking-wider flex items-center gap-2">
+                  Categoria & Tema Visual <Sparkles className="w-4 h-4 text-gold" />
+                </label>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <Select 
+                    value={formData.category}
+                    onValueChange={(val) => setFormData((prev: any) => ({ ...prev, category: val }))}
+                  >
+                    <SelectTrigger className="h-14 rounded-xl border-2 border-input font-bold text-navy">
+                      <SelectValue placeholder="Selecione uma categoria" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {Object.keys(CATEGORY_THEMES).map((cat) => (
+                        <SelectItem key={cat} value={cat}>{cat}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+
+                  {formData.category && (
+                    <div 
+                      className={cn(
+                        "p-4 rounded-xl border-2 flex items-center justify-between group cursor-pointer transition-all",
+                        getThemeByCategory(formData.category).customClass?.includes('animate-pulse-subtle') && "animate-pulse-subtle"
+                      )}
+                      style={{ 
+                        borderColor: getThemeByCategory(formData.category).accentColor + '40',
+                        backgroundColor: getThemeByCategory(formData.category).accentColor + '05'
+                      }}
+                      onClick={() => navigate({ to: '/eventos', search: { categoria: formData.category } as any })}
+                    >
+                      <div className="flex items-center gap-3">
+                        <div 
+                          className="w-10 h-10 rounded-lg flex items-center justify-center text-white"
+                          style={{ backgroundColor: getThemeByCategory(formData.category).accentColor }}
+                        >
+                          {React.createElement(getThemeByCategory(formData.category).icon, { className: "w-5 h-5" })}
+                        </div>
+                        <div>
+                          <p className="text-[10px] font-extrabold uppercase tracking-widest text-navy">Tema aplicado</p>
+                          <p className="font-bold text-navy text-xs">{formData.category}</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-2 text-gold font-extrabold text-[10px] uppercase tracking-widest">
+                        <Eye className="w-3.5 h-3.5" /> Ver prévia
+                      </div>
+                    </div>
+                  )}
+                </div>
               </div>
               <div className="space-y-2">
                 <label className="text-sm font-bold text-navy uppercase tracking-wider">Imagem principal</label>
@@ -536,7 +570,7 @@ function CriarEventoWizard() {
       </aside>
 
       <div className="flex-1 flex flex-col min-h-screen">
-        <header className="h-20 bg-white/80 backdrop-blur-md border-b border-line sticky top-0 z-40 px-6 sm:px-10 flex items-center justify-between font-sans">
+        <header className="h-20 bg-white/80 backdrop-blur-md border-b border-line sticky top-0 z-40 px-6 sm:px-10 flex items-center justify-between font-inter">
           <div className="flex items-center gap-4">
             <Sheet>
               <SheetTrigger asChild>
@@ -565,14 +599,14 @@ function CriarEventoWizard() {
           </div>
         </header>
 
-        <main className="p-6 sm:p-10 max-w-5xl mx-auto w-full font-sans">
+        <main className="p-6 sm:p-10 max-w-5xl mx-auto w-full font-inter">
           <div className="mb-10 space-y-4">
             <div className="flex items-center gap-4">
               <Link to="/produtor" className="p-2 hover:bg-white rounded-full transition-colors text-muted hover:text-navy">
                 <ArrowLeft className="w-6 h-6" />
               </Link>
               <div>
-                <h1 className="text-3xl font-heading font-extrabold text-navy tracking-tight">Criar Novo Evento</h1>
+                <h1 className="text-3xl font-manrope font-extrabold text-navy tracking-tight">Criar Novo Evento</h1>
                 <p className="text-muted font-medium">Siga as etapas para publicar sua caravana ou evento.</p>
               </div>
             </div>

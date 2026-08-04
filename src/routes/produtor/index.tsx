@@ -1,4 +1,4 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
 import { supabase } from "@/integrations/supabase/client";
 import { useEffect, useState } from "react";
 import { 
@@ -11,11 +11,16 @@ import {
   TrendingUp,
   Ticket,
   DollarSign,
-  Calendar
+  Calendar,
+  Eye,
+  ArrowRight,
+  Sparkles
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
+import { CATEGORY_THEMES, CategoryType, getThemeByCategory } from "@/lib/categoryThemes";
+import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/produtor/")({
   component: ProdutorDashboard,
@@ -51,9 +56,9 @@ function ProdutorDashboard() {
   ];
 
   return (
-    <div className="space-y-10 font-sans max-w-6xl mx-auto">
+    <div className="space-y-10 font-inter max-w-6xl mx-auto">
       <div className="space-y-2">
-        <h1 className="text-3xl font-heading font-extrabold text-navy">
+        <h1 className="text-3xl font-manrope font-extrabold text-navy">
           {getTimeGreeting()}, {user?.user_metadata?.nome?.split(' ')[0] || user?.email?.split('@')[0]}!
         </h1>
         <p className="text-muted font-medium">Já publicou seu evento?</p>
@@ -73,7 +78,48 @@ function ProdutorDashboard() {
           >
             <div className={cn("p-3 rounded-2xl mb-4 group-hover:scale-110 transition-transform bg-gradient-to-br", item.color)}>
               <item.icon className="w-6 h-6 text-navy" />
-            </div>
+      </div>
+
+      {/* Theme Preview Section */}
+      <div className="bg-white rounded-[32px] border border-line p-8 space-y-8 shadow-sm">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+          <div className="space-y-1">
+            <h2 className="text-xl font-manrope font-extrabold text-navy flex items-center gap-2">
+              <Sparkles className="w-5 h-5 text-gold" /> Prévia de Temas Visuais
+            </h2>
+            <p className="text-xs text-muted font-medium uppercase tracking-widest">Veja como seu evento aparecerá para os participantes</p>
+          </div>
+          <Link to="/eventos" className="text-[10px] font-extrabold text-gold uppercase tracking-widest hover:underline">
+            Ver página pública completa
+          </Link>
+        </div>
+
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+          {(Object.keys(CATEGORY_THEMES) as CategoryType[]).map((catName) => {
+            const theme = CATEGORY_THEMES[catName];
+            const Icon = theme.icon;
+            return (
+              <button 
+                key={catName}
+                onClick={() => navigate({ to: '/eventos', search: { categoria: catName } as any })}
+                className="group p-4 rounded-2xl border-2 border-line hover:border-navy transition-all text-center space-y-3 bg-surface/30 active:scale-95"
+                style={{ borderColor: theme.accentColor + '40' }}
+              >
+                <div 
+                  className="w-12 h-12 rounded-xl mx-auto flex items-center justify-center text-white shadow-lg group-hover:scale-110 transition-transform"
+                  style={{ backgroundColor: theme.accentColor }}
+                >
+                  <Icon className="w-6 h-6" />
+                </div>
+                <p className="text-[9px] font-extrabold uppercase tracking-widest text-navy leading-tight">{theme.name}</p>
+                <div className="pt-2 flex justify-center">
+                  <Eye className="w-3.5 h-3.5 text-muted group-hover:text-navy" />
+                </div>
+              </button>
+            );
+          })}
+        </div>
+      </div>
             <h3 className="font-bold text-navy mb-1">{item.label}</h3>
             <p className="text-xs text-muted font-medium">{item.desc}</p>
           </button>
@@ -86,7 +132,7 @@ function ProdutorDashboard() {
         <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div className="space-y-8">
             <div className="space-y-4">
-              <h2 className="text-3xl sm:text-4xl font-heading font-extrabold leading-tight">
+              <h2 className="text-3xl sm:text-4xl font-manrope font-extrabold leading-tight">
                 Seu evento pode vender ainda mais!
               </h2>
               <p className="text-white/70 font-medium text-lg">
@@ -115,7 +161,7 @@ function ProdutorDashboard() {
           <div className="hidden lg:grid grid-cols-2 gap-4">
             {stats.map((stat) => (
               <div key={stat.label} className="glass-panel backdrop-blur-md p-6 rounded-2xl text-center shadow-lg bg-white/5">
-                <p className="text-3xl font-heading font-extrabold mb-1 text-white">{stat.value}</p>
+                <p className="text-3xl font-manrope font-extrabold mb-1 text-white">{stat.value}</p>
                 <p className="text-[10px] uppercase tracking-widest font-extrabold text-white/90">{stat.label}</p>
               </div>
             ))}
@@ -182,7 +228,3 @@ function ProdutorDashboard() {
   );
 }
 
-// Utility for class concatenation if not globally available
-function cn(...inputs: any[]) {
-  return inputs.filter(Boolean).join(' ');
-}

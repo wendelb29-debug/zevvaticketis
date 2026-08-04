@@ -93,9 +93,9 @@ function OrgSettings() {
   );
 
   return (
-    <div className="space-y-10 font-sans max-w-4xl mx-auto">
+    <div className="space-y-10 font-inter max-w-4xl mx-auto">
       <div className="space-y-1">
-        <h1 className="text-3xl font-heading font-extrabold text-navy">Configurações</h1>
+        <h1 className="text-3xl font-manrope font-extrabold text-navy">Configurações</h1>
         <p className="text-muted font-medium">Dados da organização e preferências da conta.</p>
       </div>
 
@@ -106,7 +106,7 @@ function OrgSettings() {
             <div className="p-3 bg-gold/10 rounded-2xl text-gold">
               <Building2 className="w-6 h-6" />
             </div>
-            <h2 className="text-xl font-heading font-extrabold text-navy">Dados da Organização</h2>
+            <h2 className="text-xl font-manrope font-extrabold text-navy">Dados da Organização</h2>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -161,7 +161,7 @@ function OrgSettings() {
             <div className="p-3 bg-navy/5 rounded-2xl text-navy">
               <CreditCard className="w-6 h-6" />
             </div>
-            <h2 className="text-xl font-heading font-extrabold text-navy">Pagamentos (Stripe Connect)</h2>
+            <h2 className="text-xl font-manrope font-extrabold text-navy">Pagamentos (Stripe Connect)</h2>
           </div>
 
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6 bg-surface p-6 rounded-2xl border border-line">
@@ -181,7 +181,7 @@ function OrgSettings() {
             <div className="p-3 bg-good/5 rounded-2xl text-good">
               <Clock className="w-6 h-6" />
             </div>
-            <h2 className="text-xl font-heading font-extrabold text-navy">Regras de No-Show (Falta Automática)</h2>
+            <h2 className="text-xl font-manrope font-extrabold text-navy">Regras de No-Show (Falta Automática)</h2>
           </div>
 
           <div className="space-y-6">

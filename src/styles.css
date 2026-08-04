@@ -1,198 +1,67 @@
-@import "tailwindcss" source(none);
-@source "../src";
-@import "tw-animate-css";
+@import "tailwindcss";
 
-@custom-variant dark (&:is(.dark *));
+@theme {
+  --font-fredoka: "Fredoka", sans-serif;
+  --font-baloo: "Baloo 2", sans-serif;
+  --font-manrope: "Manrope", sans-serif;
+  --font-inter: "Inter", sans-serif;
 
-/*
- * Zevva Tickets Design System
- * Brand colors: Dark navy (#05070F), Gold (#D9A94D), Creme (#EDE7DD)
- */
+  --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  
+  --color-gold: #C99A3E;
+  --color-gold-deep: #A67C2C;
+  --color-navy: #0F172A;
+  --color-surface: #FAF8F3;
+  --color-line: #E5E7EB;
+  --color-muted: #64748B;
+  --color-good: #10B981;
+  --color-error: #EF4444;
 
-@theme inline {
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
-  --radius-2xl: calc(var(--radius) + 8px);
-  --radius-3xl: calc(var(--radius) + 12px);
-  --radius-4xl: calc(var(--radius) + 16px);
-
-  --font-sans: "Raleway", ui-sans-serif, system-ui, sans-serif;
-  --font-heading: "Open Sans", ui-sans-serif, system-ui, sans-serif;
-
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
-  --color-popover: var(--popover);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-destructive: var(--destructive);
-  --color-destructive-foreground: var(--destructive-foreground);
-  --color-border: var(--border);
-  --color-input: var(--input);
-  --color-ring: var(--ring);
-  --color-ring-offset-background: var(--background);
-  --color-chart-1: var(--chart-1);
-  --color-chart-2: var(--chart-2);
-  --color-chart-3: var(--chart-3);
-  --color-chart-4: var(--chart-4);
-  --color-chart-5: var(--chart-5);
-  --color-sidebar: var(--sidebar);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-ring: var(--sidebar-ring);
-
-  --color-success: var(--success);
-  --color-success-foreground: var(--success-foreground);
-  --color-error: var(--error);
-  --color-error-foreground: var(--error-foreground);
-}
-
-:root {
-  --radius: 0.7rem;
-
-  --bg: #FFFFFF;
-  --surface: #FAF8F3;
-  --surface-2: #F2EDE0;
-  --line: rgba(20, 24, 42, 0.09);
-  --gold: #C99A3E;
-  --gold-bright: #E4BA6C;
-  --gold-deep: #A97C24;
-  --navy: #14182A;
-  --muted: #6B7280;
-  --good: #2F9E6B;
-
-  --background: var(--bg);
-  --foreground: var(--navy);
-  --card: var(--surface);
-  --card-foreground: var(--navy);
-  --popover: var(--surface);
-  --popover-foreground: var(--navy);
-  --primary: var(--gold);
-  --primary-foreground: #FFFFFF;
-  --secondary: var(--navy);
-  --secondary-foreground: #FFFFFF;
-  --muted-foreground: var(--muted);
-  --accent: var(--gold-bright);
-  --accent-foreground: #FFFFFF;
-  --destructive: #E2685A;
-  --destructive-foreground: #FFFFFF;
-  --border: var(--line);
-  --input: var(--line);
-  --ring: var(--gold);
-
-  /* Gradientes Fixos */
-  --grad-cta: linear-gradient(135deg, var(--gold-bright), var(--gold));
-  --grad-dark: linear-gradient(160deg, #14182A, #1c2140 60%, #241f3a);
-}
-
-@layer base {
-  h1, h2, h3, h4, h5, h6 {
-    font-family: var(--font-heading);
-    font-weight: 800;
-    letter-spacing: -0.01em;
+  @keyframes pulse-subtle {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.7; transform: scale(1.02); }
   }
 }
 
-/* Micro-interações Globais */
-.hover-lift {
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+@utility animate-pulse-subtle {
+  animation: pulse-subtle 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
+
+@utility ease-spring {
+  transition-timing-function: var(--ease-spring);
+}
+
+@layer base {
+  body {
+    @apply font-inter;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-manrope;
+  }
+}
+
+.hover-lift {
+  @apply transition-all duration-300;
+}
+
 .hover-lift:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 10px 25px -5px rgba(20, 24, 42, 0.1);
+  @apply -translate-y-1 shadow-lg;
 }
 
 .glass-panel {
-  backdrop-filter: blur(12px);
-  background: rgba(255, 255, 255, 0.7);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  @apply bg-white/10 backdrop-blur-md border border-white/20;
 }
 
 .dark-panel {
-  background: var(--grad-dark);
-  position: relative;
-}
-.dark-panel::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(circle at 50% 50%, rgba(201, 154, 62, 0.12), transparent 60%);
-  pointer-events: none;
+  @apply bg-navy/95 border border-white/5;
 }
 
-@layer base {
-  * {
-    border-color: var(--border);
-  }
-
-  html {
-    font-family: "Inter", sans-serif;
-  }
-
-  h1, h2, h3, h4, h5, h6 {
-    font-family: "Manrope", sans-serif;
-    font-weight: 800;
-  }
-
-  body {
-    background-color: var(--bg);
-    color: var(--navy);
-  }
+@keyframes infinite-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
 }
 
-@layer base {
-  * {
-    border-color: var(--color-border);
-  }
-
-  html {
-    font-family: var(--font-sans);
-  }
-
-  h1, h2, h3, h4, h5, h6 {
-    font-family: var(--font-heading);
-    font-weight: 700;
-  }
-
-  body {
-    background-color: var(--color-background);
-    color: var(--color-foreground);
-  }
-}
-
-@supports (font-variant: small-caps) {
-  h1, h2, h3, h4, h5, h6 {
-    letter-spacing: -0.01em;
-  }
-}
-
-
-/* Marca d'água removida */
-#lovable-badge,
-a[href*="lovable.dev"],
-a[href*="gptengineer"],
-iframe[src*="lovable.dev"],
-div[style*="Edit with Lovable"],
-[id*="lovable-badge"],
-[class*="lovable-badge"] {
-  display: none !important;
-  opacity: 0 !important;
-  visibility: hidden !important;
-  pointer-events: none !important;
-  position: absolute !important;
-  z-index: -9999 !important;
+.animate-infinite-scroll {
+  animation: infinite-scroll 40s linear infinite;
 }

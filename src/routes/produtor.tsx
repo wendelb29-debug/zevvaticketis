@@ -112,7 +112,7 @@ function ProdutorLayout() {
     navigate({ to: "/" });
   };
 
-  if (loading) return <div className="min-h-screen bg-white flex items-center justify-center font-sans">
+  if (loading) return <div className="min-h-screen bg-white flex items-center justify-center font-inter">
     <div className="flex flex-col items-center gap-4">
       <div className="w-8 h-8 border-4 border-gold border-t-transparent rounded-full animate-spin"></div>
       <p className="text-navy font-bold">Carregando painel...</p>
@@ -121,11 +121,11 @@ function ProdutorLayout() {
 
   if (status === "pendente") {
     return (
-      <div className="min-h-screen bg-surface flex items-center justify-center p-6 text-center font-sans">
+      <div className="min-h-screen bg-surface flex items-center justify-center p-6 text-center font-inter">
         <div className="max-w-md space-y-8 bg-white p-12 rounded-[24px] shadow-xl border border-line">
           <div className="text-6xl animate-bounce">⏳</div>
           <div className="space-y-4">
-            <h1 className="text-3xl font-heading font-extrabold text-navy">Cadastro em Análise</h1>
+            <h1 className="text-3xl font-manrope font-extrabold text-navy">Cadastro em Análise</h1>
             <p className="text-muted font-medium leading-relaxed">
               Sua organização foi cadastrada com sucesso e está sendo revisada por nossa equipe. 
               Você receberá um e-mail assim que for aprovado para começar a vender.
@@ -145,11 +145,11 @@ function ProdutorLayout() {
 
   if (status === "bloqueado") {
     return (
-      <div className="min-h-screen bg-surface flex items-center justify-center p-6 text-center font-sans">
+      <div className="min-h-screen bg-surface flex items-center justify-center p-6 text-center font-inter">
         <div className="max-w-md space-y-8 bg-white p-12 rounded-[24px] shadow-xl border border-destructive/20">
           <div className="text-6xl">🚫</div>
           <div className="space-y-4">
-            <h1 className="text-3xl font-heading font-extrabold text-destructive">Acesso Bloqueado</h1>
+            <h1 className="text-3xl font-manrope font-extrabold text-destructive">Acesso Bloqueado</h1>
             <p className="text-muted font-medium leading-relaxed">
               Infelizmente sua conta de produtor foi bloqueada. <br />
               Por favor, entre em contato com nosso suporte para mais informações.
@@ -198,9 +198,9 @@ function ProdutorLayout() {
   });
 
   const SidebarContent = () => (
-    <div className="flex flex-col h-full bg-white border-r border-line py-8 font-sans">
+    <div className="flex flex-col h-full bg-white border-r border-line py-8 font-inter">
       <div className="px-6 mb-12">
-        <Link to="/" className="text-2xl font-heading font-extrabold text-gold tracking-tighter">
+        <Link to="/" className="text-2xl font-manrope font-extrabold text-gold tracking-tighter">
           ZEVVA <span className="text-navy">TICKETS</span>
         </Link>
       </div>
@@ -241,7 +241,7 @@ function ProdutorLayout() {
       </aside>
 
       <div className="flex-1 flex flex-col min-h-screen">
-        <header className="h-20 bg-white/80 backdrop-blur-md border-b border-line sticky top-0 z-40 px-6 sm:px-10 flex items-center justify-between font-sans">
+        <header className="h-20 bg-white/80 backdrop-blur-md border-b border-line sticky top-0 z-40 px-6 sm:px-10 flex items-center justify-between font-inter">
           <div className="flex items-center gap-4">
             <Sheet>
               <SheetTrigger asChild>

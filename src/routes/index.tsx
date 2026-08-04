@@ -4,9 +4,10 @@ import { AuthModal } from "@/components/auth/AuthModal";
 import { UserMenu } from "@/components/auth/UserMenu";
 import { LocationModal } from "@/components/ui/LocationModal";
 import { supabase } from "@/integrations/supabase/client";
-import { MapPin, LogIn } from "lucide-react";
+import { MapPin, LogIn, Calendar, MapPin as MapPinIcon, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { getThemeByCategory } from "@/lib/categoryThemes";
 
 export const Route = createFileRoute("/")({
   validateSearch: (search: Record<string, unknown>) => {
@@ -60,7 +61,8 @@ function Index() {
           date: event.start_date ? new Date(event.start_date).toLocaleDateString('pt-BR', { month: 'long', year: 'numeric' }) : 'Data a definir',
           price: `US$ ${event.min_price || '0'}`,
           image: "https://images.unsplash.com/photo-1544971587-b842c27f8e14?auto=format&fit=crop&q=80&w=800",
-          lote: "Lote 1"
+          lote: "Lote 1",
+          categoria: event.categoria
         }));
         setFilteredEvents(formatted);
       } else if (error) {
@@ -127,10 +129,10 @@ function Index() {
   const cities = ["ORLANDO", "LISBOA", "UBERLÂNDIA", "MIAMI", "SÃO PAULO", "MADRI", "NOVA YORK", "BUENOS AIRES"];
 
   return (
-    <div className="min-h-screen bg-bg text-navy font-sans text-base">
+    <div className="min-h-screen bg-bg text-navy font-inter text-base">
       <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-line h-20 flex items-center px-6">
         <div className="flex-1 flex items-center">
-          <Link to="/" className="text-xl font-heading font-extrabold text-gold tracking-tighter">
+          <Link to="/" className="text-xl font-manrope font-extrabold text-gold tracking-tighter">
             ZEVVA <span className="text-navy">TICKETS</span>
           </Link>
         </div>
@@ -208,7 +210,7 @@ function Index() {
             <div className="absolute inset-0 flex items-center px-12">
               <div className="max-w-xl text-white">
                 <span className="inline-block bg-gold text-white px-3 py-1 rounded-full text-[10px] font-extrabold uppercase tracking-widest mb-4 border border-white/20 shadow-sm">Destaque</span>
-                <h2 className="text-4xl md:text-5xl font-heading font-extrabold mb-4 leading-tight">Grand Tour 2026: Europa Medieval</h2>
+                <h2 className="text-4xl md:text-5xl font-manrope font-extrabold mb-4 leading-tight">Grand Tour 2026: Europa Medieval</h2>
                 <p className="text-lg text-white/90 mb-8 font-medium leading-relaxed">Uma jornada inesquecível pelas catedrais e castelos mais icônicos do velho continente.</p>
                 <Button className="bg-[image:var(--grad-cta)] text-white px-10 py-6 rounded-xl font-extrabold transition-all uppercase tracking-wider text-sm shadow-[0_8px_20px_-4px_rgba(201,154,62,0.4)]">Ver Detalhes</Button>
               </div>
@@ -241,8 +243,8 @@ function Index() {
           {/* Categories Section */}
           <section className="space-y-8">
             <div className="text-center space-y-2">
-              <h2 className="text-3xl font-heading font-extrabold">Explore por Categoria</h2>
-              <p className="text-muted font-medium">Encontre a experiência ideal para o seu ministério</p>
+              <h2 className="text-3xl font-manrope font-extrabold">Explore por Categoria</h2>
+              <p className="text-navy font-bold">Encontre a experiência ideal para o seu ministério</p>
             </div>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
               {categories.map((cat) => (
@@ -260,7 +262,7 @@ function Index() {
           <section className="space-y-8">
             <div className="flex justify-between items-end border-b border-line pb-4">
               <div className="space-y-1">
-                <h2 className="text-3xl font-heading font-extrabold tracking-tight">Próximas Caravanas</h2>
+                <h2 className="text-3xl font-manrope font-extrabold tracking-tight">Próximas Caravanas</h2>
                 <p className="text-muted font-medium">Saídas confirmadas para os próximos meses</p>
               </div>
               <Link to="/eventos" className="text-gold text-sm font-extrabold hover:underline uppercase tracking-widest pb-1">Ver tudo</Link>
@@ -273,49 +275,77 @@ function Index() {
                   <div key={i} className="bg-surface animate-pulse rounded-[14px] aspect-[3/4]" />
                 ))
               ) : filteredEvents.length > 0 ? (
-                filteredEvents.map((event) => (
-                <div key={event.id} className="bg-white rounded-[14px] overflow-hidden border border-line shadow-sm hover-lift group">
-                  <div className="aspect-[4/3] bg-surface relative overflow-hidden">
-                    <div className="absolute top-3 right-3 z-10">
-                      <span className="glass-panel text-gold text-[10px] font-extrabold px-3 py-1.5 rounded-full shadow-md uppercase tracking-widest">
-                        {event.lote}
-                      </span>
-                    </div>
-                    <img 
-                      src={event.image} 
-                      alt={event.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
-                  </div>
-                  <div className="p-6 space-y-4">
-                    <h3 className="font-heading font-extrabold text-lg text-navy leading-tight line-clamp-2 min-h-[3.5rem] group-hover:text-gold transition-colors">
-                      {event.title}
-                    </h3>
-                    <div className="space-y-2">
-                      <div className="flex items-center gap-2 text-sm text-navy font-bold">
-                        <svg className="w-4 h-4 text-gold-deep" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /></svg>
-                        {event.location}
+                filteredEvents.map((event) => {
+                  const theme = getThemeByCategory(event.categoria);
+                  const Icon = theme.icon;
+                  
+                  return (
+                    <div 
+                      key={event.id} 
+                      className={cn(
+                        "bg-white rounded-[14px] overflow-hidden border border-line shadow-sm hover-lift group",
+                        theme.cardAnimation,
+                        theme.customClass?.includes('animate-pulse-subtle') && "animate-pulse-subtle"
+                      )}
+                      style={{ 
+                        borderColor: theme.accentColor + '30',
+                      }}
+                    >
+                      <div className="aspect-[4/3] bg-surface relative overflow-hidden">
+                        <div className="absolute top-3 right-3 z-10 flex gap-2">
+                          <span className="glass-panel text-white text-[10px] font-extrabold px-3 py-1.5 rounded-full shadow-md uppercase tracking-widest bg-navy/40">
+                            {event.lote}
+                          </span>
+                          <span 
+                            className="text-white text-[10px] font-extrabold px-3 py-1.5 rounded-full shadow-md uppercase tracking-widest flex items-center gap-1"
+                            style={{ backgroundColor: theme.accentColor }}
+                          >
+                            <Icon className="w-3 h-3" /> {event.categoria || 'Evento'}
+                          </span>
+                        </div>
+                        <img 
+                          src={event.image} 
+                          alt={event.title}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        />
                       </div>
-                      <div className="flex items-center gap-2 text-sm text-navy font-bold">
-                        <svg className="w-4 h-4 text-gold-deep" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
-                        {event.date}
+                      <div className={cn("p-6 space-y-4", theme.fontFamily)}>
+                        <h3 
+                          className="font-manrope font-extrabold text-lg text-navy leading-tight line-clamp-2 min-h-[3.5rem] group-hover:text-gold transition-colors"
+                          style={{ color: theme.customClass?.includes('animate-pulse-subtle') ? theme.accentColor : undefined }}
+                        >
+                          {event.title}
+                        </h3>
+                        <div className="space-y-2">
+                          <div className="flex items-center gap-2 text-sm text-navy font-bold">
+                            <MapPinIcon className="w-4 h-4" style={{ color: theme.accentColor }} />
+                            {event.location}
+                          </div>
+                          <div className="flex items-center gap-2 text-sm text-navy font-bold">
+                            <Calendar className="w-4 h-4" style={{ color: theme.accentColor }} />
+                            {event.date}
+                          </div>
+                        </div>
+                        <div className="pt-4 border-t border-line flex justify-between items-center">
+                          <div className="space-y-0.5">
+                            <span className="block text-[10px] text-muted-foreground font-extrabold uppercase tracking-widest">A partir de</span>
+                            <span className="text-xl font-extrabold text-navy">{event.price}</span>
+                          </div>
+                          <Link 
+                            to="/eventos" 
+                            className={cn(
+                              "w-10 h-10 rounded-full bg-surface flex items-center justify-center transition-all shadow-md border border-line",
+                              theme.buttonRadius
+                            )}
+                            style={{ color: theme.accentColor }}
+                          >
+                            <ArrowRight className="w-5 h-5" />
+                          </Link>
+                        </div>
                       </div>
                     </div>
-                    <div className="pt-4 border-t border-line flex justify-between items-center">
-                      <div className="space-y-0.5">
-                        <span className="block text-[10px] text-muted-foreground font-extrabold uppercase tracking-widest">A partir de</span>
-                        <span className="text-xl font-extrabold text-navy">{event.price}</span>
-                      </div>
-                      <Link 
-                        to="/eventos" 
-                        className="w-10 h-10 rounded-full bg-surface flex items-center justify-center text-gold group-hover:bg-gold group-hover:text-white transition-all shadow-md border border-line"
-                      >
-                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" /></svg>
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-                ))
+                  );
+                })
               ) : (
                 <div className="col-span-full py-20 text-center space-y-4">
                   <div className="text-6xl text-surface-2">📍</div>
@@ -333,7 +363,7 @@ function Index() {
           <section className="bg-gradient-to-br from-surface to-surface-2 rounded-3xl p-12 border border-line shadow-sm overflow-hidden relative group hover:border-gold/20 transition-all">
             <div className="absolute top-0 right-0 w-1/3 h-full bg-gold/5 -skew-x-12 translate-x-1/2" />
             <div className="max-w-2xl space-y-8 relative z-10">
-              <h2 className="text-4xl font-heading font-extrabold leading-tight text-navy">Crie eventos, divulgar e vender seu evento."</h2>
+              <h2 className="text-4xl font-manrope font-extrabold leading-tight text-navy">Crie eventos, divulgar e vender seu evento."</h2>
               <ul className="space-y-4">
                 {[
                   "Publicação gratuita e intuitiva",
@@ -357,7 +387,7 @@ function Index() {
           {/* FAQ Section */}
           <section className="max-w-3xl mx-auto space-y-12">
             <div className="text-center space-y-2">
-              <h2 className="text-3xl font-heading font-extrabold">Dúvidas Frequentes</h2>
+              <h2 className="text-3xl font-manrope font-extrabold">Dúvidas Frequentes</h2>
               <p className="text-muted font-medium">Tudo o que você precisa saber sobre a sua próxima viagem</p>
             </div>
             <div className="space-y-4">
