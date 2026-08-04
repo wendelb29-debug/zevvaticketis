@@ -32,6 +32,7 @@ import { Route as ProdutorConfiguracoesRouteImport } from './routes/produtor/con
 import { Route as ProdutorEquipeRouteImport } from './routes/produtor/equipe'
 import { Route as ProdutorMarketingRouteImport } from './routes/produtor/marketing'
 import { Route as ProdutorNovoEventoRouteImport } from './routes/produtor/novo-evento'
+import { Route as ProdutorSuporteRouteImport } from './routes/produtor/suporte'
 import { Route as DotlovableOauthConsentRouteImport } from './routes/[.]lovable.oauth.consent'
 import { Route as Char91DotmcpChar93InvokeToolToolRouteImport } from './routes/[.mcp]/invoke-tool/$tool'
 
@@ -152,6 +153,11 @@ const ProdutorNovoEventoRoute = ProdutorNovoEventoRouteImport.update({
   path: '/novo-evento',
   getParentRoute: () => ProdutorRoute,
 } as any)
+const ProdutorSuporteRoute = ProdutorSuporteRouteImport.update({
+  id: '/suporte',
+  path: '/suporte',
+  getParentRoute: () => ProdutorRoute,
+} as any)
 const DotlovableOauthConsentRoute = DotlovableOauthConsentRouteImport.update({
   id: '/.lovable/oauth/consent',
   path: '/.lovable/oauth/consent',
@@ -186,6 +192,7 @@ export interface FileRoutesByFullPath {
   '/produtor/equipe': typeof ProdutorEquipeRoute
   '/produtor/marketing': typeof ProdutorMarketingRoute
   '/produtor/novo-evento': typeof ProdutorNovoEventoRoute
+  '/produtor/suporte': typeof ProdutorSuporteRoute
   '/app/': typeof AppIndexRoute
   '/produtor/': typeof ProdutorIndexRoute
   '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
@@ -211,6 +218,7 @@ export interface FileRoutesByTo {
   '/produtor/equipe': typeof ProdutorEquipeRoute
   '/produtor/marketing': typeof ProdutorMarketingRoute
   '/produtor/novo-evento': typeof ProdutorNovoEventoRoute
+  '/produtor/suporte': typeof ProdutorSuporteRoute
   '/app': typeof AppIndexRoute
   '/produtor': typeof ProdutorIndexRoute
   '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
@@ -239,6 +247,7 @@ export interface FileRoutesById {
   '/produtor/equipe': typeof ProdutorEquipeRoute
   '/produtor/marketing': typeof ProdutorMarketingRoute
   '/produtor/novo-evento': typeof ProdutorNovoEventoRoute
+  '/produtor/suporte': typeof ProdutorSuporteRoute
   '/app/': typeof AppIndexRoute
   '/produtor/': typeof ProdutorIndexRoute
   '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
@@ -268,6 +277,7 @@ export interface FileRouteTypes {
     | '/produtor/equipe'
     | '/produtor/marketing'
     | '/produtor/novo-evento'
+    | '/produtor/suporte'
     | '/app/'
     | '/produtor/'
     | '/.lovable/oauth/consent'
@@ -293,6 +303,7 @@ export interface FileRouteTypes {
     | '/produtor/equipe'
     | '/produtor/marketing'
     | '/produtor/novo-evento'
+    | '/produtor/suporte'
     | '/app'
     | '/produtor'
     | '/.lovable/oauth/consent'
@@ -320,6 +331,7 @@ export interface FileRouteTypes {
     | '/produtor/equipe'
     | '/produtor/marketing'
     | '/produtor/novo-evento'
+    | '/produtor/suporte'
     | '/app/'
     | '/produtor/'
     | '/.lovable/oauth/consent'
@@ -508,6 +520,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProdutorNovoEventoRouteImport
       parentRoute: typeof ProdutorRoute
     }
+    '/produtor/suporte': {
+      id: '/produtor/suporte'
+      path: '/suporte'
+      fullPath: '/produtor/suporte'
+      preLoaderRoute: typeof ProdutorSuporteRouteImport
+      parentRoute: typeof ProdutorRoute
+    }
     '/.lovable/oauth/consent': {
       id: '/.lovable/oauth/consent'
       path: '/.lovable/oauth/consent'
@@ -554,6 +573,7 @@ interface ProdutorRouteChildren {
   ProdutorEquipeRoute: typeof ProdutorEquipeRoute
   ProdutorMarketingRoute: typeof ProdutorMarketingRoute
   ProdutorNovoEventoRoute: typeof ProdutorNovoEventoRoute
+  ProdutorSuporteRoute: typeof ProdutorSuporteRoute
   ProdutorIndexRoute: typeof ProdutorIndexRoute
 }
 
@@ -562,6 +582,7 @@ const ProdutorRouteChildren: ProdutorRouteChildren = {
   ProdutorEquipeRoute: ProdutorEquipeRoute,
   ProdutorMarketingRoute: ProdutorMarketingRoute,
   ProdutorNovoEventoRoute: ProdutorNovoEventoRoute,
+  ProdutorSuporteRoute: ProdutorSuporteRoute,
   ProdutorIndexRoute: ProdutorIndexRoute,
 }
 
