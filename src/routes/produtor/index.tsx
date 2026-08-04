@@ -82,7 +82,7 @@ function ProdutorDashboard() {
 
       {/* Info Banner */}
       <div className="relative overflow-hidden rounded-[32px] p-8 sm:p-12 text-white dark-panel">
-        <div className="absolute top-0 right-0 w-1/2 h-full bg-gold/10 -skew-x-12 translate-x-1/4 pointer-events-none" />
+        <div className="absolute top-0 right-0 w-1/2 h-full bg-gold/5 -skew-x-12 translate-x-1/4 pointer-events-none" />
         <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div className="space-y-8">
             <div className="space-y-4">
