@@ -38,9 +38,11 @@ function EventPage() {
           {/* Main Column */}
           <div className="space-y-8">
             <div className="aspect-video bg-card rounded-2xl overflow-hidden shadow-lg">
-              <div className="w-full h-full bg-muted flex items-center justify-center">
-                <span className="text-muted-foreground font-semibold">Banner do Evento</span>
-              </div>
+              <img 
+                src="https://images.unsplash.com/photo-1544971587-b842c27f8e14?auto=format&fit=crop&q=80&w=1600" 
+                alt="Caravana Terra Santa"
+                className="w-full h-full object-cover"
+              />
             </div>
 
             <div className="space-y-4">
