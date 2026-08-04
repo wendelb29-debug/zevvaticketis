@@ -5,29 +5,42 @@ import { supabase } from "@/integrations/supabase/client";
 export const getEventDetails = createServerFn({ method: "GET" })
   .inputValidator((data) => z.object({ id: z.string() }).parse(data))
   .handler(async ({ data }) => {
-    // We use the client-side supabase here because we want RLS to apply if possible, 
-    // but for public events it works fine.
-    
+    // Fetch event with producer info
     const { data: event, error: eventError } = await supabase
       .from("events")
       .select(`
         *,
-        producer:organizations(*),
-        tickets:tickets(*)
+        producer:organizations(*)
       `)
       .eq("id", data.id)
       .single();
 
     if (eventError) throw eventError;
 
-    const { data: itinerary } = await supabase
-      .from("trip_itinerary_days")
+    // Fetch ticket types
+    const { data: ticketTypes } = await supabase
+      .from("ticket_types")
       .select("*")
       .eq("event_id", data.id)
-      .order("day_number", { ascending: true });
+      .order("ordem", { ascending: true });
+
+    // Fetch itinerary days for these ticket types
+    const ticketTypeIds = ticketTypes?.map(t => t.id) || [];
+    let itinerary: any[] = [];
+    
+    if (ticketTypeIds.length > 0) {
+      const { data: itineraryData } = await supabase
+        .from("trip_itinerary_days")
+        .select("*")
+        .in("ticket_type_id", ticketTypeIds)
+        .order("dia_numero", { ascending: true });
+      
+      itinerary = itineraryData || [];
+    }
 
     return {
       event,
-      itinerary: itinerary || []
+      ticketTypes: ticketTypes || [],
+      itinerary
     };
   });
