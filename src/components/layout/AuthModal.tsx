@@ -6,6 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Mail, Ticket, Store, ChevronRight, ShieldCheck } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+import { lovable } from "@/integrations/lovable";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 import { useNavigate } from "@tanstack/react-router";
@@ -144,20 +145,17 @@ export function AuthModal({ isOpen, onClose, defaultView = 'login' }: AuthModalP
   const handleSocialLogin = async (provider: 'google') => {
     setSocialError(null);
     try {
-      const { error } = await supabase.auth.signInWithOAuth({
-        provider,
-        options: {
-          redirectTo: `${window.location.origin}/auth/callback`,
-        },
+      const result = await lovable.auth.signInWithOAuth(provider, {
+        redirect_uri: `${window.location.origin}/auth/callback`,
       });
       
-      if (error) {
+      if (result.error) {
+        const error = result.error;
         console.error(`OAuth error for ${provider}:`, error);
         
         // Handle specific configuration errors gracefully
         if (error.message?.toLowerCase().includes('unsupported provider') || 
-            error.message?.toLowerCase().includes('missing oauth secret') ||
-            (error as any).status === 400) {
+            error.message?.toLowerCase().includes('missing oauth secret')) {
           setSocialError(`Login com Google temporariamente indisponível — tente com e-mail e senha, ou volte em breve.`);
         } else {
           toast.error(`Erro ao entrar com ${provider}`);
