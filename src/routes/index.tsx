@@ -1,10 +1,11 @@
 import { createFileRoute, Link, useNavigate, useSearch } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
 import { AuthModal } from "@/components/auth/AuthModal";
-import { UserMenu } from "@/components/auth/UserMenu";
+import { Navbar } from "@/components/layout/Navbar";
+import { FeaturedCarousel } from "@/components/home/FeaturedCarousel";
 import { LocationModal } from "@/components/ui/LocationModal";
 import { supabase } from "@/integrations/supabase/client";
-import { MapPin, LogIn, Calendar, MapPin as MapPinIcon, ArrowRight } from "lucide-react";
+import { MapPin, Calendar, MapPin as MapPinIcon, ArrowRight, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { getThemeByCategory } from "@/lib/categoryThemes";
@@ -23,6 +24,8 @@ function Index() {
   const [isLocationModalOpen, setIsLocationModalOpen] = useState(false);
   const [nearbyError, setNearbyError] = useState(false);
   const [filteredEvents, setFilteredEvents] = useState<any[]>([]);
+  const [featuredEvents, setFeaturedEvents] = useState<any[]>([]);
+  const [favorites, setFavorites] = useState<string[]>([]);
   const [loadingEvents, setLoadingEvents] = useState(true);
   const [user, setUser] = useState<any>(null);
   const navigate = useNavigate();
@@ -32,27 +35,68 @@ function Index() {
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
       setUser(session?.user ?? null);
+      if (session?.user) fetchFavorites(session.user.id);
     });
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       setUser(session?.user ?? null);
+      if (session?.user) fetchFavorites(session.user.id);
+      else setFavorites([]);
     });
 
     return () => subscription.unsubscribe();
   }, []);
 
+  async function fetchFavorites(userId: string) {
+    const { data } = await supabase.from("event_favorites").select("event_id").eq("user_id", userId);
+    if (data) setFavorites(data.map(f => f.event_id));
+  }
+
+  const toggleFavorite = async (eventId: string) => {
+    if (!user) {
+      setIsAuthModalOpen(true);
+      return;
+    }
+
+    if (favorites.includes(eventId)) {
+      await supabase.from("event_favorites").delete().eq("user_id", user.id).eq("event_id", eventId);
+      setFavorites(prev => prev.filter(id => id !== eventId));
+    } else {
+      await supabase.from("event_favorites").insert({ user_id: user.id, event_id: eventId });
+      setFavorites(prev => [...prev, eventId]);
+    }
+  };
+
   useEffect(() => {
     async function fetchEvents() {
       setLoadingEvents(true);
-      let query = supabase.from("events").select("*").eq("status", "publicado");
       
-      if (selectedCity) {
-        query = query.ilike("city", `%${selectedCity}%`);
+      // Fetch Featured Events
+      const { data: featuredData } = await supabase
+        .from("events")
+        .select("*")
+        .eq("status", "publicado")
+        .eq("destaque", true)
+        .limit(5);
+
+      if (featuredData) {
+        setFeaturedEvents(featuredData.map((e: any) => ({
+          id: e.id,
+          title: e.title,
+          city: e.city || 'Cidade',
+          state: e.country_id || 'Estado',
+          date: e.start_date ? new Date(e.start_date).toLocaleDateString('pt-BR', { day: '2-digit', month: 'short' }) : 'Em breve',
+          price: `US$ ${e.min_price || '0'}`,
+          image: "https://images.unsplash.com/photo-1544971587-b842c27f8e14?auto=format&fit=crop&q=80&w=800"
+        })));
       }
+
+      // Fetch Normal Events
+      let query = supabase.from("events").select("*").eq("status", "publicado");
+      if (selectedCity) query = query.ilike("city", `%${selectedCity}%`);
       
-      const { data, error } = await query.limit(4);
+      const { data, error } = await query.limit(8);
       if (data) {
-        // Map database fields to UI component fields
         const formatted = data.map((event: any) => ({
           id: event.id,
           title: event.title,
@@ -65,8 +109,6 @@ function Index() {
           categoria: event.categoria
         }));
         setFilteredEvents(formatted);
-      } else if (error) {
-        console.error("Error fetching events:", error);
       }
       setLoadingEvents(false);
     }
@@ -130,60 +172,11 @@ function Index() {
 
   return (
     <div className="min-h-screen bg-bg text-navy font-inter text-base">
-      <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-line h-20 flex items-center px-6">
-        <div className="flex-1 flex items-center">
-          <Link to="/" className="text-xl font-manrope font-extrabold text-gold tracking-tighter">
-            ZEVVA <span className="text-navy">TICKETS</span>
-          </Link>
-        </div>
-
-        <div className="flex-[2] max-w-2xl hidden md:flex items-center gap-3">
-          <div className="relative flex-1">
-            <input 
-              type="text" 
-              placeholder="Buscar eventos, cidades, ministérios..." 
-              className="w-full bg-white h-11 px-11 rounded-full text-sm border-2 border-line focus:ring-2 focus:ring-gold focus:border-gold outline-none text-navy placeholder:text-muted font-medium shadow-sm"
-            />
-            <svg className="absolute left-4 top-3.5 w-4 h-4 text-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-            </svg>
-          </div>
-          <div 
-            onClick={() => setIsLocationModalOpen(true)}
-            className="flex items-center gap-2 bg-white h-11 px-5 rounded-full text-sm font-extrabold whitespace-nowrap cursor-pointer hover:bg-surface transition-all border-2 border-line text-navy shadow-sm"
-          >
-            <MapPin className={cn("w-4 h-4", selectedCity ? "text-gold" : "text-gold")} />
-            <span className={cn(selectedCity && "text-gold")}>
-              {selectedCity ? `📍 ${selectedCity.charAt(0).toUpperCase() + selectedCity.slice(1)}` : "Localização"}
-            </span>
-          </div>
-        </div>
-
-        <div className="flex-1 flex justify-end items-center gap-3">
-          {user ? (
-            <UserMenu 
-              user={user} 
-              onLogout={() => supabase.auth.signOut()} 
-              onNavigate={(path) => navigate({ to: path as any })} 
-            />
-          ) : (
-            <>
-              <button 
-                onClick={handleAuthClick}
-                className="text-sm font-bold text-navy hover:text-gold transition-colors px-4"
-              >
-                Entrar
-              </button>
-              <button 
-                onClick={handleAuthClick}
-                className="text-sm font-extrabold px-6 py-2.5 rounded-[11px] bg-[image:var(--grad-cta)] text-white hover:brightness-110 transition-all shadow-[0_8px_20px_-4px_rgba(201,154,62,0.4)] border border-gold/20 active:scale-[0.97]"
-              >
-                Inscrever-se
-              </button>
-            </>
-          )}
-        </div>
-      </header>
+      <Navbar 
+        onOpenAuth={() => setIsAuthModalOpen(true)}
+        onOpenLocation={() => setIsLocationModalOpen(true)}
+        selectedCity={selectedCity}
+      />
 
       <AuthModal 
         isOpen={isAuthModalOpen} 
@@ -196,7 +189,7 @@ function Index() {
         onSelect={handleLocationSelect}
       />
 
-      <main className="pt-24 pb-12 space-y-12">
+      <main className="pt-40 pb-12 space-y-12">
         {nearbyError && (
           <div className="px-6 max-w-7xl mx-auto">
             <div className="bg-surface rounded-2xl p-6 border border-line flex items-center justify-center text-navy font-bold text-center">
@@ -204,25 +197,10 @@ function Index() {
             </div>
           </div>
         )}
-        <div className="px-6 max-w-7xl mx-auto">
-          {/* Hero Carousel */}
-          <div className="relative w-full aspect-[21/9] rounded-2xl overflow-hidden group shadow-md border border-line dark-panel">
-            <div className="absolute inset-0 flex items-center px-12">
-              <div className="max-w-xl text-white">
-                <span className="inline-block bg-gold text-white px-3 py-1 rounded-full text-[10px] font-extrabold uppercase tracking-widest mb-4 border border-white/20 shadow-sm">Destaque</span>
-                <h2 className="text-4xl md:text-5xl font-manrope font-extrabold mb-4 leading-tight">Grand Tour 2026: Europa Medieval</h2>
-                <p className="text-lg text-white/90 mb-8 font-medium leading-relaxed">Uma jornada inesquecível pelas catedrais e castelos mais icônicos do velho continente.</p>
-                <Button className="bg-[image:var(--grad-cta)] text-white px-10 py-6 rounded-xl font-extrabold transition-all uppercase tracking-wider text-sm shadow-[0_8px_20px_-4px_rgba(201,154,62,0.4)]">Ver Detalhes</Button>
-              </div>
-            </div>
-            
-            <div className="absolute bottom-6 right-6 flex gap-2">
-              {[1, 2, 3].map((i) => (
-                <div key={i} className={`w-2.5 h-2.5 rounded-full border border-white/50 ${i === 1 ? 'bg-gold border-gold' : 'bg-white/20'}`} />
-              ))}
-            </div>
-          </div>
-        </div>
+
+        {featuredEvents.length > 0 && (
+          <FeaturedCarousel events={featuredEvents} />
+        )}
 
         {/* City Ticker */}
         <div className="bg-surface border-y border-line py-4 overflow-hidden select-none">
@@ -293,14 +271,19 @@ function Index() {
                     >
                       <div className="aspect-[4/3] bg-surface relative overflow-hidden">
                         <div className="absolute top-3 right-3 z-10 flex gap-2">
+                          <button 
+                            onClick={(e) => { e.preventDefault(); toggleFavorite(event.id); }}
+                            className="glass-panel w-8 h-8 rounded-full flex items-center justify-center shadow-md hover:scale-110 active:scale-95 transition-all"
+                          >
+                            <Heart 
+                              className={cn(
+                                "w-4 h-4 transition-colors", 
+                                favorites.includes(event.id) ? "fill-error text-error" : "text-white"
+                              )} 
+                            />
+                          </button>
                           <span className="glass-panel text-white text-[10px] font-extrabold px-3 py-1.5 rounded-full shadow-md uppercase tracking-widest bg-navy/40">
                             {event.lote}
-                          </span>
-                          <span 
-                            className="text-white text-[10px] font-extrabold px-3 py-1.5 rounded-full shadow-md uppercase tracking-widest flex items-center gap-1"
-                            style={{ backgroundColor: theme.accentColor }}
-                          >
-                            <Icon className="w-3 h-3" /> {event.categoria || 'Evento'}
                           </span>
                         </div>
                         <img 
