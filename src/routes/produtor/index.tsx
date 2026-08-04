@@ -1,4 +1,4 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
 import { supabase } from "@/integrations/supabase/client";
 import { useEffect, useState } from "react";
 import { 
@@ -11,11 +11,16 @@ import {
   TrendingUp,
   Ticket,
   DollarSign,
-  Calendar
+  Calendar,
+  Eye,
+  ArrowRight,
+  Sparkles
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
+import { CATEGORY_THEMES, CategoryType, getThemeByCategory } from "@/lib/categoryThemes";
+import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/produtor/")({
   component: ProdutorDashboard,
