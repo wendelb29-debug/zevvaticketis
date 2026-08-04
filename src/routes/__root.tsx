@@ -137,11 +137,27 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const { activeOverlay, authView, closeOverlay } = useUI();
 
   return (
     <QueryClientProvider client={queryClient}>
-      {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
       <Outlet />
+      
+      <AuthModal 
+        isOpen={activeOverlay === 'auth'} 
+        onClose={closeOverlay} 
+        defaultView={authView}
+      />
+      
+      <LocationModal 
+        isOpen={activeOverlay === 'location'}
+        onClose={closeOverlay}
+        onSelect={(city) => {
+          // In a real app we'd dispatch this to a global state or search params
+          console.log("Selected city:", city);
+          closeOverlay();
+        }}
+      />
     </QueryClientProvider>
   );
 }
