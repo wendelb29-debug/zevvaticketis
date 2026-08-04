@@ -187,7 +187,3 @@ function ProdutorDashboard() {
   );
 }
 
-// Utility for class concatenation if not globally available
-function cn(...inputs: any[]) {
-  return inputs.filter(Boolean).join(' ');
-}
