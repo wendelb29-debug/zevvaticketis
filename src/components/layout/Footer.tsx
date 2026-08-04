@@ -8,10 +8,10 @@ export function Footer() {
         {/* Brand */}
         <div className="space-y-6 col-span-1 md:col-span-1">
           <Link to="/" className="flex items-center gap-2 group">
-            <div className="w-8 h-8 bg-gold rounded-lg flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform">
+            <div className="w-8 h-8 bg-coral rounded-lg flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform">
               <span className="text-white font-manrope font-extrabold text-lg">Z</span>
             </div>
-            <span className="text-lg font-manrope font-extrabold text-gold tracking-tighter">
+            <span className="text-lg font-manrope font-extrabold text-coral tracking-tighter">
               ZEVVA <span className="text-navy">TICKETS</span>
             </span>
           </Link>
