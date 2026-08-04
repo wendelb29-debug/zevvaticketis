@@ -416,7 +416,7 @@ function NewEventWizard() {
                         onChange={(e) => setFormData({...formData, falta_automatica_minutos: Number(e.target.value)})}
                       />
                       <p className="text-[10px] text-muted font-medium flex items-center gap-1">
-                        <AlertTriangle className="w-3 h-3 text-gold" />
+                        <AlertTriangle className="w-3 h-3 text-coral" />
                         O sistema mudará o status dos ingressos não validados após este período.
                       </p>
                     </div>
@@ -439,7 +439,7 @@ function NewEventWizard() {
                       <h3 className="text-xl font-extrabold text-navy">{formData.title || "Sem título"}</h3>
                       <p className="text-sm text-muted font-medium">{formData.city}, {formData.country_id}</p>
                     </div>
-                    <span className="px-3 py-1 bg-gold text-white text-[10px] font-extrabold uppercase tracking-widest rounded-full">Público</span>
+                    <span className="px-3 py-1 bg-coral text-white text-[10px] font-extrabold uppercase tracking-widest rounded-full">Público</span>
                   </div>
                   <div className="grid grid-cols-2 gap-4 pt-4 border-t border-line/50">
                     <div className="space-y-1">
@@ -482,7 +482,7 @@ function NewEventWizard() {
             <Button 
               onClick={handlePublish}
               disabled={loading}
-              className="h-14 px-10 rounded-xl bg-gold hover:bg-gold-deep text-white font-extrabold shadow-lg shadow-gold/20"
+              className="h-14 px-10 rounded-xl bg-coral hover:bg-coral-dark text-white font-extrabold shadow-lg shadow-coral/20"
             >
               {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : "Publicar Evento"}
             </Button>

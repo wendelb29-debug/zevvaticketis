@@ -114,7 +114,7 @@ function ProdutorLayout() {
 
   if (loading) return <div className="min-h-screen bg-white flex items-center justify-center font-inter">
     <div className="flex flex-col items-center gap-4">
-      <div className="w-8 h-8 border-4 border-gold border-t-transparent rounded-full animate-spin"></div>
+      <div className="w-8 h-8 border-4 border-coral border-t-transparent rounded-full animate-spin"></div>
       <p className="text-navy font-bold">Carregando painel...</p>
     </div>
   </div>;
@@ -134,7 +134,7 @@ function ProdutorLayout() {
           <Button 
             variant="ghost"
             onClick={handleLogout}
-            className="text-gold font-bold hover:text-gold-deep"
+            className="text-coral font-bold hover:text-coral-dark"
           >
             Sair da conta
           </Button>
@@ -158,7 +158,7 @@ function ProdutorLayout() {
           <Button 
             variant="ghost"
             onClick={handleLogout}
-            className="text-navy font-bold hover:text-gold"
+            className="text-navy font-bold hover:text-coral"
           >
             Sair da conta
           </Button>
@@ -200,7 +200,7 @@ function ProdutorLayout() {
   const SidebarContent = () => (
     <div className="flex flex-col h-full bg-white border-r border-line py-8 font-inter">
       <div className="px-6 mb-12">
-        <Link to="/" className="text-2xl font-manrope font-extrabold text-gold tracking-tighter">
+        <Link to="/" className="text-2xl font-manrope font-extrabold text-coral tracking-tighter">
           ZEVVA <span className="text-navy">TICKETS</span>
         </Link>
       </div>
@@ -212,7 +212,7 @@ function ProdutorLayout() {
             to={item.href}
             {...(item.activeOptions ? { activeOptions: item.activeOptions } : {})}
             className="flex items-center gap-3 px-4 py-3.5 rounded-xl text-sm font-extrabold transition-all duration-200"
-            activeProps={{ className: "bg-gold text-white shadow-lg shadow-gold/30" }}
+            activeProps={{ className: "bg-coral text-white shadow-lg shadow-coral/30" }}
             inactiveProps={{ className: "text-navy hover:bg-surface-2 hover:text-navy" }}
           >
             <item.icon className="w-5 h-5" />
@@ -255,7 +255,7 @@ function ProdutorLayout() {
             </Sheet>
             
             <div className="hidden lg:flex items-center gap-2">
-              <span className="text-xs font-extrabold uppercase tracking-widest text-gold bg-gold/5 px-3 py-1 rounded-full border border-gold/10">
+              <span className="text-xs font-extrabold uppercase tracking-widest text-coral bg-coral/5 px-3 py-1 rounded-full border border-coral/10">
                 Área do Produtor
               </span>
             </div>
@@ -264,7 +264,7 @@ function ProdutorLayout() {
           <div className="flex items-center gap-3 sm:gap-6">
             <button className="relative p-2 text-muted hover:text-navy transition-colors">
               <Bell className="w-5 h-5" />
-              <span className="absolute top-2 right-2 w-2 h-2 bg-gold rounded-full border-2 border-white"></span>
+              <span className="absolute top-2 right-2 w-2 h-2 bg-coral rounded-full border-2 border-white"></span>
             </button>
 
             {user && (

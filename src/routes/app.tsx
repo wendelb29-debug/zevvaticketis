@@ -44,7 +44,7 @@ function AppLayout() {
               >
                 <ArrowLeft className="w-5 h-5" />
               </button>
-              <Link to="/" className="text-xl font-manrope font-extrabold text-gold tracking-tighter">
+              <Link to="/" className="text-xl font-manrope font-extrabold text-coral tracking-tighter">
                 ZEVVA <span className="text-navy">APP</span>
               </Link>
             </div>
@@ -54,7 +54,7 @@ function AppLayout() {
                 to="/app" 
                 activeOptions={{ exact: true }}
                 className="px-4 py-2 rounded-full text-sm font-bold transition-all"
-                activeProps={{ className: "bg-gold/10 text-gold" }}
+                activeProps={{ className: "bg-coral/10 text-coral" }}
                 inactiveProps={{ className: "text-muted hover:text-navy" }}
               >
                 Meus Ingressos
@@ -62,7 +62,7 @@ function AppLayout() {
               <Link 
                 to="/app/perfil" 
                 className="px-4 py-2 rounded-full text-sm font-bold transition-all"
-                activeProps={{ className: "bg-gold/10 text-gold" }}
+                activeProps={{ className: "bg-coral/10 text-coral" }}
                 inactiveProps={{ className: "text-muted hover:text-navy" }}
               >
                 Meu Perfil
@@ -70,7 +70,7 @@ function AppLayout() {
               <Link 
                 to="/app/historico" 
                 className="px-4 py-2 rounded-full text-sm font-bold transition-all"
-                activeProps={{ className: "bg-gold/10 text-gold" }}
+                activeProps={{ className: "bg-coral/10 text-coral" }}
                 inactiveProps={{ className: "text-muted hover:text-navy" }}
               >
                 Histórico

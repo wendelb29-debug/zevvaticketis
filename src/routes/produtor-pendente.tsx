@@ -28,8 +28,8 @@ function ProducerPendingPage() {
     <div className="min-h-screen flex items-center justify-center bg-white font-inter p-6">
       <div className="max-w-md w-full space-y-8 text-center">
         <div className="relative">
-          <div className="w-24 h-24 bg-gold/10 rounded-full flex items-center justify-center mx-auto mb-6">
-            <Clock className="w-12 h-12 text-gold animate-pulse" />
+          <div className="w-24 h-24 bg-coral/10 rounded-full flex items-center justify-center mx-auto mb-6">
+            <Clock className="w-12 h-12 text-coral animate-pulse" />
           </div>
           <div className="absolute top-16 right-[38%] bg-white rounded-full p-1 border border-line">
             <ShieldCheck className="w-6 h-6 text-navy" />
@@ -47,7 +47,7 @@ function ProducerPendingPage() {
         <div className="bg-surface/50 border border-line rounded-[20px] p-6 space-y-4 text-left">
           <div className="flex gap-4">
             <div className="w-10 h-10 bg-white rounded-xl border border-line flex items-center justify-center shrink-0">
-              <Mail className="w-5 h-5 text-gold" />
+              <Mail className="w-5 h-5 text-coral" />
             </div>
             <div>
               <p className="text-sm font-bold text-navy">O que acontece agora?</p>

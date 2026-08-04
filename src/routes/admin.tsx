@@ -77,7 +77,7 @@ function AdminLayout() {
   const SidebarContent = () => (
     <div className="flex flex-col h-full bg-white border-r border-line py-8 font-inter">
       <div className="px-6 mb-12">
-        <Link to="/" className="text-xl font-manrope font-extrabold text-gold tracking-tighter">
+        <Link to="/" className="text-xl font-manrope font-extrabold text-coral tracking-tighter">
           ZEVVA <span className="text-navy">ADMIN</span>
         </Link>
       </div>
@@ -89,7 +89,7 @@ function AdminLayout() {
             to={item.href}
             {...(item.activeOptions ? { activeOptions: item.activeOptions } : {})}
             className="flex items-center gap-3 px-4 py-3.5 rounded-xl text-sm font-extrabold transition-all duration-200"
-            activeProps={{ className: "bg-gold text-white shadow-lg shadow-gold/30" }}
+            activeProps={{ className: "bg-coral text-white shadow-lg shadow-coral/30" }}
             inactiveProps={{ className: "text-navy hover:bg-surface-2 hover:text-navy" }}
           >
             <item.icon className="w-5 h-5" />
@@ -110,7 +110,7 @@ function AdminLayout() {
       <div className="flex-1 flex flex-col min-h-screen">
         <header className="h-20 bg-white/80 backdrop-blur-md border-b border-line sticky top-0 z-40 px-6 sm:px-10 flex items-center justify-between font-inter">
           <div className="flex items-center gap-4">
-            <span className="text-xs font-extrabold uppercase tracking-widest text-gold bg-gold/5 px-3 py-1 rounded-full border border-gold/10">
+            <span className="text-xs font-extrabold uppercase tracking-widest text-coral bg-coral/5 px-3 py-1 rounded-full border border-coral/10">
               Gestão Global
             </span>
           </div>

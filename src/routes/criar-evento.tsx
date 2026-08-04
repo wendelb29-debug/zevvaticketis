@@ -485,7 +485,7 @@ function CriarEventoWizard() {
                 />
               </div>
               
-              <div className="flex items-center gap-3 p-6 rounded-2xl bg-gold/5 border border-gold/10">
+              <div className="flex items-center gap-3 p-6 rounded-2xl bg-coral/5 border border-coral/10">
                 <Checkbox 
                   id="featured" 
                   checked={formData.featured}
@@ -524,7 +524,7 @@ function CriarEventoWizard() {
               <div className="grid grid-cols-3 gap-6">
                 <div className="p-4 bg-white rounded-xl border border-line text-center">
                   <p className="text-[10px] font-extrabold text-muted uppercase tracking-widest mb-1">Status</p>
-                  <Badge variant="outline" className="text-gold border-gold/30 bg-gold/5">{formData.status}</Badge>
+                  <Badge variant="outline" className="text-coral border-coral/30 bg-coral/5">{formData.status}</Badge>
                 </div>
                 <div className="p-4 bg-white rounded-xl border border-line text-center">
                   <p className="text-[10px] font-extrabold text-muted uppercase tracking-widest mb-1">Visibilidade</p>
@@ -542,7 +542,7 @@ function CriarEventoWizard() {
                   {tickets.map(t => (
                     <div key={t.id} className="flex justify-between items-center p-3 bg-white rounded-lg border border-line">
                       <span className="font-medium text-navy text-sm">{t.name}</span>
-                      <span className="font-bold text-gold">US$ {t.price.toFixed(2)}</span>
+                      <span className="font-bold text-coral">US$ {t.price.toFixed(2)}</span>
                     </div>
                   ))}
                 </div>
@@ -582,7 +582,7 @@ function CriarEventoWizard() {
                 <SidebarContent />
               </SheetContent>
             </Sheet>
-            <span className="text-xs font-extrabold uppercase tracking-widest text-gold bg-gold/5 px-3 py-1 rounded-full border border-gold/10">
+            <span className="text-xs font-extrabold uppercase tracking-widest text-coral bg-coral/5 px-3 py-1 rounded-full border border-coral/10">
               Área do Produtor
             </span>
           </div>
@@ -590,11 +590,11 @@ function CriarEventoWizard() {
           <div className="flex items-center gap-6">
             <button className="relative p-2 text-muted hover:text-navy transition-colors">
               <Bell className="w-5 h-5" />
-              <span className="absolute top-2 right-2 w-2 h-2 bg-gold rounded-full border-2 border-white"></span>
+              <span className="absolute top-2 right-2 w-2 h-2 bg-coral rounded-full border-2 border-white"></span>
             </button>
             <Avatar className="w-10 h-10 border-2 border-surface shadow-sm">
               <AvatarImage src={user?.user_metadata?.avatar_url} />
-              <AvatarFallback className="bg-gold text-white font-bold">U</AvatarFallback>
+              <AvatarFallback className="bg-coral text-white font-bold">U</AvatarFallback>
             </Avatar>
           </div>
         </header>
@@ -617,12 +617,12 @@ function CriarEventoWizard() {
                   <div className={cn(
                     "flex items-center gap-2 px-4 py-2 rounded-full border transition-all duration-300",
                     step === s.id ? "bg-navy border-navy text-white shadow-lg shadow-navy/20" : 
-                    step > s.id ? "bg-gold/10 border-gold/20 text-gold" : "bg-white border-line text-muted"
+                    step > s.id ? "bg-coral/10 border-coral/20 text-coral" : "bg-white border-line text-muted"
                   )}>
                     <span className={cn(
                       "w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold border",
                       step === s.id ? "bg-white text-navy border-white" : 
-                      step > s.id ? "bg-gold text-white border-gold" : "bg-surface text-muted border-line"
+                      step > s.id ? "bg-coral text-white border-coral" : "bg-surface text-muted border-line"
                     )}>
                       {step > s.id ? "✓" : s.id}
                     </span>
@@ -670,7 +670,7 @@ function CriarEventoWizard() {
                   </Button>
                 ) : (
                   <Button 
-                    className="h-14 px-10 rounded-xl bg-gold text-white font-bold shadow-lg shadow-gold/20 hover:scale-[1.02] active:scale-[0.98] transition-all"
+                    className="h-14 px-10 rounded-xl bg-coral text-white font-bold shadow-lg shadow-coral/20 hover:scale-[1.02] active:scale-[0.98] transition-all"
                     onClick={async () => {
                       setLoading(true);
                       try {

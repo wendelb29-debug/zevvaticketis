@@ -45,7 +45,7 @@ function CheckinApp() {
   return (
     <div className="min-h-screen bg-navy text-white font-inter flex flex-col">
       <header className="h-16 border-b border-white/10 px-6 flex items-center justify-between sticky top-0 z-50 bg-navy">
-        <div className="text-xl font-manrope font-extrabold text-gold tracking-tighter">
+        <div className="text-xl font-manrope font-extrabold text-coral tracking-tighter">
           ZEVVA <span className="text-white">CHECK-IN</span>
         </div>
         
@@ -60,16 +60,16 @@ function CheckinApp() {
 
       <main className="flex-1 flex flex-col items-center justify-center p-6 space-y-8">
         <div className="w-full max-w-sm aspect-square bg-white/5 border-2 border-dashed border-white/20 rounded-[32px] flex flex-col items-center justify-center gap-4 relative overflow-hidden group">
-          <div className="absolute inset-0 bg-gold/5 animate-pulse"></div>
-          <QrCode className="w-20 h-20 text-gold relative z-10" />
+          <div className="absolute inset-0 bg-coral/5 animate-pulse"></div>
+          <QrCode className="w-20 h-20 text-coral relative z-10" />
           <p className="text-sm font-bold text-white/60 relative z-10">Aponte a câmera para o QR Code</p>
           
           {/* Scanner Line Animation */}
-          <div className="absolute top-0 left-0 w-full h-1 bg-gold shadow-[0_0_15px_rgba(201,154,62,0.8)] animate-[scan_3s_ease-in-out_infinite]"></div>
+          <div className="absolute top-0 left-0 w-full h-1 bg-coral shadow-[0_0_15px_rgba(201,154,62,0.8)] animate-[scan_3s_ease-in-out_infinite]"></div>
         </div>
 
         <div className="text-center space-y-2">
-          <div className="text-5xl font-manrope font-extrabold text-gold">{checkinCount}</div>
+          <div className="text-5xl font-manrope font-extrabold text-coral">{checkinCount}</div>
           <p className="text-xs font-extrabold uppercase tracking-widest text-white/40">Check-ins Realizados</p>
         </div>
 

@@ -69,7 +69,7 @@ function MyTickets() {
 
   if (loading) return (
     <div className="flex flex-col items-center justify-center py-20 gap-4">
-      <Loader2 className="w-8 h-8 animate-spin text-gold" />
+      <Loader2 className="w-8 h-8 animate-spin text-coral" />
       <p className="text-muted font-bold uppercase tracking-widest text-[10px]">Carregando seus ingressos...</p>
     </div>
   );
@@ -92,7 +92,7 @@ function MyTickets() {
           </div>
           <Button 
             onClick={() => window.location.href = "/"}
-            className="bg-gold hover:bg-gold-deep text-white font-extrabold px-8 rounded-xl"
+            className="bg-coral hover:bg-coral-dark text-white font-extrabold px-8 rounded-xl"
           >
             Explorar Eventos
           </Button>
@@ -126,11 +126,11 @@ function MyTickets() {
                   
                   <div className="space-y-2">
                     <div className="flex items-center gap-2 text-sm text-muted font-medium">
-                      <MapPin className="w-4 h-4 text-gold" />
+                      <MapPin className="w-4 h-4 text-coral" />
                       {ticket.events?.location || `${ticket.events?.city}`}
                     </div>
                     <div className="flex items-center gap-2 text-sm text-muted font-medium">
-                      <Calendar className="w-4 h-4 text-gold" />
+                      <Calendar className="w-4 h-4 text-coral" />
                       {ticket.events?.start_date ? new Date(ticket.events.start_date).toLocaleString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' }) : 'Data a definir'}
                     </div>
                   </div>

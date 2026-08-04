@@ -50,7 +50,7 @@ export function UserMenu({ user, onLogout, onNavigate }: UserMenuProps) {
         .maybeSingle();
       
       if (member) {
-        setRole({ label: "Produtor", color: "bg-gold/10 text-gold border-gold/20" });
+        setRole({ label: "Produtor", color: "bg-coral/10 text-coral border-coral/20" });
         return;
       }
 
@@ -111,7 +111,7 @@ export function UserMenu({ user, onLogout, onNavigate }: UserMenuProps) {
             onClick={() => onNavigate("/produtor")}
             className="flex items-center gap-2 px-3 py-2.5 rounded-lg text-sm font-bold text-navy cursor-pointer hover:bg-surface"
           >
-            <Briefcase className="w-4 h-4 text-gold" />
+            <Briefcase className="w-4 h-4 text-coral" />
             Painel Produtor
           </DropdownMenuItem>
         )}

@@ -55,7 +55,7 @@ function OrderHistory() {
 
   if (loading) return (
     <div className="flex flex-col items-center justify-center py-20">
-      <Loader2 className="w-8 h-8 animate-spin text-gold" />
+      <Loader2 className="w-8 h-8 animate-spin text-coral" />
     </div>
   );
 
@@ -83,7 +83,7 @@ function OrderHistory() {
               <p className="font-bold text-navy text-xl">Nenhum pedido encontrado</p>
               <p className="text-muted font-medium">Seus ingressos passados aparecerão aqui.</p>
             </div>
-            <Button asChild className="mt-4 bg-gold hover:bg-gold-deep text-white font-extrabold px-8 rounded-xl h-12">
+            <Button asChild className="mt-4 bg-coral hover:bg-coral-dark text-white font-extrabold px-8 rounded-xl h-12">
               <Link to="/">Explorar Eventos</Link>
             </Button>
           </div>
@@ -117,7 +117,7 @@ function OrderHistory() {
                 <p className="text-xl font-manrope font-extrabold text-navy">
                   {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(order.price || 0)}
                 </p>
-                <Button variant="ghost" size="sm" className="font-bold text-gold hover:text-gold-deep h-10 px-4 rounded-lg">
+                <Button variant="ghost" size="sm" className="font-bold text-coral hover:text-coral-dark h-10 px-4 rounded-lg">
                   Ver detalhes <ChevronRight className="w-4 h-4 ml-1" />
                 </Button>
               </div>

@@ -152,8 +152,8 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       {isNavigating && (
-        <div className="fixed top-0 left-0 right-0 h-1 z-[9999] bg-gold/20 overflow-hidden">
-          <div className="h-full bg-gold w-1/2 animate-progress" />
+        <div className="fixed top-0 left-0 right-0 h-1 z-[9999] bg-coral/20 overflow-hidden">
+          <div className="h-full bg-coral w-1/2 animate-progress" />
         </div>
       )}
       <Outlet />
