@@ -566,52 +566,134 @@ function CriarEventoWizard() {
         <main className="p-6 sm:p-10 max-w-5xl mx-auto w-full font-sans">
           <div className="mb-10 space-y-4">
             <div className="flex items-center gap-4">
-              <Button variant="ghost" size="icon" onClick={() => navigate({ to: '/produtor' })} className="rounded-full">
-                <ArrowLeft className="w-6 h-6 text-navy" />
-              </Button>
-              <h1 className="text-4xl font-heading font-extrabold text-navy">Criar evento</h1>
+              <Link to="/produtor" className="p-2 hover:bg-white rounded-full transition-colors text-muted hover:text-navy">
+                <ArrowLeft className="w-6 h-6" />
+              </Link>
+              <div>
+                <h1 className="text-3xl font-heading font-extrabold text-navy tracking-tight">Criar Novo Evento</h1>
+                <p className="text-muted font-medium">Siga as etapas para publicar sua caravana ou evento.</p>
+              </div>
             </div>
-            <p className="text-muted font-medium text-lg ml-14">Adicione todas as informações necessárias para divulgar e vender seu evento.</p>
 
-            {/* Stepper */}
-            <div className="flex gap-3 pt-6 ml-14">
-              {steps.map((s, i) => (
-                <div key={s.id} className="flex-1 space-y-3">
-                  <div className={cn("h-1.5 rounded-full transition-all duration-500", step >= s.id ? "bg-gold" : "bg-line")} />
-                  <p className={cn("text-[10px] font-extrabold uppercase tracking-widest", step >= s.id ? "text-gold" : "text-muted")}>
-                    {i + 1}. {s.title}
-                  </p>
+            <div className="flex items-center gap-2 pt-4 overflow-x-auto pb-2 scrollbar-hide">
+              {steps.map((s) => (
+                <div key={s.id} className="flex items-center gap-2 flex-shrink-0">
+                  <div className={cn(
+                    "flex items-center gap-2 px-4 py-2 rounded-full border transition-all duration-300",
+                    step === s.id ? "bg-navy border-navy text-white shadow-lg shadow-navy/20" : 
+                    step > s.id ? "bg-gold/10 border-gold/20 text-gold" : "bg-white border-line text-muted"
+                  )}>
+                    <span className={cn(
+                      "w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold border",
+                      step === s.id ? "bg-white text-navy border-white" : 
+                      step > s.id ? "bg-gold text-white border-gold" : "bg-surface text-muted border-line"
+                    )}>
+                      {step > s.id ? "✓" : s.id}
+                    </span>
+                    <span className="text-xs font-bold whitespace-nowrap">{s.title}</span>
+                  </div>
+                  {s.id < steps.length && <div className="w-4 h-[1px] bg-line" />}
                 </div>
               ))}
             </div>
           </div>
 
-          <div className="bg-white rounded-[32px] border border-line p-8 sm:p-12 shadow-sm min-h-[500px] flex flex-col ml-14">
+          <div className="bg-white rounded-[32px] border border-line p-6 sm:p-10 shadow-sm min-h-[500px] flex flex-col">
             <div className="flex-1">
               {renderStep()}
             </div>
 
-            <div className="mt-12 flex justify-between items-center border-t border-line pt-8">
+            <div className="mt-12 pt-8 border-t border-line flex items-center justify-between">
               <Button 
                 variant="ghost" 
-                onClick={() => setStep(s => s - 1)}
-                disabled={step === 1}
                 className="h-14 px-8 rounded-xl font-bold text-muted hover:text-navy"
+                onClick={() => step > 1 && setStep(step - 1)}
+                disabled={step === 1}
               >
-                Anterior
+                <ChevronLeft className="w-5 h-5 mr-2" /> Voltar
               </Button>
               
               <div className="flex gap-4">
-                <Button variant="outline" className="h-14 px-8 rounded-xl font-bold border-line text-navy hover:bg-surface">
+                <Button 
+                  variant="outline" 
+                  className="h-14 px-8 rounded-xl font-bold border-line hover:bg-surface"
+                  onClick={() => {
+                    localStorage.setItem("zevva_event_draft", JSON.stringify({ formData, tickets }));
+                    alert("Rascunho salvo com sucesso!");
+                  }}
+                >
                   Salvar rascunho
                 </Button>
-                <Button 
-                  onClick={() => step < 5 ? setStep(s => s + 1) : navigate({ to: '/produtor' })}
-                  className="h-14 px-10 rounded-xl bg-navy hover:bg-navy/90 text-white font-bold shadow-lg shadow-navy/20"
-                >
-                  {step === 5 ? "Publicar Evento" : "Próximo"} 
-                  {step < 5 && <ChevronRight className="w-5 h-5 ml-2" />}
-                </Button>
+                
+                {step < 5 ? (
+                  <Button 
+                    className="h-14 px-10 rounded-xl bg-navy text-white font-bold shadow-lg shadow-navy/20 hover:scale-[1.02] active:scale-[0.98] transition-all"
+                    onClick={() => setStep(step + 1)}
+                  >
+                    Próxima etapa <ChevronRight className="w-5 h-5 ml-2" />
+                  </Button>
+                ) : (
+                  <Button 
+                    className="h-14 px-10 rounded-xl bg-gold text-white font-bold shadow-lg shadow-gold/20 hover:scale-[1.02] active:scale-[0.98] transition-all"
+                    onClick={async () => {
+                      setLoading(true);
+                      try {
+                        const { data: member } = await supabase
+                          .from("organization_members")
+                          .select("organization_id")
+                          .eq("user_id", user.id)
+                          .single();
+
+                        if (!member) throw new Error("Apenas membros de organizações podem criar eventos.");
+
+                        const { data: event, error: eventError } = await supabase
+                          .from("events")
+                          .insert({
+                            producer_id: member.organization_id,
+                            title: formData.title,
+                            description: formData.description,
+                            category: formData.category,
+                            event_type: formData.event_type,
+                            country_id: formData.country_id,
+                            city: formData.city,
+                            location: formData.location,
+                            start_date: `${formData.start_date}T${formData.start_time || '00:00'}:00`,
+                            end_date: `${formData.end_date}T${formData.end_time || '00:00'}:00`,
+                            status: 'publicado'
+                          })
+                          .select()
+                          .single();
+
+                        if (eventError) throw eventError;
+
+                        const ticketsToInsert = tickets.map(t => ({
+                          event_id: event.id,
+                          name: t.name,
+                          description: t.description,
+                          price: t.price,
+                          quantity: t.quantity
+                        }));
+
+                        const { error: ticketsError } = await supabase
+                          .from("tickets")
+                          .insert(ticketsToInsert);
+
+                        if (ticketsError) throw ticketsError;
+
+                        localStorage.removeItem("zevva_event_draft");
+                        alert("Evento publicado com sucesso!");
+                        navigate({ to: "/produtor" });
+                      } catch (error: any) {
+                        alert(error.message);
+                      } finally {
+                        setLoading(false);
+                      }
+                    }}
+                    disabled={loading}
+                  >
+                    {loading ? "Publicando..." : "Publicar evento"} <CheckCircle2 className="w-5 h-5 ml-2" />
+                  </Button>
+                )}
               </div>
             </div>
           </div>
