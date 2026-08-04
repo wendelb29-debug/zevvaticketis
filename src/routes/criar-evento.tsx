@@ -88,7 +88,7 @@ function CriarEventoWizard() {
     if (saved) {
       try {
         const parsed = JSON.parse(saved);
-        setFormData(prev => ({ ...prev, ...parsed.formData }));
+        setFormData((prev: any) => ({ ...prev, ...parsed.formData }));
         if (parsed.tickets) setTickets(parsed.tickets);
       } catch (e) {
         console.error("Failed to load draft", e);
