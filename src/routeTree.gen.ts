@@ -18,6 +18,7 @@ import { Route as EventosRouteImport } from './routes/eventos'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as ProdutorRouteImport } from './routes/produtor'
 import { Route as ProdutorIndexRouteImport } from './routes/produtor/index'
+import { Route as ProdutorNovoEventoRouteImport } from './routes/produtor/novo-evento'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -64,6 +65,11 @@ const ProdutorIndexRoute = ProdutorIndexRouteImport.update({
   path: '/',
   getParentRoute: () => ProdutorRoute,
 } as any)
+const ProdutorNovoEventoRoute = ProdutorNovoEventoRouteImport.update({
+  id: '/novo-evento',
+  path: '/novo-evento',
+  getParentRoute: () => ProdutorRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -74,6 +80,7 @@ export interface FileRoutesByFullPath {
   '/eventos': typeof EventosRoute
   '/login': typeof LoginRoute
   '/produtor': typeof ProdutorRouteWithChildren
+  '/produtor/novo-evento': typeof ProdutorNovoEventoRoute
   '/produtor/': typeof ProdutorIndexRoute
 }
 export interface FileRoutesByTo {
@@ -84,6 +91,7 @@ export interface FileRoutesByTo {
   '/checkin': typeof CheckinRoute
   '/eventos': typeof EventosRoute
   '/login': typeof LoginRoute
+  '/produtor/novo-evento': typeof ProdutorNovoEventoRoute
   '/produtor': typeof ProdutorIndexRoute
 }
 export interface FileRoutesById {
@@ -96,6 +104,7 @@ export interface FileRoutesById {
   '/eventos': typeof EventosRoute
   '/login': typeof LoginRoute
   '/produtor': typeof ProdutorRouteWithChildren
+  '/produtor/novo-evento': typeof ProdutorNovoEventoRoute
   '/produtor/': typeof ProdutorIndexRoute
 }
 export interface FileRouteTypes {
@@ -109,6 +118,7 @@ export interface FileRouteTypes {
     | '/eventos'
     | '/login'
     | '/produtor'
+    | '/produtor/novo-evento'
     | '/produtor/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -119,6 +129,7 @@ export interface FileRouteTypes {
     | '/checkin'
     | '/eventos'
     | '/login'
+    | '/produtor/novo-evento'
     | '/produtor'
   id:
     | '__root__'
@@ -130,6 +141,7 @@ export interface FileRouteTypes {
     | '/eventos'
     | '/login'
     | '/produtor'
+    | '/produtor/novo-evento'
     | '/produtor/'
   fileRoutesById: FileRoutesById
 }
@@ -209,14 +221,23 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProdutorIndexRouteImport
       parentRoute: typeof ProdutorRoute
     }
+    '/produtor/novo-evento': {
+      id: '/produtor/novo-evento'
+      path: '/novo-evento'
+      fullPath: '/produtor/novo-evento'
+      preLoaderRoute: typeof ProdutorNovoEventoRouteImport
+      parentRoute: typeof ProdutorRoute
+    }
   }
 }
 
 interface ProdutorRouteChildren {
+  ProdutorNovoEventoRoute: typeof ProdutorNovoEventoRoute
   ProdutorIndexRoute: typeof ProdutorIndexRoute
 }
 
 const ProdutorRouteChildren: ProdutorRouteChildren = {
+  ProdutorNovoEventoRoute: ProdutorNovoEventoRoute,
   ProdutorIndexRoute: ProdutorIndexRoute,
 }
 
