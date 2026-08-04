@@ -189,6 +189,19 @@ function CriarEventoWizard() {
             </div>
           </div>
         );
+      case 3:
+        return (
+          <div className="space-y-8 animate-in fade-in zoom-in-95 duration-500 text-center py-10">
+            <div className="w-20 h-20 bg-surface rounded-full flex items-center justify-center mx-auto text-gold mb-6">
+              <Ticket className="w-10 h-10" />
+            </div>
+            <h3 className="text-2xl font-bold text-navy">Gerenciamento de Ingressos</h3>
+            <p className="text-muted font-medium mb-8">Crie lotes e defina preços para seu evento.</p>
+            <Button className="h-14 px-10 rounded-xl bg-navy text-white font-bold">
+              <Plus className="w-5 h-5 mr-2" /> Adicionar ingresso
+            </Button>
+          </div>
+        );
       case 4:
         return (
           <div className="space-y-8 animate-in fade-in slide-in-from-right-4 duration-500">
@@ -268,6 +281,7 @@ function CriarEventoWizard() {
                 Ao publicar, seu evento ficará disponível imediatamente para venda em nosso marketplace.
               </p>
             </div>
+          </div>
         );
       default:
         return null;
