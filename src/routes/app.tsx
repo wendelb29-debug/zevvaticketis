@@ -1,6 +1,8 @@
 import { createFileRoute, Outlet, redirect, useNavigate } from "@tanstack/react-router";
 import { supabase } from "@/integrations/supabase/client";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, User as UserIcon } from "lucide-react";
+import { useState, useEffect } from "react";
+import { UserMenu } from "@/components/auth/UserMenu";
 
 export const Route = createFileRoute("/app")({
   beforeLoad: async () => {
@@ -16,6 +18,20 @@ export const Route = createFileRoute("/app")({
 });
 
 function AppLayout() {
+  const [user, setUser] = useState<any>(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    supabase.auth.getUser().then(({ data: { user } }) => {
+      setUser(user);
+    });
+  }, []);
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    navigate({ to: "/" });
+  };
+
   return (
     <div className="min-h-screen bg-bg text-navy font-sans">
       <header className="bg-white border-b border-line h-16 flex items-center px-6 sticky top-0 z-50">
@@ -32,12 +48,13 @@ function AppLayout() {
             </div>
           </div>
           <nav className="flex items-center gap-6">
-            <button 
-              onClick={() => supabase.auth.signOut()}
-              className="text-sm font-bold text-muted hover:text-navy transition-colors"
-            >
-              Sair
-            </button>
+            {user && (
+              <UserMenu 
+                user={user}
+                onLogout={handleLogout}
+                onNavigate={(path) => navigate({ to: path as any })}
+              />
+            )}
           </nav>
         </div>
       </header>

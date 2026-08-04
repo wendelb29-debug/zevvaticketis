@@ -1,6 +1,7 @@
 import { createFileRoute, Outlet, redirect, useNavigate, Link } from "@tanstack/react-router";
 import { supabase } from "@/integrations/supabase/client";
 import { useEffect, useState } from "react";
+import { UserMenu } from "@/components/auth/UserMenu";
 import { 
   LayoutDashboard, 
   User as UserIcon, 
