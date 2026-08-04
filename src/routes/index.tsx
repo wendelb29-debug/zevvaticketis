@@ -1,15 +1,26 @@
-import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate, useSearch } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
 import { AuthModal } from "@/components/auth/AuthModal";
+import { LocationModal } from "@/components/ui/LocationModal";
 import { supabase } from "@/integrations/supabase/client";
+import { MapPin } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/")({
+  validateSearch: (search: Record<string, unknown>) => {
+    return {
+      cidade: (search.cidade as string) || undefined,
+    };
+  },
   component: Index,
 });
 
 function Index() {
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const [isLocationModalOpen, setIsLocationModalOpen] = useState(false);
+  const [nearbyError, setNearbyError] = useState(false);
   const navigate = useNavigate();
+  const { cidade: selectedCity } = useSearch({ from: "/" });
 
   const handleAuthClick = async (e: React.MouseEvent) => {
     e.preventDefault();
@@ -30,6 +41,26 @@ function Index() {
       }
     } else {
       setIsAuthModalOpen(true);
+    }
+  };
+
+  const cn = (...inputs: any[]) => inputs.filter(Boolean).join(' ');
+
+  const handleLocationSelect = (city: string | null) => {
+    setIsLocationModalOpen(false);
+    setNearbyError(false);
+
+    if (city === "nearby") {
+      // Simulate geolocation matching none
+      setNearbyError(true);
+      navigate({ search: (prev) => ({ ...prev, cidade: undefined }) });
+    } else {
+      navigate({ 
+        search: (prev) => ({ 
+          ...prev, 
+          cidade: city ? city.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "") : undefined 
+        }) 
+      });
     }
   };
 
@@ -64,12 +95,14 @@ function Index() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
             </svg>
           </div>
-          <div className="flex items-center gap-2 bg-surface h-11 px-5 rounded-full text-sm font-semibold whitespace-nowrap cursor-pointer hover:bg-surface-2 transition-colors border border-line">
-            <svg className="w-4 h-4 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-            </svg>
-            <span>Localização</span>
+          <div 
+            onClick={() => setIsLocationModalOpen(true)}
+            className="flex items-center gap-2 bg-surface h-11 px-5 rounded-full text-sm font-semibold whitespace-nowrap cursor-pointer hover:bg-surface-2 transition-colors border border-line"
+          >
+            <MapPin className={cn("w-4 h-4", selectedCity ? "text-gold" : "text-gold")} />
+            <span className={cn(selectedCity && "text-gold")}>
+              {selectedCity ? `📍 ${selectedCity.charAt(0).toUpperCase() + selectedCity.slice(1)}` : "Localização"}
+            </span>
           </div>
         </div>
 
@@ -91,7 +124,20 @@ function Index() {
         onClose={() => setIsAuthModalOpen(false)} 
       />
 
+      <LocationModal 
+        isOpen={isLocationModalOpen}
+        onClose={() => setIsLocationModalOpen(false)}
+        onSelect={handleLocationSelect}
+      />
+
       <main className="pt-24 pb-12 space-y-12">
+        {nearbyError && (
+          <div className="px-6 max-w-7xl mx-auto">
+            <div className="bg-surface rounded-2xl p-6 border border-line flex items-center justify-center text-navy font-bold text-center">
+              Nenhum evento perto de você ainda — veja os mais buscados no mundo todo
+            </div>
+          </div>
+        )}
         <div className="px-6 max-w-7xl mx-auto">
           {/* Hero Carousel */}
           <div className="relative w-full aspect-[21/9] bg-surface-2 rounded-2xl overflow-hidden group shadow-md border border-line">
@@ -164,6 +210,7 @@ function Index() {
                   id: 1,
                   title: "Terra Santa: Passos de Jesus",
                   location: "Jerusalém, Israel",
+                  cityKey: "jerusalem",
                   date: "Dezembro 2026",
                   price: "US$ 4.500",
                   image: "https://images.unsplash.com/photo-1544971587-b842c27f8e14?auto=format&fit=crop&q=80&w=800",
@@ -173,6 +220,7 @@ function Index() {
                   id: 2,
                   title: "Grand Tour: Europa Medieval",
                   location: "Paris, França",
+                  cityKey: "paris",
                   date: "Julho 2026",
                   price: "US$ 5.200",
                   image: "https://images.unsplash.com/photo-1511739001486-6bfe10ce785f?auto=format&fit=crop&q=80&w=800",
@@ -182,6 +230,7 @@ function Index() {
                   id: 3,
                   title: "Retiro de Jovens: Conexão",
                   location: "Atibaia, SP",
+                  cityKey: "atibaia",
                   date: "Janeiro 2026",
                   price: "R$ 850",
                   image: "https://images.unsplash.com/photo-1523580494863-6f3031224c94?auto=format&fit=crop&q=80&w=800",
@@ -191,12 +240,15 @@ function Index() {
                   id: 4,
                   title: "Conferência Internacional de Fé",
                   location: "Orlando, FL",
+                  cityKey: "orlando",
                   date: "Março 2026",
                   price: "US$ 350",
                   image: "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&q=80&w=800",
                   lote: "Promoção"
                 }
-              ].map((event) => (
+              ]
+              .filter(e => !selectedCity || e.cityKey === selectedCity)
+              .map((event) => (
                 <div key={event.id} className="bg-white rounded-[14px] overflow-hidden border border-line shadow-sm hover:shadow-xl transition-all duration-300 group">
                   <div className="aspect-[4/3] bg-surface relative overflow-hidden">
                     <div className="absolute top-3 right-3 z-10">
