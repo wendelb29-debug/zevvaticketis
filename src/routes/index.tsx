@@ -157,7 +157,7 @@ function Index() {
               <Link to="/eventos" className="text-gold text-sm font-extrabold hover:underline uppercase tracking-widest pb-1">Ver tudo</Link>
             </div>
             
-            {/* Note: In a real scenario, these would be fetched. Current UI shows 4 identical mocks which might look like a bug. */}
+            
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
               {[
                 {
