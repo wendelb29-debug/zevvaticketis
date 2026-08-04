@@ -14,6 +14,7 @@ import { Route as AdminRouteImport } from './routes/admin'
 import { Route as AppRouteImport } from './routes/app'
 import { Route as CadastroRouteImport } from './routes/cadastro'
 import { Route as CheckinRouteImport } from './routes/checkin'
+import { Route as CriarEventoRouteImport } from './routes/criar-evento'
 import { Route as EventosRouteImport } from './routes/eventos'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as ProdutorRouteImport } from './routes/produtor'
@@ -43,6 +44,11 @@ const CadastroRoute = CadastroRouteImport.update({
 const CheckinRoute = CheckinRouteImport.update({
   id: '/checkin',
   path: '/checkin',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CriarEventoRoute = CriarEventoRouteImport.update({
+  id: '/criar-evento',
+  path: '/criar-evento',
   getParentRoute: () => rootRouteImport,
 } as any)
 const EventosRoute = EventosRouteImport.update({
@@ -77,6 +83,7 @@ export interface FileRoutesByFullPath {
   '/app': typeof AppRoute
   '/cadastro': typeof CadastroRoute
   '/checkin': typeof CheckinRoute
+  '/criar-evento': typeof CriarEventoRoute
   '/eventos': typeof EventosRoute
   '/login': typeof LoginRoute
   '/produtor': typeof ProdutorRouteWithChildren
@@ -89,6 +96,7 @@ export interface FileRoutesByTo {
   '/app': typeof AppRoute
   '/cadastro': typeof CadastroRoute
   '/checkin': typeof CheckinRoute
+  '/criar-evento': typeof CriarEventoRoute
   '/eventos': typeof EventosRoute
   '/login': typeof LoginRoute
   '/produtor/novo-evento': typeof ProdutorNovoEventoRoute
@@ -101,6 +109,7 @@ export interface FileRoutesById {
   '/app': typeof AppRoute
   '/cadastro': typeof CadastroRoute
   '/checkin': typeof CheckinRoute
+  '/criar-evento': typeof CriarEventoRoute
   '/eventos': typeof EventosRoute
   '/login': typeof LoginRoute
   '/produtor': typeof ProdutorRouteWithChildren
@@ -115,6 +124,7 @@ export interface FileRouteTypes {
     | '/app'
     | '/cadastro'
     | '/checkin'
+    | '/criar-evento'
     | '/eventos'
     | '/login'
     | '/produtor'
@@ -127,6 +137,7 @@ export interface FileRouteTypes {
     | '/app'
     | '/cadastro'
     | '/checkin'
+    | '/criar-evento'
     | '/eventos'
     | '/login'
     | '/produtor/novo-evento'
@@ -138,6 +149,7 @@ export interface FileRouteTypes {
     | '/app'
     | '/cadastro'
     | '/checkin'
+    | '/criar-evento'
     | '/eventos'
     | '/login'
     | '/produtor'
@@ -151,6 +163,7 @@ export interface RootRouteChildren {
   AppRoute: typeof AppRoute
   CadastroRoute: typeof CadastroRoute
   CheckinRoute: typeof CheckinRoute
+  CriarEventoRoute: typeof CriarEventoRoute
   EventosRoute: typeof EventosRoute
   LoginRoute: typeof LoginRoute
   ProdutorRoute: typeof ProdutorRouteWithChildren
@@ -191,6 +204,13 @@ declare module '@tanstack/react-router' {
       path: '/checkin'
       fullPath: '/checkin'
       preLoaderRoute: typeof CheckinRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/criar-evento': {
+      id: '/criar-evento'
+      path: '/criar-evento'
+      fullPath: '/criar-evento'
+      preLoaderRoute: typeof CriarEventoRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/eventos': {
@@ -251,6 +271,7 @@ const rootRouteChildren: RootRouteChildren = {
   AppRoute: AppRoute,
   CadastroRoute: CadastroRoute,
   CheckinRoute: CheckinRoute,
+  CriarEventoRoute: CriarEventoRoute,
   EventosRoute: EventosRoute,
   LoginRoute: LoginRoute,
   ProdutorRoute: ProdutorRouteWithChildren,
