@@ -175,6 +175,43 @@ function UserProfile() {
             <h2 className="text-xl font-manrope font-extrabold text-navy">Dados Pessoais</h2>
           </div>
 
+          <div className="flex flex-col items-center gap-6 pb-4">
+            <div className="relative group">
+              <Avatar className="w-32 h-32 border-4 border-surface shadow-xl">
+                <AvatarImage src={profile?.avatar_url} className="object-cover" />
+                <AvatarFallback className="bg-gradient-to-br from-coral/20 to-coral/40 text-2xl font-black text-navy uppercase">
+                  {initials}
+                </AvatarFallback>
+              </Avatar>
+              
+              <button 
+                onClick={() => fileInputRef.current?.click()}
+                disabled={uploading}
+                className="absolute bottom-1 right-1 w-10 h-10 bg-coral text-white rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-transform disabled:opacity-50"
+              >
+                {uploading ? <Loader2 className="w-5 h-5 animate-spin" /> : <Camera className="w-5 h-5" />}
+              </button>
+              <input 
+                type="file" 
+                ref={fileInputRef} 
+                onChange={handleFileUpload} 
+                className="hidden" 
+                accept="image/*"
+              />
+            </div>
+
+            {profile?.avatar_url && (
+              <Button 
+                variant="ghost" 
+                size="sm" 
+                onClick={handleRemovePhoto}
+                className="text-error hover:text-error hover:bg-error/5 font-bold"
+              >
+                <Trash2 className="w-4 h-4 mr-2" /> Remover foto
+              </Button>
+            )}
+          </div>
+
           <div className="space-y-6">
             <div className="space-y-2">
               <label className="text-[10px] font-extrabold uppercase tracking-widest text-muted">Nome Completo</label>
@@ -196,7 +233,63 @@ function UserProfile() {
           </div>
         </div>
 
-        {/* Security & Privacy */}
+        {/* Notifications Preference */}
+        <div className="bg-white rounded-[32px] border border-line p-8 space-y-8 shadow-sm">
+          <div className="flex items-center gap-3">
+            <div className="p-3 bg-coral/10 rounded-2xl text-coral">
+              <Bell className="w-6 h-6" />
+            </div>
+            <h2 className="text-xl font-manrope font-extrabold text-navy">Notificações</h2>
+          </div>
+
+          <div className="space-y-4">
+            <div className="flex items-center justify-between p-4 bg-surface rounded-xl opacity-80 cursor-not-allowed">
+              <div className="space-y-1">
+                <div className="flex items-center gap-2">
+                  <p className="font-bold text-navy">Confirmação de compra</p>
+                  <CheckCircle2 className="w-3 h-3 text-good" />
+                </div>
+                <p className="text-xs text-muted font-medium">Envio imediato após transação.</p>
+              </div>
+              <Switch checked disabled />
+            </div>
+
+            <div className="flex items-center justify-between p-4 bg-surface rounded-xl">
+              <div className="space-y-1">
+                <p className="font-bold text-navy">Lembrete de evento</p>
+                <p className="text-xs text-muted font-medium">Aviso 24h antes do início da caravana.</p>
+              </div>
+              <Switch 
+                checked={profile?.notif_lembrete_evento} 
+                onCheckedChange={(val) => setProfile({...profile, notif_lembrete_evento: val})}
+              />
+            </div>
+
+            <div className="flex items-center justify-between p-4 bg-surface rounded-xl opacity-80 cursor-not-allowed">
+              <div className="space-y-1">
+                <div className="flex items-center gap-2">
+                  <p className="font-bold text-navy">Mudanças no evento</p>
+                  <AlertCircle className="w-3 h-3 text-coral" />
+                </div>
+                <p className="text-xs text-muted font-medium">Avisos críticos de segurança ou logística.</p>
+              </div>
+              <Switch checked disabled />
+            </div>
+
+            <div className="flex items-center justify-between p-4 bg-surface rounded-xl">
+              <div className="space-y-1">
+                <p className="font-bold text-navy">Novidades e promoções</p>
+                <p className="text-xs text-muted font-medium">Ofertas exclusivas e novos destinos.</p>
+              </div>
+              <Switch 
+                checked={profile?.notif_novidades} 
+                onCheckedChange={(val) => setProfile({...profile, notif_novidades: val})}
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Privacy & LGPD */}
         <div className="bg-white rounded-[32px] border border-line p-8 space-y-8 shadow-sm">
           <div className="flex items-center gap-3">
             <div className="p-3 bg-navy/5 rounded-2xl text-navy">
@@ -208,17 +301,16 @@ function UserProfile() {
           <div className="space-y-6">
             <div className="flex items-center justify-between p-4 bg-surface rounded-xl">
               <div className="space-y-1">
-                <p className="font-bold text-navy">Receber ofertas por e-mail</p>
-                <p className="text-xs text-muted font-medium">Novos eventos e promoções exclusivas.</p>
-              </div>
-              <Switch defaultChecked />
-            </div>
-            <div className="flex items-center justify-between p-4 bg-surface rounded-xl">
-              <div className="space-y-1">
                 <p className="font-bold text-navy">Perfil público no catálogo</p>
                 <p className="text-xs text-muted font-medium">Mostrar seu nome em listas de participantes.</p>
               </div>
               <Switch />
+            </div>
+            <div className="p-4 bg-navy/5 rounded-xl border border-navy/10">
+              <p className="text-xs text-navy font-bold leading-relaxed">
+                Seus dados são processados de acordo com a nossa Política de Privacidade. 
+                Você pode solicitar a exportação ou exclusão total dos seus dados a qualquer momento via suporte.
+              </p>
             </div>
           </div>
         </div>
@@ -233,10 +325,10 @@ function UserProfile() {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <Button variant="outline" className="h-14 rounded-xl font-bold border-line hover:bg-surface">
+            <Button variant="outline" className="h-14 rounded-xl font-bold border-line hover:bg-surface transition-all active:scale-95">
               <Lock className="w-4 h-4 mr-2" /> Alterar Senha
             </Button>
-            <Button variant="outline" className="h-14 rounded-xl font-bold border-line hover:bg-surface">
+            <Button variant="outline" className="h-14 rounded-xl font-bold border-line hover:bg-surface transition-all active:scale-95">
               <Smartphone className="w-4 h-4 mr-2" /> Autenticação 2FA
             </Button>
           </div>
@@ -246,7 +338,7 @@ function UserProfile() {
           <Button 
             onClick={handleSave}
             disabled={saving}
-            className="bg-coral hover:bg-coral-dark text-white font-extrabold px-12 rounded-xl h-14 shadow-xl shadow-coral/20"
+            className="bg-coral hover:bg-coral-dark text-white font-extrabold px-12 rounded-xl h-14 shadow-xl shadow-coral/20 transition-all active:scale-95"
           >
             {saving ? <Loader2 className="w-5 h-5 animate-spin" /> : "Salvar Alterações"}
           </Button>
