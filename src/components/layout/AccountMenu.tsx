@@ -81,13 +81,13 @@ export function AccountMenu({ user, onLogout, onNavigate, onOpenAuth }: AccountM
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="w-48 mt-2 rounded-[16px] p-2 border-line shadow-xl font-manrope">
           <DropdownMenuItem 
-            onClick={onOpenAuth}
+            onClick={() => onNavigate("/login")}
             className="px-4 py-2.5 rounded-xl text-sm font-extrabold text-navy cursor-pointer hover:bg-surface"
           >
             Entrar
           </DropdownMenuItem>
           <DropdownMenuItem 
-            onClick={onOpenAuth}
+            onClick={() => onNavigate("/cadastro")}
             className="px-4 py-2.5 rounded-xl text-sm font-extrabold text-navy cursor-pointer hover:bg-surface"
           >
             Cadastrar

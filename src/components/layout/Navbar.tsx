@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils";
 interface NavbarProps {
   onOpenAuth: () => void;
   onOpenLocation: () => void;
-  selectedCity?: string;
+  selectedCity?: string | null;
 }
 
 export function Navbar({ onOpenAuth, onOpenLocation, selectedCity }: NavbarProps) {
@@ -104,7 +104,7 @@ export function Navbar({ onOpenAuth, onOpenLocation, selectedCity }: NavbarProps
               user={user}
               onLogout={() => supabase.auth.signOut()}
               onNavigate={(path) => navigate({ to: path as any })}
-              onOpenAuth={onOpenAuth}
+              onOpenAuth={() => navigate({ to: "/login" })}
             />
           </div>
         </div>

@@ -1,474 +1,192 @@
-import { createFileRoute, Link, useNavigate, useSearch } from "@tanstack/react-router";
+import { createFileRoute, useNavigate, Link } from '@tanstack/react-router';
 import { useState, useEffect } from "react";
-import { AuthModal } from "@/components/auth/AuthModal";
+import { 
+  Search, 
+  MapPin, 
+  Calendar, 
+  ChevronRight, 
+  ArrowRight,
+  TrendingUp,
+  Ticket,
+  Video,
+  Sparkles,
+  Users,
+  Compass,
+  Star,
+  Globe,
+  Plus
+} from "lucide-react";
 import { Navbar } from "@/components/layout/Navbar";
 import { FeaturedCarousel } from "@/components/home/FeaturedCarousel";
-import { LocationModal } from "@/components/ui/LocationModal";
+import { LocationModal } from "@/components/home/LocationModal";
+import { EventCard } from "@/components/home/EventCard";
+import { CategoryGrid } from "@/components/home/CategoryGrid";
+import { FAQAccordion } from "@/components/home/FAQAccordion";
+import { CityTicker } from "@/components/home/CityTicker";
+import { Footer } from "@/components/layout/Footer";
 import { supabase } from "@/integrations/supabase/client";
-import { MapPin, Calendar, MapPin as MapPinIcon, ArrowRight, Heart } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
-import { getThemeByCategory } from "@/lib/categoryThemes";
+import { toast } from "sonner";
 
 export const Route = createFileRoute("/")({
-  validateSearch: (search: Record<string, unknown>) => {
-    return {
-      cidade: (search['cidade'] as string) || undefined,
-    };
-  },
-  component: Index,
+  component: HomePage,
 });
 
-function Index() {
-  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
-  const [isLocationModalOpen, setIsLocationModalOpen] = useState(false);
-  const [nearbyError, setNearbyError] = useState(false);
-  const [filteredEvents, setFilteredEvents] = useState<any[]>([]);
+function HomePage() {
   const [featuredEvents, setFeaturedEvents] = useState<any[]>([]);
-  const [favorites, setFavorites] = useState<string[]>([]);
-  const [loadingEvents, setLoadingEvents] = useState(true);
-  const [user, setUser] = useState<any>(null);
+  const [events, setEvents] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [isLocationModalOpen, setIsLocationModalOpen] = useState(false);
+  const [selectedCity, setSelectedCity] = useState<string | null>(null);
   const navigate = useNavigate();
-  const search = useSearch({ from: "/" }) as any;
-  const selectedCity = search?.cidade;
-
-  useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setUser(session?.user ?? null);
-      if (session?.user) fetchFavorites(session.user.id);
-    });
-
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user ?? null);
-      if (session?.user) fetchFavorites(session.user.id);
-      else setFavorites([]);
-    });
-
-    return () => subscription.unsubscribe();
-  }, []);
-
-  async function fetchFavorites(userId: string) {
-    const { data } = await supabase.from("event_favorites").select("event_id").eq("user_id", userId);
-    if (data) setFavorites(data.map(f => f.event_id));
-  }
-
-  const toggleFavorite = async (eventId: string) => {
-    if (!user) {
-      setIsAuthModalOpen(true);
-      return;
-    }
-
-    if (favorites.includes(eventId)) {
-      await supabase.from("event_favorites").delete().eq("user_id", user.id).eq("event_id", eventId);
-      setFavorites(prev => prev.filter(id => id !== eventId));
-    } else {
-      await supabase.from("event_favorites").insert({ user_id: user.id, event_id: eventId });
-      setFavorites(prev => [...prev, eventId]);
-    }
-  };
 
   useEffect(() => {
     async function fetchEvents() {
-      setLoadingEvents(true);
+      const { data: featured } = await supabase
+        .from("events")
+        .select("*")
+        .eq("destaque", true)
+        .eq("status", "publicado")
+        .limit(5);
       
-      // Fetch Featured Events
-      const { data: featuredData } = await supabase
+      const { data: all } = await supabase
         .from("events")
         .select("*")
         .eq("status", "publicado")
-        .eq("destaque", true)
-        .limit(5);
+        .limit(8);
 
-      if (featuredData) {
-        setFeaturedEvents(featuredData.map((e: any) => ({
-          id: e.id,
-          title: e.title,
-          city: e.city || 'Cidade',
-          state: e.country_id || 'Estado',
-          date: e.start_date ? new Date(e.start_date).toLocaleDateString('pt-BR', { day: '2-digit', month: 'short' }) : 'Em breve',
-          price: `US$ ${e.min_price || '0'}`,
-          image: "https://images.unsplash.com/photo-1544971587-b842c27f8e14?auto=format&fit=crop&q=80&w=800"
-        })));
-      }
-
-      // Fetch Normal Events
-      let query = supabase.from("events").select("*").eq("status", "publicado");
-      if (selectedCity) query = query.ilike("city", `%${selectedCity}%`);
-      
-      const { data, error } = await query.limit(8);
-      if (data) {
-        const formatted = data.map((event: any) => ({
-          id: event.id,
-          title: event.title,
-          location: `${event.city || ''}, ${event.country_id || ''}`,
-          cityKey: event.city?.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""),
-          date: event.start_date ? new Date(event.start_date).toLocaleDateString('pt-BR', { month: 'long', year: 'numeric' }) : 'Data a definir',
-          price: `US$ ${event.min_price || '0'}`,
-          image: "https://images.unsplash.com/photo-1544971587-b842c27f8e14?auto=format&fit=crop&q=80&w=800",
-          lote: "Lote 1",
-          categoria: event.categoria
-        }));
-        setFilteredEvents(formatted);
-      }
-      setLoadingEvents(false);
+      if (featured) setFeaturedEvents(featured);
+      if (all) setEvents(all);
+      setLoading(false);
     }
-    
-    fetchEvents();
-  }, [selectedCity]);
 
-  const handleAuthClick = async (e: React.MouseEvent) => {
-    e.preventDefault();
+    fetchEvents();
+  }, []);
+
+  const handleToggleFavorite = async (eventId: string) => {
     const { data: { session } } = await supabase.auth.getSession();
     
-    if (session) {
-      // User is already logged in, redirect based on role
-      const { data: member } = await supabase
-        .from("organization_members")
-        .select("role")
+    if (!session) {
+      navigate({ to: '/login' });
+      return;
+    }
+
+    try {
+      const { data: existing } = await supabase
+        .from("event_favorites")
+        .select("*")
+        .eq("event_id", eventId)
         .eq("user_id", session.user.id)
-        .single();
-      
-      if (member) {
-        navigate({ to: "/produtor" });
+        .maybeSingle();
+
+      if (existing) {
+        await supabase
+          .from("event_favorites")
+          .delete()
+          .eq("id", existing.id);
+        toast.success("Removido dos favoritos");
       } else {
-        navigate({ to: "/app" });
+        await supabase
+          .from("event_favorites")
+          .insert({
+            event_id: eventId,
+            user_id: session.user.id
+          });
+        toast.success("Adicionado aos favoritos");
       }
-    } else {
-      setIsAuthModalOpen(true);
+    } catch (error) {
+      toast.error("Erro ao favoritar evento");
     }
   };
-
-  const cn = (...inputs: any[]) => inputs.filter(Boolean).join(' ');
-
-  const handleLocationSelect = (city: string | null) => {
-    setIsLocationModalOpen(false);
-    setNearbyError(false);
-
-    if (city === "nearby") {
-      // Simulate geolocation matching none
-      setNearbyError(true);
-      navigate({ to: '.', search: (prev: any) => ({ ...prev, cidade: undefined }) });
-    } else {
-      navigate({ 
-        to: '.',
-        search: (prev: any) => ({ 
-          ...prev, 
-          cidade: city ? city.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "") : undefined 
-        }) 
-      });
-    }
-  };
-
-  const categories = [
-    { name: "Conferências", icon: "✨" },
-    { name: "Shows Gospel", icon: "🎸" },
-    { name: "Retiros", icon: "🌳" },
-    { name: "Caravanas Internacionais", icon: "🌍" },
-    { name: "Cursos e Workshops", icon: "📚" },
-    { name: "Infantil", icon: "🎨" },
-  ];
-
-  const cities = ["ORLANDO", "LISBOA", "UBERLÂNDIA", "MIAMI", "SÃO PAULO", "MADRI", "NOVA YORK", "BUENOS AIRES"];
 
   return (
-    <div className="min-h-screen bg-bg text-navy font-inter text-base">
+    <div className="min-h-screen bg-white">
       <Navbar 
-        onOpenAuth={() => setIsAuthModalOpen(true)}
+        onOpenAuth={() => navigate({ to: '/login' })} 
         onOpenLocation={() => setIsLocationModalOpen(true)}
         selectedCity={selectedCity}
       />
 
-      <AuthModal 
-        isOpen={isAuthModalOpen} 
-        onClose={() => setIsAuthModalOpen(false)} 
-      />
+      <main className="pt-36">
+        {/* City Ticker */}
+        <CityTicker />
+
+        {/* Hero Section / Carousel */}
+        <section className="px-6 py-8">
+          <div className="max-w-7xl mx-auto">
+            <FeaturedCarousel events={featuredEvents} />
+          </div>
+        </section>
+
+        {/* Categories Section */}
+        <section className="px-6 py-16 bg-surface/30">
+          <div className="max-w-7xl mx-auto space-y-10">
+            <div className="flex justify-between items-end">
+              <div className="space-y-2">
+                <h2 className="text-3xl font-manrope font-extrabold text-navy">Categorias</h2>
+                <p className="text-muted font-medium">Encontre o evento perfeito para seu momento.</p>
+              </div>
+            </div>
+            <CategoryGrid />
+          </div>
+        </section>
+
+        {/* Events Grid */}
+        <section className="px-6 py-20">
+          <div className="max-w-7xl mx-auto space-y-12">
+            <div className="flex justify-between items-end">
+              <div className="space-y-2">
+                <h2 className="text-3xl font-manrope font-extrabold text-navy flex items-center gap-3">
+                  <TrendingUp className="w-8 h-8 text-gold" /> Próximos Eventos
+                </h2>
+                <p className="text-muted font-medium">As melhores experiências selecionadas para você.</p>
+              </div>
+              <Link 
+                to="/eventos" 
+                className="group flex items-center gap-2 text-gold font-bold hover:underline"
+              >
+                Ver todos <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </div>
+
+            {loading ? (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                {[1,2,3,4].map(i => (
+                  <div key={i} className="aspect-[3/4] rounded-[24px] bg-slate-100 animate-pulse" />
+                ))}
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                {events.map((event) => (
+                  <EventCard 
+                    key={event.id} 
+                    event={event} 
+                    onToggleFavorite={handleToggleFavorite}
+                  />
+                ))}
+              </div>
+            )}
+          </div>
+        </section>
+
+        {/* FAQ Section */}
+        <section className="px-6 py-20 bg-navy text-white">
+          <div className="max-w-3xl mx-auto space-y-12">
+            <div className="text-center space-y-4">
+              <h2 className="text-4xl font-manrope font-extrabold">Dúvidas Frequentes</h2>
+              <p className="text-white/60 font-medium">Tudo o que você precisa saber sobre a Zevva Tickets.</p>
+            </div>
+            <FAQAccordion />
+          </div>
+        </section>
+      </main>
+
+      <Footer />
 
       <LocationModal 
         isOpen={isLocationModalOpen}
         onClose={() => setIsLocationModalOpen(false)}
-        onSelect={handleLocationSelect}
+        onSelect={setSelectedCity}
       />
-
-      <main className="pt-40 pb-12 space-y-12">
-        {nearbyError && (
-          <div className="px-6 max-w-7xl mx-auto">
-            <div className="bg-surface rounded-2xl p-6 border border-line flex items-center justify-center text-navy font-bold text-center">
-              Nenhum evento perto de você ainda — veja os mais buscados no mundo todo
-            </div>
-          </div>
-        )}
-
-        {featuredEvents.length > 0 && (
-          <FeaturedCarousel events={featuredEvents} />
-        )}
-
-        {/* City Ticker */}
-        <div className="bg-surface border-y border-line py-4 overflow-hidden select-none">
-          <div className="flex whitespace-nowrap animate-infinite-scroll">
-            {[...Array(2)].map((_, i) => (
-              <div key={i} className="flex items-center gap-8 px-4">
-                {cities.map((city) => (
-                  <span key={city} className="text-sm font-extrabold text-gold tracking-[0.2em] flex items-center gap-8">
-                    {city} <span className="text-gold/30 text-xs">•</span>
-                  </span>
-                ))}
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="px-6 max-w-7xl mx-auto space-y-20">
-          {/* Categories Section */}
-          <section className="space-y-8">
-            <div className="text-center space-y-2">
-              <h2 className="text-3xl font-manrope font-extrabold">Explore por Categoria</h2>
-              <p className="text-navy font-bold">Encontre a experiência ideal para o seu ministério</p>
-            </div>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
-              {categories.map((cat) => (
-                <div key={cat.name} className="group cursor-pointer text-center space-y-4 hover:-translate-y-1 transition-all duration-300">
-                  <div className="aspect-square rounded-2xl bg-gradient-to-br from-surface to-surface-2 border border-line flex items-center justify-center text-3xl shadow-sm group-hover:shadow-md group-hover:border-gold/30 transition-all">
-                    {cat.icon}
-                  </div>
-                  <h3 className="text-xs font-extrabold text-navy uppercase tracking-wider line-clamp-2 leading-relaxed bg-surface/50 px-2 py-1 rounded-md">{cat.name}</h3>
-                </div>
-              ))}
-            </div>
-          </section>
-
-          {/* Featured Events Section */}
-          <section className="space-y-8">
-            <div className="flex justify-between items-end border-b border-line pb-4">
-              <div className="space-y-1">
-                <h2 className="text-3xl font-manrope font-extrabold tracking-tight">Próximas Caravanas</h2>
-                <p className="text-muted font-medium">Saídas confirmadas para os próximos meses</p>
-              </div>
-              <Link to="/eventos" className="text-gold text-sm font-extrabold hover:underline uppercase tracking-widest pb-1">Ver tudo</Link>
-            </div>
-            
-            
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-              {loadingEvents ? (
-                Array.from({ length: 4 }).map((_, i) => (
-                  <div key={i} className="bg-surface animate-pulse rounded-[14px] aspect-[3/4]" />
-                ))
-              ) : filteredEvents.length > 0 ? (
-                filteredEvents.map((event) => {
-                  const theme = getThemeByCategory(event.categoria);
-                  const Icon = theme.icon;
-                  
-                  return (
-                    <div 
-                      key={event.id} 
-                      className={cn(
-                        "bg-white rounded-[14px] overflow-hidden border border-line shadow-sm hover-lift group",
-                        theme.cardAnimation,
-                        theme.customClass?.includes('animate-pulse-subtle') && "animate-pulse-subtle"
-                      )}
-                      style={{ 
-                        borderColor: theme.accentColor + '30',
-                      }}
-                    >
-                      <div className="aspect-[4/3] bg-surface relative overflow-hidden">
-                        <div className="absolute top-3 right-3 z-10 flex gap-2">
-                          <button 
-                            onClick={(e) => { e.preventDefault(); toggleFavorite(event.id); }}
-                            className="glass-panel w-8 h-8 rounded-full flex items-center justify-center shadow-md hover:scale-110 active:scale-95 transition-all"
-                          >
-                            <Heart 
-                              className={cn(
-                                "w-4 h-4 transition-colors", 
-                                favorites.includes(event.id) ? "fill-error text-error" : "text-white"
-                              )} 
-                            />
-                          </button>
-                          <span className="glass-panel text-white text-[10px] font-extrabold px-3 py-1.5 rounded-full shadow-md uppercase tracking-widest bg-navy/40">
-                            {event.lote}
-                          </span>
-                        </div>
-                        <img 
-                          src={event.image} 
-                          alt={event.title}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                        />
-                      </div>
-                      <div className={cn("p-6 space-y-4", theme.fontFamily)}>
-                        <h3 
-                          className="font-manrope font-extrabold text-lg text-navy leading-tight line-clamp-2 min-h-[3.5rem] group-hover:text-gold transition-colors"
-                          style={{ color: theme.customClass?.includes('animate-pulse-subtle') ? theme.accentColor : undefined }}
-                        >
-                          {event.title}
-                        </h3>
-                        <div className="space-y-2">
-                          <div className="flex items-center gap-2 text-sm text-navy font-bold">
-                            <MapPinIcon className="w-4 h-4" style={{ color: theme.accentColor }} />
-                            {event.location}
-                          </div>
-                          <div className="flex items-center gap-2 text-sm text-navy font-bold">
-                            <Calendar className="w-4 h-4" style={{ color: theme.accentColor }} />
-                            {event.date}
-                          </div>
-                        </div>
-                        <div className="pt-4 border-t border-line flex justify-between items-center">
-                          <div className="space-y-0.5">
-                            <span className="block text-[10px] text-muted-foreground font-extrabold uppercase tracking-widest">A partir de</span>
-                            <span className="text-xl font-extrabold text-navy">{event.price}</span>
-                          </div>
-                          <Link 
-                            to="/eventos" 
-                            className={cn(
-                              "w-10 h-10 rounded-full bg-surface flex items-center justify-center transition-all shadow-md border border-line",
-                              theme.buttonRadius
-                            )}
-                            style={{ color: theme.accentColor }}
-                          >
-                            <ArrowRight className="w-5 h-5" />
-                          </Link>
-                        </div>
-                      </div>
-                    </div>
-                  );
-                })
-              ) : (
-                <div className="col-span-full py-20 text-center space-y-4">
-                  <div className="text-6xl text-surface-2">📍</div>
-                  <h3 className="text-xl font-bold text-navy">Nenhum evento encontrado</h3>
-                  <p className="text-muted max-w-xs mx-auto">Não encontramos caravanas para esta localização no momento.</p>
-                  <Button variant="outline" className="rounded-full" onClick={() => handleLocationSelect(null)}>
-                    Ver todas as caravanas
-                  </Button>
-                </div>
-              )}
-            </div>
-          </section>
-
-          {/* Producers Banner */}
-          <section className="bg-gradient-to-br from-surface to-surface-2 rounded-3xl p-12 border border-line shadow-sm overflow-hidden relative group hover:border-gold/20 transition-all">
-            <div className="absolute top-0 right-0 w-1/3 h-full bg-gold/5 -skew-x-12 translate-x-1/2" />
-            <div className="max-w-2xl space-y-8 relative z-10">
-              <h2 className="text-4xl font-manrope font-extrabold leading-tight text-navy">Crie eventos, divulgar e vender seu evento."</h2>
-              <ul className="space-y-4">
-                {[
-                  "Publicação gratuita e intuitiva",
-                  "Check-in profissional com QR Code",
-                  "Repasse automático em BRL, USD ou EUR"
-                ].map((item) => (
-                  <li key={item} className="flex items-center gap-3 text-lg font-semibold text-navy">
-                    <div className="w-6 h-6 rounded-full bg-good/20 flex items-center justify-center flex-shrink-0">
-                      <svg className="w-4 h-4 text-good" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" /></svg>
-                    </div>
-                    {item}
-                  </li>
-                ))}
-              </ul>
-              <Link to="/cadastro" className="inline-block bg-gradient-to-r from-gold-bright to-gold text-white px-10 py-5 rounded-[11px] font-extrabold hover:opacity-90 transition-all shadow-[0_6px_20px_rgba(201,154,62,0.3)] uppercase tracking-widest">
-                Criar meu evento
-              </Link>
-            </div>
-          </section>
-
-          {/* FAQ Section */}
-          <section className="max-w-3xl mx-auto space-y-12">
-            <div className="text-center space-y-2">
-              <h2 className="text-3xl font-manrope font-extrabold">Dúvidas Frequentes</h2>
-              <p className="text-muted font-medium">Tudo o que você precisa saber sobre a sua próxima viagem</p>
-            </div>
-            <div className="space-y-4">
-              {[
-                { q: "Como funciona o cancelamento e reembolso?", a: "As políticas de cancelamento variam por evento. Geralmente, oferecemos reembolso integral até 60 dias antes da partida." },
-                { q: "Onde localizo meus ingressos após a compra?", a: "Seus ingressos ficam disponíveis na aba 'Meus Ingressos' no seu painel e também são enviados por e-mail." },
-                { q: "Posso transferir meu ingresso para outra pessoa?", a: "Sim, a transferência é permitida até 15 dias antes do evento diretamente pelo painel do participante." },
-                { q: "O preço do ingresso muda conforme o país de compra?", a: "O valor base é fixo na moeda do evento, mas a conversão segue a cotação oficial do dia do pagamento." }
-              ].map((faq, idx) => (
-                <details key={idx} className="group bg-surface rounded-2xl border border-line">
-                  <summary className="flex justify-between items-center p-6 cursor-pointer list-none font-extrabold text-navy hover:text-gold transition-colors">
-                    {faq.q}
-                    <span className="text-gold group-open:rotate-180 transition-transform">
-                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" /></svg>
-                    </span>
-                  </summary>
-                  <div className="px-6 pb-6 text-muted font-medium leading-relaxed">
-                    {faq.a}
-                  </div>
-                </details>
-              ))}
-            </div>
-          </section>
-        </div>
-      </main>
-
-      <footer className="bg-navy pt-20 pb-10 px-6">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-12 border-b border-white/10 pb-16">
-            <div className="space-y-6">
-              <h4 className="text-white font-extrabold uppercase tracking-widest text-xs">Países</h4>
-              <ul className="space-y-3 text-sm font-medium text-white/60">
-                <li>Brasil</li>
-                <li>Estados Unidos</li>
-                <li>Portugal</li>
-                <li>Israel</li>
-              </ul>
-            </div>
-            <div className="space-y-6">
-              <h4 className="text-white font-extrabold uppercase tracking-widest text-xs">Categorias</h4>
-              <ul className="space-y-3 text-sm font-medium text-white/60">
-                <li>Caravanas</li>
-                <li>Conferências</li>
-                <li>Shows Gospel</li>
-                <li>Turismo Religioso</li>
-              </ul>
-            </div>
-            <div className="space-y-6">
-              <h4 className="text-white font-extrabold uppercase tracking-widest text-xs">Seja Produtor</h4>
-              <ul className="space-y-3 text-sm font-medium text-white/60">
-                <li>Como vender</li>
-                <li>Central de Ajuda</li>
-                <li>Taxas e Prazos</li>
-                <li>Stripe Connect</li>
-              </ul>
-            </div>
-            <div className="space-y-6">
-              <h4 className="text-white font-extrabold uppercase tracking-widest text-xs">A Zevva</h4>
-              <ul className="space-y-3 text-sm font-medium text-white/60">
-                <li>Sobre nós</li>
-                <li>Termos de Uso</li>
-                <li>Privacidade</li>
-                <li>Blog</li>
-              </ul>
-            </div>
-            <div className="space-y-6">
-              <h4 className="text-white font-extrabold uppercase tracking-widest text-xs">Ajuda</h4>
-              <ul className="space-y-3 text-sm font-medium text-white/60">
-                <li>Suporte ao Comprador</li>
-                <li>Suporte ao Produtor</li>
-                <li>Contatos</li>
-                <li>Segurança</li>
-              </ul>
-            </div>
-          </div>
-          <div className="pt-10 flex flex-col md:flex-row justify-between items-center gap-4 text-xs font-bold text-white/40 uppercase tracking-widest">
-            <p>&copy; 2026 Zevva Tickets. Todos os direitos reservados.</p>
-            <p>Powered by Milittão Brand</p>
-          </div>
-        </div>
-      </footer>
-
-      {/* Floating Help Bubble */}
-      <button className="fixed bottom-8 right-8 w-14 h-14 bg-gradient-to-r from-gold-bright to-gold text-white rounded-full shadow-[0_8px_25px_rgba(201,154,62,0.4)] flex items-center justify-center hover:scale-110 transition-transform z-50">
-        <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-        </svg>
-      </button>
-
-      <style>{`
-        @keyframes infinite-scroll {
-          from { transform: translateX(0); }
-          to { transform: translateX(-50%); }
-        }
-        .animate-infinite-scroll {
-          animation: infinite-scroll 30s linear infinite;
-        }
-      `}</style>
     </div>
   );
 }

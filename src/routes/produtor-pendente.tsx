@@ -1,44 +1,81 @@
-import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
-import { supabase } from "@/integrations/supabase/client";
-import { Button } from "@/components/ui/button";
-import { useNavigate } from "@tanstack/react-router";
+import { createFileRoute, useNavigate, Link } from '@tanstack/react-router';
+import { supabase } from '@/integrations/supabase/client';
+import { useEffect, useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { Clock, ShieldCheck, Mail, ArrowLeft, LogOut } from 'lucide-react';
+import { toast } from 'sonner';
 
-export const Route = createFileRoute("/produtor-pendente")({
-  beforeLoad: async () => {
-    const { data: { session } } = await supabase.auth.getSession();
-    if (!session) {
-      throw redirect({ to: "/" });
-    }
-  },
-  component: PendenteLayout,
+export const Route = createFileRoute('/produtor-pendente')({
+  component: ProducerPendingPage,
 });
 
-function PendenteLayout() {
+function ProducerPendingPage() {
+  const [user, setUser] = useState<any>(null);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    supabase.auth.getUser().then(({ data: { user } }) => {
+      setUser(user);
+    });
+  }, []);
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
-    navigate({ to: "/" });
+    navigate({ to: '/' });
   };
 
   return (
-    <div className="min-h-screen bg-surface flex items-center justify-center p-6 text-center font-inter">
-      <div className="max-w-md space-y-8 bg-white p-12 rounded-[24px] shadow-xl border border-line">
-        <div className="text-6xl animate-bounce">⏳</div>
-        <div className="space-y-4">
-          <h1 className="text-3xl font-manrope font-extrabold text-navy">Seu cadastro está em análise</h1>
-          <p className="text-muted font-medium leading-relaxed">
-            Sua organização foi cadastrada com sucesso e está sendo revisada por nossa equipe. 
-            Você receberá um e-mail assim que for aprovado para começar a vender.
+    <div className="min-h-screen flex items-center justify-center bg-white font-inter p-6">
+      <div className="max-w-md w-full space-y-8 text-center">
+        <div className="relative">
+          <div className="w-24 h-24 bg-gold/10 rounded-full flex items-center justify-center mx-auto mb-6">
+            <Clock className="w-12 h-12 text-gold animate-pulse" />
+          </div>
+          <div className="absolute top-16 right-[38%] bg-white rounded-full p-1 border border-line">
+            <ShieldCheck className="w-6 h-6 text-navy" />
+          </div>
+        </div>
+
+        <div className="space-y-3">
+          <h1 className="text-3xl font-manrope font-extrabold text-navy">Cadastro em análise</h1>
+          <p className="text-slate-500 font-medium leading-relaxed">
+            Olá, <span className="text-navy font-bold">{user?.user_metadata?.nome || user?.email?.split('@')[0]}</span>!
+            Sua organização está sendo avaliada por nossa equipe de curadoria.
           </p>
         </div>
-        <Button 
-          variant="ghost"
-          onClick={handleLogout}
-          className="text-gold font-bold hover:text-gold-deep"
-        >
-          Sair da conta
-        </Button>
+
+        <div className="bg-surface/50 border border-line rounded-[20px] p-6 space-y-4 text-left">
+          <div className="flex gap-4">
+            <div className="w-10 h-10 bg-white rounded-xl border border-line flex items-center justify-center shrink-0">
+              <Mail className="w-5 h-5 text-gold" />
+            </div>
+            <div>
+              <p className="text-sm font-bold text-navy">O que acontece agora?</p>
+              <p className="text-xs text-slate-500 font-medium">Você receberá um e-mail em até 24h úteis informando o status da sua aprovação.</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="space-y-4">
+          <Button 
+            variant="outline"
+            className="w-full h-12 rounded-xl font-bold border-navy text-navy hover:bg-navy hover:text-white transition-all flex items-center justify-center gap-2"
+            onClick={() => window.location.reload()}
+          >
+            Verificar status novamente
+          </Button>
+
+          <button 
+            onClick={handleLogout}
+            className="flex items-center justify-center gap-2 text-sm font-bold text-slate-400 hover:text-navy transition-colors mx-auto"
+          >
+            <LogOut className="w-4 h-4" /> Sair da conta
+          </button>
+        </div>
+
+        <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest pt-8">
+          Equipe Zevva Tickets — Segurança e Qualidade
+        </p>
       </div>
     </div>
   );

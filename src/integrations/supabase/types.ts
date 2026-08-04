@@ -139,6 +139,7 @@ export type Database = {
           id: string
           location: string | null
           min_price: number | null
+          organization_id: string | null
           producer_id: string
           start_date: string | null
           status: string | null
@@ -159,6 +160,7 @@ export type Database = {
           id?: string
           location?: string | null
           min_price?: number | null
+          organization_id?: string | null
           producer_id: string
           start_date?: string | null
           status?: string | null
@@ -179,12 +181,140 @@ export type Database = {
           id?: string
           location?: string | null
           min_price?: number | null
+          organization_id?: string | null
           producer_id?: string
           start_date?: string | null
           status?: string | null
           title?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "events_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      ledger_entries: {
+        Row: {
+          created_at: string | null
+          id: string
+          moeda_id: string | null
+          order_id: string | null
+          organization_id: string | null
+          tipo: string | null
+          valor: number
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          moeda_id?: string | null
+          order_id?: string | null
+          organization_id?: string | null
+          tipo?: string | null
+          valor: number
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          moeda_id?: string | null
+          order_id?: string | null
+          organization_id?: string | null
+          tipo?: string | null
+          valor?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ledger_entries_moeda_id_fkey"
+            columns: ["moeda_id"]
+            isOneToOne: false
+            referencedRelation: "currencies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "ledger_entries_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "ledger_entries_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      orders: {
+        Row: {
+          buyer_id: string | null
+          created_at: string | null
+          event_id: string | null
+          forma_pagamento: string | null
+          id: string
+          moeda_id: string | null
+          organization_id: string | null
+          status: string | null
+          stripe_payment_intent_id: string | null
+          taxa_plataforma: number | null
+          valor_bruto: number
+          valor_liquido_produtor: number | null
+        }
+        Insert: {
+          buyer_id?: string | null
+          created_at?: string | null
+          event_id?: string | null
+          forma_pagamento?: string | null
+          id?: string
+          moeda_id?: string | null
+          organization_id?: string | null
+          status?: string | null
+          stripe_payment_intent_id?: string | null
+          taxa_plataforma?: number | null
+          valor_bruto: number
+          valor_liquido_produtor?: number | null
+        }
+        Update: {
+          buyer_id?: string | null
+          created_at?: string | null
+          event_id?: string | null
+          forma_pagamento?: string | null
+          id?: string
+          moeda_id?: string | null
+          organization_id?: string | null
+          status?: string | null
+          stripe_payment_intent_id?: string | null
+          taxa_plataforma?: number | null
+          valor_bruto?: number
+          valor_liquido_produtor?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "orders_event_id_fkey"
+            columns: ["event_id"]
+            isOneToOne: false
+            referencedRelation: "events"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "orders_moeda_id_fkey"
+            columns: ["moeda_id"]
+            isOneToOne: false
+            referencedRelation: "currencies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "orders_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       organization_members: {
         Row: {
@@ -274,6 +404,36 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      plans: {
+        Row: {
+          created_at: string | null
+          id: string
+          limite_eventos: number | null
+          limite_ingressos: number | null
+          nome: string
+          preco_mensal: number | null
+          taxa_percentual: number
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          limite_eventos?: number | null
+          limite_ingressos?: number | null
+          nome: string
+          preco_mensal?: number | null
+          taxa_percentual: number
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          limite_eventos?: number | null
+          limite_ingressos?: number | null
+          nome?: string
+          preco_mensal?: number | null
+          taxa_percentual?: number
+        }
+        Relationships: []
       }
       platform_admins: {
         Row: {
@@ -387,6 +547,84 @@ export type Database = {
           },
         ]
       }
+      ticket_types: {
+        Row: {
+          cor: string | null
+          created_at: string | null
+          data_final: string | null
+          data_inicial: string | null
+          descricao: string | null
+          event_id: string | null
+          formas_pagamento_permitidas: string[] | null
+          id: string
+          limite_por_compra: number | null
+          limite_por_cpf: number | null
+          moeda_fixa_venda: boolean | null
+          moeda_id: string | null
+          nome: string
+          ordem: number | null
+          quantidade: number
+          quantidade_vendida: number | null
+          taxa: number | null
+          valor: number
+        }
+        Insert: {
+          cor?: string | null
+          created_at?: string | null
+          data_final?: string | null
+          data_inicial?: string | null
+          descricao?: string | null
+          event_id?: string | null
+          formas_pagamento_permitidas?: string[] | null
+          id?: string
+          limite_por_compra?: number | null
+          limite_por_cpf?: number | null
+          moeda_fixa_venda?: boolean | null
+          moeda_id?: string | null
+          nome: string
+          ordem?: number | null
+          quantidade: number
+          quantidade_vendida?: number | null
+          taxa?: number | null
+          valor: number
+        }
+        Update: {
+          cor?: string | null
+          created_at?: string | null
+          data_final?: string | null
+          data_inicial?: string | null
+          descricao?: string | null
+          event_id?: string | null
+          formas_pagamento_permitidas?: string[] | null
+          id?: string
+          limite_por_compra?: number | null
+          limite_por_cpf?: number | null
+          moeda_fixa_venda?: boolean | null
+          moeda_id?: string | null
+          nome?: string
+          ordem?: number | null
+          quantidade?: number
+          quantidade_vendida?: number | null
+          taxa?: number | null
+          valor?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ticket_types_event_id_fkey"
+            columns: ["event_id"]
+            isOneToOne: false
+            referencedRelation: "events"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "ticket_types_moeda_id_fkey"
+            columns: ["moeda_id"]
+            isOneToOne: false
+            referencedRelation: "currencies"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       tickets: {
         Row: {
           attendance_source: string | null
@@ -448,6 +686,127 @@ export type Database = {
             columns: ["event_id"]
             isOneToOne: false
             referencedRelation: "events"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      trip_cost_items: {
+        Row: {
+          id: string
+          incluso: boolean | null
+          moeda_id: string | null
+          observacao: string | null
+          ticket_type_id: string | null
+          tipo: string | null
+          valor_estimado: number | null
+        }
+        Insert: {
+          id?: string
+          incluso?: boolean | null
+          moeda_id?: string | null
+          observacao?: string | null
+          ticket_type_id?: string | null
+          tipo?: string | null
+          valor_estimado?: number | null
+        }
+        Update: {
+          id?: string
+          incluso?: boolean | null
+          moeda_id?: string | null
+          observacao?: string | null
+          ticket_type_id?: string | null
+          tipo?: string | null
+          valor_estimado?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "trip_cost_items_moeda_id_fkey"
+            columns: ["moeda_id"]
+            isOneToOne: false
+            referencedRelation: "currencies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "trip_cost_items_ticket_type_id_fkey"
+            columns: ["ticket_type_id"]
+            isOneToOne: false
+            referencedRelation: "ticket_types"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      trip_hotels: {
+        Row: {
+          categoria: string | null
+          cidade: string | null
+          descricao: string | null
+          id: string
+          imagem_url: string | null
+          noites: number | null
+          nome_hotel: string | null
+          ticket_type_id: string | null
+        }
+        Insert: {
+          categoria?: string | null
+          cidade?: string | null
+          descricao?: string | null
+          id?: string
+          imagem_url?: string | null
+          noites?: number | null
+          nome_hotel?: string | null
+          ticket_type_id?: string | null
+        }
+        Update: {
+          categoria?: string | null
+          cidade?: string | null
+          descricao?: string | null
+          id?: string
+          imagem_url?: string | null
+          noites?: number | null
+          nome_hotel?: string | null
+          ticket_type_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "trip_hotels_ticket_type_id_fkey"
+            columns: ["ticket_type_id"]
+            isOneToOne: false
+            referencedRelation: "ticket_types"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      trip_itinerary_days: {
+        Row: {
+          data: string | null
+          descricao: string | null
+          dia_numero: number
+          id: string
+          ticket_type_id: string | null
+          titulo: string | null
+        }
+        Insert: {
+          data?: string | null
+          descricao?: string | null
+          dia_numero: number
+          id?: string
+          ticket_type_id?: string | null
+          titulo?: string | null
+        }
+        Update: {
+          data?: string | null
+          descricao?: string | null
+          dia_numero?: number
+          id?: string
+          ticket_type_id?: string | null
+          titulo?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "trip_itinerary_days_ticket_type_id_fkey"
+            columns: ["ticket_type_id"]
+            isOneToOne: false
+            referencedRelation: "ticket_types"
             referencedColumns: ["id"]
           },
         ]
