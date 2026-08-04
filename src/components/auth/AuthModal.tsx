@@ -234,10 +234,10 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
       <DialogContent className="sm:max-w-[440px] p-8 rounded-[20px] bg-white border-0 shadow-2xl backdrop-blur-xl">
         <DialogHeader className="text-center space-y-2">
           <DialogTitle className="text-2xl font-heading font-extrabold text-navy">
-            Que bom ter você aqui!
+            Crie sua conta ou faça login
           </DialogTitle>
           <DialogDescription className="text-muted font-medium">
-            Escolha como deseja acessar sua conta.
+            Para se inscrever em eventos e gerenciar suas reservas, acesse sua conta.
           </DialogDescription>
         </DialogHeader>
 
