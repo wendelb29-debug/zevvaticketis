@@ -45,8 +45,8 @@ function OrderHistory() {
           thumbnail_url
         )
       `)
-      .eq("user_id", user.id)
-      .not('status', 'eq', 'ativo') // Showing past or used tickets
+      .eq("owner_id", user.id) // Using owner_id instead of user_id
+      .not('status', 'eq', 'ativo') 
       .order('created_at', { ascending: false });
     
     if (data) setOrders(data);

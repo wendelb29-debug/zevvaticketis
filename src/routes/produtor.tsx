@@ -173,7 +173,7 @@ function ProdutorLayout() {
     { label: "Financeiro", icon: BarChart3, href: "/produtor/financeiro", permission: "financeiro" },
     { label: "Relatórios", icon: FileText, href: "/produtor/relatorios", permission: "relatorios" },
     { label: "Minha Equipe", icon: Users, href: "/produtor/equipe", permission: "equipe" },
-    { label: "Configurações", icon: SettingsIcon, href: "/produtor/configuracoes", permission: "configuracoes" },
+    { label: "Configurações", icon: SettingsIcon, href: "/produtor/configuracoes", permission: "owner" },
   ];
 
   const filteredMenuItems = allMenuItems.filter(item => {
