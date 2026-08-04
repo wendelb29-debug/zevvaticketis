@@ -135,7 +135,8 @@ function ProdutorLayout() {
   }
 
   const menuItems = [
-    { label: "Início", icon: LayoutDashboard, href: "/produtor" },
+    { label: "Início", icon: LayoutDashboard, href: "/produtor", activeOptions: { exact: true } },
+    { label: "Novo Evento", icon: Plus, href: "/produtor/novo-evento" },
     { label: "Meus dados", icon: UserIcon, href: "/produtor/dados" },
     { label: "Minha página", icon: Globe, href: "/produtor/pagina" },
     { label: "Lista de interessados", icon: Users, href: "/produtor/interessados" },
