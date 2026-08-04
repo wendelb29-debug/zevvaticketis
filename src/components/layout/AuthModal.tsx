@@ -65,6 +65,8 @@ export function AuthModal({ isOpen, onClose, defaultView = 'login' }: AuthModalP
         password: formData.senha 
       });
       if (error) throw error;
+      // Completes producer signup securely once the user is authenticated
+      await supabase.rpc('ensure_producer_organization');
       toast.success('Login realizado com sucesso!');
       onClose();
     } catch (error: any) {
