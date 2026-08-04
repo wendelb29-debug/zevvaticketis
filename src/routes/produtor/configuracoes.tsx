@@ -15,6 +15,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
+import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/produtor/configuracoes")({
@@ -72,8 +73,7 @@ function OrgSettings() {
       const { error } = await supabase
         .from("organizations")
         .update({
-          name: org.name,
-          // document: org.document, // assuming columns exist or will be added
+          nome: org.nome,
         })
         .eq("id", org.id);
 
@@ -113,15 +113,15 @@ function OrgSettings() {
             <div className="space-y-2">
               <label className="text-[10px] font-extrabold uppercase tracking-widest text-muted">Nome da Organização</label>
               <Input 
-                value={org?.name || ""} 
-                onChange={(e) => setOrg({...org, name: e.target.value})}
+                value={org?.nome || ""} 
+                onChange={(e) => setOrg({...org, nome: e.target.value})}
                 className="h-12 rounded-xl"
               />
             </div>
             <div className="space-y-2">
               <label className="text-[10px] font-extrabold uppercase tracking-widest text-muted">Documento (CNPJ/TAX ID)</label>
               <Input 
-                value={org?.document || ""} 
+                value={org?.documento || ""} 
                 placeholder="00.000.000/0000-00"
                 className="h-12 rounded-xl"
               />
