@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { supabase } from "@/integrations/supabase/client";
+import { useServerFn } from "@tanstack/react-start";
+import { promotePlatformAdmin } from "@/lib/admin.functions";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -14,6 +15,7 @@ export const Route = createFileRoute("/admin/configuracoes")({
 function AdminSettings() {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
+  const promote = useServerFn(promotePlatformAdmin);
 
   const handlePromote = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -21,13 +23,8 @@ function AdminSettings() {
 
     setLoading(true);
     try {
-      const { data, error } = await supabase.rpc("promote_to_platform_admin", {
-        target_email: email.trim().toLowerCase(),
-      });
+      const result = await promote({ data: { email: email.trim().toLowerCase() } });
 
-      if (error) throw error;
-
-      const result = data as { success: boolean; message: string };
       if (result.success) {
         toast.success(result.message);
         setEmail("");
@@ -36,11 +33,12 @@ function AdminSettings() {
       }
     } catch (error: any) {
       console.error("Error promoting admin:", error);
-      toast.error(error.message || "Erro ao promover usuário.");
+      toast.error("Erro ao promover usuário.");
     } finally {
       setLoading(false);
     }
   };
+
 
   return (
     <div className="max-w-4xl mx-auto space-y-8 font-inter animate-fade-in">
