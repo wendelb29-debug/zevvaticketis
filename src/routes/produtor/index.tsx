@@ -162,7 +162,11 @@ function ProdutorDashboard() {
                     Comece a vender agora mesmo criando seu primeiro evento presencial ou online.
                   </p>
                 </div>
-                <Button variant="outline" className="h-11 px-8 rounded-xl font-bold border-gold text-gold hover:bg-gold hover:text-white transition-all">
+                <Button 
+                  variant="outline" 
+                  onClick={() => navigate({ to: '/produtor/novo-evento' })}
+                  className="h-11 px-8 rounded-xl font-bold border-gold text-gold hover:bg-gold hover:text-white transition-all"
+                >
                   Criar meu primeiro evento
                 </Button>
               </div>
