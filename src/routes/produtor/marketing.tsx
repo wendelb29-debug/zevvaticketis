@@ -36,7 +36,7 @@ function MarketingPage() {
   const copyLink = (title: string) => {
     const url = `${window.location.origin}/evento/${title.toLowerCase().replace(/\s+/g, '-')}`;
     navigator.clipboard.writeText(url);
-    toast({ title: "Link copiado!", description: "A URL foi copiada para a área de transferência." });
+    toast("Link copiado!", { description: "A URL foi copiada para a área de transferência." });
   };
 
   if (isLoading) return <div>Carregando...</div>;
