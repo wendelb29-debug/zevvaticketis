@@ -173,6 +173,11 @@ export function AuthModal({ isOpen, onClose, defaultView = 'login' }: AuthModalP
 
           {view === 'login' ? (
             <div className="space-y-4">
+              {socialError && (
+                <div className="p-4 rounded-xl bg-amber-50 border border-amber-200 text-amber-800 text-xs font-medium animate-in fade-in slide-in-from-top-2">
+                  {socialError}
+                </div>
+              )}
               <Button 
                 variant="outline" 
                 onClick={() => handleSocialLogin('google')}
