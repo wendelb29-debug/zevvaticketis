@@ -127,7 +127,7 @@ export function Roadmap() {
                 {wave.status === 'Concluído' ? (
                   <CheckCircle2 className="w-5 h-5 text-emerald-500" />
                 ) : wave.status === 'Em Progresso' ? (
-                  <Clock className="w-5 h-5 text-gold animate-pulse" />
+                  <Clock className="w-5 h-5 text-coral animate-pulse" />
                 ) : (
                   <Circle className="w-5 h-5 text-slate-300" />
                 )}

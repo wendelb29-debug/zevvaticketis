@@ -133,7 +133,7 @@ function TeamManagement() {
 
   if (loading) return (
     <div className="flex flex-col items-center justify-center py-20 gap-4">
-      <Loader2 className="w-8 h-8 animate-spin text-gold" />
+      <Loader2 className="w-8 h-8 animate-spin text-coral" />
       <p className="text-muted font-bold uppercase tracking-widest text-[10px]">Carregando equipe...</p>
     </div>
   );
@@ -148,7 +148,7 @@ function TeamManagement() {
 
         <Dialog open={isInviteOpen} onOpenChange={setIsInviteOpen}>
           <DialogTrigger asChild>
-            <Button className="bg-gold hover:bg-gold-deep text-white font-extrabold px-6 rounded-xl h-12 shadow-lg shadow-gold/20">
+            <Button className="bg-coral hover:bg-coral-dark text-white font-extrabold px-6 rounded-xl h-12 shadow-lg shadow-coral/20">
               <UserPlus className="w-5 h-5 mr-2" /> Convidar membro
             </Button>
           </DialogTrigger>
@@ -214,7 +214,7 @@ function TeamManagement() {
             {members.map((member) => (
               <div key={member.id} className="px-8 py-6 flex flex-col sm:flex-row sm:items-center justify-between gap-6">
                 <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-2xl bg-gold/10 flex items-center justify-center text-gold font-extrabold text-xl overflow-hidden">
+                  <div className="w-12 h-12 rounded-2xl bg-coral/10 flex items-center justify-center text-coral font-extrabold text-xl overflow-hidden">
                     {member.profiles?.avatar_url ? (
                       <img src={member.profiles.avatar_url} alt="" className="w-full h-full object-cover" />
                     ) : (
@@ -228,7 +228,7 @@ function TeamManagement() {
                 </div>
 
                 <div className="flex flex-wrap gap-2">
-                  <Badge variant="outline" className="bg-gold/5 text-gold border-gold/20 font-extrabold text-[10px] uppercase px-3">
+                  <Badge variant="outline" className="bg-coral/5 text-coral border-coral/20 font-extrabold text-[10px] uppercase px-3">
                     {member.role === 'produtor_owner' ? 'Dono' : 'Equipe'}
                   </Badge>
                   {(member.permissions as string[] || []).map(perm => (
@@ -252,7 +252,7 @@ function TeamManagement() {
         {invites.length > 0 && (
           <div className="bg-white rounded-[32px] border border-line shadow-sm overflow-hidden">
             <div className="px-8 py-6 border-b border-line bg-surface/30">
-              <h3 className="text-sm font-extrabold uppercase tracking-widest text-gold flex items-center gap-2">
+              <h3 className="text-sm font-extrabold uppercase tracking-widest text-coral flex items-center gap-2">
                 <Clock className="w-4 h-4" /> Convites Pendentes
               </h3>
             </div>

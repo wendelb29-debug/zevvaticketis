@@ -19,13 +19,13 @@ export function Footer() {
             A plataforma definitiva para caravanas, eventos internacionais e experiências que conectam o Reino.
           </p>
           <div className="flex items-center gap-4">
-            <a href="#" className="w-10 h-10 rounded-full bg-surface border border-line flex items-center justify-center text-navy hover:bg-gold hover:text-white transition-all">
+            <a href="#" className="w-10 h-10 rounded-full bg-surface border border-line flex items-center justify-center text-navy hover:bg-coral hover:text-white transition-all">
               <Instagram className="w-4 h-4" />
             </a>
-            <a href="#" className="w-10 h-10 rounded-full bg-surface border border-line flex items-center justify-center text-navy hover:bg-gold hover:text-white transition-all">
+            <a href="#" className="w-10 h-10 rounded-full bg-surface border border-line flex items-center justify-center text-navy hover:bg-coral hover:text-white transition-all">
               <Facebook className="w-4 h-4" />
             </a>
-            <a href="#" className="w-10 h-10 rounded-full bg-surface border border-line flex items-center justify-center text-navy hover:bg-gold hover:text-white transition-all">
+            <a href="#" className="w-10 h-10 rounded-full bg-surface border border-line flex items-center justify-center text-navy hover:bg-coral hover:text-white transition-all">
               <Globe className="w-4 h-4" />
             </a>
           </div>
@@ -37,7 +37,7 @@ export function Footer() {
           <ul className="space-y-4">
             {["Explorar eventos", "Categorias", "Produtores", "Como funciona"].map(link => (
               <li key={link}>
-                <Link to="/" className="text-sm text-slate-500 font-bold hover:text-gold transition-colors">{link}</Link>
+                <Link to="/" className="text-sm text-slate-500 font-bold hover:text-coral transition-colors">{link}</Link>
               </li>
             ))}
           </ul>
@@ -48,7 +48,7 @@ export function Footer() {
           <ul className="space-y-4">
             {["Termos de Uso", "Privacidade", "LGPD", "Reembolsos"].map(link => (
               <li key={link}>
-                <Link to="/" className="text-sm text-slate-500 font-bold hover:text-gold transition-colors">{link}</Link>
+                <Link to="/" className="text-sm text-slate-500 font-bold hover:text-coral transition-colors">{link}</Link>
               </li>
             ))}
           </ul>
@@ -59,13 +59,13 @@ export function Footer() {
           <h4 className="text-xs font-black text-navy uppercase tracking-widest mb-6">Suporte</h4>
           <div className="space-y-4">
             <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-lg bg-gold/5 flex items-center justify-center text-gold">
+              <div className="w-8 h-8 rounded-lg bg-coral/5 flex items-center justify-center text-coral">
                 <Mail className="w-4 h-4" />
               </div>
               <p className="text-sm font-bold text-navy">suporte@zevvaticjets.com</p>
             </div>
             <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-lg bg-gold/5 flex items-center justify-center text-gold">
+              <div className="w-8 h-8 rounded-lg bg-coral/5 flex items-center justify-center text-coral">
                 <Phone className="w-4 h-4" />
               </div>
               <p className="text-sm font-bold text-navy">+55 (11) 9999-9999</p>

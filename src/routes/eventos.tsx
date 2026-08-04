@@ -44,7 +44,7 @@ function EventPage() {
             <input 
               type="text" 
               placeholder="Buscar caravanas..." 
-              className="w-full bg-surface h-10 px-10 rounded-full text-sm border-2 border-line focus:ring-1 focus:ring-gold outline-none"
+              className="w-full bg-surface h-10 px-10 rounded-full text-sm border-2 border-line focus:ring-1 focus:ring-coral outline-none"
             />
             <svg className="absolute left-3 top-2.5 w-4 h-4 text-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -162,7 +162,7 @@ function EventPage() {
                   { id: 1, name: "Pacote Premium", price: "US$ 4.500", desc: "Alojamento 5★", color: theme.accentColor },
                   { id: 2, name: "Pacote Econômico", price: "US$ 3.200", desc: "Alojamento 3★" },
                 ].map((ticket) => (
-                  <div key={ticket.id} className="p-5 rounded-2xl border border-line bg-surface/30 space-y-4 group/ticket hover:border-gold/30 transition-all">
+                  <div key={ticket.id} className="p-5 rounded-2xl border border-line bg-surface/30 space-y-4 group/ticket hover:border-coral/30 transition-all">
                     <div className="flex justify-between items-start">
                       <div className="flex-1">
                         <h4 className="font-extrabold text-navy leading-tight">{ticket.name}</h4>
@@ -171,7 +171,7 @@ function EventPage() {
                       <div className="text-right">
                         <span className="block font-extrabold text-navy text-lg">{ticket.price}</span>
                         {ticket.id === 1 && (
-                          <span className="text-[9px] bg-gold/10 text-gold px-2 py-0.5 rounded-full font-extrabold uppercase mt-1 inline-block">Popular</span>
+                          <span className="text-[9px] bg-gold/10 text-gold px-2 py-0.5 rounded-full font-extrabold uppercase mt-1 inline-block">VIP</span>
                         )}
                       </div>
                     </div>
@@ -189,8 +189,8 @@ function EventPage() {
 
               <div className="space-y-4">
                 <div className="flex items-center gap-2">
-                  <input type="text" placeholder="CUPOM" className="flex-1 bg-surface border-2 border-line h-12 px-4 rounded-xl text-xs font-extrabold outline-none focus:border-gold" />
-                  <button className="text-[10px] font-extrabold text-gold uppercase tracking-widest px-4">Aplicar</button>
+                  <input type="text" placeholder="CUPOM" className="flex-1 bg-surface border-2 border-line h-12 px-4 rounded-xl text-xs font-extrabold outline-none focus:border-coral" />
+                  <button className="text-[10px] font-extrabold text-coral uppercase tracking-widest px-4">Aplicar</button>
                 </div>
                 
                 <button 

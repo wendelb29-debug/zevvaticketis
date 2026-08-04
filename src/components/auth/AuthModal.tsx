@@ -98,7 +98,7 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
     <div className="space-y-4 pt-4">
       <Button 
         variant="outline" 
-        className="w-full h-12 justify-start px-6 rounded-[12px] border-2 border-line hover:border-gold/50 hover:bg-surface transition-all font-bold text-navy"
+        className="w-full h-12 justify-start px-6 rounded-[12px] border-2 border-line hover:border-coral/50 hover:bg-surface transition-all font-bold text-navy"
         onClick={() => setView("email_login")}
         disabled={loading}
       >
@@ -108,7 +108,7 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
 
       <Button 
         variant="outline" 
-        className="w-full h-12 justify-start px-6 rounded-[12px] border-2 border-line hover:border-gold/50 hover:bg-surface transition-all font-bold text-navy"
+        className="w-full h-12 justify-start px-6 rounded-[12px] border-2 border-line hover:border-coral/50 hover:bg-surface transition-all font-bold text-navy"
         onClick={() => handleOAuthLogin('google')}
         disabled={loading}
       >
@@ -118,7 +118,7 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
 
       <Button 
         variant="outline" 
-        className="w-full h-12 justify-start px-6 rounded-[12px] border-2 border-line hover:border-gold/50 hover:bg-surface transition-all font-bold text-navy"
+        className="w-full h-12 justify-start px-6 rounded-[12px] border-2 border-line hover:border-coral/50 hover:bg-surface transition-all font-bold text-navy"
         onClick={() => handleOAuthLogin('apple')}
         disabled={loading}
       >
@@ -130,7 +130,7 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
 
       <div className="pt-4 text-center">
         <p className="text-sm text-muted">
-          Não possui uma conta? <button onClick={() => navigate({to: '/cadastro'})} className="text-gold font-bold hover:underline">Cadastre-se</button>
+          Não possui uma conta? <button onClick={() => navigate({to: '/cadastro'})} className="text-coral font-bold hover:underline">Cadastre-se</button>
         </p>
       </div>
     </div>
@@ -168,7 +168,7 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
           <button 
             type="button" 
             onClick={() => setView("forgot_password")}
-            className="text-xs text-gold font-bold hover:underline"
+            className="text-xs text-coral font-bold hover:underline"
           >
             Esqueci minha senha
           </button>
@@ -198,7 +198,7 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
           id="remember" 
           checked={rememberMe} 
           onCheckedChange={(checked) => setRememberMe(!!checked)}
-          className="rounded-[4px] border-line data-[state=checked]:bg-gold data-[state=checked]:border-gold" 
+          className="rounded-[4px] border-line data-[state=checked]:bg-coral data-[state=checked]:border-coral" 
         />
         <label htmlFor="remember" className="text-sm font-medium leading-none text-navy">
           Manter conectado
@@ -207,7 +207,7 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
 
       <Button 
         type="submit" 
-        className="w-full h-12 bg-gradient-to-r from-gold-bright to-gold hover:opacity-90 text-white font-bold rounded-[12px] shadow-[0_4px_12px_rgba(201,154,62,0.25)] border-0"
+        className="w-full h-12 bg-gradient-to-r from-coral-bright to-coral hover:opacity-90 text-white font-bold rounded-[12px] shadow-[0_4px_12px_rgba(201,154,62,0.25)] border-0"
         disabled={loading}
       >
         {loading ? <Loader2 className="w-5 h-5 animate-spin mx-auto" /> : "Entrar na conta"}
@@ -233,7 +233,7 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
           <div className="pt-4 space-y-4">
             <button 
               onClick={() => setView("email_login")}
-              className="flex items-center text-sm font-bold text-navy hover:text-gold transition-colors"
+              className="flex items-center text-sm font-bold text-navy hover:text-coral transition-colors"
             >
               <ArrowLeft className="mr-2 w-4 h-4" /> Voltar
             </button>

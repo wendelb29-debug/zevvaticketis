@@ -80,7 +80,7 @@ export function LocationModal({ isOpen, onClose, onSelect }: LocationModalProps)
             <Search className="absolute left-4 top-3.5 w-4 h-4 text-muted" />
             <Input 
               placeholder="Onde?" 
-              className="h-12 pl-11 rounded-xl border-line bg-surface/50 focus:bg-white focus:ring-gold transition-all"
+              className="h-12 pl-11 rounded-xl border-line bg-surface/50 focus:bg-white focus:ring-coral transition-all"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
             />
@@ -92,7 +92,7 @@ export function LocationModal({ isOpen, onClose, onSelect }: LocationModalProps)
             onClick={handleGeoLocation}
             className="w-full flex items-center gap-4 px-6 py-4 hover:bg-surface transition-colors text-left group"
           >
-            <div className="w-10 h-10 rounded-full bg-gold/10 flex items-center justify-center text-gold group-hover:bg-gold group-hover:text-white transition-all">
+            <div className="w-10 h-10 rounded-full bg-coral/10 flex items-center justify-center text-coral group-hover:bg-coral group-hover:text-white transition-all">
               <Target className={cn("w-5 h-5", locating && "animate-spin")} />
             </div>
             <div>
@@ -107,7 +107,7 @@ export function LocationModal({ isOpen, onClose, onSelect }: LocationModalProps)
             onClick={() => onSelect(null)}
             className="w-full flex items-center gap-4 px-6 py-4 hover:bg-surface transition-colors text-left group"
           >
-            <div className="w-10 h-10 rounded-full bg-surface-2 flex items-center justify-center text-muted group-hover:text-gold transition-all">
+            <div className="w-10 h-10 rounded-full bg-surface-2 flex items-center justify-center text-muted group-hover:text-coral transition-all">
               <MapPin className="w-5 h-5" />
             </div>
             <p className="font-bold text-navy text-sm">Qualquer lugar</p>
@@ -122,7 +122,7 @@ export function LocationModal({ isOpen, onClose, onSelect }: LocationModalProps)
                   onClick={() => onSelect(city)}
                   className="w-full flex items-center gap-4 px-6 py-3 hover:bg-surface transition-colors text-left group"
                 >
-                  <MapPin className="w-4 h-4 text-muted group-hover:text-gold transition-all" />
+                  <MapPin className="w-4 h-4 text-muted group-hover:text-coral transition-all" />
                   <p className="font-bold text-navy text-sm">{city}</p>
                 </button>
               ))}

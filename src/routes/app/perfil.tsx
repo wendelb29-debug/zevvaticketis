@@ -68,7 +68,7 @@ function UserProfile() {
 
   if (loading) return (
     <div className="flex flex-col items-center justify-center py-20">
-      <Loader2 className="w-8 h-8 animate-spin text-gold" />
+      <Loader2 className="w-8 h-8 animate-spin text-coral" />
     </div>
   );
 
@@ -83,7 +83,7 @@ function UserProfile() {
         {/* Personal Info */}
         <div className="bg-white rounded-[32px] border border-line p-8 space-y-8 shadow-sm">
           <div className="flex items-center gap-3">
-            <div className="p-3 bg-gold/10 rounded-2xl text-gold">
+            <div className="p-3 bg-coral/10 rounded-2xl text-coral">
               <User className="w-6 h-6" />
             </div>
             <h2 className="text-xl font-manrope font-extrabold text-navy">Dados Pessoais</h2>
@@ -160,7 +160,7 @@ function UserProfile() {
           <Button 
             onClick={handleSave}
             disabled={saving}
-            className="bg-gold hover:bg-gold-deep text-white font-extrabold px-12 rounded-xl h-14 shadow-xl shadow-gold/20"
+            className="bg-coral hover:bg-coral-dark text-white font-extrabold px-12 rounded-xl h-14 shadow-xl shadow-coral/20"
           >
             {saving ? <Loader2 className="w-5 h-5 animate-spin" /> : "Salvar Alterações"}
           </Button>

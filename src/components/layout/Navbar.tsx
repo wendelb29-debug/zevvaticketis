@@ -53,7 +53,7 @@ export function Navbar({ selectedCity }: { selectedCity?: string | null }) {
         )}>
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2 group">
-            <div className="w-10 h-10 bg-gradient-to-br from-gold to-gold-deep rounded-xl flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform">
+            <div className="w-10 h-10 bg-gold rounded-xl flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform">
               <span className="text-white font-manrope font-extrabold text-2xl">Z</span>
             </div>
             {!isScrolled && (
@@ -70,7 +70,7 @@ export function Navbar({ selectedCity }: { selectedCity?: string | null }) {
                 <input 
                   type="text" 
                   placeholder="O que você procura?" 
-                  className="w-full bg-surface h-10 px-10 rounded-full text-xs border border-line focus:ring-1 focus:ring-gold outline-none text-navy font-bold"
+                  className="w-full bg-surface h-10 px-10 rounded-full text-xs border border-line focus:ring-1 focus:ring-coral outline-none text-navy font-bold"
                 />
                 <Search className="absolute left-3.5 top-3 w-3.5 h-3.5 text-muted" />
               </div>
@@ -78,7 +78,7 @@ export function Navbar({ selectedCity }: { selectedCity?: string | null }) {
                 onClick={() => openOverlay('location')}
                 className="flex items-center gap-2 bg-surface h-10 px-4 rounded-full text-xs font-extrabold cursor-pointer hover:bg-line transition-all border border-line text-navy"
               >
-                <MapPin className="w-3.5 h-3.5 text-gold" />
+                <MapPin className="w-3.5 h-3.5 text-coral" />
                 <span className="truncate max-w-[100px]">
                   {selectedCity ? selectedCity.toUpperCase() : "Localização"}
                 </span>
@@ -91,15 +91,15 @@ export function Navbar({ selectedCity }: { selectedCity?: string | null }) {
             <Link 
               to={user ? "/criar-evento" : "/cadastro"} 
               onClick={(e) => { if (!user) { e.preventDefault(); openOverlay('auth', 'register'); } }}
-              className="hidden md:flex items-center gap-2 text-xs font-extrabold text-navy hover:text-gold transition-colors uppercase tracking-widest"
+              className="hidden md:flex items-center gap-2 text-xs font-extrabold text-navy hover:text-coral transition-colors uppercase tracking-widest"
             >
               Criar evento
             </Link>
             <Link 
               to="/app" 
-              className="flex items-center gap-2 text-xs font-extrabold text-navy hover:text-gold transition-colors uppercase tracking-widest"
+              className="flex items-center gap-2 text-xs font-extrabold text-navy hover:text-coral transition-colors uppercase tracking-widest"
             >
-              <Ticket className="w-4 h-4 text-gold" />
+              <Ticket className="w-4 h-4 text-coral" />
               Meus ingressos
             </Link>
             
@@ -107,7 +107,7 @@ export function Navbar({ selectedCity }: { selectedCity?: string | null }) {
               onClick={() => openOverlay('language')}
               className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-line bg-surface hover:bg-line transition-colors cursor-pointer group relative"
             >
-              <Globe className="w-4 h-4 text-navy group-hover:text-gold transition-colors" />
+              <Globe className="w-4 h-4 text-navy group-hover:text-coral transition-colors" />
               {activeOverlay === 'language' && (
                 <div className="absolute top-full right-0 mt-2 w-40 bg-white border border-line rounded-xl shadow-xl p-2 z-[60] animate-in fade-in zoom-in-95 duration-200">
                   {['🇧🇷 Português', '🇺🇸 English', '🇪🇸 Español'].map((lang, idx) => (
@@ -115,11 +115,11 @@ export function Navbar({ selectedCity }: { selectedCity?: string | null }) {
                       key={lang}
                       className={cn(
                         "w-full text-left px-3 py-2 rounded-lg text-xs font-bold transition-colors flex items-center justify-between",
-                        idx === 0 ? "bg-gold/10 text-gold" : "text-navy hover:bg-surface"
+                        idx === 0 ? "bg-coral/10 text-coral" : "text-navy hover:bg-surface"
                       )}
                     >
                       {lang}
-                      {idx === 0 && <div className="w-1 h-1 rounded-full bg-gold" />}
+                      {idx === 0 && <div className="w-1 h-1 rounded-full bg-coral" />}
                     </button>
                   ))}
                 </div>
@@ -143,22 +143,22 @@ export function Navbar({ selectedCity }: { selectedCity?: string | null }) {
                 <input 
                   type="text" 
                   placeholder="O que você procura? (ex: Caravanas, Shows, Cursos)" 
-                  className="w-full bg-white h-12 px-12 rounded-xl text-sm border-2 border-line focus:ring-2 focus:ring-gold focus:border-gold outline-none text-navy placeholder:text-muted font-bold shadow-sm"
+                  className="w-full bg-white h-12 px-12 rounded-xl text-sm border-2 border-line focus:ring-2 focus:ring-coral focus:border-coral outline-none text-navy placeholder:text-muted font-bold shadow-sm"
                 />
                 <Search className="absolute left-4 top-4 w-4 h-4 text-muted" />
               </div>
               
               <div 
                 onClick={() => openOverlay('location')}
-                className="flex-[1] flex items-center gap-3 bg-white h-12 px-5 rounded-xl text-sm font-extrabold cursor-pointer hover:border-gold/30 transition-all border-2 border-line text-navy shadow-sm"
+                className="flex-[1] flex items-center gap-3 bg-white h-12 px-5 rounded-xl text-sm font-extrabold cursor-pointer hover:border-coral/30 transition-all border-2 border-line text-navy shadow-sm"
               >
-                <MapPin className="w-4 h-4 text-gold" />
+                <MapPin className="w-4 h-4 text-coral" />
                 <span className="flex-1 truncate">
                   {selectedCity ? selectedCity.toUpperCase() : "Cidade ou país"}
                 </span>
               </div>
 
-              <button className="h-12 px-8 rounded-xl bg-navy text-white text-xs font-extrabold uppercase tracking-widest hover:bg-navy/90 transition-all active:scale-95 shadow-md">
+              <button className="h-12 px-8 rounded-xl bg-coral text-white text-xs font-extrabold uppercase tracking-widest hover:bg-coral-dark transition-all active:scale-95 shadow-md">
                 Buscar
               </button>
             </div>
