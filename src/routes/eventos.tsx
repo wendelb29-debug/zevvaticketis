@@ -35,7 +35,7 @@ function EventPage() {
           <Link to="/" className="text-muted hover:text-navy transition-colors">
             <ArrowLeft className="w-5 h-5" />
           </Link>
-          <Link to="/" className="text-xl font-manrope font-extrabold text-gold tracking-tighter">
+          <Link to="/" className="text-xl font-manrope font-extrabold text-coral tracking-tighter">
             ZEVVA <span className="text-navy">TICKETS</span>
           </Link>
         </div>
@@ -171,7 +171,7 @@ function EventPage() {
                       <div className="text-right">
                         <span className="block font-extrabold text-navy text-lg">{ticket.price}</span>
                         {ticket.id === 1 && (
-                          <span className="text-[9px] bg-gold/10 text-gold px-2 py-0.5 rounded-full font-extrabold uppercase mt-1 inline-block">VIP</span>
+                          <span className="text-[9px] bg-navy text-white px-2 py-0.5 rounded-full font-extrabold uppercase mt-1 inline-block">VIP</span>
                         )}
                       </div>
                     </div>

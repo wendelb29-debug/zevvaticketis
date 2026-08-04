@@ -39,7 +39,7 @@ export interface CategoryTheme {
 export const CATEGORY_THEMES: Record<CategoryType, CategoryTheme> = {
   "CONFERÊNCIAS": {
     name: "Conferências",
-    accentColor: "#B8925A", // Gold (VIP/Premium)
+    accentColor: "#E8604A", // Coral (Action)
     icon: LayoutDashboard,
     animationSpeed: "duration-200",
   },
@@ -75,7 +75,7 @@ export const CATEGORY_THEMES: Record<CategoryType, CategoryTheme> = {
   },
   "INFANTIL": {
     name: "Infantil",
-    accentColor: "#FFC845", // Yellow
+    accentColor: "#E8604A", // Coral (Action)
     secondaryColor: "#FF6FA5", // Pink
     icon: Baby,
     fontFamily: "font-fredoka",

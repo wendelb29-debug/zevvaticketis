@@ -28,7 +28,7 @@
   --color-coral: #E8604A;
   --color-coral-dark: #C94733;
   --color-navy: #14182A;
-  --color-gold: #B8925A;
+  --color-gold: #B8925A; /* Mantido como variável, mas não será usado para ações */
   --color-surface: #F7F7F7;
   --color-line: rgba(0,0,0,0.09);
   --color-muted: #717171;
