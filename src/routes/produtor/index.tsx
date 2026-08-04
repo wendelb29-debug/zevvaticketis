@@ -132,7 +132,10 @@ function ProdutorDashboard() {
               <TabsTrigger value="contents" className="rounded-lg px-6 font-bold data-[state=active]:bg-white data-[state=active]:text-navy data-[state=active]:shadow-sm">Meus conteúdos</TabsTrigger>
             </TabsList>
             
-            <Button className="bg-navy hover:bg-navy/90 text-white font-bold rounded-xl h-11 px-6">
+            <Button 
+              onClick={() => navigate({ to: '/produtor/novo-evento' })}
+              className="bg-navy hover:bg-navy/90 text-white font-bold rounded-xl h-11 px-6"
+            >
               <Plus className="w-4 h-4 mr-2" /> Criar novo evento
             </Button>
           </div>
