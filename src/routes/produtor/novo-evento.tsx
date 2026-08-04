@@ -479,9 +479,11 @@ function NewEventWizard() {
             </Button>
           ) : (
             <Button 
+              onClick={handlePublish}
+              disabled={loading}
               className="h-14 px-10 rounded-xl bg-gold hover:bg-gold-deep text-white font-extrabold shadow-lg shadow-gold/20"
             >
-              Publicar Evento
+              {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : "Publicar Evento"}
             </Button>
           )}
         </div>
