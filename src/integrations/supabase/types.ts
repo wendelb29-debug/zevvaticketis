@@ -14,6 +14,33 @@ export type Database = {
   }
   public: {
     Tables: {
+      active_sessions: {
+        Row: {
+          created_at: string | null
+          device_name: string
+          id: string
+          last_access: string | null
+          location: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          device_name: string
+          id?: string
+          last_access?: string | null
+          location?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          device_name?: string
+          id?: string
+          last_access?: string | null
+          location?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       audit_logs: {
         Row: {
           acao: string
@@ -644,44 +671,65 @@ export type Database = {
       profiles: {
         Row: {
           avatar_url: string | null
+          cep: string | null
+          cidade: string | null
+          complemento: string | null
           created_at: string | null
+          data_nascimento: string | null
           documento: string | null
           email: string | null
+          estado: string | null
           id: string
           idioma_preferido: string | null
           nome: string | null
           notif_lembrete_evento: boolean | null
           notif_mudancas_evento: boolean | null
           notif_novidades: boolean | null
+          numero: string | null
           pais_id: string | null
+          rua: string | null
           telefone: string | null
         }
         Insert: {
           avatar_url?: string | null
+          cep?: string | null
+          cidade?: string | null
+          complemento?: string | null
           created_at?: string | null
+          data_nascimento?: string | null
           documento?: string | null
           email?: string | null
+          estado?: string | null
           id: string
           idioma_preferido?: string | null
           nome?: string | null
           notif_lembrete_evento?: boolean | null
           notif_mudancas_evento?: boolean | null
           notif_novidades?: boolean | null
+          numero?: string | null
           pais_id?: string | null
+          rua?: string | null
           telefone?: string | null
         }
         Update: {
           avatar_url?: string | null
+          cep?: string | null
+          cidade?: string | null
+          complemento?: string | null
           created_at?: string | null
+          data_nascimento?: string | null
           documento?: string | null
           email?: string | null
+          estado?: string | null
           id?: string
           idioma_preferido?: string | null
           nome?: string | null
           notif_lembrete_evento?: boolean | null
           notif_mudancas_evento?: boolean | null
           notif_novidades?: boolean | null
+          numero?: string | null
           pais_id?: string | null
+          rua?: string | null
           telefone?: string | null
         }
         Relationships: [
