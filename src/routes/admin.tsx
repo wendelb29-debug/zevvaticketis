@@ -164,8 +164,8 @@ function AdminLayout() {
                 <button
                   onClick={() => setOpenGroup(isOpen ? null : item.label)}
                   className={cn(
-                    "w-full flex items-center justify-between py-3.5 px-4 rounded-xl text-sm font-extrabold transition-all duration-200",
-                    hasActiveChild ? "text-primary bg-primary/5" : "text-foreground hover:bg-accent"
+                    "w-full flex items-center justify-between py-3.5 px-4 rounded-xl text-sm font-extrabold transition-all duration-200 border-2",
+                    hasActiveChild ? "border-border bg-transparent text-foreground" : "border-transparent text-foreground hover:bg-accent"
                   )}
                 >
                   <div className="flex items-center gap-3">
@@ -195,8 +195,6 @@ function AdminLayout() {
           }
 
           const isChat = item.label === "Chat";
-          const isEmails = item.label === "E-mails";
-          const isActive = location.pathname === item.href;
 
           return (
             <Link
@@ -204,17 +202,13 @@ function AdminLayout() {
               to={item.href as any}
               {...(item.activeOptions ? { activeOptions: item.activeOptions } : {})}
               className={cn(
-                "flex items-center gap-3 py-3.5 rounded-xl text-sm font-extrabold transition-all duration-200",
+                "flex items-center gap-3 py-3.5 rounded-xl text-sm font-extrabold transition-all duration-200 border-2",
                 isSidebarCollapsed ? "px-0 justify-center" : "px-4",
-                isChat && "bg-primary text-primary-foreground shadow-lg shadow-primary/30",
-                isEmails && isActive && "border-2 border-primary bg-transparent text-foreground shadow-none"
+                isChat && "bg-primary text-primary-foreground border-transparent shadow-lg shadow-primary/30"
               )}
-              {...(!isChat && !isEmails ? {
-                activeProps: { className: "bg-primary text-primary-foreground shadow-lg shadow-primary/30" },
-                inactiveProps: { className: "text-foreground hover:bg-accent" }
-              } : {})}
-              {...(isEmails ? {
-                inactiveProps: { className: "text-foreground hover:bg-accent" }
+              {...(!isChat ? {
+                activeProps: { className: "border-border bg-transparent text-foreground shadow-none" },
+                inactiveProps: { className: "border-transparent text-foreground hover:bg-accent" }
               } : {})}
               title={isSidebarCollapsed ? item.label : undefined}
             >
