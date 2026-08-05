@@ -140,11 +140,25 @@ function AdminChatPage() {
             </span>
           </div>
           <div className="flex items-center gap-4">
-            <button className="text-muted-fg hover:text-foreground transition-colors">
-              <HistoryIcon className="w-5 h-5" />
-            </button>
-            <div className="flex items-center gap-2 px-3 py-1.5 bg-accent rounded-full text-[10px] font-black uppercase tracking-wider text-muted-fg border border-border">
-              <PeopleIcon className="w-3 h-3 text-primary" /> Atendimentos
+            <div className="flex bg-accent rounded-lg p-1 border border-border">
+              <button 
+                onClick={() => setTheme('light')}
+                className={cn(
+                  "px-3 py-1.5 rounded-md text-[10px] font-black uppercase tracking-wider transition-all",
+                  theme === 'light' ? "bg-primary text-primary-foreground shadow-sm" : "text-muted-fg hover:text-foreground"
+                )}
+              >
+                ☀ CLARO
+              </button>
+              <button 
+                onClick={() => setTheme('dark')}
+                className={cn(
+                  "px-3 py-1.5 rounded-md text-[10px] font-black uppercase tracking-wider transition-all",
+                  theme === 'dark' ? "bg-primary text-primary-foreground shadow-sm" : "text-muted-fg hover:text-foreground"
+                )}
+              >
+                🌙 ESCURO
+              </button>
             </div>
           </div>
         </div>
