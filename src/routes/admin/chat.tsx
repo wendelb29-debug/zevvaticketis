@@ -524,15 +524,15 @@ function AdminChatPage() {
               <div className="p-4 bg-white dark:bg-[#161922] border-t border-[#E5E7EB] dark:border-white/5 z-10">
                 {agentStatus === 'offline' ? (
                   <div className="flex flex-col items-center justify-center p-8 text-center space-y-4">
-                     <div className="w-16 h-16 rounded-full bg-[#FAFAFA] border border-[#E5E7EB] flex items-center justify-center">
-                        <User className="w-8 h-8 text-[#667085]" />
+                     <div className="w-16 h-16 rounded-full bg-[#FAFAFA] dark:bg-[#0F1117] border border-[#E5E7EB] dark:border-white/5 flex items-center justify-center">
+                        <User className="w-8 h-8 text-[#667085] dark:text-white/20" />
                      </div>
                      <div className="space-y-1">
-                        <h3 className="font-bold text-[18px]">Você está Offline</h3>
-                        <p className="text-[14px] text-[#667085]">Conecte-se para começar a receber mensagens</p>
+                        <h3 className="font-bold text-[18px] dark:text-white/90">Você está Offline</h3>
+                        <p className="text-[14px] text-[#667085] dark:text-white/40">Conecte-se para começar a receber mensagens</p>
                      </div>
                      <div className="flex gap-3">
-                        <button onClick={() => setAgentStatus('busy')} className="px-6 py-2.5 border border-[#E5E7EB] text-[13px] font-semibold rounded-lg hover:bg-[#FAFAFA] transition-colors">Ficar Ocupado</button>
+                        <button onClick={() => setAgentStatus('busy')} className="px-6 py-2.5 border border-[#E5E7EB] dark:border-white/5 dark:text-white/70 text-[13px] font-semibold rounded-lg hover:bg-[#FAFAFA] dark:hover:bg-white/5 transition-colors">Ficar Ocupado</button>
                         <button onClick={() => setAgentStatus('online')} className="px-6 py-2.5 bg-coral text-white text-[13px] font-bold rounded-lg hover:bg-coral/90 transition-colors">Ficar Online</button>
                      </div>
                   </div>
