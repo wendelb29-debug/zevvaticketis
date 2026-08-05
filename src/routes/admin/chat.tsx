@@ -566,8 +566,8 @@ function AdminChatPage() {
                  </div>
                </div>
                <div className="max-w-md space-y-2">
-                  <h3 className="font-bold text-[20px] text-[#171717]">Você está Online</h3>
-                  <p className="text-[14px] text-[#667085] leading-relaxed">
+                  <h3 className="font-bold text-[20px] text-[#171717] dark:text-white/90">Você está Online</h3>
+                  <p className="text-[14px] text-[#667085] dark:text-white/40 leading-relaxed">
                     Escolha uma conversa em andamento ou inicie uma nova conversa agora mesmo. Enquanto estiver online, você receberá novos atendimentos normalmente.
                   </p>
                </div>
