@@ -29,6 +29,7 @@ import { Route as AdminChatRouteImport } from './routes/admin/chat'
 import { Route as AdminCheckinMonitorRouteImport } from './routes/admin/checkin-monitor'
 import { Route as AdminConfiguracoesRouteImport } from './routes/admin/configuracoes'
 import { Route as AdminEmailsRouteImport } from './routes/admin/emails'
+import { Route as AdminEnviosMassivosRouteImport } from './routes/admin/envios-massivos'
 import { Route as AdminPaisesMoedasRouteImport } from './routes/admin/paises-moedas'
 import { Route as AdminPlanosRouteImport } from './routes/admin/planos'
 import { Route as AdminProdutoresRouteImport } from './routes/admin/produtores'
@@ -152,6 +153,11 @@ const AdminConfiguracoesRoute = AdminConfiguracoesRouteImport.update({
 const AdminEmailsRoute = AdminEmailsRouteImport.update({
   id: '/emails',
   path: '/emails',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminEnviosMassivosRoute = AdminEnviosMassivosRouteImport.update({
+  id: '/envios-massivos',
+  path: '/envios-massivos',
   getParentRoute: () => AdminRoute,
 } as any)
 const AdminPaisesMoedasRoute = AdminPaisesMoedasRouteImport.update({
@@ -288,6 +294,7 @@ export interface FileRoutesByFullPath {
   '/admin/checkin-monitor': typeof AdminCheckinMonitorRoute
   '/admin/configuracoes': typeof AdminConfiguracoesRoute
   '/admin/emails': typeof AdminEmailsRoute
+  '/admin/envios-massivos': typeof AdminEnviosMassivosRoute
   '/admin/paises-moedas': typeof AdminPaisesMoedasRoute
   '/admin/planos': typeof AdminPlanosRoute
   '/admin/produtores': typeof AdminProdutoresRoute
@@ -329,6 +336,7 @@ export interface FileRoutesByTo {
   '/admin/checkin-monitor': typeof AdminCheckinMonitorRoute
   '/admin/configuracoes': typeof AdminConfiguracoesRoute
   '/admin/emails': typeof AdminEmailsRoute
+  '/admin/envios-massivos': typeof AdminEnviosMassivosRoute
   '/admin/paises-moedas': typeof AdminPaisesMoedasRoute
   '/admin/planos': typeof AdminPlanosRoute
   '/admin/produtores': typeof AdminProdutoresRoute
@@ -374,6 +382,7 @@ export interface FileRoutesById {
   '/admin/checkin-monitor': typeof AdminCheckinMonitorRoute
   '/admin/configuracoes': typeof AdminConfiguracoesRoute
   '/admin/emails': typeof AdminEmailsRoute
+  '/admin/envios-massivos': typeof AdminEnviosMassivosRoute
   '/admin/paises-moedas': typeof AdminPaisesMoedasRoute
   '/admin/planos': typeof AdminPlanosRoute
   '/admin/produtores': typeof AdminProdutoresRoute
@@ -420,6 +429,7 @@ export interface FileRouteTypes {
     | '/admin/checkin-monitor'
     | '/admin/configuracoes'
     | '/admin/emails'
+    | '/admin/envios-massivos'
     | '/admin/paises-moedas'
     | '/admin/planos'
     | '/admin/produtores'
@@ -461,6 +471,7 @@ export interface FileRouteTypes {
     | '/admin/checkin-monitor'
     | '/admin/configuracoes'
     | '/admin/emails'
+    | '/admin/envios-massivos'
     | '/admin/paises-moedas'
     | '/admin/planos'
     | '/admin/produtores'
@@ -505,6 +516,7 @@ export interface FileRouteTypes {
     | '/admin/checkin-monitor'
     | '/admin/configuracoes'
     | '/admin/emails'
+    | '/admin/envios-massivos'
     | '/admin/paises-moedas'
     | '/admin/planos'
     | '/admin/produtores'
@@ -694,6 +706,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminEmailsRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/envios-massivos': {
+      id: '/admin/envios-massivos'
+      path: '/envios-massivos'
+      fullPath: '/admin/envios-massivos'
+      preLoaderRoute: typeof AdminEnviosMassivosRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/paises-moedas': {
       id: '/admin/paises-moedas'
       path: '/paises-moedas'
@@ -858,6 +877,7 @@ interface AdminRouteChildren {
   AdminCheckinMonitorRoute: typeof AdminCheckinMonitorRoute
   AdminConfiguracoesRoute: typeof AdminConfiguracoesRoute
   AdminEmailsRoute: typeof AdminEmailsRoute
+  AdminEnviosMassivosRoute: typeof AdminEnviosMassivosRoute
   AdminPaisesMoedasRoute: typeof AdminPaisesMoedasRoute
   AdminPlanosRoute: typeof AdminPlanosRoute
   AdminProdutoresRoute: typeof AdminProdutoresRoute
@@ -875,6 +895,7 @@ const AdminRouteChildren: AdminRouteChildren = {
   AdminCheckinMonitorRoute: AdminCheckinMonitorRoute,
   AdminConfiguracoesRoute: AdminConfiguracoesRoute,
   AdminEmailsRoute: AdminEmailsRoute,
+  AdminEnviosMassivosRoute: AdminEnviosMassivosRoute,
   AdminPaisesMoedasRoute: AdminPaisesMoedasRoute,
   AdminPlanosRoute: AdminPlanosRoute,
   AdminProdutoresRoute: AdminProdutoresRoute,
