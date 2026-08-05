@@ -9,7 +9,12 @@ import {
   CreditCard, 
   Globe, 
   Settings,
-  ShieldCheck
+  ShieldCheck,
+  ChevronLeft,
+  ChevronRight,
+  Mail,
+  History,
+  UserCog
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -37,6 +42,18 @@ function AdminLayout() {
   const [isAdmin, setIsAdmin] = useState<boolean | null>(null);
   const [user, setUser] = useState<any>(null);
   const navigate = useNavigate();
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(() => {
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("admin-sidebar-collapsed") === "true";
+    }
+    return false;
+  });
+
+  const toggleSidebar = () => {
+    const newState = !isSidebarCollapsed;
+    setIsSidebarCollapsed(newState);
+    localStorage.setItem("admin-sidebar-collapsed", String(newState));
+  };
 
   useEffect(() => {
     async function checkAdmin() {
@@ -44,7 +61,6 @@ function AdminLayout() {
       if (!user) return;
       setUser(user);
 
-      
       const { data } = await supabase
         .from("platform_admins")
         .select("id")
@@ -64,36 +80,55 @@ function AdminLayout() {
     navigate({ to: "/" });
   };
 
-
   const menuItems = [
     { label: "Dashboard", icon: LayoutDashboard, href: "/admin", activeOptions: { exact: true } },
     { label: "Aprovações", icon: CheckSquare, href: "/admin/aprovacoes" },
     { label: "Produtores", icon: Users, href: "/admin/produtores" },
     { label: "Planos", icon: CreditCard, href: "/admin/planos" },
     { label: "Países e Moedas", icon: Globe, href: "/admin/paises-moedas" },
+    { label: "Marketing", icon: LayoutDashboard, href: "/admin/marketing" },
+    { label: "E-mails", icon: Mail, href: "/admin/emails" },
+    { label: "Auditoria", icon: History, href: "/admin/auditoria" },
+    { label: "Usuários", icon: UserCog, href: "/admin/usuarios" },
+    { label: "Check-in", icon: CheckSquare, href: "/admin/checkin-monitor" },
     { label: "Configurações", icon: Settings, href: "/admin/configuracoes" },
   ];
 
   const SidebarContent = () => (
-    <div className="flex flex-col h-full bg-white border-r border-line py-8 font-inter">
-      <div className="px-6 mb-12">
-        <Link to="/" className="text-xl font-manrope font-extrabold text-coral tracking-tighter">
-          ZEVVA <span className="text-navy">ADMIN</span>
-        </Link>
+    <div className={cn(
+      "flex flex-col h-full bg-white border-r border-line py-8 font-inter transition-all duration-200",
+      isSidebarCollapsed ? "w-20" : "w-72"
+    )}>
+      <div className={cn("px-6 mb-12 flex items-center justify-between", isSidebarCollapsed && "px-4 justify-center")}>
+        {!isSidebarCollapsed && (
+          <Link to="/" className="text-xl font-manrope font-extrabold text-coral tracking-tighter">
+            ZEVVA <span className="text-navy">ADMIN</span>
+          </Link>
+        )}
+        <button 
+          onClick={toggleSidebar}
+          className="p-2 hover:bg-surface-2 rounded-lg transition-colors text-navy"
+        >
+          {isSidebarCollapsed ? <ChevronRight className="w-5 h-5" /> : <ChevronLeft className="w-5 h-5" />}
+        </button>
       </div>
       
-      <nav className="flex-1 space-y-1 px-4">
+      <nav className="flex-1 space-y-1 px-4 overflow-y-auto custom-scrollbar">
         {menuItems.map((item) => (
           <Link
             key={item.label}
             to={item.href}
             {...(item.activeOptions ? { activeOptions: item.activeOptions } : {})}
-            className="flex items-center gap-3 px-4 py-3.5 rounded-xl text-sm font-extrabold transition-all duration-200"
+            className={cn(
+              "flex items-center gap-3 py-3.5 rounded-xl text-sm font-extrabold transition-all duration-200",
+              isSidebarCollapsed ? "px-0 justify-center" : "px-4"
+            )}
             activeProps={{ className: "bg-coral text-white shadow-lg shadow-coral/30" }}
             inactiveProps={{ className: "text-navy hover:bg-surface-2 hover:text-navy" }}
+            title={isSidebarCollapsed ? item.label : undefined}
           >
-            <item.icon className="w-5 h-5" />
-            {item.label}
+            <item.icon className="w-5 h-5 shrink-0" />
+            {!isSidebarCollapsed && <span className="truncate">{item.label}</span>}
           </Link>
         ))}
       </nav>
