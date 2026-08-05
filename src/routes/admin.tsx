@@ -194,6 +194,10 @@ function AdminLayout() {
             );
           }
 
+          const isChat = item.label === "Chat";
+          const isEmails = item.label === "E-mails";
+          const isActive = location.pathname === item.href;
+
           return (
             <Link
               key={item.label}
@@ -202,10 +206,14 @@ function AdminLayout() {
               className={cn(
                 "flex items-center gap-3 py-3.5 rounded-xl text-sm font-extrabold transition-all duration-200",
                 isSidebarCollapsed ? "px-0 justify-center" : "px-4",
-                item.label === "Chat" && "bg-primary text-primary-foreground shadow-lg shadow-primary/30"
+                isChat && "bg-primary text-primary-foreground shadow-lg shadow-primary/30",
+                isEmails && isActive && "border-2 border-primary bg-transparent text-foreground shadow-none"
               )}
-              {...(item.label !== "Chat" ? {
+              {...(!isChat && !isEmails ? {
                 activeProps: { className: "bg-primary text-primary-foreground shadow-lg shadow-primary/30" },
+                inactiveProps: { className: "text-foreground hover:bg-accent" }
+              } : {})}
+              {...(isEmails ? {
                 inactiveProps: { className: "text-foreground hover:bg-accent" }
               } : {})}
               title={isSidebarCollapsed ? item.label : undefined}
