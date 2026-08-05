@@ -839,12 +839,12 @@ function AdminChatPage() {
           </DialogHeader>
           <div className="grid grid-cols-3 gap-6 py-4">
             <div className="space-y-2">
-              <Label className="text-[10px] font-bold uppercase tracking-wider text-gray-400">Projeto</Label>
+              <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Projeto</Label>
               <Select defaultValue="all">
-                <SelectTrigger className="bg-[#23262E] border-none text-xs h-10">
+                <SelectTrigger className="bg-muted border-none text-xs h-10">
                   <SelectValue placeholder="Selecione uma opção" />
                 </SelectTrigger>
-                <SelectContent className="bg-[#23262E] border-none text-white">
+                <SelectContent className="bg-popover border-border text-foreground">
                   <SelectItem value="all">Todos os Projetos</SelectItem>
                   <SelectItem value="zevva">Zevva Tickets</SelectItem>
                 </SelectContent>
