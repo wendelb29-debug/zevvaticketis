@@ -24,6 +24,7 @@ import { Route as Char91DotmcpChar93ListToolsRouteImport } from './routes/[.mcp]
 import { Route as Char91DotwellKnownChar93OauthProtectedResourceRouteImport } from './routes/[.well-known]/oauth-protected-resource'
 import { Route as AdminAprovacoesRouteImport } from './routes/admin/aprovacoes'
 import { Route as AdminAuditoriaRouteImport } from './routes/admin/auditoria'
+import { Route as AdminChatRouteImport } from './routes/admin/chat'
 import { Route as AdminCheckinMonitorRouteImport } from './routes/admin/checkin-monitor'
 import { Route as AdminConfiguracoesRouteImport } from './routes/admin/configuracoes'
 import { Route as AdminEmailsRouteImport } from './routes/admin/emails'
@@ -44,6 +45,7 @@ import { Route as ProdutorNovoEventoRouteImport } from './routes/produtor/novo-e
 import { Route as ProdutorSuporteRouteImport } from './routes/produtor/suporte'
 import { Route as DotlovableOauthConsentRouteImport } from './routes/[.]lovable.oauth.consent'
 import { Route as Char91DotmcpChar93InvokeToolToolRouteImport } from './routes/[.mcp]/invoke-tool/$tool'
+import { Route as ApiPublicUazapiWebhookRouteImport } from './routes/api/public/uazapi-webhook'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -120,6 +122,11 @@ const AdminAprovacoesRoute = AdminAprovacoesRouteImport.update({
 const AdminAuditoriaRoute = AdminAuditoriaRouteImport.update({
   id: '/auditoria',
   path: '/auditoria',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminChatRoute = AdminChatRouteImport.update({
+  id: '/chat',
+  path: '/chat',
   getParentRoute: () => AdminRoute,
 } as any)
 const AdminCheckinMonitorRoute = AdminCheckinMonitorRouteImport.update({
@@ -223,6 +230,11 @@ const Char91DotmcpChar93InvokeToolToolRoute =
     path: '/.mcp/invoke-tool/$tool',
     getParentRoute: () => rootRouteImport,
   } as any)
+const ApiPublicUazapiWebhookRoute = ApiPublicUazapiWebhookRouteImport.update({
+  id: '/api/public/uazapi-webhook',
+  path: '/api/public/uazapi-webhook',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -240,6 +252,7 @@ export interface FileRoutesByFullPath {
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/admin/aprovacoes': typeof AdminAprovacoesRoute
   '/admin/auditoria': typeof AdminAuditoriaRoute
+  '/admin/chat': typeof AdminChatRoute
   '/admin/checkin-monitor': typeof AdminCheckinMonitorRoute
   '/admin/configuracoes': typeof AdminConfiguracoesRoute
   '/admin/emails': typeof AdminEmailsRoute
@@ -260,6 +273,7 @@ export interface FileRoutesByFullPath {
   '/produtor/': typeof ProdutorIndexRoute
   '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
+  '/api/public/uazapi-webhook': typeof ApiPublicUazapiWebhookRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -275,6 +289,7 @@ export interface FileRoutesByTo {
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/admin/aprovacoes': typeof AdminAprovacoesRoute
   '/admin/auditoria': typeof AdminAuditoriaRoute
+  '/admin/chat': typeof AdminChatRoute
   '/admin/checkin-monitor': typeof AdminCheckinMonitorRoute
   '/admin/configuracoes': typeof AdminConfiguracoesRoute
   '/admin/emails': typeof AdminEmailsRoute
@@ -295,6 +310,7 @@ export interface FileRoutesByTo {
   '/produtor': typeof ProdutorIndexRoute
   '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
+  '/api/public/uazapi-webhook': typeof ApiPublicUazapiWebhookRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -313,6 +329,7 @@ export interface FileRoutesById {
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/admin/aprovacoes': typeof AdminAprovacoesRoute
   '/admin/auditoria': typeof AdminAuditoriaRoute
+  '/admin/chat': typeof AdminChatRoute
   '/admin/checkin-monitor': typeof AdminCheckinMonitorRoute
   '/admin/configuracoes': typeof AdminConfiguracoesRoute
   '/admin/emails': typeof AdminEmailsRoute
@@ -333,6 +350,7 @@ export interface FileRoutesById {
   '/produtor/': typeof ProdutorIndexRoute
   '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
+  '/api/public/uazapi-webhook': typeof ApiPublicUazapiWebhookRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -352,6 +370,7 @@ export interface FileRouteTypes {
     | '/.well-known/oauth-protected-resource'
     | '/admin/aprovacoes'
     | '/admin/auditoria'
+    | '/admin/chat'
     | '/admin/checkin-monitor'
     | '/admin/configuracoes'
     | '/admin/emails'
@@ -372,6 +391,7 @@ export interface FileRouteTypes {
     | '/produtor/'
     | '/.lovable/oauth/consent'
     | '/.mcp/invoke-tool/$tool'
+    | '/api/public/uazapi-webhook'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -387,6 +407,7 @@ export interface FileRouteTypes {
     | '/.well-known/oauth-protected-resource'
     | '/admin/aprovacoes'
     | '/admin/auditoria'
+    | '/admin/chat'
     | '/admin/checkin-monitor'
     | '/admin/configuracoes'
     | '/admin/emails'
@@ -407,6 +428,7 @@ export interface FileRouteTypes {
     | '/produtor'
     | '/.lovable/oauth/consent'
     | '/.mcp/invoke-tool/$tool'
+    | '/api/public/uazapi-webhook'
   id:
     | '__root__'
     | '/'
@@ -424,6 +446,7 @@ export interface FileRouteTypes {
     | '/.well-known/oauth-protected-resource'
     | '/admin/aprovacoes'
     | '/admin/auditoria'
+    | '/admin/chat'
     | '/admin/checkin-monitor'
     | '/admin/configuracoes'
     | '/admin/emails'
@@ -444,6 +467,7 @@ export interface FileRouteTypes {
     | '/produtor/'
     | '/.lovable/oauth/consent'
     | '/.mcp/invoke-tool/$tool'
+    | '/api/public/uazapi-webhook'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -463,6 +487,7 @@ export interface RootRouteChildren {
   AuthCallbackRoute: typeof AuthCallbackRoute
   DotlovableOauthConsentRoute: typeof DotlovableOauthConsentRoute
   Char91DotmcpChar93InvokeToolToolRoute: typeof Char91DotmcpChar93InvokeToolToolRoute
+  ApiPublicUazapiWebhookRoute: typeof ApiPublicUazapiWebhookRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -570,6 +595,13 @@ declare module '@tanstack/react-router' {
       path: '/auditoria'
       fullPath: '/admin/auditoria'
       preLoaderRoute: typeof AdminAuditoriaRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/chat': {
+      id: '/admin/chat'
+      path: '/chat'
+      fullPath: '/admin/chat'
+      preLoaderRoute: typeof AdminChatRouteImport
       parentRoute: typeof AdminRoute
     }
     '/admin/checkin-monitor': {
@@ -712,12 +744,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof Char91DotmcpChar93InvokeToolToolRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/uazapi-webhook': {
+      id: '/api/public/uazapi-webhook'
+      path: '/api/public/uazapi-webhook'
+      fullPath: '/api/public/uazapi-webhook'
+      preLoaderRoute: typeof ApiPublicUazapiWebhookRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 interface AdminRouteChildren {
   AdminAprovacoesRoute: typeof AdminAprovacoesRoute
   AdminAuditoriaRoute: typeof AdminAuditoriaRoute
+  AdminChatRoute: typeof AdminChatRoute
   AdminCheckinMonitorRoute: typeof AdminCheckinMonitorRoute
   AdminConfiguracoesRoute: typeof AdminConfiguracoesRoute
   AdminEmailsRoute: typeof AdminEmailsRoute
@@ -731,6 +771,7 @@ interface AdminRouteChildren {
 const AdminRouteChildren: AdminRouteChildren = {
   AdminAprovacoesRoute: AdminAprovacoesRoute,
   AdminAuditoriaRoute: AdminAuditoriaRoute,
+  AdminChatRoute: AdminChatRoute,
   AdminCheckinMonitorRoute: AdminCheckinMonitorRoute,
   AdminConfiguracoesRoute: AdminConfiguracoesRoute,
   AdminEmailsRoute: AdminEmailsRoute,
@@ -797,6 +838,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthCallbackRoute: AuthCallbackRoute,
   DotlovableOauthConsentRoute: DotlovableOauthConsentRoute,
   Char91DotmcpChar93InvokeToolToolRoute: Char91DotmcpChar93InvokeToolToolRoute,
+  ApiPublicUazapiWebhookRoute: ApiPublicUazapiWebhookRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
