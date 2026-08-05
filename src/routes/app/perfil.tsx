@@ -101,10 +101,11 @@ function UserProfile() {
 
   async function fetchTickets() {
     const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return;
     const { data } = await supabase
       .from("tickets")
       .select("*, events(title, location, city, start_date)")
-      .eq("owner_id", user?.id)
+      .eq("owner_id", user.id)
       .limit(3);
     if (data) setMyTickets(data);
   }
@@ -169,10 +170,11 @@ function UserProfile() {
   const handleRemovePhoto = async () => {
     try {
       const { data: { user } } = await supabase.auth.getUser();
+      if (!user) throw new Error("Usuário não autenticado");
       const { error } = await supabase
         .from('profiles')
         .update({ avatar_url: null })
-        .eq('id', user?.id);
+        .eq('id', user.id);
 
       if (error) throw error;
       setProfile({ ...profile, avatar_url: null });

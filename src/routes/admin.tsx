@@ -204,8 +204,10 @@ function AdminLayout() {
                 isSidebarCollapsed ? "px-0 justify-center" : "px-4",
                 item.label === "Chat" && "bg-primary text-primary-foreground shadow-lg shadow-primary/30"
               )}
-              activeProps={item.label !== "Chat" ? { className: "bg-primary text-primary-foreground shadow-lg shadow-primary/30" } : undefined}
-              inactiveProps={item.label !== "Chat" ? { className: "text-foreground hover:bg-accent" } : undefined}
+              {...(item.label !== "Chat" ? {
+                activeProps: { className: "bg-primary text-primary-foreground shadow-lg shadow-primary/30" },
+                inactiveProps: { className: "text-foreground hover:bg-accent" }
+              } : {})}
               title={isSidebarCollapsed ? item.label : undefined}
             >
               <item.icon className="w-5 h-5 shrink-0" />
