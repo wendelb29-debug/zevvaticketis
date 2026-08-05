@@ -1,4 +1,4 @@
-import { createFileRoute, redirect } from "@tanstack/react-router";
+import { createFileRoute, redirect, Link } from "@tanstack/react-router";
 import { supabase } from "@/integrations/supabase/client";
 import { useState, useEffect, useRef } from "react";
 import { 
@@ -14,7 +14,21 @@ import {
   Trash2,
   Bell,
   CheckCircle2,
-  AlertCircle
+  AlertCircle,
+  MapPin,
+  Calendar,
+  Ticket,
+  ChevronRight,
+  LogOut,
+  Map,
+  CreditCard,
+  Settings,
+  Moon,
+  Sun,
+  Monitor,
+  Phone,
+  Hash,
+  AlertTriangle
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
