@@ -539,8 +539,8 @@ function AdminChatPage() {
                 ) : (
                   <div className="flex gap-3 items-end">
                     <div className="flex gap-1.5 mb-1 shrink-0">
-                      <button className="p-2 hover:bg-[#FAFAFA] text-[#667085] rounded-lg transition-all border border-transparent hover:border-[#E5E7EB]"><Plus className="w-5 h-5" /></button>
-                      <button className="p-2 hover:bg-[#FAFAFA] text-[#667085] rounded-lg transition-all border border-transparent hover:border-[#E5E7EB]"><Smile className="w-5 h-5" /></button>
+                       <button className="p-2 hover:bg-[#FAFAFA] dark:hover:bg-white/5 text-[#667085] dark:text-white/40 rounded-lg transition-all border border-transparent hover:border-[#E5E7EB] dark:hover:border-white/5"><Plus className="w-5 h-5" /></button>
+                      <button className="p-2 hover:bg-[#FAFAFA] dark:hover:bg-white/5 text-[#667085] dark:text-white/40 rounded-lg transition-all border border-transparent hover:border-[#E5E7EB] dark:hover:border-white/5"><Smile className="w-5 h-5" /></button>
                     </div>
                     <div className="flex-1 relative">
                       <textarea 
