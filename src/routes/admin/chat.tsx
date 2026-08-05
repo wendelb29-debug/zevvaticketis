@@ -863,12 +863,12 @@ function AdminChatPage() {
               </Select>
             </div>
             <div className="space-y-2">
-              <Label className="text-[10px] font-bold uppercase tracking-wider text-gray-400">Tipo de atendimento</Label>
+              <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Tipo de atendimento</Label>
               <Select defaultValue="receptivo">
-                <SelectTrigger className="bg-[#23262E] border-none text-xs h-10">
+                <SelectTrigger className="bg-muted border-none text-xs h-10">
                   <SelectValue placeholder="Ativo e receptivo" />
                 </SelectTrigger>
-                <SelectContent className="bg-[#23262E] border-none text-white">
+                <SelectContent className="bg-popover border-border text-foreground">
                   <SelectItem value="receptivo">Ativo e receptivo</SelectItem>
                   <SelectItem value="only-receptivo">Apenas receptivo</SelectItem>
                 </SelectContent>
