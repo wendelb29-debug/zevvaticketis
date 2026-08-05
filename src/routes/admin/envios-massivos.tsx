@@ -1,14 +1,17 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { Megaphone, Plus, Mail, MessageSquare, Clock, AlertCircle, CheckCircle } from "lucide-react";
+import { Megaphone, Plus, Mail, MessageSquare, Clock, AlertCircle, CheckCircle, TrendingUp, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { NewCampaignWizard } from "@/components/admin/campaigns/NewCampaignWizard";
 
 export const Route = createFileRoute("/admin/envios-massivos")({
   component: EnviosMassivosPage,
 });
 
 function EnviosMassivosPage() {
+  const [isWizardOpen, setIsWizardOpen] = useState(false);
+
   return (
     <div className="p-8 max-w-7xl mx-auto space-y-8">
       <div className="flex justify-between items-center">
