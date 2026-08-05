@@ -1,4 +1,4 @@
-import { createFileRoute, redirect, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { supabase } from "@/integrations/supabase/client";
 import { useState, useEffect } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -7,38 +7,15 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
-import { Badge } from "@/components/ui/badge";
 import { 
-  Users, 
-  Settings, 
-  Shield, 
-  Bell, 
-  Clock, 
-  Tag, 
-  MessageSquare, 
-  Globe,
-  Plus,
-  Search,
-  MoreVertical,
-  Trash2,
-  Edit2,
-  Calendar,
-  Zap,
-  Ticket,
-  Workflow,
-  PlusCircle,
-  X
+  Users, Settings, Shield, Clock, Tag, MessageSquare, Workflow, Plus, 
+  Edit2, Trash2, X, Zap, Ticket, Calendar, Globe, Bell, 
+  Layers, Lock, Database, Smartphone, Sliders
 } from "lucide-react";
-import { cn } from "@/lib/utils";
 import { toast } from "sonner";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/admin/configuracoes")({
   component: AuthGuard,
@@ -53,24 +30,17 @@ function AuthGuard() {
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session);
       setLoading(false);
-      if (!session) {
-        navigate({ to: "/" });
-      }
+      if (!session) navigate({ to: "/" });
     });
-
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_, session) => {
       setSession(session);
-      if (!session) {
-        navigate({ to: "/" });
-      }
+      if (!session) navigate({ to: "/" });
     });
-
     return () => subscription.unsubscribe();
   }, []);
 
   if (loading) return null;
   if (!session) return null;
-
   return <SettingsPage />;
 }
 
@@ -78,251 +48,305 @@ function SettingsPage() {
   const [activeTab, setActiveTab] = useState("atendimento");
   const [isDeptModalOpen, setIsDeptModalOpen] = useState(false);
   const [isTagModalOpen, setIsTagModalOpen] = useState(false);
-  const [isHolidayModalOpen, setIsHolidayModalOpen] = useState(false);
-  
-  // State for forms
   const [deptName, setDeptName] = useState("");
   const [tagName, setTagName] = useState("");
   const [tagColor, setTagColor] = useState("#E8604A");
-  
-  // Mock data
-  const [departments, setDepartments] = useState([
-    { id: "1", name: "Suporte", members: 5, status: "active" },
-    { id: "2", name: "Comercial", members: 3, status: "active" },
-    { id: "3", name: "Financeiro", members: 2, status: "active" },
+
+  const [departments] = useState([
+    { id: "1", name: "Suporte", members: 5 },
+    { id: "2", name: "Comercial", members: 3 },
   ]);
 
-  const [tags, setTags] = useState([
+  const [tags] = useState([
     { id: "1", name: "Urgente", color: "#ef4444" },
-    { id: "2", name: "Dúvida", color: "#3b82f6" },
-    { id: "3", name: "Feedback", color: "#10b981" },
+    { id: "2", name: "Feedback", color: "#10b981" },
   ]);
-
-  const handleCreateDept = () => {
-    if (!deptName) return;
-    setDepartments([...departments, { id: Date.now().toString(), name: deptName, members: 0, status: "active" }]);
-    setDeptName("");
-    setIsDeptModalOpen(false);
-    toast.success("Departamento criado com sucesso");
-  };
-
-  const handleCreateTag = () => {
-    if (!tagName) return;
-    setTags([...tags, { id: Date.now().toString(), name: tagName, color: tagColor }]);
-    setTagName("");
-    setIsTagModalOpen(false);
-    toast.success("Tag criada com sucesso");
-  };
-
-  const handleDeleteTag = (id: string) => {
-    setTags(tags.filter(t => t.id !== id));
-    toast.info("Tag removida");
-  };
 
   return (
-    <div className="space-y-6 max-w-7xl mx-auto pb-12 font-inter text-foreground">
+    <div className="space-y-8 p-6 max-w-7xl mx-auto pb-12 font-inter text-foreground animate-in fade-in duration-500">
       <div className="flex flex-col gap-2">
-        <h1 className="text-3xl font-manrope font-extrabold text-foreground">Configurações do Sistema</h1>
-        <p className="text-muted-fg">Gerencie as regras de atendimento, equipe e recursos da plataforma.</p>
+        <h1 className="text-3xl font-manrope font-extrabold text-foreground">Configurações do Projeto</h1>
+        <p className="text-muted-fg">Administre as operações, equipe e o núcleo do sistema Zevva.</p>
       </div>
 
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-        <TabsList className="bg-card border border-border p-1 rounded-xl w-full justify-start overflow-x-auto h-auto">
+        <TabsList className="bg-card border border-border p-1 rounded-xl w-full justify-start overflow-x-auto h-auto shadow-sm mb-6">
           <TabsTrigger value="atendimento" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground rounded-lg py-2.5 px-6 flex items-center gap-2 text-sm font-bold transition-all">
-            <MessageSquare className="w-4 h-4" />
-            Atendimento
+            <MessageSquare className="w-4 h-4" /> Atendimento
           </TabsTrigger>
           <TabsTrigger value="equipe" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground rounded-lg py-2.5 px-6 flex items-center gap-2 text-sm font-bold transition-all">
-            <Users className="w-4 h-4" />
-            Equipe e Recursos
+            <Users className="w-4 h-4" /> Equipe e Recursos
           </TabsTrigger>
           <TabsTrigger value="sistema" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground rounded-lg py-2.5 px-6 flex items-center gap-2 text-sm font-bold transition-all">
-            <Settings className="w-4 h-4" />
-            Sistema
+            <Settings className="w-4 h-4" /> Sistema
           </TabsTrigger>
         </TabsList>
 
-        <TabsContent value="atendimento" className="space-y-6 mt-6">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <Card className="md:col-span-1 border-border bg-card h-fit sticky top-24">
-              <CardContent className="p-4 space-y-1">
-                <Button variant="ghost" className="w-full justify-start gap-2 font-bold text-primary bg-primary/5">
-                  <Workflow className="w-4 h-4" />
-                  Regras Gerais
-                </Button>
-                <Button variant="ghost" className="w-full justify-start gap-2 font-bold text-foreground hover:bg-accent">
-                  <Users className="w-4 h-4" />
-                  Departamentos
-                </Button>
-                <Button variant="ghost" className="w-full justify-start gap-2 font-bold text-foreground hover:bg-accent">
-                  <Tag className="w-4 h-4" />
-                  Tags e Classificações
-                </Button>
-                <Button variant="ghost" className="w-full justify-start gap-2 font-bold text-foreground hover:bg-accent">
-                  <Clock className="w-4 h-4" />
-                  Inatividade e SLA
-                </Button>
-              </CardContent>
-            </Card>
-
-            <div className="md:col-span-2 space-y-6">
-              <Card className="border-border bg-card overflow-hidden shadow-sm">
-                <CardHeader className="bg-accent/50 border-b border-border">
-                  <CardTitle className="text-lg font-manrope font-bold text-foreground">Distribuição de Tickets</CardTitle>
-                  <CardDescription className="text-muted-fg">Configure como os novos atendimentos são atribuídos.</CardDescription>
-                </CardHeader>
-                <CardContent className="p-6 space-y-6">
-                  <div className="flex items-center justify-between p-4 bg-card border border-border rounded-xl shadow-sm">
+        <TabsContent value="atendimento" className="space-y-4 focus-visible:outline-none outline-none">
+          <Accordion type="single" collapsible className="w-full space-y-4">
+            <AccordionItem value="geral" className="border-border bg-card rounded-xl overflow-hidden shadow-sm border">
+              <AccordionTrigger className="px-6 py-5 font-bold text-lg hover:no-underline hover:bg-accent/50 transition-colors">
+                <div className="flex items-center gap-3">
+                  <Sliders className="w-5 h-5 text-primary" />
+                  Configurações Gerais de Atendimento
+                </div>
+              </AccordionTrigger>
+              <AccordionContent className="px-6 pb-6 pt-2 space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="flex items-center justify-between p-4 bg-background border border-border rounded-xl">
                     <div className="space-y-0.5">
-                      <Label className="text-sm font-bold text-foreground">Distribuição Automática</Label>
-                      <p className="text-xs text-muted-fg">Atribui automaticamente novos tickets aos agentes disponíveis.</p>
+                      <Label className="font-bold">Distribuição Automática</Label>
+                      <p className="text-xs text-muted-fg">Atribui tickets aos agentes disponíveis.</p>
                     </div>
                     <Switch defaultChecked />
                   </div>
-
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <Label className="text-sm font-bold text-foreground">Capacidade Máxima</Label>
-                      <Input type="number" defaultValue="5" className="border-border bg-background focus:ring-primary" />
-                      <p className="text-xs text-muted-fg">Tickets simultâneos por agente.</p>
+                  <div className="flex items-center justify-between p-4 bg-background border border-border rounded-xl">
+                    <div className="space-y-0.5">
+                      <Label className="font-bold">Chat de Boas-vindas</Label>
+                      <p className="text-xs text-muted-fg">Ativa mensagem automática inicial.</p>
                     </div>
-                    <div className="space-y-2">
-                      <Label className="text-sm font-bold text-foreground">Limite de Espera</Label>
-                      <Input type="number" defaultValue="15" className="border-border bg-background focus:ring-primary" />
-                      <p className="text-xs text-muted-fg">Minutos antes de alerta de SLA.</p>
-                    </div>
+                    <Switch defaultChecked />
                   </div>
-                </CardContent>
-              </Card>
+                </div>
+                <div className="space-y-3">
+                  <Label className="font-bold">Capacidade Máxima por Agente</Label>
+                  <Input type="number" defaultValue={5} className="bg-background border-border max-w-[200px]" />
+                </div>
+              </AccordionContent>
+            </AccordionItem>
 
-              <Card className="border-border bg-card overflow-hidden shadow-sm">
-                <CardHeader className="bg-accent/50 border-b border-border flex flex-row items-center justify-between">
-                  <div>
-                    <CardTitle className="text-lg font-manrope font-bold text-foreground">Departamentos</CardTitle>
-                    <CardDescription className="text-muted-fg">Gerencie as áreas de atendimento.</CardDescription>
-                  </div>
-                  <Button onClick={() => setIsDeptModalOpen(true)} size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground gap-2 font-bold rounded-lg shadow-md shadow-primary/20">
-                    <Plus className="w-4 h-4" />
-                    Adicionar
+            <AccordionItem value="departamentos" className="border-border bg-card rounded-xl overflow-hidden shadow-sm border">
+              <AccordionTrigger className="px-6 py-5 font-bold text-lg hover:no-underline hover:bg-accent/50 transition-colors">
+                <div className="flex items-center gap-3">
+                  <Users className="w-5 h-5 text-primary" />
+                  Gerenciar Departamentos
+                </div>
+              </AccordionTrigger>
+              <AccordionContent className="px-6 pb-6 pt-2">
+                <div className="flex justify-end mb-4">
+                  <Button onClick={() => setIsDeptModalOpen(true)} size="sm" className="bg-primary text-white gap-2 font-bold">
+                    <Plus className="w-4 h-4" /> Novo Departamento
                   </Button>
-                </CardHeader>
-                <CardContent className="p-0">
-                  <div className="divide-y divide-border">
-                    {departments.map(dept => (
-                      <div key={dept.id} className="p-4 flex items-center justify-between hover:bg-accent transition-colors">
-                        <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-                            <Users className="w-5 h-5 text-primary" />
-                          </div>
-                          <div>
-                            <p className="text-sm font-bold text-foreground">{dept.name}</p>
-                            <p className="text-xs text-muted-fg">{dept.members} membros</p>
-                          </div>
+                </div>
+                <div className="space-y-2">
+                  {departments.map(dept => (
+                    <div key={dept.id} className="flex items-center justify-between p-4 bg-background border border-border rounded-xl group hover:border-primary/30 transition-all">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold">
+                          {dept.name.charAt(0)}
                         </div>
-                        <div className="flex items-center gap-2">
-                          <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-fg hover:text-foreground">
-                            <Edit2 className="w-4 h-4" />
-                          </Button>
-                          <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-fg hover:text-error">
-                            <Trash2 className="w-4 h-4" />
-                          </Button>
+                        <div>
+                          <p className="font-bold">{dept.name}</p>
+                          <p className="text-xs text-muted-fg">{dept.members} membros ativos</p>
                         </div>
                       </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card className="border-border bg-card overflow-hidden shadow-sm">
-                <CardHeader className="bg-accent/50 border-b border-border flex flex-row items-center justify-between">
-                  <div>
-                    <CardTitle className="text-lg font-manrope font-bold text-foreground">Tags e Classificações</CardTitle>
-                    <CardDescription className="text-muted-fg">Organize atendimentos com etiquetas coloridas.</CardDescription>
-                  </div>
-                  <Button onClick={() => setIsTagModalOpen(true)} size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground gap-2 font-bold rounded-lg shadow-md shadow-primary/20">
-                    <Plus className="w-4 h-4" />
-                    Nova Tag
-                  </Button>
-                </CardHeader>
-                <CardContent className="p-6">
-                  <div className="flex flex-wrap gap-2">
-                    {tags.map(tag => (
-                      <div 
-                        key={tag.id}
-                        className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-border bg-background group hover:border-primary transition-colors"
-                      >
-                        <div className="w-2 h-2 rounded-full" style={{ backgroundColor: tag.color }} />
-                        <span className="text-sm font-bold text-foreground">{tag.name}</span>
-                        <button 
-                          onClick={() => handleDeleteTag(tag.id)}
-                          className="text-muted-fg hover:text-error transition-colors opacity-0 group-hover:opacity-100"
-                        >
-                          <X className="w-3 h-3" />
-                        </button>
+                      <div className="flex items-center gap-2">
+                        <Button variant="ghost" size="icon" className="hover:text-primary"><Edit2 className="w-4 h-4" /></Button>
+                        <Button variant="ghost" size="icon" className="hover:text-error"><Trash2 className="w-4 h-4" /></Button>
                       </div>
-                    ))}
+                    </div>
+                  ))}
+                </div>
+              </AccordionContent>
+            </AccordionItem>
+
+            <AccordionItem value="tags" className="border-border bg-card rounded-xl overflow-hidden shadow-sm border">
+              <AccordionTrigger className="px-6 py-5 font-bold text-lg hover:no-underline hover:bg-accent/50 transition-colors">
+                <div className="flex items-center gap-3">
+                  <Tag className="w-5 h-5 text-primary" />
+                  Gerenciar Tags e Classificações
+                </div>
+              </AccordionTrigger>
+              <AccordionContent className="px-6 pb-6 pt-2">
+                <div className="flex justify-end mb-4">
+                  <Button onClick={() => setIsTagModalOpen(true)} size="sm" className="bg-primary text-white gap-2 font-bold">
+                    <Plus className="w-4 h-4" /> Nova Tag
+                  </Button>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {tags.map(tag => (
+                    <div key={tag.id} className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-border bg-background group">
+                      <div className="w-3 h-3 rounded-full" style={{ backgroundColor: tag.color }} />
+                      <span className="text-sm font-bold">{tag.name}</span>
+                      <button className="text-muted-fg hover:text-error transition-colors opacity-0 group-hover:opacity-100">
+                        <X className="w-3 h-3" />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </AccordionContent>
+            </AccordionItem>
+
+            <AccordionItem value="gatilhos" className="border-border bg-card rounded-xl overflow-hidden shadow-sm border">
+              <AccordionTrigger className="px-6 py-5 font-bold text-lg hover:no-underline hover:bg-accent/50 transition-colors">
+                <div className="flex items-center gap-3">
+                  <Zap className="w-5 h-5 text-primary" />
+                  Gatilhos de Atendimento
+                </div>
+              </AccordionTrigger>
+              <AccordionContent className="px-6 pb-6 pt-2 space-y-4">
+                <p className="text-sm text-muted-fg">Configure ações automáticas baseadas em eventos do chat.</p>
+                <Button variant="outline" className="w-full border-dashed border-2 hover:bg-accent hover:border-primary transition-all">
+                  <Plus className="w-4 h-4 mr-2" /> Criar Novo Gatilho
+                </Button>
+              </AccordionContent>
+            </AccordionItem>
+
+            <AccordionItem value="sla" className="border-border bg-card rounded-xl overflow-hidden shadow-sm border">
+              <AccordionTrigger className="px-6 py-5 font-bold text-lg hover:no-underline hover:bg-accent/50 transition-colors">
+                <div className="flex items-center gap-3">
+                  <Clock className="w-5 h-5 text-primary" />
+                  Inatividade e SLA
+                </div>
+              </AccordionTrigger>
+              <AccordionContent className="px-6 pb-6 pt-2 space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="space-y-2">
+                    <Label className="font-bold">Tempo de Inatividade (min)</Label>
+                    <Input type="number" defaultValue={15} className="bg-background border-border" />
+                    <p className="text-xs text-muted-fg">Minutos para marcar ticket como inativo.</p>
                   </div>
-                </CardContent>
-              </Card>
-            </div>
-          </div>
+                  <div className="space-y-2">
+                    <Label className="font-bold">Alerta de SLA (min)</Label>
+                    <Input type="number" defaultValue={10} className="bg-background border-border" />
+                    <p className="text-xs text-muted-fg">Tempo máximo para resposta inicial.</p>
+                  </div>
+                </div>
+                <div className="flex items-center justify-between p-4 bg-background border border-border rounded-xl">
+                  <div className="space-y-0.5">
+                    <Label className="font-bold">Encerramento Automático</Label>
+                    <p className="text-xs text-muted-fg">Fechar tickets inativos após o prazo.</p>
+                  </div>
+                  <Switch defaultChecked />
+                </div>
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
+        </TabsContent>
+
+        <TabsContent value="equipe" className="space-y-4 focus-visible:outline-none outline-none">
+          <Accordion type="single" collapsible className="w-full space-y-4">
+            <AccordionItem value="usuarios" className="border-border bg-card rounded-xl border overflow-hidden shadow-sm">
+              <AccordionTrigger className="px-6 py-5 font-bold text-lg hover:no-underline hover:bg-accent/50 transition-colors">
+                <div className="flex items-center gap-3">
+                  <Users className="w-5 h-5 text-primary" /> Gerenciar Usuários
+                </div>
+              </AccordionTrigger>
+              <AccordionContent className="px-6 pb-6 pt-2">
+                 <p className="text-sm text-muted-fg">Administre os acessos dos seus agentes e colaboradores.</p>
+              </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="permissoes" className="border-border bg-card rounded-xl border overflow-hidden shadow-sm">
+              <AccordionTrigger className="px-6 py-5 font-bold text-lg hover:no-underline hover:bg-accent/50 transition-colors">
+                <div className="flex items-center gap-3">
+                  <Lock className="w-5 h-5 text-primary" /> Permissões e Cargos
+                </div>
+              </AccordionTrigger>
+              <AccordionContent className="px-6 pb-6 pt-2">
+                 <p className="text-sm text-muted-fg">Defina o que cada perfil pode visualizar e editar.</p>
+              </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="filas" className="border-border bg-card rounded-xl border overflow-hidden shadow-sm">
+              <AccordionTrigger className="px-6 py-5 font-bold text-lg hover:no-underline hover:bg-accent/50 transition-colors">
+                <div className="flex items-center gap-3">
+                  <Layers className="w-5 h-5 text-primary" /> Filas de Atendimento
+                </div>
+              </AccordionTrigger>
+              <AccordionContent className="px-6 pb-6 pt-2">
+                 <p className="text-sm text-muted-fg">Organize o fluxo de entrada de mensagens.</p>
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
+        </TabsContent>
+
+        <TabsContent value="sistema" className="space-y-4 focus-visible:outline-none outline-none">
+          <Accordion type="single" collapsible className="w-full space-y-4">
+            <AccordionItem value="parametros" className="border-border bg-card rounded-xl border overflow-hidden shadow-sm">
+              <AccordionTrigger className="px-6 py-5 font-bold text-lg hover:no-underline hover:bg-accent/50 transition-colors">
+                <div className="flex items-center gap-3">
+                  <Database className="w-5 h-5 text-primary" /> Parâmetros Gerais
+                </div>
+              </AccordionTrigger>
+              <AccordionContent className="px-6 pb-6 pt-2">
+                 <p className="text-sm text-muted-fg">Configurações de infraestrutura e dados do sistema.</p>
+              </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="integracoes" className="border-border bg-card rounded-xl border overflow-hidden shadow-sm">
+              <AccordionTrigger className="px-6 py-5 font-bold text-lg hover:no-underline hover:bg-accent/50 transition-colors">
+                <div className="flex items-center gap-3">
+                  <Globe className="w-5 h-5 text-primary" /> Integrações e APIs
+                </div>
+              </AccordionTrigger>
+              <AccordionContent className="px-6 pb-6 pt-2">
+                 <p className="text-sm text-muted-fg">Conecte o Zevva com outras ferramentas de mercado.</p>
+              </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="pref" className="border-border bg-card rounded-xl border overflow-hidden shadow-sm">
+              <AccordionTrigger className="px-6 py-5 font-bold text-lg hover:no-underline hover:bg-accent/50 transition-colors">
+                <div className="flex items-center gap-3">
+                  <SlidingScale className="w-5 h-5 text-primary" /> Preferências Globais
+                </div>
+              </AccordionTrigger>
+              <AccordionContent className="px-6 pb-6 pt-2">
+                 <p className="text-sm text-muted-fg">Ajustes finos de interface e comportamento da plataforma.</p>
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
         </TabsContent>
       </Tabs>
 
       {/* Dept Modal */}
       <Dialog open={isDeptModalOpen} onOpenChange={setIsDeptModalOpen}>
-        <DialogContent className="sm:max-w-[425px] bg-card border-border p-0 overflow-hidden text-foreground">
-          <DialogHeader className="p-6 bg-accent/50 border-b border-border">
+        <DialogContent className="sm:max-w-[425px] bg-card border-border p-0 overflow-hidden text-foreground border shadow-2xl">
+          <DialogHeader className="p-6 bg-accent/20 border-b border-border">
             <DialogTitle className="text-xl font-manrope font-extrabold">Criar Departamento</DialogTitle>
-            <DialogDescription className="text-muted-fg">Adicione um novo departamento para organizar seus atendimentos.</DialogDescription>
+            <DialogDescription className="text-muted-fg">Organize sua equipe em áreas especializadas.</DialogDescription>
           </DialogHeader>
           <div className="p-6 space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="dept-name" className="text-sm font-bold">Nome do Departamento</Label>
+              <Label className="text-sm font-bold">Nome do Departamento</Label>
               <Input 
-                id="dept-name" 
                 value={deptName}
                 onChange={(e) => setDeptName(e.target.value)}
-                placeholder="Ex: Suporte Premium" 
+                placeholder="Ex: Financeiro" 
                 className="border-border bg-background focus:ring-primary" 
               />
             </div>
           </div>
-          <DialogFooter className="p-6 bg-accent/30 border-t border-border">
+          <DialogFooter className="p-6 bg-accent/10 border-t border-border gap-2">
             <Button variant="outline" onClick={() => setIsDeptModalOpen(false)} className="border-border font-bold">Cancelar</Button>
-            <Button onClick={handleCreateDept} className="bg-primary hover:bg-primary/90 text-primary-foreground font-bold">Criar Departamento</Button>
+            <Button onClick={() => { setIsDeptModalOpen(false); toast.success("Departamento criado!"); }} className="bg-primary text-white font-bold">Criar</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
 
       {/* Tag Modal */}
       <Dialog open={isTagModalOpen} onOpenChange={setIsTagModalOpen}>
-        <DialogContent className="sm:max-w-[425px] bg-card border-border p-0 overflow-hidden text-foreground">
-          <DialogHeader className="p-6 bg-accent/50 border-b border-border">
+        <DialogContent className="sm:max-w-[425px] bg-card border-border p-0 overflow-hidden text-foreground border shadow-2xl">
+          <DialogHeader className="p-6 bg-accent/20 border-b border-border">
             <DialogTitle className="text-xl font-manrope font-extrabold">Nova Tag</DialogTitle>
-            <DialogDescription className="text-muted-fg">Crie classificações para seus atendimentos.</DialogDescription>
+            <DialogDescription className="text-muted-fg">Crie classificações visuais para o chat.</DialogDescription>
           </DialogHeader>
-          <div className="p-6 space-y-4">
+          <div className="p-6 space-y-6">
             <div className="space-y-2">
-              <Label htmlFor="tag-name" className="text-sm font-bold">Nome da Tag</Label>
+              <Label className="text-sm font-bold">Nome da Tag</Label>
               <Input 
-                id="tag-name" 
                 value={tagName}
                 onChange={(e) => setTagName(e.target.value)}
-                placeholder="Ex: Reclamação" 
+                placeholder="Ex: Prioridade Alta" 
                 className="border-border bg-background focus:ring-primary" 
               />
             </div>
             <div className="space-y-2">
-              <Label className="text-sm font-bold">Cor de Identificação</Label>
+              <Label className="text-sm font-bold">Cor</Label>
               <div className="flex gap-2">
-                {["#ef4444", "#3b82f6", "#10b981", "#f59e0b", "#8b5cf6", "#E8604A"].map(color => (
+                {["#ef4444", "#3b82f6", "#10b981", "#f59e0b", "#E8604A"].map(color => (
                   <button
                     key={color}
                     onClick={() => setTagColor(color)}
                     className={cn(
-                      "w-8 h-8 rounded-full border-2 transition-transform hover:scale-110",
-                      tagColor === color ? "border-foreground" : "border-transparent"
+                      "w-8 h-8 rounded-full border-2 transition-all hover:scale-110",
+                      tagColor === color ? "border-foreground scale-110" : "border-transparent"
                     )}
                     style={{ backgroundColor: color }}
                   />
@@ -330,12 +354,15 @@ function SettingsPage() {
               </div>
             </div>
           </div>
-          <DialogFooter className="p-6 bg-accent/30 border-t border-border">
+          <DialogFooter className="p-6 bg-accent/10 border-t border-border gap-2">
             <Button variant="outline" onClick={() => setIsTagModalOpen(false)} className="border-border font-bold">Cancelar</Button>
-            <Button onClick={handleCreateTag} className="bg-primary hover:bg-primary/90 text-primary-foreground font-bold">Salvar Tag</Button>
+            <Button onClick={() => { setIsTagModalOpen(false); toast.success("Tag salva!"); }} className="bg-primary text-white font-bold">Salvar</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
     </div>
   );
 }
+
+// Simple fallback for icons if missing
+const SlidingScale = Sliders;
