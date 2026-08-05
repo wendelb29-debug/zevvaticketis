@@ -762,10 +762,10 @@ function AdminChatPage() {
                     <div className="flex-1 relative">
                       <textarea 
                         rows={1}
-                        className="w-full bg-[#FAFAFA] dark:bg-[#0F1117] border border-[#E5E7EB] dark:border-white/5 p-3.5 pr-14 rounded-xl text-[13px] text-[#171717] dark:text-white/90 placeholder:text-[#667085]/50 focus:outline-none focus:ring-1 focus:ring-coral transition-all resize-none" 
+                        className="w-full bg-muted border border-border p-3.5 pr-14 rounded-xl text-[13px] text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-1 focus:ring-primary/50 transition-all resize-none" 
                         placeholder="Digite uma mensagem — use ‘/’ para atalhos" 
                       />
-                      <button className="absolute right-2 top-2 w-9 h-9 bg-coral text-white rounded-lg flex items-center justify-center hover:bg-coral/90 transition-all">
+                      <button className="absolute right-2 top-2 w-9 h-9 bg-primary text-primary-foreground rounded-lg flex items-center justify-center hover:bg-primary/90 transition-all">
 
                         <Send className="w-4 h-4" />
                       </button>
