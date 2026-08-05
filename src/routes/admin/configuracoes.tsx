@@ -182,14 +182,14 @@ function SettingsPage() {
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="space-y-2">
-                      <Label className="text-sm font-bold text-navy">Capacidade Máxima</Label>
-                      <Input type="number" defaultValue="5" className="border-line focus:ring-coral" />
-                      <p className="text-xs text-navy/60">Tickets simultâneos por agente.</p>
+                      <Label className="text-sm font-bold text-foreground">Capacidade Máxima</Label>
+                      <Input type="number" defaultValue="5" className="border-border bg-background focus:ring-primary" />
+                      <p className="text-xs text-muted-fg">Tickets simultâneos por agente.</p>
                     </div>
                     <div className="space-y-2">
-                      <Label className="text-sm font-bold text-navy">Limite de Espera</Label>
-                      <Input type="number" defaultValue="15" className="border-line focus:ring-coral" />
-                      <p className="text-xs text-navy/60">Minutos antes de alerta de SLA.</p>
+                      <Label className="text-sm font-bold text-foreground">Limite de Espera</Label>
+                      <Input type="number" defaultValue="15" className="border-border bg-background focus:ring-primary" />
+                      <p className="text-xs text-muted-fg">Minutos antes de alerta de SLA.</p>
                     </div>
                   </div>
                 </CardContent>
