@@ -188,7 +188,7 @@ function AdminEmailsPage() {
             variant="ghost"
             size="sm"
             className="mt-2 w-full justify-start text-destructive hover:text-destructive"
-            onClick={() => disconnectMutation.mutate({})}
+            onClick={() => disconnectMutation.mutate()}
             disabled={disconnectMutation.isPending}
           >
             <LogOut className="mr-2 h-4 w-4" /> Desconectar conta
