@@ -181,6 +181,7 @@ function RootComponent() {
       mediaQuery.addEventListener("change", listener);
       return () => mediaQuery.removeEventListener("change", listener);
     }
+    return undefined;
   }, [theme]);
 
   useEffect(() => {
