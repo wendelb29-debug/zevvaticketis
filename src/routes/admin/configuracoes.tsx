@@ -141,97 +141,223 @@ const AtendimentoAccordion = () => (
             <h3 className="text-lg font-bold text-navy">Gerenciar departamentos</h3>
             <Dialog>
               <DialogTrigger asChild>
-                <Button className="bg-[#FFF8E6] text-[#D9A94D] hover:bg-[#FFF8E6]/80 border border-[#D9A94D]/20 gap-2 rounded-xl h-11 px-6">
+                <Button className="bg-[#FFF8E6] text-[#D9A94D] hover:bg-[#FFF8E6]/80 border border-[#D9A94D]/20 gap-2 rounded-xl h-11 px-6 font-bold">
                   <Plus className="w-4 h-4" /> Criar departamento
                 </Button>
               </DialogTrigger>
-              <DialogContent className="max-w-2xl max-h-[90vh] flex flex-col p-0 overflow-hidden">
-                <DialogHeader className="px-6 py-4 border-b">
-                  <DialogTitle className="text-xl font-bold">Criar departamento</DialogTitle>
-                  <p className="text-sm text-navy/40">Crie departamentos para organizar e distribuir os atendimentos</p>
+              <DialogContent className="max-w-7xl h-[95vh] flex flex-col p-0 overflow-hidden border-none shadow-2xl">
+                <DialogHeader className="px-8 py-6 bg-[#FDF8EB] border-b border-[#D9A94D]/10 shrink-0">
+                  <div className="flex items-center gap-3">
+                    <div className="bg-white p-2 rounded-lg shadow-sm border border-[#D9A94D]/20">
+                      <Layers className="w-5 h-5 text-[#D9A94D]" />
+                    </div>
+                    <div>
+                      <DialogTitle className="text-xl font-bold text-navy">Configurações básicas</DialogTitle>
+                      <p className="text-sm text-navy/40 font-medium mt-0.5">Configure o nome e informações básicas do departamento</p>
+                    </div>
+                  </div>
                 </DialogHeader>
-                <ScrollArea className="flex-1 px-6 py-6">
-                  <div className="space-y-8">
-                    <div className="space-y-2">
-                      <Label className="text-sm font-bold">Nome <span className="text-coral">*</span></Label>
-                      <Input placeholder="Insira o nome" className="rounded-xl border-line" />
-                    </div>
 
-                    <div className="space-y-4">
-                      <div className="flex items-center gap-2">
-                        <Label className="text-sm font-bold">Atendentes</Label>
-                        <Info className="w-3.5 h-3.5 text-navy/30" />
-                      </div>
-                      <div className="border border-line rounded-xl overflow-hidden">
-                        <div className="p-3 bg-surface-2 border-b border-line flex items-center gap-2">
-                          <Search className="w-4 h-4 text-navy/30" />
-                          <input className="bg-transparent border-none outline-none text-xs flex-1" placeholder="Buscar..." />
-                        </div>
-                        <div className="max-h-48 overflow-y-auto p-2 space-y-1">
-                          {[
-                            { name: "Eduardo Lima", email: "edulima27.eh@gmail.com" },
-                            { name: "Elaine Ramos", email: "elainereaparecidaramossouza@gmail.com" },
-                            { name: "Elias Silva", email: "eliascomercialsavecar@gmail.com" },
-                            { name: "Evely Azevedo Rocha", email: "evelyrocha.savecar@gmail.com" }
-                          ].map(user => (
-                            <div key={user.email} className="flex items-center gap-3 p-2 hover:bg-surface-2 rounded-lg transition-colors">
-                              <Checkbox id={user.email} />
-                              <Label htmlFor={user.email} className="text-xs font-medium cursor-pointer">
-                                {user.name} <span className="text-navy/40">({user.email})</span>
-                              </Label>
-                            </div>
-                          ))}
-                        </div>
+                <ScrollArea className="flex-1 bg-white">
+                  <div className="p-8 space-y-10">
+                    {/* Nome Section */}
+                    <div className="space-y-3">
+                      <Label className="text-sm font-bold text-navy flex items-center gap-1">
+                        Nome <span className="text-coral">*</span>
+                      </Label>
+                      <div className="relative group">
+                        <Input 
+                          placeholder="Benefícios Ativos" 
+                          className="rounded-xl border-line h-12 bg-surface-2 px-4 focus-visible:ring-coral/20 focus-visible:border-coral transition-all" 
+                        />
+                        <Pencil className="w-4 h-4 text-navy/20 absolute right-4 top-1/2 -translate-y-1/2 group-hover:text-navy/40 transition-colors" />
                       </div>
                     </div>
 
-                    <div className="space-y-4">
-                      <div className="flex items-center gap-2">
-                        <Label className="text-sm font-bold">Tags</Label>
-                        <Info className="w-3.5 h-3.5 text-navy/30" />
-                      </div>
-                      <div className="border border-line rounded-xl overflow-hidden">
-                        <div className="p-3 bg-surface-2 border-b border-line flex items-center gap-2">
-                          <Search className="w-4 h-4 text-navy/30" />
-                          <input className="bg-transparent border-none outline-none text-xs flex-1" placeholder="Buscar..." />
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                      {/* Atendentes Section */}
+                      <div className="space-y-4">
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-2">
+                            <Users className="w-4 h-4 text-[#D9A94D]" />
+                            <Label className="text-sm font-bold text-navy">Atendentes vinculados</Label>
+                          </div>
                         </div>
-                        <div className="max-h-48 overflow-y-auto p-2 space-y-1">
-                          {["Analisar", "Boleto", "Cotação", "Em Negociação", "Insatisfeito"].map(tag => (
-                            <div key={tag} className="flex items-center gap-3 p-2 hover:bg-surface-2 rounded-lg transition-colors">
-                              <Checkbox id={`tag-${tag}`} />
-                              <Label htmlFor={`tag-${tag}`} className="text-xs font-medium cursor-pointer">{tag}</Label>
+                        <div className="border border-line rounded-xl overflow-hidden bg-white shadow-sm h-[320px] flex flex-col">
+                          <div className="p-3 bg-surface-2 border-b border-line flex items-center gap-2">
+                            <Search className="w-4 h-4 text-navy/30" />
+                            <input className="bg-transparent border-none outline-none text-xs flex-1 placeholder:text-navy/20" placeholder="Buscar..." />
+                            <RefreshCcw className="w-3.5 h-3.5 text-navy/20" />
+                          </div>
+                          <ScrollArea className="flex-1 p-2">
+                            <div className="space-y-1">
+                              {[
+                                { name: "Alice Vieira", email: "alicevieiraii214@gmail.com" },
+                                { name: "Bárbara Carvalho", email: "barbara864carvalho@gmail.com" },
+                                { name: "Carolina Silva", email: "carol.12godinho@gmail.com" },
+                                { name: "Daiane Silva", email: "cobransasavecar@savecarbrasil.com.br" },
+                                { name: "Eduardo Lima", email: "edulima27.eh@gmail.com" }
+                              ].map(user => (
+                                <div key={user.email} className="flex items-center gap-3 p-2.5 hover:bg-surface-2 rounded-lg transition-colors group">
+                                  <Checkbox id={user.email} className="data-[state=checked]:bg-[#D9A94D] data-[state=checked]:border-[#D9A94D]" />
+                                  <div className="flex flex-col min-w-0">
+                                    <Label htmlFor={user.email} className="text-[11px] font-bold text-navy truncate cursor-pointer group-hover:text-coral transition-colors">
+                                      {user.name}
+                                    </Label>
+                                    <span className="text-[10px] text-navy/30 truncate">{user.email}</span>
+                                  </div>
+                                </div>
+                              ))}
                             </div>
-                          ))}
+                          </ScrollArea>
+                        </div>
+                      </div>
+
+                      {/* Classificações Section */}
+                      <div className="space-y-4">
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-2">
+                            <Briefcase className="w-4 h-4 text-[#D9A94D]" />
+                            <Label className="text-sm font-bold text-navy">Classificações vinculadas</Label>
+                          </div>
+                          <Button variant="link" className="text-[10px] text-[#D9A94D] h-auto p-0 font-bold">+ Criar classificação</Button>
+                        </div>
+                        <div className="border border-line rounded-xl overflow-hidden bg-white shadow-sm h-[320px] flex flex-col">
+                          <div className="p-3 bg-surface-2 border-b border-line flex items-center gap-2">
+                            <Search className="w-4 h-4 text-navy/30" />
+                            <input className="bg-transparent border-none outline-none text-xs flex-1 placeholder:text-navy/20" placeholder="Buscar..." />
+                          </div>
+                          <ScrollArea className="flex-1 p-2">
+                            <div className="space-y-1">
+                              {["Concluído"].map(item => (
+                                <div key={item} className="flex items-center gap-3 p-2.5 hover:bg-surface-2 rounded-lg transition-colors group">
+                                  <Checkbox id={`class-${item}`} className="data-[state=checked]:bg-[#D9A94D] data-[state=checked]:border-[#D9A94D]" />
+                                  <Label htmlFor={`class-${item}`} className="text-[11px] font-bold text-navy cursor-pointer">{item}</Label>
+                                </div>
+                              ))}
+                            </div>
+                          </ScrollArea>
+                        </div>
+                      </div>
+
+                      {/* Tags Section */}
+                      <div className="space-y-4">
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-2">
+                            <Tag className="w-4 h-4 text-[#D9A94D]" />
+                            <Label className="text-sm font-bold text-navy">Tags vinculadas</Label>
+                          </div>
+                          <Button variant="link" className="text-[10px] text-[#D9A94D] h-auto p-0 font-bold">+ Criar tag</Button>
+                        </div>
+                        <div className="border border-line rounded-xl overflow-hidden bg-white shadow-sm h-[320px] flex flex-col">
+                          <div className="p-3 bg-surface-2 border-b border-line flex items-center gap-2">
+                            <Search className="w-4 h-4 text-navy/30" />
+                            <input className="bg-transparent border-none outline-none text-xs flex-1 placeholder:text-navy/20" placeholder="Buscar..." />
+                          </div>
+                          <ScrollArea className="flex-1 p-2">
+                            <div className="space-y-1">
+                              {[
+                                { name: "Analisar", active: true },
+                                { name: "Boleto", active: false },
+                                { name: "Cotação", active: true },
+                                { name: "Em Negociação", active: true },
+                                { name: "Insatisfeito", active: true }
+                              ].map(tag => (
+                                <div key={tag.name} className="flex items-center gap-3 p-2.5 hover:bg-surface-2 rounded-lg transition-colors group">
+                                  <Checkbox 
+                                    id={`tag-${tag.name}`} 
+                                    defaultChecked={tag.active}
+                                    className="data-[state=checked]:bg-[#D9A94D] data-[state=checked]:border-[#D9A94D]" 
+                                  />
+                                  <Label htmlFor={`tag-${tag.name}`} className="text-[11px] font-bold text-navy cursor-pointer">{tag.name}</Label>
+                                </div>
+                              ))}
+                            </div>
+                          </ScrollArea>
+                        </div>
+                      </div>
+
+                      {/* Templates Section */}
+                      <div className="space-y-4">
+                        <div className="flex items-center gap-2">
+                          <Layers className="w-4 h-4 text-[#D9A94D]" />
+                          <Label className="text-sm font-bold text-navy">Templates vinculados</Label>
+                        </div>
+                        <div className="border border-line rounded-xl overflow-hidden bg-white shadow-sm h-[320px] flex flex-col">
+                          <div className="p-3 bg-surface-2 border-b border-line flex items-center gap-2">
+                            <Search className="w-4 h-4 text-navy/30" />
+                            <input className="bg-transparent border-none outline-none text-xs flex-1 placeholder:text-navy/20" placeholder="Buscar..." />
+                          </div>
+                          <ScrollArea className="flex-1 p-2">
+                            <div className="space-y-1">
+                              {[
+                                { name: "Boa Tarde, Reativar", active: false },
+                                { name: "Bom Dia, Reativar", active: false },
+                                { name: "Disparo_Ativo_16_Energia_Com_Selo", active: true },
+                                { name: "Finalizar Ativo", active: false },
+                                { name: "Laura, Voltando Associado", active: false }
+                              ].map(temp => (
+                                <div key={temp.name} className="flex items-center gap-3 p-2.5 hover:bg-surface-2 rounded-lg transition-colors group">
+                                  <Checkbox 
+                                    id={`temp-${temp.name}`} 
+                                    defaultChecked={temp.active}
+                                    className="data-[state=checked]:bg-[#D9A94D] data-[state=checked]:border-[#D9A94D]" 
+                                  />
+                                  <Label htmlFor={`temp-${temp.name}`} className="text-[11px] font-bold text-navy cursor-pointer truncate">{temp.name}</Label>
+                                </div>
+                              ))}
+                            </div>
+                          </ScrollArea>
                         </div>
                       </div>
                     </div>
 
-                    <div className="space-y-4 pb-4">
-                      <Label className="text-sm font-bold">Templates</Label>
-                      <div className="border border-line rounded-xl overflow-hidden">
-                        <div className="p-3 bg-surface-2 border-b border-line flex items-center gap-2">
-                          <Search className="w-4 h-4 text-navy/30" />
-                          <input className="bg-transparent border-none outline-none text-xs flex-1" placeholder="Buscar..." />
+                    {/* Transfer Restriction */}
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                      <div className="space-y-4">
+                        <div className="flex items-center gap-2">
+                          <RefreshCcw className="w-4 h-4 text-[#D9A94D]" />
+                          <Label className="text-sm font-bold text-navy">Restringir recebimento de transferências</Label>
                         </div>
-                        <div className="max-h-48 overflow-y-auto p-2 space-y-1">
-                          {["Boa Tarde, Reativar", "Bom Dia, Reativar", "Disparo_Ativo_16_Energia_Com_Selo", "Finalizar Ativo"].map(temp => (
-                            <div key={temp} className="flex items-center gap-3 p-2 hover:bg-surface-2 rounded-lg transition-colors">
-                              <Checkbox id={`temp-${temp}`} />
-                              <Label htmlFor={`temp-${temp}`} className="text-xs font-medium cursor-pointer">{temp}</Label>
+                        <p className="text-[10px] leading-relaxed text-navy/40 font-medium max-w-md">
+                          Se nenhum for selecionado, este departamento é público e recebe transferências de qualquer departamento. Selecionando um ou mais, somente atendimentos que estão nesses departamentos poderão ser transferidos para cá.
+                        </p>
+                        <div className="border border-line rounded-xl overflow-hidden bg-white shadow-sm h-[200px] flex flex-col max-w-sm">
+                          <div className="p-3 bg-surface-2 border-b border-line flex items-center gap-2">
+                            <Search className="w-4 h-4 text-navy/30" />
+                            <input className="bg-transparent border-none outline-none text-xs flex-1 placeholder:text-navy/20" placeholder="Buscar..." />
+                          </div>
+                          <ScrollArea className="flex-1 p-2">
+                            <div className="space-y-1">
+                              {["2 Via Boleto", "Adm", "Atendimento", "Cadastro", "Carta de Ressalva"].map(dept => (
+                                <div key={dept} className="flex items-center gap-3 p-2 hover:bg-surface-2 rounded-lg transition-colors group">
+                                  <Checkbox id={`restrict-${dept}`} className="data-[state=checked]:bg-[#D9A94D] data-[state=checked]:border-[#D9A94D]" />
+                                  <Label htmlFor={`restrict-${dept}`} className="text-[11px] font-bold text-navy cursor-pointer">{dept}</Label>
+                                </div>
+                              ))}
                             </div>
-                          ))}
+                          </ScrollArea>
                         </div>
                       </div>
                     </div>
                   </div>
                 </ScrollArea>
-                <DialogFooter className="px-6 py-4 border-t bg-surface-2 flex items-center justify-between sm:justify-between w-full">
-                  <Button variant="ghost" className="text-navy/60 font-bold hover:bg-transparent">Cancelar</Button>
-                  <Button className="bg-transparent text-navy/20 font-bold hover:bg-transparent" disabled>Salvar</Button>
+
+                <div className="px-8 py-2 bg-white flex items-center justify-center border-t border-line/50 shrink-0">
+                  <div className="flex items-center gap-2 text-[10px] font-bold text-navy/20">
+                    <ChevronDown className="w-3 h-3" /> Role para ver mais
+                  </div>
+                </div>
+
+                <DialogFooter className="px-8 py-6 border-t bg-surface-2 flex items-center justify-end w-full shrink-0">
+                  <Button className="bg-[#D9A94D] text-white hover:bg-[#D9A94D]/90 font-bold px-10 h-12 rounded-xl shadow-lg shadow-[#D9A94D]/20 transition-all active:scale-95">
+                    Salvar Departamento
+                  </Button>
                 </DialogFooter>
               </DialogContent>
             </Dialog>
           </div>
+
 
           <div className="flex flex-col md:flex-row gap-4">
             <div className="space-y-1.5 flex-1 max-w-xs">
