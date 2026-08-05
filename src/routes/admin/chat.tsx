@@ -851,12 +851,12 @@ function AdminChatPage() {
               </Select>
             </div>
             <div className="space-y-2">
-              <Label className="text-[10px] font-bold uppercase tracking-wider text-gray-400">Tipo de canal</Label>
+              <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Tipo de canal</Label>
               <Select>
-                <SelectTrigger className="bg-[#23262E] border-none text-xs h-10">
+                <SelectTrigger className="bg-muted border-none text-xs h-10">
                   <SelectValue placeholder="Selecione uma opção" />
                 </SelectTrigger>
-                <SelectContent className="bg-[#23262E] border-none text-white">
+                <SelectContent className="bg-popover border-border text-foreground">
                   <SelectItem value="wa">WhatsApp</SelectItem>
                   <SelectItem value="email">Email</SelectItem>
                 </SelectContent>
