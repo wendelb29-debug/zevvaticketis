@@ -7,10 +7,38 @@ import {
   MoreVertical, CheckCircle, Shuffle, Users as PeopleIcon, Folder, Clock, 
   History as HistoryIcon, Calendar, Zap, Copy, Printer, Eye, Tag, AlertCircle, 
   LayoutList, MessageSquare, Filter, SlidersHorizontal, ListFilter,
-  Paperclip, Smile, Image as ImageIcon, Play, Volume2, Pencil, X, Home, ChevronRight
+  Paperclip, Smile, ImageIcon, Play, Volume2, Pencil, X, Home, ChevronRight,
+  ArrowUpDown, SortAsc, SortDesc, CalendarDays, Lock, Globe, MessageCircle
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Badge } from '@/components/ui/badge';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
+import { toast } from "sonner";
 
 export const Route = createFileRoute('/admin/chat')({
   component: AdminChatPage,
@@ -20,6 +48,12 @@ function AdminChatPage() {
   const [selectedContactId, setSelectedContactId] = useState<string | null>("1");
   const [agentStatus, setAgentStatus] = useState<'online' | 'busy' | 'offline'>('offline');
   const [user, setUser] = useState<any>(null);
+  const [isFilterDialogOpen, setIsFilterDialogOpen] = useState(false);
+  const [isHistoryDialogOpen, setIsHistoryDialogOpen] = useState(false);
+  const [isActiveTicketDialogOpen, setIsActiveTicketDialogOpen] = useState(false);
+  const [isFinishDialogOpen, setIsFinishDialogOpen] = useState(false);
+  const [isTransferDialogOpen, setIsTransferDialogOpen] = useState(false);
+  const [sortBy, setSortBy] = useState('recent-top');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -33,6 +67,11 @@ function AdminChatPage() {
   const handleLogout = async () => {
     await supabase.auth.signOut();
     navigate({ to: "/" });
+  };
+
+  const handleTransfer = () => {
+    toast.info("Transferindo atendimento...");
+    setIsTransferDialogOpen(false);
   };
 
   const contacts = [
@@ -119,9 +158,78 @@ function AdminChatPage() {
                 />
               </div>
               <div className="flex gap-1">
-                <button className="p-2 bg-surface-2 rounded-lg text-navy/40 hover:text-navy border border-line"><LayoutList className="w-4 h-4" /></button>
-                <button className="p-2 bg-surface-2 rounded-lg text-navy/40 hover:text-navy border border-line"><Clock className="w-4 h-4" /></button>
-                <button className="p-2 bg-coral rounded-lg text-white"><Plus className="w-4 h-4" /></button>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <button className="p-2 bg-surface-2 rounded-lg text-navy/40 hover:text-navy border border-line">
+                      <ArrowUpDown className="w-4 h-4" />
+                    </button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end" className="w-[300px] bg-[#23262E] border-none text-white p-2">
+                    <DropdownMenuLabel className="text-[10px] font-bold text-gray-400 uppercase tracking-widest px-2 py-2">Tipos de Ordenação</DropdownMenuLabel>
+                    <DropdownMenuItem 
+                      onClick={() => setSortBy('recent-top')}
+                      className={cn("flex items-center justify-between px-3 py-2.5 rounded-lg cursor-pointer", sortBy === 'recent-top' ? "bg-coral/20 text-coral" : "hover:bg-white/5")}
+                    >
+                      <div className="flex items-center gap-3">
+                        <MessageSquare className="w-4 h-4" />
+                        <span className="text-xs">Mensagem mais recente no topo (Padrão)</span>
+                      </div>
+                      <SortDesc className="w-3.5 h-3.5" />
+                    </DropdownMenuItem>
+                    <DropdownMenuItem 
+                      onClick={() => setSortBy('oldest-top')}
+                      className={cn("flex items-center justify-between px-3 py-2.5 rounded-lg cursor-pointer", sortBy === 'oldest-top' ? "bg-coral/20 text-coral" : "hover:bg-white/5")}
+                    >
+                      <div className="flex items-center gap-3">
+                        <MessageSquare className="w-4 h-4" />
+                        <span className="text-xs">Mensagem mais antiga no topo</span>
+                      </div>
+                      <SortAsc className="w-3.5 h-3.5" />
+                    </DropdownMenuItem>
+                    <DropdownMenuItem 
+                      onClick={() => setSortBy('created-recent')}
+                      className={cn("flex items-center justify-between px-3 py-2.5 rounded-lg cursor-pointer", sortBy === 'created-recent' ? "bg-coral/20 text-coral" : "hover:bg-white/5")}
+                    >
+                      <div className="flex items-center gap-3">
+                        <CalendarDays className="w-4 h-4" />
+                        <span className="text-xs">Data de criação mais recente no topo</span>
+                      </div>
+                      <SortDesc className="w-3.5 h-3.5" />
+                    </DropdownMenuItem>
+                    <DropdownMenuItem 
+                      onClick={() => setSortBy('created-oldest')}
+                      className={cn("flex items-center justify-between px-3 py-2.5 rounded-lg cursor-pointer", sortBy === 'created-oldest' ? "bg-coral/20 text-coral" : "hover:bg-white/5")}
+                    >
+                      <div className="flex items-center gap-3">
+                        <CalendarDays className="w-4 h-4" />
+                        <span className="text-xs">Data de criação mais antiga no topo</span>
+                      </div>
+                      <SortAsc className="w-3.5 h-3.5" />
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+
+                <button 
+                  onClick={() => setIsFilterDialogOpen(true)}
+                  className="p-2 bg-surface-2 rounded-lg text-navy/40 hover:text-navy border border-line"
+                >
+                  <Filter className="w-4 h-4" />
+                </button>
+                
+                <button 
+                  onClick={() => setIsHistoryDialogOpen(true)}
+                  className="p-2 bg-surface-2 rounded-lg text-navy/40 hover:text-navy border border-line"
+                >
+                  <HistoryIcon className="w-4 h-4" />
+                </button>
+
+                <button 
+                  onClick={() => setIsActiveTicketDialogOpen(true)}
+                  className="p-2 bg-coral rounded-lg text-white"
+                  title="Iniciar atendimento ativo"
+                >
+                  <Plus className="w-4 h-4" />
+                </button>
               </div>
             </div>
             <div className="text-[10px] text-gray-500 font-bold uppercase px-1">Exibindo {contacts.length} atendimentos de {contacts.length}</div>
@@ -320,7 +428,10 @@ function AdminChatPage() {
                     Escolha uma conversa em andamento ou inicie uma nova conversa agora mesmo. Enquanto estiver online, você receberá novos atendimentos normalmente.
                   </p>
                </div>
-               <button className="px-8 py-3 bg-white border-2 border-[#FFD31A] text-[#171717] text-[14px] font-bold rounded-xl hover:bg-[#FFFBE8] transition-colors shadow-sm">
+               <button 
+                onClick={() => setIsActiveTicketDialogOpen(true)}
+                className="px-8 py-3 bg-white border-2 border-coral text-coral text-[14px] font-bold rounded-xl hover:bg-coral/5 transition-colors shadow-sm"
+              >
                  Iniciar nova conversa
                </button>
             </div>
@@ -330,25 +441,345 @@ function AdminChatPage() {
         {/* 9. BARRA VERTICAL DE AÇÕES (52px) */}
         <div className="w-[52px] border-l border-[#E5E7EB] flex flex-col items-center py-6 gap-4 bg-white shrink-0 z-10">
           {[
-            { icon: CheckCircle, label: "Finalizar" },
-            { icon: Shuffle, label: "Transferir" },
+            { icon: CheckCircle, label: "Finalizar", onClick: () => setIsFinishDialogOpen(true) },
+            { icon: Shuffle, label: "Transferir", onClick: () => setIsTransferDialogOpen(true) },
             { icon: PeopleIcon, label: "Dados" },
             { icon: Folder, label: "Arquivos" },
-            { icon: HistoryIcon, label: "Histórico" },
+            { icon: HistoryIcon, label: "Histórico", onClick: () => setIsHistoryDialogOpen(true) },
             { icon: Calendar, label: "Agendar" },
             { icon: Zap, label: "Gatilhos" },
             { icon: Copy, label: "Copiar" },
             { icon: Printer, label: "Imprimir" },
           ].map((action, i) => (
-            <button key={i} className={cn(
+            <button 
+              key={i} 
+              onClick={action.onClick}
+              className={cn(
                 "p-2.5 rounded-lg transition-all group relative border border-transparent",
-                i === 2 ? "bg-coral/10 border-coral/30 text-coral" : "text-navy/20 hover:bg-coral/5 hover:text-coral"
+                i === 0 ? "bg-coral text-white shadow-lg" : "text-navy/20 hover:bg-coral/5 hover:text-coral"
             )} title={action.label}>
               <action.icon className="w-5 h-5" />
+              {i === 0 && <span className="absolute left-[-80px] top-1/2 -translate-y-1/2 bg-[#23262E] text-white text-[10px] font-bold px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">Finalizar</span>}
+              {i === 1 && <span className="absolute left-[-80px] top-1/2 -translate-y-1/2 bg-[#23262E] text-white text-[10px] font-bold px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none text-coral">Transferir</span>}
             </button>
           ))}
         </div>
       </div>
+
+      {/* Dialog: Filtros */}
+      <Dialog open={isFilterDialogOpen} onOpenChange={setIsFilterDialogOpen}>
+        <DialogContent className="max-w-2xl bg-[#1A1D29] border-[#2D313F] text-white">
+          <DialogHeader>
+            <DialogTitle className="text-xl font-bold">Filtros</DialogTitle>
+            <DialogDescription className="text-gray-400">Selecione os filtros que deseja aplicar aos tickets.</DialogDescription>
+          </DialogHeader>
+          <div className="grid grid-cols-3 gap-6 py-4">
+            <div className="space-y-2">
+              <Label className="text-[10px] font-bold uppercase tracking-wider text-gray-400">Projeto</Label>
+              <Select defaultValue="all">
+                <SelectTrigger className="bg-[#23262E] border-none text-xs h-10">
+                  <SelectValue placeholder="Selecione uma opção" />
+                </SelectTrigger>
+                <SelectContent className="bg-[#23262E] border-none text-white">
+                  <SelectItem value="all">Todos os Projetos</SelectItem>
+                  <SelectItem value="zevva">Zevva Tickets</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="space-y-2">
+              <Label className="text-[10px] font-bold uppercase tracking-wider text-gray-400">Tipo de canal</Label>
+              <Select>
+                <SelectTrigger className="bg-[#23262E] border-none text-xs h-10">
+                  <SelectValue placeholder="Selecione uma opção" />
+                </SelectTrigger>
+                <SelectContent className="bg-[#23262E] border-none text-white">
+                  <SelectItem value="wa">WhatsApp</SelectItem>
+                  <SelectItem value="email">Email</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="space-y-2">
+              <Label className="text-[10px] font-bold uppercase tracking-wider text-gray-400">Tipo de atendimento</Label>
+              <Select defaultValue="receptivo">
+                <SelectTrigger className="bg-[#23262E] border-none text-xs h-10">
+                  <SelectValue placeholder="Ativo e receptivo" />
+                </SelectTrigger>
+                <SelectContent className="bg-[#23262E] border-none text-white">
+                  <SelectItem value="receptivo">Ativo e receptivo</SelectItem>
+                  <SelectItem value="only-receptivo">Apenas receptivo</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+          <div className="grid grid-cols-2 gap-6 py-2">
+            <div className="space-y-2">
+              <Label className="text-[10px] font-bold uppercase tracking-wider text-gray-400">Departamentos</Label>
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-500" />
+                <Input placeholder="Buscar..." className="bg-[#23262E] border-none pl-9 h-10 text-xs" />
+              </div>
+            </div>
+            <div className="space-y-2">
+              <div className="flex items-center gap-1">
+                <Label className="text-[10px] font-bold uppercase tracking-wider text-gray-400">Tags</Label>
+                <AlertCircle className="w-3 h-3 text-coral" />
+              </div>
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-500" />
+                <Input placeholder="Buscar..." className="bg-[#23262E] border-none pl-9 h-10 text-xs" />
+              </div>
+            </div>
+          </div>
+          <div className="py-4">
+             <div className="bg-[#315DA8]/20 border border-[#315DA8]/30 rounded-lg p-3 text-center text-[11px] text-[#315DA8] font-medium">
+               Selecione um projeto para selecionar os canais (não é necessário selecionar um canal para filtrar)
+             </div>
+          </div>
+          <div className="space-y-4 py-2">
+            <Label className="text-[10px] font-bold uppercase tracking-wider text-gray-400">Preferências</Label>
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <span className="text-xs text-gray-400">Mensagens agendadas</span>
+                <Switch />
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-xs text-gray-400">Mensagens não lidas</span>
+                <Switch />
+              </div>
+            </div>
+          </div>
+          <DialogFooter className="mt-6 flex justify-between sm:justify-between items-center w-full">
+            <button onClick={() => setIsFilterDialogOpen(false)} className="text-sm font-bold hover:underline">Cancelar</button>
+            <div className="flex gap-4">
+              <button className="flex items-center gap-2 text-xs font-bold text-gray-400 hover:text-white">
+                <ListFilter className="w-4 h-4" /> Limpar filtros
+              </button>
+              <button onClick={() => { toast.success("Filtros aplicados"); setIsFilterDialogOpen(false); }} className="bg-[#FFD31A] hover:bg-[#FFD31A]/90 text-black px-8 py-2.5 rounded-lg text-xs font-black uppercase tracking-widest">Aplicar</button>
+            </div>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Dialog: Histórico de Conversas */}
+      <Dialog open={isHistoryDialogOpen} onOpenChange={setIsHistoryDialogOpen}>
+        <DialogContent className="max-w-2xl bg-[#1A1D29] border-[#2D313F] text-white">
+          <DialogHeader>
+            <DialogTitle className="text-xl font-bold">Histórico de conversas</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-6 py-4">
+            <div className="space-y-2">
+              <Label className="text-[10px] font-bold uppercase tracking-wider text-gray-400">Projeto</Label>
+              <Select defaultValue="zevva">
+                <SelectTrigger className="bg-[#23262E] border-none text-xs h-10">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent className="bg-[#23262E] border-none text-white">
+                  <SelectItem value="zevva">Zevva Tickets</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="space-y-2">
+              <Label className="text-[10px] font-bold uppercase tracking-wider text-gray-400">Pesquisar por protocolo, nome ou telefone <span className="text-coral">*</span></Label>
+              <div className="relative">
+                <Input placeholder="Buscar por protocolo, nome ou telefone" className="bg-[#23262E] border-none h-11 text-xs pr-12" />
+                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] text-gray-500 font-bold">0 / 255</span>
+              </div>
+            </div>
+            <div className="grid grid-cols-2 gap-6">
+              <div className="space-y-2">
+                <Label className="text-[10px] font-bold uppercase tracking-wider text-gray-400">Tipo de canal</Label>
+                <Select>
+                  <SelectTrigger className="bg-[#23262E] border-none text-xs h-10">
+                    <SelectValue placeholder="Selecione os tipos de canais" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-[#23262E] border-none text-white">
+                    <SelectItem value="wa">WhatsApp</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="space-y-2">
+                <Label className="text-[10px] font-bold uppercase tracking-wider text-gray-400">Canais</Label>
+                <Select>
+                  <SelectTrigger className="bg-[#23262E] border-none text-xs h-10">
+                    <SelectValue placeholder="Selecione um ou mais canais" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-[#23262E] border-none text-white">
+                    <SelectItem value="c1">Canal 1</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+            <div className="space-y-2">
+              <Label className="text-[10px] font-bold uppercase tracking-wider text-gray-400">Período</Label>
+              <button className="w-full bg-[#23262E] text-left px-4 h-10 rounded-lg text-xs text-gray-400">Selecionar período</button>
+            </div>
+            <button className="w-full py-3 bg-[#2F323D] text-gray-500 text-xs font-black uppercase tracking-widest rounded-lg cursor-not-allowed">Buscar</button>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Dialog: Iniciar Atendimento Ativo */}
+      <Dialog open={isActiveTicketDialogOpen} onOpenChange={setIsActiveTicketDialogOpen}>
+        <DialogContent className="max-w-2xl bg-[#1A1D29] border-[#2D313F] text-white">
+          <DialogHeader>
+            <DialogTitle className="text-xl font-bold">Iniciar Atendimento Ativo</DialogTitle>
+            <DialogDescription className="text-gray-400">Escolha um cliente para iniciar um novo atendimento ativo</DialogDescription>
+          </DialogHeader>
+          <div className="grid grid-cols-2 gap-6 py-6">
+            <div className="space-y-2">
+              <Label className="text-[10px] font-bold uppercase tracking-wider text-gray-400">Organização</Label>
+              <Select defaultValue="zevva">
+                <SelectTrigger className="bg-[#23262E] border-none text-xs h-11">
+                  <SelectValue placeholder="Zevva" />
+                </SelectTrigger>
+                <SelectContent className="bg-[#23262E] border-none text-white">
+                  <SelectItem value="zevva">Zevva</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="space-y-2">
+              <Label className="text-[10px] font-bold uppercase tracking-wider text-gray-400">Projeto</Label>
+              <Select defaultValue="zevva-br">
+                <SelectTrigger className="bg-[#23262E] border-none text-xs h-11">
+                  <SelectValue placeholder="Zevva Tickets" />
+                </SelectTrigger>
+                <SelectContent className="bg-[#23262E] border-none text-white">
+                  <SelectItem value="zevva-br">Zevva Tickets</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="space-y-2">
+              <Label className="text-[10px] font-bold uppercase tracking-wider text-gray-400">Canal</Label>
+              <Select>
+                <SelectTrigger className="bg-[#23262E] border-none text-xs h-11 text-gray-500">
+                  <SelectValue placeholder="Selecione um canal" />
+                </SelectTrigger>
+                <SelectContent className="bg-[#23262E] border-none text-white">
+                  <SelectItem value="wa">WhatsApp Suporte</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="space-y-2">
+              <Label className="text-[10px] font-bold uppercase tracking-wider text-gray-400">Departamento</Label>
+              <Select>
+                <SelectTrigger className="bg-[#23262E] border-none text-xs h-11 text-gray-500">
+                  <SelectValue placeholder="Selecione um departamento" />
+                </SelectTrigger>
+                <SelectContent className="bg-[#23262E] border-none text-white">
+                  <SelectItem value="vendas">Vendas</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+          <DialogFooter className="mt-4 flex justify-between sm:justify-between items-center w-full">
+            <button onClick={() => setIsActiveTicketDialogOpen(false)} className="text-sm font-bold hover:underline">Cancelar</button>
+            <button className="flex-1 max-w-[400px] py-3 bg-[#2F323D] text-gray-500 text-[11px] font-black uppercase tracking-widest rounded-lg cursor-not-allowed">Escolher Destinatário</button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Dialog: Finalizar Atendimento */}
+      <Dialog open={isFinishDialogOpen} onOpenChange={setIsFinishDialogOpen}>
+        <DialogContent className="max-w-2xl bg-[#1A1D29] border-[#2D313F] text-white">
+          <DialogHeader>
+            <div className="flex items-center gap-3">
+              <DialogTitle className="text-xl font-bold">Finalizar atendimento</DialogTitle>
+              <Badge variant="outline" className="bg-[#23262E] border-none text-gray-500 text-[10px] px-2 py-0">20240804-001</Badge>
+            </div>
+            <DialogDescription className="text-gray-400">Ao finalizar este atendimento, o ticket será fechado e não poderá ser reaberto.</DialogDescription>
+          </DialogHeader>
+          <div className="py-4 space-y-6">
+            <div className="bg-[#315DA8]/20 border border-[#315DA8]/30 rounded-lg p-3 flex items-center gap-3 text-[11px] text-[#315DA8] font-medium">
+              <AlertCircle className="w-4 h-4" /> Não há classificações disponíveis para este departamento.
+            </div>
+            <div className="space-y-3">
+              <Label className="text-[10px] font-bold uppercase tracking-wider text-gray-400">Observações</Label>
+              <div className="bg-[#23262E] rounded-xl border border-white/5 overflow-hidden">
+                <div className="flex items-center gap-4 px-4 py-3 border-b border-white/5">
+                  <div className="flex gap-4 text-gray-400">
+                     <span className="font-serif font-bold">B</span>
+                     <span className="italic font-serif">I</span>
+                     <span className="line-through font-serif">S</span>
+                     <span className="font-mono">{"<>"}</span>
+                  </div>
+                  <div className="flex-1" />
+                  <div className="flex gap-4 text-gray-400">
+                    <Smile className="w-4 h-4" />
+                    <Pencil className="w-4 h-4" />
+                  </div>
+                </div>
+                <textarea 
+                  className="w-full bg-transparent p-6 min-h-[160px] outline-none text-sm resize-none"
+                  placeholder="Descreva o atendimento..."
+                />
+                <div className="flex items-center justify-between px-4 py-3 border-t border-white/5">
+                   <Zap className="w-4 h-4 text-gray-500" />
+                   <div className="flex items-center gap-3">
+                     <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">0 / 512</span>
+                     <MoreVertical className="w-4 h-4 text-gray-500" />
+                   </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <DialogFooter className="mt-4 flex justify-between sm:justify-between items-center w-full">
+            <button onClick={() => setIsFinishDialogOpen(false)} className="text-sm font-bold hover:underline">Cancelar</button>
+            <button onClick={() => { toast.success("Atendimento finalizado"); setIsFinishDialogOpen(false); }} className="flex-1 max-w-[400px] py-3 bg-coral hover:bg-coral/90 text-white text-[11px] font-black uppercase tracking-widest rounded-lg">Finalizar atendimento</button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Dialog: Transferir Atendimento */}
+      <Dialog open={isTransferDialogOpen} onOpenChange={setIsTransferDialogOpen}>
+        <DialogContent className="max-w-2xl bg-[#1A1D29] border-[#2D313F] text-white">
+          <DialogHeader>
+            <div className="flex items-center gap-3">
+              <DialogTitle className="text-xl font-bold">Transferir atendimento</DialogTitle>
+              <Badge variant="outline" className="bg-[#23262E] border-none text-gray-500 text-[10px] px-2 py-0">20240804-001</Badge>
+            </div>
+            <DialogDescription className="text-gray-400">Escolha o destinatário para transferir este atendimento.</DialogDescription>
+          </DialogHeader>
+          <div className="py-6 space-y-6">
+            <div className="grid grid-cols-2 gap-6">
+              <div className="space-y-2">
+                <Label className="text-[10px] font-bold uppercase tracking-wider text-gray-400">Tipo de transferência</Label>
+                <Select defaultValue="agent">
+                  <SelectTrigger className="bg-[#23262E] border-none text-xs h-11">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent className="bg-[#23262E] border-none text-white">
+                    <SelectItem value="agent">Para Agente</SelectItem>
+                    <SelectItem value="dept">Para Departamento</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="space-y-2">
+                <Label className="text-[10px] font-bold uppercase tracking-wider text-gray-400">Destinatário</Label>
+                <Select>
+                  <SelectTrigger className="bg-[#23262E] border-none text-xs h-11">
+                    <SelectValue placeholder="Selecione um agente" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-[#23262E] border-none text-white">
+                    <SelectItem value="a1">Carlos Aguiar</SelectItem>
+                    <SelectItem value="a2">Ana Pereira</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+            <div className="space-y-2">
+              <Label className="text-[10px] font-bold uppercase tracking-wider text-gray-400">Motivo da transferência</Label>
+              <textarea 
+                className="w-full bg-[#23262E] border-none p-4 rounded-xl text-xs text-white placeholder:text-gray-600 outline-none min-h-[100px] resize-none"
+                placeholder="Explique o motivo da transferência..."
+              />
+            </div>
+          </div>
+          <DialogFooter className="mt-4 flex justify-between sm:justify-between items-center w-full">
+            <button onClick={() => setIsTransferDialogOpen(false)} className="text-sm font-bold hover:underline">Cancelar</button>
+            <button onClick={handleTransfer} className="flex-1 max-w-[400px] py-3 bg-coral hover:bg-coral/90 text-white text-[11px] font-black uppercase tracking-widest rounded-lg">Transferir agora</button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
 
       <style>{`
         .custom-scrollbar::-webkit-scrollbar { width: 4px; }
