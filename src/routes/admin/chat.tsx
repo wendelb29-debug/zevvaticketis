@@ -433,21 +433,26 @@ function AdminChatPage() {
         {/* 9. BARRA VERTICAL DE AÇÕES (52px) */}
         <div className="w-[52px] border-l border-[#E5E7EB] flex flex-col items-center py-6 gap-4 bg-white shrink-0 z-10">
           {[
-            { icon: CheckCircle, label: "Finalizar" },
-            { icon: Shuffle, label: "Transferir" },
+            { icon: CheckCircle, label: "Finalizar", onClick: () => setIsFinishDialogOpen(true) },
+            { icon: Shuffle, label: "Transferir", onClick: () => setIsTransferDialogOpen(true) },
             { icon: PeopleIcon, label: "Dados" },
             { icon: Folder, label: "Arquivos" },
-            { icon: HistoryIcon, label: "Histórico" },
+            { icon: HistoryIcon, label: "Histórico", onClick: () => setIsHistoryDialogOpen(true) },
             { icon: Calendar, label: "Agendar" },
             { icon: Zap, label: "Gatilhos" },
             { icon: Copy, label: "Copiar" },
             { icon: Printer, label: "Imprimir" },
           ].map((action, i) => (
-            <button key={i} className={cn(
+            <button 
+              key={i} 
+              onClick={action.onClick}
+              className={cn(
                 "p-2.5 rounded-lg transition-all group relative border border-transparent",
-                i === 2 ? "bg-coral/10 border-coral/30 text-coral" : "text-navy/20 hover:bg-coral/5 hover:text-coral"
+                i === 0 ? "bg-coral text-white shadow-lg" : "text-navy/20 hover:bg-coral/5 hover:text-coral"
             )} title={action.label}>
               <action.icon className="w-5 h-5" />
+              {i === 0 && <span className="absolute left-[-80px] top-1/2 -translate-y-1/2 bg-[#23262E] text-white text-[10px] font-bold px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">Finalizar</span>}
+              {i === 1 && <span className="absolute left-[-80px] top-1/2 -translate-y-1/2 bg-[#23262E] text-white text-[10px] font-bold px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none text-coral">Transferir</span>}
             </button>
           ))}
         </div>
