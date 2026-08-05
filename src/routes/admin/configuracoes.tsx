@@ -1009,11 +1009,11 @@ const AtendimentoAccordion = () => (
       </AccordionTrigger>
       <AccordionContent className="px-6 pb-6 pt-2 border-t border-border/50">
         <div className="space-y-6 pt-6">
-          <div className="bg-[#EBF3FF] p-4 rounded-xl flex items-center gap-3 border border-[#EBF3FF] shadow-sm">
-            <div className="bg-[#3B82F6] p-1.5 rounded-full">
+          <div className="bg-primary/10 p-4 rounded-xl flex items-center gap-3 border border-primary/20 shadow-sm">
+            <div className="bg-primary p-1.5 rounded-full">
               <Clock className="w-3.5 h-3.5 text-white" />
             </div>
-            <p className="text-xs font-bold text-[#3B82F6]">
+            <p className="text-xs font-bold text-primary">
               Os horários abaixo seguem o fuso horário do projeto: America/Sao Paulo.
             </p>
           </div>
@@ -1035,9 +1035,9 @@ const AtendimentoAccordion = () => (
                   </div>
                 </DialogHeader>
                 
-                <div className="bg-[#EBF3FF] mx-8 mt-6 p-3 rounded-xl flex items-center gap-3 border border-[#EBF3FF]">
-                  <Clock className="w-4 h-4 text-[#3B82F6]" />
-                  <p className="text-[11px] font-bold text-[#3B82F6]">
+                <div className="bg-primary/10 mx-8 mt-6 p-3 rounded-xl flex items-center gap-3 border border-primary/20">
+                  <Clock className="w-4 h-4 text-primary" />
+                  <p className="text-[11px] font-bold text-primary">
                     Os horários abaixo seguem o fuso horário do projeto: America/Sao Paulo.
                   </p>
                 </div>
