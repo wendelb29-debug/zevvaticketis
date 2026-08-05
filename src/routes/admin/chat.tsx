@@ -695,9 +695,9 @@ function AdminChatPage() {
                              </DropdownMenuTrigger>
                              <DropdownMenuContent side="right" className="bg-popover border border-border p-1 shadow-xl max-h-[300px] overflow-y-auto">
                               {['Gaúcho', 'Carioca', 'Paulista', 'Mineiro', 'Nordestino', 'Baiano', 'Nortista', 'Sertanejo', 'Catarinense', 'Paranaense'].map(accent => (
-                                <DropdownMenuItem key={accent} className="text-xs px-3 py-2 hover:bg-coral/5 dark:hover:bg-white/5 cursor-pointer rounded-md">
-                                  {accent}
-                                </DropdownMenuItem>
+                                 <DropdownMenuItem key={accent} className="text-xs px-3 py-2 hover:bg-accent cursor-pointer rounded-md text-foreground">
+                                   {accent}
+                                 </DropdownMenuItem>
                               ))}
                             </DropdownMenuContent>
                           </DropdownMenu>
