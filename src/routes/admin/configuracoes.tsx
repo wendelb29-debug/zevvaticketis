@@ -270,7 +270,7 @@ function SettingsPage() {
             <AccordionItem value="pref" className="border-border bg-card rounded-xl border overflow-hidden shadow-sm">
               <AccordionTrigger className="px-6 py-5 font-bold text-lg hover:no-underline hover:bg-accent/50 transition-colors">
                 <div className="flex items-center gap-3">
-                  <SlidingScale className="w-5 h-5 text-primary" /> Preferências Globais
+                  <Sliders className="w-5 h-5 text-primary" /> Preferências Globais
                 </div>
               </AccordionTrigger>
               <AccordionContent className="px-6 pb-6 pt-2">
