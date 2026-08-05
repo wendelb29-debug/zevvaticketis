@@ -242,45 +242,48 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
 
 
           {step === 2 && (
-            <div className="grid grid-cols-1 lg:grid-cols-[300px_1fr] gap-8 animate-in fade-in duration-300">
-              <div className="space-y-6">
+            <div className="grid grid-cols-1 lg:grid-cols-[380px_1fr] gap-12 animate-in fade-in slide-in-from-bottom-4 duration-500">
+              <div className="space-y-8">
                 <div>
-                  <h2 className="text-lg font-bold mb-1">Público Alvo</h2>
-                  <p className="text-sm text-white/40">Selecione o público que receberá as mensagens da sua campanha</p>
+                  <h2 className="text-xl font-manrope font-extrabold text-navy uppercase tracking-tight">Público Alvo</h2>
+                  <p className="text-sm text-muted-fg mt-1">Selecione o público que receberá as mensagens da sua campanha</p>
                 </div>
 
                 <div className="space-y-4">
-                  <div className="space-y-2">
-                    <Label className="text-xs font-bold text-white/60">Selecionar público</Label>
-                    <p className="text-[10px] text-white/40 mb-3">Escolha como você quer adicionar os contatos que receberão as mensagens</p>
+                  <div className="space-y-3">
+                    <Label className="text-xs font-bold text-navy uppercase tracking-widest">Origem dos contatos</Label>
                     
-                    <div className="space-y-2">
+                    <div className="space-y-3">
                       {[
-                        { id: "arquivo", label: "Arquivo (csv ou xlsx)", desc: "Carregue um arquivo com os seus leads" },
-                        { id: "publico", label: "Usar meu público", desc: "Usar os leads já cadastrados no sistema" },
-                        { id: "manual", label: "Manualmente", desc: "Digitar números de leads manualmente" },
+                        { id: "arquivo", label: "Arquivo Importado", desc: "Planilhas .csv ou .xlsx", icon: FileText },
+                        { id: "publico", label: "Minha Base Zevva", desc: "Leads e participantes do sistema", icon: Users },
+                        { id: "manual", label: "Entrada Manual", desc: "Digitar números manualmente", icon: MessageSquare },
                       ].map((item) => (
                         <div 
                           key={item.id}
                           onClick={() => setPublicType(item.id)}
                           className={cn(
-                            "p-4 rounded-xl border-2 cursor-pointer transition-all duration-200",
+                            "p-4 rounded-xl border transition-all duration-300 cursor-pointer flex items-center gap-4 group",
                             publicType === item.id 
-                              ? "bg-[#FFCC00]/5 border-[#FFCC00]" 
-                              : "bg-[#2A2A3C] border-transparent hover:border-white/10"
+                              ? "bg-primary/5 border-primary shadow-sm ring-1 ring-primary/20" 
+                              : "bg-background border-border hover:border-primary/30"
                           )}
                         >
-                          <div className="flex items-start gap-3">
-                            <div className={cn(
-                              "w-5 h-5 rounded-full border-2 flex items-center justify-center mt-0.5",
-                              publicType === item.id ? "border-[#FFCC00]" : "border-white/20"
-                            )}>
-                              {publicType === item.id && <div className="w-2.5 h-2.5 rounded-full bg-[#FFCC00]" />}
-                            </div>
-                            <div>
-                              <p className={cn("text-xs font-bold", publicType === item.id ? "text-[#FFCC00]" : "text-white")}>{item.label}</p>
-                              <p className="text-[10px] text-white/40 mt-1">{item.desc}</p>
-                            </div>
+                          <div className={cn(
+                            "w-10 h-10 rounded-lg flex items-center justify-center transition-colors",
+                            publicType === item.id ? "bg-primary text-white" : "bg-accent text-muted-fg group-hover:bg-primary/10 group-hover:text-primary"
+                          )}>
+                            <item.icon className="w-5 h-5" />
+                          </div>
+                          <div className="flex-1">
+                            <p className={cn("text-sm font-bold", publicType === item.id ? "text-primary" : "text-navy")}>{item.label}</p>
+                            <p className="text-[10px] text-muted-fg font-medium">{item.desc}</p>
+                          </div>
+                          <div className={cn(
+                            "w-4 h-4 rounded-full border flex items-center justify-center",
+                            publicType === item.id ? "border-primary bg-primary" : "border-border"
+                          )}>
+                            {publicType === item.id && <Check className="w-2.5 h-2.5 text-white" />}
                           </div>
                         </div>
                       ))}
@@ -289,7 +292,8 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
                 </div>
               </div>
 
-              <div className="bg-[#2A2A3C]/30 rounded-2xl p-8 border border-white/5">
+              <div className="bg-accent/20 rounded-2xl p-8 border border-border">
+
                 {publicType === "arquivo" && (
                   <div className="h-full flex flex-col items-center justify-center space-y-6">
                     <div className="w-full max-w-xl space-y-4">
