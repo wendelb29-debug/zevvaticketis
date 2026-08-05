@@ -72,7 +72,8 @@ export function EventCard({ event, onToggleFavorite }: EventCardProps) {
           </div>
           <Link 
             to="/eventos" 
-            className="w-10 h-10 rounded-full bg-surface border border-line flex items-center justify-center text-navy group-hover:bg-coral group-hover:border-coral group-hover:text-white transition-all shadow-sm"
+            search={{ id: event.id, categoria: event.category || "CARAVANAS INTERNACIONAIS" }}
+            className="w-10 h-10 rounded-full bg-muted border border-border flex items-center justify-center text-foreground group-hover:bg-primary group-hover:border-primary group-hover:text-white transition-all shadow-sm"
           >
             <ArrowRight className="w-5 h-5" />
           </Link>
