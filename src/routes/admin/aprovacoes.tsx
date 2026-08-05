@@ -47,12 +47,12 @@ function AprovacoesPage() {
   if (isLoading) return <div>Carregando...</div>;
 
   return (
-    <div className="space-y-6">
-      <h1 className="text-2xl font-manrope font-extrabold text-navy">Aprovações de Produtores</h1>
+    <div className="space-y-6 text-foreground">
+      <h1 className="text-2xl font-manrope font-extrabold text-foreground">Aprovações de Produtores</h1>
       
-      <div className="bg-white rounded-xl border overflow-hidden">
+      <div className="bg-card rounded-xl border border-border overflow-hidden">
         <table className="w-full text-left">
-          <thead className="bg-surface text-muted text-xs font-extrabold uppercase tracking-wider">
+          <thead className="bg-accent text-muted-fg text-xs font-extrabold uppercase tracking-wider">
             <tr>
               <th className="px-6 py-4">Organização</th>
               <th className="px-6 py-4">Documento</th>
@@ -61,20 +61,20 @@ function AprovacoesPage() {
               <th className="px-6 py-4 text-right">Ações</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-line">
+          <tbody className="divide-y divide-border">
             {organizations?.map((org: any) => (
-              <tr key={org.id} className="hover:bg-surface/50 transition-colors">
+              <tr key={org.id} className="hover:bg-accent transition-colors">
                 <td className="px-6 py-4">
                   <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 bg-coral/10 rounded flex items-center justify-center text-coral">
+                    <div className="w-8 h-8 bg-primary/10 rounded flex items-center justify-center text-primary">
                       <Building2 className="w-4 h-4" />
                     </div>
-                    <span className="font-bold text-navy">{org.nome}</span>
+                    <span className="font-bold text-foreground">{org.nome}</span>
                   </div>
                 </td>
                 <td className="px-6 py-4 text-sm font-medium">{org.documento || "---"}</td>
                 <td className="px-6 py-4 text-sm font-medium">{org.countries?.nome || "---"}</td>
-                <td className="px-6 py-4 text-sm text-muted">
+                <td className="px-6 py-4 text-sm text-muted-fg">
                   {new Date(org.created_at).toLocaleDateString()}
                 </td>
                 <td className="px-6 py-4 text-right">

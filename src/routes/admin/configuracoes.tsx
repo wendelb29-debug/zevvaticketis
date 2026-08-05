@@ -120,23 +120,23 @@ function SettingsPage() {
   };
 
   return (
-    <div className="space-y-6 max-w-7xl mx-auto pb-12 font-inter">
+    <div className="space-y-6 max-w-7xl mx-auto pb-12 font-inter text-foreground">
       <div className="flex flex-col gap-2">
-        <h1 className="text-3xl font-manrope font-extrabold text-navy">Configurações do Sistema</h1>
-        <p className="text-navy/60">Gerencie as regras de atendimento, equipe e recursos da plataforma.</p>
+        <h1 className="text-3xl font-manrope font-extrabold text-foreground">Configurações do Sistema</h1>
+        <p className="text-muted-fg">Gerencie as regras de atendimento, equipe e recursos da plataforma.</p>
       </div>
 
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-        <TabsList className="bg-white border border-line p-1 rounded-xl w-full justify-start overflow-x-auto h-auto">
-          <TabsTrigger value="atendimento" className="data-[state=active]:bg-coral data-[state=active]:text-white rounded-lg py-2.5 px-6 flex items-center gap-2 text-sm font-bold transition-all">
+        <TabsList className="bg-card border border-border p-1 rounded-xl w-full justify-start overflow-x-auto h-auto">
+          <TabsTrigger value="atendimento" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground rounded-lg py-2.5 px-6 flex items-center gap-2 text-sm font-bold transition-all">
             <MessageSquare className="w-4 h-4" />
             Atendimento
           </TabsTrigger>
-          <TabsTrigger value="equipe" className="data-[state=active]:bg-coral data-[state=active]:text-white rounded-lg py-2.5 px-6 flex items-center gap-2 text-sm font-bold transition-all">
+          <TabsTrigger value="equipe" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground rounded-lg py-2.5 px-6 flex items-center gap-2 text-sm font-bold transition-all">
             <Users className="w-4 h-4" />
             Equipe e Recursos
           </TabsTrigger>
-          <TabsTrigger value="sistema" className="data-[state=active]:bg-coral data-[state=active]:text-white rounded-lg py-2.5 px-6 flex items-center gap-2 text-sm font-bold transition-all">
+          <TabsTrigger value="sistema" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground rounded-lg py-2.5 px-6 flex items-center gap-2 text-sm font-bold transition-all">
             <Settings className="w-4 h-4" />
             Sistema
           </TabsTrigger>
@@ -144,21 +144,21 @@ function SettingsPage() {
 
         <TabsContent value="atendimento" className="space-y-6 mt-6">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <Card className="md:col-span-1 border-line h-fit sticky top-24">
+            <Card className="md:col-span-1 border-border bg-card h-fit sticky top-24">
               <CardContent className="p-4 space-y-1">
-                <Button variant="ghost" className="w-full justify-start gap-2 font-bold text-coral bg-coral/5">
+                <Button variant="ghost" className="w-full justify-start gap-2 font-bold text-primary bg-primary/5">
                   <Workflow className="w-4 h-4" />
                   Regras Gerais
                 </Button>
-                <Button variant="ghost" className="w-full justify-start gap-2 font-bold text-navy hover:bg-surface">
+                <Button variant="ghost" className="w-full justify-start gap-2 font-bold text-foreground hover:bg-accent">
                   <Users className="w-4 h-4" />
                   Departamentos
                 </Button>
-                <Button variant="ghost" className="w-full justify-start gap-2 font-bold text-navy hover:bg-surface">
+                <Button variant="ghost" className="w-full justify-start gap-2 font-bold text-foreground hover:bg-accent">
                   <Tag className="w-4 h-4" />
                   Tags e Classificações
                 </Button>
-                <Button variant="ghost" className="w-full justify-start gap-2 font-bold text-navy hover:bg-surface">
+                <Button variant="ghost" className="w-full justify-start gap-2 font-bold text-foreground hover:bg-accent">
                   <Clock className="w-4 h-4" />
                   Inatividade e SLA
                 </Button>
@@ -166,64 +166,64 @@ function SettingsPage() {
             </Card>
 
             <div className="md:col-span-2 space-y-6">
-              <Card className="border-line overflow-hidden shadow-sm">
-                <CardHeader className="bg-surface/50 border-b border-line">
-                  <CardTitle className="text-lg font-manrope font-bold text-navy">Distribuição de Tickets</CardTitle>
-                  <CardDescription>Configure como os novos atendimentos são atribuídos.</CardDescription>
+              <Card className="border-border bg-card overflow-hidden shadow-sm">
+                <CardHeader className="bg-accent/50 border-b border-border">
+                  <CardTitle className="text-lg font-manrope font-bold text-foreground">Distribuição de Tickets</CardTitle>
+                  <CardDescription className="text-muted-fg">Configure como os novos atendimentos são atribuídos.</CardDescription>
                 </CardHeader>
                 <CardContent className="p-6 space-y-6">
-                  <div className="flex items-center justify-between p-4 bg-white border border-line rounded-xl shadow-sm">
+                  <div className="flex items-center justify-between p-4 bg-card border border-border rounded-xl shadow-sm">
                     <div className="space-y-0.5">
-                      <Label className="text-sm font-bold text-navy">Distribuição Automática</Label>
-                      <p className="text-xs text-navy/60">Atribui automaticamente novos tickets aos agentes disponíveis.</p>
+                      <Label className="text-sm font-bold text-foreground">Distribuição Automática</Label>
+                      <p className="text-xs text-muted-fg">Atribui automaticamente novos tickets aos agentes disponíveis.</p>
                     </div>
                     <Switch defaultChecked />
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="space-y-2">
-                      <Label className="text-sm font-bold text-navy">Capacidade Máxima</Label>
-                      <Input type="number" defaultValue="5" className="border-line focus:ring-coral" />
-                      <p className="text-xs text-navy/60">Tickets simultâneos por agente.</p>
+                      <Label className="text-sm font-bold text-foreground">Capacidade Máxima</Label>
+                      <Input type="number" defaultValue="5" className="border-border bg-background focus:ring-primary" />
+                      <p className="text-xs text-muted-fg">Tickets simultâneos por agente.</p>
                     </div>
                     <div className="space-y-2">
-                      <Label className="text-sm font-bold text-navy">Limite de Espera</Label>
-                      <Input type="number" defaultValue="15" className="border-line focus:ring-coral" />
-                      <p className="text-xs text-navy/60">Minutos antes de alerta de SLA.</p>
+                      <Label className="text-sm font-bold text-foreground">Limite de Espera</Label>
+                      <Input type="number" defaultValue="15" className="border-border bg-background focus:ring-primary" />
+                      <p className="text-xs text-muted-fg">Minutos antes de alerta de SLA.</p>
                     </div>
                   </div>
                 </CardContent>
               </Card>
 
-              <Card className="border-line overflow-hidden shadow-sm">
-                <CardHeader className="bg-surface/50 border-b border-line flex flex-row items-center justify-between">
+              <Card className="border-border bg-card overflow-hidden shadow-sm">
+                <CardHeader className="bg-accent/50 border-b border-border flex flex-row items-center justify-between">
                   <div>
-                    <CardTitle className="text-lg font-manrope font-bold text-navy">Departamentos</CardTitle>
-                    <CardDescription>Gerencie as áreas de atendimento.</CardDescription>
+                    <CardTitle className="text-lg font-manrope font-bold text-foreground">Departamentos</CardTitle>
+                    <CardDescription className="text-muted-fg">Gerencie as áreas de atendimento.</CardDescription>
                   </div>
-                  <Button onClick={() => setIsDeptModalOpen(true)} size="sm" className="bg-coral hover:bg-coral/90 text-white gap-2 font-bold rounded-lg shadow-md shadow-coral/20">
+                  <Button onClick={() => setIsDeptModalOpen(true)} size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground gap-2 font-bold rounded-lg shadow-md shadow-primary/20">
                     <Plus className="w-4 h-4" />
                     Adicionar
                   </Button>
                 </CardHeader>
                 <CardContent className="p-0">
-                  <div className="divide-y divide-line">
+                  <div className="divide-y divide-border">
                     {departments.map(dept => (
-                      <div key={dept.id} className="p-4 flex items-center justify-between hover:bg-surface transition-colors">
+                      <div key={dept.id} className="p-4 flex items-center justify-between hover:bg-accent transition-colors">
                         <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 rounded-full bg-coral/10 flex items-center justify-center">
-                            <Users className="w-5 h-5 text-coral" />
+                          <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                            <Users className="w-5 h-5 text-primary" />
                           </div>
                           <div>
-                            <p className="text-sm font-bold text-navy">{dept.name}</p>
-                            <p className="text-xs text-navy/60">{dept.members} membros</p>
+                            <p className="text-sm font-bold text-foreground">{dept.name}</p>
+                            <p className="text-xs text-muted-fg">{dept.members} membros</p>
                           </div>
                         </div>
                         <div className="flex items-center gap-2">
-                          <Button variant="ghost" size="icon" className="h-8 w-8 text-navy/60 hover:text-navy">
+                          <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-fg hover:text-foreground">
                             <Edit2 className="w-4 h-4" />
                           </Button>
-                          <Button variant="ghost" size="icon" className="h-8 w-8 text-navy/60 hover:text-red-500">
+                          <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-fg hover:text-error">
                             <Trash2 className="w-4 h-4" />
                           </Button>
                         </div>
@@ -233,13 +233,13 @@ function SettingsPage() {
                 </CardContent>
               </Card>
 
-              <Card className="border-line overflow-hidden shadow-sm">
-                <CardHeader className="bg-surface/50 border-b border-line flex flex-row items-center justify-between">
+              <Card className="border-border bg-card overflow-hidden shadow-sm">
+                <CardHeader className="bg-accent/50 border-b border-border flex flex-row items-center justify-between">
                   <div>
-                    <CardTitle className="text-lg font-manrope font-bold text-navy">Tags e Classificações</CardTitle>
-                    <CardDescription>Organize atendimentos com etiquetas coloridas.</CardDescription>
+                    <CardTitle className="text-lg font-manrope font-bold text-foreground">Tags e Classificações</CardTitle>
+                    <CardDescription className="text-muted-fg">Organize atendimentos com etiquetas coloridas.</CardDescription>
                   </div>
-                  <Button onClick={() => setIsTagModalOpen(true)} size="sm" className="bg-coral hover:bg-coral/90 text-white gap-2 font-bold rounded-lg shadow-md shadow-coral/20">
+                  <Button onClick={() => setIsTagModalOpen(true)} size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground gap-2 font-bold rounded-lg shadow-md shadow-primary/20">
                     <Plus className="w-4 h-4" />
                     Nova Tag
                   </Button>
@@ -249,13 +249,13 @@ function SettingsPage() {
                     {tags.map(tag => (
                       <div 
                         key={tag.id}
-                        className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-line bg-white group hover:border-coral transition-colors"
+                        className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-border bg-background group hover:border-primary transition-colors"
                       >
                         <div className="w-2 h-2 rounded-full" style={{ backgroundColor: tag.color }} />
-                        <span className="text-sm font-bold text-navy">{tag.name}</span>
+                        <span className="text-sm font-bold text-foreground">{tag.name}</span>
                         <button 
                           onClick={() => handleDeleteTag(tag.id)}
-                          className="text-navy/40 hover:text-red-500 transition-colors opacity-0 group-hover:opacity-100"
+                          className="text-muted-fg hover:text-error transition-colors opacity-0 group-hover:opacity-100"
                         >
                           <X className="w-3 h-3" />
                         </button>
@@ -271,50 +271,50 @@ function SettingsPage() {
 
       {/* Dept Modal */}
       <Dialog open={isDeptModalOpen} onOpenChange={setIsDeptModalOpen}>
-        <DialogContent className="sm:max-w-[425px] bg-white border-line p-0 overflow-hidden">
-          <DialogHeader className="p-6 bg-surface/50 border-b border-line">
-            <DialogTitle className="text-xl font-manrope font-extrabold text-navy">Criar Departamento</DialogTitle>
-            <DialogDescription>Adicione um novo departamento para organizar seus atendimentos.</DialogDescription>
+        <DialogContent className="sm:max-w-[425px] bg-card border-border p-0 overflow-hidden text-foreground">
+          <DialogHeader className="p-6 bg-accent/50 border-b border-border">
+            <DialogTitle className="text-xl font-manrope font-extrabold">Criar Departamento</DialogTitle>
+            <DialogDescription className="text-muted-fg">Adicione um novo departamento para organizar seus atendimentos.</DialogDescription>
           </DialogHeader>
           <div className="p-6 space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="dept-name" className="text-sm font-bold text-navy">Nome do Departamento</Label>
+              <Label htmlFor="dept-name" className="text-sm font-bold">Nome do Departamento</Label>
               <Input 
                 id="dept-name" 
                 value={deptName}
                 onChange={(e) => setDeptName(e.target.value)}
                 placeholder="Ex: Suporte Premium" 
-                className="border-line focus:ring-coral" 
+                className="border-border bg-background focus:ring-primary" 
               />
             </div>
           </div>
-          <DialogFooter className="p-6 bg-surface/30 border-t border-line">
-            <Button variant="outline" onClick={() => setIsDeptModalOpen(false)} className="border-line font-bold">Cancelar</Button>
-            <Button onClick={handleCreateDept} className="bg-coral hover:bg-coral/90 text-white font-bold">Criar Departamento</Button>
+          <DialogFooter className="p-6 bg-accent/30 border-t border-border">
+            <Button variant="outline" onClick={() => setIsDeptModalOpen(false)} className="border-border font-bold">Cancelar</Button>
+            <Button onClick={handleCreateDept} className="bg-primary hover:bg-primary/90 text-primary-foreground font-bold">Criar Departamento</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
 
       {/* Tag Modal */}
       <Dialog open={isTagModalOpen} onOpenChange={setIsTagModalOpen}>
-        <DialogContent className="sm:max-w-[425px] bg-white border-line p-0 overflow-hidden">
-          <DialogHeader className="p-6 bg-surface/50 border-b border-line">
-            <DialogTitle className="text-xl font-manrope font-extrabold text-navy">Nova Tag</DialogTitle>
-            <DialogDescription>Crie classificações para seus atendimentos.</DialogDescription>
+        <DialogContent className="sm:max-w-[425px] bg-card border-border p-0 overflow-hidden text-foreground">
+          <DialogHeader className="p-6 bg-accent/50 border-b border-border">
+            <DialogTitle className="text-xl font-manrope font-extrabold">Nova Tag</DialogTitle>
+            <DialogDescription className="text-muted-fg">Crie classificações para seus atendimentos.</DialogDescription>
           </DialogHeader>
           <div className="p-6 space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="tag-name" className="text-sm font-bold text-navy">Nome da Tag</Label>
+              <Label htmlFor="tag-name" className="text-sm font-bold">Nome da Tag</Label>
               <Input 
                 id="tag-name" 
                 value={tagName}
                 onChange={(e) => setTagName(e.target.value)}
                 placeholder="Ex: Reclamação" 
-                className="border-line focus:ring-coral" 
+                className="border-border bg-background focus:ring-primary" 
               />
             </div>
             <div className="space-y-2">
-              <Label className="text-sm font-bold text-navy">Cor de Identificação</Label>
+              <Label className="text-sm font-bold">Cor de Identificação</Label>
               <div className="flex gap-2">
                 {["#ef4444", "#3b82f6", "#10b981", "#f59e0b", "#8b5cf6", "#E8604A"].map(color => (
                   <button
@@ -322,7 +322,7 @@ function SettingsPage() {
                     onClick={() => setTagColor(color)}
                     className={cn(
                       "w-8 h-8 rounded-full border-2 transition-transform hover:scale-110",
-                      tagColor === color ? "border-navy" : "border-transparent"
+                      tagColor === color ? "border-foreground" : "border-transparent"
                     )}
                     style={{ backgroundColor: color }}
                   />
@@ -330,9 +330,9 @@ function SettingsPage() {
               </div>
             </div>
           </div>
-          <DialogFooter className="p-6 bg-surface/30 border-t border-line">
-            <Button variant="outline" onClick={() => setIsTagModalOpen(false)} className="border-line font-bold">Cancelar</Button>
-            <Button onClick={handleCreateTag} className="bg-coral hover:bg-coral/90 text-white font-bold">Salvar Tag</Button>
+          <DialogFooter className="p-6 bg-accent/30 border-t border-border">
+            <Button variant="outline" onClick={() => setIsTagModalOpen(false)} className="border-border font-bold">Cancelar</Button>
+            <Button onClick={handleCreateTag} className="bg-primary hover:bg-primary/90 text-primary-foreground font-bold">Salvar Tag</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>

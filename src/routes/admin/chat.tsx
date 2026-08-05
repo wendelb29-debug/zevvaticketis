@@ -2,12 +2,13 @@ import { createFileRoute, Link, useNavigate } from '@tanstack/react-router';
 import { useState, useEffect, useRef } from 'react';
 import { supabase } from "@/integrations/supabase/client";
 import { UserMenu } from "@/components/auth/UserMenu";
+import { useUI } from '@/hooks/use-ui';
 import { 
   Search, Send, User, Check, CheckCheck, Phone, Plus, Bell, ChevronDown, 
   MoreVertical, CheckCircle, Shuffle, Users as PeopleIcon, Folder, Clock, 
   History as HistoryIcon, Calendar, Zap, Copy, Printer, Eye, Tag, AlertCircle, 
   LayoutList, MessageSquare, Filter, SlidersHorizontal, ListFilter,
-  Settings as SettingsIcon,
+  Settings as SettingsIcon, Sun, Moon,
   Paperclip, Smile, ImageIcon, Play, Volume2, Pencil, X, Home, ChevronRight,
   ArrowUpDown, SortAsc, SortDesc, CalendarDays, Lock, Globe, MessageCircle,
   Music, FileText, Sparkles, Wand2, ArrowUpCircle, AlignLeft, Languages
@@ -68,6 +69,7 @@ function AdminChatPage() {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [fileType, setFileType] = useState<string | null>(null);
   const [aiAssistantEnabled, setAiAssistantEnabled] = useState(false);
+  const { theme, setTheme } = useUI();
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -130,37 +132,51 @@ function AdminChatPage() {
           <div className="flex items-center gap-4">
             <Link 
               to="/admin" 
-              className="p-2 hover:bg-surface-2 rounded-xl transition-colors text-navy group"
+              className="p-2 hover:bg-accent rounded-xl transition-colors text-foreground group"
               title="Voltar para o Admin"
             >
-              <Home className="w-5 h-5 group-hover:text-coral transition-colors" />
+              <Home className="w-5 h-5 group-hover:text-primary transition-colors" />
             </Link>
-            <span className="font-black text-lg tracking-tighter text-coral italic">
-              zevva.<span className="text-navy">chat</span>
+            <span className="font-black text-lg tracking-tighter text-primary italic">
+              zevva.<span className="text-foreground">chat</span>
             </span>
           </div>
           <div className="flex items-center gap-4">
-            <button className="text-navy/40 hover:text-navy transition-colors">
-              <HistoryIcon className="w-5 h-5" />
-            </button>
-            <div className="flex items-center gap-2 px-3 py-1.5 bg-surface-2 rounded-full text-[10px] font-black uppercase tracking-wider text-navy/60 border border-line">
-              <PeopleIcon className="w-3 h-3 text-coral" /> Atendimentos
+            <div className="flex bg-accent rounded-lg p-1 border border-border">
+              <button 
+                onClick={() => setTheme('light')}
+                className={cn(
+                  "px-3 py-1.5 rounded-md text-[10px] font-black uppercase tracking-wider transition-all",
+                  theme === 'light' ? "bg-primary text-primary-foreground shadow-sm" : "text-muted-fg hover:text-foreground"
+                )}
+              >
+                ☀ CLARO
+              </button>
+              <button 
+                onClick={() => setTheme('dark')}
+                className={cn(
+                  "px-3 py-1.5 rounded-md text-[10px] font-black uppercase tracking-wider transition-all",
+                  theme === 'dark' ? "bg-primary text-primary-foreground shadow-sm" : "text-muted-fg hover:text-foreground"
+                )}
+              >
+                🌙 ESCURO
+              </button>
             </div>
           </div>
         </div>
         
         <div className="flex items-center gap-6">
-          <button className="relative p-2 hover:bg-surface-2 rounded-full transition-colors text-navy/60">
+          <button className="relative p-2 hover:bg-accent rounded-full transition-colors text-muted-fg">
             <Bell className="w-5 h-5" />
             <span className="absolute top-1.5 right-1.5 w-3 h-3 bg-primary rounded-full text-[8px] flex items-center justify-center border-2 border-card text-primary-foreground font-bold">3</span>
           </button>
           
-          <div className="flex items-center gap-3 pl-4 border-l border-line">
+          <div className="flex items-center gap-3 pl-4 border-l border-border">
             <div className="text-right hidden sm:block">
-              <div className="text-[10px] font-black text-navy uppercase leading-tight">Admin Zevva</div>
+              <div className="text-[10px] font-black text-foreground uppercase leading-tight">Admin Zevva</div>
               <div className={cn(
                 "text-[9px] font-black uppercase tracking-widest leading-tight",
-                agentStatus === 'online' ? "text-green-500" : agentStatus === 'busy' ? "text-amber-500" : "text-muted-foreground"
+                agentStatus === 'online' ? "text-green-500" : agentStatus === 'busy' ? "text-amber-500" : "text-muted-fg"
               )}>{agentStatus}</div>
             </div>
             
@@ -179,7 +195,7 @@ function AdminChatPage() {
       </header>
 
       <div className="flex flex-1 overflow-hidden">
-        {/* Coluna 1: Lista de Conversas (410px) */}
+        {/* Coluna 1: Lista de Conversas */}
         <div 
           style={{ width: `${sidebarWidth}px` }}
           className={cn(
@@ -445,7 +461,7 @@ function AdminChatPage() {
               {/* Cabeçalho da Conversa */}
               <div className="h-[72px] border-b border-border bg-card px-8 flex items-center justify-between z-10">
                 <div className="flex items-center gap-4">
-                  <div className="w-[42px] h-[42px] rounded-full bg-muted border border-border flex items-center justify-center font-bold text-primary text-sm shadow-sm">
+                  <div className="w-[42px] h-[42px] rounded-full bg-accent border border-border flex items-center justify-center font-bold text-primary text-sm shadow-sm">
                     JS
                   </div>
                   <div>
@@ -519,7 +535,7 @@ function AdminChatPage() {
                 </div>
               </div>
               
-              <div className="flex-1 overflow-y-auto p-8 space-y-8 relative z-10 custom-scrollbar bg-background">
+              <div className="flex-1 overflow-y-auto p-8 space-y-8 relative z-10 custom-scrollbar bg-background chat-container">
                 <div className="flex justify-center">
                   <span className="px-4 py-1.5 bg-card text-[10px] font-bold text-muted-foreground uppercase tracking-widest rounded-full border border-border shadow-sm">Hoje, 04 de Agosto</span>
                 </div>
@@ -1154,6 +1170,10 @@ function AdminChatPage() {
       </Dialog>
 
       <style>{`
+        .chat-container {
+          background-image: none !important;
+          background-color: var(--background) !important;
+        }
         .custom-scrollbar::-webkit-scrollbar { width: 4px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(232, 96, 74, 0.1); border-radius: 10px; }
