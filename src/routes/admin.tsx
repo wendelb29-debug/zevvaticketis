@@ -219,33 +219,40 @@ function AdminLayout() {
   return (
     <div className="min-h-screen bg-surface flex">
       {/* Desktop Sidebar */}
-      <aside className={cn(
-        "hidden lg:block h-screen sticky top-0 transition-all duration-200",
-        isSidebarCollapsed ? "w-20" : "w-72"
-      )}>
-        <SidebarContent />
-      </aside>
+      {location.pathname !== "/admin/chat" && (
+        <aside className={cn(
+          "hidden lg:block h-screen sticky top-0 transition-all duration-200",
+          isSidebarCollapsed ? "w-20" : "w-72"
+        )}>
+          <SidebarContent />
+        </aside>
+      )}
 
       <div className="flex-1 flex flex-col min-h-screen">
-        <header className="h-20 bg-white/80 backdrop-blur-md border-b border-line sticky top-0 z-40 px-6 sm:px-10 flex items-center justify-between font-inter">
-          <div className="flex items-center gap-4">
-            <span className="text-xs font-extrabold uppercase tracking-widest text-coral bg-coral/5 px-3 py-1 rounded-full border border-coral/10">
-              Gestão Global
-            </span>
-          </div>
+        {location.pathname !== "/admin/chat" && (
+          <header className="h-20 bg-white/80 backdrop-blur-md border-b border-line sticky top-0 z-40 px-6 sm:px-10 flex items-center justify-between font-inter">
+            <div className="flex items-center gap-4">
+              <span className="text-xs font-extrabold uppercase tracking-widest text-coral bg-coral/5 px-3 py-1 rounded-full border border-coral/10">
+                Gestão Global
+              </span>
+            </div>
 
-          <div className="flex items-center gap-3 sm:gap-6">
-            {user && (
-              <UserMenu 
-                user={user}
-                onLogout={handleLogout}
-                onNavigate={(path) => navigate({ to: path as any })}
-              />
-            )}
-          </div>
-        </header>
+            <div className="flex items-center gap-3 sm:gap-6">
+              {user && (
+                <UserMenu 
+                  user={user}
+                  onLogout={handleLogout}
+                  onNavigate={(path) => navigate({ to: path as any })}
+                />
+              )}
+            </div>
+          </header>
+        )}
 
-        <main className="p-6 sm:p-10">
+        <main className={cn(
+          "p-6 sm:p-10",
+          location.pathname === "/admin/chat" && "p-0 sm:p-0"
+        )}>
           <Outlet />
         </main>
       </div>
