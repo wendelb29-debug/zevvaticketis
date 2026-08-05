@@ -445,7 +445,7 @@ function AdminChatPage() {
               {/* Cabeçalho da Conversa */}
               <div className="h-[72px] border-b border-border bg-card px-8 flex items-center justify-between z-10">
                 <div className="flex items-center gap-4">
-                  <div className="w-[42px] h-[42px] rounded-full bg-muted border border-border flex items-center justify-center font-bold text-primary text-sm shadow-sm">
+                  <div className="w-[42px] h-[42px] rounded-full bg-accent border border-border flex items-center justify-center font-bold text-primary text-sm shadow-sm">
                     JS
                   </div>
                   <div>
