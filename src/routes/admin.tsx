@@ -79,9 +79,6 @@ function AdminLayout() {
     checkAdmin();
   }, []);
 
-  if (isAdmin === null) return null;
-  if (isAdmin === false) throw redirect({ to: "/" });
-
   const handleLogout = async () => {
     await supabase.auth.signOut();
     navigate({ to: "/" });
@@ -130,6 +127,10 @@ function AdminLayout() {
       }
     });
   }, [location.pathname]);
+
+  if (isAdmin === null) return null;
+  if (isAdmin === false) throw redirect({ to: "/" });
+
 
   const SidebarContent = () => (
     <div className={cn(
