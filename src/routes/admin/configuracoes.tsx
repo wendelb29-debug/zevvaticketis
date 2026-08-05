@@ -1185,9 +1185,11 @@ const AtendimentoAccordion = () => (
             </Table>
           </div>
         </div>
+      </AccordionContent>
+    </AccordionItem>
+  </Accordion>
+);
 
-
-const EquipeAccordion = () => (
   <Accordion type="single" collapsible className="space-y-4">
     {[
       { id: "equipe", icon: Users, title: "Gerenciar Equipe", desc: "Tabela de usuários, e-mails e permissões." },
