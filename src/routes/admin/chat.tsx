@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from 'react';
 import { supabase } from "@/integrations/supabase/client";
 import { UserMenu } from "@/components/auth/UserMenu";
 import { useUI } from '@/hooks/use-ui';
+import { Button } from "@/components/ui/button";
 import { 
   Search, Send, User, Check, CheckCheck, Phone, Plus, Bell, ChevronDown, 
   MoreVertical, CheckCircle, Shuffle, Users as PeopleIcon, Folder, Clock, 
