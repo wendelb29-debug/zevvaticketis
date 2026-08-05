@@ -535,7 +535,7 @@ function AdminChatPage() {
                 </div>
               </div>
               
-              <div className="flex-1 overflow-y-auto p-8 space-y-8 relative z-10 custom-scrollbar bg-background">
+              <div className="flex-1 overflow-y-auto p-8 space-y-8 relative z-10 custom-scrollbar bg-background chat-container">
                 <div className="flex justify-center">
                   <span className="px-4 py-1.5 bg-card text-[10px] font-bold text-muted-foreground uppercase tracking-widest rounded-full border border-border shadow-sm">Hoje, 04 de Agosto</span>
                 </div>
