@@ -487,6 +487,8 @@ function UserProfile() {
       </div>
     </div>
   );
+}
+
 function NotificationItem({ icon: Icon, title, description }: { icon: any, title: string, description: string }) {
   return (
     <div className="flex items-center justify-between p-4 bg-surface/50 rounded-2xl border border-line/5 hover:border-coral/20 transition-all group">
@@ -513,5 +515,3 @@ function NotificationItem({ icon: Icon, title, description }: { icon: any, title
     </div>
   );
 }
-
-export default UserProfile;
