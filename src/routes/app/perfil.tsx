@@ -39,6 +39,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useUI } from "@/hooks/use-ui";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
+import { BreadcrumbNavigation } from "@/components/layout/BreadcrumbNavigation";
 import { 
   AlertDialog,
   AlertDialogAction,
@@ -249,7 +250,8 @@ function UserProfile() {
   );
 
   return (
-    <div className="space-y-10 font-inter max-w-2xl mx-auto pb-20">
+    <div className="space-y-10 font-inter max-w-2xl mx-auto pb-20 pt-6">
+      <BreadcrumbNavigation />
       <div className="space-y-1">
         <h1 className="text-3xl font-manrope font-extrabold text-navy">Meu Perfil</h1>
         <p className="text-muted font-medium">Gerencie suas informações pessoais e preferências.</p>
