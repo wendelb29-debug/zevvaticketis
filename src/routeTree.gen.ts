@@ -28,7 +28,6 @@ import { Route as AdminChatRouteImport } from './routes/admin/chat'
 import { Route as AdminCheckinMonitorRouteImport } from './routes/admin/checkin-monitor'
 import { Route as AdminConfiguracoesRouteImport } from './routes/admin/configuracoes'
 import { Route as AdminEmailsRouteImport } from './routes/admin/emails'
-import { Route as AdminMarketingRouteImport } from './routes/admin/marketing'
 import { Route as AdminPaisesMoedasRouteImport } from './routes/admin/paises-moedas'
 import { Route as AdminPlanosRouteImport } from './routes/admin/planos'
 import { Route as AdminProdutoresRouteImport } from './routes/admin/produtores'
@@ -45,6 +44,7 @@ import { Route as ProdutorNovoEventoRouteImport } from './routes/produtor/novo-e
 import { Route as ProdutorSuporteRouteImport } from './routes/produtor/suporte'
 import { Route as DotlovableOauthConsentRouteImport } from './routes/[.]lovable.oauth.consent'
 import { Route as Char91DotmcpChar93InvokeToolToolRouteImport } from './routes/[.mcp]/invoke-tool/$tool'
+import { Route as AdminMarketingPublicidadeRouteImport } from './routes/admin/marketing/publicidade'
 import { Route as ApiPublicEmailOauthCallbackRouteImport } from './routes/api/public/email-oauth-callback'
 import { Route as ApiPublicUazapiWebhookRouteImport } from './routes/api/public/uazapi-webhook'
 
@@ -145,11 +145,6 @@ const AdminEmailsRoute = AdminEmailsRouteImport.update({
   path: '/emails',
   getParentRoute: () => AdminRoute,
 } as any)
-const AdminMarketingRoute = AdminMarketingRouteImport.update({
-  id: '/marketing',
-  path: '/marketing',
-  getParentRoute: () => AdminRoute,
-} as any)
 const AdminPaisesMoedasRoute = AdminPaisesMoedasRouteImport.update({
   id: '/paises-moedas',
   path: '/paises-moedas',
@@ -231,6 +226,12 @@ const Char91DotmcpChar93InvokeToolToolRoute =
     path: '/.mcp/invoke-tool/$tool',
     getParentRoute: () => rootRouteImport,
   } as any)
+const AdminMarketingPublicidadeRoute =
+  AdminMarketingPublicidadeRouteImport.update({
+    id: '/marketing/publicidade',
+    path: '/marketing/publicidade',
+    getParentRoute: () => AdminRoute,
+  } as any)
 const ApiPublicEmailOauthCallbackRoute =
   ApiPublicEmailOauthCallbackRouteImport.update({
     id: '/api/public/email-oauth-callback',
@@ -263,7 +264,6 @@ export interface FileRoutesByFullPath {
   '/admin/checkin-monitor': typeof AdminCheckinMonitorRoute
   '/admin/configuracoes': typeof AdminConfiguracoesRoute
   '/admin/emails': typeof AdminEmailsRoute
-  '/admin/marketing': typeof AdminMarketingRoute
   '/admin/paises-moedas': typeof AdminPaisesMoedasRoute
   '/admin/planos': typeof AdminPlanosRoute
   '/admin/produtores': typeof AdminProdutoresRoute
@@ -280,6 +280,7 @@ export interface FileRoutesByFullPath {
   '/produtor/': typeof ProdutorIndexRoute
   '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
+  '/admin/marketing/publicidade': typeof AdminMarketingPublicidadeRoute
   '/api/public/email-oauth-callback': typeof ApiPublicEmailOauthCallbackRoute
   '/api/public/uazapi-webhook': typeof ApiPublicUazapiWebhookRoute
 }
@@ -301,7 +302,6 @@ export interface FileRoutesByTo {
   '/admin/checkin-monitor': typeof AdminCheckinMonitorRoute
   '/admin/configuracoes': typeof AdminConfiguracoesRoute
   '/admin/emails': typeof AdminEmailsRoute
-  '/admin/marketing': typeof AdminMarketingRoute
   '/admin/paises-moedas': typeof AdminPaisesMoedasRoute
   '/admin/planos': typeof AdminPlanosRoute
   '/admin/produtores': typeof AdminProdutoresRoute
@@ -318,6 +318,7 @@ export interface FileRoutesByTo {
   '/produtor': typeof ProdutorIndexRoute
   '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
+  '/admin/marketing/publicidade': typeof AdminMarketingPublicidadeRoute
   '/api/public/email-oauth-callback': typeof ApiPublicEmailOauthCallbackRoute
   '/api/public/uazapi-webhook': typeof ApiPublicUazapiWebhookRoute
 }
@@ -342,7 +343,6 @@ export interface FileRoutesById {
   '/admin/checkin-monitor': typeof AdminCheckinMonitorRoute
   '/admin/configuracoes': typeof AdminConfiguracoesRoute
   '/admin/emails': typeof AdminEmailsRoute
-  '/admin/marketing': typeof AdminMarketingRoute
   '/admin/paises-moedas': typeof AdminPaisesMoedasRoute
   '/admin/planos': typeof AdminPlanosRoute
   '/admin/produtores': typeof AdminProdutoresRoute
@@ -359,6 +359,7 @@ export interface FileRoutesById {
   '/produtor/': typeof ProdutorIndexRoute
   '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
+  '/admin/marketing/publicidade': typeof AdminMarketingPublicidadeRoute
   '/api/public/email-oauth-callback': typeof ApiPublicEmailOauthCallbackRoute
   '/api/public/uazapi-webhook': typeof ApiPublicUazapiWebhookRoute
 }
@@ -384,7 +385,6 @@ export interface FileRouteTypes {
     | '/admin/checkin-monitor'
     | '/admin/configuracoes'
     | '/admin/emails'
-    | '/admin/marketing'
     | '/admin/paises-moedas'
     | '/admin/planos'
     | '/admin/produtores'
@@ -401,6 +401,7 @@ export interface FileRouteTypes {
     | '/produtor/'
     | '/.lovable/oauth/consent'
     | '/.mcp/invoke-tool/$tool'
+    | '/admin/marketing/publicidade'
     | '/api/public/email-oauth-callback'
     | '/api/public/uazapi-webhook'
   fileRoutesByTo: FileRoutesByTo
@@ -422,7 +423,6 @@ export interface FileRouteTypes {
     | '/admin/checkin-monitor'
     | '/admin/configuracoes'
     | '/admin/emails'
-    | '/admin/marketing'
     | '/admin/paises-moedas'
     | '/admin/planos'
     | '/admin/produtores'
@@ -439,6 +439,7 @@ export interface FileRouteTypes {
     | '/produtor'
     | '/.lovable/oauth/consent'
     | '/.mcp/invoke-tool/$tool'
+    | '/admin/marketing/publicidade'
     | '/api/public/email-oauth-callback'
     | '/api/public/uazapi-webhook'
   id:
@@ -462,7 +463,6 @@ export interface FileRouteTypes {
     | '/admin/checkin-monitor'
     | '/admin/configuracoes'
     | '/admin/emails'
-    | '/admin/marketing'
     | '/admin/paises-moedas'
     | '/admin/planos'
     | '/admin/produtores'
@@ -479,6 +479,7 @@ export interface FileRouteTypes {
     | '/produtor/'
     | '/.lovable/oauth/consent'
     | '/.mcp/invoke-tool/$tool'
+    | '/admin/marketing/publicidade'
     | '/api/public/email-oauth-callback'
     | '/api/public/uazapi-webhook'
   fileRoutesById: FileRoutesById
@@ -639,13 +640,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminEmailsRouteImport
       parentRoute: typeof AdminRoute
     }
-    '/admin/marketing': {
-      id: '/admin/marketing'
-      path: '/marketing'
-      fullPath: '/admin/marketing'
-      preLoaderRoute: typeof AdminMarketingRouteImport
-      parentRoute: typeof AdminRoute
-    }
     '/admin/paises-moedas': {
       id: '/admin/paises-moedas'
       path: '/paises-moedas'
@@ -758,6 +752,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof Char91DotmcpChar93InvokeToolToolRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/marketing/publicidade': {
+      id: '/admin/marketing/publicidade'
+      path: '/marketing/publicidade'
+      fullPath: '/admin/marketing/publicidade'
+      preLoaderRoute: typeof AdminMarketingPublicidadeRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/api/public/email-oauth-callback': {
       id: '/api/public/email-oauth-callback'
       path: '/api/public/email-oauth-callback'
@@ -782,11 +783,11 @@ interface AdminRouteChildren {
   AdminCheckinMonitorRoute: typeof AdminCheckinMonitorRoute
   AdminConfiguracoesRoute: typeof AdminConfiguracoesRoute
   AdminEmailsRoute: typeof AdminEmailsRoute
-  AdminMarketingRoute: typeof AdminMarketingRoute
   AdminPaisesMoedasRoute: typeof AdminPaisesMoedasRoute
   AdminPlanosRoute: typeof AdminPlanosRoute
   AdminProdutoresRoute: typeof AdminProdutoresRoute
   AdminUsuariosRoute: typeof AdminUsuariosRoute
+  AdminMarketingPublicidadeRoute: typeof AdminMarketingPublicidadeRoute
 }
 
 const AdminRouteChildren: AdminRouteChildren = {
@@ -796,11 +797,11 @@ const AdminRouteChildren: AdminRouteChildren = {
   AdminCheckinMonitorRoute: AdminCheckinMonitorRoute,
   AdminConfiguracoesRoute: AdminConfiguracoesRoute,
   AdminEmailsRoute: AdminEmailsRoute,
-  AdminMarketingRoute: AdminMarketingRoute,
   AdminPaisesMoedasRoute: AdminPaisesMoedasRoute,
   AdminPlanosRoute: AdminPlanosRoute,
   AdminProdutoresRoute: AdminProdutoresRoute,
   AdminUsuariosRoute: AdminUsuariosRoute,
+  AdminMarketingPublicidadeRoute: AdminMarketingPublicidadeRoute,
 }
 
 const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)

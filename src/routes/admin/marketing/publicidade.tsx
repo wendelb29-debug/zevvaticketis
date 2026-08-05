@@ -6,7 +6,7 @@ import { useState } from "react";
 import { Switch } from "@/components/ui/switch";
 import { toast } from "sonner";
 
-export const Route = createFileRoute("/admin/marketing")({
+export const Route = createFileRoute("/admin/marketing/publicidade")({
   component: MarketingPage,
 });
 
