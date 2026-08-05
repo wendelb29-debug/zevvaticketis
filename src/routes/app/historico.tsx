@@ -13,7 +13,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import { BreadcrumbNavigation } from "@/components/layout/BreadcrumbNavigation";
+import { GlobalBreadcrumb } from "@/components/layout/GlobalBreadcrumb";
 
 export const Route = createFileRoute("/app/historico")({
   beforeLoad: async () => {
@@ -62,7 +62,7 @@ function OrderHistory() {
 
   return (
     <div className="space-y-10 font-inter max-w-4xl mx-auto pb-20 pt-6">
-      <BreadcrumbNavigation />
+      <GlobalBreadcrumb className="py-4" />
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div className="space-y-1">
           <h1 className="text-3xl font-manrope font-extrabold text-navy">Histórico de Pedidos</h1>

@@ -2,7 +2,7 @@ import { createFileRoute, Outlet, redirect, useNavigate, Link, useLocation } fro
 import { supabase } from "@/integrations/supabase/client";
 import { useEffect, useState } from "react";
 import { UserMenu } from "@/components/auth/UserMenu";
-import { BreadcrumbNavigation } from "@/components/layout/BreadcrumbNavigation";
+import { GlobalBreadcrumb } from "@/components/layout/GlobalBreadcrumb";
 import { useUI } from "@/hooks/use-ui";
 import { 
   LayoutDashboard, 
@@ -237,10 +237,8 @@ function AdminLayout() {
       <div className="flex-1 flex flex-col min-h-screen relative">
         {location.pathname !== "/admin/chat" && (
           <header className="h-20 bg-card/80 backdrop-blur-md border-b border-border sticky top-0 z-40 px-6 sm:px-10 flex items-center justify-between font-inter">
-            <div className="flex items-center gap-4">
-              <span className="text-xs font-extrabold uppercase tracking-widest text-primary bg-primary/5 px-3 py-1 rounded-full border border-primary/10">
-                Gestão Global
-              </span>
+            <div className="flex items-center gap-4 min-w-0 overflow-x-auto scrollbar-hide">
+              <GlobalBreadcrumb />
             </div>
 
             <div className="flex items-center gap-3 sm:gap-6">
@@ -260,12 +258,6 @@ function AdminLayout() {
           location.pathname === "/admin/chat" && "p-0 sm:p-0",
           isTransitioning ? "opacity-0" : "opacity-100"
         )}>
-          {location.pathname !== "/admin/chat" && (
-            <div className="mb-6">
-              <BreadcrumbNavigation />
-            </div>
-          )}
-          
           {isTransitioning ? (
             <div className="w-full h-full flex items-center justify-center py-20">
                <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin" />
