@@ -6,6 +6,7 @@ import { getWhatsAppContacts, sendWhatsAppMessage } from '@/lib/whatsapp/whatsap
 import { 
   Search, Send, User, Check, CheckCheck, Phone, Plus, Bell, ChevronDown, 
   MoreVertical, CheckCircle, Shuffle, Users as PeopleIcon, Folder, Clock, 
+  History as HistoryIcon,
   Calendar, Zap, Copy, Printer, Eye, Tag, AlertCircle, LayoutList, MessageSquare
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -41,7 +42,7 @@ function AdminChatPage() {
           </div>
           <div className="flex items-center gap-4">
             <button className="text-gray-400 hover:text-white transition-colors">
-              <History className="w-5 h-5" />
+              <HistoryIcon className="w-5 h-5" />
             </button>
             <div className="flex items-center gap-2 px-3 py-1.5 bg-[#24283b] rounded-full text-[10px] font-bold uppercase tracking-wider text-gray-300 border border-[#2d3247]">
               <PeopleIcon className="w-3 h-3 text-[#d9a94d]" /> Atendimentos
