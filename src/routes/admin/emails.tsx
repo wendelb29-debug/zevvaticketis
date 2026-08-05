@@ -80,7 +80,7 @@ function AdminEmailsPage() {
         <div className="w-20 h-20 rounded-full bg-coral/10 flex items-center justify-center mb-6">
           <Mail className="w-10 h-10 text-coral" />
         </div>
-        <h2 className="text-2xl font-manrope font-extrabold text-navy mb-2">Conecte seu Gmail</h2>
+        <h2 className="text-2xl font-manrope font-extrabold text-navy mb-2">aqui precisa funcioanr poder conectar com gmail e gerenciar e-mails</h2>
         <p className="text-navy/60 max-w-md mb-8 font-inter">
           Para gerenciar os e-mails da plataforma Zevva, conecte uma conta oficial do Gmail.
         </p>
