@@ -809,7 +809,7 @@ const AtendimentoAccordion = () => (
     {[
       { id: "classificacoes", icon: Briefcase, title: "Gerenciar Classificações", desc: "Categorização vinculada a departamentos." },
       { id: "gatilhos", icon: Zap, title: "Gatilhos de Atendimento", desc: "Automações baseadas em fluxos." },
-      { id: "sla", icon: Clock, title: "Inatividade e SLA", desc: "Tempos de resposta e prazos por setor." },
+      { id: "sla", icon: Clock, title: "Inatividade e SLA", desc: "Configure regras de inatividade e SLA do atendente" },
       { id: "feriados", icon: CalendarDays, title: "Feriados e Datas Especiais", desc: "Mensagens para datas não úteis." }
     ].map((item) => (
       <AccordionItem key={item.id} value={item.id} className="bg-white rounded-2xl border border-line p-0 overflow-hidden shadow-sm">
@@ -820,8 +820,173 @@ const AtendimentoAccordion = () => (
           </div>
         </AccordionTrigger>
         <AccordionContent className="px-6 pb-6 pt-2 border-t border-line/50">
-          <div className="py-10 text-center">
-            <p className="text-xs text-navy/40 font-medium">Módulo de {item.title} será implementado aqui.</p>
+          <div className="space-y-12 pt-6">
+            {/* Parâmetros de inatividade do cliente */}
+            <div className="space-y-6">
+              <div className="flex items-center justify-between">
+                <h3 className="text-lg font-bold text-navy">Parâmetros de inatividade do cliente</h3>
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <Button className="bg-[#FFF8E6] text-[#D9A94D] hover:bg-[#FFF8E6]/80 border border-[#D9A94D]/20 gap-2 rounded-xl h-11 px-6 font-bold">
+                      <Plus className="w-4 h-4" /> Configurar inatividade
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent className="max-w-3xl p-0 overflow-hidden border-none shadow-2xl rounded-3xl">
+                    <DialogHeader className="px-8 py-6 border-b shrink-0">
+                      <DialogTitle className="text-xl font-bold text-navy">Criar Regra de Inatividade</DialogTitle>
+                      <p className="text-sm text-navy/40 font-medium">Configure uma nova regra para gerenciar a inatividade do cliente</p>
+                    </DialogHeader>
+                    <ScrollArea className="max-h-[70vh]">
+                      <div className="p-8 space-y-8">
+                        <div className="space-y-2">
+                          <Label className="text-xs font-bold text-navy">Nome da regra</Label>
+                          <div className="relative">
+                            <Input placeholder="Digite um nome para identificar esta regra (opcional)" className="rounded-xl border-line h-11 bg-surface-2 pr-12 text-sm" />
+                            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] text-navy/20 font-bold">0 / 255</span>
+                          </div>
+                        </div>
+
+                        <div className="space-y-4">
+                          <Label className="text-xs font-bold text-navy">Escopo de departamentos</Label>
+                          <div className="flex items-center gap-2">
+                            <Button className="bg-[#D9A94D] text-white hover:bg-[#D9A94D]/90 rounded-xl h-9 px-4 text-xs font-bold">Todos os departamentos (Global)</Button>
+                            <Button variant="ghost" className="text-navy/40 hover:bg-surface-2 rounded-xl h-9 px-4 text-xs font-bold">Departamentos específicos</Button>
+                          </div>
+                          <p className="text-[10px] text-navy/30 font-bold">Esta regra será aplicada a todos os departamentos</p>
+                        </div>
+
+                        <div className="space-y-4">
+                          {[
+                            { title: "Vigência da regra", desc: "Defina a partir de qual data os atendimentos poderão ser impactados por esta regra. Se desativado, conversas anteriores em atendimento também serão impactadas.", active: false },
+                            { title: "Considerar horário comercial do departamento", desc: "Ligado: o tempo de inatividade conta apenas dentro do horário de atendimento do departamento (pula noite/fim de semana/feriado). Desligado: conta em tempo corrido (24/7).", active: true },
+                            { title: "Enviar Mensagens", desc: "Configure mensagens automáticas para enviar ao cliente antes do encerramento", active: false },
+                            { title: "Encerrar Atendimento", desc: "Encerra automaticamente o atendimento após o tempo de inatividade", active: false }
+                          ].map((config, cIdx) => (
+                            <div key={cIdx} className="flex items-start justify-between p-5 bg-white border border-line rounded-2xl shadow-sm group hover:border-[#D9A94D]/20 transition-all">
+                              <div className="space-y-1 pr-8">
+                                <h4 className="text-sm font-bold text-navy">{config.title}</h4>
+                                <p className="text-[11px] leading-relaxed text-navy/30 font-medium">{config.desc}</p>
+                              </div>
+                              <Switch defaultChecked={config.active} className="data-[state=checked]:bg-[#D9A94D]" />
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </ScrollArea>
+                    <DialogFooter className="px-8 py-6 border-t bg-surface-2 flex items-center justify-between sm:justify-between w-full">
+                      <Button variant="ghost" className="text-navy/40 font-bold hover:bg-transparent">Cancelar</Button>
+                      <Button className="bg-transparent text-navy/10 font-bold hover:bg-transparent" disabled>Salvar</Button>
+                    </DialogFooter>
+                  </DialogContent>
+                </Dialog>
+              </div>
+
+              <div className="flex flex-col md:flex-row gap-4">
+                <div className="space-y-1.5 flex-1 max-w-sm">
+                  <Label className="text-[10px] font-black uppercase tracking-wider text-navy/30 px-1">Pesquisar</Label>
+                  <Input placeholder="Pesquisar por nome ou departamento..." className="rounded-xl border-line h-11 bg-white pl-4 text-sm font-medium" />
+                </div>
+                <div className="space-y-1.5 flex-1 max-w-xs">
+                  <Label className="text-[10px] font-black uppercase tracking-wider text-navy/30 px-1">Departamentos</Label>
+                  <Select defaultValue="todas">
+                    <SelectTrigger className="h-11 rounded-xl border-line bg-white text-sm font-medium">
+                      <SelectValue placeholder="Todas" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="todas">Todas</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="ml-auto flex items-end gap-3 pb-0.5">
+                  <Button variant="ghost" size="icon" className="text-navy/30 hover:text-coral h-11 w-11 transition-colors">
+                    <RefreshCcw className="w-4 h-4" />
+                  </Button>
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs font-bold text-navy/40">Mostrar</span>
+                    <Select defaultValue="10">
+                      <SelectTrigger className="w-20 h-11 rounded-xl border-line bg-white text-sm font-bold">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="10">10</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-surface-2 rounded-2xl py-12 text-center border border-dashed border-line">
+                <p className="text-xs text-navy/30 font-bold uppercase tracking-widest">Nenhum resultado para exibir</p>
+              </div>
+
+              <div className="flex items-center justify-between text-[11px] font-bold text-navy/30 px-2 pt-2">
+                <span>Mostrando de 0 até 10 de 0 registros</span>
+                <div className="flex items-center gap-4">
+                  <span>Página 1 de 1</span>
+                  <div className="flex items-center gap-1">
+                    <Button size="icon" variant="outline" className="h-7 w-7 rounded-lg border-line text-[#D9A94D] bg-[#FFF8E6] font-bold">1</Button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Parâmetros de SLA do Atendente */}
+            <div className="space-y-6">
+              <div className="flex items-center justify-between">
+                <h3 className="text-lg font-bold text-navy">Parâmetros de SLA do Atendente</h3>
+                <Button className="bg-[#FFF8E6] text-[#D9A94D] hover:bg-[#FFF8E6]/80 border border-[#D9A94D]/20 gap-2 rounded-xl h-11 px-6 font-bold">
+                  <Plus className="w-4 h-4" /> Configurar SLA
+                </Button>
+              </div>
+
+              <div className="flex flex-col md:flex-row gap-4">
+                <div className="space-y-1.5 flex-1 max-w-sm">
+                  <Label className="text-[10px] font-black uppercase tracking-wider text-navy/30 px-1">Pesquisar</Label>
+                  <Input placeholder="Pesquisar por nome ou departamento..." className="rounded-xl border-line h-11 bg-white pl-4 text-sm font-medium" />
+                </div>
+                <div className="space-y-1.5 flex-1 max-w-xs">
+                  <Label className="text-[10px] font-black uppercase tracking-wider text-navy/30 px-1">Departamentos</Label>
+                  <Select defaultValue="todas">
+                    <SelectTrigger className="h-11 rounded-xl border-line bg-white text-sm font-medium">
+                      <SelectValue placeholder="Todas" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="todas">Todas</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="ml-auto flex items-end gap-3 pb-0.5">
+                  <Button variant="ghost" size="icon" className="text-navy/30 hover:text-coral h-11 w-11 transition-colors">
+                    <RefreshCcw className="w-4 h-4" />
+                  </Button>
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs font-bold text-navy/40">Mostrar</span>
+                    <Select defaultValue="10">
+                      <SelectTrigger className="w-20 h-11 rounded-xl border-line bg-white text-sm font-bold">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="10">10</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-surface-2 rounded-2xl py-12 text-center border border-dashed border-line">
+                <p className="text-xs text-navy/30 font-bold uppercase tracking-widest">Nenhum resultado para exibir</p>
+              </div>
+
+              <div className="flex items-center justify-between text-[11px] font-bold text-navy/30 px-2 pt-2">
+                <span>Mostrando de 0 até 10 de 0 registros</span>
+                <div className="flex items-center gap-4">
+                  <span>Página 1 de 1</span>
+                  <div className="flex items-center gap-1">
+                    <Button size="icon" variant="outline" className="h-7 w-7 rounded-lg border-line text-[#D9A94D] bg-[#FFF8E6] font-bold">1</Button>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </AccordionContent>
       </AccordionItem>
