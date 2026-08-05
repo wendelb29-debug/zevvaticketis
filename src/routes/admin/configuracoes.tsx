@@ -32,7 +32,8 @@ import {
   RefreshCcw,
   Pencil,
   Trash2,
-  Info
+  Info,
+  ChevronDown
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Switch } from "@/components/ui/switch";
