@@ -419,39 +419,226 @@ const AtendimentoAccordion = () => (
                   { name: "Contas A Receber", agents: ["Jaqueline", "Kitielle", "Natália", "Leticia", "Laura", "Sara", "Vitoria"], config: "Global", created: "08/10/25 11:28", updated: "25/02/26 13:43" },
                   { name: "Sdr", agents: ["Thayane", "Daiane", "Mayck"], config: "Personalizado", created: "08/10/25 11:28", updated: "11/12/25 15:31" },
                 ].map((depto, idx) => (
-                  <TableRow key={idx} className="border-line group hover:bg-surface-2/50 transition-colors">
+                  <TableRow key={idx} className="border-line group hover:bg-surface-2 transition-colors">
                     <TableCell className="px-6 py-5 font-bold text-navy text-sm">{depto.name}</TableCell>
                     <TableCell className="px-6 py-5">
                       <div className="flex flex-wrap gap-1.5">
                         {depto.agents.map((agent, aIdx) => (
-                          <Badge key={aIdx} variant="outline" className="bg-white border-line text-[10px] py-0.5 font-medium text-navy/60 rounded-lg">
+                          <Badge key={aIdx} variant="outline" className="bg-white border-line text-[10px] py-1 px-3 font-bold text-navy/60 rounded-xl">
                             {agent}
                           </Badge>
                         ))}
                       </div>
                     </TableCell>
                     <TableCell className="px-6 py-5 text-center">
-                      <span className={cn(
-                        "text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full",
-                        depto.config === "Global" ? "text-navy/40" : "bg-[#EDF2FF] text-[#4A6BF3]"
-                      )}>
+                      <span className="text-xs font-bold text-navy/40">
                         {depto.config}
                       </span>
                     </TableCell>
-                    <TableCell className="px-6 py-5 text-center text-navy/40 text-xs font-medium">{depto.created}</TableCell>
-                    <TableCell className="px-6 py-5 text-center text-navy/40 text-xs font-medium">{depto.updated}</TableCell>
+                    <TableCell className="px-6 py-5 text-center text-navy/40 text-[11px] font-bold">{depto.created}</TableCell>
+                    <TableCell className="px-6 py-5 text-center text-navy/40 text-[11px] font-bold">{depto.updated}</TableCell>
                     <TableCell className="px-6 py-5">
-                      <div className="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                        <Button variant="ghost" size="icon" className="h-8 w-8 text-navy/30 hover:text-navy transition-colors">
-                          <Pencil className="w-3.5 h-3.5" />
-                        </Button>
-                        <Button variant="ghost" size="icon" className="h-8 w-8 text-navy/30 hover:text-coral transition-colors">
-                          <Trash2 className="w-3.5 h-3.5" />
+                      <div className="flex items-center justify-end gap-2">
+                        <Dialog>
+                          <DialogTrigger asChild>
+                            <Button variant="ghost" size="icon" className="h-9 w-9 text-navy/20 hover:text-[#D9A94D] hover:bg-[#FFF8E6] transition-all rounded-lg border border-transparent hover:border-[#D9A94D]/20">
+                              <Pencil className="w-4 h-4" />
+                            </Button>
+                          </DialogTrigger>
+                          {/* Reuse the same content for editing - In a real app we'd pass the depto data */}
+                          <DialogContent className="max-w-7xl h-[95vh] flex flex-col p-0 overflow-hidden border-none shadow-2xl">
+                            <DialogHeader className="px-8 py-6 bg-[#FDF8EB] border-b border-[#D9A94D]/10 shrink-0">
+                              <div className="flex items-center gap-3">
+                                <div className="bg-white p-2 rounded-lg shadow-sm border border-[#D9A94D]/20">
+                                  <Layers className="w-5 h-5 text-[#D9A94D]" />
+                                </div>
+                                <div>
+                                  <DialogTitle className="text-xl font-bold text-navy">Configurações básicas</DialogTitle>
+                                  <p className="text-sm text-navy/40 font-medium mt-0.5">Configure o nome e informações básicas do departamento</p>
+                                </div>
+                              </div>
+                            </DialogHeader>
+
+                            <ScrollArea className="flex-1 bg-white">
+                              <div className="p-8 space-y-10">
+                                <div className="space-y-3">
+                                  <Label className="text-sm font-bold text-navy flex items-center gap-1">
+                                    Nome <span className="text-coral">*</span>
+                                  </Label>
+                                  <div className="relative group">
+                                    <Input 
+                                      defaultValue={depto.name}
+                                      className="rounded-xl border-line h-12 bg-surface-2 px-4 focus-visible:ring-coral/20 focus-visible:border-coral transition-all font-bold" 
+                                    />
+                                    <Pencil className="w-4 h-4 text-navy/20 absolute right-4 top-1/2 -translate-y-1/2 group-hover:text-navy/40 transition-colors" />
+                                  </div>
+                                </div>
+
+                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                                  {/* Sections reproduced here for the Edit modal... */}
+                                  <div className="space-y-4">
+                                    <div className="flex items-center gap-2">
+                                      <Users className="w-4 h-4 text-[#D9A94D]" />
+                                      <Label className="text-sm font-bold text-navy">Atendentes vinculados</Label>
+                                    </div>
+                                    <div className="border border-line rounded-xl overflow-hidden bg-white shadow-sm h-[320px] flex flex-col">
+                                      <div className="p-3 bg-surface-2 border-b border-line flex items-center gap-2">
+                                        <Search className="w-4 h-4 text-navy/30" />
+                                        <input className="bg-transparent border-none outline-none text-xs flex-1" placeholder="Buscar..." />
+                                      </div>
+                                      <ScrollArea className="flex-1 p-2">
+                                        <div className="space-y-1">
+                                          {[
+                                            { name: "Alice Vieira", email: "alicevieiraii214@gmail.com" },
+                                            { name: "Bárbara Carvalho", email: "barbara864carvalho@gmail.com" },
+                                            { name: "Carolina Silva", email: "carol.12godinho@gmail.com" },
+                                            { name: "Daiane Silva", email: "cobransasavecar@savecarbrasil.com.br" },
+                                            { name: "Eduardo Lima", email: "edulima27.eh@gmail.com" }
+                                          ].map(user => (
+                                            <div key={user.email} className="flex items-center gap-3 p-2.5 hover:bg-surface-2 rounded-lg transition-colors group">
+                                              <Checkbox id={`edit-${depto.name}-${user.email}`} className="data-[state=checked]:bg-[#D9A94D] data-[state=checked]:border-[#D9A94D]" />
+                                              <div className="flex flex-col min-w-0">
+                                                <Label htmlFor={`edit-${depto.name}-${user.email}`} className="text-[11px] font-bold text-navy truncate cursor-pointer group-hover:text-[#D9A94D] transition-colors">
+                                                  {user.name}
+                                                </Label>
+                                                <span className="text-[10px] text-navy/30 truncate">{user.email}</span>
+                                              </div>
+                                            </div>
+                                          ))}
+                                        </div>
+                                      </ScrollArea>
+                                    </div>
+                                  </div>
+
+                                  <div className="space-y-4">
+                                    <div className="flex items-center justify-between">
+                                      <div className="flex items-center gap-2">
+                                        <Briefcase className="w-4 h-4 text-[#D9A94D]" />
+                                        <Label className="text-sm font-bold text-navy">Classificações vinculadas</Label>
+                                      </div>
+                                      <Button variant="link" className="text-[10px] text-[#D9A94D] h-auto p-0 font-bold">+ Criar classificação</Button>
+                                    </div>
+                                    <div className="border border-line rounded-xl overflow-hidden bg-white shadow-sm h-[320px] flex flex-col">
+                                      <div className="p-3 bg-surface-2 border-b border-line flex items-center gap-2">
+                                        <Search className="w-4 h-4 text-navy/30" />
+                                        <input className="bg-transparent border-none outline-none text-xs flex-1" placeholder="Buscar..." />
+                                      </div>
+                                      <ScrollArea className="flex-1 p-2">
+                                        <div className="p-2.5 flex items-center gap-3 hover:bg-surface-2 rounded-lg transition-colors group">
+                                          <Checkbox id={`edit-class-${depto.name}`} className="data-[state=checked]:bg-[#D9A94D] data-[state=checked]:border-[#D9A94D]" />
+                                          <Label htmlFor={`edit-class-${depto.name}`} className="text-[11px] font-bold text-navy cursor-pointer">Concluído</Label>
+                                        </div>
+                                      </ScrollArea>
+                                    </div>
+                                  </div>
+
+                                  <div className="space-y-4">
+                                    <div className="flex items-center justify-between">
+                                      <div className="flex items-center gap-2">
+                                        <Tag className="w-4 h-4 text-[#D9A94D]" />
+                                        <Label className="text-sm font-bold text-navy">Tags vinculadas</Label>
+                                      </div>
+                                      <Button variant="link" className="text-[10px] text-[#D9A94D] h-auto p-0 font-bold">+ Criar tag</Button>
+                                    </div>
+                                    <div className="border border-line rounded-xl overflow-hidden bg-white shadow-sm h-[320px] flex flex-col">
+                                      <div className="p-3 bg-surface-2 border-b border-line flex items-center gap-2">
+                                        <Search className="w-4 h-4 text-navy/30" />
+                                        <input className="bg-transparent border-none outline-none text-xs flex-1" placeholder="Buscar..." />
+                                      </div>
+                                      <ScrollArea className="flex-1 p-2">
+                                        <div className="space-y-1">
+                                          {["Analisar", "Boleto", "Cotação", "Em Negociação", "Insatisfeito"].map(tag => (
+                                            <div key={tag} className="flex items-center gap-3 p-2.5 hover:bg-surface-2 rounded-lg transition-colors group">
+                                              <Checkbox 
+                                                id={`edit-tag-${depto.name}-${tag}`} 
+                                                className="data-[state=checked]:bg-[#D9A94D] data-[state=checked]:border-[#D9A94D]" 
+                                                defaultChecked={idx === 0 && (tag === "Analisar" || tag === "Cotação" || tag === "Em Negociação" || tag === "Insatisfeito")}
+                                              />
+                                              <Label htmlFor={`edit-tag-${depto.name}-${tag}`} className="text-[11px] font-bold text-navy cursor-pointer">{tag}</Label>
+                                            </div>
+                                          ))}
+                                        </div>
+                                      </ScrollArea>
+                                    </div>
+                                  </div>
+
+                                  <div className="space-y-4">
+                                    <div className="flex items-center gap-2">
+                                      <Layers className="w-4 h-4 text-[#D9A94D]" />
+                                      <Label className="text-sm font-bold text-navy">Templates vinculados</Label>
+                                    </div>
+                                    <div className="border border-line rounded-xl overflow-hidden bg-white shadow-sm h-[320px] flex flex-col">
+                                      <div className="p-3 bg-surface-2 border-b border-line flex items-center gap-2">
+                                        <Search className="w-4 h-4 text-navy/30" />
+                                        <input className="bg-transparent border-none outline-none text-xs flex-1" placeholder="Buscar..." />
+                                      </div>
+                                      <ScrollArea className="flex-1 p-2">
+                                        <div className="space-y-1">
+                                          {["Boa Tarde, Reativar", "Bom Dia, Reativar", "Disparo_Ativo_16_Energia_Com_Selo", "Finalizar Ativo"].map(temp => (
+                                            <div key={temp} className="flex items-center gap-3 p-2.5 hover:bg-surface-2 rounded-lg transition-colors group">
+                                              <Checkbox 
+                                                id={`edit-temp-${depto.name}-${temp}`} 
+                                                className="data-[state=checked]:bg-[#D9A94D] data-[state=checked]:border-[#D9A94D]" 
+                                                defaultChecked={idx === 0 && temp === "Disparo_Ativo_16_Energia_Com_Selo"}
+                                              />
+                                              <Label htmlFor={`edit-temp-${depto.name}-${temp}`} className="text-[11px] font-bold text-navy cursor-pointer truncate">{temp}</Label>
+                                            </div>
+                                          ))}
+                                        </div>
+                                      </ScrollArea>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <div className="space-y-4">
+                                  <div className="flex items-center gap-2">
+                                    <RefreshCcw className="w-4 h-4 text-[#D9A94D]" />
+                                    <Label className="text-sm font-bold text-navy">Restringir recebimento de transferências</Label>
+                                  </div>
+                                  <p className="text-[10px] leading-relaxed text-navy/40 font-medium max-w-md">
+                                    Se nenhum for selecionado, este departamento é público e recebe transferências de qualquer departamento.
+                                  </p>
+                                  <div className="border border-line rounded-xl overflow-hidden bg-white shadow-sm h-[200px] flex flex-col max-w-sm">
+                                    <div className="p-3 bg-surface-2 border-b border-line flex items-center gap-2">
+                                      <Search className="w-4 h-4 text-navy/30" />
+                                      <input className="bg-transparent border-none outline-none text-xs flex-1" placeholder="Buscar..." />
+                                    </div>
+                                    <ScrollArea className="flex-1 p-2">
+                                      <div className="space-y-1">
+                                        {["2 Via Boleto", "Adm", "Atendimento", "Cadastro", "Carta de Ressalva"].map(d => (
+                                          <div key={d} className="flex items-center gap-3 p-2 hover:bg-surface-2 rounded-lg transition-colors group">
+                                            <Checkbox id={`edit-restrict-${depto.name}-${d}`} className="data-[state=checked]:bg-[#D9A94D] data-[state=checked]:border-[#D9A94D]" />
+                                            <Label htmlFor={`edit-restrict-${depto.name}-${d}`} className="text-[11px] font-bold text-navy cursor-pointer">{d}</Label>
+                                          </div>
+                                        ))}
+                                      </div>
+                                    </ScrollArea>
+                                  </div>
+                                </div>
+                              </div>
+                            </ScrollArea>
+
+                            <div className="px-8 py-2 bg-white flex items-center justify-center border-t border-line/50 shrink-0">
+                              <div className="flex items-center gap-2 text-[10px] font-bold text-navy/20">
+                                <ChevronDown className="w-3 h-3" /> Role para ver mais
+                              </div>
+                            </div>
+
+                            <DialogFooter className="px-8 py-6 border-t bg-surface-2 flex items-center justify-end w-full shrink-0">
+                              <Button className="bg-[#D9A94D] text-white hover:bg-[#D9A94D]/90 font-bold px-10 h-12 rounded-xl shadow-lg shadow-[#D9A94D]/20 transition-all active:scale-95">
+                                Salvar Departamento
+                              </Button>
+                            </DialogFooter>
+                          </DialogContent>
+                        </Dialog>
+                        <Button variant="ghost" size="icon" className="h-9 w-9 text-navy/20 hover:text-coral hover:bg-coral/5 transition-all rounded-lg border border-transparent hover:border-coral/20">
+                          <Trash2 className="w-4 h-4" />
                         </Button>
                       </div>
                     </TableCell>
                   </TableRow>
                 ))}
+
               </TableBody>
             </Table>
           </div>
