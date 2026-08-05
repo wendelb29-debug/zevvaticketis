@@ -142,15 +142,15 @@ const AtendimentoAccordion = () => (
             <h3 className="text-lg font-bold text-navy">Gerenciar departamentos</h3>
             <Dialog>
               <DialogTrigger asChild>
-                <Button className="bg-[#FFF8E6] text-[#D9A94D] hover:bg-[#FFF8E6]/80 border border-[#D9A94D]/20 gap-2 rounded-xl h-11 px-6 font-bold">
+                <Button className="bg-[hsl(var(--primary)/0.1)] text-[var(--primary)] hover:bg-[hsl(var(--primary)/0.1)]/80 border border-[var(--primary)]/20 gap-2 rounded-xl h-11 px-6 font-bold">
                   <Plus className="w-4 h-4" /> Criar departamento
                 </Button>
               </DialogTrigger>
               <DialogContent className="max-w-7xl h-[95vh] flex flex-col p-0 overflow-hidden border-none shadow-2xl">
-                <DialogHeader className="px-8 py-6 bg-[#FDF8EB] border-b border-[#D9A94D]/10 shrink-0">
+                <DialogHeader className="px-8 py-6 bg-[hsl(var(--muted)/0.3)] border-b border-[var(--primary)]/10 shrink-0">
                   <div className="flex items-center gap-3">
-                    <div className="bg-white p-2 rounded-lg shadow-sm border border-[#D9A94D]/20">
-                      <Layers className="w-5 h-5 text-[#D9A94D]" />
+                    <div className="bg-white p-2 rounded-lg shadow-sm border border-[var(--primary)]/20">
+                      <Layers className="w-5 h-5 text-[var(--primary)]" />
                     </div>
                     <div>
                       <DialogTitle className="text-xl font-bold text-navy">Configurações básicas</DialogTitle>
@@ -180,7 +180,7 @@ const AtendimentoAccordion = () => (
                       <div className="space-y-4">
                         <div className="flex items-center justify-between">
                           <div className="flex items-center gap-2">
-                            <Users className="w-4 h-4 text-[#D9A94D]" />
+                            <Users className="w-4 h-4 text-[var(--primary)]" />
                             <Label className="text-sm font-bold text-navy">Atendentes vinculados</Label>
                           </div>
                         </div>
@@ -200,7 +200,7 @@ const AtendimentoAccordion = () => (
                                 { name: "Eduardo Lima", email: "edulima27.eh@gmail.com" }
                               ].map(user => (
                                 <div key={user.email} className="flex items-center gap-3 p-2.5 hover:bg-surface-2 rounded-lg transition-colors group">
-                                  <Checkbox id={user.email} className="data-[state=checked]:bg-[#D9A94D] data-[state=checked]:border-[#D9A94D]" />
+                                  <Checkbox id={user.email} className="data-[state=checked]:bg-[var(--primary)] data-[state=checked]:border-[var(--primary)]" />
                                   <div className="flex flex-col min-w-0">
                                     <Label htmlFor={user.email} className="text-[11px] font-bold text-navy truncate cursor-pointer group-hover:text-coral transition-colors">
                                       {user.name}
@@ -218,10 +218,10 @@ const AtendimentoAccordion = () => (
                       <div className="space-y-4">
                         <div className="flex items-center justify-between">
                           <div className="flex items-center gap-2">
-                            <Briefcase className="w-4 h-4 text-[#D9A94D]" />
+                            <Briefcase className="w-4 h-4 text-[var(--primary)]" />
                             <Label className="text-sm font-bold text-navy">Classificações vinculadas</Label>
                           </div>
-                          <Button variant="link" className="text-[10px] text-[#D9A94D] h-auto p-0 font-bold">+ Criar classificação</Button>
+                          <Button variant="link" className="text-[10px] text-[var(--primary)] h-auto p-0 font-bold">+ Criar classificação</Button>
                         </div>
                         <div className="border border-line rounded-xl overflow-hidden bg-white shadow-sm h-[320px] flex flex-col">
                           <div className="p-3 bg-surface-2 border-b border-line flex items-center gap-2">
@@ -232,7 +232,7 @@ const AtendimentoAccordion = () => (
                             <div className="space-y-1">
                               {["Concluído"].map(item => (
                                 <div key={item} className="flex items-center gap-3 p-2.5 hover:bg-surface-2 rounded-lg transition-colors group">
-                                  <Checkbox id={`class-${item}`} className="data-[state=checked]:bg-[#D9A94D] data-[state=checked]:border-[#D9A94D]" />
+                                  <Checkbox id={`class-${item}`} className="data-[state=checked]:bg-[var(--primary)] data-[state=checked]:border-[var(--primary)]" />
                                   <Label htmlFor={`class-${item}`} className="text-[11px] font-bold text-navy cursor-pointer">{item}</Label>
                                 </div>
                               ))}
@@ -245,10 +245,10 @@ const AtendimentoAccordion = () => (
                       <div className="space-y-4">
                         <div className="flex items-center justify-between">
                           <div className="flex items-center gap-2">
-                            <Tag className="w-4 h-4 text-[#D9A94D]" />
+                            <Tag className="w-4 h-4 text-[var(--primary)]" />
                             <Label className="text-sm font-bold text-navy">Tags vinculadas</Label>
                           </div>
-                          <Button variant="link" className="text-[10px] text-[#D9A94D] h-auto p-0 font-bold">+ Criar tag</Button>
+                          <Button variant="link" className="text-[10px] text-[var(--primary)] h-auto p-0 font-bold">+ Criar tag</Button>
                         </div>
                         <div className="border border-line rounded-xl overflow-hidden bg-white shadow-sm h-[320px] flex flex-col">
                           <div className="p-3 bg-surface-2 border-b border-line flex items-center gap-2">
@@ -268,7 +268,7 @@ const AtendimentoAccordion = () => (
                                   <Checkbox 
                                     id={`tag-${tag.name}`} 
                                     defaultChecked={tag.active}
-                                    className="data-[state=checked]:bg-[#D9A94D] data-[state=checked]:border-[#D9A94D]" 
+                                    className="data-[state=checked]:bg-[var(--primary)] data-[state=checked]:border-[var(--primary)]" 
                                   />
                                   <Label htmlFor={`tag-${tag.name}`} className="text-[11px] font-bold text-navy cursor-pointer">{tag.name}</Label>
                                 </div>
@@ -281,7 +281,7 @@ const AtendimentoAccordion = () => (
                       {/* Templates Section */}
                       <div className="space-y-4">
                         <div className="flex items-center gap-2">
-                          <Layers className="w-4 h-4 text-[#D9A94D]" />
+                          <Layers className="w-4 h-4 text-[var(--primary)]" />
                           <Label className="text-sm font-bold text-navy">Templates vinculados</Label>
                         </div>
                         <div className="border border-line rounded-xl overflow-hidden bg-white shadow-sm h-[320px] flex flex-col">
@@ -302,7 +302,7 @@ const AtendimentoAccordion = () => (
                                   <Checkbox 
                                     id={`temp-${temp.name}`} 
                                     defaultChecked={temp.active}
-                                    className="data-[state=checked]:bg-[#D9A94D] data-[state=checked]:border-[#D9A94D]" 
+                                    className="data-[state=checked]:bg-[var(--primary)] data-[state=checked]:border-[var(--primary)]" 
                                   />
                                   <Label htmlFor={`temp-${temp.name}`} className="text-[11px] font-bold text-navy cursor-pointer truncate">{temp.name}</Label>
                                 </div>
@@ -317,7 +317,7 @@ const AtendimentoAccordion = () => (
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                       <div className="space-y-4">
                         <div className="flex items-center gap-2">
-                          <RefreshCcw className="w-4 h-4 text-[#D9A94D]" />
+                          <RefreshCcw className="w-4 h-4 text-[var(--primary)]" />
                           <Label className="text-sm font-bold text-navy">Restringir recebimento de transferências</Label>
                         </div>
                         <p className="text-[10px] leading-relaxed text-navy/40 font-medium max-w-md">
@@ -332,7 +332,7 @@ const AtendimentoAccordion = () => (
                             <div className="space-y-1">
                               {["2 Via Boleto", "Adm", "Atendimento", "Cadastro", "Carta de Ressalva"].map(dept => (
                                 <div key={dept} className="flex items-center gap-3 p-2 hover:bg-surface-2 rounded-lg transition-colors group">
-                                  <Checkbox id={`restrict-${dept}`} className="data-[state=checked]:bg-[#D9A94D] data-[state=checked]:border-[#D9A94D]" />
+                                  <Checkbox id={`restrict-${dept}`} className="data-[state=checked]:bg-[var(--primary)] data-[state=checked]:border-[var(--primary)]" />
                                   <Label htmlFor={`restrict-${dept}`} className="text-[11px] font-bold text-navy cursor-pointer">{dept}</Label>
                                 </div>
                               ))}
@@ -351,7 +351,7 @@ const AtendimentoAccordion = () => (
                 </div>
 
                 <DialogFooter className="px-8 py-6 border-t bg-surface-2 flex items-center justify-end w-full shrink-0">
-                  <Button className="bg-[#D9A94D] text-white hover:bg-[#D9A94D]/90 font-bold px-10 h-12 rounded-xl shadow-lg shadow-[#D9A94D]/20 transition-all active:scale-95">
+                  <Button className="bg-[var(--primary)] text-white hover:bg-[var(--primary)]/90 font-bold px-10 h-12 rounded-xl shadow-lg shadow-[var(--primary)]/20 transition-all active:scale-95">
                     Salvar Departamento
                   </Button>
                 </DialogFooter>
@@ -441,16 +441,16 @@ const AtendimentoAccordion = () => (
                       <div className="flex items-center justify-end gap-2">
                         <Dialog>
                           <DialogTrigger asChild>
-                            <Button variant="ghost" size="icon" className="h-9 w-9 text-navy/20 hover:text-[#D9A94D] hover:bg-[#FFF8E6] transition-all rounded-lg border border-transparent hover:border-[#D9A94D]/20">
+                            <Button variant="ghost" size="icon" className="h-9 w-9 text-navy/20 hover:text-[var(--primary)] hover:bg-[hsl(var(--primary)/0.1)] transition-all rounded-lg border border-transparent hover:border-[var(--primary)]/20">
                               <Pencil className="w-4 h-4" />
                             </Button>
                           </DialogTrigger>
                           {/* Reuse the same content for editing - In a real app we'd pass the depto data */}
                           <DialogContent className="max-w-7xl h-[95vh] flex flex-col p-0 overflow-hidden border-none shadow-2xl">
-                            <DialogHeader className="px-8 py-6 bg-[#FDF8EB] border-b border-[#D9A94D]/10 shrink-0">
+                            <DialogHeader className="px-8 py-6 bg-[hsl(var(--muted)/0.3)] border-b border-[var(--primary)]/10 shrink-0">
                               <div className="flex items-center gap-3">
-                                <div className="bg-white p-2 rounded-lg shadow-sm border border-[#D9A94D]/20">
-                                  <Layers className="w-5 h-5 text-[#D9A94D]" />
+                                <div className="bg-white p-2 rounded-lg shadow-sm border border-[var(--primary)]/20">
+                                  <Layers className="w-5 h-5 text-[var(--primary)]" />
                                 </div>
                                 <div>
                                   <DialogTitle className="text-xl font-bold text-navy">Configurações básicas</DialogTitle>
@@ -478,7 +478,7 @@ const AtendimentoAccordion = () => (
                                   {/* Sections reproduced here for the Edit modal... */}
                                   <div className="space-y-4">
                                     <div className="flex items-center gap-2">
-                                      <Users className="w-4 h-4 text-[#D9A94D]" />
+                                      <Users className="w-4 h-4 text-[var(--primary)]" />
                                       <Label className="text-sm font-bold text-navy">Atendentes vinculados</Label>
                                     </div>
                                     <div className="border border-line rounded-xl overflow-hidden bg-white shadow-sm h-[320px] flex flex-col">
@@ -496,9 +496,9 @@ const AtendimentoAccordion = () => (
                                             { name: "Eduardo Lima", email: "edulima27.eh@gmail.com" }
                                           ].map(user => (
                                             <div key={user.email} className="flex items-center gap-3 p-2.5 hover:bg-surface-2 rounded-lg transition-colors group">
-                                              <Checkbox id={`edit-${depto.name}-${user.email}`} className="data-[state=checked]:bg-[#D9A94D] data-[state=checked]:border-[#D9A94D]" />
+                                              <Checkbox id={`edit-${depto.name}-${user.email}`} className="data-[state=checked]:bg-[var(--primary)] data-[state=checked]:border-[var(--primary)]" />
                                               <div className="flex flex-col min-w-0">
-                                                <Label htmlFor={`edit-${depto.name}-${user.email}`} className="text-[11px] font-bold text-navy truncate cursor-pointer group-hover:text-[#D9A94D] transition-colors">
+                                                <Label htmlFor={`edit-${depto.name}-${user.email}`} className="text-[11px] font-bold text-navy truncate cursor-pointer group-hover:text-[var(--primary)] transition-colors">
                                                   {user.name}
                                                 </Label>
                                                 <span className="text-[10px] text-navy/30 truncate">{user.email}</span>
@@ -513,10 +513,10 @@ const AtendimentoAccordion = () => (
                                   <div className="space-y-4">
                                     <div className="flex items-center justify-between">
                                       <div className="flex items-center gap-2">
-                                        <Briefcase className="w-4 h-4 text-[#D9A94D]" />
+                                        <Briefcase className="w-4 h-4 text-[var(--primary)]" />
                                         <Label className="text-sm font-bold text-navy">Classificações vinculadas</Label>
                                       </div>
-                                      <Button variant="link" className="text-[10px] text-[#D9A94D] h-auto p-0 font-bold">+ Criar classificação</Button>
+                                      <Button variant="link" className="text-[10px] text-[var(--primary)] h-auto p-0 font-bold">+ Criar classificação</Button>
                                     </div>
                                     <div className="border border-line rounded-xl overflow-hidden bg-white shadow-sm h-[320px] flex flex-col">
                                       <div className="p-3 bg-surface-2 border-b border-line flex items-center gap-2">
@@ -525,7 +525,7 @@ const AtendimentoAccordion = () => (
                                       </div>
                                       <ScrollArea className="flex-1 p-2">
                                         <div className="p-2.5 flex items-center gap-3 hover:bg-surface-2 rounded-lg transition-colors group">
-                                          <Checkbox id={`edit-class-${depto.name}`} className="data-[state=checked]:bg-[#D9A94D] data-[state=checked]:border-[#D9A94D]" />
+                                          <Checkbox id={`edit-class-${depto.name}`} className="data-[state=checked]:bg-[var(--primary)] data-[state=checked]:border-[var(--primary)]" />
                                           <Label htmlFor={`edit-class-${depto.name}`} className="text-[11px] font-bold text-navy cursor-pointer">Concluído</Label>
                                         </div>
                                       </ScrollArea>
@@ -535,10 +535,10 @@ const AtendimentoAccordion = () => (
                                   <div className="space-y-4">
                                     <div className="flex items-center justify-between">
                                       <div className="flex items-center gap-2">
-                                        <Tag className="w-4 h-4 text-[#D9A94D]" />
+                                        <Tag className="w-4 h-4 text-[var(--primary)]" />
                                         <Label className="text-sm font-bold text-navy">Tags vinculadas</Label>
                                       </div>
-                                      <Button variant="link" className="text-[10px] text-[#D9A94D] h-auto p-0 font-bold">+ Criar tag</Button>
+                                      <Button variant="link" className="text-[10px] text-[var(--primary)] h-auto p-0 font-bold">+ Criar tag</Button>
                                     </div>
                                     <div className="border border-line rounded-xl overflow-hidden bg-white shadow-sm h-[320px] flex flex-col">
                                       <div className="p-3 bg-surface-2 border-b border-line flex items-center gap-2">
@@ -551,7 +551,7 @@ const AtendimentoAccordion = () => (
                                             <div key={tag} className="flex items-center gap-3 p-2.5 hover:bg-surface-2 rounded-lg transition-colors group">
                                               <Checkbox 
                                                 id={`edit-tag-${depto.name}-${tag}`} 
-                                                className="data-[state=checked]:bg-[#D9A94D] data-[state=checked]:border-[#D9A94D]" 
+                                                className="data-[state=checked]:bg-[var(--primary)] data-[state=checked]:border-[var(--primary)]" 
                                                 defaultChecked={idx === 0 && (tag === "Analisar" || tag === "Cotação" || tag === "Em Negociação" || tag === "Insatisfeito")}
                                               />
                                               <Label htmlFor={`edit-tag-${depto.name}-${tag}`} className="text-[11px] font-bold text-navy cursor-pointer">{tag}</Label>
@@ -564,7 +564,7 @@ const AtendimentoAccordion = () => (
 
                                   <div className="space-y-4">
                                     <div className="flex items-center gap-2">
-                                      <Layers className="w-4 h-4 text-[#D9A94D]" />
+                                      <Layers className="w-4 h-4 text-[var(--primary)]" />
                                       <Label className="text-sm font-bold text-navy">Templates vinculados</Label>
                                     </div>
                                     <div className="border border-line rounded-xl overflow-hidden bg-white shadow-sm h-[320px] flex flex-col">
@@ -578,7 +578,7 @@ const AtendimentoAccordion = () => (
                                             <div key={temp} className="flex items-center gap-3 p-2.5 hover:bg-surface-2 rounded-lg transition-colors group">
                                               <Checkbox 
                                                 id={`edit-temp-${depto.name}-${temp}`} 
-                                                className="data-[state=checked]:bg-[#D9A94D] data-[state=checked]:border-[#D9A94D]" 
+                                                className="data-[state=checked]:bg-[var(--primary)] data-[state=checked]:border-[var(--primary)]" 
                                                 defaultChecked={idx === 0 && temp === "Disparo_Ativo_16_Energia_Com_Selo"}
                                               />
                                               <Label htmlFor={`edit-temp-${depto.name}-${temp}`} className="text-[11px] font-bold text-navy cursor-pointer truncate">{temp}</Label>
@@ -592,7 +592,7 @@ const AtendimentoAccordion = () => (
 
                                 <div className="space-y-4">
                                   <div className="flex items-center gap-2">
-                                    <RefreshCcw className="w-4 h-4 text-[#D9A94D]" />
+                                    <RefreshCcw className="w-4 h-4 text-[var(--primary)]" />
                                     <Label className="text-sm font-bold text-navy">Restringir recebimento de transferências</Label>
                                   </div>
                                   <p className="text-[10px] leading-relaxed text-navy/40 font-medium max-w-md">
@@ -607,7 +607,7 @@ const AtendimentoAccordion = () => (
                                       <div className="space-y-1">
                                         {["2 Via Boleto", "Adm", "Atendimento", "Cadastro", "Carta de Ressalva"].map(d => (
                                           <div key={d} className="flex items-center gap-3 p-2 hover:bg-surface-2 rounded-lg transition-colors group">
-                                            <Checkbox id={`edit-restrict-${depto.name}-${d}`} className="data-[state=checked]:bg-[#D9A94D] data-[state=checked]:border-[#D9A94D]" />
+                                            <Checkbox id={`edit-restrict-${depto.name}-${d}`} className="data-[state=checked]:bg-[var(--primary)] data-[state=checked]:border-[var(--primary)]" />
                                             <Label htmlFor={`edit-restrict-${depto.name}-${d}`} className="text-[11px] font-bold text-navy cursor-pointer">{d}</Label>
                                           </div>
                                         ))}
@@ -625,7 +625,7 @@ const AtendimentoAccordion = () => (
                             </div>
 
                             <DialogFooter className="px-8 py-6 border-t bg-surface-2 flex items-center justify-end w-full shrink-0">
-                              <Button className="bg-[#D9A94D] text-white hover:bg-[#D9A94D]/90 font-bold px-10 h-12 rounded-xl shadow-lg shadow-[#D9A94D]/20 transition-all active:scale-95">
+                              <Button className="bg-[var(--primary)] text-white hover:bg-[var(--primary)]/90 font-bold px-10 h-12 rounded-xl shadow-lg shadow-[var(--primary)]/20 transition-all active:scale-95">
                                 Salvar Departamento
                               </Button>
                             </DialogFooter>
@@ -662,7 +662,7 @@ const AtendimentoAccordion = () => (
             <h3 className="text-lg font-bold text-navy">Gerenciar tags</h3>
             <Dialog>
               <DialogTrigger asChild>
-                <Button className="bg-[#FFF8E6] text-[#D9A94D] hover:bg-[#FFF8E6]/80 border border-[#D9A94D]/20 gap-2 rounded-xl h-11 px-6 font-bold">
+                <Button className="bg-[hsl(var(--primary)/0.1)] text-[var(--primary)] hover:bg-[hsl(var(--primary)/0.1)]/80 border border-[var(--primary)]/20 gap-2 rounded-xl h-11 px-6 font-bold">
                   <Plus className="w-4 h-4" /> Criar tag
                 </Button>
               </DialogTrigger>
@@ -677,7 +677,7 @@ const AtendimentoAccordion = () => (
                       <Label className="text-xs font-bold text-navy">Cor:</Label>
                       <div className="flex items-center gap-2">
                         <div className="w-10 h-10 rounded-xl bg-red-600 shadow-sm border border-line" />
-                        <Button variant="ghost" size="icon" className="h-8 w-8 text-[#D9A94D] hover:bg-[#FFF8E6] rounded-lg">
+                        <Button variant="ghost" size="icon" className="h-8 w-8 text-[var(--primary)] hover:bg-[hsl(var(--primary)/0.1)] rounded-lg">
                           <Palette className="w-4 h-4" />
                         </Button>
                       </div>
@@ -703,7 +703,7 @@ const AtendimentoAccordion = () => (
                         <div className="space-y-1">
                           {["2 Via Boleto", "Adm", "Atendimento", "Benefícios Ativos", "Cadastro"].map(dept => (
                             <div key={dept} className="flex items-center gap-3 p-2.5 hover:bg-surface-2 rounded-lg transition-colors group">
-                              <Checkbox id={`tag-dept-${dept}`} className="data-[state=checked]:bg-[#D9A94D] data-[state=checked]:border-[#D9A94D]" />
+                              <Checkbox id={`tag-dept-${dept}`} className="data-[state=checked]:bg-[var(--primary)] data-[state=checked]:border-[var(--primary)]" />
                               <Label htmlFor={`tag-dept-${dept}`} className="text-xs font-bold text-navy cursor-pointer">{dept}</Label>
                             </div>
                           ))}
@@ -788,7 +788,7 @@ const AtendimentoAccordion = () => (
                     </TableCell>
                     <TableCell className="px-6 py-5">
                       <div className="flex items-center justify-end gap-2">
-                        <Button variant="ghost" size="icon" className="h-9 w-9 text-navy/20 hover:text-[#D9A94D] transition-all">
+                        <Button variant="ghost" size="icon" className="h-9 w-9 text-navy/20 hover:text-[var(--primary)] transition-all">
                           <Pencil className="w-4 h-4" />
                         </Button>
                         <Button variant="ghost" size="icon" className="h-9 w-9 text-navy/20 hover:text-coral transition-all">
@@ -830,7 +830,7 @@ const AtendimentoAccordion = () => (
                 <h3 className="text-lg font-bold text-navy">Parâmetros de inatividade do cliente</h3>
                 <Dialog>
                   <DialogTrigger asChild>
-                    <Button className="bg-[#FFF8E6] text-[#D9A94D] hover:bg-[#FFF8E6]/80 border border-[#D9A94D]/20 gap-2 rounded-xl h-11 px-6 font-bold">
+                    <Button className="bg-[hsl(var(--primary)/0.1)] text-[var(--primary)] hover:bg-[hsl(var(--primary)/0.1)]/80 border border-[var(--primary)]/20 gap-2 rounded-xl h-11 px-6 font-bold">
                       <Plus className="w-4 h-4" /> Configurar inatividade
                     </Button>
                   </DialogTrigger>
@@ -852,7 +852,7 @@ const AtendimentoAccordion = () => (
                         <div className="space-y-4">
                           <Label className="text-xs font-bold text-navy">Escopo de departamentos</Label>
                           <div className="flex items-center gap-2">
-                            <Button className="bg-[#D9A94D] text-white hover:bg-[#D9A94D]/90 rounded-xl h-9 px-4 text-xs font-bold">Todos os departamentos (Global)</Button>
+                            <Button className="bg-[var(--primary)] text-white hover:bg-[var(--primary)]/90 rounded-xl h-9 px-4 text-xs font-bold">Todos os departamentos (Global)</Button>
                             <Button variant="ghost" className="text-navy/40 hover:bg-surface-2 rounded-xl h-9 px-4 text-xs font-bold">Departamentos específicos</Button>
                           </div>
                           <p className="text-[10px] text-navy/30 font-bold">Esta regra será aplicada a todos os departamentos</p>
@@ -865,12 +865,12 @@ const AtendimentoAccordion = () => (
                             { title: "Enviar Mensagens", desc: "Configure mensagens automáticas para enviar ao cliente antes do encerramento", active: false },
                             { title: "Encerrar Atendimento", desc: "Encerra automaticamente o atendimento após o tempo de inatividade", active: false }
                           ].map((config, cIdx) => (
-                            <div key={cIdx} className="flex items-start justify-between p-5 bg-white border border-line rounded-2xl shadow-sm group hover:border-[#D9A94D]/20 transition-all">
+                            <div key={cIdx} className="flex items-start justify-between p-5 bg-white border border-line rounded-2xl shadow-sm group hover:border-[var(--primary)]/20 transition-all">
                               <div className="space-y-1 pr-8">
                                 <h4 className="text-sm font-bold text-navy">{config.title}</h4>
                                 <p className="text-[11px] leading-relaxed text-navy/30 font-medium">{config.desc}</p>
                               </div>
-                              <Switch defaultChecked={config.active} className="data-[state=checked]:bg-[#D9A94D]" />
+                              <Switch defaultChecked={config.active} className="data-[state=checked]:bg-[var(--primary)]" />
                             </div>
                           ))}
                         </div>
@@ -927,7 +927,7 @@ const AtendimentoAccordion = () => (
                 <div className="flex items-center gap-4">
                   <span>Página 1 de 1</span>
                   <div className="flex items-center gap-1">
-                    <Button size="icon" variant="outline" className="h-7 w-7 rounded-lg border-line text-[#D9A94D] bg-[#FFF8E6] font-bold">1</Button>
+                    <Button size="icon" variant="outline" className="h-7 w-7 rounded-lg border-line text-[var(--primary)] bg-[hsl(var(--primary)/0.1)] font-bold">1</Button>
                   </div>
                 </div>
               </div>
@@ -937,7 +937,7 @@ const AtendimentoAccordion = () => (
             <div className="space-y-6">
               <div className="flex items-center justify-between">
                 <h3 className="text-lg font-bold text-navy">Parâmetros de SLA do Atendente</h3>
-                <Button className="bg-[#FFF8E6] text-[#D9A94D] hover:bg-[#FFF8E6]/80 border border-[#D9A94D]/20 gap-2 rounded-xl h-11 px-6 font-bold">
+                <Button className="bg-[hsl(var(--primary)/0.1)] text-[var(--primary)] hover:bg-[hsl(var(--primary)/0.1)]/80 border border-[var(--primary)]/20 gap-2 rounded-xl h-11 px-6 font-bold">
                   <Plus className="w-4 h-4" /> Configurar SLA
                 </Button>
               </div>
@@ -985,7 +985,7 @@ const AtendimentoAccordion = () => (
                 <div className="flex items-center gap-4">
                   <span>Página 1 de 1</span>
                   <div className="flex items-center gap-1">
-                    <Button size="icon" variant="outline" className="h-7 w-7 rounded-lg border-line text-[#D9A94D] bg-[#FFF8E6] font-bold">1</Button>
+                    <Button size="icon" variant="outline" className="h-7 w-7 rounded-lg border-line text-[var(--primary)] bg-[hsl(var(--primary)/0.1)] font-bold">1</Button>
                   </div>
                 </div>
               </div>
@@ -1021,7 +1021,7 @@ const AtendimentoAccordion = () => (
           <div className="flex justify-end">
             <Dialog>
               <DialogTrigger asChild>
-                <Button className="bg-[#D9A94D] text-white hover:bg-[#D9A94D]/90 gap-2 rounded-xl h-11 px-6 font-bold shadow-lg shadow-[#D9A94D]/20">
+                <Button className="bg-[var(--primary)] text-white hover:bg-[var(--primary)]/90 gap-2 rounded-xl h-11 px-6 font-bold shadow-lg shadow-[var(--primary)]/20">
                   <Plus className="w-4 h-4" /> Adicionar feriado
                 </Button>
               </DialogTrigger>
@@ -1088,7 +1088,7 @@ const AtendimentoAccordion = () => (
                         Como o atendimento funciona neste dia? <span className="text-coral">*</span>
                       </Label>
                       <div className="grid grid-cols-2 gap-0 border border-line rounded-xl overflow-hidden h-11">
-                        <Button className="rounded-none bg-[#FFF8E6] text-navy hover:bg-[#FFF8E6] border-r border-line text-xs font-bold shadow-none h-full">Dia inteiro fechado</Button>
+                        <Button className="rounded-none bg-[hsl(var(--primary)/0.1)] text-navy hover:bg-[hsl(var(--primary)/0.1)] border-r border-line text-xs font-bold shadow-none h-full">Dia inteiro fechado</Button>
                         <Button variant="ghost" className="rounded-none text-navy/40 text-xs font-bold hover:bg-surface-2 h-full">Horário reduzido</Button>
                       </div>
                     </div>
@@ -1113,7 +1113,7 @@ const AtendimentoAccordion = () => (
                           placeholder="Digite a mensagem que será enviada..."
                         />
                         <div className="p-2 border-t border-line flex items-center justify-between bg-surface-1">
-                          <Zap className="w-4 h-4 text-[#D9A94D] cursor-pointer" />
+                          <Zap className="w-4 h-4 text-[var(--primary)] cursor-pointer" />
                           <div className="flex items-center gap-2">
                             <span className="text-[10px] text-navy/20 font-bold">0 / 2000</span>
                             <div className="w-4 h-4 border border-line rounded-sm flex items-center justify-center cursor-pointer">
@@ -1140,7 +1140,7 @@ const AtendimentoAccordion = () => (
                           </div>
                         </div>
                         <div className="flex items-center gap-2">
-                          <Checkbox id="transfer" defaultChecked className="rounded border-line data-[state=checked]:bg-[#D9A94D] data-[state=checked]:border-[#D9A94D]" />
+                          <Checkbox id="transfer" defaultChecked className="rounded border-line data-[state=checked]:bg-[var(--primary)] data-[state=checked]:border-[var(--primary)]" />
                           <div className="flex items-center gap-1">
                             <Label htmlFor="transfer" className="text-xs font-bold text-navy cursor-pointer">Ao transferir para um atendente humano</Label>
                             <Info className="w-3 h-3 text-navy/30" />
@@ -1151,7 +1151,7 @@ const AtendimentoAccordion = () => (
                   </div>
                 </ScrollArea>
                 <DialogFooter className="px-8 py-6 border-t bg-surface-2 flex items-center justify-end w-full">
-                  <Button className="bg-[#D9A94D] text-white hover:bg-[#D9A94D]/90 font-bold px-10 h-12 rounded-xl shadow-lg shadow-[#D9A94D]/20 transition-all active:scale-95">
+                  <Button className="bg-[var(--primary)] text-white hover:bg-[var(--primary)]/90 font-bold px-10 h-12 rounded-xl shadow-lg shadow-[var(--primary)]/20 transition-all active:scale-95">
                     Salvar feriado
                   </Button>
                 </DialogFooter>
