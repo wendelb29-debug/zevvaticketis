@@ -147,7 +147,7 @@ function UserProfile() {
 
       const { data: { publicUrl } } = supabase.storage
         .from('avatars')
-        .getPublicUrl(filePath);
+        .getPublicUrl(filePath || "");
 
       const { error: updateError } = await supabase
         .from('profiles')
