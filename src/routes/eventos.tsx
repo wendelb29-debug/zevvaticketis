@@ -339,7 +339,7 @@ function EventPage() {
                             <p className="text-[10px] font-bold text-white/50">{quantities[t.id]}x unidade(s)</p>
                           </div>
                           <span className="font-black text-sm">
-                            {(quantities[t.id] * t.valor).toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}
+                            {t?.id && ((quantities[t.id] || 0) * (t?.valor || 0)).toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}
                           </span>
                         </div>
                       ))}
