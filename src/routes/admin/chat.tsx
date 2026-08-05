@@ -1048,39 +1048,39 @@ function AdminChatPage() {
           <DialogHeader>
             <div className="flex items-center gap-3">
               <DialogTitle className="text-xl font-bold">Finalizar atendimento</DialogTitle>
-              <Badge variant="outline" className="bg-[#23262E] border-none text-gray-500 text-[10px] px-2 py-0">20240804-001</Badge>
+              <Badge variant="outline" className="bg-muted border-none text-muted-foreground text-[10px] px-2 py-0">20240804-001</Badge>
             </div>
-            <DialogDescription className="text-gray-400">Ao finalizar este atendimento, o ticket será fechado e não poderá ser reaberto.</DialogDescription>
+            <DialogDescription className="text-muted-foreground">Ao finalizar este atendimento, o ticket será fechado e não poderá ser reaberto.</DialogDescription>
           </DialogHeader>
           <div className="py-4 space-y-6">
-            <div className="bg-[#315DA8]/20 border border-[#315DA8]/30 rounded-lg p-3 flex items-center gap-3 text-[11px] text-[#315DA8] font-medium">
+            <div className="bg-primary/10 border border-primary/20 rounded-lg p-3 flex items-center gap-3 text-[11px] text-primary font-medium">
               <AlertCircle className="w-4 h-4" /> Não há classificações disponíveis para este departamento.
             </div>
             <div className="space-y-3">
-              <Label className="text-[10px] font-bold uppercase tracking-wider text-gray-400">Observações</Label>
-              <div className="bg-[#23262E] rounded-xl border border-white/5 overflow-hidden">
-                <div className="flex items-center gap-4 px-4 py-3 border-b border-white/5">
-                  <div className="flex gap-4 text-gray-400">
+              <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Observações</Label>
+              <div className="bg-muted rounded-xl border border-border overflow-hidden">
+                <div className="flex items-center gap-4 px-4 py-3 border-b border-border">
+                  <div className="flex gap-4 text-muted-foreground">
                      <span className="font-serif font-bold">B</span>
                      <span className="italic font-serif">I</span>
                      <span className="line-through font-serif">S</span>
                      <span className="font-mono">{"<>"}</span>
                   </div>
                   <div className="flex-1" />
-                  <div className="flex gap-4 text-gray-400">
+                  <div className="flex gap-4 text-muted-foreground">
                     <Smile className="w-4 h-4" />
                     <Pencil className="w-4 h-4" />
                   </div>
                 </div>
                 <textarea 
-                  className="w-full bg-transparent p-6 min-h-[160px] outline-none text-sm resize-none"
+                  className="w-full bg-transparent p-6 min-h-[160px] outline-none text-sm resize-none text-foreground"
                   placeholder="Descreva o atendimento..."
                 />
-                <div className="flex items-center justify-between px-4 py-3 border-t border-white/5">
-                   <Zap className="w-4 h-4 text-gray-500" />
+                <div className="flex items-center justify-between px-4 py-3 border-t border-border">
+                   <Zap className="w-4 h-4 text-muted-foreground" />
                    <div className="flex items-center gap-3">
-                     <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">0 / 512</span>
-                     <MoreVertical className="w-4 h-4 text-gray-500" />
+                     <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">0 / 512</span>
+                     <MoreVertical className="w-4 h-4 text-muted-foreground" />
                    </div>
                 </div>
               </div>
