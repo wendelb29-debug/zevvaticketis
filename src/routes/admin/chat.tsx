@@ -1002,12 +1002,12 @@ function AdminChatPage() {
               </Select>
             </div>
             <div className="space-y-2">
-              <Label className="text-[10px] font-bold uppercase tracking-wider text-gray-400">Projeto</Label>
+              <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Projeto</Label>
               <Select defaultValue="zevva-br">
-                <SelectTrigger className="bg-[#23262E] border-none text-xs h-11">
+                <SelectTrigger className="bg-muted border-none text-xs h-11">
                   <SelectValue placeholder="Zevva Tickets" />
                 </SelectTrigger>
-                <SelectContent className="bg-[#23262E] border-none text-white">
+                <SelectContent className="bg-popover border-border text-foreground">
                   <SelectItem value="zevva-br">Zevva Tickets</SelectItem>
                 </SelectContent>
               </Select>
