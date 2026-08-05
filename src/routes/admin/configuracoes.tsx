@@ -990,10 +990,10 @@ const AtendimentoAccordion = () => (
               </div>
             </div>
           </div>
-        </div>
-      </AccordionContent>
-    </AccordionItem>
+        </AccordionContent>
+      </AccordionItem>
     ))}
+
 
     <AccordionItem value="feriados" className="bg-white rounded-2xl border border-line p-0 overflow-hidden shadow-sm">
       <AccordionTrigger className="px-6 py-5 hover:no-underline group text-left">
