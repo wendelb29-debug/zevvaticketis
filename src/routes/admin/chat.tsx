@@ -32,36 +32,50 @@ function AdminChatPage() {
   return (
     <div className="flex flex-col h-screen bg-[#1a1d29] text-white overflow-hidden font-inter">
       {/* Header Fixo */}
-      <header className="h-14 flex items-center justify-between px-6 border-b border-[#2d3247] bg-[#1a1d29] shrink-0 z-10 shadow-lg">
+      <header className="h-16 flex items-center justify-between px-6 border-b border-line bg-white shrink-0 z-10 shadow-sm">
         <div className="flex items-center gap-8">
-          <div className="flex items-center gap-2">
-            <span className="font-black text-lg tracking-tighter italic">ez.<span className="text-[#d9a94d]">chat</span></span>
+          <div className="flex items-center gap-4">
+            <Link 
+              to="/admin" 
+              className="p-2 hover:bg-surface-2 rounded-xl transition-colors text-navy group"
+              title="Voltar para o Admin"
+            >
+              <Home className="w-5 h-5 group-hover:text-coral transition-colors" />
+            </Link>
+            <span className="font-black text-lg tracking-tighter text-coral italic">
+              zevva.<span className="text-navy">chat</span>
+            </span>
           </div>
           <div className="flex items-center gap-4">
-            <button className="text-gray-400 hover:text-white transition-colors">
+            <button className="text-navy/40 hover:text-navy transition-colors">
               <HistoryIcon className="w-5 h-5" />
             </button>
-            <div className="flex items-center gap-2 px-3 py-1.5 bg-[#24283b] rounded-full text-[10px] font-bold uppercase tracking-wider text-gray-300 border border-[#2d3247]">
-              <PeopleIcon className="w-3 h-3 text-[#d9a94d]" /> Atendimentos
+            <div className="flex items-center gap-2 px-3 py-1.5 bg-surface-2 rounded-full text-[10px] font-black uppercase tracking-wider text-navy/60 border border-line">
+              <PeopleIcon className="w-3 h-3 text-coral" /> Atendimentos
             </div>
           </div>
         </div>
         
         <div className="flex items-center gap-6">
-          <button className="relative">
-            <Bell className="w-5 h-5 text-gray-400" />
-            <span className="absolute -top-1 -right-1 w-3 h-3 bg-coral rounded-full text-[8px] flex items-center justify-center border-2 border-[#1a1d29]">3</span>
+          <button className="relative p-2 hover:bg-surface-2 rounded-full transition-colors text-navy/60">
+            <Bell className="w-5 h-5" />
+            <span className="absolute top-1.5 right-1.5 w-3 h-3 bg-coral rounded-full text-[8px] flex items-center justify-center border-2 border-white text-white font-bold">3</span>
           </button>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 pl-4 border-l border-line">
             <div className="text-right">
-              <div className="text-xs font-bold">Admin Zevva</div>
-              <div className="text-[10px] text-gray-500 uppercase font-black">{agentStatus}</div>
-            </div>
-            <div className="relative">
-              <div className="w-9 h-9 rounded-full bg-gray-600 border border-[#2d3247]" />
+              <div className="text-xs font-black text-navy uppercase">Admin Zevva</div>
               <div className={cn(
-                "absolute bottom-0 right-0 w-3 h-3 rounded-full border-2 border-[#1a1d29]",
-                agentStatus === 'online' ? "bg-green-500" : agentStatus === 'busy' ? "bg-yellow-500" : "bg-gray-500"
+                "text-[9px] font-black uppercase tracking-widest",
+                agentStatus === 'online' ? "text-green-500" : agentStatus === 'busy' ? "text-amber-500" : "text-navy/40"
+              )}>{agentStatus}</div>
+            </div>
+            <div className="relative cursor-pointer group">
+              <div className="w-10 h-10 rounded-2xl bg-surface-2 border border-line overflow-hidden flex items-center justify-center font-black text-navy/40">
+                <User className="w-6 h-6" />
+              </div>
+              <div className={cn(
+                "absolute -bottom-1 -right-1 w-4 h-4 rounded-full border-4 border-white shadow-sm",
+                agentStatus === 'online' ? "bg-green-500" : agentStatus === 'busy' ? "bg-amber-500" : "bg-navy/20"
               )} />
             </div>
           </div>
