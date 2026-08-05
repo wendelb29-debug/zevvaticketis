@@ -78,6 +78,7 @@ function AdminLayout() {
   };
 
   const menuItems = [
+    { label: "Chat", icon: MessageSquare, href: "/admin/chat" },
     { label: "Dashboard", icon: LayoutDashboard, href: "/admin", activeOptions: { exact: true } },
     { label: "Aprovações", icon: CheckSquare, href: "/admin/aprovacoes" },
     { 
@@ -107,7 +108,6 @@ function AdminLayout() {
     { label: "E-mails", icon: Mail, href: "/admin/emails" },
     { label: "Auditoria", icon: History, href: "/admin/auditoria" },
     { label: "Check-in", icon: CheckSquare, href: "/admin/checkin-monitor" },
-    { label: "WhatsApp Chat", icon: MessageSquare, href: "/admin/chat" },
     { label: "Configurações", icon: Settings, href: "/admin/configuracoes" },
   ];
 
@@ -213,31 +213,6 @@ function AdminLayout() {
         })}
       </nav>
 
-      {/* Theme Switcher in Sidebar */}
-      {!isSidebarCollapsed && (
-        <div className="px-4 mt-auto pt-4 border-t border-border">
-          <div className="flex bg-accent rounded-lg p-1">
-            <button 
-              onClick={() => setTheme('light')}
-              className={cn(
-                "flex-1 flex items-center justify-center gap-2 py-2 rounded-md text-xs font-bold transition-all",
-                theme === 'light' ? "bg-primary text-primary-foreground shadow-sm" : "text-muted-fg hover:text-foreground"
-              )}
-            >
-              <Sun className="w-3.5 h-3.5" /> Claro
-            </button>
-            <button 
-              onClick={() => setTheme('dark')}
-              className={cn(
-                "flex-1 flex items-center justify-center gap-2 py-2 rounded-md text-xs font-bold transition-all",
-                theme === 'dark' ? "bg-primary text-primary-foreground shadow-sm" : "text-muted-fg hover:text-foreground"
-              )}
-            >
-              <Moon className="w-3.5 h-3.5" /> Escuro
-            </button>
-          </div>
-        </div>
-      )}
     </div>
   );
 
