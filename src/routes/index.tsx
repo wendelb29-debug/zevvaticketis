@@ -142,7 +142,7 @@ function HomePage() {
               </div>
               <Link 
                 to="/eventos" 
-                search={{ categoria: "CARAVANAS INTERNACIONAIS" }}
+                search={{ id: undefined, categoria: "CARAVANAS INTERNACIONAIS" }}
                 className="group flex items-center gap-2 text-primary font-bold hover:underline"
               >
                 {t.viewAll} <ArrowRight className={cn("w-4 h-4 group-hover:translate-x-1 transition-transform", language === 'ar' && "rotate-180 group-hover:-translate-x-1")} />
