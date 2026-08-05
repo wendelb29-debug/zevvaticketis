@@ -105,10 +105,11 @@ function AdminEmailsPage() {
       popup.location.href = authorizationUrl;
       await completion;
       await queryClient.invalidateQueries({ queryKey: ['gmail'] });
-      toast.success('Conta Google conectada com sucesso.');
+      toast.success('Gmail conectado com sucesso!');
     } catch (e: any) {
       popup.close();
-      toast.error(e?.message ?? 'Não foi possível conectar sua conta Google.');
+      console.error("[Gmail OAuth]", e);
+      toast.error('Não foi possível conectar seu Gmail. Verifique as permissões da conta Google.');
     } finally {
       setConnecting(false);
     }
