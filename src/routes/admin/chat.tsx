@@ -7,6 +7,7 @@ import {
   MoreVertical, CheckCircle, Shuffle, Users as PeopleIcon, Folder, Clock, 
   History as HistoryIcon, Calendar, Zap, Copy, Printer, Eye, Tag, AlertCircle, 
   LayoutList, MessageSquare, Filter, SlidersHorizontal, ListFilter,
+  Settings as SettingsIcon,
   Paperclip, Smile, ImageIcon, Play, Volume2, Pencil, X, Home, ChevronRight,
   ArrowUpDown, SortAsc, SortDesc, CalendarDays, Lock, Globe, MessageCircle,
   Music, FileText, Sparkles, Wand2, ArrowUpCircle, AlignLeft, Languages
@@ -54,6 +55,7 @@ function AdminChatPage() {
   const [isActiveTicketDialogOpen, setIsActiveTicketDialogOpen] = useState(false);
   const [isFinishDialogOpen, setIsFinishDialogOpen] = useState(false);
   const [isTransferDialogOpen, setIsTransferDialogOpen] = useState(false);
+  const [isChatSettingsOpen, setIsChatSettingsOpen] = useState(false);
   const [sortBy, setSortBy] = useState('recent-top');
   const [sidebarWidth, setSidebarWidth] = useState(540);
   const [isResizing, setIsResizing] = useState(false);
@@ -165,6 +167,7 @@ function AdminChatPage() {
                 onNavigate={(path) => navigate({ to: path as any })}
                 agentStatus={agentStatus}
                 onStatusChange={setAgentStatus}
+                onOpenSettings={() => setIsChatSettingsOpen(true)}
               />
             )}
           </div>
@@ -1183,6 +1186,62 @@ function AdminChatPage() {
           .custom-scrollbar::-webkit-scrollbar { display: none; }
         }
       `}</style>
+      {/* Dialog: Configurações do Chat */}
+      <Dialog open={isChatSettingsOpen} onOpenChange={setIsChatSettingsOpen}>
+        <DialogContent className="max-w-md bg-[#1A1D29] border-[#2D313F] text-white p-0 overflow-hidden shadow-2xl">
+          <div className="p-4 border-b border-white/5 flex items-center justify-between bg-[#23262E]">
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center">
+                <SettingsIcon className="w-4 h-4 text-gray-400" />
+              </div>
+              <div>
+                <DialogTitle className="text-sm font-bold">Preferências</DialogTitle>
+                <DialogDescription className="text-[10px] text-gray-500">Configurações do ez Chat</DialogDescription>
+              </div>
+            </div>
+            <button onClick={() => setIsChatSettingsOpen(false)} className="text-gray-500 hover:text-white transition-colors">
+              <X className="w-4 h-4" />
+            </button>
+          </div>
+          
+          <div className="p-6 space-y-8">
+            <div className="space-y-4">
+              <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-gray-500 mb-2">
+                <Bell className="w-3 h-3" /> NOTIFICAÇÕES
+              </div>
+              <div className="space-y-1 bg-[#23262E] rounded-xl border border-white/5 overflow-hidden">
+                {[
+                  { label: "Notificações de novos chats", icon: true },
+                  { label: "Alertas sonoros para novos tickets", sound: true },
+                  { label: "Alertas sonoros para novas mensagens", sound: true },
+                  { label: "Alertas sonoros para tickets transferidos", sound: true },
+                ].map((pref, i) => (
+                  <div key={i} className={cn("flex items-center justify-between p-4", i !== 3 && "border-b border-white/5")}>
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs text-gray-300 font-medium">{pref.label}</span>
+                      <AlertCircle className="w-3 h-3 text-gray-600" />
+                    </div>
+                    <div className="flex items-center gap-3">
+                      {pref.sound && <Volume2 className="w-3.5 h-3.5 text-gray-500" />}
+                      <Switch defaultChecked={pref.label !== "Notificações de novos chats"} className="data-[state=checked]:bg-coral" />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="space-y-4">
+              <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-gray-500 mb-2">
+                <MessageSquare className="w-3 h-3" /> CHAT
+              </div>
+              <div className="bg-[#23262E] rounded-xl border border-white/5 p-4 flex items-center justify-between">
+                <span className="text-xs text-gray-300 font-medium">Enviar mensagem ao pressionar ENTER</span>
+                <Switch defaultChecked className="data-[state=checked]:bg-coral" />
+              </div>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

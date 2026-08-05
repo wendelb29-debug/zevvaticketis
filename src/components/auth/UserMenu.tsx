@@ -10,7 +10,8 @@ import {
   Type,
   Settings as SettingsIcon,
   LogOut,
-  Bell
+  Bell,
+  Sliders
 } from "lucide-react";
 import { 
   DropdownMenu, 
@@ -35,9 +36,10 @@ interface UserMenuProps {
   onNavigate: (path: string) => void;
   agentStatus?: 'online' | 'busy' | 'offline';
   onStatusChange?: (status: 'online' | 'busy' | 'offline') => void;
+  onOpenSettings?: () => void;
 }
 
-export function UserMenu({ user, onLogout, onNavigate, agentStatus, onStatusChange }: UserMenuProps) {
+export function UserMenu({ user, onLogout, onNavigate, agentStatus, onStatusChange, onOpenSettings }: UserMenuProps) {
   const [role, setRole] = useState<{ label: string; color: string } | null>(null);
   const { theme, setTheme, fontSize, setFontSize } = useUI();
   const location = useLocation();
@@ -237,13 +239,25 @@ export function UserMenu({ user, onLogout, onNavigate, agentStatus, onStatusChan
           </DropdownMenuItem>
         )}
 
-          <DropdownMenuItem 
-            onClick={() => onNavigate("/admin/configuracoes")}
-            className="flex items-center gap-2 px-3 py-2.5 rounded-lg text-sm font-bold text-navy cursor-pointer hover:bg-surface"
-          >
-            <SettingsIcon className="w-4 h-4 text-navy/40" />
-            Configurações
-          </DropdownMenuItem>
+          {isChat && onOpenSettings ? (
+            <DropdownMenuItem 
+              onClick={onOpenSettings}
+              className="flex items-center justify-between px-3 py-2.5 rounded-lg text-sm font-bold text-navy cursor-pointer hover:bg-surface"
+            >
+              <div className="flex items-center gap-2">
+                <Sliders className="w-4 h-4 text-navy/40" />
+                Configurações
+              </div>
+            </DropdownMenuItem>
+          ) : (
+            <DropdownMenuItem 
+              onClick={() => onNavigate("/admin/configuracoes")}
+              className="flex items-center gap-2 px-3 py-2.5 rounded-lg text-sm font-bold text-navy cursor-pointer hover:bg-surface"
+            >
+              <SettingsIcon className="w-4 h-4 text-navy/40" />
+              Configurações
+            </DropdownMenuItem>
+          )}
 
           <DropdownMenuSeparator className="bg-line mx-2" />
           <DropdownMenuItem 
