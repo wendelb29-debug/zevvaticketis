@@ -50,7 +50,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useUI } from "@/hooks/use-ui";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
-import { BreadcrumbNavigation } from "@/components/layout/BreadcrumbNavigation";
+import { GlobalBreadcrumb } from "@/components/layout/GlobalBreadcrumb";
 import { AvatarCropDialog } from "@/components/profile/AvatarCropDialog";
 import { useAvatarUrl, clearAvatarCache, AVATAR_BUCKET } from "@/lib/avatar";
 import { 
@@ -280,7 +280,7 @@ function UserProfile() {
         onClose={() => setCropSrc(null)}
         onConfirm={handleCroppedUpload}
       />
-      <BreadcrumbNavigation />
+      <GlobalBreadcrumb className="py-4" />
       <div className="space-y-1">
         <h1 className="text-3xl font-manrope font-extrabold text-navy">Meu Perfil</h1>
         <p className="text-muted font-medium">Gerencie suas informações pessoais e preferências.</p>
