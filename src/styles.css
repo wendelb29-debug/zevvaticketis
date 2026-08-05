@@ -68,11 +68,11 @@
   --popover-foreground: #14182A;
   --primary: #E8604A;
   --primary-foreground: #FFFFFF;
-  --secondary: #F7F7F7;
+  --secondary: #FFFFFF;
   --secondary-foreground: #14182A;
-  --muted-bg: #F1F5F9;
+  --muted-bg: #FFFFFF;
   --muted-fg: #64748B;
-  --accent: #F1F5F9;
+  --accent: #FDF0ED;
   --accent-foreground: #14182A;
   --border: rgba(0,0,0,0.09);
   --input: rgba(0,0,0,0.09);

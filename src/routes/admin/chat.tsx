@@ -219,7 +219,7 @@ function AdminChatPage() {
           </div>
 
           <div className="p-4 space-y-4">
-            <div className="flex p-1 bg-muted rounded-full border border-border">
+            <div className="flex p-1 bg-card rounded-full border border-border">
               <button className="flex-1 py-1.5 text-xs font-bold bg-primary text-primary-foreground rounded-full">Em Atendimento</button>
               <button className="flex-1 py-1.5 text-xs font-bold text-muted-foreground">Em Espera</button>
             </div>
@@ -228,14 +228,14 @@ function AdminChatPage() {
               <div className="relative flex-1">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                 <input 
-                  className="w-full pl-9 pr-4 py-2 bg-muted rounded-lg text-xs border border-border text-foreground focus:ring-1 focus:ring-primary/50 outline-none" 
+                  className="w-full pl-9 pr-4 py-2 bg-card rounded-lg text-xs border border-border text-foreground focus:ring-1 focus:ring-primary/50 outline-none" 
                   placeholder="Buscar atendimentos..." 
                 />
               </div>
               <div className="flex gap-1">
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <button className="p-2 bg-muted rounded-lg text-muted-foreground hover:text-foreground border border-border">
+                    <button className="p-2 bg-card rounded-lg text-muted-foreground hover:text-foreground border border-border">
                       <ArrowUpDown className="w-4 h-4" />
                     </button>
                   </DropdownMenuTrigger>
@@ -286,14 +286,14 @@ function AdminChatPage() {
 
                 <button 
                   onClick={() => setIsFilterDialogOpen(true)}
-                  className="p-2 bg-muted rounded-lg text-muted-foreground hover:text-foreground border border-border"
+                  className="p-2 bg-card rounded-lg text-muted-foreground hover:text-foreground border border-border"
                 >
                   <Filter className="w-4 h-4" />
                 </button>
                 
                 <button 
                   onClick={() => setIsHistoryDialogOpen(true)}
-                  className="p-2 bg-muted rounded-lg text-muted-foreground hover:text-foreground border border-border"
+                  className="p-2 bg-card rounded-lg text-muted-foreground hover:text-foreground border border-border"
                 >
                   <HistoryIcon className="w-4 h-4" />
                 </button>
@@ -370,7 +370,7 @@ function AdminChatPage() {
         {/* Modal de Pré-visualização */}
         <Dialog open={!!previewContactId} onOpenChange={(open) => !open && setPreviewContactId(null)}>
           <DialogContent className="max-w-2xl p-0 overflow-hidden border border-border bg-card shadow-2xl">
-            <div className="flex items-center justify-between p-4 border-b border-border bg-muted/30">
+            <div className="flex items-center justify-between p-4 border-b border-border bg-card">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold">
                   {contacts.find(c => c.id === previewContactId)?.name.split(' ').map(n => n[0]).join('')}
@@ -378,7 +378,7 @@ function AdminChatPage() {
                 <div>
                   <div className="flex items-center gap-2">
                     <h3 className="font-bold text-foreground text-sm">{contacts.find(c => c.id === previewContactId)?.name}</h3>
-                    <Badge variant="outline" className="text-[9px] bg-muted border-border text-muted-foreground px-1.5 py-0 uppercase">Pré-visualização</Badge>
+                    <Badge variant="outline" className="text-[9px] bg-card border-border text-muted-foreground px-1.5 py-0 uppercase">Pré-visualização</Badge>
                   </div>
                   <p className="text-[10px] text-muted-foreground">Última atividade {contacts.find(c => c.id === previewContactId)?.time}</p>
                 </div>
@@ -420,7 +420,7 @@ function AdminChatPage() {
                       <button className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center text-primary">
                         <Play className="w-4 h-4 fill-current" />
                       </button>
-                      <div className="flex-1 h-1 bg-muted rounded-full relative">
+                      <div className="flex-1 h-1 bg-card rounded-full relative">
                         <div className="absolute inset-0 w-1/3 bg-primary rounded-full" />
                       </div>
                       <span className="text-[10px] text-muted-foreground">0:44</span>
@@ -449,7 +449,7 @@ function AdminChatPage() {
               </div>
             </div>
 
-            <div className="p-3 bg-muted/50 text-center border-t border-border">
+            <div className="p-3 bg-card text-center border-t border-border">
               <p className="text-[10px] text-muted-foreground font-medium">Pré-visualização — não marca como lida e não abre a conversa.</p>
             </div>
           </DialogContent>
@@ -481,7 +481,7 @@ function AdminChatPage() {
                               <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-muted-foreground" />
                               <Input 
                                 placeholder="Buscar ou criar tag..." 
-                                className="h-9 pl-8 text-xs bg-muted border-none"
+                                className="h-9 pl-8 text-xs bg-card border-none"
                               />
                             </div>
                           </div>
@@ -524,13 +524,13 @@ function AdminChatPage() {
                   </div>
                 </div>
                 <div className="flex items-center gap-2">
-                   <button className="p-2 hover:bg-muted text-muted-foreground rounded-lg transition-colors border border-transparent hover:border-border">
+                   <button className="p-2 hover:bg-primary/5 text-muted-foreground rounded-lg transition-colors border border-transparent hover:border-border">
                     <Search className="w-[18px] h-[18px]" />
                   </button>
-                  <button className="p-2 hover:bg-muted text-muted-foreground rounded-lg transition-colors border border-transparent hover:border-border">
+                  <button className="p-2 hover:bg-primary/5 text-muted-foreground rounded-lg transition-colors border border-transparent hover:border-border">
                     <Phone className="w-[18px] h-[18px]" />
                   </button>
-                  <button className="p-2 hover:bg-muted text-muted-foreground rounded-lg transition-colors border border-transparent hover:border-border">
+                  <button className="p-2 hover:bg-primary/5 text-muted-foreground rounded-lg transition-colors border border-transparent hover:border-border">
                     <MoreVertical className="w-[18px] h-[18px]" />
                   </button>
                 </div>
@@ -570,7 +570,7 @@ function AdminChatPage() {
                     </div>
                     <div className="font-bold text-base mb-1 tracking-tight">Viagem Terra Santa 2026</div>
                     <p className="text-[11px] text-muted-foreground mb-4 leading-relaxed">Pacote completo com guia especializado e hospedagem premium.</p>
-                    <div className="flex items-center gap-3 mb-5 p-3.5 bg-muted rounded-xl border border-border">
+                    <div className="flex items-center gap-3 mb-5 p-3.5 bg-card rounded-xl border border-border">
                       <div className="flex flex-col">
                         <span className="text-[9px] font-bold text-muted-foreground uppercase tracking-widest">Mensalidade</span>
                         <span className="text-sm text-destructive font-bold line-through">R$ 341,28</span>
@@ -592,7 +592,7 @@ function AdminChatPage() {
               <div className="p-4 bg-card border-t border-border z-10">
                 {agentStatus === 'offline' ? (
                   <div className="flex flex-col items-center justify-center p-8 text-center space-y-4">
-                     <div className="w-16 h-16 rounded-full bg-muted border border-border flex items-center justify-center">
+                     <div className="w-16 h-16 rounded-full bg-card border border-border flex items-center justify-center">
                         <User className="w-8 h-8 text-muted-foreground" />
                       </div>
                       <div className="space-y-1">
@@ -609,7 +609,7 @@ function AdminChatPage() {
                     <div className="flex gap-1.5 mb-1 shrink-0">
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild>
-                          <button className="p-2 hover:bg-muted text-muted-foreground rounded-lg transition-all border border-transparent hover:border-border">
+                          <button className="p-2 hover:bg-primary/5 text-muted-foreground rounded-lg transition-all border border-transparent hover:border-border">
                             <Plus className="w-5 h-5" />
                           </button>
                         </DropdownMenuTrigger>
@@ -639,13 +639,13 @@ function AdminChatPage() {
                         </DropdownMenuContent>
                       </DropdownMenu>
 
-                      <button className="p-2 hover:bg-muted text-muted-foreground rounded-lg transition-all border border-transparent hover:border-border">
+                      <button className="p-2 hover:bg-primary/5 text-muted-foreground rounded-lg transition-all border border-transparent hover:border-border">
                         <Smile className="w-5 h-5" />
                       </button>
 
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild>
-                          <button className="p-2 hover:bg-muted text-muted-foreground rounded-lg transition-all border border-transparent hover:border-border">
+                          <button className="p-2 hover:bg-primary/5 text-muted-foreground rounded-lg transition-all border border-transparent hover:border-border">
                             <Sparkles className="w-5 h-5" />
                           </button>
                         </DropdownMenuTrigger>
@@ -655,7 +655,7 @@ function AdminChatPage() {
                           </DropdownMenuLabel>
                           
                           <div className="px-3 py-2">
-                             <div className="flex flex-col gap-1.5 p-2 bg-muted rounded-lg border border-border">
+                             <div className="flex flex-col gap-1.5 p-2 bg-card rounded-lg border border-border">
                                <div className="flex items-center gap-2 text-[10px] font-bold text-muted-foreground uppercase">
                                  <Pencil className="w-3 h-3" /> Criar texto
                                </div>
@@ -764,7 +764,7 @@ function AdminChatPage() {
                         </DropdownMenuContent>
                       </DropdownMenu>
 
-                      <button className="p-2 hover:bg-muted text-muted-foreground rounded-lg transition-all border border-transparent hover:border-border">
+                      <button className="p-2 hover:bg-primary/5 text-muted-foreground rounded-lg transition-all border border-transparent hover:border-border">
                         <Volume2 className="w-5 h-5" />
                       </button>
 
@@ -783,7 +783,7 @@ function AdminChatPage() {
                     <div className="flex-1 relative">
                       <textarea 
                         rows={1}
-                        className="w-full bg-muted border border-border p-3.5 pr-14 rounded-xl text-[13px] text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-1 focus:ring-primary/50 transition-all resize-none" 
+                        className="w-full bg-card border border-border p-3.5 pr-14 rounded-xl text-[13px] text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-1 focus:ring-primary/50 transition-all resize-none" 
                         placeholder="Digite uma mensagem — use ‘/’ para atalhos" 
                       />
                       <button className="absolute right-2 top-2 w-9 h-9 bg-primary text-primary-foreground rounded-lg flex items-center justify-center hover:bg-primary/90 transition-all">
@@ -862,7 +862,7 @@ function AdminChatPage() {
             <div className="space-y-2">
               <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Projeto</Label>
               <Select defaultValue="all">
-                <SelectTrigger className="bg-muted border-none text-xs h-10">
+                <SelectTrigger className="bg-card border-none text-xs h-10">
                   <SelectValue placeholder="Selecione uma opção" />
                 </SelectTrigger>
                 <SelectContent className="bg-popover border-border text-foreground">
@@ -874,7 +874,7 @@ function AdminChatPage() {
             <div className="space-y-2">
               <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Tipo de canal</Label>
               <Select>
-                <SelectTrigger className="bg-muted border-none text-xs h-10">
+                <SelectTrigger className="bg-card border-none text-xs h-10">
                   <SelectValue placeholder="Selecione uma opção" />
                 </SelectTrigger>
                 <SelectContent className="bg-popover border-border text-foreground">
@@ -886,7 +886,7 @@ function AdminChatPage() {
             <div className="space-y-2">
               <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Tipo de atendimento</Label>
               <Select defaultValue="receptivo">
-                <SelectTrigger className="bg-muted border-none text-xs h-10">
+                <SelectTrigger className="bg-card border-none text-xs h-10">
                   <SelectValue placeholder="Ativo e receptivo" />
                 </SelectTrigger>
                 <SelectContent className="bg-popover border-border text-foreground">
@@ -901,7 +901,7 @@ function AdminChatPage() {
               <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Departamentos</Label>
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-muted-foreground" />
-                <Input placeholder="Buscar..." className="bg-muted border-none pl-9 h-10 text-xs" />
+                <Input placeholder="Buscar..." className="bg-card border-none pl-9 h-10 text-xs" />
               </div>
             </div>
             <div className="space-y-2">
@@ -911,7 +911,7 @@ function AdminChatPage() {
               </div>
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-muted-foreground" />
-                <Input placeholder="Buscar..." className="bg-muted border-none pl-9 h-10 text-xs" />
+                <Input placeholder="Buscar..." className="bg-card border-none pl-9 h-10 text-xs" />
               </div>
             </div>
           </div>
@@ -955,7 +955,7 @@ function AdminChatPage() {
             <div className="space-y-2">
               <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Projeto</Label>
               <Select defaultValue="zevva">
-                <SelectTrigger className="bg-muted border-none text-xs h-10">
+                <SelectTrigger className="bg-card border-none text-xs h-10">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent className="bg-popover border-border text-foreground">
@@ -966,7 +966,7 @@ function AdminChatPage() {
             <div className="space-y-2">
               <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Pesquisar por protocolo, nome ou telefone <span className="text-primary">*</span></Label>
               <div className="relative">
-                <Input placeholder="Buscar por protocolo, nome ou telefone" className="bg-muted border-none h-11 text-xs pr-12" />
+                <Input placeholder="Buscar por protocolo, nome ou telefone" className="bg-card border-none h-11 text-xs pr-12" />
                 <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] text-muted-foreground font-bold">0 / 255</span>
               </div>
             </div>
@@ -974,7 +974,7 @@ function AdminChatPage() {
               <div className="space-y-2">
                  <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Tipo de canal</Label>
                  <Select>
-                   <SelectTrigger className="bg-muted border-none text-xs h-10">
+                   <SelectTrigger className="bg-card border-none text-xs h-10">
                      <SelectValue placeholder="Selecione os tipos de canais" />
                    </SelectTrigger>
                    <SelectContent className="bg-popover border-border text-foreground">
@@ -985,7 +985,7 @@ function AdminChatPage() {
               <div className="space-y-2">
                  <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Canais</Label>
                  <Select>
-                   <SelectTrigger className="bg-muted border-none text-xs h-10">
+                   <SelectTrigger className="bg-card border-none text-xs h-10">
                      <SelectValue placeholder="Selecione um ou mais canais" />
                    </SelectTrigger>
                    <SelectContent className="bg-popover border-border text-foreground">
@@ -996,9 +996,9 @@ function AdminChatPage() {
             </div>
             <div className="space-y-2">
               <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Período</Label>
-              <button className="w-full bg-muted text-left px-4 h-10 rounded-lg text-xs text-muted-foreground">Selecionar período</button>
+              <button className="w-full bg-card text-left px-4 h-10 rounded-lg text-xs text-muted-foreground">Selecionar período</button>
             </div>
-            <button className="w-full py-3 bg-muted text-muted-foreground/50 text-xs font-black uppercase tracking-widest rounded-lg cursor-not-allowed">Buscar</button>
+            <button className="w-full py-3 bg-card text-muted-foreground/50 text-xs font-black uppercase tracking-widest rounded-lg cursor-not-allowed">Buscar</button>
           </div>
         </DialogContent>
       </Dialog>
@@ -1014,7 +1014,7 @@ function AdminChatPage() {
             <div className="space-y-2">
               <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Organização</Label>
               <Select defaultValue="zevva">
-                <SelectTrigger className="bg-muted border-none text-xs h-11">
+                <SelectTrigger className="bg-card border-none text-xs h-11">
                   <SelectValue placeholder="Zevva" />
                 </SelectTrigger>
                 <SelectContent className="bg-popover border-border text-foreground">
@@ -1025,7 +1025,7 @@ function AdminChatPage() {
             <div className="space-y-2">
               <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Projeto</Label>
               <Select defaultValue="zevva-br">
-                <SelectTrigger className="bg-muted border-none text-xs h-11">
+                <SelectTrigger className="bg-card border-none text-xs h-11">
                   <SelectValue placeholder="Zevva Tickets" />
                 </SelectTrigger>
                 <SelectContent className="bg-popover border-border text-foreground">
@@ -1036,7 +1036,7 @@ function AdminChatPage() {
             <div className="space-y-2">
               <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Canal</Label>
               <Select>
-                <SelectTrigger className="bg-muted border-none text-xs h-11 text-muted-foreground">
+                <SelectTrigger className="bg-card border-none text-xs h-11 text-muted-foreground">
                   <SelectValue placeholder="Selecione um canal" />
                 </SelectTrigger>
                 <SelectContent className="bg-popover border-border text-foreground">
@@ -1047,7 +1047,7 @@ function AdminChatPage() {
             <div className="space-y-2">
               <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Departamento</Label>
               <Select>
-                <SelectTrigger className="bg-muted border-none text-xs h-11 text-muted-foreground">
+                <SelectTrigger className="bg-card border-none text-xs h-11 text-muted-foreground">
                   <SelectValue placeholder="Selecione um departamento" />
                 </SelectTrigger>
                 <SelectContent className="bg-popover border-border text-foreground">
@@ -1058,7 +1058,7 @@ function AdminChatPage() {
           </div>
           <DialogFooter className="mt-4 flex justify-between sm:justify-between items-center w-full">
             <button onClick={() => setIsActiveTicketDialogOpen(false)} className="text-sm font-bold hover:underline">Cancelar</button>
-            <button className="flex-1 max-w-[400px] py-3 bg-muted text-muted-foreground/50 text-[11px] font-black uppercase tracking-widest rounded-lg cursor-not-allowed">Escolher Destinatário</button>
+            <button className="flex-1 max-w-[400px] py-3 bg-card text-muted-foreground/50 text-[11px] font-black uppercase tracking-widest rounded-lg cursor-not-allowed">Escolher Destinatário</button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
@@ -1131,7 +1131,7 @@ function AdminChatPage() {
           <DialogHeader>
             <div className="flex items-center gap-3">
               <DialogTitle className="text-xl font-bold">Transferir atendimento</DialogTitle>
-              <Badge variant="outline" className="bg-muted border-none text-muted-foreground text-[10px] px-2 py-0">20240804-001</Badge>
+              <Badge variant="outline" className="bg-card border-none text-muted-foreground text-[10px] px-2 py-0">20240804-001</Badge>
             </div>
             <DialogDescription className="text-muted-foreground">Escolha o destinatário para transferir este atendimento.</DialogDescription>
           </DialogHeader>
@@ -1140,7 +1140,7 @@ function AdminChatPage() {
               <div className="space-y-2">
                 <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Tipo de transferência</Label>
                 <Select defaultValue="agent">
-                  <SelectTrigger className="bg-muted border-none text-xs h-11">
+                  <SelectTrigger className="bg-card border-none text-xs h-11">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent className="bg-popover border-border text-foreground">
@@ -1152,7 +1152,7 @@ function AdminChatPage() {
               <div className="space-y-2">
                 <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Destinatário</Label>
                 <Select>
-                  <SelectTrigger className="bg-muted border-none text-xs h-11">
+                  <SelectTrigger className="bg-card border-none text-xs h-11">
                     <SelectValue placeholder="Selecione um agente" />
                   </SelectTrigger>
                   <SelectContent className="bg-popover border-border text-foreground">
@@ -1165,7 +1165,7 @@ function AdminChatPage() {
             <div className="space-y-2">
               <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Motivo da transferência</Label>
               <textarea 
-                className="w-full bg-muted border-none p-4 rounded-xl text-xs text-foreground placeholder:text-muted-foreground outline-none min-h-[100px] resize-none"
+                className="w-full bg-card border-none p-4 rounded-xl text-xs text-foreground placeholder:text-muted-foreground outline-none min-h-[100px] resize-none"
                 placeholder="Explique o motivo da transferência..."
               />
             </div>
@@ -1225,7 +1225,7 @@ function AdminChatPage() {
       {/* Dialog: Configurações do Chat */}
       <Dialog open={isChatSettingsOpen} onOpenChange={setIsChatSettingsOpen}>
         <DialogContent className="max-w-md bg-popover border-border text-foreground p-0 overflow-hidden shadow-2xl">
-          <div className="p-4 border-b border-border flex items-center justify-between bg-muted/50">
+          <div className="p-4 border-b border-border flex items-center justify-between bg-card">
             <div className="flex items-center gap-3">
               <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
                 <SettingsIcon className="w-4 h-4 text-primary" />
@@ -1245,7 +1245,7 @@ function AdminChatPage() {
               <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-muted-foreground mb-2">
                 <Bell className="w-3 h-3" /> NOTIFICAÇÕES
               </div>
-              <div className="space-y-1 bg-muted rounded-xl border border-border overflow-hidden">
+              <div className="space-y-1 bg-card rounded-xl border border-border overflow-hidden">
                 {[
                   { label: "Notificações de novos chats", icon: true },
                   { label: "Alertas sonoros para novos tickets", sound: true },
@@ -1270,7 +1270,7 @@ function AdminChatPage() {
               <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-muted-foreground mb-2">
                 <MessageSquare className="w-3 h-3" /> CHAT
               </div>
-              <div className="bg-muted rounded-xl border border-border p-4 flex items-center justify-between">
+              <div className="bg-card rounded-xl border border-border p-4 flex items-center justify-between">
                 <span className="text-xs text-foreground font-medium">Enviar mensagem ao pressionar ENTER</span>
                 <Switch defaultChecked className="data-[state=checked]:bg-primary" />
               </div>

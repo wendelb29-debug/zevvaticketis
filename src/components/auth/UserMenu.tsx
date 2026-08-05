@@ -86,7 +86,7 @@ export function UserMenu({ user, onLogout, onNavigate, agentStatus, onStatusChan
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <button className="flex items-center gap-2 p-1 rounded-full hover:bg-muted transition-all outline-none group border border-transparent hover:border-border">
+        <button className="flex items-center gap-2 p-1 rounded-full hover:bg-primary/5 transition-all outline-none group border border-transparent hover:border-border">
           <Avatar className="h-8 w-8 border-2 border-white shadow-sm ring-1 ring-border">
             <AvatarFallback className="bg-foreground text-background text-[10px] font-extrabold">
               {initials}
@@ -127,7 +127,7 @@ export function UserMenu({ user, onLogout, onNavigate, agentStatus, onStatusChan
         <div className="p-1.5">
           {isChat && onStatusChange && (
             <DropdownMenuSub>
-              <DropdownMenuSubTrigger className="flex items-center gap-2 px-3 py-2.5 rounded-lg text-sm font-bold text-foreground cursor-pointer hover:bg-muted">
+              <DropdownMenuSubTrigger className="flex items-center gap-2 px-3 py-2.5 rounded-lg text-sm font-bold text-foreground cursor-pointer hover:bg-primary/5">
                 <div className={cn(
                   "w-2.5 h-2.5 rounded-full",
                   agentStatus === 'online' ? "bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.4)]" : 
@@ -154,28 +154,28 @@ export function UserMenu({ user, onLogout, onNavigate, agentStatus, onStatusChan
 
           <DropdownMenuItem 
             onClick={() => onNavigate("/app/perfil")}
-            className="flex items-center gap-2 px-3 py-2.5 rounded-lg text-sm font-bold text-foreground cursor-pointer hover:bg-muted"
+            className="flex items-center gap-2 px-3 py-2.5 rounded-lg text-sm font-bold text-foreground cursor-pointer hover:bg-primary/5"
           >
             <UserIcon className="w-4 h-4 text-muted-foreground" />
             Minha Conta
           </DropdownMenuItem>
 
           <DropdownMenuSub>
-            <DropdownMenuSubTrigger className="flex items-center gap-2 px-3 py-2.5 rounded-lg text-sm font-bold text-foreground cursor-pointer hover:bg-muted">
+            <DropdownMenuSubTrigger className="flex items-center gap-2 px-3 py-2.5 rounded-lg text-sm font-bold text-foreground cursor-pointer hover:bg-primary/5">
               <Palette className="w-4 h-4 text-muted-foreground" />
               Alterar tema
             </DropdownMenuSubTrigger>
             <DropdownMenuPortal>
               <DropdownMenuSubContent className="w-40 rounded-xl p-1.5 border-border shadow-xl font-inter bg-popover/95 backdrop-blur-md">
-                <DropdownMenuItem onClick={() => setTheme('light')} className={cn("text-xs font-bold text-foreground cursor-pointer", theme === 'light' && "bg-muted")}>Claro</DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setTheme('dark')} className={cn("text-xs font-bold text-foreground cursor-pointer", theme === 'dark' && "bg-muted")}>Escuro</DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setTheme('system')} className={cn("text-xs font-bold text-foreground cursor-pointer", theme === 'system' && "bg-muted")}>Sistema</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setTheme('light')} className={cn("text-xs font-bold text-foreground cursor-pointer", theme === 'light' && "bg-card")}>Claro</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setTheme('dark')} className={cn("text-xs font-bold text-foreground cursor-pointer", theme === 'dark' && "bg-card")}>Escuro</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setTheme('system')} className={cn("text-xs font-bold text-foreground cursor-pointer", theme === 'system' && "bg-card")}>Sistema</DropdownMenuItem>
               </DropdownMenuSubContent>
             </DropdownMenuPortal>
           </DropdownMenuSub>
 
           <DropdownMenuSub>
-            <DropdownMenuSubTrigger className="flex items-center gap-2 px-3 py-2.5 rounded-lg text-sm font-bold text-foreground cursor-pointer hover:bg-muted">
+            <DropdownMenuSubTrigger className="flex items-center gap-2 px-3 py-2.5 rounded-lg text-sm font-bold text-foreground cursor-pointer hover:bg-primary/5">
               <Type className="w-4 h-4 text-muted-foreground" />
               <div className="flex flex-1 justify-between items-center">
                 <span>Tamanho do texto</span>
@@ -192,7 +192,7 @@ export function UserMenu({ user, onLogout, onNavigate, agentStatus, onStatusChan
                   <div className="flex items-center gap-3">
                     <button 
                       onClick={() => setFontSize(Math.max(80, fontSize - 10))}
-                      className="w-8 h-8 flex items-center justify-center rounded-lg border border-border text-foreground hover:bg-muted"
+                      className="w-8 h-8 flex items-center justify-center rounded-lg border border-border text-foreground hover:bg-primary/5"
                     >
                       -
                     </button>
@@ -208,7 +208,7 @@ export function UserMenu({ user, onLogout, onNavigate, agentStatus, onStatusChan
                     </div>
                     <button 
                       onClick={() => setFontSize(Math.min(150, fontSize + 10))}
-                      className="w-8 h-8 flex items-center justify-center rounded-lg border border-border text-foreground hover:bg-muted"
+                      className="w-8 h-8 flex items-center justify-center rounded-lg border border-border text-foreground hover:bg-primary/5"
                     >
                       +
                     </button>
@@ -222,7 +222,7 @@ export function UserMenu({ user, onLogout, onNavigate, agentStatus, onStatusChan
         {role?.label === "Admin" && (
           <DropdownMenuItem 
             onClick={() => onNavigate("/admin")}
-            className="flex items-center gap-2 px-3 py-2.5 rounded-lg text-sm font-bold text-foreground cursor-pointer hover:bg-muted"
+            className="flex items-center gap-2 px-3 py-2.5 rounded-lg text-sm font-bold text-foreground cursor-pointer hover:bg-primary/5"
           >
             <ShieldCheck className="w-4 h-4 text-destructive" />
             Painel Admin
@@ -232,7 +232,7 @@ export function UserMenu({ user, onLogout, onNavigate, agentStatus, onStatusChan
         {role?.label === "Produtor" && (
           <DropdownMenuItem 
             onClick={() => onNavigate("/produtor")}
-            className="flex items-center gap-2 px-3 py-2.5 rounded-lg text-sm font-bold text-foreground cursor-pointer hover:bg-muted"
+            className="flex items-center gap-2 px-3 py-2.5 rounded-lg text-sm font-bold text-foreground cursor-pointer hover:bg-primary/5"
           >
             <Briefcase className="w-4 h-4 text-primary" />
             Painel Produtor
@@ -242,7 +242,7 @@ export function UserMenu({ user, onLogout, onNavigate, agentStatus, onStatusChan
           {isChat && onOpenSettings ? (
             <DropdownMenuItem 
               onClick={onOpenSettings}
-              className="flex items-center justify-between px-3 py-2.5 rounded-lg text-sm font-bold text-foreground cursor-pointer hover:bg-muted"
+              className="flex items-center justify-between px-3 py-2.5 rounded-lg text-sm font-bold text-foreground cursor-pointer hover:bg-primary/5"
             >
               <div className="flex items-center gap-2">
                 <Sliders className="w-4 h-4 text-muted-foreground" />
@@ -252,7 +252,7 @@ export function UserMenu({ user, onLogout, onNavigate, agentStatus, onStatusChan
           ) : (
             <DropdownMenuItem 
               onClick={() => onNavigate("/admin/configuracoes")}
-              className="flex items-center gap-2 px-3 py-2.5 rounded-lg text-sm font-bold text-foreground cursor-pointer hover:bg-muted"
+              className="flex items-center gap-2 px-3 py-2.5 rounded-lg text-sm font-bold text-foreground cursor-pointer hover:bg-primary/5"
             >
               <SettingsIcon className="w-4 h-4 text-muted-foreground" />
               Configurações
