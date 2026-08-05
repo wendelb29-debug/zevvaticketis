@@ -434,7 +434,7 @@ function AdminChatPage() {
               {/* Cabeçalho da Conversa */}
               <div className="h-[72px] border-b border-[#E5E7EB] dark:border-white/5 bg-white dark:bg-[#161922] px-8 flex items-center justify-between z-10">
                 <div className="flex items-center gap-4">
-                  <div className="w-[42px] h-[42px] rounded-full bg-surface-2 border border-line flex items-center justify-center font-bold text-coral text-sm shadow-sm">
+                  <div className="w-[42px] h-[42px] rounded-full bg-surface-2 dark:bg-[#1e222d] border border-line dark:border-white/5 flex items-center justify-center font-bold text-coral text-sm shadow-sm">
                     JS
                   </div>
                   <div>
@@ -456,13 +456,13 @@ function AdminChatPage() {
                   </div>
                 </div>
                 <div className="flex items-center gap-2">
-                  <button className="p-2 hover:bg-[#FAFAFA] text-[#667085] rounded-lg transition-colors border border-transparent hover:border-[#E5E7EB]">
+                   <button className="p-2 hover:bg-[#FAFAFA] dark:hover:bg-white/5 text-[#667085] dark:text-white/40 rounded-lg transition-colors border border-transparent hover:border-[#E5E7EB] dark:hover:border-white/5">
                     <Search className="w-[18px] h-[18px]" />
                   </button>
-                  <button className="p-2 hover:bg-[#FAFAFA] text-[#667085] rounded-lg transition-colors border border-transparent hover:border-[#E5E7EB]">
+                  <button className="p-2 hover:bg-[#FAFAFA] dark:hover:bg-white/5 text-[#667085] dark:text-white/40 rounded-lg transition-colors border border-transparent hover:border-[#E5E7EB] dark:hover:border-white/5">
                     <Phone className="w-[18px] h-[18px]" />
                   </button>
-                  <button className="p-2 hover:bg-[#FAFAFA] text-[#667085] rounded-lg transition-colors border border-transparent hover:border-[#E5E7EB]">
+                  <button className="p-2 hover:bg-[#FAFAFA] dark:hover:bg-white/5 text-[#667085] dark:text-white/40 rounded-lg transition-colors border border-transparent hover:border-[#E5E7EB] dark:hover:border-white/5">
                     <MoreVertical className="w-[18px] h-[18px]" />
                   </button>
                 </div>
@@ -495,25 +495,25 @@ function AdminChatPage() {
                 
                 {/* 5. CARDS INTERATIVOS */}
                 <div className="flex justify-start">
-                  <div className="bg-white text-[#171717] rounded-2xl p-5 shadow-xl shadow-[#171717]/5 max-w-[320px] overflow-hidden border border-[#E5E7EB] relative group hover:-translate-y-0.5 transition-transform">
+                  <div className="bg-white dark:bg-[#1e222d] text-[#171717] dark:text-white/90 rounded-2xl p-5 shadow-xl shadow-[#171717]/5 dark:shadow-none max-w-[320px] overflow-hidden border border-[#E5E7EB] dark:border-white/5 relative group hover:-translate-y-0.5 transition-transform">
                     <div className="absolute top-0 left-0 w-1.5 h-full bg-coral" />
                     <div className="flex justify-between items-start mb-3">
-                      <div className="text-[10px] font-bold uppercase text-navy font-bold tracking-widest bg-coral/10 px-2.5 py-1 rounded-md border border-coral/5">Negociação de Valor</div>
+                      <div className="text-[10px] font-bold uppercase text-navy dark:text-white/80 font-bold tracking-widest bg-coral/10 px-2.5 py-1 rounded-md border border-coral/5">Negociação de Valor</div>
                     </div>
                     <div className="font-bold text-base mb-1 tracking-tight">Viagem Terra Santa 2026</div>
-                    <p className="text-[11px] text-[#667085] mb-4 leading-relaxed">Pacote completo com guia especializado e hospedagem premium.</p>
-                    <div className="flex items-center gap-3 mb-5 p-3.5 bg-[#FAFAFA] rounded-xl border border-[#E5E7EB]">
+                    <p className="text-[11px] text-[#667085] dark:text-white/40 mb-4 leading-relaxed">Pacote completo com guia especializado e hospedagem premium.</p>
+                    <div className="flex items-center gap-3 mb-5 p-3.5 bg-[#FAFAFA] dark:bg-[#0F1117] rounded-xl border border-[#E5E7EB] dark:border-white/5">
                       <div className="flex flex-col">
-                        <span className="text-[9px] font-bold text-[#667085] uppercase tracking-widest">Mensalidade</span>
+                        <span className="text-[9px] font-bold text-[#667085] dark:text-white/30 uppercase tracking-widest">Mensalidade</span>
                         <span className="text-sm text-[#E5484D] font-bold line-through">R$ 341,28</span>
                       </div>
-                      <div className="w-px h-8 bg-[#E5E7EB]" />
+                      <div className="w-px h-8 bg-[#E5E7EB] dark:bg-white/5" />
                       <div className="flex flex-col">
                         <span className="text-[9px] font-bold text-[#24B667] uppercase tracking-widest">Oferta</span>
                         <span className="text-xl font-bold text-[#24B667] tracking-tighter">R$ 273,02</span>
                       </div>
                     </div>
-                    <button className="w-full py-2.5 bg-[#171717] text-white text-[11px] font-bold uppercase tracking-widest rounded-xl hover:bg-black transition-all flex items-center justify-center gap-2">
+                    <button className="w-full py-2.5 bg-[#171717] dark:bg-coral text-white text-[11px] font-bold uppercase tracking-widest rounded-xl hover:bg-black dark:hover:bg-coral/90 transition-all flex items-center justify-center gap-2">
                       ACEITAR PROPOSTA
                     </button>
                   </div>
@@ -524,23 +524,23 @@ function AdminChatPage() {
               <div className="p-4 bg-white dark:bg-[#161922] border-t border-[#E5E7EB] dark:border-white/5 z-10">
                 {agentStatus === 'offline' ? (
                   <div className="flex flex-col items-center justify-center p-8 text-center space-y-4">
-                     <div className="w-16 h-16 rounded-full bg-[#FAFAFA] border border-[#E5E7EB] flex items-center justify-center">
-                        <User className="w-8 h-8 text-[#667085]" />
+                     <div className="w-16 h-16 rounded-full bg-[#FAFAFA] dark:bg-[#0F1117] border border-[#E5E7EB] dark:border-white/5 flex items-center justify-center">
+                        <User className="w-8 h-8 text-[#667085] dark:text-white/20" />
                      </div>
                      <div className="space-y-1">
-                        <h3 className="font-bold text-[18px]">Você está Offline</h3>
-                        <p className="text-[14px] text-[#667085]">Conecte-se para começar a receber mensagens</p>
+                        <h3 className="font-bold text-[18px] dark:text-white/90">Você está Offline</h3>
+                        <p className="text-[14px] text-[#667085] dark:text-white/40">Conecte-se para começar a receber mensagens</p>
                      </div>
                      <div className="flex gap-3">
-                        <button onClick={() => setAgentStatus('busy')} className="px-6 py-2.5 border border-[#E5E7EB] text-[13px] font-semibold rounded-lg hover:bg-[#FAFAFA] transition-colors">Ficar Ocupado</button>
+                        <button onClick={() => setAgentStatus('busy')} className="px-6 py-2.5 border border-[#E5E7EB] dark:border-white/5 dark:text-white/70 text-[13px] font-semibold rounded-lg hover:bg-[#FAFAFA] dark:hover:bg-white/5 transition-colors">Ficar Ocupado</button>
                         <button onClick={() => setAgentStatus('online')} className="px-6 py-2.5 bg-coral text-white text-[13px] font-bold rounded-lg hover:bg-coral/90 transition-colors">Ficar Online</button>
                      </div>
                   </div>
                 ) : (
                   <div className="flex gap-3 items-end">
                     <div className="flex gap-1.5 mb-1 shrink-0">
-                      <button className="p-2 hover:bg-[#FAFAFA] text-[#667085] rounded-lg transition-all border border-transparent hover:border-[#E5E7EB]"><Plus className="w-5 h-5" /></button>
-                      <button className="p-2 hover:bg-[#FAFAFA] text-[#667085] rounded-lg transition-all border border-transparent hover:border-[#E5E7EB]"><Smile className="w-5 h-5" /></button>
+                       <button className="p-2 hover:bg-[#FAFAFA] dark:hover:bg-white/5 text-[#667085] dark:text-white/40 rounded-lg transition-all border border-transparent hover:border-[#E5E7EB] dark:hover:border-white/5"><Plus className="w-5 h-5" /></button>
+                      <button className="p-2 hover:bg-[#FAFAFA] dark:hover:bg-white/5 text-[#667085] dark:text-white/40 rounded-lg transition-all border border-transparent hover:border-[#E5E7EB] dark:hover:border-white/5"><Smile className="w-5 h-5" /></button>
                     </div>
                     <div className="flex-1 relative">
                       <textarea 
@@ -566,14 +566,14 @@ function AdminChatPage() {
                  </div>
                </div>
                <div className="max-w-md space-y-2">
-                  <h3 className="font-bold text-[20px] text-[#171717]">Você está Online</h3>
-                  <p className="text-[14px] text-[#667085] leading-relaxed">
+                  <h3 className="font-bold text-[20px] text-[#171717] dark:text-white/90">Você está Online</h3>
+                  <p className="text-[14px] text-[#667085] dark:text-white/40 leading-relaxed">
                     Escolha uma conversa em andamento ou inicie uma nova conversa agora mesmo. Enquanto estiver online, você receberá novos atendimentos normalmente.
                   </p>
                </div>
                <button 
                 onClick={() => setIsActiveTicketDialogOpen(true)}
-                className="px-8 py-3 bg-white border-2 border-coral text-coral text-[14px] font-bold rounded-xl hover:bg-coral/5 transition-colors shadow-sm"
+                className="px-8 py-3 bg-white dark:bg-coral border-2 border-coral dark:border-coral text-coral dark:text-white text-[14px] font-bold rounded-xl hover:bg-coral/5 dark:hover:bg-coral/90 transition-colors shadow-sm"
               >
                  Iniciar nova conversa
                </button>
