@@ -150,17 +150,17 @@ function AdminChatPage() {
         </div>
         
         <div className="flex items-center gap-6">
-          <button className="relative p-2 hover:bg-surface-2 rounded-full transition-colors text-navy/60">
+          <button className="relative p-2 hover:bg-accent rounded-full transition-colors text-muted-fg">
             <Bell className="w-5 h-5" />
             <span className="absolute top-1.5 right-1.5 w-3 h-3 bg-primary rounded-full text-[8px] flex items-center justify-center border-2 border-card text-primary-foreground font-bold">3</span>
           </button>
           
-          <div className="flex items-center gap-3 pl-4 border-l border-line">
+          <div className="flex items-center gap-3 pl-4 border-l border-border">
             <div className="text-right hidden sm:block">
-              <div className="text-[10px] font-black text-navy uppercase leading-tight">Admin Zevva</div>
+              <div className="text-[10px] font-black text-foreground uppercase leading-tight">Admin Zevva</div>
               <div className={cn(
                 "text-[9px] font-black uppercase tracking-widest leading-tight",
-                agentStatus === 'online' ? "text-green-500" : agentStatus === 'busy' ? "text-amber-500" : "text-muted-foreground"
+                agentStatus === 'online' ? "text-green-500" : agentStatus === 'busy' ? "text-amber-500" : "text-muted-fg"
               )}>{agentStatus}</div>
             </div>
             
