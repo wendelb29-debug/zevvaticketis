@@ -821,10 +821,15 @@ function AdminChatPage() {
               className={cn(
                 "p-2.5 rounded-lg transition-all group relative border border-transparent",
                 i === 0 ? "bg-coral text-white shadow-lg" : "text-navy/20 hover:bg-coral/5 hover:text-coral"
-            )} title={action.label}>
+            )}>
               <action.icon className="w-5 h-5" />
-              {i === 0 && <span className="absolute left-[-80px] top-1/2 -translate-y-1/2 bg-[#23262E] text-white text-[10px] font-bold px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">Finalizar</span>}
-              {i === 1 && <span className="absolute left-[-80px] top-1/2 -translate-y-1/2 bg-[#23262E] text-white text-[10px] font-bold px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none text-coral">Transferir</span>}
+              
+              {/* Tooltip Lateral */}
+              <div className="absolute right-full mr-3 top-1/2 -translate-y-1/2 px-2.5 py-1.5 bg-[#23262E] text-white text-[10px] font-bold rounded shadow-xl opacity-0 group-hover:opacity-100 transition-all pointer-events-none whitespace-nowrap translate-x-2 group-hover:translate-x-0 border border-white/5 flex items-center gap-2">
+                <div className={cn("w-1.5 h-1.5 rounded-full", i === 0 ? "bg-coral" : "bg-blue-500")} />
+                {action.label}
+                <div className="absolute right-[-4px] top-1/2 -translate-y-1/2 w-2 h-2 bg-[#23262E] rotate-45 border-r border-t border-white/5" />
+              </div>
             </button>
           ))}
         </div>
