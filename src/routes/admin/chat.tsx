@@ -779,7 +779,7 @@ function AdminChatPage() {
             <div className="flex-1 flex flex-col items-center justify-center p-12 text-center space-y-6">
                <div className="relative">
                  <div className="w-24 h-24 rounded-full bg-[#24B667]/5 flex items-center justify-center animate-pulse">
-                    <div className="w-12 h-12 rounded-full bg-[#24B667] border-4 border-white shadow-lg"></div>
+                     <div className="w-12 h-12 rounded-full bg-green-500 border-4 border-background shadow-lg"></div>
                  </div>
                </div>
                <div className="max-w-md space-y-2">
