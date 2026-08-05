@@ -233,13 +233,13 @@ function SettingsPage() {
                 </CardContent>
               </Card>
 
-              <Card className="border-line overflow-hidden shadow-sm">
-                <CardHeader className="bg-surface/50 border-b border-line flex flex-row items-center justify-between">
+              <Card className="border-border bg-card overflow-hidden shadow-sm">
+                <CardHeader className="bg-accent/50 border-b border-border flex flex-row items-center justify-between">
                   <div>
-                    <CardTitle className="text-lg font-manrope font-bold text-navy">Tags e Classificações</CardTitle>
-                    <CardDescription>Organize atendimentos com etiquetas coloridas.</CardDescription>
+                    <CardTitle className="text-lg font-manrope font-bold text-foreground">Tags e Classificações</CardTitle>
+                    <CardDescription className="text-muted-fg">Organize atendimentos com etiquetas coloridas.</CardDescription>
                   </div>
-                  <Button onClick={() => setIsTagModalOpen(true)} size="sm" className="bg-coral hover:bg-coral/90 text-white gap-2 font-bold rounded-lg shadow-md shadow-coral/20">
+                  <Button onClick={() => setIsTagModalOpen(true)} size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground gap-2 font-bold rounded-lg shadow-md shadow-primary/20">
                     <Plus className="w-4 h-4" />
                     Nova Tag
                   </Button>
@@ -249,13 +249,13 @@ function SettingsPage() {
                     {tags.map(tag => (
                       <div 
                         key={tag.id}
-                        className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-line bg-white group hover:border-coral transition-colors"
+                        className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-border bg-background group hover:border-primary transition-colors"
                       >
                         <div className="w-2 h-2 rounded-full" style={{ backgroundColor: tag.color }} />
-                        <span className="text-sm font-bold text-navy">{tag.name}</span>
+                        <span className="text-sm font-bold text-foreground">{tag.name}</span>
                         <button 
                           onClick={() => handleDeleteTag(tag.id)}
-                          className="text-navy/40 hover:text-red-500 transition-colors opacity-0 group-hover:opacity-100"
+                          className="text-muted-fg hover:text-error transition-colors opacity-0 group-hover:opacity-100"
                         >
                           <X className="w-3 h-3" />
                         </button>
