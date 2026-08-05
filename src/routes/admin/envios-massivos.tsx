@@ -18,17 +18,16 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { NewCampaignWizard } from "@/components/admin/campaigns/NewCampaignWizard";
 import { cn } from "@/lib/utils";
+import { z } from "zod";
 
-type EnviosMassivosSearch = {
-  wizard?: boolean;
-}
+const searchSchema = z.object({
+  wizard: z.boolean().optional(),
+});
+
+type EnviosMassivosSearch = z.infer<typeof searchSchema>;
 
 export const Route = createFileRoute("/admin/envios-massivos")({
-  validateSearch: (search: Record<string, unknown>): EnviosMassivosSearch => {
-    return {
-      wizard: search["wizard"] === "true" || search["wizard"] === true,
-    };
-  },
+  validateSearch: (search) => searchSchema.parse(search),
   component: EnviosMassivosPage,
 });
 
@@ -47,9 +46,9 @@ function EnviosMassivosPage() {
   const handleOpenWizard = (open: boolean) => {
     setIsWizardOpen(open);
     if (!open) {
-      navigate({ search: {} });
+      navigate({ search: (prev: any) => ({ ...prev, wizard: undefined }) });
     } else {
-      navigate({ search: { wizard: true } });
+      navigate({ search: (prev: any) => ({ ...prev, wizard: true }) });
     }
   };
 
