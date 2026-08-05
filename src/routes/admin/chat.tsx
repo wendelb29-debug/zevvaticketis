@@ -743,7 +743,7 @@ function AdminChatPage() {
                         </DropdownMenuContent>
                       </DropdownMenu>
 
-                      <button className="p-2 hover:bg-[#FAFAFA] dark:hover:bg-white/5 text-[#667085] dark:text-white/40 rounded-lg transition-all border border-transparent hover:border-[#E5E7EB] dark:hover:border-white/5">
+                      <button className="p-2 hover:bg-muted text-muted-foreground rounded-lg transition-all border border-transparent hover:border-border">
                         <Volume2 className="w-5 h-5" />
                       </button>
 
