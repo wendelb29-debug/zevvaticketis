@@ -55,7 +55,7 @@ function EventPage() {
 
   useEffect(() => {
     if (search.id) {
-      getEvent({ id: search.id }).then(res => {
+      getEvent({ data: { id: search.id } }).then(res => {
         setData(res);
         setLoading(false);
       }).catch(err => {
