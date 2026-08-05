@@ -324,31 +324,33 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
 
                 {publicType === "publico" && (
                   <div className="space-y-6">
-                    <div>
-                      <h3 className="text-sm font-bold mb-1">Filtre na sua base de contatos</h3>
-                      <p className="text-xs text-white/40">Defina as condições para filtrar os contatos que receberão o disparo</p>
+                    <div className="flex justify-between items-end">
+                      <div>
+                        <h3 className="text-lg font-manrope font-extrabold text-navy">Filtre sua base Zevva</h3>
+                        <p className="text-sm text-muted-fg mt-1">Defina as condições para segmentar seu público</p>
+                      </div>
+                      <Button variant="outline" className="border-primary text-primary hover:bg-primary/5 h-11 px-6 rounded-xl font-bold">
+                        <Filter className="w-4 h-4 mr-2" /> Adicionar Filtro
+                      </Button>
                     </div>
-
-                    <Button variant="outline" className="bg-transparent border-dashed border-[#FFCC00]/50 text-[#FFCC00] hover:bg-[#FFCC00]/5 hover:border-[#FFCC00] h-10 px-4">
-                      <Filter className="w-4 h-4 mr-2" /> Filtro
-                    </Button>
 
                     <div className="space-y-4">
                       <div className="flex items-center justify-between">
-                        <p className="text-xs font-bold uppercase tracking-widest text-white/60">Lista de Contatos <span className="bg-white/10 text-white px-1.5 py-0.5 rounded text-[10px] ml-2">0</span></p>
+                        <p className="text-xs font-extrabold uppercase tracking-widest text-navy">Contatos Selecionados <span className="bg-primary/10 text-primary px-2.5 py-0.5 rounded-full text-[10px] ml-2">0</span></p>
                       </div>
-                      <div className="bg-[#1E1E2D] rounded-xl overflow-hidden border border-white/5">
+                      <div className="bg-white rounded-2xl overflow-hidden border border-border shadow-sm">
                         <table className="w-full text-left">
-                          <thead className="bg-white/5">
+                          <thead className="bg-accent/50">
                             <tr>
-                              <th className="px-6 py-4 text-[10px] font-bold text-white/40 uppercase tracking-widest">Nome</th>
-                              <th className="px-6 py-4 text-[10px] font-bold text-white/40 uppercase tracking-widest">Telefone</th>
+                              <th className="px-6 py-4 text-[10px] font-extrabold text-muted-fg uppercase tracking-widest">Nome</th>
+                              <th className="px-6 py-4 text-[10px] font-extrabold text-muted-fg uppercase tracking-widest">Telefone</th>
+                              <th className="px-6 py-4 text-[10px] font-extrabold text-muted-fg uppercase tracking-widest">Tags</th>
                             </tr>
                           </thead>
                           <tbody>
                             <tr>
-                              <td colSpan={2} className="px-6 py-12 text-center text-white/20 italic text-sm">
-                                Adicione ao menos 1 filtro para ver os contatos.
+                              <td colSpan={3} className="px-6 py-16 text-center text-muted-fg italic text-sm">
+                                Use os filtros acima para listar contatos da sua base.
                               </td>
                             </tr>
                           </tbody>
@@ -357,6 +359,7 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
                     </div>
                   </div>
                 )}
+
 
                 {publicType === "manual" && (
                   <div className="space-y-6">
