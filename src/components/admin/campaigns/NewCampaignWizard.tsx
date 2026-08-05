@@ -66,8 +66,8 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
   ];
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange} modal={false}>
-        <DialogContent className="fixed right-0 top-0 h-screen w-full max-w-6xl p-0 overflow-hidden bg-background border-l border-border text-foreground rounded-none shadow-2xl z-50 animate-in slide-in-from-right duration-300">
+    <Dialog open={open} onOpenChange={onOpenChange}>
+        <DialogContent className="max-w-6xl p-0 overflow-hidden bg-background border border-border text-foreground rounded-2xl">
         <DialogHeader className="p-0 border-b border-border bg-background">
           <div className="flex items-center justify-between px-8 py-6">
             <div className="flex flex-col">
