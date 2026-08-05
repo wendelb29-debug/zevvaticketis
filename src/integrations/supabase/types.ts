@@ -1019,7 +1019,15 @@ export type Database = {
         Args: { _uid: string }
         Returns: Json
       }
-      has_role: { Args: { _role: string; _user_id: string }; Returns: boolean }
+      has_role:
+        | {
+            Args: {
+              _role: Database["public"]["Enums"]["app_role"]
+              _user_id: string
+            }
+            Returns: boolean
+          }
+        | { Args: { _role: string; _user_id: string }; Returns: boolean }
       promote_to_platform_admin: {
         Args: { target_email: string }
         Returns: Json
