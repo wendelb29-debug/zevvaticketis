@@ -119,9 +119,9 @@ function AdminChatPage() {
   ];
 
   return (
-    <div className="flex flex-col h-screen bg-white dark:bg-[#0F1117] text-[#171717] dark:text-white/90 overflow-hidden font-inter">
+    <div className="flex flex-col h-screen bg-background text-foreground overflow-hidden font-inter">
       {/* Header Fixo */}
-      <header className="h-16 flex items-center justify-between px-6 border-b border-line dark:border-white/5 bg-white dark:bg-[#161922] shrink-0 z-10 shadow-sm">
+      <header className="h-16 flex items-center justify-between px-6 border-b border-border bg-card shrink-0 z-10 shadow-sm">
         <div className="flex items-center gap-8">
           <div className="flex items-center gap-4">
             <Link 
@@ -148,7 +148,7 @@ function AdminChatPage() {
         <div className="flex items-center gap-6">
           <button className="relative p-2 hover:bg-surface-2 rounded-full transition-colors text-navy/60">
             <Bell className="w-5 h-5" />
-            <span className="absolute top-1.5 right-1.5 w-3 h-3 bg-coral rounded-full text-[8px] flex items-center justify-center border-2 border-white text-white font-bold">3</span>
+            <span className="absolute top-1.5 right-1.5 w-3 h-3 bg-primary rounded-full text-[8px] flex items-center justify-center border-2 border-card text-primary-foreground font-bold">3</span>
           </button>
           
           <div className="flex items-center gap-3 pl-4 border-l border-line">
@@ -179,7 +179,7 @@ function AdminChatPage() {
         <div 
           style={{ width: `${sidebarWidth}px` }}
           className={cn(
-            "border-r border-[#E5E7EB] dark:border-white/5 flex flex-col bg-white dark:bg-[#161922] shrink-0 relative",
+            "border-r border-border flex flex-col bg-card shrink-0 relative",
             !isResizing && "transition-[width] duration-150 ease-in-out"
           )}
         >
@@ -198,31 +198,31 @@ function AdminChatPage() {
           </div>
 
           <div className="p-4 space-y-4">
-            <div className="flex p-1 bg-surface-2 dark:bg-[#0F1117] rounded-full border dark:border-white/5">
-              <button className="flex-1 py-1.5 text-xs font-bold bg-coral text-white rounded-full">Em Atendimento</button>
-              <button className="flex-1 py-1.5 text-xs font-bold text-navy/40">Em Espera</button>
+            <div className="flex p-1 bg-muted rounded-full border border-border">
+              <button className="flex-1 py-1.5 text-xs font-bold bg-primary text-primary-foreground rounded-full">Em Atendimento</button>
+              <button className="flex-1 py-1.5 text-xs font-bold text-muted-foreground">Em Espera</button>
             </div>
             
             <div className="flex gap-2">
               <div className="relative flex-1">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-navy/40" />
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                 <input 
-                  className="w-full pl-9 pr-4 py-2 bg-surface-2 dark:bg-[#0F1117] rounded-lg text-xs border border-line dark:border-white/5 dark:text-white/90 focus:ring-1 focus:ring-coral/50 outline-none" 
+                  className="w-full pl-9 pr-4 py-2 bg-muted rounded-lg text-xs border border-border text-foreground focus:ring-1 focus:ring-primary/50 outline-none" 
                   placeholder="Buscar atendimentos..." 
                 />
               </div>
               <div className="flex gap-1">
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <button className="p-2 bg-surface-2 dark:bg-[#0F1117] rounded-lg text-navy/40 dark:text-white/20 hover:text-navy dark:hover:text-white border border-line dark:border-white/5">
+                    <button className="p-2 bg-muted rounded-lg text-muted-foreground hover:text-foreground border border-border">
                       <ArrowUpDown className="w-4 h-4" />
                     </button>
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end" className="w-[300px] bg-[#23262E] border-none text-white p-2">
-                    <DropdownMenuLabel className="text-[10px] font-bold text-gray-400 uppercase tracking-widest px-2 py-2">Tipos de Ordenação</DropdownMenuLabel>
+                  <DropdownMenuContent align="end" className="w-[300px] bg-popover border border-border text-popover-foreground p-2">
+                    <DropdownMenuLabel className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest px-2 py-2">Tipos de Ordenação</DropdownMenuLabel>
                     <DropdownMenuItem 
                       onClick={() => setSortBy('recent-top')}
-                      className={cn("flex items-center justify-between px-3 py-2.5 rounded-lg cursor-pointer", sortBy === 'recent-top' ? "bg-coral/20 text-coral" : "hover:bg-white/5")}
+                      className={cn("flex items-center justify-between px-3 py-2.5 rounded-lg cursor-pointer", sortBy === 'recent-top' ? "bg-primary/20 text-primary" : "hover:bg-accent")}
                     >
                       <div className="flex items-center gap-3">
                         <MessageSquare className="w-4 h-4" />
@@ -232,7 +232,7 @@ function AdminChatPage() {
                     </DropdownMenuItem>
                     <DropdownMenuItem 
                       onClick={() => setSortBy('oldest-top')}
-                      className={cn("flex items-center justify-between px-3 py-2.5 rounded-lg cursor-pointer", sortBy === 'oldest-top' ? "bg-coral/20 text-coral" : "hover:bg-white/5")}
+                      className={cn("flex items-center justify-between px-3 py-2.5 rounded-lg cursor-pointer", sortBy === 'oldest-top' ? "bg-primary/20 text-primary" : "hover:bg-accent")}
                     >
                       <div className="flex items-center gap-3">
                         <MessageSquare className="w-4 h-4" />
@@ -242,7 +242,7 @@ function AdminChatPage() {
                     </DropdownMenuItem>
                     <DropdownMenuItem 
                       onClick={() => setSortBy('created-recent')}
-                      className={cn("flex items-center justify-between px-3 py-2.5 rounded-lg cursor-pointer", sortBy === 'created-recent' ? "bg-coral/20 text-coral" : "hover:bg-white/5")}
+                      className={cn("flex items-center justify-between px-3 py-2.5 rounded-lg cursor-pointer", sortBy === 'created-recent' ? "bg-primary/20 text-primary" : "hover:bg-accent")}
                     >
                       <div className="flex items-center gap-3">
                         <CalendarDays className="w-4 h-4" />
@@ -252,7 +252,7 @@ function AdminChatPage() {
                     </DropdownMenuItem>
                     <DropdownMenuItem 
                       onClick={() => setSortBy('created-oldest')}
-                      className={cn("flex items-center justify-between px-3 py-2.5 rounded-lg cursor-pointer", sortBy === 'created-oldest' ? "bg-coral/20 text-coral" : "hover:bg-white/5")}
+                      className={cn("flex items-center justify-between px-3 py-2.5 rounded-lg cursor-pointer", sortBy === 'created-oldest' ? "bg-primary/20 text-primary" : "hover:bg-accent")}
                     >
                       <div className="flex items-center gap-3">
                         <CalendarDays className="w-4 h-4" />
@@ -265,21 +265,21 @@ function AdminChatPage() {
 
                 <button 
                   onClick={() => setIsFilterDialogOpen(true)}
-                  className="p-2 bg-surface-2 dark:bg-[#0F1117] rounded-lg text-navy/40 dark:text-white/20 hover:text-navy dark:hover:text-white border border-line dark:border-white/5"
+                  className="p-2 bg-muted rounded-lg text-muted-foreground hover:text-foreground border border-border"
                 >
                   <Filter className="w-4 h-4" />
                 </button>
                 
                 <button 
                   onClick={() => setIsHistoryDialogOpen(true)}
-                  className="p-2 bg-surface-2 dark:bg-[#0F1117] rounded-lg text-navy/40 dark:text-white/20 hover:text-navy dark:hover:text-white border border-line dark:border-white/5"
+                  className="p-2 bg-muted rounded-lg text-muted-foreground hover:text-foreground border border-border"
                 >
                   <HistoryIcon className="w-4 h-4" />
                 </button>
 
                 <button 
                   onClick={() => setIsActiveTicketDialogOpen(true)}
-                  className="p-2 bg-coral rounded-lg text-white"
+                  className="p-2 bg-primary rounded-lg text-primary-foreground"
                   title="Iniciar atendimento ativo"
                 >
                   <Plus className="w-4 h-4" />
@@ -296,21 +296,21 @@ function AdminChatPage() {
                 onClick={() => setSelectedContactId(contact.id)}
                 className={cn(
                   "p-3 rounded-2xl mb-1 cursor-pointer transition-all border border-transparent",
-                  selectedContactId === contact.id ? "bg-coral/10 dark:bg-coral/20 border-coral/20" : "hover:bg-coral/5 dark:hover:bg-white/5"
+                  selectedContactId === contact.id ? "bg-primary/10 border-primary/20" : "hover:bg-accent"
                 )}
               >
                 <div className="flex gap-3">
                   <div className="relative shrink-0">
-                    <div className="w-11 h-11 rounded-full bg-gradient-to-br from-coral to-coral/80 flex items-center justify-center text-white font-black text-sm">
+                    <div className="w-11 h-11 rounded-full bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center text-primary-foreground font-black text-sm">
                       {contact.name.split(' ').map(n => n[0]).join('')}
                     </div>
-                    <div className="absolute -bottom-1 -right-1 bg-green-500 rounded-full p-0.5 border-2 border-white">
-                      <MessageSquare className="w-2 h-2 text-white" />
+                    <div className="absolute -bottom-1 -right-1 bg-green-500 rounded-full p-0.5 border-2 border-card">
+                      <MessageSquare className="w-2 h-2 text-primary-foreground" />
                     </div>
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex justify-between items-center mb-0.5">
-                      <span className="font-bold text-sm truncate dark:text-white/90">{contact.name}</span>
+                      <span className="font-bold text-sm truncate text-foreground">{contact.name}</span>
                       <span className="text-[9px] text-gray-500 whitespace-nowrap">{contact.time}</span>
                     </div>
                     <div className="flex items-center gap-1 text-[11px] text-gray-400 truncate">
@@ -332,12 +332,12 @@ function AdminChatPage() {
                         e.stopPropagation();
                         setPreviewContactId(contact.id);
                       }}
-                      className="p-1 hover:bg-coral/10 rounded-md transition-colors"
+                      className="p-1 hover:bg-primary/10 rounded-md transition-colors"
                     >
-                      <Eye className="w-3.5 h-3.5 text-navy/20 hover:text-coral transition-colors" />
+                      <Eye className="w-3.5 h-3.5 text-muted-foreground hover:text-primary transition-colors" />
                     </button>
-                    <button className="p-0.5 hover:bg-surface-2 rounded-md">
-                      <MoreVertical className="w-3.5 h-3.5 text-navy/20" />
+                    <button className="p-0.5 hover:bg-accent rounded-md">
+                      <MoreVertical className="w-3.5 h-3.5 text-muted-foreground" />
                     </button>
                   </div>
                 </div>
@@ -348,23 +348,23 @@ function AdminChatPage() {
 
         {/* Modal de Pré-visualização */}
         <Dialog open={!!previewContactId} onOpenChange={(open) => !open && setPreviewContactId(null)}>
-          <DialogContent className="max-w-2xl p-0 overflow-hidden border-none bg-[#161922] shadow-2xl">
-            <div className="flex items-center justify-between p-4 border-b border-white/5 bg-[#1C1F28]">
+          <DialogContent className="max-w-2xl p-0 overflow-hidden border border-border bg-popover shadow-2xl">
+            <div className="flex items-center justify-between p-4 border-b border-border bg-muted/30">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-coral/20 flex items-center justify-center text-coral font-bold">
+                <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold">
                   {contacts.find(c => c.id === previewContactId)?.name.split(' ').map(n => n[0]).join('')}
                 </div>
                 <div>
                   <div className="flex items-center gap-2">
-                    <h3 className="font-bold text-white text-sm">{contacts.find(c => c.id === previewContactId)?.name}</h3>
-                    <Badge variant="outline" className="text-[9px] bg-white/5 border-white/10 text-white/50 px-1.5 py-0 uppercase">Pré-visualização</Badge>
+                    <h3 className="font-bold text-foreground text-sm">{contacts.find(c => c.id === previewContactId)?.name}</h3>
+                    <Badge variant="outline" className="text-[9px] bg-muted border-border text-muted-foreground px-1.5 py-0 uppercase">Pré-visualização</Badge>
                   </div>
-                  <p className="text-[10px] text-white/40">Última atividade {contacts.find(c => c.id === previewContactId)?.time}</p>
+                  <p className="text-[10px] text-muted-foreground">Última atividade {contacts.find(c => c.id === previewContactId)?.time}</p>
                 </div>
               </div>
               <button 
                 onClick={() => setPreviewContactId(null)}
-                className="p-2 hover:bg-white/5 rounded-full transition-colors text-white/40 hover:text-white"
+                className="p-2 hover:bg-accent rounded-full transition-colors text-muted-foreground hover:text-foreground"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -374,97 +374,97 @@ function AdminChatPage() {
               <div className="flex flex-col gap-4">
                 {/* Simulando mensagens na pré-visualização */}
                 <div className="flex flex-col gap-2 max-w-[80%] self-start">
-                  <div className="bg-[#1C1F28] text-white p-3 rounded-2xl rounded-tl-none shadow-md border border-white/5">
+                  <div className="bg-popover text-popover-foreground p-3 rounded-2xl rounded-tl-none shadow-md border border-border">
                     <p className="text-xs">{contacts.find(c => c.id === previewContactId)?.lastMsg}</p>
                     <div className="flex justify-end mt-1">
-                      <span className="text-[9px] text-white/40">10:05</span>
+                      <span className="text-[9px] text-muted-foreground">10:05</span>
                     </div>
                   </div>
                 </div>
 
                 <div className="flex flex-col gap-2 max-w-[80%] self-end">
-                  <div className="bg-coral text-white p-3 rounded-2xl rounded-tr-none shadow-md">
+                  <div className="bg-primary text-primary-foreground p-3 rounded-2xl rounded-tr-none shadow-md">
                     <p className="text-xs">Olá! No que podemos ajudar hoje?</p>
                     <div className="flex justify-end items-center gap-1 mt-1">
-                      <span className="text-[9px] text-white/70">10:07</span>
-                      <CheckCheck className="w-3 h-3 text-white/70" />
+                      <span className="text-[9px] text-primary-foreground/70">10:07</span>
+                      <CheckCheck className="w-3 h-3 text-primary-foreground/70" />
                     </div>
                   </div>
                 </div>
 
                 {/* Mensagem de voz simulada se for o Paulo Vitor (referência da imagem) */}
                 <div className="flex flex-col gap-2 max-w-[80%] self-start">
-                  <div className="bg-[#1C1F28] text-white p-3 rounded-2xl rounded-tl-none shadow-md border border-white/5 w-[280px]">
+                  <div className="bg-popover text-popover-foreground p-3 rounded-2xl rounded-tl-none shadow-md border border-border w-[280px]">
                     <div className="flex items-center gap-3">
-                      <button className="w-8 h-8 rounded-full bg-coral/20 flex items-center justify-center text-coral">
+                      <button className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center text-primary">
                         <Play className="w-4 h-4 fill-current" />
                       </button>
-                      <div className="flex-1 h-1 bg-white/10 rounded-full relative">
-                        <div className="absolute inset-0 w-1/3 bg-coral rounded-full" />
+                      <div className="flex-1 h-1 bg-muted rounded-full relative">
+                        <div className="absolute inset-0 w-1/3 bg-primary rounded-full" />
                       </div>
-                      <span className="text-[10px] text-white/40">0:44</span>
+                      <span className="text-[10px] text-muted-foreground">0:44</span>
                     </div>
                     <div className="flex justify-end mt-1">
-                      <span className="text-[9px] text-white/40">10:21</span>
+                      <span className="text-[9px] text-muted-foreground">10:21</span>
                     </div>
                   </div>
                 </div>
 
                 {/* Card de imagem simulado */}
                 <div className="flex flex-col gap-2 max-w-[80%] self-start">
-                  <div className="bg-[#1C1F28] text-white p-2 rounded-2xl rounded-tl-none shadow-md border border-white/5">
-                    <div className="bg-white rounded-lg p-3 text-navy mb-2 overflow-hidden">
-                       <p className="text-[10px] font-bold text-navy/60 uppercase mb-1">Mensalidade</p>
+                  <div className="bg-popover text-popover-foreground p-2 rounded-2xl rounded-tl-none shadow-md border border-border">
+                    <div className="bg-card rounded-lg p-3 text-card-foreground mb-2 overflow-hidden">
+                       <p className="text-[10px] font-bold text-muted-foreground uppercase mb-1">Mensalidade</p>
                        <div className="flex flex-col gap-0.5">
                          <span className="text-xs text-red-500 line-through">R$ 341,28</span>
                          <span className="text-lg font-black text-green-600">R$ 273,02</span>
                        </div>
                     </div>
                     <div className="flex justify-end mt-1 px-1">
-                      <span className="text-[9px] text-white/40">10:23</span>
+                      <span className="text-[9px] text-muted-foreground">10:23</span>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div className="p-3 bg-[#1C1F28] text-center border-t border-white/5">
-              <p className="text-[10px] text-white/30 font-medium">Pré-visualização — não marca como lida e não abre a conversa.</p>
+            <div className="p-3 bg-muted/50 text-center border-t border-border">
+              <p className="text-[10px] text-muted-foreground font-medium">Pré-visualização — não marca como lida e não abre a conversa.</p>
             </div>
           </DialogContent>
         </Dialog>
 
         {/* 4. ÁREA DA CONVERSA */}
-        <div className="flex-1 flex flex-col bg-white dark:bg-[#0F1117] shrink-0 relative">
+        <div className="flex-1 flex flex-col bg-background shrink-0 relative">
           {selectedContactId ? (
             <>
               {/* Cabeçalho da Conversa */}
-              <div className="h-[72px] border-b border-[#E5E7EB] dark:border-white/5 bg-white dark:bg-[#161922] px-8 flex items-center justify-between z-10">
+              <div className="h-[72px] border-b border-border bg-card px-8 flex items-center justify-between z-10">
                 <div className="flex items-center gap-4">
-                  <div className="w-[42px] h-[42px] rounded-full bg-surface-2 dark:bg-[#1e222d] border border-line dark:border-white/5 flex items-center justify-center font-bold text-coral text-sm shadow-sm">
+                  <div className="w-[42px] h-[42px] rounded-full bg-muted border border-border flex items-center justify-center font-bold text-primary text-sm shadow-sm">
                     JS
                   </div>
                   <div>
                     <div className="flex items-center gap-2">
-                      <h2 className="font-bold text-[#171717] dark:text-white/90 text-[15px] tracking-tight leading-none">João Silva</h2>
+                      <h2 className="font-bold text-foreground text-[15px] tracking-tight leading-none">João Silva</h2>
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild>
-                          <button className="p-1 hover:bg-coral/10 dark:hover:bg-white/5 rounded-md transition-colors group">
-                            <Tag className="w-3.5 h-3.5 text-coral group-hover:scale-110 transition-transform" />
+                          <button className="p-1 hover:bg-primary/10 rounded-md transition-colors group">
+                            <Tag className="w-3.5 h-3.5 text-primary group-hover:scale-110 transition-transform" />
                           </button>
                         </DropdownMenuTrigger>
-                        <DropdownMenuContent align="start" className="w-[280px] bg-white dark:bg-[#1C1F28] border-line dark:border-white/10 p-2 shadow-2xl">
-                          <DropdownMenuLabel className="text-[10px] font-black text-gray-400 uppercase tracking-widest px-2 py-2">Gerenciar Tags</DropdownMenuLabel>
+                        <DropdownMenuContent align="start" className="w-[280px] bg-popover border border-border p-2 shadow-2xl">
+                          <DropdownMenuLabel className="text-[10px] font-black text-muted-foreground uppercase tracking-widest px-2 py-2">Gerenciar Tags</DropdownMenuLabel>
                           <div className="px-2 pb-2">
                             <div className="relative">
-                              <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-500" />
+                              <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-muted-foreground" />
                               <Input 
                                 placeholder="Buscar ou criar tag..." 
-                                className="h-9 pl-8 text-xs bg-surface-2 dark:bg-[#0F1117] border-none"
+                                className="h-9 pl-8 text-xs bg-muted border-none"
                               />
                             </div>
                           </div>
-                          <DropdownMenuSeparator className="bg-line dark:bg-white/5" />
+                          <DropdownMenuSeparator className="bg-border" />
                           <div className="max-h-[200px] overflow-y-auto py-1">
                             {[
                               { label: 'Analisar', color: 'bg-red-500' },
@@ -474,25 +474,25 @@ function AdminChatPage() {
                               { label: 'Resgate', color: 'bg-blue-500' },
                               { label: 'Venda', color: 'bg-green-500' },
                             ].map((tag) => (
-                              <DropdownMenuItem key={tag.label} className="flex items-center justify-between px-2 py-2 cursor-pointer hover:bg-coral/5 dark:hover:bg-white/5 rounded-md group">
+                              <DropdownMenuItem key={tag.label} className="flex items-center justify-between px-2 py-2 cursor-pointer hover:bg-accent rounded-md group">
                                 <div className="flex items-center gap-3">
                                   <div className={cn("w-2 h-2 rounded-full", tag.color)} />
-                                  <span className="text-xs font-medium dark:text-white/80">{tag.label}</span>
+                                  <span className="text-xs font-medium text-foreground">{tag.label}</span>
                                 </div>
-                                <div className="w-4 h-4 border border-line dark:border-white/20 rounded group-hover:border-coral transition-colors" />
+                                <div className="w-4 h-4 border border-border rounded group-hover:border-primary transition-colors" />
                               </DropdownMenuItem>
                             ))}
                           </div>
-                          <DropdownMenuSeparator className="bg-line dark:bg-white/5" />
-                          <button className="w-full flex items-center gap-2 px-2 py-2 text-[11px] font-bold text-coral hover:bg-coral/5 rounded-md transition-colors mt-1">
+                          <DropdownMenuSeparator className="bg-border" />
+                          <button className="w-full flex items-center gap-2 px-2 py-2 text-[11px] font-bold text-primary hover:bg-primary/5 rounded-md transition-colors mt-1">
                             <Plus className="w-3.5 h-3.5" />
                             CRIAR NOVA TAG
                           </button>
                         </DropdownMenuContent>
                       </DropdownMenu>
                     </div>
-                    <div className="flex items-center gap-2 mt-1.5 text-[10px] font-medium text-[#667085] dark:text-white/40 uppercase tracking-wider">
-                      <span className="text-[#315DA8] dark:text-[#5289e9] font-bold">+55 34 99999-9999</span>
+                    <div className="flex items-center gap-2 mt-1.5 text-[10px] font-medium text-muted-foreground uppercase tracking-wider">
+                      <span className="text-primary font-bold">+55 34 99999-9999</span>
                       <span>•</span>
                       <span>Prot: 20240804-001</span>
                       <span>•</span>
@@ -503,21 +503,21 @@ function AdminChatPage() {
                   </div>
                 </div>
                 <div className="flex items-center gap-2">
-                   <button className="p-2 hover:bg-[#FAFAFA] dark:hover:bg-white/5 text-[#667085] dark:text-white/40 rounded-lg transition-colors border border-transparent hover:border-[#E5E7EB] dark:hover:border-white/5">
+                   <button className="p-2 hover:bg-muted text-muted-foreground rounded-lg transition-colors border border-transparent hover:border-border">
                     <Search className="w-[18px] h-[18px]" />
                   </button>
-                  <button className="p-2 hover:bg-[#FAFAFA] dark:hover:bg-white/5 text-[#667085] dark:text-white/40 rounded-lg transition-colors border border-transparent hover:border-[#E5E7EB] dark:hover:border-white/5">
+                  <button className="p-2 hover:bg-muted text-muted-foreground rounded-lg transition-colors border border-transparent hover:border-border">
                     <Phone className="w-[18px] h-[18px]" />
                   </button>
-                  <button className="p-2 hover:bg-[#FAFAFA] dark:hover:bg-white/5 text-[#667085] dark:text-white/40 rounded-lg transition-colors border border-transparent hover:border-[#E5E7EB] dark:hover:border-white/5">
+                  <button className="p-2 hover:bg-muted text-muted-foreground rounded-lg transition-colors border border-transparent hover:border-border">
                     <MoreVertical className="w-[18px] h-[18px]" />
                   </button>
                 </div>
               </div>
               
-              <div className="flex-1 overflow-y-auto p-8 space-y-8 relative z-10 custom-scrollbar bg-[#FAFAFA]/30 dark:bg-transparent">
+              <div className="flex-1 overflow-y-auto p-8 space-y-8 relative z-10 custom-scrollbar bg-background">
                 <div className="flex justify-center">
-                  <span className="px-4 py-1.5 bg-white dark:bg-[#1e222d] text-[10px] font-bold text-[#667085] dark:text-white/40 uppercase tracking-widest rounded-full border border-[#E5E7EB] dark:border-white/5 shadow-sm">Hoje, 04 de Agosto</span>
+                  <span className="px-4 py-1.5 bg-card text-[10px] font-bold text-muted-foreground uppercase tracking-widest rounded-full border border-border shadow-sm">Hoje, 04 de Agosto</span>
                 </div>
 
                 {messages.map((msg) => (
@@ -525,13 +525,13 @@ function AdminChatPage() {
                     <div className={cn(
                       "max-w-[70%] p-3 rounded-2xl shadow-sm relative transition-shadow border",
                       msg.sender === 'agent' 
-                        ? "bg-coral text-white rounded-tr-none border-coral/10 dark:shadow-[0_4px_12px_rgba(232,96,74,0.15)]" 
-                        : "bg-white dark:bg-[#1e222d] text-[#171717] dark:text-white/90 rounded-tl-none border-[#E5E7EB] dark:border-white/5"
+                        ? "bg-primary text-primary-foreground rounded-tr-none border-primary/10 shadow-[0_4px_12px_rgba(var(--primary),0.15)]" 
+                        : "bg-card text-foreground rounded-tl-none border-border"
                     )}>
                       <p className="text-[13px] leading-relaxed">{msg.text}</p>
                       <div className={cn(
                         "flex items-center justify-end gap-1.5 mt-1.5",
-                        msg.sender === 'agent' ? "text-white/60" : "text-[#667085]/40 dark:text-white/20"
+                        msg.sender === 'agent' ? "text-primary-foreground/60" : "text-muted-foreground/40"
                       )}>
                         <span className="text-[9px] font-bold">{msg.time}</span>
                         {msg.sender === 'agent' && <CheckCheck className="w-3.5 h-3.5" />}
@@ -542,25 +542,25 @@ function AdminChatPage() {
                 
                 {/* 5. CARDS INTERATIVOS */}
                 <div className="flex justify-start">
-                  <div className="bg-white dark:bg-[#1e222d] text-[#171717] dark:text-white/90 rounded-2xl p-5 shadow-xl shadow-[#171717]/5 dark:shadow-none max-w-[320px] overflow-hidden border border-[#E5E7EB] dark:border-white/5 relative group hover:-translate-y-0.5 transition-transform">
-                    <div className="absolute top-0 left-0 w-1.5 h-full bg-coral" />
+                  <div className="bg-card text-foreground rounded-2xl p-5 shadow-xl shadow-foreground/5 max-w-[320px] overflow-hidden border border-border relative group hover:-translate-y-0.5 transition-transform">
+                    <div className="absolute top-0 left-0 w-1.5 h-full bg-primary" />
                     <div className="flex justify-between items-start mb-3">
-                      <div className="text-[10px] font-bold uppercase text-navy dark:text-white/80 font-bold tracking-widest bg-coral/10 px-2.5 py-1 rounded-md border border-coral/5">Negociação de Valor</div>
+                      <div className="text-[10px] font-bold uppercase text-foreground tracking-widest bg-primary/10 px-2.5 py-1 rounded-md border border-primary/5">Negociação de Valor</div>
                     </div>
                     <div className="font-bold text-base mb-1 tracking-tight">Viagem Terra Santa 2026</div>
-                    <p className="text-[11px] text-[#667085] dark:text-white/40 mb-4 leading-relaxed">Pacote completo com guia especializado e hospedagem premium.</p>
-                    <div className="flex items-center gap-3 mb-5 p-3.5 bg-[#FAFAFA] dark:bg-[#0F1117] rounded-xl border border-[#E5E7EB] dark:border-white/5">
+                    <p className="text-[11px] text-muted-foreground mb-4 leading-relaxed">Pacote completo com guia especializado e hospedagem premium.</p>
+                    <div className="flex items-center gap-3 mb-5 p-3.5 bg-muted rounded-xl border border-border">
                       <div className="flex flex-col">
-                        <span className="text-[9px] font-bold text-[#667085] dark:text-white/30 uppercase tracking-widest">Mensalidade</span>
-                        <span className="text-sm text-[#E5484D] font-bold line-through">R$ 341,28</span>
+                        <span className="text-[9px] font-bold text-muted-foreground uppercase tracking-widest">Mensalidade</span>
+                        <span className="text-sm text-destructive font-bold line-through">R$ 341,28</span>
                       </div>
-                      <div className="w-px h-8 bg-[#E5E7EB] dark:bg-white/5" />
+                      <div className="w-px h-8 bg-border" />
                       <div className="flex flex-col">
                         <span className="text-[9px] font-bold text-[#24B667] uppercase tracking-widest">Oferta</span>
                         <span className="text-xl font-bold text-[#24B667] tracking-tighter">R$ 273,02</span>
                       </div>
                     </div>
-                    <button className="w-full py-2.5 bg-[#171717] dark:bg-coral text-white text-[11px] font-bold uppercase tracking-widest rounded-xl hover:bg-black dark:hover:bg-coral/90 transition-all flex items-center justify-center gap-2">
+                    <button className="w-full py-2.5 bg-primary text-primary-foreground text-[11px] font-bold uppercase tracking-widest rounded-xl hover:bg-primary/90 transition-all flex items-center justify-center gap-2">
                       ACEITAR PROPOSTA
                     </button>
                   </div>
@@ -568,182 +568,182 @@ function AdminChatPage() {
               </div>
 
               {/* 6. CAMPO DE DIGITAÇÃO */}
-              <div className="p-4 bg-white dark:bg-[#161922] border-t border-[#E5E7EB] dark:border-white/5 z-10">
+              <div className="p-4 bg-card border-t border-border z-10">
                 {agentStatus === 'offline' ? (
                   <div className="flex flex-col items-center justify-center p-8 text-center space-y-4">
-                     <div className="w-16 h-16 rounded-full bg-[#FAFAFA] dark:bg-[#0F1117] border border-[#E5E7EB] dark:border-white/5 flex items-center justify-center">
-                        <User className="w-8 h-8 text-[#667085] dark:text-white/20" />
-                     </div>
-                     <div className="space-y-1">
-                        <h3 className="font-bold text-[18px] dark:text-white/90">Você está Offline</h3>
-                        <p className="text-[14px] text-[#667085] dark:text-white/40">Conecte-se para começar a receber mensagens</p>
-                     </div>
-                     <div className="flex gap-3">
-                        <button onClick={() => setAgentStatus('busy')} className="px-6 py-2.5 border border-[#E5E7EB] dark:border-white/5 dark:text-white/70 text-[13px] font-semibold rounded-lg hover:bg-[#FAFAFA] dark:hover:bg-white/5 transition-colors">Ficar Ocupado</button>
-                        <button onClick={() => setAgentStatus('online')} className="px-6 py-2.5 bg-coral text-white text-[13px] font-bold rounded-lg hover:bg-coral/90 transition-colors">Ficar Online</button>
-                     </div>
+                     <div className="w-16 h-16 rounded-full bg-muted border border-border flex items-center justify-center">
+                        <User className="w-8 h-8 text-muted-foreground" />
+                      </div>
+                      <div className="space-y-1">
+                         <h3 className="font-bold text-[18px] text-foreground">Você está Offline</h3>
+                         <p className="text-[14px] text-muted-foreground">Conecte-se para começar a receber mensagens</p>
+                      </div>
+                      <div className="flex gap-3">
+                         <button onClick={() => setAgentStatus('busy')} className="px-6 py-2.5 border border-border text-muted-foreground text-[13px] font-semibold rounded-lg hover:bg-accent transition-colors">Ficar Ocupado</button>
+                         <button onClick={() => setAgentStatus('online')} className="px-6 py-2.5 bg-primary text-primary-foreground text-[13px] font-bold rounded-lg hover:bg-primary/90 transition-colors">Ficar Online</button>
+                      </div>
                   </div>
                 ) : (
                   <div className="flex gap-3 items-end">
                     <div className="flex gap-1.5 mb-1 shrink-0">
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild>
-                          <button className="p-2 hover:bg-[#FAFAFA] dark:hover:bg-white/5 text-[#667085] dark:text-white/40 rounded-lg transition-all border border-transparent hover:border-[#E5E7EB] dark:hover:border-white/5">
+                          <button className="p-2 hover:bg-muted text-muted-foreground rounded-lg transition-all border border-transparent hover:border-border">
                             <Plus className="w-5 h-5" />
                           </button>
                         </DropdownMenuTrigger>
-                        <DropdownMenuContent align="start" side="top" className="w-[220px] bg-white dark:bg-[#1C1F28] border-line dark:border-white/10 p-1 shadow-2xl">
-                          <DropdownMenuItem onClick={() => { setFileType('image/*'); fileInputRef.current?.click(); }} className="flex items-center gap-3 px-3 py-2.5 cursor-pointer hover:bg-coral/5 dark:hover:bg-white/5 rounded-md">
+                        <DropdownMenuContent align="start" side="top" className="w-[220px] bg-popover border border-border p-1 shadow-2xl">
+                          <DropdownMenuItem onClick={() => { setFileType('image/*'); fileInputRef.current?.click(); }} className="flex items-center gap-3 px-3 py-2.5 cursor-pointer hover:bg-accent rounded-md">
                             <ImageIcon className="w-4 h-4 text-blue-500" />
-                            <span className="text-xs font-medium dark:text-white/80">Fotos e Vídeos</span>
+                            <span className="text-xs font-medium text-foreground">Fotos e Vídeos</span>
                           </DropdownMenuItem>
-                          <DropdownMenuItem onClick={() => { setFileType('audio/*'); fileInputRef.current?.click(); }} className="flex items-center gap-3 px-3 py-2.5 cursor-pointer hover:bg-coral/5 dark:hover:bg-white/5 rounded-md">
+                          <DropdownMenuItem onClick={() => { setFileType('audio/*'); fileInputRef.current?.click(); }} className="flex items-center gap-3 px-3 py-2.5 cursor-pointer hover:bg-accent rounded-md">
                             <Music className="w-4 h-4 text-purple-500" />
-                            <span className="text-xs font-medium dark:text-white/80">Áudio</span>
+                            <span className="text-xs font-medium text-foreground">Áudio</span>
                           </DropdownMenuItem>
-                          <DropdownMenuItem onClick={() => { setFileType('.pdf,.doc,.docx,.xls,.xlsx'); fileInputRef.current?.click(); }} className="flex items-center gap-3 px-3 py-2.5 cursor-pointer hover:bg-coral/5 dark:hover:bg-white/5 rounded-md">
+                          <DropdownMenuItem onClick={() => { setFileType('.pdf,.doc,.docx,.xls,.xlsx'); fileInputRef.current?.click(); }} className="flex items-center gap-3 px-3 py-2.5 cursor-pointer hover:bg-accent rounded-md">
                             <FileText className="w-4 h-4 text-blue-400" />
-                            <span className="text-xs font-medium dark:text-white/80">Documento</span>
+                            <span className="text-xs font-medium text-foreground">Documento</span>
                           </DropdownMenuItem>
-                          <DropdownMenuSeparator className="bg-line dark:bg-white/5" />
-                          <DropdownMenuItem className="flex items-center justify-between px-3 py-2.5 cursor-pointer hover:bg-coral/5 dark:hover:bg-white/5 rounded-md">
+                          <DropdownMenuSeparator className="bg-border" />
+                          <DropdownMenuItem className="flex items-center justify-between px-3 py-2.5 cursor-pointer hover:bg-accent rounded-md">
                             <div className="flex items-center gap-3">
                               <AlertCircle className="w-4 h-4 text-amber-500" />
-                              <span className="text-xs font-medium dark:text-white/80">Mensagem interna</span>
+                              <span className="text-xs font-medium text-foreground">Mensagem interna</span>
                             </div>
-                            <div className="w-4 h-4 rounded-full border border-line dark:border-white/20 flex items-center justify-center">
-                              <span className="text-[8px] font-bold text-gray-400">i</span>
+                            <div className="w-4 h-4 rounded-full border border-border flex items-center justify-center">
+                              <span className="text-[8px] font-bold text-muted-foreground">i</span>
                             </div>
                           </DropdownMenuItem>
                         </DropdownMenuContent>
                       </DropdownMenu>
 
-                      <button className="p-2 hover:bg-[#FAFAFA] dark:hover:bg-white/5 text-[#667085] dark:text-white/40 rounded-lg transition-all border border-transparent hover:border-[#E5E7EB] dark:hover:border-white/5">
+                      <button className="p-2 hover:bg-muted text-muted-foreground rounded-lg transition-all border border-transparent hover:border-border">
                         <Smile className="w-5 h-5" />
                       </button>
 
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild>
-                          <button className="p-2 hover:bg-[#FAFAFA] dark:hover:bg-white/5 text-[#667085] dark:text-white/40 rounded-lg transition-all border border-transparent hover:border-[#E5E7EB] dark:hover:border-white/5">
+                          <button className="p-2 hover:bg-muted text-muted-foreground rounded-lg transition-all border border-transparent hover:border-border">
                             <Sparkles className="w-5 h-5" />
                           </button>
                         </DropdownMenuTrigger>
-                        <DropdownMenuContent align="start" side="top" className="w-[280px] bg-white dark:bg-[#1C1F28] border-line dark:border-white/10 p-1 shadow-2xl overflow-y-auto max-h-[450px]">
-                          <DropdownMenuLabel className="text-[10px] font-black text-gray-400 uppercase tracking-widest px-3 py-2 flex items-center gap-2">
-                            <Sparkles className="w-3 h-3 text-coral" /> Assistente de IA
+                        <DropdownMenuContent align="start" side="top" className="w-[280px] bg-popover border border-border p-1 shadow-2xl overflow-y-auto max-h-[450px]">
+                          <DropdownMenuLabel className="text-[10px] font-black text-muted-foreground uppercase tracking-widest px-3 py-2 flex items-center gap-2">
+                            <Sparkles className="w-3 h-3 text-primary" /> Assistente de IA
                           </DropdownMenuLabel>
                           
                           <div className="px-3 py-2">
-                             <div className="flex flex-col gap-1.5 p-2 bg-surface-2 dark:bg-[#0F1117] rounded-lg border border-line dark:border-white/5">
-                               <div className="flex items-center gap-2 text-[10px] font-bold text-gray-400 uppercase">
+                             <div className="flex flex-col gap-1.5 p-2 bg-muted rounded-lg border border-border">
+                               <div className="flex items-center gap-2 text-[10px] font-bold text-muted-foreground uppercase">
                                  <Pencil className="w-3 h-3" /> Criar texto
                                </div>
-                               <p className="text-[9px] text-gray-500 italic">Descreva em pelo menos 20 caracteres</p>
+                               <p className="text-[9px] text-muted-foreground italic">Descreva em pelo menos 20 caracteres</p>
                              </div>
                           </div>
 
-                          <DropdownMenuItem className="flex items-center gap-3 px-3 py-2.5 cursor-pointer hover:bg-coral/5 dark:hover:bg-white/5 rounded-md">
+                          <DropdownMenuItem className="flex items-center gap-3 px-3 py-2.5 cursor-pointer hover:bg-accent rounded-md">
                             <Wand2 className="w-4 h-4 text-amber-500" />
-                            <span className="text-xs font-medium dark:text-white/80">Melhorar texto</span>
+                            <span className="text-xs font-medium text-foreground">Melhorar texto</span>
                           </DropdownMenuItem>
                           
-                          <DropdownMenuItem className="flex items-center gap-3 px-3 py-2.5 cursor-pointer hover:bg-coral/5 dark:hover:bg-white/5 rounded-md">
-                            <ArrowUpCircle className="w-4 h-4 text-green-500" />
-                            <span className="text-xs font-medium dark:text-white/80">Aumentar o texto</span>
-                          </DropdownMenuItem>
+                           <DropdownMenuItem className="flex items-center gap-3 px-3 py-2.5 cursor-pointer hover:bg-accent rounded-md">
+                             <ArrowUpCircle className="w-4 h-4 text-green-500" />
+                             <span className="text-xs font-medium text-foreground">Aumentar o texto</span>
+                           </DropdownMenuItem>
 
-                          <DropdownMenuItem className="flex items-center gap-3 px-3 py-2.5 cursor-pointer hover:bg-coral/5 dark:hover:bg-white/5 rounded-md">
-                            <AlignLeft className="w-4 h-4 text-blue-500" />
-                            <span className="text-xs font-medium dark:text-white/80">Resumir</span>
-                          </DropdownMenuItem>
+                           <DropdownMenuItem className="flex items-center gap-3 px-3 py-2.5 cursor-pointer hover:bg-accent rounded-md">
+                             <AlignLeft className="w-4 h-4 text-blue-500" />
+                             <span className="text-xs font-medium text-foreground">Resumir</span>
+                           </DropdownMenuItem>
 
-                          <DropdownMenuItem className="flex items-center gap-3 px-3 py-2.5 cursor-pointer hover:bg-coral/5 dark:hover:bg-white/5 rounded-md">
-                            <Smile className="w-4 h-4 text-cyan-400" />
-                            <span className="text-xs font-medium dark:text-white/80">Adicionar emojis</span>
-                          </DropdownMenuItem>
+                           <DropdownMenuItem className="flex items-center gap-3 px-3 py-2.5 cursor-pointer hover:bg-accent rounded-md">
+                             <Smile className="w-4 h-4 text-cyan-400" />
+                             <span className="text-xs font-medium text-foreground">Adicionar emojis</span>
+                           </DropdownMenuItem>
 
-                          <DropdownMenuSeparator className="bg-line dark:bg-white/5" />
+                           <DropdownMenuSeparator className="bg-border" />
 
-                          <DropdownMenu>
-                            <DropdownMenuTrigger asChild>
-                              <div className="flex items-center justify-between px-3 py-2.5 cursor-pointer hover:bg-coral/5 dark:hover:bg-white/5 rounded-md">
-                                <div className="flex items-center gap-3">
-                                  <Volume2 className="w-4 h-4 text-amber-600" />
-                                  <span className="text-xs font-medium dark:text-white/80">Alterar o tom</span>
-                                </div>
-                                <ChevronRight className="w-3 h-3 text-gray-400" />
-                              </div>
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent side="right" className="bg-white dark:bg-[#1C1F28] border-line dark:border-white/10 p-1 shadow-xl">
+                           <DropdownMenu>
+                             <DropdownMenuTrigger asChild>
+                               <div className="flex items-center justify-between px-3 py-2.5 cursor-pointer hover:bg-accent rounded-md">
+                                 <div className="flex items-center gap-3">
+                                   <Volume2 className="w-4 h-4 text-amber-600" />
+                                   <span className="text-xs font-medium text-foreground">Alterar o tom</span>
+                                 </div>
+                                 <ChevronRight className="w-3 h-3 text-muted-foreground" />
+                               </div>
+                             </DropdownMenuTrigger>
+                             <DropdownMenuContent side="right" className="bg-popover border border-border p-1 shadow-xl">
                               {['Comunicativo', 'Bem-humorado', 'Entusiasmado', 'Informativo', 'Profissional', 'Inteligente', 'Confiável'].map(tone => (
-                                <DropdownMenuItem key={tone} className="text-xs px-3 py-2 hover:bg-coral/5 dark:hover:bg-white/5 cursor-pointer rounded-md">
-                                  {tone}
-                                </DropdownMenuItem>
+                                 <DropdownMenuItem key={tone} className="text-xs px-3 py-2 hover:bg-accent cursor-pointer rounded-md text-foreground">
+                                   {tone}
+                                 </DropdownMenuItem>
                               ))}
                             </DropdownMenuContent>
                           </DropdownMenu>
 
                           <DropdownMenu>
                             <DropdownMenuTrigger asChild>
-                              <div className="flex items-center justify-between px-3 py-2.5 cursor-pointer hover:bg-coral/5 dark:hover:bg-white/5 rounded-md">
-                                <div className="flex items-center gap-3">
-                                  <LayoutList className="w-4 h-4 text-red-500" />
-                                  <span className="text-xs font-medium dark:text-white/80">Alterar o sotaque</span>
-                                </div>
-                                <ChevronRight className="w-3 h-3 text-gray-400" />
-                              </div>
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent side="right" className="bg-white dark:bg-[#1C1F28] border-line dark:border-white/10 p-1 shadow-xl max-h-[300px] overflow-y-auto">
+                               <div className="flex items-center justify-between px-3 py-2.5 cursor-pointer hover:bg-accent rounded-md">
+                                 <div className="flex items-center gap-3">
+                                   <LayoutList className="w-4 h-4 text-red-500" />
+                                   <span className="text-xs font-medium text-foreground">Alterar o sotaque</span>
+                                 </div>
+                                 <ChevronRight className="w-3 h-3 text-muted-foreground" />
+                               </div>
+                             </DropdownMenuTrigger>
+                             <DropdownMenuContent side="right" className="bg-popover border border-border p-1 shadow-xl max-h-[300px] overflow-y-auto">
                               {['Gaúcho', 'Carioca', 'Paulista', 'Mineiro', 'Nordestino', 'Baiano', 'Nortista', 'Sertanejo', 'Catarinense', 'Paranaense'].map(accent => (
-                                <DropdownMenuItem key={accent} className="text-xs px-3 py-2 hover:bg-coral/5 dark:hover:bg-white/5 cursor-pointer rounded-md">
-                                  {accent}
-                                </DropdownMenuItem>
+                                 <DropdownMenuItem key={accent} className="text-xs px-3 py-2 hover:bg-accent cursor-pointer rounded-md text-foreground">
+                                   {accent}
+                                 </DropdownMenuItem>
                               ))}
                             </DropdownMenuContent>
                           </DropdownMenu>
 
                           <DropdownMenu>
                             <DropdownMenuTrigger asChild>
-                              <div className="flex items-center justify-between px-3 py-2.5 cursor-pointer hover:bg-coral/5 dark:hover:bg-white/5 rounded-md">
-                                <div className="flex items-center gap-3">
-                                  <Globe className="w-4 h-4 text-blue-400" />
-                                  <span className="text-xs font-medium dark:text-white/80">Traduzir</span>
-                                </div>
-                                <ChevronRight className="w-3 h-3 text-gray-400" />
-                              </div>
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent side="right" className="bg-white dark:bg-[#1C1F28] border-line dark:border-white/10 p-1 shadow-xl">
+                               <div className="flex items-center justify-between px-3 py-2.5 cursor-pointer hover:bg-accent rounded-md">
+                                 <div className="flex items-center gap-3">
+                                   <Globe className="w-4 h-4 text-blue-400" />
+                                   <span className="text-xs font-medium text-foreground">Traduzir</span>
+                                 </div>
+                                 <ChevronRight className="w-3 h-3 text-muted-foreground" />
+                               </div>
+                             </DropdownMenuTrigger>
+                             <DropdownMenuContent side="right" className="bg-popover border border-border p-1 shadow-xl">
                               {[
                                 { label: 'Para Inglês', flag: '🇺🇸' },
                                 { label: 'Para Português', flag: '🇧🇷' },
                                 { label: 'Para Espanhol', flag: '🇪🇸' }
                               ].map(lang => (
-                                <DropdownMenuItem key={lang.label} className="flex items-center gap-2 text-xs px-3 py-2 hover:bg-coral/5 dark:hover:bg-white/5 cursor-pointer rounded-md">
-                                  <span>{lang.flag}</span> {lang.label}
-                                </DropdownMenuItem>
+                                 <DropdownMenuItem key={lang.label} className="flex items-center gap-2 text-xs px-3 py-2 hover:bg-accent cursor-pointer rounded-md text-foreground">
+                                   <span>{lang.flag}</span> {lang.label}
+                                 </DropdownMenuItem>
                               ))}
                             </DropdownMenuContent>
                           </DropdownMenu>
 
-                          <DropdownMenuSeparator className="bg-line dark:bg-white/5" />
+                          <DropdownMenuSeparator className="bg-border" />
 
                           <div className="px-3 py-2 flex items-center justify-between">
                              <div className="flex items-center gap-2">
                                <Switch 
                                  checked={aiAssistantEnabled} 
                                  onCheckedChange={setAiAssistantEnabled}
-                                 className="scale-75 data-[state=checked]:bg-coral" 
+                                 className="scale-75 data-[state=checked]:bg-primary" 
                                />
-                               <span className="text-[10px] font-bold dark:text-white/60">Assistente automático</span>
+                               <span className="text-[10px] font-bold text-muted-foreground">Assistente automático</span>
                              </div>
-                             <div className="w-4 h-4 rounded-full border border-line dark:border-white/20 flex items-center justify-center cursor-help">
-                               <span className="text-[8px] font-bold text-gray-400">i</span>
+                             <div className="w-4 h-4 rounded-full border border-border flex items-center justify-center cursor-help">
+                               <span className="text-[8px] font-bold text-muted-foreground">i</span>
                              </div>
                           </div>
                         </DropdownMenuContent>
                       </DropdownMenu>
 
-                      <button className="p-2 hover:bg-[#FAFAFA] dark:hover:bg-white/5 text-[#667085] dark:text-white/40 rounded-lg transition-all border border-transparent hover:border-[#E5E7EB] dark:hover:border-white/5">
+                      <button className="p-2 hover:bg-muted text-muted-foreground rounded-lg transition-all border border-transparent hover:border-border">
                         <Volume2 className="w-5 h-5" />
                       </button>
 
@@ -762,10 +762,10 @@ function AdminChatPage() {
                     <div className="flex-1 relative">
                       <textarea 
                         rows={1}
-                        className="w-full bg-[#FAFAFA] dark:bg-[#0F1117] border border-[#E5E7EB] dark:border-white/5 p-3.5 pr-14 rounded-xl text-[13px] text-[#171717] dark:text-white/90 placeholder:text-[#667085]/50 focus:outline-none focus:ring-1 focus:ring-coral transition-all resize-none" 
+                        className="w-full bg-muted border border-border p-3.5 pr-14 rounded-xl text-[13px] text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-1 focus:ring-primary/50 transition-all resize-none" 
                         placeholder="Digite uma mensagem — use ‘/’ para atalhos" 
                       />
-                      <button className="absolute right-2 top-2 w-9 h-9 bg-coral text-white rounded-lg flex items-center justify-center hover:bg-coral/90 transition-all">
+                      <button className="absolute right-2 top-2 w-9 h-9 bg-primary text-primary-foreground rounded-lg flex items-center justify-center hover:bg-primary/90 transition-all">
 
                         <Send className="w-4 h-4" />
                       </button>
@@ -779,18 +779,18 @@ function AdminChatPage() {
             <div className="flex-1 flex flex-col items-center justify-center p-12 text-center space-y-6">
                <div className="relative">
                  <div className="w-24 h-24 rounded-full bg-[#24B667]/5 flex items-center justify-center animate-pulse">
-                    <div className="w-12 h-12 rounded-full bg-[#24B667] border-4 border-white shadow-lg"></div>
+                     <div className="w-12 h-12 rounded-full bg-green-500 border-4 border-background shadow-lg"></div>
                  </div>
                </div>
                <div className="max-w-md space-y-2">
-                  <h3 className="font-bold text-[20px] text-[#171717] dark:text-white/90">Você está Online</h3>
-                  <p className="text-[14px] text-[#667085] dark:text-white/40 leading-relaxed">
-                    Escolha uma conversa em andamento ou inicie uma nova conversa agora mesmo. Enquanto estiver online, você receberá novos atendimentos normalmente.
-                  </p>
+                   <h3 className="font-bold text-[20px] text-foreground">Você está Online</h3>
+                   <p className="text-[14px] text-muted-foreground leading-relaxed">
+                     Escolha uma conversa em andamento ou inicie uma nova conversa agora mesmo. Enquanto estiver online, você receberá novos atendimentos normalmente.
+                   </p>
                </div>
                <button 
                 onClick={() => setIsActiveTicketDialogOpen(true)}
-                className="px-8 py-3 bg-white dark:bg-coral border-2 border-coral dark:border-coral text-coral dark:text-white text-[14px] font-bold rounded-xl hover:bg-coral/5 dark:hover:bg-coral/90 transition-colors shadow-sm"
+                className="px-8 py-3 bg-primary text-primary-foreground text-[14px] font-bold rounded-xl hover:bg-primary/90 transition-colors shadow-sm"
               >
                  Iniciar nova conversa
                </button>
@@ -799,7 +799,7 @@ function AdminChatPage() {
         </div>
 
         {/* 9. BARRA VERTICAL DE AÇÕES (52px) */}
-        <div className="w-[52px] border-l border-[#E5E7EB] dark:border-white/5 flex flex-col items-center py-6 gap-4 bg-white dark:bg-[#161922] shrink-0 z-10">
+        <div className="w-[52px] border-l border-border flex flex-col items-center py-6 gap-4 bg-card shrink-0 z-10">
           {[
             { icon: CheckCircle, label: "Finalizar", onClick: () => setIsFinishDialogOpen(true) },
             { icon: Shuffle, label: "Transferir", onClick: () => setIsTransferDialogOpen(true) },
@@ -820,11 +820,11 @@ function AdminChatPage() {
               onClick={action.onClick}
               className={cn(
                 "p-2.5 rounded-lg transition-all group relative border border-transparent",
-                i === 0 ? "bg-coral text-white shadow-lg" : "text-navy/20 hover:bg-coral/5 hover:text-coral"
+                i === 0 ? "bg-primary text-primary-foreground shadow-lg" : "text-muted-foreground hover:bg-primary/5 hover:text-primary"
             )} title={action.label}>
               <action.icon className="w-5 h-5" />
-              {i === 0 && <span className="absolute left-[-80px] top-1/2 -translate-y-1/2 bg-[#23262E] text-white text-[10px] font-bold px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">Finalizar</span>}
-              {i === 1 && <span className="absolute left-[-80px] top-1/2 -translate-y-1/2 bg-[#23262E] text-white text-[10px] font-bold px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none text-coral">Transferir</span>}
+              {i === 0 && <span className="absolute left-[-80px] top-1/2 -translate-y-1/2 bg-popover text-popover-foreground border border-border text-[10px] font-bold px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">Finalizar</span>}
+              {i === 1 && <span className="absolute left-[-80px] top-1/2 -translate-y-1/2 bg-popover text-popover-foreground border border-border text-[10px] font-bold px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none text-primary">Transferir</span>}
             </button>
           ))}
         </div>
@@ -832,43 +832,43 @@ function AdminChatPage() {
 
       {/* Dialog: Filtros */}
       <Dialog open={isFilterDialogOpen} onOpenChange={setIsFilterDialogOpen}>
-        <DialogContent className="max-w-2xl bg-[#1A1D29] border-[#2D313F] text-white">
+        <DialogContent className="max-w-2xl bg-popover border-border text-foreground">
           <DialogHeader>
             <DialogTitle className="text-xl font-bold">Filtros</DialogTitle>
-            <DialogDescription className="text-gray-400">Selecione os filtros que deseja aplicar aos tickets.</DialogDescription>
+            <DialogDescription className="text-muted-foreground">Selecione os filtros que deseja aplicar aos tickets.</DialogDescription>
           </DialogHeader>
           <div className="grid grid-cols-3 gap-6 py-4">
             <div className="space-y-2">
-              <Label className="text-[10px] font-bold uppercase tracking-wider text-gray-400">Projeto</Label>
+              <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Projeto</Label>
               <Select defaultValue="all">
-                <SelectTrigger className="bg-[#23262E] border-none text-xs h-10">
+                <SelectTrigger className="bg-muted border-none text-xs h-10">
                   <SelectValue placeholder="Selecione uma opção" />
                 </SelectTrigger>
-                <SelectContent className="bg-[#23262E] border-none text-white">
+                <SelectContent className="bg-popover border-border text-foreground">
                   <SelectItem value="all">Todos os Projetos</SelectItem>
                   <SelectItem value="zevva">Zevva Tickets</SelectItem>
                 </SelectContent>
               </Select>
             </div>
             <div className="space-y-2">
-              <Label className="text-[10px] font-bold uppercase tracking-wider text-gray-400">Tipo de canal</Label>
+              <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Tipo de canal</Label>
               <Select>
-                <SelectTrigger className="bg-[#23262E] border-none text-xs h-10">
+                <SelectTrigger className="bg-muted border-none text-xs h-10">
                   <SelectValue placeholder="Selecione uma opção" />
                 </SelectTrigger>
-                <SelectContent className="bg-[#23262E] border-none text-white">
+                <SelectContent className="bg-popover border-border text-foreground">
                   <SelectItem value="wa">WhatsApp</SelectItem>
                   <SelectItem value="email">Email</SelectItem>
                 </SelectContent>
               </Select>
             </div>
             <div className="space-y-2">
-              <Label className="text-[10px] font-bold uppercase tracking-wider text-gray-400">Tipo de atendimento</Label>
+              <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Tipo de atendimento</Label>
               <Select defaultValue="receptivo">
-                <SelectTrigger className="bg-[#23262E] border-none text-xs h-10">
+                <SelectTrigger className="bg-muted border-none text-xs h-10">
                   <SelectValue placeholder="Ativo e receptivo" />
                 </SelectTrigger>
-                <SelectContent className="bg-[#23262E] border-none text-white">
+                <SelectContent className="bg-popover border-border text-foreground">
                   <SelectItem value="receptivo">Ativo e receptivo</SelectItem>
                   <SelectItem value="only-receptivo">Apenas receptivo</SelectItem>
                 </SelectContent>
@@ -877,37 +877,37 @@ function AdminChatPage() {
           </div>
           <div className="grid grid-cols-2 gap-6 py-2">
             <div className="space-y-2">
-              <Label className="text-[10px] font-bold uppercase tracking-wider text-gray-400">Departamentos</Label>
+              <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Departamentos</Label>
               <div className="relative">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-500" />
-                <Input placeholder="Buscar..." className="bg-[#23262E] border-none pl-9 h-10 text-xs" />
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-muted-foreground" />
+                <Input placeholder="Buscar..." className="bg-muted border-none pl-9 h-10 text-xs" />
               </div>
             </div>
             <div className="space-y-2">
               <div className="flex items-center gap-1">
-                <Label className="text-[10px] font-bold uppercase tracking-wider text-gray-400">Tags</Label>
-                <AlertCircle className="w-3 h-3 text-coral" />
+                <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Tags</Label>
+                <AlertCircle className="w-3 h-3 text-primary" />
               </div>
               <div className="relative">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-500" />
-                <Input placeholder="Buscar..." className="bg-[#23262E] border-none pl-9 h-10 text-xs" />
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-muted-foreground" />
+                <Input placeholder="Buscar..." className="bg-muted border-none pl-9 h-10 text-xs" />
               </div>
             </div>
           </div>
           <div className="py-4">
-             <div className="bg-[#315DA8]/20 border border-[#315DA8]/30 rounded-lg p-3 text-center text-[11px] text-[#315DA8] font-medium">
+             <div className="bg-primary/10 border border-primary/20 rounded-lg p-3 text-center text-[11px] text-primary font-medium">
                Selecione um projeto para selecionar os canais (não é necessário selecionar um canal para filtrar)
              </div>
           </div>
           <div className="space-y-4 py-2">
-            <Label className="text-[10px] font-bold uppercase tracking-wider text-gray-400">Preferências</Label>
+            <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Preferências</Label>
             <div className="space-y-3">
               <div className="flex items-center justify-between">
-                <span className="text-xs text-gray-400">Mensagens agendadas</span>
+                <span className="text-xs text-muted-foreground">Mensagens agendadas</span>
                 <Switch />
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-xs text-gray-400">Mensagens não lidas</span>
+                <span className="text-xs text-muted-foreground">Mensagens não lidas</span>
                 <Switch />
               </div>
             </div>
@@ -915,10 +915,10 @@ function AdminChatPage() {
           <DialogFooter className="mt-6 flex justify-between sm:justify-between items-center w-full">
             <button onClick={() => setIsFilterDialogOpen(false)} className="text-sm font-bold hover:underline">Cancelar</button>
             <div className="flex gap-4">
-              <button className="flex items-center gap-2 text-xs font-bold text-gray-400 hover:text-white">
+              <button className="flex items-center gap-2 text-xs font-bold text-muted-foreground hover:text-foreground">
                 <ListFilter className="w-4 h-4" /> Limpar filtros
               </button>
-              <button onClick={() => { toast.success("Filtros aplicados"); setIsFilterDialogOpen(false); }} className="bg-[#FFD31A] hover:bg-[#FFD31A]/90 text-black px-8 py-2.5 rounded-lg text-xs font-black uppercase tracking-widest">Aplicar</button>
+              <button onClick={() => { toast.success("Filtros aplicados"); setIsFilterDialogOpen(false); }} className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-2.5 rounded-lg text-xs font-black uppercase tracking-widest">Aplicar</button>
             </div>
           </DialogFooter>
         </DialogContent>
@@ -926,110 +926,110 @@ function AdminChatPage() {
 
       {/* Dialog: Histórico de Conversas */}
       <Dialog open={isHistoryDialogOpen} onOpenChange={setIsHistoryDialogOpen}>
-        <DialogContent className="max-w-2xl bg-[#1A1D29] border-[#2D313F] text-white">
+        <DialogContent className="max-w-2xl bg-popover border-border text-foreground">
           <DialogHeader>
             <DialogTitle className="text-xl font-bold">Histórico de conversas</DialogTitle>
           </DialogHeader>
           <div className="space-y-6 py-4">
             <div className="space-y-2">
-              <Label className="text-[10px] font-bold uppercase tracking-wider text-gray-400">Projeto</Label>
+              <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Projeto</Label>
               <Select defaultValue="zevva">
-                <SelectTrigger className="bg-[#23262E] border-none text-xs h-10">
+                <SelectTrigger className="bg-muted border-none text-xs h-10">
                   <SelectValue />
                 </SelectTrigger>
-                <SelectContent className="bg-[#23262E] border-none text-white">
+                <SelectContent className="bg-popover border-border text-foreground">
                   <SelectItem value="zevva">Zevva Tickets</SelectItem>
                 </SelectContent>
               </Select>
             </div>
             <div className="space-y-2">
-              <Label className="text-[10px] font-bold uppercase tracking-wider text-gray-400">Pesquisar por protocolo, nome ou telefone <span className="text-coral">*</span></Label>
+              <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Pesquisar por protocolo, nome ou telefone <span className="text-primary">*</span></Label>
               <div className="relative">
-                <Input placeholder="Buscar por protocolo, nome ou telefone" className="bg-[#23262E] border-none h-11 text-xs pr-12" />
-                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] text-gray-500 font-bold">0 / 255</span>
+                <Input placeholder="Buscar por protocolo, nome ou telefone" className="bg-muted border-none h-11 text-xs pr-12" />
+                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] text-muted-foreground font-bold">0 / 255</span>
               </div>
             </div>
             <div className="grid grid-cols-2 gap-6">
               <div className="space-y-2">
-                <Label className="text-[10px] font-bold uppercase tracking-wider text-gray-400">Tipo de canal</Label>
-                <Select>
-                  <SelectTrigger className="bg-[#23262E] border-none text-xs h-10">
-                    <SelectValue placeholder="Selecione os tipos de canais" />
-                  </SelectTrigger>
-                  <SelectContent className="bg-[#23262E] border-none text-white">
+                 <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Tipo de canal</Label>
+                 <Select>
+                   <SelectTrigger className="bg-muted border-none text-xs h-10">
+                     <SelectValue placeholder="Selecione os tipos de canais" />
+                   </SelectTrigger>
+                   <SelectContent className="bg-popover border-border text-foreground">
                     <SelectItem value="wa">WhatsApp</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
               <div className="space-y-2">
-                <Label className="text-[10px] font-bold uppercase tracking-wider text-gray-400">Canais</Label>
-                <Select>
-                  <SelectTrigger className="bg-[#23262E] border-none text-xs h-10">
-                    <SelectValue placeholder="Selecione um ou mais canais" />
-                  </SelectTrigger>
-                  <SelectContent className="bg-[#23262E] border-none text-white">
+                 <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Canais</Label>
+                 <Select>
+                   <SelectTrigger className="bg-muted border-none text-xs h-10">
+                     <SelectValue placeholder="Selecione um ou mais canais" />
+                   </SelectTrigger>
+                   <SelectContent className="bg-popover border-border text-foreground">
                     <SelectItem value="c1">Canal 1</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
             </div>
             <div className="space-y-2">
-              <Label className="text-[10px] font-bold uppercase tracking-wider text-gray-400">Período</Label>
-              <button className="w-full bg-[#23262E] text-left px-4 h-10 rounded-lg text-xs text-gray-400">Selecionar período</button>
+              <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Período</Label>
+              <button className="w-full bg-muted text-left px-4 h-10 rounded-lg text-xs text-muted-foreground">Selecionar período</button>
             </div>
-            <button className="w-full py-3 bg-[#2F323D] text-gray-500 text-xs font-black uppercase tracking-widest rounded-lg cursor-not-allowed">Buscar</button>
+            <button className="w-full py-3 bg-muted text-muted-foreground/50 text-xs font-black uppercase tracking-widest rounded-lg cursor-not-allowed">Buscar</button>
           </div>
         </DialogContent>
       </Dialog>
 
       {/* Dialog: Iniciar Atendimento Ativo */}
       <Dialog open={isActiveTicketDialogOpen} onOpenChange={setIsActiveTicketDialogOpen}>
-        <DialogContent className="max-w-2xl bg-[#1A1D29] border-[#2D313F] text-white">
+        <DialogContent className="max-w-2xl bg-popover border-border text-foreground">
           <DialogHeader>
             <DialogTitle className="text-xl font-bold">Iniciar Atendimento Ativo</DialogTitle>
-            <DialogDescription className="text-gray-400">Escolha um cliente para iniciar um novo atendimento ativo</DialogDescription>
+            <DialogDescription className="text-muted-foreground">Escolha um cliente para iniciar um novo atendimento ativo</DialogDescription>
           </DialogHeader>
           <div className="grid grid-cols-2 gap-6 py-6">
             <div className="space-y-2">
-              <Label className="text-[10px] font-bold uppercase tracking-wider text-gray-400">Organização</Label>
+              <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Organização</Label>
               <Select defaultValue="zevva">
-                <SelectTrigger className="bg-[#23262E] border-none text-xs h-11">
+                <SelectTrigger className="bg-muted border-none text-xs h-11">
                   <SelectValue placeholder="Zevva" />
                 </SelectTrigger>
-                <SelectContent className="bg-[#23262E] border-none text-white">
+                <SelectContent className="bg-popover border-border text-foreground">
                   <SelectItem value="zevva">Zevva</SelectItem>
                 </SelectContent>
               </Select>
             </div>
             <div className="space-y-2">
-              <Label className="text-[10px] font-bold uppercase tracking-wider text-gray-400">Projeto</Label>
+              <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Projeto</Label>
               <Select defaultValue="zevva-br">
-                <SelectTrigger className="bg-[#23262E] border-none text-xs h-11">
+                <SelectTrigger className="bg-muted border-none text-xs h-11">
                   <SelectValue placeholder="Zevva Tickets" />
                 </SelectTrigger>
-                <SelectContent className="bg-[#23262E] border-none text-white">
+                <SelectContent className="bg-popover border-border text-foreground">
                   <SelectItem value="zevva-br">Zevva Tickets</SelectItem>
                 </SelectContent>
               </Select>
             </div>
             <div className="space-y-2">
-              <Label className="text-[10px] font-bold uppercase tracking-wider text-gray-400">Canal</Label>
+              <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Canal</Label>
               <Select>
-                <SelectTrigger className="bg-[#23262E] border-none text-xs h-11 text-gray-500">
+                <SelectTrigger className="bg-muted border-none text-xs h-11 text-muted-foreground">
                   <SelectValue placeholder="Selecione um canal" />
                 </SelectTrigger>
-                <SelectContent className="bg-[#23262E] border-none text-white">
+                <SelectContent className="bg-popover border-border text-foreground">
                   <SelectItem value="wa">WhatsApp Suporte</SelectItem>
                 </SelectContent>
               </Select>
             </div>
             <div className="space-y-2">
-              <Label className="text-[10px] font-bold uppercase tracking-wider text-gray-400">Departamento</Label>
+              <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Departamento</Label>
               <Select>
-                <SelectTrigger className="bg-[#23262E] border-none text-xs h-11 text-gray-500">
+                <SelectTrigger className="bg-muted border-none text-xs h-11 text-muted-foreground">
                   <SelectValue placeholder="Selecione um departamento" />
                 </SelectTrigger>
-                <SelectContent className="bg-[#23262E] border-none text-white">
+                <SelectContent className="bg-popover border-border text-foreground">
                   <SelectItem value="vendas">Vendas</SelectItem>
                 </SelectContent>
               </Select>
@@ -1037,50 +1037,50 @@ function AdminChatPage() {
           </div>
           <DialogFooter className="mt-4 flex justify-between sm:justify-between items-center w-full">
             <button onClick={() => setIsActiveTicketDialogOpen(false)} className="text-sm font-bold hover:underline">Cancelar</button>
-            <button className="flex-1 max-w-[400px] py-3 bg-[#2F323D] text-gray-500 text-[11px] font-black uppercase tracking-widest rounded-lg cursor-not-allowed">Escolher Destinatário</button>
+            <button className="flex-1 max-w-[400px] py-3 bg-muted text-muted-foreground/50 text-[11px] font-black uppercase tracking-widest rounded-lg cursor-not-allowed">Escolher Destinatário</button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
 
       {/* Dialog: Finalizar Atendimento */}
       <Dialog open={isFinishDialogOpen} onOpenChange={setIsFinishDialogOpen}>
-        <DialogContent className="max-w-2xl bg-[#1A1D29] border-[#2D313F] text-white">
+        <DialogContent className="max-w-2xl bg-popover border-border text-foreground">
           <DialogHeader>
             <div className="flex items-center gap-3">
               <DialogTitle className="text-xl font-bold">Finalizar atendimento</DialogTitle>
-              <Badge variant="outline" className="bg-[#23262E] border-none text-gray-500 text-[10px] px-2 py-0">20240804-001</Badge>
+              <Badge variant="outline" className="bg-muted border-none text-muted-foreground text-[10px] px-2 py-0">20240804-001</Badge>
             </div>
-            <DialogDescription className="text-gray-400">Ao finalizar este atendimento, o ticket será fechado e não poderá ser reaberto.</DialogDescription>
+            <DialogDescription className="text-muted-foreground">Ao finalizar este atendimento, o ticket será fechado e não poderá ser reaberto.</DialogDescription>
           </DialogHeader>
           <div className="py-4 space-y-6">
-            <div className="bg-[#315DA8]/20 border border-[#315DA8]/30 rounded-lg p-3 flex items-center gap-3 text-[11px] text-[#315DA8] font-medium">
+            <div className="bg-primary/10 border border-primary/20 rounded-lg p-3 flex items-center gap-3 text-[11px] text-primary font-medium">
               <AlertCircle className="w-4 h-4" /> Não há classificações disponíveis para este departamento.
             </div>
             <div className="space-y-3">
-              <Label className="text-[10px] font-bold uppercase tracking-wider text-gray-400">Observações</Label>
-              <div className="bg-[#23262E] rounded-xl border border-white/5 overflow-hidden">
-                <div className="flex items-center gap-4 px-4 py-3 border-b border-white/5">
-                  <div className="flex gap-4 text-gray-400">
+              <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Observações</Label>
+              <div className="bg-muted rounded-xl border border-border overflow-hidden">
+                <div className="flex items-center gap-4 px-4 py-3 border-b border-border">
+                  <div className="flex gap-4 text-muted-foreground">
                      <span className="font-serif font-bold">B</span>
                      <span className="italic font-serif">I</span>
                      <span className="line-through font-serif">S</span>
                      <span className="font-mono">{"<>"}</span>
                   </div>
                   <div className="flex-1" />
-                  <div className="flex gap-4 text-gray-400">
+                  <div className="flex gap-4 text-muted-foreground">
                     <Smile className="w-4 h-4" />
                     <Pencil className="w-4 h-4" />
                   </div>
                 </div>
                 <textarea 
-                  className="w-full bg-transparent p-6 min-h-[160px] outline-none text-sm resize-none"
+                  className="w-full bg-transparent p-6 min-h-[160px] outline-none text-sm resize-none text-foreground"
                   placeholder="Descreva o atendimento..."
                 />
-                <div className="flex items-center justify-between px-4 py-3 border-t border-white/5">
-                   <Zap className="w-4 h-4 text-gray-500" />
+                <div className="flex items-center justify-between px-4 py-3 border-t border-border">
+                   <Zap className="w-4 h-4 text-muted-foreground" />
                    <div className="flex items-center gap-3">
-                     <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">0 / 512</span>
-                     <MoreVertical className="w-4 h-4 text-gray-500" />
+                     <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">0 / 512</span>
+                     <MoreVertical className="w-4 h-4 text-muted-foreground" />
                    </div>
                 </div>
               </div>
@@ -1088,42 +1088,42 @@ function AdminChatPage() {
           </div>
           <DialogFooter className="mt-4 flex justify-between sm:justify-between items-center w-full">
             <button onClick={() => setIsFinishDialogOpen(false)} className="text-sm font-bold hover:underline">Cancelar</button>
-            <button onClick={() => { toast.success("Atendimento finalizado"); setIsFinishDialogOpen(false); }} className="flex-1 max-w-[400px] py-3 bg-coral hover:bg-coral/90 text-white text-[11px] font-black uppercase tracking-widest rounded-lg">Finalizar atendimento</button>
+            <button onClick={() => { toast.success("Atendimento finalizado"); setIsFinishDialogOpen(false); }} className="flex-1 max-w-[400px] py-3 bg-primary hover:bg-primary/90 text-primary-foreground text-[11px] font-black uppercase tracking-widest rounded-lg">Finalizar atendimento</button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
 
       {/* Dialog: Transferir Atendimento */}
       <Dialog open={isTransferDialogOpen} onOpenChange={setIsTransferDialogOpen}>
-        <DialogContent className="max-w-2xl bg-[#1A1D29] border-[#2D313F] text-white">
+        <DialogContent className="max-w-2xl bg-popover border-border text-foreground">
           <DialogHeader>
             <div className="flex items-center gap-3">
               <DialogTitle className="text-xl font-bold">Transferir atendimento</DialogTitle>
-              <Badge variant="outline" className="bg-[#23262E] border-none text-gray-500 text-[10px] px-2 py-0">20240804-001</Badge>
+              <Badge variant="outline" className="bg-muted border-none text-muted-foreground text-[10px] px-2 py-0">20240804-001</Badge>
             </div>
-            <DialogDescription className="text-gray-400">Escolha o destinatário para transferir este atendimento.</DialogDescription>
+            <DialogDescription className="text-muted-foreground">Escolha o destinatário para transferir este atendimento.</DialogDescription>
           </DialogHeader>
           <div className="py-6 space-y-6">
             <div className="grid grid-cols-2 gap-6">
               <div className="space-y-2">
-                <Label className="text-[10px] font-bold uppercase tracking-wider text-gray-400">Tipo de transferência</Label>
+                <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Tipo de transferência</Label>
                 <Select defaultValue="agent">
-                  <SelectTrigger className="bg-[#23262E] border-none text-xs h-11">
+                  <SelectTrigger className="bg-muted border-none text-xs h-11">
                     <SelectValue />
                   </SelectTrigger>
-                  <SelectContent className="bg-[#23262E] border-none text-white">
+                  <SelectContent className="bg-popover border-border text-foreground">
                     <SelectItem value="agent">Para Agente</SelectItem>
                     <SelectItem value="dept">Para Departamento</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
               <div className="space-y-2">
-                <Label className="text-[10px] font-bold uppercase tracking-wider text-gray-400">Destinatário</Label>
+                <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Destinatário</Label>
                 <Select>
-                  <SelectTrigger className="bg-[#23262E] border-none text-xs h-11">
+                  <SelectTrigger className="bg-muted border-none text-xs h-11">
                     <SelectValue placeholder="Selecione um agente" />
                   </SelectTrigger>
-                  <SelectContent className="bg-[#23262E] border-none text-white">
+                  <SelectContent className="bg-popover border-border text-foreground">
                     <SelectItem value="a1">Carlos Aguiar</SelectItem>
                     <SelectItem value="a2">Ana Pereira</SelectItem>
                   </SelectContent>
@@ -1131,16 +1131,16 @@ function AdminChatPage() {
               </div>
             </div>
             <div className="space-y-2">
-              <Label className="text-[10px] font-bold uppercase tracking-wider text-gray-400">Motivo da transferência</Label>
+              <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Motivo da transferência</Label>
               <textarea 
-                className="w-full bg-[#23262E] border-none p-4 rounded-xl text-xs text-white placeholder:text-gray-600 outline-none min-h-[100px] resize-none"
+                className="w-full bg-muted border-none p-4 rounded-xl text-xs text-foreground placeholder:text-muted-foreground outline-none min-h-[100px] resize-none"
                 placeholder="Explique o motivo da transferência..."
               />
             </div>
           </div>
           <DialogFooter className="mt-4 flex justify-between sm:justify-between items-center w-full">
             <button onClick={() => setIsTransferDialogOpen(false)} className="text-sm font-bold hover:underline">Cancelar</button>
-            <button onClick={handleTransfer} className="flex-1 max-w-[400px] py-3 bg-coral hover:bg-coral/90 text-white text-[11px] font-black uppercase tracking-widest rounded-lg">Transferir agora</button>
+            <button onClick={handleTransfer} className="flex-1 max-w-[400px] py-3 bg-primary hover:bg-primary/90 text-primary-foreground text-[11px] font-black uppercase tracking-widest rounded-lg">Transferir agora</button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
@@ -1188,42 +1188,42 @@ function AdminChatPage() {
       `}</style>
       {/* Dialog: Configurações do Chat */}
       <Dialog open={isChatSettingsOpen} onOpenChange={setIsChatSettingsOpen}>
-        <DialogContent className="max-w-md bg-[#1A1D29] border-[#2D313F] text-white p-0 overflow-hidden shadow-2xl">
-          <div className="p-4 border-b border-white/5 flex items-center justify-between bg-[#23262E]">
+        <DialogContent className="max-w-md bg-popover border-border text-foreground p-0 overflow-hidden shadow-2xl">
+          <div className="p-4 border-b border-border flex items-center justify-between bg-muted/50">
             <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center">
-                <SettingsIcon className="w-4 h-4 text-gray-400" />
+              <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
+                <SettingsIcon className="w-4 h-4 text-primary" />
               </div>
               <div>
                 <DialogTitle className="text-sm font-bold">Preferências</DialogTitle>
-                <DialogDescription className="text-[10px] text-gray-500">Configurações do ez Chat</DialogDescription>
+                <DialogDescription className="text-[10px] text-muted-foreground">Configurações do ez Chat</DialogDescription>
               </div>
             </div>
-            <button onClick={() => setIsChatSettingsOpen(false)} className="text-gray-500 hover:text-white transition-colors">
+            <button onClick={() => setIsChatSettingsOpen(false)} className="text-muted-foreground hover:text-foreground transition-colors">
               <X className="w-4 h-4" />
             </button>
           </div>
           
           <div className="p-6 space-y-8">
             <div className="space-y-4">
-              <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-gray-500 mb-2">
+              <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-muted-foreground mb-2">
                 <Bell className="w-3 h-3" /> NOTIFICAÇÕES
               </div>
-              <div className="space-y-1 bg-[#23262E] rounded-xl border border-white/5 overflow-hidden">
+              <div className="space-y-1 bg-muted rounded-xl border border-border overflow-hidden">
                 {[
                   { label: "Notificações de novos chats", icon: true },
                   { label: "Alertas sonoros para novos tickets", sound: true },
                   { label: "Alertas sonoros para novas mensagens", sound: true },
                   { label: "Alertas sonoros para tickets transferidos", sound: true },
                 ].map((pref, i) => (
-                  <div key={i} className={cn("flex items-center justify-between p-4", i !== 3 && "border-b border-white/5")}>
+                  <div key={i} className={cn("flex items-center justify-between p-4", i !== 3 && "border-b border-border")}>
                     <div className="flex items-center gap-2">
-                      <span className="text-xs text-gray-300 font-medium">{pref.label}</span>
-                      <AlertCircle className="w-3 h-3 text-gray-600" />
+                      <span className="text-xs text-foreground font-medium">{pref.label}</span>
+                      <AlertCircle className="w-3 h-3 text-muted-foreground" />
                     </div>
                     <div className="flex items-center gap-3">
-                      {pref.sound && <Volume2 className="w-3.5 h-3.5 text-gray-500" />}
-                      <Switch defaultChecked={pref.label !== "Notificações de novos chats"} className="data-[state=checked]:bg-coral" />
+                      {pref.sound && <Volume2 className="w-3.5 h-3.5 text-muted-foreground" />}
+                      <Switch defaultChecked={pref.label !== "Notificações de novos chats"} className="data-[state=checked]:bg-primary" />
                     </div>
                   </div>
                 ))}
@@ -1231,12 +1231,12 @@ function AdminChatPage() {
             </div>
 
             <div className="space-y-4">
-              <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-gray-500 mb-2">
+              <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-muted-foreground mb-2">
                 <MessageSquare className="w-3 h-3" /> CHAT
               </div>
-              <div className="bg-[#23262E] rounded-xl border border-white/5 p-4 flex items-center justify-between">
-                <span className="text-xs text-gray-300 font-medium">Enviar mensagem ao pressionar ENTER</span>
-                <Switch defaultChecked className="data-[state=checked]:bg-coral" />
+              <div className="bg-muted rounded-xl border border-border p-4 flex items-center justify-between">
+                <span className="text-xs text-foreground font-medium">Enviar mensagem ao pressionar ENTER</span>
+                <Switch defaultChecked className="data-[state=checked]:bg-primary" />
               </div>
             </div>
           </div>
