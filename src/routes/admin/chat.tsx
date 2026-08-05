@@ -320,7 +320,15 @@ function AdminChatPage() {
                     </div>
                   </div>
                   <div className="flex flex-col items-end justify-between py-0.5 shrink-0">
-                    <Eye className="w-3.5 h-3.5 text-navy/20 hover:text-coral transition-colors" />
+                    <button 
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setPreviewContactId(contact.id);
+                      }}
+                      className="p-1 hover:bg-coral/10 rounded-md transition-colors"
+                    >
+                      <Eye className="w-3.5 h-3.5 text-navy/20 hover:text-coral transition-colors" />
+                    </button>
                     <button className="p-0.5 hover:bg-surface-2 rounded-md">
                       <MoreVertical className="w-3.5 h-3.5 text-navy/20" />
                     </button>
@@ -330,6 +338,94 @@ function AdminChatPage() {
             ))}
           </div>
         </div>
+
+        {/* Modal de Pré-visualização */}
+        <Dialog open={!!previewContactId} onOpenChange={(open) => !open && setPreviewContactId(null)}>
+          <DialogContent className="max-w-2xl p-0 overflow-hidden border-none bg-[#161922] shadow-2xl">
+            <div className="flex items-center justify-between p-4 border-b border-white/5 bg-[#1C1F28]">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-full bg-coral/20 flex items-center justify-center text-coral font-bold">
+                  {contacts.find(c => c.id === previewContactId)?.name.split(' ').map(n => n[0]).join('')}
+                </div>
+                <div>
+                  <div className="flex items-center gap-2">
+                    <h3 className="font-bold text-white text-sm">{contacts.find(c => c.id === previewContactId)?.name}</h3>
+                    <Badge variant="outline" className="text-[9px] bg-white/5 border-white/10 text-white/50 px-1.5 py-0 uppercase">Pré-visualização</Badge>
+                  </div>
+                  <p className="text-[10px] text-white/40">Última atividade {contacts.find(c => c.id === previewContactId)?.time}</p>
+                </div>
+              </div>
+              <button 
+                onClick={() => setPreviewContactId(null)}
+                className="p-2 hover:bg-white/5 rounded-full transition-colors text-white/40 hover:text-white"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+            
+            <div className="p-6 h-[500px] overflow-y-auto visible-scrollbar bg-[url('https://w0.peakpx.com/wallpaper/580/678/wallpaper-whatsapp-dark-mode.jpg')] bg-repeat bg-center">
+              <div className="flex flex-col gap-4">
+                {/* Simulando mensagens na pré-visualização */}
+                <div className="flex flex-col gap-2 max-w-[80%] self-start">
+                  <div className="bg-[#1C1F28] text-white p-3 rounded-2xl rounded-tl-none shadow-md border border-white/5">
+                    <p className="text-xs">{contacts.find(c => c.id === previewContactId)?.lastMsg}</p>
+                    <div className="flex justify-end mt-1">
+                      <span className="text-[9px] text-white/40">10:05</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex flex-col gap-2 max-w-[80%] self-end">
+                  <div className="bg-coral text-white p-3 rounded-2xl rounded-tr-none shadow-md">
+                    <p className="text-xs">Olá! No que podemos ajudar hoje?</p>
+                    <div className="flex justify-end items-center gap-1 mt-1">
+                      <span className="text-[9px] text-white/70">10:07</span>
+                      <CheckCheck className="w-3 h-3 text-white/70" />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Mensagem de voz simulada se for o Paulo Vitor (referência da imagem) */}
+                <div className="flex flex-col gap-2 max-w-[80%] self-start">
+                  <div className="bg-[#1C1F28] text-white p-3 rounded-2xl rounded-tl-none shadow-md border border-white/5 w-[280px]">
+                    <div className="flex items-center gap-3">
+                      <button className="w-8 h-8 rounded-full bg-coral/20 flex items-center justify-center text-coral">
+                        <Play className="w-4 h-4 fill-current" />
+                      </button>
+                      <div className="flex-1 h-1 bg-white/10 rounded-full relative">
+                        <div className="absolute inset-0 w-1/3 bg-coral rounded-full" />
+                      </div>
+                      <span className="text-[10px] text-white/40">0:44</span>
+                    </div>
+                    <div className="flex justify-end mt-1">
+                      <span className="text-[9px] text-white/40">10:21</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Card de imagem simulado */}
+                <div className="flex flex-col gap-2 max-w-[80%] self-start">
+                  <div className="bg-[#1C1F28] text-white p-2 rounded-2xl rounded-tl-none shadow-md border border-white/5">
+                    <div className="bg-white rounded-lg p-3 text-navy mb-2 overflow-hidden">
+                       <p className="text-[10px] font-bold text-navy/60 uppercase mb-1">Mensalidade</p>
+                       <div className="flex flex-col gap-0.5">
+                         <span className="text-xs text-red-500 line-through">R$ 341,28</span>
+                         <span className="text-lg font-black text-green-600">R$ 273,02</span>
+                       </div>
+                    </div>
+                    <div className="flex justify-end mt-1 px-1">
+                      <span className="text-[9px] text-white/40">10:23</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="p-3 bg-[#1C1F28] text-center border-t border-white/5">
+              <p className="text-[10px] text-white/30 font-medium">Pré-visualização — não marca como lida e não abre a conversa.</p>
+            </div>
+          </DialogContent>
+        </Dialog>
 
         {/* 4. ÁREA DA CONVERSA */}
         <div className="flex-1 flex flex-col bg-white dark:bg-[#0F1117] shrink-0 relative">
