@@ -1,17 +1,25 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { getWhatsAppContacts, sendWhatsAppMessage } from '@/lib/whatsapp/whatsapp.functions';
 import { 
   Search, Send, User, Check, CheckCheck, Phone, Plus, Bell, ChevronDown, 
   MoreVertical, CheckCircle, Shuffle, Users as PeopleIcon, Folder, Clock, 
-  History as HistoryIcon,
-  Calendar, Zap, Copy, Printer, Eye, Tag, AlertCircle, LayoutList, MessageSquare
+  History as HistoryIcon, Calendar, Zap, Copy, Printer, Eye, Tag, AlertCircle, 
+  LayoutList, MessageSquare, Filter, SlidersHorizontal, ListFilter,
+  Paperclip, Smile, Image as ImageIcon, Play, Volume2, Pencil, X
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { format } from 'date-fns';
 import { Badge } from '@/components/ui/badge';
+import { 
+  Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter 
+} from "@/components/ui/dialog";
+import { 
+  DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, DropdownMenuSeparator, DropdownMenuSub, DropdownMenuSubTrigger, DropdownMenuPortal, DropdownMenuSubContent
+} from "@/components/ui/dropdown-menu";
+import { Switch } from "@/components/ui/switch";
+import { toast } from "sonner";
 
 export const Route = createFileRoute('/admin/chat')({
   component: AdminChatPage,
