@@ -634,11 +634,11 @@ function AdminChatPage() {
                           </DropdownMenuLabel>
                           
                           <div className="px-3 py-2">
-                             <div className="flex flex-col gap-1.5 p-2 bg-surface-2 dark:bg-[#0F1117] rounded-lg border border-line dark:border-white/5">
-                               <div className="flex items-center gap-2 text-[10px] font-bold text-gray-400 uppercase">
+                             <div className="flex flex-col gap-1.5 p-2 bg-muted rounded-lg border border-border">
+                               <div className="flex items-center gap-2 text-[10px] font-bold text-muted-foreground uppercase">
                                  <Pencil className="w-3 h-3" /> Criar texto
                                </div>
-                               <p className="text-[9px] text-gray-500 italic">Descreva em pelo menos 20 caracteres</p>
+                               <p className="text-[9px] text-muted-foreground italic">Descreva em pelo menos 20 caracteres</p>
                              </div>
                           </div>
 
