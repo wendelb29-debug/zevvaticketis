@@ -157,119 +157,193 @@ function AdminChatPage() {
           </div>
         </div>
 
-        {/* Coluna 2: Thread da Conversa */}
-        <div className="flex-1 flex flex-col bg-[#161924] shrink-0">
-          <div className="h-24 border-b border-[#2d3247] bg-[#1a1d29] px-6 flex flex-col justify-center gap-2">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <div className="w-9 h-9 rounded-full bg-[#2d3247] flex items-center justify-center font-bold">JS</div>
-                <div>
-                  <div className="font-extrabold text-sm">João Silva</div>
-                  <div className="text-[10px] text-gray-500">+55 34 99999-9999</div>
+        {/* 4. ÁREA DA CONVERSA */}
+        <div className="flex-1 flex flex-col bg-white shrink-0 relative">
+          {selectedContactId ? (
+            <>
+              {/* Cabeçalho da Conversa */}
+              <div className="h-[72px] border-b border-[#E5E7EB] bg-white px-8 flex items-center justify-between z-10">
+                <div className="flex items-center gap-4">
+                  <div className="w-[42px] h-[42px] rounded-full bg-[#FAFAFA] border border-[#E5E7EB] flex items-center justify-center font-bold text-[#FFD31A] text-sm shadow-sm">
+                    JS
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <h2 className="font-bold text-[#171717] text-[15px] tracking-tight leading-none">João Silva</h2>
+                      <button className="p-1 hover:bg-[#FAFAFA] rounded-md transition-colors">
+                        <Tag className="w-3.5 h-3.5 text-[#FFD31A]" />
+                      </button>
+                    </div>
+                    <div className="flex items-center gap-2 mt-1.5 text-[10px] font-medium text-[#667085] uppercase tracking-wider">
+                      <span className="text-[#315DA8] font-bold">+55 34 99999-9999</span>
+                      <span>•</span>
+                      <span>Prot: 20240804-001</span>
+                      <span>•</span>
+                      <span>Zevva Tickets</span>
+                      <span>•</span>
+                      <span>WhatsApp</span>
+                    </div>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2">
+                  <button className="p-2 hover:bg-[#FAFAFA] text-[#667085] rounded-lg transition-colors border border-transparent hover:border-[#E5E7EB]">
+                    <Search className="w-[18px] h-[18px]" />
+                  </button>
+                  <button className="p-2 hover:bg-[#FAFAFA] text-[#667085] rounded-lg transition-colors border border-transparent hover:border-[#E5E7EB]">
+                    <Phone className="w-[18px] h-[18px]" />
+                  </button>
+                  <button className="p-2 hover:bg-[#FAFAFA] text-[#667085] rounded-lg transition-colors border border-transparent hover:border-[#E5E7EB]">
+                    <MoreVertical className="w-[18px] h-[18px]" />
+                  </button>
                 </div>
               </div>
-              <div className="flex items-center gap-2">
-                <button className="p-1.5 hover:bg-[#2d3247] rounded-lg transition-colors text-gray-400">
-                  <Tag className="w-4 h-4" />
-                </button>
-              </div>
-            </div>
-            <div className="flex items-center gap-3 text-[9px] text-gray-500 font-bold uppercase tracking-wider">
-              <span>Protocolo: 20240804-001</span>
-              <span>•</span>
-              <span>Zevva Tickets</span>
-              <span>•</span>
-              <span>WhatsApp</span>
-            </div>
-          </div>
-          
-          <div className="flex-1 overflow-y-auto p-6 space-y-4 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] bg-fixed opacity-90 custom-scrollbar">
-            {messages.map((msg) => (
-              <div key={msg.id} className={cn("flex w-full", msg.sender === 'agent' ? "justify-end" : "justify-start")}>
-                <div className={cn(
-                  "max-w-[70%] p-3 rounded-2xl shadow-lg relative",
-                  msg.sender === 'agent' 
-                    ? "bg-[#2d3247] text-white rounded-tr-none border border-[#d9a94d]/10" 
-                    : "bg-[#24283b] text-white rounded-tl-none"
-                )}>
-                  <p className="text-sm font-medium leading-relaxed">{msg.text}</p>
-                  <div className="flex items-center justify-end gap-1 mt-1.5">
-                    <span className="text-[9px] text-gray-500 font-bold">{msg.time}</span>
-                    {msg.sender === 'agent' && <CheckCheck className="w-3 h-3 text-[#d9a94d]" />}
+              
+              <div className="flex-1 overflow-y-auto p-8 space-y-8 relative z-10 custom-scrollbar bg-[#FAFAFA]/30">
+                <div className="flex justify-center">
+                  <span className="px-4 py-1.5 bg-white text-[10px] font-bold text-[#667085] uppercase tracking-widest rounded-full border border-[#E5E7EB] shadow-sm">Hoje, 04 de Agosto</span>
+                </div>
+
+                {messages.map((msg) => (
+                  <div key={msg.id} className={cn("flex w-full group", msg.sender === 'agent' ? "justify-end" : "justify-start")}>
+                    <div className={cn(
+                      "max-w-[70%] p-3 rounded-2xl shadow-sm relative transition-shadow border",
+                      msg.sender === 'agent' 
+                        ? "bg-[#FFF9DF] text-[#171717] rounded-tr-none border-[#FFD31A]/10" 
+                        : "bg-white text-[#171717] rounded-tl-none border-[#E5E7EB]"
+                    )}>
+                      <p className="text-[13px] leading-relaxed">{msg.text}</p>
+                      <div className={cn(
+                        "flex items-center justify-end gap-1.5 mt-1.5",
+                        msg.sender === 'agent' ? "text-[#F2C600]" : "text-[#667085]/40"
+                      )}>
+                        <span className="text-[9px] font-bold">{msg.time}</span>
+                        {msg.sender === 'agent' && <CheckCheck className="w-3.5 h-3.5" />}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+                
+                {/* 5. CARDS INTERATIVOS */}
+                <div className="flex justify-start">
+                  <div className="bg-white text-[#171717] rounded-2xl p-5 shadow-xl shadow-[#171717]/5 max-w-[320px] overflow-hidden border border-[#E5E7EB] relative group hover:-translate-y-0.5 transition-transform">
+                    <div className="absolute top-0 left-0 w-1.5 h-full bg-[#FFD31A]" />
+                    <div className="flex justify-between items-start mb-3">
+                      <div className="text-[10px] font-bold uppercase text-[#315DA8] tracking-widest bg-[#EAF2FF] px-2.5 py-1 rounded-md border border-[#EAF2FF]">Negociação de Valor</div>
+                    </div>
+                    <div className="font-bold text-base mb-1 tracking-tight">Viagem Terra Santa 2026</div>
+                    <p className="text-[11px] text-[#667085] mb-4 leading-relaxed">Pacote completo com guia especializado e hospedagem premium.</p>
+                    <div className="flex items-center gap-3 mb-5 p-3.5 bg-[#FAFAFA] rounded-xl border border-[#E5E7EB]">
+                      <div className="flex flex-col">
+                        <span className="text-[9px] font-bold text-[#667085] uppercase tracking-widest">Mensalidade</span>
+                        <span className="text-sm text-[#E5484D] font-bold line-through">R$ 341,28</span>
+                      </div>
+                      <div className="w-px h-8 bg-[#E5E7EB]" />
+                      <div className="flex flex-col">
+                        <span className="text-[9px] font-bold text-[#24B667] uppercase tracking-widest">Oferta</span>
+                        <span className="text-xl font-bold text-[#24B667] tracking-tighter">R$ 273,02</span>
+                      </div>
+                    </div>
+                    <button className="w-full py-2.5 bg-[#171717] text-white text-[11px] font-bold uppercase tracking-widest rounded-xl hover:bg-black transition-all flex items-center justify-center gap-2">
+                      ACEITAR PROPOSTA
+                    </button>
                   </div>
                 </div>
               </div>
-            ))}
-            
-            {/* Rich Card Example */}
-            <div className="flex justify-start">
-              <div className="bg-white text-[#14182a] rounded-2xl p-4 shadow-xl max-w-xs overflow-hidden border-l-4 border-[#d9a94d]">
-                <div className="text-[10px] font-black uppercase text-gray-400 mb-2">Negociação de Valor</div>
-                <div className="font-bold text-lg mb-1">Terra Santa 2026</div>
-                <div className="flex items-baseline gap-2 mb-4">
-                  <span className="text-xs text-red-500 line-through">R$ 5.400,00</span>
-                  <span className="text-xl font-black text-green-600">R$ 4.900,00</span>
-                </div>
-                <button className="w-full py-2 bg-[#14182a] text-white text-xs font-bold rounded-lg hover:bg-black transition-colors">ACEITAR PROPOSTA</button>
-              </div>
-            </div>
-          </div>
 
-          <div className="p-4 bg-[#1a1d29] border-t border-[#2d3247]">
-            {agentStatus === 'offline' ? (
-              <div className="flex items-center justify-between p-3 bg-red-500/10 border border-red-500/20 rounded-xl gap-4">
-                <div className="flex items-center gap-2 text-xs text-red-400 font-bold">
-                  <AlertCircle className="w-4 h-4" />
-                  <span>Você só pode enviar mensagens quando seu status for online ou ocupado</span>
-                </div>
-                <div className="flex gap-2">
-                  <button onClick={() => setAgentStatus('online')} className="px-3 py-1.5 bg-green-500/20 text-green-400 text-[10px] font-black uppercase rounded-lg hover:bg-green-500/30 transition-colors">Online</button>
-                  <button onClick={() => setAgentStatus('busy')} className="px-3 py-1.5 bg-yellow-500/20 text-yellow-400 text-[10px] font-black uppercase rounded-lg hover:bg-yellow-500/30 transition-colors">Ocupado</button>
-                </div>
+              {/* 6. CAMPO DE DIGITAÇÃO */}
+              <div className="p-4 bg-white border-t border-[#E5E7EB] z-10">
+                {agentStatus === 'offline' ? (
+                  <div className="flex flex-col items-center justify-center p-8 text-center space-y-4">
+                     <div className="w-16 h-16 rounded-full bg-[#FAFAFA] border border-[#E5E7EB] flex items-center justify-center">
+                        <User className="w-8 h-8 text-[#667085]" />
+                     </div>
+                     <div className="space-y-1">
+                        <h3 className="font-bold text-[18px]">Você está Offline</h3>
+                        <p className="text-[14px] text-[#667085]">Conecte-se para começar a receber mensagens</p>
+                     </div>
+                     <div className="flex gap-3">
+                        <button onClick={() => setAgentStatus('busy')} className="px-6 py-2.5 border border-[#E5E7EB] text-[13px] font-semibold rounded-lg hover:bg-[#FAFAFA] transition-colors">Ficar Ocupado</button>
+                        <button onClick={() => setAgentStatus('online')} className="px-6 py-2.5 bg-[#FFD31A] text-[#171717] text-[13px] font-bold rounded-lg hover:bg-[#F2C600] transition-colors">Ficar Online</button>
+                     </div>
+                  </div>
+                ) : (
+                  <div className="flex gap-3 items-end">
+                    <div className="flex gap-1.5 mb-1 shrink-0">
+                      <button className="p-2 hover:bg-[#FAFAFA] text-[#667085] rounded-lg transition-all border border-transparent hover:border-[#E5E7EB]"><Plus className="w-5 h-5" /></button>
+                      <button className="p-2 hover:bg-[#FAFAFA] text-[#667085] rounded-lg transition-all border border-transparent hover:border-[#E5E7EB]"><Smile className="w-5 h-5" /></button>
+                    </div>
+                    <div className="flex-1 relative">
+                      <textarea 
+                        rows={1}
+                        className="w-full bg-[#FAFAFA] border border-[#E5E7EB] p-3.5 pr-14 rounded-xl text-[13px] text-[#171717] placeholder:text-[#667085]/50 focus:outline-none focus:ring-1 focus:ring-[#FFD31A] transition-all resize-none" 
+                        placeholder="Digite uma mensagem — use ‘/’ para atalhos" 
+                      />
+                      <button className="absolute right-2 top-2 w-9 h-9 bg-[#FFD31A] text-[#171717] rounded-lg flex items-center justify-center hover:bg-[#F2C600] transition-all">
+                        <Send className="w-4 h-4" />
+                      </button>
+                    </div>
+                  </div>
+                )}
               </div>
-            ) : (
-              <div className="flex gap-2">
-                <div className="flex-1 relative">
-                  <input className="w-full bg-[#2d3247] p-3 rounded-xl text-sm border-none focus:ring-1 focus:ring-[#d9a94d]/30" placeholder="Digite sua mensagem..." />
-                </div>
-                <button className="w-11 h-11 bg-[#d9a94d] text-navy rounded-xl flex items-center justify-center shrink-0 hover:scale-105 transition-transform">
-                  <Send className="w-5 h-5" />
-                </button>
-              </div>
-            )}
-          </div>
+            </>
+          ) : (
+            /* 3. ESTADO ONLINE SEM CONVERSA SELECIONADA */
+            <div className="flex-1 flex flex-col items-center justify-center p-12 text-center space-y-6">
+               <div className="relative">
+                 <div className="w-24 h-24 rounded-full bg-[#24B667]/5 flex items-center justify-center animate-pulse">
+                    <div className="w-12 h-12 rounded-full bg-[#24B667] border-4 border-white shadow-lg"></div>
+                 </div>
+               </div>
+               <div className="max-w-md space-y-2">
+                  <h3 className="font-bold text-[20px] text-[#171717]">Você está Online</h3>
+                  <p className="text-[14px] text-[#667085] leading-relaxed">
+                    Escolha uma conversa em andamento ou inicie uma nova conversa agora mesmo. Enquanto estiver online, você receberá novos atendimentos normalmente.
+                  </p>
+               </div>
+               <button className="px-8 py-3 bg-white border-2 border-[#FFD31A] text-[#171717] text-[14px] font-bold rounded-xl hover:bg-[#FFFBE8] transition-colors shadow-sm">
+                 Iniciar nova conversa
+               </button>
+            </div>
+          )}
         </div>
 
-        {/* Coluna 3: Toolbar de Ações (Narrow) */}
-        <div className="w-14 border-l border-[#2d3247] flex flex-col items-center py-6 gap-5 bg-[#1a1d29] shrink-0">
+        {/* 9. BARRA VERTICAL DE AÇÕES (52px) */}
+        <div className="w-[52px] border-l border-[#E5E7EB] flex flex-col items-center py-6 gap-4 bg-white shrink-0 z-10">
           {[
             { icon: CheckCircle, label: "Finalizar" },
             { icon: Shuffle, label: "Transferir" },
-            { icon: PeopleIcon, label: "Grupos" },
+            { icon: PeopleIcon, label: "Dados" },
             { icon: Folder, label: "Arquivos" },
-            { icon: Clock, label: "Histórico" },
+            { icon: HistoryIcon, label: "Histórico" },
             { icon: Calendar, label: "Agendar" },
             { icon: Zap, label: "Gatilhos" },
             { icon: Copy, label: "Copiar" },
             { icon: Printer, label: "Imprimir" },
           ].map((action, i) => (
-            <button key={i} className="p-2.5 text-gray-500 hover:text-[#d9a94d] hover:bg-[#2d3247] rounded-xl transition-all group relative" title={action.label}>
+            <button key={i} className={cn(
+                "p-2.5 rounded-lg transition-all group relative border border-transparent",
+                i === 2 ? "bg-[#FFFBE8] border-[#FFD31A]/30 text-[#171717]" : "text-[#667085] hover:bg-[#FAFAFA] hover:text-[#171717]"
+            )} title={action.label}>
               <action.icon className="w-5 h-5" />
             </button>
           ))}
         </div>
       </div>
+      </div>
 
       <style>{`
         .custom-scrollbar-fina::-webkit-scrollbar {
-          width: 3px;
+          width: 4px;
         }
         .custom-scrollbar-fina::-webkit-scrollbar-track {
           background: transparent;
         }
         .custom-scrollbar-fina::-webkit-scrollbar-thumb {
-          background: #2d3247;
+          background: #E5E7EB;
           border-radius: 10px;
+        }
+        .custom-scrollbar-fina::-webkit-scrollbar-thumb:hover {
+          background: #D1D5DB;
         }
       `}</style>
     </div>
