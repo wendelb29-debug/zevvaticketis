@@ -194,7 +194,7 @@ function EventPage() {
                       key={ticket.id} 
                       className={cn(
                         "p-8 bg-white rounded-[40px] border-2 transition-all duration-300 flex flex-col md:flex-row md:items-center justify-between gap-8",
-                        quantities[ticket.id] > 0 ? "border-coral shadow-2xl shadow-coral/5 scale-[1.02]" : "border-line hover:border-coral/20"
+                        ticket?.id && (quantities[ticket.id] || 0) > 0 ? "border-coral shadow-2xl shadow-coral/5 scale-[1.02]" : "border-line hover:border-coral/20"
                       )}
                     >
                       <div className="space-y-4 flex-1">
