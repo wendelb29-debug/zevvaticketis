@@ -993,9 +993,10 @@ const AtendimentoAccordion = () => (
       </AccordionContent>
     </AccordionItem>
     ))}
-    </>
 
+    <AccordionItem value="feriados" className="bg-white rounded-2xl border border-line p-0 overflow-hidden shadow-sm">
       <AccordionTrigger className="px-6 py-5 hover:no-underline group text-left">
+
         <div className="flex items-center gap-3 text-left">
           <CalendarDays className="w-5 h-5 text-coral" />
           <ConfigItemHeader 
