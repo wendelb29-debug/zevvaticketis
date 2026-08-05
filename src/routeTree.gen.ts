@@ -49,7 +49,6 @@ import { Route as Char91DotmcpChar93InvokeToolToolRouteImport } from './routes/[
 import { Route as AdminMarketingIndexRouteImport } from './routes/admin/marketing/index'
 import { Route as AdminMarketingAnunciosRouteImport } from './routes/admin/marketing/anuncios'
 import { Route as AdminMarketingPublicidadeRouteImport } from './routes/admin/marketing/publicidade'
-import { Route as ApiPublicEmailOauthCallbackRouteImport } from './routes/api/public/email-oauth-callback'
 import { Route as ApiPublicUazapiWebhookRouteImport } from './routes/api/public/uazapi-webhook'
 import { Route as OauthGoogleReturnRouteImport } from './routes/oauth/google/return'
 
@@ -257,12 +256,6 @@ const AdminMarketingPublicidadeRoute =
     path: '/marketing/publicidade',
     getParentRoute: () => AdminRoute,
   } as any)
-const ApiPublicEmailOauthCallbackRoute =
-  ApiPublicEmailOauthCallbackRouteImport.update({
-    id: '/api/public/email-oauth-callback',
-    path: '/api/public/email-oauth-callback',
-    getParentRoute: () => rootRouteImport,
-  } as any)
 const ApiPublicUazapiWebhookRoute = ApiPublicUazapiWebhookRouteImport.update({
   id: '/api/public/uazapi-webhook',
   path: '/api/public/uazapi-webhook',
@@ -314,7 +307,6 @@ export interface FileRoutesByFullPath {
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
   '/admin/marketing/anuncios': typeof AdminMarketingAnunciosRoute
   '/admin/marketing/publicidade': typeof AdminMarketingPublicidadeRoute
-  '/api/public/email-oauth-callback': typeof ApiPublicEmailOauthCallbackRoute
   '/api/public/uazapi-webhook': typeof ApiPublicUazapiWebhookRoute
   '/oauth/google/return': typeof OauthGoogleReturnRoute
   '/admin/marketing/': typeof AdminMarketingIndexRoute
@@ -356,7 +348,6 @@ export interface FileRoutesByTo {
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
   '/admin/marketing/anuncios': typeof AdminMarketingAnunciosRoute
   '/admin/marketing/publicidade': typeof AdminMarketingPublicidadeRoute
-  '/api/public/email-oauth-callback': typeof ApiPublicEmailOauthCallbackRoute
   '/api/public/uazapi-webhook': typeof ApiPublicUazapiWebhookRoute
   '/oauth/google/return': typeof OauthGoogleReturnRoute
   '/admin/marketing': typeof AdminMarketingIndexRoute
@@ -402,7 +393,6 @@ export interface FileRoutesById {
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
   '/admin/marketing/anuncios': typeof AdminMarketingAnunciosRoute
   '/admin/marketing/publicidade': typeof AdminMarketingPublicidadeRoute
-  '/api/public/email-oauth-callback': typeof ApiPublicEmailOauthCallbackRoute
   '/api/public/uazapi-webhook': typeof ApiPublicUazapiWebhookRoute
   '/oauth/google/return': typeof OauthGoogleReturnRoute
   '/admin/marketing/': typeof AdminMarketingIndexRoute
@@ -449,7 +439,6 @@ export interface FileRouteTypes {
     | '/.mcp/invoke-tool/$tool'
     | '/admin/marketing/anuncios'
     | '/admin/marketing/publicidade'
-    | '/api/public/email-oauth-callback'
     | '/api/public/uazapi-webhook'
     | '/oauth/google/return'
     | '/admin/marketing/'
@@ -491,7 +480,6 @@ export interface FileRouteTypes {
     | '/.mcp/invoke-tool/$tool'
     | '/admin/marketing/anuncios'
     | '/admin/marketing/publicidade'
-    | '/api/public/email-oauth-callback'
     | '/api/public/uazapi-webhook'
     | '/oauth/google/return'
     | '/admin/marketing'
@@ -536,7 +524,6 @@ export interface FileRouteTypes {
     | '/.mcp/invoke-tool/$tool'
     | '/admin/marketing/anuncios'
     | '/admin/marketing/publicidade'
-    | '/api/public/email-oauth-callback'
     | '/api/public/uazapi-webhook'
     | '/oauth/google/return'
     | '/admin/marketing/'
@@ -559,7 +546,6 @@ export interface RootRouteChildren {
   AuthCallbackRoute: typeof AuthCallbackRoute
   DotlovableOauthConsentRoute: typeof DotlovableOauthConsentRoute
   Char91DotmcpChar93InvokeToolToolRoute: typeof Char91DotmcpChar93InvokeToolToolRoute
-  ApiPublicEmailOauthCallbackRoute: typeof ApiPublicEmailOauthCallbackRoute
   ApiPublicUazapiWebhookRoute: typeof ApiPublicUazapiWebhookRoute
   OauthGoogleReturnRoute: typeof OauthGoogleReturnRoute
 }
@@ -846,13 +832,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminMarketingPublicidadeRouteImport
       parentRoute: typeof AdminRoute
     }
-    '/api/public/email-oauth-callback': {
-      id: '/api/public/email-oauth-callback'
-      path: '/api/public/email-oauth-callback'
-      fullPath: '/api/public/email-oauth-callback'
-      preLoaderRoute: typeof ApiPublicEmailOauthCallbackRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/api/public/uazapi-webhook': {
       id: '/api/public/uazapi-webhook'
       path: '/api/public/uazapi-webhook'
@@ -962,7 +941,6 @@ const rootRouteChildren: RootRouteChildren = {
   AuthCallbackRoute: AuthCallbackRoute,
   DotlovableOauthConsentRoute: DotlovableOauthConsentRoute,
   Char91DotmcpChar93InvokeToolToolRoute: Char91DotmcpChar93InvokeToolToolRoute,
-  ApiPublicEmailOauthCallbackRoute: ApiPublicEmailOauthCallbackRoute,
   ApiPublicUazapiWebhookRoute: ApiPublicUazapiWebhookRoute,
   OauthGoogleReturnRoute: OauthGoogleReturnRoute,
 }
