@@ -80,7 +80,15 @@ function AdminLayout() {
 
   const menuItems = [
     { label: "Chat", icon: MessageSquare, href: "/admin/chat" },
-    { label: "Envios Massivos", icon: Megaphone, href: "/admin/envios-massivos" },
+    { 
+      label: "Envios Massivos", 
+      icon: Megaphone, 
+      children: [
+        { label: "Criar novo", href: "/admin/envios-massivos", query: { wizard: "true" } },
+        { label: "Envios", href: "/admin/envios-massivos" },
+        { label: "Modelos", href: "/admin/envios-massivos/modelos" },
+      ]
+    },
     { label: "Dashboard", icon: LayoutDashboard, href: "/admin", activeOptions: { exact: true } },
     { label: "Check-in", icon: CheckSquare, href: "/admin/checkin-monitor" },
 

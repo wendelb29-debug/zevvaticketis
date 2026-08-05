@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { 
   Megaphone, 
@@ -20,11 +20,17 @@ import { NewCampaignWizard } from "@/components/admin/campaigns/NewCampaignWizar
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/admin/envios-massivos")({
+  validateSearch: (search: Record<string, unknown>) => {
+    return {
+      wizard: (search.wizard as string) === "true",
+    };
+  },
   component: EnviosMassivosPage,
 });
 
 function EnviosMassivosPage() {
-  const [isWizardOpen, setIsWizardOpen] = useState(false);
+  const { wizard } = Route.useSearch();
+  const [isWizardOpen, setIsWizardOpen] = useState(wizard);
 
   return (
     <div className="p-8 max-w-7xl mx-auto space-y-8 animate-in fade-in duration-500">
