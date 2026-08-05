@@ -130,21 +130,21 @@ function AdminChatPage() {
           <div className="flex items-center gap-4">
             <Link 
               to="/admin" 
-              className="p-2 hover:bg-surface-2 rounded-xl transition-colors text-navy group"
+              className="p-2 hover:bg-accent rounded-xl transition-colors text-foreground group"
               title="Voltar para o Admin"
             >
-              <Home className="w-5 h-5 group-hover:text-coral transition-colors" />
+              <Home className="w-5 h-5 group-hover:text-primary transition-colors" />
             </Link>
-            <span className="font-black text-lg tracking-tighter text-coral italic">
-              zevva.<span className="text-navy">chat</span>
+            <span className="font-black text-lg tracking-tighter text-primary italic">
+              zevva.<span className="text-foreground">chat</span>
             </span>
           </div>
           <div className="flex items-center gap-4">
-            <button className="text-navy/40 hover:text-navy transition-colors">
+            <button className="text-muted-fg hover:text-foreground transition-colors">
               <HistoryIcon className="w-5 h-5" />
             </button>
-            <div className="flex items-center gap-2 px-3 py-1.5 bg-surface-2 rounded-full text-[10px] font-black uppercase tracking-wider text-navy/60 border border-line">
-              <PeopleIcon className="w-3 h-3 text-coral" /> Atendimentos
+            <div className="flex items-center gap-2 px-3 py-1.5 bg-accent rounded-full text-[10px] font-black uppercase tracking-wider text-muted-fg border border-border">
+              <PeopleIcon className="w-3 h-3 text-primary" /> Atendimentos
             </div>
           </div>
         </div>
