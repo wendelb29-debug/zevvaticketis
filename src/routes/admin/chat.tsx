@@ -704,15 +704,15 @@ function AdminChatPage() {
 
                           <DropdownMenu>
                             <DropdownMenuTrigger asChild>
-                              <div className="flex items-center justify-between px-3 py-2.5 cursor-pointer hover:bg-coral/5 dark:hover:bg-white/5 rounded-md">
-                                <div className="flex items-center gap-3">
-                                  <Globe className="w-4 h-4 text-blue-400" />
-                                  <span className="text-xs font-medium dark:text-white/80">Traduzir</span>
-                                </div>
-                                <ChevronRight className="w-3 h-3 text-gray-400" />
-                              </div>
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent side="right" className="bg-white dark:bg-[#1C1F28] border-line dark:border-white/10 p-1 shadow-xl">
+                               <div className="flex items-center justify-between px-3 py-2.5 cursor-pointer hover:bg-accent rounded-md">
+                                 <div className="flex items-center gap-3">
+                                   <Globe className="w-4 h-4 text-blue-400" />
+                                   <span className="text-xs font-medium text-foreground">Traduzir</span>
+                                 </div>
+                                 <ChevronRight className="w-3 h-3 text-muted-foreground" />
+                               </div>
+                             </DropdownMenuTrigger>
+                             <DropdownMenuContent side="right" className="bg-popover border border-border p-1 shadow-xl">
                               {[
                                 { label: 'Para Inglês', flag: '🇺🇸' },
                                 { label: 'Para Português', flag: '🇧🇷' },
