@@ -20,14 +20,12 @@ import { NewCampaignWizard } from "@/components/admin/campaigns/NewCampaignWizar
 import { cn } from "@/lib/utils";
 import { z } from "zod";
 
-const searchSchema = z.object({
-  wizard: z.boolean().optional(),
-});
-
-type EnviosMassivosSearch = z.infer<typeof searchSchema>;
-
 export const Route = createFileRoute("/admin/envios-massivos")({
-  validateSearch: (search) => searchSchema.parse(search),
+  validateSearch: (search: Record<string, unknown>) => {
+    const raw = search["wizard"];
+    const wizard = raw === true || raw === "true" || raw === '"true"';
+    return wizard ? { wizard: true } : {};
+  },
   component: EnviosMassivosPage,
 });
 
