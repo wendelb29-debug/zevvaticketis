@@ -121,6 +121,45 @@ export type Database = {
         }
         Relationships: []
       }
+      email_accounts: {
+        Row: {
+          created_at: string | null
+          display_name: string | null
+          email_address: string | null
+          id: string
+          last_synced_at: string | null
+          oauth_tokens: Json | null
+          provider: string | null
+          status: string | null
+          status_message: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          display_name?: string | null
+          email_address?: string | null
+          id?: string
+          last_synced_at?: string | null
+          oauth_tokens?: Json | null
+          provider?: string | null
+          status?: string | null
+          status_message?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          display_name?: string | null
+          email_address?: string | null
+          id?: string
+          last_synced_at?: string | null
+          oauth_tokens?: Json | null
+          provider?: string | null
+          status?: string | null
+          status_message?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       email_logs: {
         Row: {
           assunto: string
@@ -150,6 +189,80 @@ export type Database = {
           tipo?: string
         }
         Relationships: []
+      }
+      email_messages: {
+        Row: {
+          account_id: string
+          attachments: Json | null
+          body_html: string | null
+          body_text: string | null
+          cc_emails: Json | null
+          created_at: string | null
+          folder: string | null
+          from_email: string | null
+          from_name: string | null
+          has_attachments: boolean | null
+          id: string
+          is_read: boolean | null
+          is_starred: boolean | null
+          provider_msg_id: string | null
+          received_at: string | null
+          snippet: string | null
+          subject: string | null
+          thread_id: string | null
+          to_emails: Json | null
+        }
+        Insert: {
+          account_id: string
+          attachments?: Json | null
+          body_html?: string | null
+          body_text?: string | null
+          cc_emails?: Json | null
+          created_at?: string | null
+          folder?: string | null
+          from_email?: string | null
+          from_name?: string | null
+          has_attachments?: boolean | null
+          id?: string
+          is_read?: boolean | null
+          is_starred?: boolean | null
+          provider_msg_id?: string | null
+          received_at?: string | null
+          snippet?: string | null
+          subject?: string | null
+          thread_id?: string | null
+          to_emails?: Json | null
+        }
+        Update: {
+          account_id?: string
+          attachments?: Json | null
+          body_html?: string | null
+          body_text?: string | null
+          cc_emails?: Json | null
+          created_at?: string | null
+          folder?: string | null
+          from_email?: string | null
+          from_name?: string | null
+          has_attachments?: boolean | null
+          id?: string
+          is_read?: boolean | null
+          is_starred?: boolean | null
+          provider_msg_id?: string | null
+          received_at?: string | null
+          snippet?: string | null
+          subject?: string | null
+          thread_id?: string | null
+          to_emails?: Json | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "email_messages_account_id_fkey"
+            columns: ["account_id"]
+            isOneToOne: false
+            referencedRelation: "email_accounts"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       event_favorites: {
         Row: {
