@@ -440,11 +440,51 @@ function AdminChatPage() {
                   <div>
                     <div className="flex items-center gap-2">
                       <h2 className="font-bold text-[#171717] dark:text-white/90 text-[15px] tracking-tight leading-none">João Silva</h2>
-                      <button className="p-1 hover:bg-[#FAFAFA] rounded-md transition-colors">
-                        <Tag className="w-3.5 h-3.5 text-coral" />
-                      </button>
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <button className="p-1 hover:bg-coral/10 dark:hover:bg-white/5 rounded-md transition-colors group">
+                            <Tag className="w-3.5 h-3.5 text-coral group-hover:scale-110 transition-transform" />
+                          </button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="start" className="w-[280px] bg-white dark:bg-[#1C1F28] border-line dark:border-white/10 p-2 shadow-2xl">
+                          <DropdownMenuLabel className="text-[10px] font-black text-gray-400 uppercase tracking-widest px-2 py-2">Gerenciar Tags</DropdownMenuLabel>
+                          <div className="px-2 pb-2">
+                            <div className="relative">
+                              <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-500" />
+                              <Input 
+                                placeholder="Buscar ou criar tag..." 
+                                className="h-9 pl-8 text-xs bg-surface-2 dark:bg-[#0F1117] border-none"
+                              />
+                            </div>
+                          </div>
+                          <DropdownMenuSeparator className="bg-line dark:bg-white/5" />
+                          <div className="max-h-[200px] overflow-y-auto py-1">
+                            {[
+                              { label: 'Analisar', color: 'bg-red-500' },
+                              { label: 'Cotação', color: 'bg-cyan-400' },
+                              { label: 'Em Negociação', color: 'bg-amber-500' },
+                              { label: 'Insatisfeito', color: 'bg-orange-500' },
+                              { label: 'Resgate', color: 'bg-blue-500' },
+                              { label: 'Venda', color: 'bg-green-500' },
+                            ].map((tag) => (
+                              <DropdownMenuItem key={tag.label} className="flex items-center justify-between px-2 py-2 cursor-pointer hover:bg-coral/5 dark:hover:bg-white/5 rounded-md group">
+                                <div className="flex items-center gap-3">
+                                  <div className={cn("w-2 h-2 rounded-full", tag.color)} />
+                                  <span className="text-xs font-medium dark:text-white/80">{tag.label}</span>
+                                </div>
+                                <div className="w-4 h-4 border border-line dark:border-white/20 rounded group-hover:border-coral transition-colors" />
+                              </DropdownMenuItem>
+                            ))}
+                          </div>
+                          <DropdownMenuSeparator className="bg-line dark:bg-white/5" />
+                          <button className="w-full flex items-center gap-2 px-2 py-2 text-[11px] font-bold text-coral hover:bg-coral/5 rounded-md transition-colors mt-1">
+                            <Plus className="w-3.5 h-3.5" />
+                            CRIAR NOVA TAG
+                          </button>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
                     </div>
-                    <div className="flex items-center gap-2 mt-1.5 text-[10px] font-medium text-[#667085] uppercase tracking-wider">
+                    <div className="flex items-center gap-2 mt-1.5 text-[10px] font-medium text-[#667085] dark:text-white/40 uppercase tracking-wider">
                       <span className="text-[#315DA8] dark:text-[#5289e9] font-bold">+55 34 99999-9999</span>
                       <span>•</span>
                       <span>Prot: 20240804-001</span>
