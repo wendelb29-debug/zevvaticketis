@@ -17,6 +17,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
 import { TeamManagement } from "@/components/admin/TeamManagement";
+import { AuditoriaPanel } from "@/components/admin/AuditoriaPanel";
 import { useQuery } from "@tanstack/react-query";
 
 
