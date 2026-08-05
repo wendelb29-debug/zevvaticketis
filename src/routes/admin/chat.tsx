@@ -895,7 +895,7 @@ function AdminChatPage() {
             </div>
           </div>
           <div className="py-4">
-             <div className="bg-[#315DA8]/20 border border-[#315DA8]/30 rounded-lg p-3 text-center text-[11px] text-[#315DA8] font-medium">
+             <div className="bg-primary/10 border border-primary/20 rounded-lg p-3 text-center text-[11px] text-primary font-medium">
                Selecione um projeto para selecionar os canais (não é necessário selecionar um canal para filtrar)
              </div>
           </div>
