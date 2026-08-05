@@ -45,6 +45,7 @@ import { Route as ProdutorNovoEventoRouteImport } from './routes/produtor/novo-e
 import { Route as ProdutorSuporteRouteImport } from './routes/produtor/suporte'
 import { Route as DotlovableOauthConsentRouteImport } from './routes/[.]lovable.oauth.consent'
 import { Route as Char91DotmcpChar93InvokeToolToolRouteImport } from './routes/[.mcp]/invoke-tool/$tool'
+import { Route as ApiPublicEmailOauthCallbackRouteImport } from './routes/api/public/email-oauth-callback'
 import { Route as ApiPublicUazapiWebhookRouteImport } from './routes/api/public/uazapi-webhook'
 
 const IndexRoute = IndexRouteImport.update({
@@ -230,6 +231,12 @@ const Char91DotmcpChar93InvokeToolToolRoute =
     path: '/.mcp/invoke-tool/$tool',
     getParentRoute: () => rootRouteImport,
   } as any)
+const ApiPublicEmailOauthCallbackRoute =
+  ApiPublicEmailOauthCallbackRouteImport.update({
+    id: '/api/public/email-oauth-callback',
+    path: '/api/public/email-oauth-callback',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const ApiPublicUazapiWebhookRoute = ApiPublicUazapiWebhookRouteImport.update({
   id: '/api/public/uazapi-webhook',
   path: '/api/public/uazapi-webhook',
@@ -273,6 +280,7 @@ export interface FileRoutesByFullPath {
   '/produtor/': typeof ProdutorIndexRoute
   '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
+  '/api/public/email-oauth-callback': typeof ApiPublicEmailOauthCallbackRoute
   '/api/public/uazapi-webhook': typeof ApiPublicUazapiWebhookRoute
 }
 export interface FileRoutesByTo {
@@ -310,6 +318,7 @@ export interface FileRoutesByTo {
   '/produtor': typeof ProdutorIndexRoute
   '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
+  '/api/public/email-oauth-callback': typeof ApiPublicEmailOauthCallbackRoute
   '/api/public/uazapi-webhook': typeof ApiPublicUazapiWebhookRoute
 }
 export interface FileRoutesById {
@@ -350,6 +359,7 @@ export interface FileRoutesById {
   '/produtor/': typeof ProdutorIndexRoute
   '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
+  '/api/public/email-oauth-callback': typeof ApiPublicEmailOauthCallbackRoute
   '/api/public/uazapi-webhook': typeof ApiPublicUazapiWebhookRoute
 }
 export interface FileRouteTypes {
@@ -391,6 +401,7 @@ export interface FileRouteTypes {
     | '/produtor/'
     | '/.lovable/oauth/consent'
     | '/.mcp/invoke-tool/$tool'
+    | '/api/public/email-oauth-callback'
     | '/api/public/uazapi-webhook'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -428,6 +439,7 @@ export interface FileRouteTypes {
     | '/produtor'
     | '/.lovable/oauth/consent'
     | '/.mcp/invoke-tool/$tool'
+    | '/api/public/email-oauth-callback'
     | '/api/public/uazapi-webhook'
   id:
     | '__root__'
@@ -467,6 +479,7 @@ export interface FileRouteTypes {
     | '/produtor/'
     | '/.lovable/oauth/consent'
     | '/.mcp/invoke-tool/$tool'
+    | '/api/public/email-oauth-callback'
     | '/api/public/uazapi-webhook'
   fileRoutesById: FileRoutesById
 }
@@ -487,6 +500,7 @@ export interface RootRouteChildren {
   AuthCallbackRoute: typeof AuthCallbackRoute
   DotlovableOauthConsentRoute: typeof DotlovableOauthConsentRoute
   Char91DotmcpChar93InvokeToolToolRoute: typeof Char91DotmcpChar93InvokeToolToolRoute
+  ApiPublicEmailOauthCallbackRoute: typeof ApiPublicEmailOauthCallbackRoute
   ApiPublicUazapiWebhookRoute: typeof ApiPublicUazapiWebhookRoute
 }
 
@@ -744,6 +758,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof Char91DotmcpChar93InvokeToolToolRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/email-oauth-callback': {
+      id: '/api/public/email-oauth-callback'
+      path: '/api/public/email-oauth-callback'
+      fullPath: '/api/public/email-oauth-callback'
+      preLoaderRoute: typeof ApiPublicEmailOauthCallbackRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/uazapi-webhook': {
       id: '/api/public/uazapi-webhook'
       path: '/api/public/uazapi-webhook'
@@ -838,6 +859,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthCallbackRoute: AuthCallbackRoute,
   DotlovableOauthConsentRoute: DotlovableOauthConsentRoute,
   Char91DotmcpChar93InvokeToolToolRoute: Char91DotmcpChar93InvokeToolToolRoute,
+  ApiPublicEmailOauthCallbackRoute: ApiPublicEmailOauthCallbackRoute,
   ApiPublicUazapiWebhookRoute: ApiPublicUazapiWebhookRoute,
 }
 export const routeTree = rootRouteImport
