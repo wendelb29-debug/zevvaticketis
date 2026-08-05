@@ -352,7 +352,7 @@ function AdminChatPage() {
 
         {/* Modal de Pré-visualização */}
         <Dialog open={!!previewContactId} onOpenChange={(open) => !open && setPreviewContactId(null)}>
-          <DialogContent className="max-w-2xl p-0 overflow-hidden border border-border bg-popover shadow-2xl">
+          <DialogContent className="max-w-2xl p-0 overflow-hidden border border-border bg-card shadow-2xl">
             <div className="flex items-center justify-between p-4 border-b border-border bg-muted/30">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold">
@@ -836,7 +836,7 @@ function AdminChatPage() {
 
       {/* Dialog: Filtros */}
       <Dialog open={isFilterDialogOpen} onOpenChange={setIsFilterDialogOpen}>
-        <DialogContent className="max-w-2xl bg-popover border-border text-foreground">
+        <DialogContent className="max-w-2xl bg-card border-border text-foreground">
           <DialogHeader>
             <DialogTitle className="text-xl font-bold">Filtros</DialogTitle>
             <DialogDescription className="text-muted-foreground">Selecione os filtros que deseja aplicar aos tickets.</DialogDescription>
@@ -930,7 +930,7 @@ function AdminChatPage() {
 
       {/* Dialog: Histórico de Conversas */}
       <Dialog open={isHistoryDialogOpen} onOpenChange={setIsHistoryDialogOpen}>
-        <DialogContent className="max-w-2xl bg-popover border-border text-foreground">
+        <DialogContent className="max-w-2xl bg-card border-border text-foreground">
           <DialogHeader>
             <DialogTitle className="text-xl font-bold">Histórico de conversas</DialogTitle>
           </DialogHeader>
@@ -988,7 +988,7 @@ function AdminChatPage() {
 
       {/* Dialog: Iniciar Atendimento Ativo */}
       <Dialog open={isActiveTicketDialogOpen} onOpenChange={setIsActiveTicketDialogOpen}>
-        <DialogContent className="max-w-2xl bg-popover border-border text-foreground">
+        <DialogContent className="max-w-2xl bg-card border-border text-foreground">
           <DialogHeader>
             <DialogTitle className="text-xl font-bold">Iniciar Atendimento Ativo</DialogTitle>
             <DialogDescription className="text-muted-foreground">Escolha um cliente para iniciar um novo atendimento ativo</DialogDescription>
@@ -1048,13 +1048,17 @@ function AdminChatPage() {
 
       {/* Dialog: Finalizar Atendimento */}
       <Dialog open={isFinishDialogOpen} onOpenChange={setIsFinishDialogOpen}>
-        <DialogContent className="max-w-2xl bg-popover border-border text-foreground">
-          <DialogHeader>
-            <div className="flex items-center gap-3">
+        <DialogContent className="max-w-2xl bg-card border-border text-foreground shadow-2xl">
+          <DialogHeader className="space-y-4">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <DialogTitle className="text-xl font-bold">Finalizar atendimento</DialogTitle>
-              <Badge variant="outline" className="bg-muted border-none text-muted-foreground text-[10px] px-2 py-0">20240804-001</Badge>
+              <Badge variant="outline" className="bg-muted border-border text-muted-foreground text-[10px] px-3 py-1 font-mono w-fit">
+                20240804-001
+              </Badge>
             </div>
-            <DialogDescription className="text-muted-foreground">Ao finalizar este atendimento, o ticket será fechado e não poderá ser reaberto.</DialogDescription>
+            <DialogDescription className="text-muted-foreground text-left">
+              Ao finalizar este atendimento, o ticket será fechado e não poderá ser reaberto.
+            </DialogDescription>
           </DialogHeader>
           <div className="py-4 space-y-6">
             <div className="bg-primary/10 border border-primary/20 rounded-lg p-3 flex items-center gap-3 text-[11px] text-primary font-medium">
@@ -1099,7 +1103,7 @@ function AdminChatPage() {
 
       {/* Dialog: Transferir Atendimento */}
       <Dialog open={isTransferDialogOpen} onOpenChange={setIsTransferDialogOpen}>
-        <DialogContent className="max-w-2xl bg-popover border-border text-foreground">
+        <DialogContent className="max-w-2xl bg-card border-border text-foreground">
           <DialogHeader>
             <div className="flex items-center gap-3">
               <DialogTitle className="text-xl font-bold">Transferir atendimento</DialogTitle>
