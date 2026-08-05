@@ -27,7 +27,7 @@ const searchSchema = z.object({
 type EnviosMassivosSearch = z.infer<typeof searchSchema>;
 
 export const Route = createFileRoute("/admin/envios-massivos")({
-  validateSearch: (search) => searchSchema.parse(search),
+  validateSearch: (search: Record<string, unknown>) => searchSchema.parse(search),
   component: EnviosMassivosPage,
 });
 
@@ -46,9 +46,9 @@ function EnviosMassivosPage() {
   const handleOpenWizard = (open: boolean) => {
     setIsWizardOpen(open);
     if (!open) {
-      navigate({ search: (prev: any) => ({ ...prev, wizard: undefined }) });
+      navigate({ search: { wizard: undefined } });
     } else {
-      navigate({ search: (prev: any) => ({ ...prev, wizard: true }) });
+      navigate({ search: { wizard: true } });
     }
   };
 
