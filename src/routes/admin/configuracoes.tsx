@@ -125,8 +125,214 @@ const AtendimentoAccordion = () => (
       </AccordionContent>
     </AccordionItem>
 
+    <AccordionItem value="deptos" className="bg-white rounded-2xl border border-line p-0 overflow-hidden shadow-sm">
+      <AccordionTrigger className="px-6 py-5 hover:no-underline group text-left">
+        <div className="flex items-center gap-3 text-left">
+          <Layers className="w-5 h-5 text-coral" />
+          <ConfigItemHeader 
+            title="Gerenciar Departamentos" 
+            description="Defina as regras de distribuição de protocolos para seu departamento" 
+          />
+        </div>
+      </AccordionTrigger>
+      <AccordionContent className="px-6 pb-6 pt-2 border-t border-line/50">
+        <div className="space-y-6 pt-4">
+          <div className="flex items-center justify-between">
+            <h3 className="text-lg font-bold text-navy">Gerenciar departamentos</h3>
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button className="bg-[#FFF8E6] text-[#D9A94D] hover:bg-[#FFF8E6]/80 border border-[#D9A94D]/20 gap-2 rounded-xl h-11 px-6">
+                  <Plus className="w-4 h-4" /> Criar departamento
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="max-w-2xl max-h-[90vh] flex flex-col p-0 overflow-hidden">
+                <DialogHeader className="px-6 py-4 border-b">
+                  <DialogTitle className="text-xl font-bold">Criar departamento</DialogTitle>
+                  <p className="text-sm text-navy/40">Crie departamentos para organizar e distribuir os atendimentos</p>
+                </DialogHeader>
+                <ScrollArea className="flex-1 px-6 py-6">
+                  <div className="space-y-8">
+                    <div className="space-y-2">
+                      <Label className="text-sm font-bold">Nome <span className="text-coral">*</span></Label>
+                      <Input placeholder="Insira o nome" className="rounded-xl border-line" />
+                    </div>
+
+                    <div className="space-y-4">
+                      <div className="flex items-center gap-2">
+                        <Label className="text-sm font-bold">Atendentes</Label>
+                        <Info className="w-3.5 h-3.5 text-navy/30" />
+                      </div>
+                      <div className="border border-line rounded-xl overflow-hidden">
+                        <div className="p-3 bg-surface-2 border-b border-line flex items-center gap-2">
+                          <Search className="w-4 h-4 text-navy/30" />
+                          <input className="bg-transparent border-none outline-none text-xs flex-1" placeholder="Buscar..." />
+                        </div>
+                        <div className="max-h-48 overflow-y-auto p-2 space-y-1">
+                          {[
+                            { name: "Eduardo Lima", email: "edulima27.eh@gmail.com" },
+                            { name: "Elaine Ramos", email: "elainereaparecidaramossouza@gmail.com" },
+                            { name: "Elias Silva", email: "eliascomercialsavecar@gmail.com" },
+                            { name: "Evely Azevedo Rocha", email: "evelyrocha.savecar@gmail.com" }
+                          ].map(user => (
+                            <div key={user.email} className="flex items-center gap-3 p-2 hover:bg-surface-2 rounded-lg transition-colors">
+                              <Checkbox id={user.email} />
+                              <Label htmlFor={user.email} className="text-xs font-medium cursor-pointer">
+                                {user.name} <span className="text-navy/40">({user.email})</span>
+                              </Label>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="space-y-4">
+                      <div className="flex items-center gap-2">
+                        <Label className="text-sm font-bold">Tags</Label>
+                        <Info className="w-3.5 h-3.5 text-navy/30" />
+                      </div>
+                      <div className="border border-line rounded-xl overflow-hidden">
+                        <div className="p-3 bg-surface-2 border-b border-line flex items-center gap-2">
+                          <Search className="w-4 h-4 text-navy/30" />
+                          <input className="bg-transparent border-none outline-none text-xs flex-1" placeholder="Buscar..." />
+                        </div>
+                        <div className="max-h-48 overflow-y-auto p-2 space-y-1">
+                          {["Analisar", "Boleto", "Cotação", "Em Negociação", "Insatisfeito"].map(tag => (
+                            <div key={tag} className="flex items-center gap-3 p-2 hover:bg-surface-2 rounded-lg transition-colors">
+                              <Checkbox id={`tag-${tag}`} />
+                              <Label htmlFor={`tag-${tag}`} className="text-xs font-medium cursor-pointer">{tag}</Label>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="space-y-4 pb-4">
+                      <Label className="text-sm font-bold">Templates</Label>
+                      <div className="border border-line rounded-xl overflow-hidden">
+                        <div className="p-3 bg-surface-2 border-b border-line flex items-center gap-2">
+                          <Search className="w-4 h-4 text-navy/30" />
+                          <input className="bg-transparent border-none outline-none text-xs flex-1" placeholder="Buscar..." />
+                        </div>
+                        <div className="max-h-48 overflow-y-auto p-2 space-y-1">
+                          {["Boa Tarde, Reativar", "Bom Dia, Reativar", "Disparo_Ativo_16_Energia_Com_Selo", "Finalizar Ativo"].map(temp => (
+                            <div key={temp} className="flex items-center gap-3 p-2 hover:bg-surface-2 rounded-lg transition-colors">
+                              <Checkbox id={`temp-${temp}`} />
+                              <Label htmlFor={`temp-${temp}`} className="text-xs font-medium cursor-pointer">{temp}</Label>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </ScrollArea>
+                <DialogFooter className="px-6 py-4 border-t bg-surface-2 flex items-center justify-between sm:justify-between w-full">
+                  <Button variant="ghost" className="text-navy/60 font-bold hover:bg-transparent">Cancelar</Button>
+                  <Button className="bg-transparent text-navy/20 font-bold hover:bg-transparent" disabled>Salvar</Button>
+                </DialogFooter>
+              </DialogContent>
+            </Dialog>
+          </div>
+
+          <div className="flex flex-col md:flex-row gap-4">
+            <div className="space-y-1.5 flex-1 max-w-xs">
+              <Label className="text-[10px] font-black uppercase tracking-wider text-navy/30 px-1">Pesquisar</Label>
+              <div className="relative">
+                <Input placeholder="11 registros" className="rounded-xl border-line h-11 bg-white pl-4 text-sm font-medium" />
+              </div>
+            </div>
+            <div className="space-y-1.5 flex-1 max-w-xs">
+              <Label className="text-[10px] font-black uppercase tracking-wider text-navy/30 px-1">Atendentes</Label>
+              <Select defaultValue="todos">
+                <SelectTrigger className="h-11 rounded-xl border-line bg-white text-sm font-medium">
+                  <SelectValue placeholder="Todos" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="todos">Todos</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="ml-auto flex items-end gap-3 pb-0.5">
+              <Button variant="ghost" size="icon" className="text-navy/30 hover:text-coral h-11 w-11 transition-colors">
+                <RefreshCcw className="w-4 h-4" />
+              </Button>
+              <div className="flex items-center gap-2">
+                <span className="text-xs font-bold text-navy/40">Mostrar</span>
+                <Select defaultValue="10">
+                  <SelectTrigger className="w-20 h-11 rounded-xl border-line bg-white text-sm font-bold">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="10">10</SelectItem>
+                    <SelectItem value="25">25</SelectItem>
+                    <SelectItem value="50">50</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+          </div>
+
+          <div className="border border-line rounded-2xl overflow-hidden bg-white">
+            <Table>
+              <TableHeader className="bg-surface-2">
+                <TableRow className="hover:bg-transparent border-line">
+                  <TableHead className="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-navy/30">Nome</TableHead>
+                  <TableHead className="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-navy/30">Atendentes</TableHead>
+                  <TableHead className="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-navy/30 text-center">Configurações</TableHead>
+                  <TableHead className="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-navy/30 text-center">Criado em</TableHead>
+                  <TableHead className="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-navy/30 text-center">Atualizado em</TableHead>
+                  <TableHead className="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-navy/30 w-[100px]"></TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {[
+                  { name: "Benefícios Ativos", agents: ["Wendel", "Gabriel Vitor", "Kamilla"], config: "Global", created: "30/07/26 10:14", updated: "30/07/26 10:14" },
+                  { name: "2 Via Boleto", agents: [], config: "Global", created: "02/04/26 17:31", updated: "02/04/26 17:31" },
+                  { name: "Adm", agents: ["Maria Júlia", "Bárbara", "Karolaynne", "Haline", "Stephanie", "+ 7"], config: "Global", created: "12/03/26 12:38", updated: "12/03/26 12:38" },
+                  { name: "Disparo Kenia", agents: [], config: "Global", created: "04/03/26 13:39", updated: "04/03/26 13:39" },
+                  { name: "Contas A Receber", agents: ["Jaqueline", "Kitielle", "Natália", "Leticia", "Laura", "Sara", "Vitoria"], config: "Global", created: "08/10/25 11:28", updated: "25/02/26 13:43" },
+                  { name: "Sdr", agents: ["Thayane", "Daiane", "Mayck"], config: "Personalizado", created: "08/10/25 11:28", updated: "11/12/25 15:31" },
+                ].map((depto, idx) => (
+                  <TableRow key={idx} className="border-line group hover:bg-surface-2/50 transition-colors">
+                    <TableCell className="px-6 py-5 font-bold text-navy text-sm">{depto.name}</TableCell>
+                    <TableCell className="px-6 py-5">
+                      <div className="flex flex-wrap gap-1.5">
+                        {depto.agents.map((agent, aIdx) => (
+                          <Badge key={aIdx} variant="outline" className="bg-white border-line text-[10px] py-0.5 font-medium text-navy/60 rounded-lg">
+                            {agent}
+                          </Badge>
+                        ))}
+                      </div>
+                    </TableCell>
+                    <TableCell className="px-6 py-5 text-center">
+                      <span className={cn(
+                        "text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full",
+                        depto.config === "Global" ? "text-navy/40" : "bg-[#EDF2FF] text-[#4A6BF3]"
+                      )}>
+                        {depto.config}
+                      </span>
+                    </TableCell>
+                    <TableCell className="px-6 py-5 text-center text-navy/40 text-xs font-medium">{depto.created}</TableCell>
+                    <TableCell className="px-6 py-5 text-center text-navy/40 text-xs font-medium">{depto.updated}</TableCell>
+                    <TableCell className="px-6 py-5">
+                      <div className="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <Button variant="ghost" size="icon" className="h-8 w-8 text-navy/30 hover:text-navy transition-colors">
+                          <Pencil className="w-3.5 h-3.5" />
+                        </Button>
+                        <Button variant="ghost" size="icon" className="h-8 w-8 text-navy/30 hover:text-coral transition-colors">
+                          <Trash2 className="w-3.5 h-3.5" />
+                        </Button>
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
+        </div>
+      </AccordionContent>
+    </AccordionItem>
+
     {[
-      { id: "deptos", icon: Layers, title: "Gerenciar Departamentos", desc: "CRUD de departamentos e atendentes vinculados." },
       { id: "classificacoes", icon: Briefcase, title: "Gerenciar Classificações", desc: "Categorização vinculada a departamentos." },
       { id: "tags", icon: Tag, title: "Gerenciar Tags", desc: "Etiquetas globais e por departamento." },
       { id: "gatilhos", icon: Zap, title: "Gatilhos de Atendimento", desc: "Automações baseadas em fluxos." },
@@ -134,8 +340,8 @@ const AtendimentoAccordion = () => (
       { id: "feriados", icon: CalendarDays, title: "Feriados e Datas Especiais", desc: "Mensagens para datas não úteis." }
     ].map((item) => (
       <AccordionItem key={item.id} value={item.id} className="bg-white rounded-2xl border border-line p-0 overflow-hidden shadow-sm">
-        <AccordionTrigger className="px-6 py-5 hover:no-underline group">
-          <div className="flex items-center gap-3">
+        <AccordionTrigger className="px-6 py-5 hover:no-underline group text-left">
+          <div className="flex items-center gap-3 text-left">
             <item.icon className="w-5 h-5 text-coral" />
             <ConfigItemHeader title={item.title} description={item.desc} />
           </div>
