@@ -74,7 +74,7 @@ function AprovacoesPage() {
                 </td>
                 <td className="px-6 py-4 text-sm font-medium">{org.documento || "---"}</td>
                 <td className="px-6 py-4 text-sm font-medium">{org.countries?.nome || "---"}</td>
-                <td className="px-6 py-4 text-sm text-muted">
+                <td className="px-6 py-4 text-sm text-muted-fg">
                   {new Date(org.created_at).toLocaleDateString()}
                 </td>
                 <td className="px-6 py-4 text-right">
