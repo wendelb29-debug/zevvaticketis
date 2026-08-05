@@ -82,7 +82,7 @@ export const sendEmail = createServerFn({ method: "POST" })
     // Guardar en email_messages folder='sent'
     await supabase.from('email_messages').insert({
       account_id: data.accountId,
-      from_email: account?.email_address,
+      from_email: account?.email_address || '',
       to_emails: [data.to],
       subject: data.subject,
       body_text: data.content,

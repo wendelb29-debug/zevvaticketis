@@ -197,7 +197,7 @@ function AdminEmailsPage() {
                       {msg.from_name || msg.from_email}
                     </span>
                     <span className="text-[10px] text-navy/40 font-inter">
-                      {format(new Date(msg.received_at), 'dd MMM', { locale: ptBR })}
+                      {msg.received_at ? format(new Date(msg.received_at), 'dd MMM', { locale: ptBR }) : ''}
                     </span>
                   </div>
                   <h4 className={cn("text-xs truncate mb-1", !msg.is_read ? "font-extrabold text-navy" : "font-medium text-navy/70")}>
@@ -241,7 +241,7 @@ function AdminEmailsPage() {
                       <div className="flex items-baseline justify-between">
                         <h3 className="font-extrabold text-navy">{selectedMessage.from_name}</h3>
                         <span className="text-xs text-navy/40 font-inter">
-                          {format(new Date(selectedMessage.received_at), "eeee, d 'de' MMMM 'às' HH:mm", { locale: ptBR })}
+                          {selectedMessage.received_at ? format(new Date(selectedMessage.received_at), "eeee, d 'de' MMMM 'às' HH:mm", { locale: ptBR }) : ''}
                         </span>
                       </div>
                       <p className="text-xs text-navy/50 font-inter">&lt;{selectedMessage.from_email}&gt;</p>
