@@ -822,6 +822,7 @@ const AtendimentoAccordion = () => (
         <AccordionContent className="px-6 pb-6 pt-2 border-t border-line/50">
           <div className="space-y-12 pt-6">
 
+
             {/* Parâmetros de inatividade do cliente */}
             <div className="space-y-6">
               <div className="flex items-center justify-between">
