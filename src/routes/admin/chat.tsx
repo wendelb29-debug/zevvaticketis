@@ -68,6 +68,7 @@ function AdminChatPage() {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [fileType, setFileType] = useState<string | null>(null);
   const [aiAssistantEnabled, setAiAssistantEnabled] = useState(false);
+  const { theme, setTheme } = useUI();
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
