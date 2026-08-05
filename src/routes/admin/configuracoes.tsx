@@ -46,7 +46,173 @@ function AuthGuard() {
   return <SettingsPage />;
 }
 
+type Dept = { id: string; name: string; members: number };
+
+function OptionRadio({
+  label, hint, selected, onSelect,
+}: { label: string; hint?: string; selected: boolean; onSelect: () => void }) {
+  return (
+    <button
+      type="button"
+      onClick={onSelect}
+      title={hint}
+      className={cn(
+        "w-full flex items-center gap-3 rounded-xl border px-4 py-3 text-left transition-all",
+        selected
+          ? "border-primary bg-primary/10 ring-1 ring-primary/40"
+          : "border-border bg-background hover:border-primary/40"
+      )}
+    >
+      <span className={cn(
+        "w-4 h-4 rounded-full border-2 flex items-center justify-center shrink-0",
+        selected ? "border-primary" : "border-muted-fg"
+      )}>
+        {selected && <span className="w-2 h-2 rounded-full bg-primary" />}
+      </span>
+      <span className="text-sm font-bold">{label}</span>
+    </button>
+  );
+}
+
+function DistribuicaoConversas({ departments }: { departments: Dept[] }) {
+  const [modoEntrega, setModoEntrega] = useState("automatica");
+  const [tipoDistribuicao, setTipoDistribuicao] = useState("circular");
+  const [porCiclo, setPorCiclo] = useState("10");
+  const [ultimoAtendente, setUltimoAtendente] = useState(true);
+  const [tentativas, setTentativas] = useState("1");
+  const [limitarReceptivos, setLimitarReceptivos] = useState(true);
+  const [maxReceptivos, setMaxReceptivos] = useState("10");
+  const [limitarAtivos, setLimitarAtivos] = useState(false);
+  const [maxAtivos, setMaxAtivos] = useState("0");
+  const [porFila, setPorFila] = useState(true);
+  const [filaLimites, setFilaLimites] = useState<Record<string, string>>(
+    Object.fromEntries(departments.map((d) => [d.id, "5"]))
+  );
+
+  return (
+    <div className="space-y-6">
+      <div className="rounded-xl border border-border bg-background/50 p-5 space-y-5">
+        <div className="flex items-start gap-3">
+          <Workflow className="w-5 h-5 text-primary mt-0.5" />
+          <div>
+            <p className="font-bold">Distribuição de conversas</p>
+            <p className="text-xs text-muted-fg">Como as conversas são entregues e distribuídas entre os agentes.</p>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-5">
+          <div className="space-y-2">
+            <Label className="text-[11px] font-bold tracking-wider text-muted-fg uppercase">Modo de entrega de conversas</Label>
+            <OptionRadio label="Forçar aceitação automática" selected={modoEntrega === "automatica"} onSelect={() => setModoEntrega("automatica")} />
+            <OptionRadio label="Permitir aceite/recusa" selected={modoEntrega === "aceite"} onSelect={() => setModoEntrega("aceite")} />
+          </div>
+
+          <div className="space-y-2">
+            <Label className="text-[11px] font-bold tracking-wider text-muted-fg uppercase">Tipo de distribuição por usuário</Label>
+            <OptionRadio label="Circular" selected={tipoDistribuicao === "circular"} onSelect={() => setTipoDistribuicao("circular")} />
+            <OptionRadio label="Igualitária" selected={tipoDistribuicao === "igualitaria"} onSelect={() => setTipoDistribuicao("igualitaria")} />
+            <OptionRadio label="Por disponibilidade" selected={tipoDistribuicao === "disponibilidade"} onSelect={() => setTipoDistribuicao("disponibilidade")} />
+          </div>
+
+          <div className="space-y-2">
+            <Label className="text-[11px] font-bold tracking-wider text-muted-fg uppercase">Conversas por ciclo de distribuição</Label>
+            <Input type="number" value={porCiclo} onChange={(e) => setPorCiclo(e.target.value)} className="bg-background border-border" />
+            <p className="text-xs text-muted-fg">Máximo de conversas que um agente pode receber a cada ciclo. Evita sobrecarga quando há muitas conversas acumuladas no departamento.</p>
+          </div>
+
+          <div className="space-y-2">
+            <div className="flex items-center justify-between gap-2">
+              <Label className="text-[11px] font-bold tracking-wider text-muted-fg uppercase">Último atendente</Label>
+              <Switch checked={ultimoAtendente} onCheckedChange={setUltimoAtendente} />
+            </div>
+            {ultimoAtendente && (
+              <>
+                <Input type="number" value={tentativas} onChange={(e) => setTentativas(e.target.value)} className="bg-background border-border" />
+                <p className="text-xs text-muted-fg">Número de tentativas antes de distribuir normalmente.</p>
+              </>
+            )}
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="rounded-xl border border-border bg-background p-4 space-y-4">
+            <div className="flex items-start justify-between gap-4">
+              <div>
+                <p className="font-bold">Limitar conversas receptivas</p>
+                <p className="text-xs text-muted-fg">Limite de conversas que o agente pode receber por vez, distribuídas automaticamente.</p>
+              </div>
+              <Switch checked={limitarReceptivos} onCheckedChange={setLimitarReceptivos} />
+            </div>
+            {limitarReceptivos && (
+              <div className="rounded-xl border border-border p-4 space-y-2">
+                <Label className="font-bold">Máximo por agente <span className="text-primary">*</span></Label>
+                <Input type="number" value={maxReceptivos} onChange={(e) => setMaxReceptivos(e.target.value)} className="bg-background border-border max-w-[220px]" />
+              </div>
+            )}
+          </div>
+
+          <div className="rounded-xl border border-border bg-background p-4 space-y-4">
+            <div className="flex items-start justify-between gap-4">
+              <div>
+                <p className="font-bold">Limitar conversas ativas</p>
+                <p className="text-xs text-muted-fg">Número máximo de conversas ativas (iniciadas pelo agente) por agente.</p>
+              </div>
+              <Switch checked={limitarAtivos} onCheckedChange={setLimitarAtivos} />
+            </div>
+            {limitarAtivos && (
+              <div className="rounded-xl border border-border p-4 space-y-2">
+                <Label className="font-bold">Máximo por agente (0 = ilimitado) <span className="text-primary">*</span></Label>
+                <Input type="number" value={maxAtivos} onChange={(e) => setMaxAtivos(e.target.value)} className="bg-background border-border max-w-[220px]" />
+              </div>
+            )}
+          </div>
+        </div>
+
+        <div className="rounded-xl border border-border bg-background p-4 space-y-4">
+          <div className="flex items-start justify-between gap-4">
+            <div>
+              <p className="font-bold">Separar limites por fila de departamento</p>
+              <p className="text-xs text-muted-fg">Define um limite de conversas simultâneas específico para cada fila.</p>
+            </div>
+            <Switch checked={porFila} onCheckedChange={setPorFila} />
+          </div>
+          {porFila && (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              {departments.map((d) => (
+                <div key={d.id} className="flex items-center justify-between gap-3 rounded-xl border border-border p-3">
+                  <div className="flex items-center gap-3">
+                    <div className="w-9 h-9 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold">
+                      {d.name.charAt(0)}
+                    </div>
+                    <div>
+                      <p className="text-sm font-bold">{d.name}</p>
+                      <p className="text-xs text-muted-fg">{d.members} agentes na fila</p>
+                    </div>
+                  </div>
+                  <Input
+                    type="number"
+                    value={filaLimites[d.id] ?? "0"}
+                    onChange={(e) => setFilaLimites((p) => ({ ...p, [d.id]: e.target.value }))}
+                    className="bg-background border-border w-24"
+                  />
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
+        <div className="flex justify-end">
+          <Button onClick={() => toast.success("Configurações de distribuição salvas")} className="bg-primary text-primary-foreground font-bold">
+            Salvar alterações
+          </Button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function SettingsPage() {
+
   const [activeTab, setActiveTab] = useState("atendimento");
   const [isDeptModalOpen, setIsDeptModalOpen] = useState(false);
   const [isTagModalOpen, setIsTagModalOpen] = useState(false);
@@ -94,27 +260,9 @@ function SettingsPage() {
                 </div>
               </AccordionTrigger>
               <AccordionContent className="px-6 pb-6 pt-2 space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="flex items-center justify-between p-4 bg-background border border-border rounded-xl">
-                    <div className="space-y-0.5">
-                      <Label className="font-bold">Distribuição Automática</Label>
-                      <p className="text-xs text-muted-fg">Atribui tickets aos agentes disponíveis.</p>
-                    </div>
-                    <Switch defaultChecked />
-                  </div>
-                  <div className="flex items-center justify-between p-4 bg-background border border-border rounded-xl">
-                    <div className="space-y-0.5">
-                      <Label className="font-bold">Chat de Boas-vindas</Label>
-                      <p className="text-xs text-muted-fg">Ativa mensagem automática inicial.</p>
-                    </div>
-                    <Switch defaultChecked />
-                  </div>
-                </div>
-                <div className="space-y-3">
-                  <Label className="font-bold">Capacidade Máxima por Agente</Label>
-                  <Input type="number" defaultValue={5} className="bg-background border-border max-w-[200px]" />
-                </div>
+                <DistribuicaoConversas departments={departments} />
               </AccordionContent>
+
             </AccordionItem>
 
             <AccordionItem value="departamentos" className="border-border bg-card rounded-xl overflow-hidden shadow-sm border">
@@ -288,7 +436,7 @@ function SettingsPage() {
             <AccordionItem value="pref" className="border-border bg-card rounded-xl border overflow-hidden shadow-sm">
               <AccordionTrigger className="px-6 py-5 font-bold text-lg hover:no-underline hover:bg-accent/50 transition-colors">
                 <div className="flex items-center gap-3">
-                  <SlidingScale className="w-5 h-5 text-primary" /> Preferências Globais
+                  <Sliders className="w-5 h-5 text-primary" /> Preferências Globais
                 </div>
               </AccordionTrigger>
               <AccordionContent className="px-6 pb-6 pt-2">
