@@ -423,7 +423,10 @@ function AdminChatPage() {
                     Escolha uma conversa em andamento ou inicie uma nova conversa agora mesmo. Enquanto estiver online, você receberá novos atendimentos normalmente.
                   </p>
                </div>
-               <button className="px-8 py-3 bg-white border-2 border-[#FFD31A] text-[#171717] text-[14px] font-bold rounded-xl hover:bg-[#FFFBE8] transition-colors shadow-sm">
+               <button 
+                onClick={() => setIsActiveTicketDialogOpen(true)}
+                className="px-8 py-3 bg-white border-2 border-coral text-coral text-[14px] font-bold rounded-xl hover:bg-coral/5 transition-colors shadow-sm"
+              >
                  Iniciar nova conversa
                </button>
             </div>
