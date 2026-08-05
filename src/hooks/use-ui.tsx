@@ -25,7 +25,7 @@ export const useUI = create<UIStore>()(
       activeOverlay: null,
       authView: 'login',
       language: 'pt',
-      theme: 'light',
+      theme: 'system',
       fontSize: 100,
       openOverlay: (type, view = 'login') => {
         set({ activeOverlay: type, authView: view });

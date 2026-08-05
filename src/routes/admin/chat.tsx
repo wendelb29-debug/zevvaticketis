@@ -119,44 +119,44 @@ function AdminChatPage() {
   ];
 
   return (
-    <div className="flex flex-col h-screen bg-white dark:bg-[#0F1117] text-[#171717] dark:text-white/90 overflow-hidden font-inter">
+    <div className="flex flex-col h-screen bg-background text-foreground overflow-hidden font-inter">
       {/* Header Fixo */}
-      <header className="h-16 flex items-center justify-between px-6 border-b border-line dark:border-white/5 bg-white dark:bg-[#161922] shrink-0 z-10 shadow-sm">
+      <header className="h-16 flex items-center justify-between px-6 border-b border-border bg-card shrink-0 z-10 shadow-sm">
         <div className="flex items-center gap-8">
           <div className="flex items-center gap-4">
             <Link 
               to="/admin" 
-              className="p-2 hover:bg-surface-2 rounded-xl transition-colors text-navy group"
+              className="p-2 hover:bg-accent rounded-xl transition-colors text-foreground/80 group"
               title="Voltar para o Admin"
             >
-              <Home className="w-5 h-5 group-hover:text-coral transition-colors" />
+              <Home className="w-5 h-5 group-hover:text-primary transition-colors" />
             </Link>
-            <span className="font-black text-lg tracking-tighter text-coral italic">
-              zevva.<span className="text-navy">chat</span>
+            <span className="font-black text-lg tracking-tighter text-primary italic">
+              zevva.<span className="text-foreground">chat</span>
             </span>
           </div>
           <div className="flex items-center gap-4">
-            <button className="text-navy/40 hover:text-navy transition-colors">
+            <button className="text-muted-foreground hover:text-foreground transition-colors">
               <HistoryIcon className="w-5 h-5" />
             </button>
-            <div className="flex items-center gap-2 px-3 py-1.5 bg-surface-2 rounded-full text-[10px] font-black uppercase tracking-wider text-navy/60 border border-line">
-              <PeopleIcon className="w-3 h-3 text-coral" /> Atendimentos
+            <div className="flex items-center gap-2 px-3 py-1.5 bg-accent rounded-full text-[10px] font-black uppercase tracking-wider text-muted-foreground border border-border">
+              <PeopleIcon className="w-3 h-3 text-primary" /> Atendimentos
             </div>
           </div>
         </div>
         
         <div className="flex items-center gap-6">
-          <button className="relative p-2 hover:bg-surface-2 rounded-full transition-colors text-navy/60">
+          <button className="relative p-2 hover:bg-accent rounded-full transition-colors text-muted-foreground">
             <Bell className="w-5 h-5" />
-            <span className="absolute top-1.5 right-1.5 w-3 h-3 bg-coral rounded-full text-[8px] flex items-center justify-center border-2 border-white text-white font-bold">3</span>
+            <span className="absolute top-1.5 right-1.5 w-3 h-3 bg-primary rounded-full text-[8px] flex items-center justify-center border-2 border-background text-primary-foreground font-bold">3</span>
           </button>
           
-          <div className="flex items-center gap-3 pl-4 border-l border-line">
+          <div className="flex items-center gap-3 pl-4 border-l border-border">
             <div className="text-right hidden sm:block">
-              <div className="text-[10px] font-black text-navy uppercase leading-tight">Admin Zevva</div>
+              <div className="text-[10px] font-black text-foreground uppercase leading-tight">Admin Zevva</div>
               <div className={cn(
                 "text-[9px] font-black uppercase tracking-widest leading-tight",
-                agentStatus === 'online' ? "text-green-500" : agentStatus === 'busy' ? "text-amber-500" : "text-navy/40"
+                agentStatus === 'online' ? "text-green-500" : agentStatus === 'busy' ? "text-amber-500" : "text-muted-foreground"
               )}>{agentStatus}</div>
             </div>
             
@@ -179,7 +179,7 @@ function AdminChatPage() {
         <div 
           style={{ width: `${sidebarWidth}px` }}
           className={cn(
-            "border-r border-[#E5E7EB] dark:border-white/5 flex flex-col bg-white dark:bg-[#161922] shrink-0 relative",
+            "border-r border-border flex flex-col bg-card shrink-0 relative",
             !isResizing && "transition-[width] duration-150 ease-in-out"
           )}
         >
@@ -194,35 +194,35 @@ function AdminChatPage() {
               isResizing ? "bg-coral/40" : "hover:bg-coral/20"
             )}
           >
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[2px] h-8 bg-line dark:bg-white/10 group-hover:bg-coral transition-colors rounded-full" />
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[2px] h-8 bg-border group-hover:bg-primary transition-colors rounded-full" />
           </div>
 
           <div className="p-4 space-y-4">
-            <div className="flex p-1 bg-surface-2 dark:bg-[#0F1117] rounded-full border dark:border-white/5">
-              <button className="flex-1 py-1.5 text-xs font-bold bg-coral text-white rounded-full">Em Atendimento</button>
-              <button className="flex-1 py-1.5 text-xs font-bold text-navy/40">Em Espera</button>
+            <div className="flex p-1 bg-muted rounded-full border border-border">
+              <button className="flex-1 py-1.5 text-xs font-bold bg-primary text-primary-foreground rounded-full">Em Atendimento</button>
+              <button className="flex-1 py-1.5 text-xs font-bold text-muted-foreground">Em Espera</button>
             </div>
             
             <div className="flex gap-2">
               <div className="relative flex-1">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-navy/40" />
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                 <input 
-                  className="w-full pl-9 pr-4 py-2 bg-surface-2 dark:bg-[#0F1117] rounded-lg text-xs border border-line dark:border-white/5 dark:text-white/90 focus:ring-1 focus:ring-coral/50 outline-none" 
+                  className="w-full pl-9 pr-4 py-2 bg-muted rounded-lg text-xs border border-border text-foreground focus:ring-1 focus:ring-primary/50 outline-none" 
                   placeholder="Buscar atendimentos..." 
                 />
               </div>
               <div className="flex gap-1">
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <button className="p-2 bg-surface-2 dark:bg-[#0F1117] rounded-lg text-navy/40 dark:text-white/20 hover:text-navy dark:hover:text-white border border-line dark:border-white/5">
+                    <button className="p-2 bg-muted rounded-lg text-muted-foreground hover:text-foreground border border-border">
                       <ArrowUpDown className="w-4 h-4" />
                     </button>
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end" className="w-[300px] bg-[#23262E] border-none text-white p-2">
-                    <DropdownMenuLabel className="text-[10px] font-bold text-gray-400 uppercase tracking-widest px-2 py-2">Tipos de Ordenação</DropdownMenuLabel>
+                  <DropdownMenuContent align="end" className="w-[300px] bg-popover border-border text-foreground p-2 shadow-2xl">
+                    <DropdownMenuLabel className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest px-2 py-2">Tipos de Ordenação</DropdownMenuLabel>
                     <DropdownMenuItem 
                       onClick={() => setSortBy('recent-top')}
-                      className={cn("flex items-center justify-between px-3 py-2.5 rounded-lg cursor-pointer", sortBy === 'recent-top' ? "bg-coral/20 text-coral" : "hover:bg-white/5")}
+                      className={cn("flex items-center justify-between px-3 py-2.5 rounded-lg cursor-pointer", sortBy === 'recent-top' ? "bg-primary/20 text-primary" : "hover:bg-accent")}
                     >
                       <div className="flex items-center gap-3">
                         <MessageSquare className="w-4 h-4" />
@@ -265,28 +265,28 @@ function AdminChatPage() {
 
                 <button 
                   onClick={() => setIsFilterDialogOpen(true)}
-                  className="p-2 bg-surface-2 dark:bg-[#0F1117] rounded-lg text-navy/40 dark:text-white/20 hover:text-navy dark:hover:text-white border border-line dark:border-white/5"
+                  className="p-2 bg-muted rounded-lg text-muted-foreground hover:text-foreground border border-border"
                 >
                   <Filter className="w-4 h-4" />
                 </button>
                 
                 <button 
                   onClick={() => setIsHistoryDialogOpen(true)}
-                  className="p-2 bg-surface-2 dark:bg-[#0F1117] rounded-lg text-navy/40 dark:text-white/20 hover:text-navy dark:hover:text-white border border-line dark:border-white/5"
+                  className="p-2 bg-muted rounded-lg text-muted-foreground hover:text-foreground border border-border"
                 >
                   <HistoryIcon className="w-4 h-4" />
                 </button>
 
                 <button 
                   onClick={() => setIsActiveTicketDialogOpen(true)}
-                  className="p-2 bg-coral rounded-lg text-white"
+                  className="p-2 bg-primary rounded-lg text-primary-foreground"
                   title="Iniciar atendimento ativo"
                 >
                   <Plus className="w-4 h-4" />
                 </button>
               </div>
             </div>
-            <div className="text-[10px] text-gray-500 font-bold uppercase px-1">Exibindo {contacts.length} atendimentos de {contacts.length}</div>
+            <div className="text-[10px] text-muted-foreground font-bold uppercase px-1">Exibindo {contacts.length} atendimentos de {contacts.length}</div>
           </div>
 
           <div className="flex-1 overflow-y-auto visible-scrollbar px-2">
@@ -296,24 +296,24 @@ function AdminChatPage() {
                 onClick={() => setSelectedContactId(contact.id)}
                 className={cn(
                   "p-3 rounded-2xl mb-1 cursor-pointer transition-all border border-transparent",
-                  selectedContactId === contact.id ? "bg-coral/10 dark:bg-coral/20 border-coral/20" : "hover:bg-coral/5 dark:hover:bg-white/5"
+                  selectedContactId === contact.id ? "bg-primary/10 border-primary/20" : "hover:bg-accent"
                 )}
               >
                 <div className="flex gap-3">
                   <div className="relative shrink-0">
-                    <div className="w-11 h-11 rounded-full bg-gradient-to-br from-coral to-coral/80 flex items-center justify-center text-white font-black text-sm">
+                    <div className="w-11 h-11 rounded-full bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center text-primary-foreground font-black text-sm">
                       {contact.name.split(' ').map(n => n[0]).join('')}
                     </div>
-                    <div className="absolute -bottom-1 -right-1 bg-green-500 rounded-full p-0.5 border-2 border-white">
-                      <MessageSquare className="w-2 h-2 text-white" />
+                    <div className="absolute -bottom-1 -right-1 bg-green-500 rounded-full p-0.5 border-2 border-background">
+                      <MessageSquare className="w-2 h-2 text-primary-foreground" />
                     </div>
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex justify-between items-center mb-0.5">
-                      <span className="font-bold text-sm truncate dark:text-white/90">{contact.name}</span>
-                      <span className="text-[9px] text-gray-500 whitespace-nowrap">{contact.time}</span>
+                      <span className="font-bold text-sm truncate text-foreground">{contact.name}</span>
+                      <span className="text-[9px] text-muted-foreground whitespace-nowrap">{contact.time}</span>
                     </div>
-                    <div className="flex items-center gap-1 text-[11px] text-gray-400 truncate">
+                    <div className="flex items-center gap-1 text-[11px] text-muted-foreground truncate">
                       {contact.direction === 'inbound' ? (
                         <div className="w-3 h-3 rounded-full bg-green-500/10 flex items-center justify-center">
                           <ChevronDown className="w-2 h-2 text-green-500 rotate-45" />
@@ -332,12 +332,12 @@ function AdminChatPage() {
                         e.stopPropagation();
                         setPreviewContactId(contact.id);
                       }}
-                      className="p-1 hover:bg-coral/10 rounded-md transition-colors"
+                      className="p-1 hover:bg-primary/10 rounded-md transition-colors"
                     >
-                      <Eye className="w-3.5 h-3.5 text-navy/20 hover:text-coral transition-colors" />
+                      <Eye className="w-3.5 h-3.5 text-muted-foreground hover:text-primary transition-colors" />
                     </button>
-                    <button className="p-0.5 hover:bg-surface-2 rounded-md">
-                      <MoreVertical className="w-3.5 h-3.5 text-navy/20" />
+                    <button className="p-0.5 hover:bg-accent rounded-md">
+                      <MoreVertical className="w-3.5 h-3.5 text-muted-foreground" />
                     </button>
                   </div>
                 </div>
@@ -348,71 +348,71 @@ function AdminChatPage() {
 
         {/* Modal de Pré-visualização */}
         <Dialog open={!!previewContactId} onOpenChange={(open) => !open && setPreviewContactId(null)}>
-          <DialogContent className="max-w-2xl p-0 overflow-hidden border-none bg-[#161922] shadow-2xl">
-            <div className="flex items-center justify-between p-4 border-b border-white/5 bg-[#1C1F28]">
+          <DialogContent className="max-w-2xl p-0 overflow-hidden border-border bg-popover shadow-2xl">
+            <div className="flex items-center justify-between p-4 border-b border-border bg-secondary">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-coral/20 flex items-center justify-center text-coral font-bold">
+                <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold">
                   {contacts.find(c => c.id === previewContactId)?.name.split(' ').map(n => n[0]).join('')}
                 </div>
                 <div>
                   <div className="flex items-center gap-2">
-                    <h3 className="font-bold text-white text-sm">{contacts.find(c => c.id === previewContactId)?.name}</h3>
-                    <Badge variant="outline" className="text-[9px] bg-white/5 border-white/10 text-white/50 px-1.5 py-0 uppercase">Pré-visualização</Badge>
+                    <h3 className="font-bold text-foreground text-sm">{contacts.find(c => c.id === previewContactId)?.name}</h3>
+                    <Badge variant="outline" className="text-[9px] bg-accent border-border text-foreground px-1.5 py-0 uppercase">Pré-visualização</Badge>
                   </div>
-                  <p className="text-[10px] text-white/40">Última atividade {contacts.find(c => c.id === previewContactId)?.time}</p>
+                  <p className="text-[10px] text-muted-foreground">Última atividade {contacts.find(c => c.id === previewContactId)?.time}</p>
                 </div>
               </div>
               <button 
                 onClick={() => setPreviewContactId(null)}
-                className="p-2 hover:bg-white/5 rounded-full transition-colors text-white/40 hover:text-white"
+                className="p-2 hover:bg-accent rounded-full transition-colors text-muted-foreground hover:text-foreground"
               >
                 <X className="w-4 h-4" />
               </button>
             </div>
             
-            <div className="p-6 h-[500px] overflow-y-auto visible-scrollbar bg-[url('https://w0.peakpx.com/wallpaper/580/678/wallpaper-whatsapp-dark-mode.jpg')] bg-repeat bg-center">
+            <div className="p-6 h-[500px] overflow-y-auto visible-scrollbar bg-background bg-opacity-95 bg-[url('https://w0.peakpx.com/wallpaper/580/678/wallpaper-whatsapp-dark-mode.jpg')] bg-repeat bg-center mix-blend-overlay dark:mix-blend-normal">
               <div className="flex flex-col gap-4">
                 {/* Simulando mensagens na pré-visualização */}
                 <div className="flex flex-col gap-2 max-w-[80%] self-start">
-                  <div className="bg-[#1C1F28] text-white p-3 rounded-2xl rounded-tl-none shadow-md border border-white/5">
+                  <div className="bg-card text-foreground p-3 rounded-2xl rounded-tl-none shadow-md border border-border">
                     <p className="text-xs">{contacts.find(c => c.id === previewContactId)?.lastMsg}</p>
                     <div className="flex justify-end mt-1">
-                      <span className="text-[9px] text-white/40">10:05</span>
+                      <span className="text-[9px] text-muted-foreground">10:05</span>
                     </div>
                   </div>
                 </div>
 
                 <div className="flex flex-col gap-2 max-w-[80%] self-end">
-                  <div className="bg-coral text-white p-3 rounded-2xl rounded-tr-none shadow-md">
+                  <div className="bg-primary text-primary-foreground p-3 rounded-2xl rounded-tr-none shadow-md">
                     <p className="text-xs">Olá! No que podemos ajudar hoje?</p>
                     <div className="flex justify-end items-center gap-1 mt-1">
-                      <span className="text-[9px] text-white/70">10:07</span>
-                      <CheckCheck className="w-3 h-3 text-white/70" />
+                      <span className="text-[9px] text-primary-foreground/70">10:07</span>
+                      <CheckCheck className="w-3 h-3 text-primary-foreground/70" />
                     </div>
                   </div>
                 </div>
 
                 {/* Mensagem de voz simulada se for o Paulo Vitor (referência da imagem) */}
                 <div className="flex flex-col gap-2 max-w-[80%] self-start">
-                  <div className="bg-[#1C1F28] text-white p-3 rounded-2xl rounded-tl-none shadow-md border border-white/5 w-[280px]">
+                  <div className="bg-card text-foreground p-3 rounded-2xl rounded-tl-none shadow-md border border-border w-[280px]">
                     <div className="flex items-center gap-3">
-                      <button className="w-8 h-8 rounded-full bg-coral/20 flex items-center justify-center text-coral">
+                      <button className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center text-primary">
                         <Play className="w-4 h-4 fill-current" />
                       </button>
                       <div className="flex-1 h-1 bg-white/10 rounded-full relative">
-                        <div className="absolute inset-0 w-1/3 bg-coral rounded-full" />
+                        <div className="absolute inset-0 w-1/3 bg-primary rounded-full" />
                       </div>
-                      <span className="text-[10px] text-white/40">0:44</span>
+                      <span className="text-[10px] text-muted-foreground">0:44</span>
                     </div>
                     <div className="flex justify-end mt-1">
-                      <span className="text-[9px] text-white/40">10:21</span>
+                      <span className="text-[9px] text-muted-foreground">10:21</span>
                     </div>
                   </div>
                 </div>
 
                 {/* Card de imagem simulado */}
                 <div className="flex flex-col gap-2 max-w-[80%] self-start">
-                  <div className="bg-[#1C1F28] text-white p-2 rounded-2xl rounded-tl-none shadow-md border border-white/5">
+                  <div className="bg-card text-foreground p-2 rounded-2xl rounded-tl-none shadow-md border border-border">
                     <div className="bg-white rounded-lg p-3 text-navy mb-2 overflow-hidden">
                        <p className="text-[10px] font-bold text-navy/60 uppercase mb-1">Mensalidade</p>
                        <div className="flex flex-col gap-0.5">
@@ -421,15 +421,15 @@ function AdminChatPage() {
                        </div>
                     </div>
                     <div className="flex justify-end mt-1 px-1">
-                      <span className="text-[9px] text-white/40">10:23</span>
+                      <span className="text-[9px] text-muted-foreground">10:23</span>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div className="p-3 bg-[#1C1F28] text-center border-t border-white/5">
-              <p className="text-[10px] text-white/30 font-medium">Pré-visualização — não marca como lida e não abre a conversa.</p>
+            <div className="p-3 bg-secondary text-center border-t border-border">
+              <p className="text-[10px] text-muted-foreground font-medium">Pré-visualização — não marca como lida e não abre a conversa.</p>
             </div>
           </DialogContent>
         </Dialog>
@@ -799,7 +799,7 @@ function AdminChatPage() {
         </div>
 
         {/* 9. BARRA VERTICAL DE AÇÕES (52px) */}
-        <div className="w-[52px] border-l border-[#E5E7EB] dark:border-white/5 flex flex-col items-center py-6 gap-4 bg-white dark:bg-[#161922] shrink-0 z-10">
+        <div className="w-[52px] border-l border-border flex flex-col items-center py-6 gap-4 bg-card shrink-0 z-10">
           {[
             { icon: CheckCircle, label: "Finalizar", onClick: () => setIsFinishDialogOpen(true) },
             { icon: Shuffle, label: "Transferir", onClick: () => setIsTransferDialogOpen(true) },
@@ -820,15 +820,15 @@ function AdminChatPage() {
               onClick={action.onClick}
               className={cn(
                 "p-2.5 rounded-lg transition-all group relative border border-transparent",
-                i === 0 ? "bg-coral text-white shadow-lg" : "text-navy/20 hover:bg-coral/5 hover:text-coral"
+                i === 0 ? "bg-primary text-primary-foreground shadow-lg" : "text-muted-foreground/40 hover:bg-primary/5 hover:text-primary"
             )}>
               <action.icon className="w-5 h-5" />
               
               {/* Tooltip Lateral */}
-              <div className="absolute right-full mr-3 top-1/2 -translate-y-1/2 px-2.5 py-1.5 bg-[#23262E] text-white text-[10px] font-bold rounded shadow-xl opacity-0 group-hover:opacity-100 transition-all pointer-events-none whitespace-nowrap translate-x-2 group-hover:translate-x-0 border border-white/5 flex items-center gap-2">
-                <div className={cn("w-1.5 h-1.5 rounded-full", i === 0 ? "bg-coral" : "bg-blue-500")} />
+              <div className="absolute right-full mr-3 top-1/2 -translate-y-1/2 px-2.5 py-1.5 bg-popover text-foreground text-[10px] font-bold rounded shadow-xl opacity-0 group-hover:opacity-100 transition-all pointer-events-none whitespace-nowrap translate-x-2 group-hover:translate-x-0 border border-border flex items-center gap-2">
+                <div className={cn("w-1.5 h-1.5 rounded-full", i === 0 ? "bg-primary" : "bg-blue-500")} />
                 {action.label}
-                <div className="absolute right-[-4px] top-1/2 -translate-y-1/2 w-2 h-2 bg-[#23262E] rotate-45 border-r border-t border-white/5" />
+                <div className="absolute right-[-4px] top-1/2 -translate-y-1/2 w-2 h-2 bg-popover rotate-45 border-r border-t border-border" />
               </div>
             </button>
           ))}
