@@ -59,7 +59,7 @@ function CheckinApp() {
       </header>
 
       <main className="flex-1 flex flex-col items-center justify-center p-6 space-y-8">
-        <div className="w-full max-w-sm aspect-square bg-white/5 border-2 border-dashed border-white/20 rounded-[32px] flex flex-col items-center justify-center gap-4 relative overflow-hidden group">
+        <div className="w-full max-w-sm aspect-square bg-muted border-2 border-dashed border-border rounded-[32px] flex flex-col items-center justify-center gap-4 relative overflow-hidden group">
           <div className="absolute inset-0 bg-coral/5 animate-pulse"></div>
           <QrCode className="w-20 h-20 text-coral relative z-10" />
           <p className="text-sm font-bold text-muted-foreground relative z-10">Aponte a câmera para o QR Code</p>
