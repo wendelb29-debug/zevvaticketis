@@ -177,8 +177,8 @@ function ProdutorDashboard() {
         <Tabs defaultValue="events" className="w-full">
           <div className="px-8 pt-8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
             <TabsList className="bg-muted p-1 rounded-xl h-11">
-              <TabsTrigger value="events" className="rounded-lg px-6 font-bold data-[state=active]:bg-white data-[state=active]:text-foreground data-[state=active]:shadow-sm">Meus eventos</TabsTrigger>
-              <TabsTrigger value="contents" className="rounded-lg px-6 font-bold data-[state=active]:bg-white data-[state=active]:text-foreground data-[state=active]:shadow-sm">Meus conteúdos</TabsTrigger>
+              <TabsTrigger value="events" className="rounded-lg px-6 font-bold data-[state=active]:bg-card data-[state=active]:text-foreground data-[state=active]:shadow-sm">Meus eventos</TabsTrigger>
+              <TabsTrigger value="contents" className="rounded-lg px-6 font-bold data-[state=active]:bg-card data-[state=active]:text-foreground data-[state=active]:shadow-sm">Meus conteúdos</TabsTrigger>
             </TabsList>
             
             <Button 
