@@ -16,6 +16,8 @@ import { toast } from "sonner";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
+import { TeamManagement } from "@/components/admin/TeamManagement";
+
 
 export const Route = createFileRoute("/admin/configuracoes")({
   component: AuthGuard,
