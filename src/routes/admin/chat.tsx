@@ -987,7 +987,7 @@ function AdminChatPage() {
         <DialogContent className="max-w-2xl bg-popover border-border text-foreground">
           <DialogHeader>
             <DialogTitle className="text-xl font-bold">Iniciar Atendimento Ativo</DialogTitle>
-            <DialogDescription className="text-gray-400">Escolha um cliente para iniciar um novo atendimento ativo</DialogDescription>
+            <DialogDescription className="text-muted-foreground">Escolha um cliente para iniciar um novo atendimento ativo</DialogDescription>
           </DialogHeader>
           <div className="grid grid-cols-2 gap-6 py-6">
             <div className="space-y-2">
