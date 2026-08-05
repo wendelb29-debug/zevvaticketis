@@ -48,6 +48,12 @@ function AdminChatPage() {
   const [selectedContactId, setSelectedContactId] = useState<string | null>("1");
   const [agentStatus, setAgentStatus] = useState<'online' | 'busy' | 'offline'>('offline');
   const [user, setUser] = useState<any>(null);
+  const [isFilterDialogOpen, setIsFilterDialogOpen] = useState(false);
+  const [isHistoryDialogOpen, setIsHistoryDialogOpen] = useState(false);
+  const [isActiveTicketDialogOpen, setIsActiveTicketDialogOpen] = useState(false);
+  const [isFinishDialogOpen, setIsFinishDialogOpen] = useState(false);
+  const [isTransferDialogOpen, setIsTransferDialogOpen] = useState(false);
+  const [sortBy, setSortBy] = useState('recent-top');
   const navigate = useNavigate();
 
   useEffect(() => {
