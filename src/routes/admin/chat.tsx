@@ -6,7 +6,7 @@ import { getWhatsAppContacts, sendWhatsAppMessage } from '@/lib/whatsapp/whatsap
 import { 
   Search, Send, User, Check, CheckCheck, Phone, Plus, Bell, ChevronDown, 
   MoreVertical, CheckCircle, Shuffle, Users as PeopleIcon, Folder, Clock, 
-  Calendar, Zap, Copy, Printer, Eye, Tag, AlertCircle
+  Calendar, Zap, Copy, Printer, Eye, Tag, AlertCircle, LayoutList, MessageSquare
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { format } from 'date-fns';
