@@ -86,9 +86,9 @@ function AdminChatPage() {
   ];
 
   return (
-    <div className="flex flex-col h-screen bg-white text-[#171717] overflow-hidden font-inter">
+    <div className="flex flex-col h-screen bg-white dark:bg-[#0F1117] text-[#171717] dark:text-white/90 overflow-hidden font-inter">
       {/* Header Fixo */}
-      <header className="h-16 flex items-center justify-between px-6 border-b border-line bg-white shrink-0 z-10 shadow-sm">
+      <header className="h-16 flex items-center justify-between px-6 border-b border-line dark:border-white/5 bg-white dark:bg-[#161922] shrink-0 z-10 shadow-sm">
         <div className="flex items-center gap-8">
           <div className="flex items-center gap-4">
             <Link 
@@ -142,9 +142,9 @@ function AdminChatPage() {
 
       <div className="flex flex-1 overflow-hidden">
         {/* Coluna 1: Lista de Conversas (410px) */}
-        <div className="w-[540px] border-r border-[#E5E7EB] flex flex-col bg-white shrink-0">
+        <div className="w-[540px] border-r border-[#E5E7EB] dark:border-white/5 flex flex-col bg-white dark:bg-[#161922] shrink-0">
           <div className="p-4 space-y-4">
-            <div className="flex p-1 bg-surface-2 rounded-full">
+            <div className="flex p-1 bg-surface-2 dark:bg-[#0F1117] rounded-full border dark:border-white/5">
               <button className="flex-1 py-1.5 text-xs font-bold bg-coral text-white rounded-full">Em Atendimento</button>
               <button className="flex-1 py-1.5 text-xs font-bold text-navy/40">Em Espera</button>
             </div>
@@ -153,14 +153,14 @@ function AdminChatPage() {
               <div className="relative flex-1">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-navy/40" />
                 <input 
-                  className="w-full pl-9 pr-4 py-2 bg-surface-2 rounded-lg text-xs border border-line focus:ring-1 focus:ring-coral/50 outline-none" 
+                  className="w-full pl-9 pr-4 py-2 bg-surface-2 dark:bg-[#0F1117] rounded-lg text-xs border border-line dark:border-white/5 dark:text-white/90 focus:ring-1 focus:ring-coral/50 outline-none" 
                   placeholder="Buscar atendimentos..." 
                 />
               </div>
               <div className="flex gap-1">
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <button className="p-2 bg-surface-2 rounded-lg text-navy/40 hover:text-navy border border-line">
+                    <button className="p-2 bg-surface-2 dark:bg-[#0F1117] rounded-lg text-navy/40 dark:text-white/20 hover:text-navy dark:hover:text-white border border-line dark:border-white/5">
                       <ArrowUpDown className="w-4 h-4" />
                     </button>
                   </DropdownMenuTrigger>
@@ -211,14 +211,14 @@ function AdminChatPage() {
 
                 <button 
                   onClick={() => setIsFilterDialogOpen(true)}
-                  className="p-2 bg-surface-2 rounded-lg text-navy/40 hover:text-navy border border-line"
+                  className="p-2 bg-surface-2 dark:bg-[#0F1117] rounded-lg text-navy/40 dark:text-white/20 hover:text-navy dark:hover:text-white border border-line dark:border-white/5"
                 >
                   <Filter className="w-4 h-4" />
                 </button>
                 
                 <button 
                   onClick={() => setIsHistoryDialogOpen(true)}
-                  className="p-2 bg-surface-2 rounded-lg text-navy/40 hover:text-navy border border-line"
+                  className="p-2 bg-surface-2 dark:bg-[#0F1117] rounded-lg text-navy/40 dark:text-white/20 hover:text-navy dark:hover:text-white border border-line dark:border-white/5"
                 >
                   <HistoryIcon className="w-4 h-4" />
                 </button>
@@ -242,7 +242,7 @@ function AdminChatPage() {
                 onClick={() => setSelectedContactId(contact.id)}
                 className={cn(
                   "p-3 rounded-2xl mb-1 cursor-pointer transition-all border border-transparent",
-                  selectedContactId === contact.id ? "bg-coral/10 border-coral/20" : "hover:bg-coral/5"
+                  selectedContactId === contact.id ? "bg-coral/10 dark:bg-coral/20 border-coral/20" : "hover:bg-coral/5 dark:hover:bg-white/5"
                 )}
               >
                 <div className="flex gap-3">
@@ -256,7 +256,7 @@ function AdminChatPage() {
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex justify-between items-center mb-0.5">
-                      <span className="font-bold text-sm truncate">{contact.name}</span>
+                      <span className="font-bold text-sm truncate dark:text-white/90">{contact.name}</span>
                       <span className="text-[9px] text-gray-500 whitespace-nowrap">{contact.time}</span>
                     </div>
                     <div className="flex items-center gap-1 text-[11px] text-gray-400 truncate">
@@ -285,24 +285,24 @@ function AdminChatPage() {
         </div>
 
         {/* 4. ÁREA DA CONVERSA */}
-        <div className="flex-1 flex flex-col bg-white shrink-0 relative">
+        <div className="flex-1 flex flex-col bg-white dark:bg-[#0F1117] shrink-0 relative">
           {selectedContactId ? (
             <>
               {/* Cabeçalho da Conversa */}
-              <div className="h-[72px] border-b border-[#E5E7EB] bg-white px-8 flex items-center justify-between z-10">
+              <div className="h-[72px] border-b border-[#E5E7EB] dark:border-white/5 bg-white dark:bg-[#161922] px-8 flex items-center justify-between z-10">
                 <div className="flex items-center gap-4">
                   <div className="w-[42px] h-[42px] rounded-full bg-surface-2 border border-line flex items-center justify-center font-bold text-coral text-sm shadow-sm">
                     JS
                   </div>
                   <div>
                     <div className="flex items-center gap-2">
-                      <h2 className="font-bold text-[#171717] text-[15px] tracking-tight leading-none">João Silva</h2>
+                      <h2 className="font-bold text-[#171717] dark:text-white/90 text-[15px] tracking-tight leading-none">João Silva</h2>
                       <button className="p-1 hover:bg-[#FAFAFA] rounded-md transition-colors">
                         <Tag className="w-3.5 h-3.5 text-coral" />
                       </button>
                     </div>
                     <div className="flex items-center gap-2 mt-1.5 text-[10px] font-medium text-[#667085] uppercase tracking-wider">
-                      <span className="text-[#315DA8] font-bold">+55 34 99999-9999</span>
+                      <span className="text-[#315DA8] dark:text-[#5289e9] font-bold">+55 34 99999-9999</span>
                       <span>•</span>
                       <span>Prot: 20240804-001</span>
                       <span>•</span>
@@ -325,9 +325,9 @@ function AdminChatPage() {
                 </div>
               </div>
               
-              <div className="flex-1 overflow-y-auto p-8 space-y-8 relative z-10 custom-scrollbar bg-[#FAFAFA]/30">
+              <div className="flex-1 overflow-y-auto p-8 space-y-8 relative z-10 custom-scrollbar bg-[#FAFAFA]/30 dark:bg-transparent">
                 <div className="flex justify-center">
-                  <span className="px-4 py-1.5 bg-white text-[10px] font-bold text-[#667085] uppercase tracking-widest rounded-full border border-[#E5E7EB] shadow-sm">Hoje, 04 de Agosto</span>
+                  <span className="px-4 py-1.5 bg-white dark:bg-[#1e222d] text-[10px] font-bold text-[#667085] dark:text-white/40 uppercase tracking-widest rounded-full border border-[#E5E7EB] dark:border-white/5 shadow-sm">Hoje, 04 de Agosto</span>
                 </div>
 
                 {messages.map((msg) => (
@@ -335,13 +335,13 @@ function AdminChatPage() {
                     <div className={cn(
                       "max-w-[70%] p-3 rounded-2xl shadow-sm relative transition-shadow border",
                       msg.sender === 'agent' 
-                        ? "bg-coral/5 text-[#171717] rounded-tr-none border-coral/10" 
-                        : "bg-white text-[#171717] rounded-tl-none border-[#E5E7EB]"
+                        ? "bg-coral text-white rounded-tr-none border-coral/10 dark:shadow-[0_4px_12px_rgba(232,96,74,0.15)]" 
+                        : "bg-white dark:bg-[#1e222d] text-[#171717] dark:text-white/90 rounded-tl-none border-[#E5E7EB] dark:border-white/5"
                     )}>
                       <p className="text-[13px] leading-relaxed">{msg.text}</p>
                       <div className={cn(
                         "flex items-center justify-end gap-1.5 mt-1.5",
-                        msg.sender === 'agent' ? "text-[#F2C600]" : "text-[#667085]/40"
+                        msg.sender === 'agent' ? "text-white/60" : "text-[#667085]/40 dark:text-white/20"
                       )}>
                         <span className="text-[9px] font-bold">{msg.time}</span>
                         {msg.sender === 'agent' && <CheckCheck className="w-3.5 h-3.5" />}
@@ -378,7 +378,7 @@ function AdminChatPage() {
               </div>
 
               {/* 6. CAMPO DE DIGITAÇÃO */}
-              <div className="p-4 bg-white border-t border-[#E5E7EB] z-10">
+              <div className="p-4 bg-white dark:bg-[#161922] border-t border-[#E5E7EB] dark:border-white/5 z-10">
                 {agentStatus === 'offline' ? (
                   <div className="flex flex-col items-center justify-center p-8 text-center space-y-4">
                      <div className="w-16 h-16 rounded-full bg-[#FAFAFA] border border-[#E5E7EB] flex items-center justify-center">
@@ -402,7 +402,7 @@ function AdminChatPage() {
                     <div className="flex-1 relative">
                       <textarea 
                         rows={1}
-                        className="w-full bg-[#FAFAFA] border border-[#E5E7EB] p-3.5 pr-14 rounded-xl text-[13px] text-[#171717] placeholder:text-[#667085]/50 focus:outline-none focus:ring-1 focus:ring-coral transition-all resize-none" 
+                        className="w-full bg-[#FAFAFA] dark:bg-[#0F1117] border border-[#E5E7EB] dark:border-white/5 p-3.5 pr-14 rounded-xl text-[13px] text-[#171717] dark:text-white/90 placeholder:text-[#667085]/50 focus:outline-none focus:ring-1 focus:ring-coral transition-all resize-none" 
                         placeholder="Digite uma mensagem — use ‘/’ para atalhos" 
                       />
                       <button className="absolute right-2 top-2 w-9 h-9 bg-coral text-white rounded-lg flex items-center justify-center hover:bg-coral/90 transition-all">
@@ -439,7 +439,7 @@ function AdminChatPage() {
         </div>
 
         {/* 9. BARRA VERTICAL DE AÇÕES (52px) */}
-        <div className="w-[52px] border-l border-[#E5E7EB] flex flex-col items-center py-6 gap-4 bg-white shrink-0 z-10">
+        <div className="w-[52px] border-l border-[#E5E7EB] dark:border-white/5 flex flex-col items-center py-6 gap-4 bg-white dark:bg-[#161922] shrink-0 z-10">
           {[
             { icon: CheckCircle, label: "Finalizar", onClick: () => setIsFinishDialogOpen(true) },
             { icon: Shuffle, label: "Transferir", onClick: () => setIsTransferDialogOpen(true) },
