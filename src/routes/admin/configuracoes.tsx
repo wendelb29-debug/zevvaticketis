@@ -120,23 +120,23 @@ function SettingsPage() {
   };
 
   return (
-    <div className="space-y-6 max-w-7xl mx-auto pb-12 font-inter">
+    <div className="space-y-6 max-w-7xl mx-auto pb-12 font-inter text-foreground">
       <div className="flex flex-col gap-2">
-        <h1 className="text-3xl font-manrope font-extrabold text-navy">Configurações do Sistema</h1>
-        <p className="text-navy/60">Gerencie as regras de atendimento, equipe e recursos da plataforma.</p>
+        <h1 className="text-3xl font-manrope font-extrabold text-foreground">Configurações do Sistema</h1>
+        <p className="text-muted-fg">Gerencie as regras de atendimento, equipe e recursos da plataforma.</p>
       </div>
 
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-        <TabsList className="bg-white border border-line p-1 rounded-xl w-full justify-start overflow-x-auto h-auto">
-          <TabsTrigger value="atendimento" className="data-[state=active]:bg-coral data-[state=active]:text-white rounded-lg py-2.5 px-6 flex items-center gap-2 text-sm font-bold transition-all">
+        <TabsList className="bg-card border border-border p-1 rounded-xl w-full justify-start overflow-x-auto h-auto">
+          <TabsTrigger value="atendimento" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground rounded-lg py-2.5 px-6 flex items-center gap-2 text-sm font-bold transition-all">
             <MessageSquare className="w-4 h-4" />
             Atendimento
           </TabsTrigger>
-          <TabsTrigger value="equipe" className="data-[state=active]:bg-coral data-[state=active]:text-white rounded-lg py-2.5 px-6 flex items-center gap-2 text-sm font-bold transition-all">
+          <TabsTrigger value="equipe" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground rounded-lg py-2.5 px-6 flex items-center gap-2 text-sm font-bold transition-all">
             <Users className="w-4 h-4" />
             Equipe e Recursos
           </TabsTrigger>
-          <TabsTrigger value="sistema" className="data-[state=active]:bg-coral data-[state=active]:text-white rounded-lg py-2.5 px-6 flex items-center gap-2 text-sm font-bold transition-all">
+          <TabsTrigger value="sistema" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground rounded-lg py-2.5 px-6 flex items-center gap-2 text-sm font-bold transition-all">
             <Settings className="w-4 h-4" />
             Sistema
           </TabsTrigger>
@@ -144,21 +144,21 @@ function SettingsPage() {
 
         <TabsContent value="atendimento" className="space-y-6 mt-6">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <Card className="md:col-span-1 border-line h-fit sticky top-24">
+            <Card className="md:col-span-1 border-border bg-card h-fit sticky top-24">
               <CardContent className="p-4 space-y-1">
-                <Button variant="ghost" className="w-full justify-start gap-2 font-bold text-coral bg-coral/5">
+                <Button variant="ghost" className="w-full justify-start gap-2 font-bold text-primary bg-primary/5">
                   <Workflow className="w-4 h-4" />
                   Regras Gerais
                 </Button>
-                <Button variant="ghost" className="w-full justify-start gap-2 font-bold text-navy hover:bg-surface">
+                <Button variant="ghost" className="w-full justify-start gap-2 font-bold text-foreground hover:bg-accent">
                   <Users className="w-4 h-4" />
                   Departamentos
                 </Button>
-                <Button variant="ghost" className="w-full justify-start gap-2 font-bold text-navy hover:bg-surface">
+                <Button variant="ghost" className="w-full justify-start gap-2 font-bold text-foreground hover:bg-accent">
                   <Tag className="w-4 h-4" />
                   Tags e Classificações
                 </Button>
-                <Button variant="ghost" className="w-full justify-start gap-2 font-bold text-navy hover:bg-surface">
+                <Button variant="ghost" className="w-full justify-start gap-2 font-bold text-foreground hover:bg-accent">
                   <Clock className="w-4 h-4" />
                   Inatividade e SLA
                 </Button>
