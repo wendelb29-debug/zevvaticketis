@@ -94,27 +94,9 @@ function SettingsPage() {
                 </div>
               </AccordionTrigger>
               <AccordionContent className="px-6 pb-6 pt-2 space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="flex items-center justify-between p-4 bg-background border border-border rounded-xl">
-                    <div className="space-y-0.5">
-                      <Label className="font-bold">Distribuição Automática</Label>
-                      <p className="text-xs text-muted-fg">Atribui tickets aos agentes disponíveis.</p>
-                    </div>
-                    <Switch defaultChecked />
-                  </div>
-                  <div className="flex items-center justify-between p-4 bg-background border border-border rounded-xl">
-                    <div className="space-y-0.5">
-                      <Label className="font-bold">Chat de Boas-vindas</Label>
-                      <p className="text-xs text-muted-fg">Ativa mensagem automática inicial.</p>
-                    </div>
-                    <Switch defaultChecked />
-                  </div>
-                </div>
-                <div className="space-y-3">
-                  <Label className="font-bold">Capacidade Máxima por Agente</Label>
-                  <Input type="number" defaultValue={5} className="bg-background border-border max-w-[200px]" />
-                </div>
+                <DistribuicaoConversas departments={departments} />
               </AccordionContent>
+
             </AccordionItem>
 
             <AccordionItem value="departamentos" className="border-border bg-card rounded-xl overflow-hidden shadow-sm border">
