@@ -27,6 +27,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   Users,
   BookOpen,
@@ -37,9 +38,12 @@ import {
   PieChart,
   Trash2,
   Send,
-
+  Info,
+  Search,
+  ListChecks,
 } from "lucide-react";
 import { toast } from "sonner";
+import { sendTeamInvite } from "@/lib/team.functions";
 
 type Member = {
   id: string;
