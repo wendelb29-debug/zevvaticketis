@@ -110,6 +110,13 @@ function AnunciosPage() {
                   </td>
                   <td className="px-6 py-4 text-right">
                     <div className="flex items-center justify-end gap-2">
+                      <button 
+                        onClick={() => toast.info("Funcionalidade de gerenciamento em desenvolvimento")}
+                        className="p-2 hover:bg-surface rounded-lg transition-colors text-navy/40 hover:text-navy"
+                        title="Gerenciar Anúncio"
+                      >
+                        <Search className="w-4 h-4" />
+                      </button>
                       <a 
                         href={`/eventos/${event.id}`} 
                         target="_blank" 
