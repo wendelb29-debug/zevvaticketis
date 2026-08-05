@@ -19,15 +19,15 @@ function AuditoriaPage() {
     }
   });
 
-  if (isLoading) return <div>Carregando logs...</div>;
+  if (isLoading) return <div className="p-10 text-center text-muted-fg">Carregando logs...</div>;
 
   return (
-    <div className="space-y-6">
-      <h1 className="text-2xl font-manrope font-extrabold text-navy">Auditoria do Sistema</h1>
+    <div className="space-y-6 text-foreground">
+      <h1 className="text-2xl font-manrope font-extrabold">Auditoria do Sistema</h1>
       
-      <div className="bg-white rounded-xl border overflow-hidden">
+      <div className="bg-card rounded-xl border border-border overflow-hidden shadow-sm">
         <table className="w-full text-left">
-          <thead className="bg-surface text-muted text-xs font-extrabold uppercase">
+          <thead className="bg-accent text-muted-fg text-xs font-extrabold uppercase tracking-wider">
             <tr>
               <th className="px-6 py-4">Admin</th>
               <th className="px-6 py-4">Ação</th>
@@ -35,18 +35,18 @@ function AuditoriaPage() {
               <th className="px-6 py-4">Data</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-line">
+          <tbody className="divide-y divide-border">
             {logs?.map((log: any) => (
-              <tr key={log.id}>
-                <td className="px-6 py-4 font-bold text-navy">{log.profiles?.nome || 'Sistema'}</td>
-                <td className="px-6 py-4">{log.acao}</td>
-                <td className="px-6 py-4">{log.alvo_tipo} ({log.alvo_id})</td>
-                <td className="px-6 py-4 text-xs text-muted">{new Date(log.created_at).toLocaleString()}</td>
+              <tr key={log.id} className="hover:bg-accent/30 transition-colors">
+                <td className="px-6 py-4 font-bold text-foreground">{log.profiles?.nome || 'Sistema'}</td>
+                <td className="px-6 py-4 text-sm">{log.acao}</td>
+                <td className="px-6 py-4 text-sm font-medium">{log.alvo_tipo} <span className="text-muted-fg font-normal">({log.alvo_id})</span></td>
+                <td className="px-6 py-4 text-xs text-muted-fg font-inter">{new Date(log.created_at).toLocaleString()}</td>
               </tr>
             ))}
             {(!logs || logs.length === 0) && (
               <tr>
-                <td colSpan={4} className="px-6 py-8 text-center text-muted">Nenhum log de auditoria encontrado.</td>
+                <td colSpan={4} className="px-6 py-12 text-center text-muted-fg font-inter">Nenhum log de auditoria encontrado.</td>
               </tr>
             )}
           </tbody>
