@@ -100,7 +100,15 @@ function AdminLayout() {
       ]
     },
     { label: "E-mails", icon: Mail, href: "/admin/emails" },
-    { label: "Check-in", icon: CheckSquare, href: "/admin/checkin-monitor" },
+    { 
+      label: "Usuários", 
+      icon: UserCog, 
+      children: [
+        { label: "Aprovações", href: "/admin/aprovacoes" },
+        { label: "Todos os Usuários", href: "/admin/usuarios" },
+        { label: "Produtores", href: "/admin/produtores" },
+      ]
+    },
     { label: "Configurações", icon: Settings, href: "/admin/configuracoes" },
   ];
 
