@@ -187,6 +187,48 @@ export type Database = {
         }
         Relationships: []
       }
+      email_integrations: {
+        Row: {
+          access_token: string
+          created_at: string | null
+          display_name: string | null
+          email_address: string
+          expires_at: string | null
+          id: string
+          photo_url: string | null
+          provider: string
+          refresh_token: string | null
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          access_token: string
+          created_at?: string | null
+          display_name?: string | null
+          email_address: string
+          expires_at?: string | null
+          id?: string
+          photo_url?: string | null
+          provider?: string
+          refresh_token?: string | null
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          access_token?: string
+          created_at?: string | null
+          display_name?: string | null
+          email_address?: string
+          expires_at?: string | null
+          id?: string
+          photo_url?: string | null
+          provider?: string
+          refresh_token?: string | null
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       email_logs: {
         Row: {
           assunto: string
@@ -287,6 +329,74 @@ export type Database = {
             columns: ["account_id"]
             isOneToOne: false
             referencedRelation: "email_accounts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      email_messages_individual: {
+        Row: {
+          body_html: string | null
+          body_text: string | null
+          created_at: string | null
+          folder: string | null
+          from_email: string
+          from_name: string | null
+          gmail_message_id: string | null
+          id: string
+          integration_id: string
+          is_read: boolean | null
+          is_starred: boolean | null
+          labels: string[] | null
+          received_at: string | null
+          snippet: string | null
+          subject: string | null
+          thread_id: string | null
+          to_emails: string[]
+        }
+        Insert: {
+          body_html?: string | null
+          body_text?: string | null
+          created_at?: string | null
+          folder?: string | null
+          from_email: string
+          from_name?: string | null
+          gmail_message_id?: string | null
+          id?: string
+          integration_id: string
+          is_read?: boolean | null
+          is_starred?: boolean | null
+          labels?: string[] | null
+          received_at?: string | null
+          snippet?: string | null
+          subject?: string | null
+          thread_id?: string | null
+          to_emails: string[]
+        }
+        Update: {
+          body_html?: string | null
+          body_text?: string | null
+          created_at?: string | null
+          folder?: string | null
+          from_email?: string
+          from_name?: string | null
+          gmail_message_id?: string | null
+          id?: string
+          integration_id?: string
+          is_read?: boolean | null
+          is_starred?: boolean | null
+          labels?: string[] | null
+          received_at?: string | null
+          snippet?: string | null
+          subject?: string | null
+          thread_id?: string | null
+          to_emails?: string[]
+        }
+        Relationships: [
+          {
+            foreignKeyName: "email_messages_individual_integration_id_fkey"
+            columns: ["integration_id"]
+            isOneToOne: false
+            referencedRelation: "email_integrations"
             referencedColumns: ["id"]
           },
         ]
