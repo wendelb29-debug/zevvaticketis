@@ -805,7 +805,7 @@ const AtendimentoAccordion = () => (
       </AccordionContent>
     </AccordionItem>
 
-    <>
+    
     {[
 
       { id: "classificacoes", icon: Briefcase, title: "Gerenciar Classificações", desc: "Categorização vinculada a departamentos." },
