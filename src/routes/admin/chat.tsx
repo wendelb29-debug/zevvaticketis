@@ -900,7 +900,7 @@ function AdminChatPage() {
              </div>
           </div>
           <div className="space-y-4 py-2">
-            <Label className="text-[10px] font-bold uppercase tracking-wider text-gray-400">Preferências</Label>
+            <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Preferências</Label>
             <div className="space-y-3">
               <div className="flex items-center justify-between">
                 <span className="text-xs text-gray-400">Mensagens agendadas</span>
