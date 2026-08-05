@@ -495,25 +495,25 @@ function AdminChatPage() {
                 
                 {/* 5. CARDS INTERATIVOS */}
                 <div className="flex justify-start">
-                  <div className="bg-white text-[#171717] rounded-2xl p-5 shadow-xl shadow-[#171717]/5 max-w-[320px] overflow-hidden border border-[#E5E7EB] relative group hover:-translate-y-0.5 transition-transform">
+                  <div className="bg-white dark:bg-[#1e222d] text-[#171717] dark:text-white/90 rounded-2xl p-5 shadow-xl shadow-[#171717]/5 dark:shadow-none max-w-[320px] overflow-hidden border border-[#E5E7EB] dark:border-white/5 relative group hover:-translate-y-0.5 transition-transform">
                     <div className="absolute top-0 left-0 w-1.5 h-full bg-coral" />
                     <div className="flex justify-between items-start mb-3">
-                      <div className="text-[10px] font-bold uppercase text-navy font-bold tracking-widest bg-coral/10 px-2.5 py-1 rounded-md border border-coral/5">Negociação de Valor</div>
+                      <div className="text-[10px] font-bold uppercase text-navy dark:text-white/80 font-bold tracking-widest bg-coral/10 px-2.5 py-1 rounded-md border border-coral/5">Negociação de Valor</div>
                     </div>
                     <div className="font-bold text-base mb-1 tracking-tight">Viagem Terra Santa 2026</div>
-                    <p className="text-[11px] text-[#667085] mb-4 leading-relaxed">Pacote completo com guia especializado e hospedagem premium.</p>
-                    <div className="flex items-center gap-3 mb-5 p-3.5 bg-[#FAFAFA] rounded-xl border border-[#E5E7EB]">
+                    <p className="text-[11px] text-[#667085] dark:text-white/40 mb-4 leading-relaxed">Pacote completo com guia especializado e hospedagem premium.</p>
+                    <div className="flex items-center gap-3 mb-5 p-3.5 bg-[#FAFAFA] dark:bg-[#0F1117] rounded-xl border border-[#E5E7EB] dark:border-white/5">
                       <div className="flex flex-col">
-                        <span className="text-[9px] font-bold text-[#667085] uppercase tracking-widest">Mensalidade</span>
+                        <span className="text-[9px] font-bold text-[#667085] dark:text-white/30 uppercase tracking-widest">Mensalidade</span>
                         <span className="text-sm text-[#E5484D] font-bold line-through">R$ 341,28</span>
                       </div>
-                      <div className="w-px h-8 bg-[#E5E7EB]" />
+                      <div className="w-px h-8 bg-[#E5E7EB] dark:bg-white/5" />
                       <div className="flex flex-col">
                         <span className="text-[9px] font-bold text-[#24B667] uppercase tracking-widest">Oferta</span>
                         <span className="text-xl font-bold text-[#24B667] tracking-tighter">R$ 273,02</span>
                       </div>
                     </div>
-                    <button className="w-full py-2.5 bg-[#171717] text-white text-[11px] font-bold uppercase tracking-widest rounded-xl hover:bg-black transition-all flex items-center justify-center gap-2">
+                    <button className="w-full py-2.5 bg-[#171717] dark:bg-coral text-white text-[11px] font-bold uppercase tracking-widest rounded-xl hover:bg-black dark:hover:bg-coral/90 transition-all flex items-center justify-center gap-2">
                       ACEITAR PROPOSTA
                     </button>
                   </div>
