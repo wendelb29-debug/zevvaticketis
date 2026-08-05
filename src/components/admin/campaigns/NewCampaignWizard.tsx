@@ -21,7 +21,9 @@ import {
   Send,
   Calendar,
   ChevronRight,
-  ChevronLeft
+  ChevronLeft,
+  AlertCircle,
+  Clock
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
@@ -48,7 +50,7 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-4xl p-0 overflow-hidden bg-card border-border">
         <DialogHeader className="p-6 border-b border-border bg-surface">
-          <DialogTitle className="text-xl font-manrope font-extrabold text-navy">
+          <DialogTitle className="text-xl font-manrope font-extrabold text-navy text-center uppercase tracking-tighter">
             {step === 1 && "Etapa 1 - Tipo de envio"}
             {step === 2 && "Etapa 2 - Selecionar Público"}
             {step === 3 && (type === "whatsapp" ? "Etapa 3 - Criador de Mensagem WhatsApp" : "Etapa 3 - Criador de E-mail")}
@@ -81,7 +83,7 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
                   )}
                 >
                   <div className={cn(
-                    "w-16 h-16 rounded-full flex items-center justify-center transition-colors",
+                    "w-16 h-16 rounded-full flex items-center justify-center transition-colors shadow-sm",
                     type === "whatsapp" ? "bg-primary text-white" : "bg-muted text-muted-fg"
                   )}>
                     <MessageSquare className="w-8 h-8" />
@@ -104,7 +106,7 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
                   )}
                 >
                   <div className={cn(
-                    "w-16 h-16 rounded-full flex items-center justify-center transition-colors",
+                    "w-16 h-16 rounded-full flex items-center justify-center transition-colors shadow-sm",
                     type === "email" ? "bg-primary text-white" : "bg-muted text-muted-fg"
                   )}>
                     <Mail className="w-8 h-8" />
@@ -150,9 +152,9 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
                       { label: "Curso Marketing Digital", type: "Curso" }
                     ].map((item, i) => (
                       <div key={i} className="flex items-center space-x-3 p-3 border border-line rounded-lg hover:border-primary/30 transition-all group">
-                        <Checkbox id={} />
+                        <Checkbox id={`event-${i}`} />
                         <div className="flex-1">
-                          <Label htmlFor={} className="text-sm font-bold block group-hover:text-primary transition-colors cursor-pointer">{item.label}</Label>
+                          <Label htmlFor={`event-${i}`} className="text-sm font-bold block group-hover:text-primary transition-colors cursor-pointer">{item.label}</Label>
                           <span className="text-[10px] uppercase font-extrabold text-muted-fg">{item.type}</span>
                         </div>
                       </div>
@@ -198,10 +200,10 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
                         <FileText className="w-4 h-4" />
                       </Button>
                       <div className="h-4 w-[1px] bg-border mx-1" />
-                      <div className="flex gap-1">
+                      <div className="flex gap-1 overflow-x-auto scrollbar-hide">
                         {["nome", "evento", "data"].map(v => (
-                          <button key={v} className="text-[10px] font-bold px-2 py-1 bg-white border border-line rounded text-muted-fg hover:border-primary transition-colors">
-                            {{`{{${v}}}` }}
+                          <button key={v} className="text-[10px] font-bold px-2 py-1 bg-white border border-line rounded text-muted-fg hover:border-primary transition-colors whitespace-nowrap">
+                            {`{{${v}}}`}
                           </button>
                         ))}
                       </div>
