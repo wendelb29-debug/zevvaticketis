@@ -217,13 +217,98 @@ function SettingsPage() {
   const [isDeptModalOpen, setIsDeptModalOpen] = useState(false);
   const [isTagModalOpen, setIsTagModalOpen] = useState(false);
   const [deptName, setDeptName] = useState("");
+  const [editingDeptId, setEditingDeptId] = useState<string | null>(null);
+  const [deptAgents, setDeptAgents] = useState<string[]>([]);
+  const [deptRestrictions, setDeptRestrictions] = useState<string[]>([]);
+  const [agentSearch, setAgentSearch] = useState("");
+  const [restrictSearch, setRestrictSearch] = useState("");
   const [tagName, setTagName] = useState("");
   const [tagColor, setTagColor] = useState("#E8604A");
 
-  const [departments] = useState([
-    { id: "1", name: "Suporte", members: 5 },
-    { id: "2", name: "Comercial", members: 3 },
+  const [agents] = useState([
+    { id: "u1", name: "Alice Vieira", email: "alicevieirai214@gmail.com" },
+    { id: "u2", name: "Bárbara Carvalho", email: "barbara864carvalho@gmail.com" },
+    { id: "u3", name: "Carolina Silva", email: "carol.12godinho@gmail.com" },
+    { id: "u4", name: "Daiane Silva", email: "daiane@zevva.com" },
+    { id: "u5", name: "Eduardo Lima", email: "edulima27.eh@gmail.com" },
+    { id: "u6", name: "Mayck Souza", email: "mayck@zevva.com" },
   ]);
+
+  const [departments, setDepartments] = useState<DeptFull[]>([
+    { id: "1", name: "Suporte", members: 5, agents: ["u1", "u3"], restrictions: [] },
+    { id: "2", name: "Comercial", members: 3, agents: ["u6"], restrictions: [] },
+  ]);
+
+  const filteredAgents = agents.filter(
+    (a) =>
+      a.name.toLowerCase().includes(agentSearch.toLowerCase()) ||
+      a.email.toLowerCase().includes(agentSearch.toLowerCase())
+  );
+  const filteredRestrictDepts = departments.filter(
+    (d) => d.id !== editingDeptId && d.name.toLowerCase().includes(restrictSearch.toLowerCase())
+  );
+
+  const resetDeptForm = () => {
+    setDeptName("");
+    setEditingDeptId(null);
+    setDeptAgents([]);
+    setDeptRestrictions([]);
+    setAgentSearch("");
+    setRestrictSearch("");
+  };
+
+  const openNewDept = () => {
+    resetDeptForm();
+    setIsDeptModalOpen(true);
+  };
+
+  const openEditDept = (dept: DeptFull) => {
+    setEditingDeptId(dept.id);
+    setDeptName(dept.name);
+    setDeptAgents(dept.agents);
+    setDeptRestrictions(dept.restrictions);
+    setAgentSearch("");
+    setRestrictSearch("");
+    setIsDeptModalOpen(true);
+  };
+
+  const removeDept = (id: string) => {
+    setDepartments((prev) =>
+      prev
+        .filter((d) => d.id !== id)
+        .map((d) => ({ ...d, restrictions: d.restrictions.filter((r) => r !== id) }))
+    );
+    toast.success("Departamento removido.");
+  };
+
+  const saveDept = () => {
+    if (!deptName.trim()) return;
+    if (editingDeptId) {
+      setDepartments((prev) =>
+        prev.map((d) =>
+          d.id === editingDeptId
+            ? { ...d, name: deptName.trim(), agents: deptAgents, restrictions: deptRestrictions, members: deptAgents.length }
+            : d
+        )
+      );
+      toast.success("Departamento atualizado!");
+    } else {
+      setDepartments((prev) => [
+        ...prev,
+        {
+          id: crypto.randomUUID(),
+          name: deptName.trim(),
+          members: deptAgents.length,
+          agents: deptAgents,
+          restrictions: deptRestrictions,
+        },
+      ]);
+      toast.success("Departamento criado!");
+    }
+    setIsDeptModalOpen(false);
+    resetDeptForm();
+  };
+
 
   const [tags] = useState([
     { id: "1", name: "Urgente", color: "#ef4444" },
