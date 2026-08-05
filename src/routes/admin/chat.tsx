@@ -340,7 +340,7 @@ function AdminChatPage() {
           ].map((action, i) => (
             <button key={i} className={cn(
                 "p-2.5 rounded-lg transition-all group relative border border-transparent",
-                i === 2 ? "bg-[#FFFBE8] border-[#FFD31A]/30 text-[#171717]" : "text-[#667085] hover:bg-[#FAFAFA] hover:text-[#171717]"
+                i === 2 ? "bg-coral/10 border-coral/30 text-coral" : "text-navy/20 hover:bg-coral/5 hover:text-coral"
             )} title={action.label}>
               <action.icon className="w-5 h-5" />
             </button>
@@ -349,19 +349,14 @@ function AdminChatPage() {
       </div>
 
       <style>{`
-        .custom-scrollbar-fina::-webkit-scrollbar {
-          width: 4px;
-        }
-        .custom-scrollbar-fina::-webkit-scrollbar-track {
-          background: transparent;
-        }
-        .custom-scrollbar-fina::-webkit-scrollbar-thumb {
-          background: #E5E7EB;
-          border-radius: 10px;
-        }
-        .custom-scrollbar-fina::-webkit-scrollbar-thumb:hover {
-          background: #D1D5DB;
-        }
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(232, 96, 74, 0.1); border-radius: 10px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(232, 96, 74, 0.2); }
+        
+        .custom-scrollbar-fina::-webkit-scrollbar { width: 3px; }
+        .custom-scrollbar-fina::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar-fina::-webkit-scrollbar-thumb { background: rgba(232, 96, 74, 0.05); border-radius: 10px; }
       `}</style>
     </div>
   );
