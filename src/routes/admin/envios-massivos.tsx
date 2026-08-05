@@ -12,19 +12,12 @@ import {
   Users,
   Eye,
   Copy,
-  XCircle,
-  MoreVertical
+  XCircle
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { NewCampaignWizard } from "@/components/admin/campaigns/NewCampaignWizard";
 import { cn } from "@/lib/utils";
-import { 
-  DropdownMenu, 
-  DropdownMenuContent, 
-  DropdownMenuItem, 
-  DropdownMenuTrigger 
-} from "@/components/ui/dialog";
 
 export const Route = createFileRoute("/admin/envios-massivos")({
   component: EnviosMassivosPage,
@@ -89,7 +82,6 @@ function EnviosMassivosPage() {
               </tr>
             </thead>
             <tbody className="divide-y divide-line">
-              {/* Exemplo de item para visualização */}
               <tr className="hover:bg-surface/50 transition-colors group">
                 <td className="px-8 py-6">
                   <div className="flex flex-col">
@@ -138,16 +130,6 @@ function EnviosMassivosPage() {
                   </div>
                 </td>
               </tr>
-              
-              {/* Empty state fallback */}
-              {/* <tr>
-                <td colSpan={6} className="px-8 py-20 text-center">
-                  <div className="flex flex-col items-center gap-3 grayscale opacity-30">
-                    <Megaphone className="w-12 h-12" />
-                    <p className="text-sm font-bold text-muted-fg">Nenhuma campanha registrada ainda.</p>
-                  </div>
-                </td>
-              </tr> */}
             </tbody>
           </table>
         </div>
