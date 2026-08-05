@@ -3,15 +3,16 @@ import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { 
   Users, 
-  Ticket, 
-  TrendingUp, 
   Calendar,
   ChevronRight,
   ArrowUpRight,
-  DollarSign
+  DollarSign,
+  TrendingUp
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+import { Badge } from "@/components/ui/badge";
 
 export const Route = createFileRoute("/admin/")({
   component: AdminDashboard,
@@ -38,13 +39,14 @@ function AdminDashboard() {
           .from("events")
           .select("*", { count: 'exact', head: true });
 
-        // Calculate total revenue from ledger_entries (taxa_plataforma)
+        // Calculate total revenue from ledger_entries (tipo 'taxa_plataforma')
+        // Using correct schema column names from types.ts: 'tipo' and 'valor'
         const { data: ledgerData } = await supabase
           .from("ledger_entries")
-          .select("amount")
-          .eq("type", "taxa_plataforma");
+          .select("valor")
+          .eq("tipo", "taxa_plataforma");
         
-        const revenue = ledgerData?.reduce((acc, curr) => acc + (Number(curr.amount) || 0), 0) || 0;
+        const revenue = ledgerData?.reduce((acc, curr) => acc + (Number(curr.valor) || 0), 0) || 0;
 
         setStats({
           activeProducers: producersCount || 0,
@@ -87,6 +89,14 @@ function AdminDashboard() {
       description: "Soma de taxas da plataforma"
     }
   ];
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-64">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-8 animate-in fade-in duration-500">
@@ -143,7 +153,7 @@ function AdminDashboard() {
             <CardTitle className="text-lg font-manrope font-bold">Performance da Plataforma</CardTitle>
             <TrendingUp className="w-5 h-5 text-muted-fg" />
           </CardHeader>
-          <CardContent className="h-[240px] flex items-center justify-center text-muted-fg bg-accent/20 rounded-xl m-2 border border-dashed border-border">
+          <CardContent className="h-[240px] flex items-center justify-center text-muted-fg bg-accent/20 rounded-xl m-2 border border-dashed border-border text-sm">
             Gráfico de Crescimento (Simulado)
           </CardContent>
         </Card>
@@ -151,7 +161,3 @@ function AdminDashboard() {
     </div>
   );
 }
-
-// Internal cn utility if needed or import
-import { cn } from "@/lib/utils";
-import { Badge } from "@/components/ui/badge";
