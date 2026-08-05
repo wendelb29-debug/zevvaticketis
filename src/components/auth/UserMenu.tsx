@@ -86,30 +86,30 @@ export function UserMenu({ user, onLogout, onNavigate, agentStatus, onStatusChan
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <button className="flex items-center gap-2 p-1 rounded-full hover:bg-surface transition-all outline-none group border border-transparent hover:border-line">
-          <Avatar className="h-8 w-8 border-2 border-white shadow-sm ring-1 ring-line">
-            <AvatarFallback className="bg-navy text-white text-[10px] font-extrabold">
+        <button className="flex items-center gap-2 p-1 rounded-full hover:bg-accent transition-all outline-none group border border-transparent hover:border-border">
+          <Avatar className="h-8 w-8 border-2 border-background shadow-sm ring-1 ring-border">
+            <AvatarFallback className="bg-primary text-primary-foreground text-[10px] font-extrabold">
               {initials}
             </AvatarFallback>
           </Avatar>
           {isChat && (
             <div className={cn(
-              "absolute -top-0.5 -right-0.5 w-3 h-3 rounded-full border-2 border-white",
-              agentStatus === 'online' ? "bg-green-500" : agentStatus === 'busy' ? "bg-amber-500" : "bg-navy/20"
+              "absolute -top-0.5 -right-0.5 w-3 h-3 rounded-full border-2 border-background",
+              agentStatus === 'online' ? "bg-green-500" : agentStatus === 'busy' ? "bg-amber-500" : "bg-muted"
             )} />
           )}
           <div className="flex items-center gap-1">
-             <ChevronDown className="w-4 h-4 text-muted group-hover:text-navy transition-colors" />
+             <ChevronDown className="w-4 h-4 text-muted-foreground group-hover:text-foreground transition-colors" />
           </div>
         </button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-64 mt-2 rounded-xl p-0 border-line shadow-2xl font-inter overflow-hidden bg-white/95 backdrop-blur-md">
-        <DropdownMenuLabel className="px-4 py-5 bg-gradient-to-br from-navy/5 to-transparent">
+      <DropdownMenuContent align="end" className="w-64 mt-2 rounded-xl p-0 border-border shadow-2xl font-inter overflow-hidden bg-popover/95 backdrop-blur-md">
+        <DropdownMenuLabel className="px-4 py-5 bg-gradient-to-br from-primary/5 to-transparent">
           <div className="flex flex-col gap-1.5">
-            <p className="text-sm font-extrabold text-navy truncate">
+            <p className="text-sm font-extrabold text-foreground truncate">
               {user?.user_metadata?.nome || user?.email}
             </p>
-            <p className="text-[11px] text-navy/40 font-medium truncate mb-1">
+            <p className="text-[11px] text-muted-foreground font-medium truncate mb-1">
               {user?.email}
             </p>
             {role && (
