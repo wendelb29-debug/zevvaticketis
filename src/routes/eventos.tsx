@@ -79,9 +79,12 @@ function EventPage() {
     </div>
   );
 
-  if (!data?.event) return <div className="p-20 text-center font-manrope font-black text-navy text-2xl">Evento não encontrado.</div>;
+  if (!data || !data.event) return <div className="p-20 text-center font-manrope font-black text-navy text-2xl">Evento não encontrado.</div>;
 
-  const { event, ticketTypes, itinerary } = data;
+  const event = data.event;
+  const ticketTypes = data.ticketTypes || [];
+  const itinerary = data.itinerary || [];
+  
   const total = ticketTypes.reduce((acc: number, t: any) => acc + (quantities[t.id] || 0) * t.valor, 0);
   const totalTickets = Object.values(quantities).reduce((a, b) => a + b, 0);
 
