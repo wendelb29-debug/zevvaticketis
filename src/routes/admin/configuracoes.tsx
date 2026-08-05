@@ -274,30 +274,51 @@ function SettingsPage() {
               </AccordionTrigger>
               <AccordionContent className="px-6 pb-6 pt-2">
                 <div className="flex justify-end mb-4">
-                  <Button onClick={() => setIsDeptModalOpen(true)} size="sm" className="bg-primary text-white gap-2 font-bold">
-                    <Plus className="w-4 h-4" /> Novo Departamento
+                  <Button onClick={openNewDept} size="sm" className="bg-primary text-white gap-2 font-bold">
+                    <Plus className="w-4 h-4" /> Criar departamento
                   </Button>
                 </div>
                 <div className="space-y-2">
                   {departments.map(dept => (
-                    <div key={dept.id} className="flex items-center justify-between p-4 bg-background border border-border rounded-xl group hover:border-primary/30 transition-all">
-                      <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold">
+                    <div key={dept.id} className="flex items-center justify-between gap-4 p-4 bg-background border border-border rounded-xl group hover:border-primary/30 transition-all">
+                      <div className="flex items-center gap-3 min-w-0">
+                        <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold shrink-0">
                           {dept.name.charAt(0)}
                         </div>
-                        <div>
+                        <div className="min-w-0">
                           <p className="font-bold">{dept.name}</p>
-                          <p className="text-xs text-muted-fg">{dept.members} membros ativos</p>
+                          <div className="flex flex-wrap gap-1 mt-1">
+                            {dept.agents.length === 0 && (
+                              <span className="text-xs text-muted-fg">Nenhum atendente atribuído</span>
+                            )}
+                            {dept.agents.slice(0, 3).map((id) => (
+                              <span key={id} className="px-2 py-0.5 rounded-full border border-border text-xs font-bold">
+                                {agents.find((a) => a.id === id)?.name ?? id}
+                              </span>
+                            ))}
+                            {dept.agents.length > 3 && (
+                              <span className="px-2 py-0.5 rounded-full border border-border text-xs font-bold">
+                                +{dept.agents.length - 3}
+                              </span>
+                            )}
+                          </div>
                         </div>
                       </div>
-                      <div className="flex items-center gap-2">
-                        <Button variant="ghost" size="icon" className="hover:text-primary"><Edit2 className="w-4 h-4" /></Button>
-                        <Button variant="ghost" size="icon" className="hover:text-error"><Trash2 className="w-4 h-4" /></Button>
+                      <div className="flex items-center gap-2 shrink-0">
+                        <span className={cn(
+                          "text-xs font-bold px-2 py-1 rounded-full",
+                          dept.restrictions.length > 0 ? "bg-primary/10 text-primary" : "text-muted-fg"
+                        )}>
+                          {dept.restrictions.length > 0 ? "Transferências restritas" : "Global"}
+                        </span>
+                        <Button variant="ghost" size="icon" className="hover:text-primary" onClick={() => openEditDept(dept)}><Edit2 className="w-4 h-4" /></Button>
+                        <Button variant="ghost" size="icon" className="hover:text-error" onClick={() => removeDept(dept.id)}><Trash2 className="w-4 h-4" /></Button>
                       </div>
                     </div>
                   ))}
                 </div>
               </AccordionContent>
+
             </AccordionItem>
 
             <AccordionItem value="tags" className="border-border bg-card rounded-xl overflow-hidden shadow-sm border">
