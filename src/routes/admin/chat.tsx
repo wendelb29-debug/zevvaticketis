@@ -926,7 +926,7 @@ function AdminChatPage() {
 
       {/* Dialog: Histórico de Conversas */}
       <Dialog open={isHistoryDialogOpen} onOpenChange={setIsHistoryDialogOpen}>
-        <DialogContent className="max-w-2xl bg-[#1A1D29] border-[#2D313F] text-white">
+        <DialogContent className="max-w-2xl bg-popover border-border text-foreground">
           <DialogHeader>
             <DialogTitle className="text-xl font-bold">Histórico de conversas</DialogTitle>
           </DialogHeader>
