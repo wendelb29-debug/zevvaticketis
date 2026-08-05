@@ -161,7 +161,7 @@ function EnviosMassivosPage() {
         </div>
       </div>
       
-      <NewCampaignWizard open={isWizardOpen} onOpenChange={handleOpenWizard} />
+      {isWizardOpen && <NewCampaignWizard open={isWizardOpen} onOpenChange={handleOpenWizard} />}
     </div>
   );
 }
