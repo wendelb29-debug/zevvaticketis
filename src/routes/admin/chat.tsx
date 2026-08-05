@@ -383,12 +383,8 @@ function AdminChatPage() {
                   <p className="text-[10px] text-muted-foreground">Última atividade {contacts.find(c => c.id === previewContactId)?.time}</p>
                 </div>
               </div>
-              <button 
-                onClick={() => setPreviewContactId(null)}
-                className="p-2 hover:bg-accent rounded-full transition-colors text-muted-foreground hover:text-foreground"
-              >
-                <X className="w-4 h-4" />
-              </button>
+
+
             </div>
             
             <div className="p-6 h-[500px] overflow-y-auto visible-scrollbar bg-[url('https://w0.peakpx.com/wallpaper/580/678/wallpaper-whatsapp-dark-mode.jpg')] bg-repeat bg-center">
