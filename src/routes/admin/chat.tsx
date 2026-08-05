@@ -30,7 +30,7 @@ function AdminChatPage() {
   ];
 
   return (
-    <div className="flex flex-col h-screen bg-[#1a1d29] text-white overflow-hidden font-inter">
+    <div className="flex flex-col h-screen bg-white text-[#171717] overflow-hidden font-inter">
       {/* Header Fixo */}
       <header className="h-16 flex items-center justify-between px-6 border-b border-line bg-white shrink-0 z-10 shadow-sm">
         <div className="flex items-center gap-8">
