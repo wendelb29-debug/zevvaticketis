@@ -420,9 +420,91 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
             </div>
           )}
 
-          {step >= 3 && (
-            <div className="flex items-center justify-center h-full">
-               <p className="text-white/40 italic">As etapas de Conteúdo e Configurações serão implementadas em seguida.</p>
+          {step === 3 && (
+            <div className="grid grid-cols-1 lg:grid-cols-[1fr_400px] gap-12 animate-in fade-in slide-in-from-bottom-4 duration-500">
+              <div className="space-y-8">
+                <div>
+                  <h2 className="text-xl font-manrope font-extrabold text-navy uppercase tracking-tight">Criar Mensagem</h2>
+                  <p className="text-sm text-muted-fg mt-1">Escreva o conteúdo que será enviado para seu público</p>
+                </div>
+
+                <div className="space-y-6">
+                  <div className="bg-white border border-border rounded-2xl shadow-sm overflow-hidden">
+                    <div className="p-3 border-b border-border bg-accent/30 flex items-center justify-between">
+                      <div className="flex gap-1">
+                        <Button variant="ghost" size="sm" className="h-8 px-2 text-muted-fg hover:text-primary">
+                          <Smile className="w-4 h-4" />
+                        </Button>
+                        <Button variant="ghost" size="sm" className="h-8 px-2 text-muted-fg hover:text-primary">
+                          <ImageIcon className="w-4 h-4" />
+                        </Button>
+                        <Button variant="ghost" size="sm" className="h-8 px-2 text-muted-fg hover:text-primary">
+                          <FileText className="w-4 h-4" />
+                        </Button>
+                      </div>
+                      <div className="flex gap-2">
+                        {["nome", "evento", "data", "local"].map(v => (
+                          <Button key={v} variant="outline" size="sm" className="h-6 px-2 text-[10px] font-extrabold uppercase border-primary/20 text-primary hover:bg-primary/5">
+                            {"{{"}{v}{"}}"}
+                          </Button>
+                        ))}
+                      </div>
+                    </div>
+                    <textarea 
+                      placeholder="Escreva sua mensagem aqui..."
+                      className="w-full min-h-[300px] p-6 text-navy focus:outline-none resize-none leading-relaxed"
+                    />
+                    <div className="p-4 border-t border-border bg-accent/10 flex justify-between items-center">
+                      <p className="text-[10px] text-muted-fg font-bold uppercase tracking-widest">Aproximadamente 120 caracteres</p>
+                      <Button variant="outline" size="sm" className="border-border text-navy hover:bg-accent font-bold">
+                        <Plus className="w-4 h-4 mr-2" /> Botão CTA
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-accent/20 rounded-2xl p-8 border border-border flex flex-col">
+                <div className="mb-6">
+                  <h3 className="text-sm font-extrabold text-navy uppercase tracking-widest">Pré-visualização</h3>
+                  <p className="text-[10px] text-muted-fg mt-1">Como o cliente verá no {channelType === "email" ? "E-mail" : "WhatsApp"}</p>
+                </div>
+
+                <div className="flex-1 bg-[#E5DDD5] rounded-3xl p-4 shadow-inner relative overflow-hidden border-4 border-navy/10">
+                  <div className="absolute top-0 left-0 w-full h-12 bg-[#075E54] flex items-center px-4 gap-3">
+                    <div className="w-8 h-8 rounded-full bg-white/20" />
+                    <div className="flex-1">
+                      <div className="w-24 h-2 bg-white/30 rounded" />
+                      <div className="w-16 h-1 bg-white/20 rounded mt-1" />
+                    </div>
+                  </div>
+                  <div className="mt-16 space-y-4">
+                    <div className="bg-white rounded-xl p-3 shadow-sm max-w-[85%] relative">
+                      <p className="text-xs text-navy">Olá {"{{"}nome{"}}"}! 👋</p>
+                      <div className="mt-2 aspect-video bg-accent/50 rounded-lg flex items-center justify-center border border-dashed border-border">
+                         <ImageIcon className="w-6 h-6 text-muted-fg/20" />
+                      </div>
+                      <p className="text-xs text-navy mt-2 leading-relaxed">Prepare-se para o melhor evento do ano! Te esperamos no local...</p>
+                      <span className="text-[8px] text-muted-fg absolute bottom-1 right-2 uppercase font-bold">14:30</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {step === 4 && (
+            <div className="flex flex-col items-center justify-center h-full text-center space-y-6">
+               <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center">
+                  <Clock className="w-10 h-10 text-primary" />
+               </div>
+               <div>
+                  <h2 className="text-2xl font-manrope font-extrabold text-navy uppercase">Configuração Final</h2>
+                  <p className="text-muted-fg mt-2 max-w-md">Sua campanha está quase pronta para decolar! Revise os dados e agende o melhor horário para o disparo.</p>
+               </div>
+               <Button className="bg-primary hover:bg-primary/90 text-white font-extrabold px-12 h-14 rounded-2xl shadow-xl shadow-primary/30 text-lg uppercase tracking-tight">
+                  <Rocket className="w-5 h-5 mr-3" /> Iniciar Envio Agora
+               </Button>
             </div>
           )}
         </div>
@@ -430,3 +512,4 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
     </Dialog>
   );
 }
+
