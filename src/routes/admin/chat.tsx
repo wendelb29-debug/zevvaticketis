@@ -1088,30 +1088,30 @@ function AdminChatPage() {
           </div>
           <DialogFooter className="mt-4 flex justify-between sm:justify-between items-center w-full">
             <button onClick={() => setIsFinishDialogOpen(false)} className="text-sm font-bold hover:underline">Cancelar</button>
-            <button onClick={() => { toast.success("Atendimento finalizado"); setIsFinishDialogOpen(false); }} className="flex-1 max-w-[400px] py-3 bg-coral hover:bg-coral/90 text-white text-[11px] font-black uppercase tracking-widest rounded-lg">Finalizar atendimento</button>
+            <button onClick={() => { toast.success("Atendimento finalizado"); setIsFinishDialogOpen(false); }} className="flex-1 max-w-[400px] py-3 bg-primary hover:bg-primary/90 text-primary-foreground text-[11px] font-black uppercase tracking-widest rounded-lg">Finalizar atendimento</button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
 
       {/* Dialog: Transferir Atendimento */}
       <Dialog open={isTransferDialogOpen} onOpenChange={setIsTransferDialogOpen}>
-        <DialogContent className="max-w-2xl bg-[#1A1D29] border-[#2D313F] text-white">
+        <DialogContent className="max-w-2xl bg-popover border-border text-foreground">
           <DialogHeader>
             <div className="flex items-center gap-3">
               <DialogTitle className="text-xl font-bold">Transferir atendimento</DialogTitle>
-              <Badge variant="outline" className="bg-[#23262E] border-none text-gray-500 text-[10px] px-2 py-0">20240804-001</Badge>
+              <Badge variant="outline" className="bg-muted border-none text-muted-foreground text-[10px] px-2 py-0">20240804-001</Badge>
             </div>
-            <DialogDescription className="text-gray-400">Escolha o destinatário para transferir este atendimento.</DialogDescription>
+            <DialogDescription className="text-muted-foreground">Escolha o destinatário para transferir este atendimento.</DialogDescription>
           </DialogHeader>
           <div className="py-6 space-y-6">
             <div className="grid grid-cols-2 gap-6">
               <div className="space-y-2">
-                <Label className="text-[10px] font-bold uppercase tracking-wider text-gray-400">Tipo de transferência</Label>
+                <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Tipo de transferência</Label>
                 <Select defaultValue="agent">
-                  <SelectTrigger className="bg-[#23262E] border-none text-xs h-11">
+                  <SelectTrigger className="bg-muted border-none text-xs h-11">
                     <SelectValue />
                   </SelectTrigger>
-                  <SelectContent className="bg-[#23262E] border-none text-white">
+                  <SelectContent className="bg-popover border-border text-foreground">
                     <SelectItem value="agent">Para Agente</SelectItem>
                     <SelectItem value="dept">Para Departamento</SelectItem>
                   </SelectContent>
