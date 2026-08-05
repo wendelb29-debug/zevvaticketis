@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { BreadcrumbNavigation } from "@/components/layout/BreadcrumbNavigation";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/app/")({
