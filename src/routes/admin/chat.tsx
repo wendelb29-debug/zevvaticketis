@@ -1170,7 +1170,7 @@ function AdminChatPage() {
 
         @media print {
           body * { visibility: hidden; }
-          .flex-1.flex.flex-col.bg-white.shrink-0.relative, .flex-1.flex.flex-col.bg-white.shrink-0.relative * {
+          .flex-1.flex.flex-col.bg-background.shrink-0.relative, .flex-1.flex.flex-col.bg-background.shrink-0.relative * {
             visibility: visible;
           }
           .flex-1.flex.flex-col.bg-white.shrink-0.relative {

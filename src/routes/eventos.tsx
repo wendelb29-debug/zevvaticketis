@@ -79,7 +79,7 @@ function EventPage() {
     </div>
   );
 
-  if (!data?.event) return <div className="p-20 text-center font-manrope font-black text-navy text-2xl">Evento não encontrado.</div>;
+  if (!data?.event) return <div className="p-20 text-center font-manrope font-black text-foreground text-2xl">Evento não encontrado.</div>;
 
   const event = data.event;
   const ticketTypes = data.ticketTypes || [];
@@ -95,7 +95,7 @@ function EventPage() {
   };
 
   return (
-    <div className={cn("min-h-screen bg-bg text-navy font-inter selection:bg-coral/20", theme.fontFamily)}>
+    <div className={cn("min-h-screen bg-background text-foreground font-inter selection:bg-coral/20", theme.fontFamily)}>
       {/* Sticky Secondary Nav / Header */}
       <header className="fixed top-0 left-0 right-0 z-[100] bg-background/80 backdrop-blur-xl border-b border-border h-20 px-6 flex items-center justify-between transition-all duration-300">
         <div className="flex items-center gap-6">
@@ -164,7 +164,7 @@ function EventPage() {
         </div>
 
         {/* Dynamic Sticky Secondary Navigation */}
-        <div className="sticky top-20 z-[90] bg-bg/80 backdrop-blur-md py-4 -mx-6 px-6 border-b border-line overflow-x-auto no-scrollbar">
+        <div className="sticky top-20 z-[90] bg-background/80 backdrop-blur-md py-4 -mx-6 px-6 border-b border-border overflow-x-auto no-scrollbar">
           <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
             <TabsList className="bg-transparent h-12 w-full justify-start gap-12 rounded-none p-0">
               <TabsTrigger value="tickets" className="h-full data-[state=active]:text-coral data-[state=active]:shadow-none data-[state=active]:bg-transparent data-[state=active]:border-b-4 data-[state=active]:border-coral rounded-none font-black text-xs uppercase tracking-widest transition-all">Ingressos</TabsTrigger>
@@ -182,7 +182,7 @@ function EventPage() {
             <Tabs value={activeTab} className="w-full">
               <TabsContent value="tickets" className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
                 <div className="space-y-4">
-                  <h3 className="text-2xl font-manrope font-black text-navy flex items-center gap-3">
+                  <h3 className="text-2xl font-manrope font-black text-foreground flex items-center gap-3">
                     <TicketIcon className="w-6 h-6 text-coral" /> Opções de Ingressos
                   </h3>
                   <p className="text-muted font-medium">Selecione as categorias que melhor atendem sua necessidade.</p>

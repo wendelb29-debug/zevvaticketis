@@ -51,9 +51,9 @@ function ProdutorDashboard() {
   if (loading) return null;
 
   const stats = [
-    { label: "Eventos publicados", value: "0", color: "text-navy" },
+    { label: "Eventos publicados", value: "0", color: "text-foreground" },
     { label: "Ingressos vendidos", value: "0", color: "text-coral" },
-    { label: "Receita total", value: "US$ 0,00", color: "text-good" },
+    { label: "Receita total", value: "US$ 0,00", color: "text-green-500" },
   ];
 
   return (
@@ -84,10 +84,10 @@ function ProdutorDashboard() {
       </div>
 
       {/* Theme Preview Section */}
-      <div className="bg-white rounded-[32px] border border-line p-8 space-y-8 shadow-sm">
+      <div className="bg-card rounded-[32px] border border-border p-8 space-y-8 shadow-sm">
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
           <div className="space-y-1">
-            <h2 className="text-xl font-manrope font-extrabold text-navy flex items-center gap-2">
+            <h2 className="text-xl font-manrope font-extrabold text-foreground flex items-center gap-2">
               <Sparkles className="w-5 h-5 text-coral" /> Prévia de Temas Visuais
             </h2>
             <p className="text-xs text-muted font-medium uppercase tracking-widest">Veja como seu evento aparecerá para os participantes</p>
