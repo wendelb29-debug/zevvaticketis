@@ -28,13 +28,28 @@ import {
   Monitor,
   Phone,
   Hash,
-  AlertTriangle
+  AlertTriangle,
+  ChevronDown
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
 import { toast } from "sonner";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { useUI } from "@/hooks/use-ui";
+import { cn } from "@/lib/utils";
+import { Badge } from "@/components/ui/badge";
+import { 
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 export const Route = createFileRoute("/app/perfil")({
   beforeLoad: async () => {
@@ -43,6 +58,7 @@ export const Route = createFileRoute("/app/perfil")({
   },
   component: UserProfile,
 });
+
 
 function UserProfile() {
   const [profile, setProfile] = useState<any>(null);
