@@ -744,27 +744,45 @@ export type Database = {
       }
       team_invites: {
         Row: {
+          accepted_at: string | null
+          access_hours: string | null
           created_at: string
+          departments: Json
           email: string
+          expires_at: string
           id: string
+          invited_by: string | null
           organization_id: string
           permissions: Json
+          role: string
           status: string
         }
         Insert: {
+          accepted_at?: string | null
+          access_hours?: string | null
           created_at?: string
+          departments?: Json
           email: string
+          expires_at?: string
           id?: string
+          invited_by?: string | null
           organization_id: string
           permissions?: Json
+          role?: string
           status?: string
         }
         Update: {
+          accepted_at?: string | null
+          access_hours?: string | null
           created_at?: string
+          departments?: Json
           email?: string
+          expires_at?: string
           id?: string
+          invited_by?: string | null
           organization_id?: string
           permissions?: Json
+          role?: string
           status?: string
         }
         Relationships: [
