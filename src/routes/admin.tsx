@@ -20,6 +20,7 @@ import {
   Megaphone,
   Sun,
   Moon,
+  Rocket,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -101,7 +102,7 @@ function AdminLayout() {
     },
     { 
       label: "Envios Massivos", 
-      icon: Megaphone, 
+      icon: Rocket, 
       children: [
         { label: "Criar novo", href: "/admin/envios-massivos", query: { wizard: "true" } },
         { label: "Envios", href: "/admin/envios-massivos" },
