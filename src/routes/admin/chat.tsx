@@ -54,7 +54,33 @@ function AdminChatPage() {
   const [isFinishDialogOpen, setIsFinishDialogOpen] = useState(false);
   const [isTransferDialogOpen, setIsTransferDialogOpen] = useState(false);
   const [sortBy, setSortBy] = useState('recent-top');
+  const [sidebarWidth, setSidebarWidth] = useState(540);
+  const [isResizing, setIsResizing] = useState(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!isResizing) return;
+      const newWidth = Math.min(Math.max(300, e.clientX), 800);
+      setSidebarWidth(newWidth);
+    };
+
+    const handleMouseUp = () => {
+      setIsResizing(false);
+      document.body.style.cursor = 'default';
+    };
+
+    if (isResizing) {
+      document.addEventListener('mousemove', handleMouseMove);
+      document.addEventListener('mouseup', handleMouseUp);
+      document.body.style.cursor = 'col-resize';
+    }
+
+    return () => {
+      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseup', handleMouseUp);
+    };
+  }, [isResizing]);
 
   useEffect(() => {
     async function getUser() {
@@ -142,7 +168,24 @@ function AdminChatPage() {
 
       <div className="flex flex-1 overflow-hidden">
         {/* Coluna 1: Lista de Conversas (410px) */}
-        <div className="w-[540px] border-r border-[#E5E7EB] dark:border-white/5 flex flex-col bg-white dark:bg-[#161922] shrink-0">
+        <div 
+          style={{ width: `${sidebarWidth}px` }}
+          className="border-r border-[#E5E7EB] dark:border-white/5 flex flex-col bg-white dark:bg-[#161922] shrink-0 relative transition-[width] duration-75 ease-out"
+        >
+          {/* Resize Handle */}
+          <div 
+            onMouseDown={(e) => {
+              e.preventDefault();
+              setIsResizing(true);
+            }}
+            className={cn(
+              "absolute top-0 right-[-4px] w-2 h-full z-50 cursor-col-resize group transition-colors",
+              isResizing ? "bg-coral/40" : "hover:bg-coral/20"
+            )}
+          >
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[2px] h-8 bg-line dark:bg-white/10 group-hover:bg-coral transition-colors rounded-full" />
+          </div>
+
           <div className="p-4 space-y-4">
             <div className="flex p-1 bg-surface-2 dark:bg-[#0F1117] rounded-full border dark:border-white/5">
               <button className="flex-1 py-1.5 text-xs font-bold bg-coral text-white rounded-full">Em Atendimento</button>
@@ -235,7 +278,7 @@ function AdminChatPage() {
             <div className="text-[10px] text-gray-500 font-bold uppercase px-1">Exibindo {contacts.length} atendimentos de {contacts.length}</div>
           </div>
 
-          <div className="flex-1 overflow-y-auto custom-scrollbar-fina px-2">
+          <div className="flex-1 overflow-y-auto visible-scrollbar px-2">
             {contacts.map((contact) => (
               <div 
                 key={contact.id}
@@ -794,6 +837,15 @@ function AdminChatPage() {
         .custom-scrollbar-fina::-webkit-scrollbar { width: 3px; }
         .custom-scrollbar-fina::-webkit-scrollbar-track { background: transparent; }
         .custom-scrollbar-fina::-webkit-scrollbar-thumb { background: rgba(232, 96, 74, 0.05); border-radius: 10px; }
+
+        .visible-scrollbar::-webkit-scrollbar { width: 6px; }
+        .visible-scrollbar::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.05); }
+        .visible-scrollbar::-webkit-scrollbar-thumb { background: rgba(232, 96, 74, 0.2); border-radius: 10px; }
+        .visible-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(232, 96, 74, 0.4); }
+        
+        .dark .visible-scrollbar::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.02); }
+        .dark .visible-scrollbar::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); }
+        .dark .visible-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.2); }
 
         @media print {
           body * { visibility: hidden; }
