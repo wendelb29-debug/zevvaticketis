@@ -164,8 +164,8 @@ function AdminLayout() {
                 <button
                   onClick={() => setOpenGroup(isOpen ? null : item.label)}
                   className={cn(
-                    "w-full flex items-center justify-between py-3.5 px-4 rounded-xl text-sm font-extrabold transition-all duration-200",
-                    hasActiveChild ? "text-primary bg-primary/5" : "text-foreground hover:bg-accent"
+                    "w-full flex items-center justify-between py-3.5 px-4 rounded-xl text-sm font-extrabold transition-all duration-200 border-2",
+                    hasActiveChild ? "border-border bg-transparent text-foreground" : "border-transparent text-foreground hover:bg-accent"
                   )}
                 >
                   <div className="flex items-center gap-3">
