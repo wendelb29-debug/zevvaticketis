@@ -170,7 +170,10 @@ function AdminChatPage() {
         {/* Coluna 1: Lista de Conversas (410px) */}
         <div 
           style={{ width: `${sidebarWidth}px` }}
-          className="border-r border-[#E5E7EB] dark:border-white/5 flex flex-col bg-white dark:bg-[#161922] shrink-0 relative transition-[width] duration-75 ease-out"
+          className={cn(
+            "border-r border-[#E5E7EB] dark:border-white/5 flex flex-col bg-white dark:bg-[#161922] shrink-0 relative",
+            !isResizing && "transition-[width] duration-150 ease-in-out"
+          )}
         >
           {/* Resize Handle */}
           <div 
