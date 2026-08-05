@@ -1206,24 +1206,24 @@ function AdminChatPage() {
           
           <div className="p-6 space-y-8">
             <div className="space-y-4">
-              <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-gray-500 mb-2">
+              <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-muted-foreground mb-2">
                 <Bell className="w-3 h-3" /> NOTIFICAÇÕES
               </div>
-              <div className="space-y-1 bg-[#23262E] rounded-xl border border-white/5 overflow-hidden">
+              <div className="space-y-1 bg-muted rounded-xl border border-border overflow-hidden">
                 {[
                   { label: "Notificações de novos chats", icon: true },
                   { label: "Alertas sonoros para novos tickets", sound: true },
                   { label: "Alertas sonoros para novas mensagens", sound: true },
                   { label: "Alertas sonoros para tickets transferidos", sound: true },
                 ].map((pref, i) => (
-                  <div key={i} className={cn("flex items-center justify-between p-4", i !== 3 && "border-b border-white/5")}>
+                  <div key={i} className={cn("flex items-center justify-between p-4", i !== 3 && "border-b border-border")}>
                     <div className="flex items-center gap-2">
-                      <span className="text-xs text-gray-300 font-medium">{pref.label}</span>
-                      <AlertCircle className="w-3 h-3 text-gray-600" />
+                      <span className="text-xs text-foreground font-medium">{pref.label}</span>
+                      <AlertCircle className="w-3 h-3 text-muted-foreground" />
                     </div>
                     <div className="flex items-center gap-3">
-                      {pref.sound && <Volume2 className="w-3.5 h-3.5 text-gray-500" />}
-                      <Switch defaultChecked={pref.label !== "Notificações de novos chats"} className="data-[state=checked]:bg-coral" />
+                      {pref.sound && <Volume2 className="w-3.5 h-3.5 text-muted-foreground" />}
+                      <Switch defaultChecked={pref.label !== "Notificações de novos chats"} className="data-[state=checked]:bg-primary" />
                     </div>
                   </div>
                 ))}
@@ -1231,12 +1231,12 @@ function AdminChatPage() {
             </div>
 
             <div className="space-y-4">
-              <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-gray-500 mb-2">
+              <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-muted-foreground mb-2">
                 <MessageSquare className="w-3 h-3" /> CHAT
               </div>
-              <div className="bg-[#23262E] rounded-xl border border-white/5 p-4 flex items-center justify-between">
-                <span className="text-xs text-gray-300 font-medium">Enviar mensagem ao pressionar ENTER</span>
-                <Switch defaultChecked className="data-[state=checked]:bg-coral" />
+              <div className="bg-muted rounded-xl border border-border p-4 flex items-center justify-between">
+                <span className="text-xs text-foreground font-medium">Enviar mensagem ao pressionar ENTER</span>
+                <Switch defaultChecked className="data-[state=checked]:bg-primary" />
               </div>
             </div>
           </div>
