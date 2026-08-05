@@ -179,7 +179,7 @@ function AdminChatPage() {
       </header>
 
       <div className="flex flex-1 overflow-hidden">
-        {/* Coluna 1: Lista de Conversas (410px) */}
+        {/* Coluna 1: Lista de Conversas */}
         <div 
           style={{ width: `${sidebarWidth}px` }}
           className={cn(
