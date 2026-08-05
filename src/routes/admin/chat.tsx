@@ -877,10 +877,10 @@ function AdminChatPage() {
           </div>
           <div className="grid grid-cols-2 gap-6 py-2">
             <div className="space-y-2">
-              <Label className="text-[10px] font-bold uppercase tracking-wider text-gray-400">Departamentos</Label>
+              <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Departamentos</Label>
               <div className="relative">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-500" />
-                <Input placeholder="Buscar..." className="bg-[#23262E] border-none pl-9 h-10 text-xs" />
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-muted-foreground" />
+                <Input placeholder="Buscar..." className="bg-muted border-none pl-9 h-10 text-xs" />
               </div>
             </div>
             <div className="space-y-2">
