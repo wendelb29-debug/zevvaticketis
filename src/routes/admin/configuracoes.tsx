@@ -215,15 +215,15 @@ function SettingsPage() {
                             <Users className="w-5 h-5 text-primary" />
                           </div>
                           <div>
-                            <p className="text-sm font-bold text-navy">{dept.name}</p>
-                            <p className="text-xs text-navy/60">{dept.members} membros</p>
+                            <p className="text-sm font-bold text-foreground">{dept.name}</p>
+                            <p className="text-xs text-muted-fg">{dept.members} membros</p>
                           </div>
                         </div>
                         <div className="flex items-center gap-2">
-                          <Button variant="ghost" size="icon" className="h-8 w-8 text-navy/60 hover:text-navy">
+                          <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-fg hover:text-foreground">
                             <Edit2 className="w-4 h-4" />
                           </Button>
-                          <Button variant="ghost" size="icon" className="h-8 w-8 text-navy/60 hover:text-red-500">
+                          <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-fg hover:text-error">
                             <Trash2 className="w-4 h-4" />
                           </Button>
                         </div>
