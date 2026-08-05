@@ -84,7 +84,7 @@ function AdminChatPage() {
 
       <div className="flex flex-1 overflow-hidden">
         {/* Coluna 1: Lista de Conversas (410px) */}
-        <div className="w-[410px] border-r border-[#2d3247] flex flex-col bg-[#1a1d29] shrink-0">
+        <div className="w-[540px] border-r border-[#E5E7EB] flex flex-col bg-white shrink-0">
           <div className="p-4 space-y-4">
             <div className="flex p-1 bg-[#24283b] rounded-full">
               <button className="flex-1 py-1.5 text-xs font-bold bg-[#d9a94d] text-[#14182a] rounded-full">Em Atendimento</button>
