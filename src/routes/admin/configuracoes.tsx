@@ -332,9 +332,97 @@ const AtendimentoAccordion = () => (
       </AccordionContent>
     </AccordionItem>
 
+    <AccordionItem value="tags" className="bg-white rounded-2xl border border-line p-0 overflow-hidden shadow-sm">
+      <AccordionTrigger className="px-6 py-5 hover:no-underline group text-left">
+        <div className="flex items-center gap-3 text-left">
+          <Tag className="w-5 h-5 text-coral" />
+          <ConfigItemHeader 
+            title="Gerenciar Tags" 
+            description="Etiquetas globais e por departamento." 
+          />
+        </div>
+      </AccordionTrigger>
+      <AccordionContent className="px-6 pb-6 pt-2 border-t border-line/50">
+        <div className="space-y-6 pt-4">
+          <div className="flex items-center justify-between">
+            <h3 className="text-lg font-bold text-navy">Gerenciar tags</h3>
+            <Button className="bg-[#FFF8E6] text-[#D9A94D] hover:bg-[#FFF8E6]/80 border border-[#D9A94D]/20 gap-2 rounded-xl h-11 px-6">
+              <Plus className="w-4 h-4" /> Criar tag
+            </Button>
+          </div>
+          <div className="flex flex-col md:flex-row gap-4">
+            <div className="space-y-1.5 flex-1 max-w-xs">
+              <Label className="text-[10px] font-black uppercase tracking-wider text-navy/30 px-1">Pesquisar</Label>
+              <Input placeholder="Buscar por nome..." className="rounded-xl border-line h-11 bg-white pl-4 text-sm font-medium" />
+            </div>
+            <div className="ml-auto flex items-end gap-3 pb-0.5">
+              <Button variant="ghost" size="icon" className="text-navy/30 hover:text-coral h-11 w-11 transition-colors">
+                <RefreshCcw className="w-4 h-4" />
+              </Button>
+              <div className="flex items-center gap-2">
+                <span className="text-xs font-bold text-navy/40">Mostrar</span>
+                <Select defaultValue="10">
+                  <SelectTrigger className="w-20 h-11 rounded-xl border-line bg-white text-sm font-bold">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="10">10</SelectItem>
+                    <SelectItem value="25">25</SelectItem>
+                    <SelectItem value="50">50</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+          </div>
+          <div className="border border-line rounded-2xl overflow-hidden bg-white">
+            <Table>
+              <TableHeader className="bg-surface-2">
+                <TableRow className="hover:bg-transparent border-line">
+                  <TableHead className="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-navy/30">Nome</TableHead>
+                  <TableHead className="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-navy/30">Departamento</TableHead>
+                  <TableHead className="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-navy/30 text-center">Criado em</TableHead>
+                  <TableHead className="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-navy/30 w-[100px]"></TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {[
+                  { name: "Analisar", color: "#4A6BF3", dept: "Global", created: "30/07/26 10:14" },
+                  { name: "Boleto", color: "#F34A4A", dept: "Global", created: "02/04/26 17:31" },
+                  { name: "Cotação", color: "#4AF384", dept: "Sdr", created: "12/03/26 12:38" },
+                  { name: "Em Negociação", color: "#F3A94A", dept: "Global", created: "04/03/26 13:39" },
+                ].map((tag, idx) => (
+                  <TableRow key={idx} className="border-line group hover:bg-surface-2/50 transition-colors">
+                    <TableCell className="px-6 py-5">
+                      <div className="flex items-center gap-2">
+                        <div className="w-3 h-3 rounded-full" style={{ backgroundColor: tag.color }} />
+                        <span className="font-bold text-navy text-sm">{tag.name}</span>
+                      </div>
+                    </TableCell>
+                    <TableCell className="px-6 py-5">
+                      <span className="text-xs font-medium text-navy/60">{tag.dept}</span>
+                    </TableCell>
+                    <TableCell className="px-6 py-5 text-center text-navy/40 text-xs font-medium">{tag.created}</TableCell>
+                    <TableCell className="px-6 py-5">
+                      <div className="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <Button variant="ghost" size="icon" className="h-8 w-8 text-navy/30 hover:text-navy transition-colors">
+                          <Pencil className="w-3.5 h-3.5" />
+                        </Button>
+                        <Button variant="ghost" size="icon" className="h-8 w-8 text-navy/30 hover:text-coral transition-colors">
+                          <Trash2 className="w-3.5 h-3.5" />
+                        </Button>
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
+        </div>
+      </AccordionContent>
+    </AccordionItem>
+
     {[
       { id: "classificacoes", icon: Briefcase, title: "Gerenciar Classificações", desc: "Categorização vinculada a departamentos." },
-      { id: "tags", icon: Tag, title: "Gerenciar Tags", desc: "Etiquetas globais e por departamento." },
       { id: "gatilhos", icon: Zap, title: "Gatilhos de Atendimento", desc: "Automações baseadas em fluxos." },
       { id: "sla", icon: Clock, title: "Inatividade e SLA", desc: "Tempos de resposta e prazos por setor." },
       { id: "feriados", icon: CalendarDays, title: "Feriados e Datas Especiais", desc: "Mensagens para datas não úteis." }
