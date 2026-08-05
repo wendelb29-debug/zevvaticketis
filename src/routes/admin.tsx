@@ -24,22 +24,6 @@ import {
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/admin")({
-  beforeLoad: async () => {
-    const { data: { session } } = await supabase.auth.getSession();
-    if (!session) {
-      throw redirect({ to: "/" });
-    }
-
-    const { data: isAdmin } = await supabase
-      .from("platform_admins")
-      .select("id")
-      .eq("user_id", session.user.id)
-      .maybeSingle();
-
-    if (!isAdmin) {
-      throw redirect({ to: "/app" });
-    }
-  },
   component: AdminLayout,
 });
 
@@ -129,8 +113,18 @@ function AdminLayout() {
     });
   }, [location.pathname]);
 
-  if (isAdmin === null) return null;
-  if (isAdmin === false) throw redirect({ to: "/" });
+  if (isAdmin === null) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-surface">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-coral"></div>
+      </div>
+    );
+  }
+  
+  if (isAdmin === false) {
+    navigate({ to: "/" });
+    return null;
+  }
 
 
   const SidebarContent = () => (

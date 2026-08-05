@@ -28,7 +28,7 @@ import {
   Workflow
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { useToast } from "@/hooks/use-toast";
+import { toast } from "sonner";
 import {
   Dialog,
   DialogContent,
@@ -49,7 +49,6 @@ export const Route = createFileRoute("/admin/configuracoes")({
 });
 
 function SettingsPage() {
-  const { toast } = useToast();
   const [activeTab, setActiveTab] = useState("atendimento");
   const [isDeptModalOpen, setIsDeptModalOpen] = useState(false);
   const [isTagModalOpen, setIsTagModalOpen] = useState(false);
