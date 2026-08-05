@@ -16,6 +16,8 @@ import { toast } from "sonner";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
+import { TeamManagement } from "@/components/admin/TeamManagement";
+
 
 export const Route = createFileRoute("/admin/configuracoes")({
   component: AuthGuard,
@@ -225,7 +227,9 @@ function SettingsPage() {
         </TabsContent>
 
         <TabsContent value="equipe" className="space-y-4 focus-visible:outline-none outline-none">
+          <TeamManagement />
           <Accordion type="single" collapsible className="w-full space-y-4">
+
             <AccordionItem value="usuarios" className="border-border bg-card rounded-xl border overflow-hidden shadow-sm">
               <AccordionTrigger className="px-6 py-5 font-bold text-lg hover:no-underline hover:bg-accent/50 transition-colors">
                 <div className="flex items-center gap-3">
