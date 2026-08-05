@@ -19,8 +19,9 @@ export interface AppUserOAuthAuthorizeParams {
   appUserId: string;
   clientAPIKey: string;
   returnUrl: string;
-  connectionAPIKey?: string;
-  credentialsConfiguration?: Record<string, unknown>;
+  connectionAPIKey?: string | undefined;
+  credentialsConfiguration?: Record<string, unknown> | undefined;
+
 }
 
 export interface AppUserOAuthAuthorizeResponse {
