@@ -732,12 +732,12 @@ function AdminChatPage() {
                                <Switch 
                                  checked={aiAssistantEnabled} 
                                  onCheckedChange={setAiAssistantEnabled}
-                                 className="scale-75 data-[state=checked]:bg-coral" 
+                                 className="scale-75 data-[state=checked]:bg-primary" 
                                />
-                               <span className="text-[10px] font-bold dark:text-white/60">Assistente automático</span>
+                               <span className="text-[10px] font-bold text-muted-foreground">Assistente automático</span>
                              </div>
-                             <div className="w-4 h-4 rounded-full border border-line dark:border-white/20 flex items-center justify-center cursor-help">
-                               <span className="text-[8px] font-bold text-gray-400">i</span>
+                             <div className="w-4 h-4 rounded-full border border-border flex items-center justify-center cursor-help">
+                               <span className="text-[8px] font-bold text-muted-foreground">i</span>
                              </div>
                           </div>
                         </DropdownMenuContent>
