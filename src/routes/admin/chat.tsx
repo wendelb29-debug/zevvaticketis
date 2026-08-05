@@ -1118,12 +1118,12 @@ function AdminChatPage() {
                 </Select>
               </div>
               <div className="space-y-2">
-                <Label className="text-[10px] font-bold uppercase tracking-wider text-gray-400">Destinatário</Label>
+                <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Destinatário</Label>
                 <Select>
-                  <SelectTrigger className="bg-[#23262E] border-none text-xs h-11">
+                  <SelectTrigger className="bg-muted border-none text-xs h-11">
                     <SelectValue placeholder="Selecione um agente" />
                   </SelectTrigger>
-                  <SelectContent className="bg-[#23262E] border-none text-white">
+                  <SelectContent className="bg-popover border-border text-foreground">
                     <SelectItem value="a1">Carlos Aguiar</SelectItem>
                     <SelectItem value="a2">Ana Pereira</SelectItem>
                   </SelectContent>
@@ -1131,16 +1131,16 @@ function AdminChatPage() {
               </div>
             </div>
             <div className="space-y-2">
-              <Label className="text-[10px] font-bold uppercase tracking-wider text-gray-400">Motivo da transferência</Label>
+              <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Motivo da transferência</Label>
               <textarea 
-                className="w-full bg-[#23262E] border-none p-4 rounded-xl text-xs text-white placeholder:text-gray-600 outline-none min-h-[100px] resize-none"
+                className="w-full bg-muted border-none p-4 rounded-xl text-xs text-foreground placeholder:text-muted-foreground outline-none min-h-[100px] resize-none"
                 placeholder="Explique o motivo da transferência..."
               />
             </div>
           </div>
           <DialogFooter className="mt-4 flex justify-between sm:justify-between items-center w-full">
             <button onClick={() => setIsTransferDialogOpen(false)} className="text-sm font-bold hover:underline">Cancelar</button>
-            <button onClick={handleTransfer} className="flex-1 max-w-[400px] py-3 bg-coral hover:bg-coral/90 text-white text-[11px] font-black uppercase tracking-widest rounded-lg">Transferir agora</button>
+            <button onClick={handleTransfer} className="flex-1 max-w-[400px] py-3 bg-primary hover:bg-primary/90 text-primary-foreground text-[11px] font-black uppercase tracking-widest rounded-lg">Transferir agora</button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
@@ -1188,18 +1188,18 @@ function AdminChatPage() {
       `}</style>
       {/* Dialog: Configurações do Chat */}
       <Dialog open={isChatSettingsOpen} onOpenChange={setIsChatSettingsOpen}>
-        <DialogContent className="max-w-md bg-[#1A1D29] border-[#2D313F] text-white p-0 overflow-hidden shadow-2xl">
-          <div className="p-4 border-b border-white/5 flex items-center justify-between bg-[#23262E]">
+        <DialogContent className="max-w-md bg-popover border-border text-foreground p-0 overflow-hidden shadow-2xl">
+          <div className="p-4 border-b border-border flex items-center justify-between bg-muted/50">
             <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center">
-                <SettingsIcon className="w-4 h-4 text-gray-400" />
+              <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
+                <SettingsIcon className="w-4 h-4 text-primary" />
               </div>
               <div>
                 <DialogTitle className="text-sm font-bold">Preferências</DialogTitle>
-                <DialogDescription className="text-[10px] text-gray-500">Configurações do ez Chat</DialogDescription>
+                <DialogDescription className="text-[10px] text-muted-foreground">Configurações do ez Chat</DialogDescription>
               </div>
             </div>
-            <button onClick={() => setIsChatSettingsOpen(false)} className="text-gray-500 hover:text-white transition-colors">
+            <button onClick={() => setIsChatSettingsOpen(false)} className="text-muted-foreground hover:text-foreground transition-colors">
               <X className="w-4 h-4" />
             </button>
           </div>
