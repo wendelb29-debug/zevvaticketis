@@ -23,8 +23,9 @@ import { z } from "zod";
 export const Route = createFileRoute("/admin/envios-massivos")({
   validateSearch: (search: Record<string, unknown>) => {
     const raw = search["wizard"];
-    const wizard = raw === true || raw === "true" || raw === '"true"';
-    return wizard ? { wizard: true } : {};
+    return {
+      wizard: raw === true || raw === "true" || raw === '"true"' ? true : undefined,
+    };
   },
   component: EnviosMassivosPage,
 });
