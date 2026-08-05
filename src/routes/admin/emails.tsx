@@ -96,7 +96,7 @@ function AdminEmailsPage() {
   }
 
   // Si no hay cuenta seleccionada, seleccionamos la primera
-  if (!selectedAccountId && accounts.length > 0) {
+  if (!selectedAccountId && accounts && accounts.length > 0) {
     setSelectedAccountId(accounts[0].id);
   }
 
@@ -138,7 +138,7 @@ function AdminEmailsPage() {
 
           <div className="mt-auto p-4 border-t border-line bg-white/50">
             <h4 className="text-[10px] font-extrabold uppercase tracking-widest text-navy/40 mb-3 px-2">Contas</h4>
-            {accounts.map(acc => (
+            {accounts?.map((acc: any) => (
               <button
                 key={acc.id}
                 onClick={() => setSelectedAccountId(acc.id)}
@@ -179,10 +179,10 @@ function AdminEmailsPage() {
           <div className="flex-1 overflow-y-auto custom-scrollbar">
             {loadingMessages ? (
               <div className="p-10 text-center text-xs text-navy/40 font-inter">Buscando mensagens...</div>
-            ) : messages.length === 0 ? (
+            ) : !messages || messages.length === 0 ? (
               <div className="p-10 text-center text-xs text-navy/40 font-inter">Nenhuma mensagem nesta pasta.</div>
             ) : (
-              messages.map(msg => (
+              messages.map((msg: any) => (
                 <button
                   key={msg.id}
                   onClick={() => setSelectedMessageId(msg.id)}
