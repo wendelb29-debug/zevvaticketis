@@ -92,7 +92,7 @@ function ProdutorDashboard() {
             </h2>
             <p className="text-xs text-muted font-medium uppercase tracking-widest">Veja como seu evento aparecerá para os participantes</p>
           </div>
-          <Link to="/eventos" search={{}} className="text-[10px] font-extrabold text-coral uppercase tracking-widest hover:underline">
+          <Link to="/eventos" className="text-[10px] font-extrabold text-coral uppercase tracking-widest hover:underline">
             Ver página pública completa
           </Link>
         </div>

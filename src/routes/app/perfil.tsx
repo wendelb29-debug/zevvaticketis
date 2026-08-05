@@ -85,13 +85,10 @@ function UserProfile() {
 
       if (uploadError) throw uploadError;
 
-      // Bucket é privado: gerar URL assinada para exibição
-      const { data: signed, error: signedError } = await supabase.storage
+      // Get public URL
+      const { data: { publicUrl } } = supabase.storage
         .from('avatars')
-        .createSignedUrl(filePath, 60 * 60 * 24 * 365);
-
-      if (signedError || !signed) throw signedError ?? new Error("Falha ao gerar URL da imagem");
-      const publicUrl = signed.signedUrl;
+        .getPublicUrl(filePath);
 
       // Update profile
       const { error: updateError } = await supabase
