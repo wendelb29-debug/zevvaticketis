@@ -1,5 +1,5 @@
 import { createFileRoute, Link, useNavigate } from '@tanstack/react-router';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { supabase } from "@/integrations/supabase/client";
 import { UserMenu } from "@/components/auth/UserMenu";
 import { 
@@ -8,7 +8,8 @@ import {
   History as HistoryIcon, Calendar, Zap, Copy, Printer, Eye, Tag, AlertCircle, 
   LayoutList, MessageSquare, Filter, SlidersHorizontal, ListFilter,
   Paperclip, Smile, ImageIcon, Play, Volume2, Pencil, X, Home, ChevronRight,
-  ArrowUpDown, SortAsc, SortDesc, CalendarDays, Lock, Globe, MessageCircle
+  ArrowUpDown, SortAsc, SortDesc, CalendarDays, Lock, Globe, MessageCircle,
+  Music, FileText, Sparkles, Wand2, ArrowUpCircle, AlignLeft, Languages
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Badge } from '@/components/ui/badge';
