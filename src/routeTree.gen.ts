@@ -22,6 +22,7 @@ import { Route as ProdutorRouteImport } from './routes/produtor'
 import { Route as ProdutorPendenteRouteImport } from './routes/produtor-pendente'
 import { Route as Char91DotmcpChar93ListToolsRouteImport } from './routes/[.mcp]/list-tools'
 import { Route as Char91DotwellKnownChar93OauthProtectedResourceRouteImport } from './routes/[.well-known]/oauth-protected-resource'
+import { Route as AdminIndexRouteImport } from './routes/admin/index'
 import { Route as AdminAprovacoesRouteImport } from './routes/admin/aprovacoes'
 import { Route as AdminAuditoriaRouteImport } from './routes/admin/auditoria'
 import { Route as AdminChatRouteImport } from './routes/admin/chat'
@@ -117,6 +118,11 @@ const Char91DotwellKnownChar93OauthProtectedResourceRoute =
     path: '/.well-known/oauth-protected-resource',
     getParentRoute: () => rootRouteImport,
   } as any)
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminAprovacoesRoute = AdminAprovacoesRouteImport.update({
   id: '/aprovacoes',
   path: '/aprovacoes',
@@ -288,6 +294,7 @@ export interface FileRoutesByFullPath {
   '/produtor/marketing': typeof ProdutorMarketingRoute
   '/produtor/novo-evento': typeof ProdutorNovoEventoRoute
   '/produtor/suporte': typeof ProdutorSuporteRoute
+  '/admin/': typeof AdminIndexRoute
   '/app/': typeof AppIndexRoute
   '/produtor/': typeof ProdutorIndexRoute
   '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
@@ -300,7 +307,6 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/admin': typeof AdminRouteWithChildren
   '/cadastro': typeof CadastroRoute
   '/checkin': typeof CheckinRoute
   '/criar-evento': typeof CriarEventoRoute
@@ -328,6 +334,7 @@ export interface FileRoutesByTo {
   '/produtor/marketing': typeof ProdutorMarketingRoute
   '/produtor/novo-evento': typeof ProdutorNovoEventoRoute
   '/produtor/suporte': typeof ProdutorSuporteRoute
+  '/admin': typeof AdminIndexRoute
   '/app': typeof AppIndexRoute
   '/produtor': typeof ProdutorIndexRoute
   '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
@@ -371,6 +378,7 @@ export interface FileRoutesById {
   '/produtor/marketing': typeof ProdutorMarketingRoute
   '/produtor/novo-evento': typeof ProdutorNovoEventoRoute
   '/produtor/suporte': typeof ProdutorSuporteRoute
+  '/admin/': typeof AdminIndexRoute
   '/app/': typeof AppIndexRoute
   '/produtor/': typeof ProdutorIndexRoute
   '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
@@ -415,6 +423,7 @@ export interface FileRouteTypes {
     | '/produtor/marketing'
     | '/produtor/novo-evento'
     | '/produtor/suporte'
+    | '/admin/'
     | '/app/'
     | '/produtor/'
     | '/.lovable/oauth/consent'
@@ -427,7 +436,6 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/admin'
     | '/cadastro'
     | '/checkin'
     | '/criar-evento'
@@ -455,6 +463,7 @@ export interface FileRouteTypes {
     | '/produtor/marketing'
     | '/produtor/novo-evento'
     | '/produtor/suporte'
+    | '/admin'
     | '/app'
     | '/produtor'
     | '/.lovable/oauth/consent'
@@ -497,6 +506,7 @@ export interface FileRouteTypes {
     | '/produtor/marketing'
     | '/produtor/novo-evento'
     | '/produtor/suporte'
+    | '/admin/'
     | '/app/'
     | '/produtor/'
     | '/.lovable/oauth/consent'
@@ -621,6 +631,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/.well-known/oauth-protected-resource'
       preLoaderRoute: typeof Char91DotwellKnownChar93OauthProtectedResourceRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/admin/': {
+      id: '/admin/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof AdminRoute
     }
     '/admin/aprovacoes': {
       id: '/admin/aprovacoes'
@@ -825,6 +842,7 @@ interface AdminRouteChildren {
   AdminPlanosRoute: typeof AdminPlanosRoute
   AdminProdutoresRoute: typeof AdminProdutoresRoute
   AdminUsuariosRoute: typeof AdminUsuariosRoute
+  AdminIndexRoute: typeof AdminIndexRoute
   AdminMarketingAnunciosRoute: typeof AdminMarketingAnunciosRoute
   AdminMarketingPublicidadeRoute: typeof AdminMarketingPublicidadeRoute
   AdminMarketingIndexRoute: typeof AdminMarketingIndexRoute
@@ -841,6 +859,7 @@ const AdminRouteChildren: AdminRouteChildren = {
   AdminPlanosRoute: AdminPlanosRoute,
   AdminProdutoresRoute: AdminProdutoresRoute,
   AdminUsuariosRoute: AdminUsuariosRoute,
+  AdminIndexRoute: AdminIndexRoute,
   AdminMarketingAnunciosRoute: AdminMarketingAnunciosRoute,
   AdminMarketingPublicidadeRoute: AdminMarketingPublicidadeRoute,
   AdminMarketingIndexRoute: AdminMarketingIndexRoute,
