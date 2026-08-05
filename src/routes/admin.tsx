@@ -190,6 +190,7 @@ function AdminLayout() {
                       <Link
                         key={child.label}
                         to={child.href as any}
+                        search={child.query as any}
                         className="block py-2 rounded-lg text-xs font-bold transition-all duration-200"
                         activeProps={{ className: "text-primary" }}
                         inactiveProps={{ className: "text-muted-fg hover:text-foreground" }}

@@ -40,7 +40,7 @@ function EnviosMassivosPage() {
           <p className="text-sm text-muted-fg mt-2 font-medium">Ferramenta completa de campanhas multicanal Zevva.</p>
         </div>
         <Button 
-          onClick={() => setIsWizardOpen(true)}
+          onClick={() => handleOpenWizard(true)}
           className="bg-primary hover:bg-primary/90 text-primary-foreground gap-2 font-extrabold px-8 h-12 shadow-lg shadow-primary/20 rounded-xl"
         >
           <Plus className="w-5 h-5" /> NOVA CAMPANHA
@@ -141,7 +141,7 @@ function EnviosMassivosPage() {
         </div>
       </div>
       
-      <NewCampaignWizard open={isWizardOpen} onOpenChange={setIsWizardOpen} />
+      <NewCampaignWizard open={isWizardOpen} onOpenChange={handleOpenWizard} />
     </div>
   );
 }
