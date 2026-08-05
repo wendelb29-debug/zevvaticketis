@@ -14,6 +14,33 @@ export type Database = {
   }
   public: {
     Tables: {
+      audit_logs: {
+        Row: {
+          acao: string
+          admin_id: string | null
+          alvo_id: string
+          alvo_tipo: string
+          created_at: string | null
+          id: string
+        }
+        Insert: {
+          acao: string
+          admin_id?: string | null
+          alvo_id: string
+          alvo_tipo: string
+          created_at?: string | null
+          id?: string
+        }
+        Update: {
+          acao?: string
+          admin_id?: string | null
+          alvo_id?: string
+          alvo_tipo?: string
+          created_at?: string | null
+          id?: string
+        }
+        Relationships: []
+      }
       checkin_logs: {
         Row: {
           id: string
@@ -91,6 +118,36 @@ export type Database = {
           created_at?: string | null
           id?: string
           simbolo?: string
+        }
+        Relationships: []
+      }
+      email_logs: {
+        Row: {
+          assunto: string
+          destinatario: string
+          enviado_em: string | null
+          id: string
+          metadata: Json | null
+          status: string
+          tipo: string
+        }
+        Insert: {
+          assunto: string
+          destinatario: string
+          enviado_em?: string | null
+          id?: string
+          metadata?: Json | null
+          status: string
+          tipo: string
+        }
+        Update: {
+          assunto?: string
+          destinatario?: string
+          enviado_em?: string | null
+          id?: string
+          metadata?: Json | null
+          status?: string
+          tipo?: string
         }
         Relationships: []
       }
@@ -832,13 +889,14 @@ export type Database = {
         Args: { _uid: string }
         Returns: Json
       }
+      has_role: { Args: { _role: string; _user_id: string }; Returns: boolean }
       promote_to_platform_admin: {
         Args: { target_email: string }
         Returns: Json
       }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "produtor_owner" | "equipe" | "participante"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -965,6 +1023,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "produtor_owner", "equipe", "participante"],
+    },
   },
 } as const

@@ -10,11 +10,11 @@ function AuditoriaPage() {
   const { data: logs, isLoading } = useQuery({
     queryKey: ["audit-logs"],
     queryFn: async () => {
-      // @ts-ignore
-      const { data } = await supabase
-        .from("audit_logs")
+      // Use any to bypass schema types until types are regenerated
+      const { data } = await (supabase
+        .from("audit_logs" as any)
         .select("*, profiles(nome)")
-        .order("created_at", { ascending: false });
+        .order("created_at", { ascending: false }) as any);
       return data;
     }
   });
@@ -38,12 +38,17 @@ function AuditoriaPage() {
           <tbody className="divide-y divide-line">
             {logs?.map((log: any) => (
               <tr key={log.id}>
-                <td className="px-6 py-4 font-bold text-navy">{log.profiles?.nome}</td>
+                <td className="px-6 py-4 font-bold text-navy">{log.profiles?.nome || 'Sistema'}</td>
                 <td className="px-6 py-4">{log.acao}</td>
                 <td className="px-6 py-4">{log.alvo_tipo} ({log.alvo_id})</td>
                 <td className="px-6 py-4 text-xs text-muted">{new Date(log.created_at).toLocaleString()}</td>
               </tr>
             ))}
+            {(!logs || logs.length === 0) && (
+              <tr>
+                <td colSpan={4} className="px-6 py-8 text-center text-muted">Nenhum log de auditoria encontrado.</td>
+              </tr>
+            )}
           </tbody>
         </table>
       </div>
