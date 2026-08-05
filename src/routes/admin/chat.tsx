@@ -448,8 +448,12 @@ function AdminChatPage() {
             { icon: HistoryIcon, label: "Histórico", onClick: () => setIsHistoryDialogOpen(true) },
             { icon: Calendar, label: "Agendar" },
             { icon: Zap, label: "Gatilhos" },
-            { icon: Copy, label: "Copiar" },
-            { icon: Printer, label: "Imprimir" },
+            { icon: Copy, label: "Copiar", onClick: () => {
+              const text = messages.map(m => `${m.time} - ${m.sender === 'agent' ? 'Atendente' : 'Cliente'}: ${m.text}`).join('\n');
+              navigator.clipboard.writeText(text);
+              toast.success("Conversa copiada para a área de transferência");
+            }},
+            { icon: Printer, label: "Imprimir", onClick: () => window.print() },
           ].map((action, i) => (
             <button 
               key={i} 
@@ -790,6 +794,28 @@ function AdminChatPage() {
         .custom-scrollbar-fina::-webkit-scrollbar { width: 3px; }
         .custom-scrollbar-fina::-webkit-scrollbar-track { background: transparent; }
         .custom-scrollbar-fina::-webkit-scrollbar-thumb { background: rgba(232, 96, 74, 0.05); border-radius: 10px; }
+
+        @media print {
+          body * { visibility: hidden; }
+          .flex-1.flex.flex-col.bg-white.shrink-0.relative, .flex-1.flex.flex-col.bg-white.shrink-0.relative * {
+            visibility: visible;
+          }
+          .flex-1.flex.flex-col.bg-white.shrink-0.relative {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: auto;
+          }
+          header, .w-[540px], .w-[52px], .p-4.bg-white.border-t, .h-\[72px\] .flex.items-center.gap-2 {
+            display: none !important;
+          }
+          .flex-1.overflow-y-auto.p-8.space-y-8 {
+            overflow: visible !important;
+            height: auto !important;
+          }
+          .custom-scrollbar::-webkit-scrollbar { display: none; }
+        }
       `}</style>
     </div>
   );
