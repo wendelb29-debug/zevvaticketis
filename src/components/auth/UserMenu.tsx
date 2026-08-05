@@ -27,6 +27,7 @@ import {
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { cn } from "@/lib/utils";
 import { useLocation } from "@tanstack/react-router";
+import { useUI, type Theme } from "@/hooks/use-ui";
 
 interface UserMenuProps {
   user: any;
@@ -38,6 +39,7 @@ interface UserMenuProps {
 
 export function UserMenu({ user, onLogout, onNavigate, agentStatus, onStatusChange }: UserMenuProps) {
   const [role, setRole] = useState<{ label: string; color: string } | null>(null);
+  const { theme, setTheme, fontSize, setFontSize } = useUI();
   const location = useLocation();
   const isChat = location.pathname === "/admin/chat";
 
@@ -162,10 +164,10 @@ export function UserMenu({ user, onLogout, onNavigate, agentStatus, onStatusChan
               Alterar tema
             </DropdownMenuSubTrigger>
             <DropdownMenuPortal>
-              <DropdownMenuSubContent className="w-40 rounded-xl p-1.5 border-line shadow-xl font-inter bg-white/95 backdrop-blur-md">
-                <DropdownMenuItem className="text-xs font-bold text-navy">Claro</DropdownMenuItem>
-                <DropdownMenuItem className="text-xs font-bold text-navy">Escuro</DropdownMenuItem>
-                <DropdownMenuItem className="text-xs font-bold text-navy">Sistema</DropdownMenuItem>
+              <DropdownMenuSubContent className="w-40 rounded-xl p-1.5 border-line shadow-xl font-inter bg-white/95 dark:bg-[#1A1D29]/95 backdrop-blur-md">
+                <DropdownMenuItem onClick={() => setTheme('light')} className={cn("text-xs font-bold text-navy dark:text-white cursor-pointer", theme === 'light' && "bg-surface dark:bg-white/10")}>Claro</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setTheme('dark')} className={cn("text-xs font-bold text-navy dark:text-white cursor-pointer", theme === 'dark' && "bg-surface dark:bg-white/10")}>Escuro</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setTheme('system')} className={cn("text-xs font-bold text-navy dark:text-white cursor-pointer", theme === 'system' && "bg-surface dark:bg-white/10")}>Sistema</DropdownMenuItem>
               </DropdownMenuSubContent>
             </DropdownMenuPortal>
           </DropdownMenuSub>
@@ -175,19 +177,39 @@ export function UserMenu({ user, onLogout, onNavigate, agentStatus, onStatusChan
               <Type className="w-4 h-4 text-navy/40" />
               <div className="flex flex-1 justify-between items-center">
                 <span>Tamanho do texto</span>
-                <span className="text-[10px] text-navy/40">100%</span>
+                <span className="text-[10px] text-navy/40">{fontSize}%</span>
               </div>
             </DropdownMenuSubTrigger>
             <DropdownMenuPortal>
-              <DropdownMenuSubContent className="w-48 rounded-xl p-4 border-line shadow-xl font-inter bg-white/95 backdrop-blur-md">
-                <div className="space-y-3">
-                  <p className="text-[10px] font-black uppercase tracking-widest text-navy/40">Ajustar zoom</p>
+              <DropdownMenuSubContent className="w-56 rounded-xl p-4 border-line shadow-xl font-inter bg-white/95 dark:bg-[#1A1D29]/95 backdrop-blur-md">
+                <div className="space-y-4">
+                  <div className="flex justify-between items-center">
+                    <p className="text-[10px] font-black uppercase tracking-widest text-navy/40">Ajustar zoom</p>
+                    <span className="text-[10px] font-bold text-coral">{fontSize}%</span>
+                  </div>
                   <div className="flex items-center gap-3">
-                    <button className="w-6 h-6 flex items-center justify-center rounded-md border border-line text-navy hover:bg-surface">-</button>
-                    <div className="flex-1 h-1 bg-coral/10 rounded-full relative">
-                      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3 h-3 bg-coral rounded-full shadow-sm" />
+                    <button 
+                      onClick={() => setFontSize(Math.max(80, fontSize - 10))}
+                      className="w-8 h-8 flex items-center justify-center rounded-lg border border-line text-navy dark:text-white hover:bg-surface dark:hover:bg-white/10"
+                    >
+                      -
+                    </button>
+                    <div className="flex-1 px-1">
+                      <input 
+                        type="range"
+                        min="80"
+                        max="150"
+                        value={fontSize}
+                        onChange={(e) => setFontSize(parseInt(e.target.value))}
+                        className="w-full h-1 bg-line rounded-full appearance-none cursor-pointer accent-coral"
+                      />
                     </div>
-                    <button className="w-6 h-6 flex items-center justify-center rounded-md border border-line text-navy hover:bg-surface">+</button>
+                    <button 
+                      onClick={() => setFontSize(Math.min(150, fontSize + 10))}
+                      className="w-8 h-8 flex items-center justify-center rounded-lg border border-line text-navy dark:text-white hover:bg-surface dark:hover:bg-white/10"
+                    >
+                      +
+                    </button>
                   </div>
                 </div>
               </DropdownMenuSubContent>

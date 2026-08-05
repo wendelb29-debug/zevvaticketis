@@ -156,9 +156,25 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
-  const { activeOverlay, authView, closeOverlay, language } = useUI();
+  const { activeOverlay, authView, closeOverlay, language, theme, fontSize } = useUI();
   const router = useRouter();
   const [isNavigating, setIsNavigating] = useState(false);
+
+  useEffect(() => {
+    const root = window.document.documentElement;
+    root.classList.remove("light", "dark");
+    
+    if (theme === "system") {
+      const systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      root.classList.add(systemTheme);
+    } else {
+      root.classList.add(theme);
+    }
+  }, [theme]);
+
+  useEffect(() => {
+    document.documentElement.style.fontSize = `${(fontSize / 100) * 16}px`;
+  }, [fontSize]);
 
   useEffect(() => {
     const handleOutsideClick = (event: MouseEvent) => {
