@@ -49,10 +49,18 @@ function UserProfile() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [uploading, setUploading] = useState(false);
+  const [sessions, setSessions] = useState<any[]>([]);
+  const [myTickets, setMyTickets] = useState<any[]>([]);
+  const [activities, setActivities] = useState<any[]>([]);
+  const [newPassword, setNewPassword] = useState({ current: "", new: "", confirm: "" });
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const { theme, setTheme } = useUI();
 
   useEffect(() => {
     fetchProfile();
+    fetchSessions();
+    fetchTickets();
+    fetchHistory();
   }, []);
 
   async function fetchProfile() {
@@ -69,11 +77,34 @@ function UserProfile() {
     setLoading(false);
   }
 
+  async function fetchSessions() {
+    const { data } = await supabase.from("active_sessions").select("*").order("last_access", { ascending: false });
+    if (data) setSessions(data);
+  }
+
+  async function fetchTickets() {
+    const { data: { user } } = await supabase.auth.getUser();
+    const { data } = await supabase
+      .from("tickets")
+      .select("*, events(title, location, city, start_date)")
+      .eq("owner_id", user?.id)
+      .limit(3);
+    if (data) setMyTickets(data);
+  }
+
+  async function fetchHistory() {
+    // Simulated history for timeline
+    setActivities([
+      { id: 1, type: "compra", title: "Compra realizada", desc: "Evento Caravanas Internacionais", date: "05/08/2026" },
+      { id: 2, type: "perfil", title: "Perfil atualizado", desc: "Foto de perfil alterada", date: "04/08/2026" },
+      { id: 3, type: "login", title: "Login realizado", desc: "Dispositivo Chrome / Windows", date: "04/08/2026" },
+    ]);
+  }
+
   const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (!file) return;
 
-    // Validation
     const allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
     if (!allowedTypes.includes(file.type)) {
       toast.error("Formato inválido. Use JPG, PNG ou WebP.");
@@ -90,21 +121,18 @@ function UserProfile() {
       if (!user) throw new Error("Usuário não autenticado");
 
       const fileExt = file.name.split('.').pop();
-      const filePath = `${user.id}/avatar.${fileExt}`;
+      const filePath = `${user.id}/avatar-${Date.now()}.${fileExt}`;
 
-      // Upload file
       const { error: uploadError } = await supabase.storage
         .from('avatars')
         .upload(filePath, file, { upsert: true });
 
       if (uploadError) throw uploadError;
 
-      // Get public URL
       const { data: { publicUrl } } = supabase.storage
         .from('avatars')
         .getPublicUrl(filePath);
 
-      // Update profile
       const { error: updateError } = await supabase
         .from('profiles')
         .update({ avatar_url: publicUrl })
@@ -124,15 +152,12 @@ function UserProfile() {
   const handleRemovePhoto = async () => {
     try {
       const { data: { user } } = await supabase.auth.getUser();
-      if (!user) throw new Error("Usuário não autenticado");
-
       const { error } = await supabase
         .from('profiles')
         .update({ avatar_url: null })
-        .eq('id', user.id);
+        .eq('id', user?.id);
 
       if (error) throw error;
-
       setProfile({ ...profile, avatar_url: null });
       toast.success("Foto removida.");
     } catch (error: any) {
@@ -147,19 +172,53 @@ function UserProfile() {
         .from("profiles")
         .update({
           nome: profile.nome,
+          telefone: profile.telefone,
+          data_nascimento: profile.data_nascimento,
+          documento: profile.documento,
+          cidade: profile.cidade,
+          estado: profile.estado,
+          cep: profile.cep,
+          rua: profile.rua,
+          numero: profile.numero,
+          complemento: profile.complemento,
           notif_lembrete_evento: profile.notif_lembrete_evento,
-          notif_mudancas_evento: profile.notif_mudancas_evento,
           notif_novidades: profile.notif_novidades,
         })
         .eq("id", profile.id);
 
       if (error) throw error;
-      toast.success("Perfil atualizado!");
+      toast.success("Alterações salvas com sucesso!");
     } catch (error: any) {
       toast.error(error.message);
     } finally {
       setSaving(false);
     }
+  };
+
+  const handleUpdatePassword = async () => {
+    if (newPassword.new !== newPassword.confirm) {
+      toast.error("As senhas não conferem.");
+      return;
+    }
+    const { error } = await supabase.auth.updateUser({ password: newPassword.new });
+    if (error) toast.error(error.message);
+    else {
+      toast.success("Senha atualizada com sucesso!");
+      setNewPassword({ current: "", new: "", confirm: "" });
+    }
+  };
+
+  const handleTerminateSession = async (sessionId: string) => {
+    const { error } = await supabase.from("active_sessions").delete().eq("id", sessionId);
+    if (error) toast.error("Erro ao encerrar sessão.");
+    else {
+      setSessions(sessions.filter(s => s.id !== sessionId));
+      toast.success("Sessão encerrada.");
+    }
+  };
+
+  const handleDeleteAccount = async () => {
+    toast.error("Esta função requer suporte administrativo para garantir a exclusão segura de todos os dados.");
   };
 
   const initials = profile?.nome 
@@ -169,6 +228,7 @@ function UserProfile() {
   if (loading) return (
     <div className="flex flex-col items-center justify-center py-20">
       <Loader2 className="w-8 h-8 animate-spin text-coral" />
+      <p className="mt-4 text-xs font-bold text-muted uppercase tracking-widest">Carregando perfil...</p>
     </div>
   );
 
