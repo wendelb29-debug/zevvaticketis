@@ -112,7 +112,7 @@ function EventPage() {
         </div>
         
         <div className="flex items-center gap-4">
-          <Button variant="ghost" className="hidden md:flex rounded-xl font-bold gap-2 text-xs h-12">
+          <Button variant="ghost" className="hidden md:flex rounded-xl font-bold gap-2 text-xs h-12 text-foreground hover:bg-muted">
             <Share2 className="w-4 h-4" /> Compartilhar
           </Button>
           <Button 
