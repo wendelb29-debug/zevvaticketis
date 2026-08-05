@@ -109,6 +109,7 @@ function AdminLayout() {
     { 
       label: "Marketing", 
       icon: Megaphone, 
+
       children: [
         { label: "Anúncios", href: "/admin/marketing/anuncios" },
         { label: "Publicidade", href: "/admin/marketing/publicidade" },
