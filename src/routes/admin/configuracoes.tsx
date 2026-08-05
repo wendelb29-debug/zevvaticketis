@@ -271,26 +271,26 @@ function SettingsPage() {
 
       {/* Dept Modal */}
       <Dialog open={isDeptModalOpen} onOpenChange={setIsDeptModalOpen}>
-        <DialogContent className="sm:max-w-[425px] bg-white border-line p-0 overflow-hidden">
-          <DialogHeader className="p-6 bg-surface/50 border-b border-line">
-            <DialogTitle className="text-xl font-manrope font-extrabold text-navy">Criar Departamento</DialogTitle>
-            <DialogDescription>Adicione um novo departamento para organizar seus atendimentos.</DialogDescription>
+        <DialogContent className="sm:max-w-[425px] bg-card border-border p-0 overflow-hidden text-foreground">
+          <DialogHeader className="p-6 bg-accent/50 border-b border-border">
+            <DialogTitle className="text-xl font-manrope font-extrabold">Criar Departamento</DialogTitle>
+            <DialogDescription className="text-muted-fg">Adicione um novo departamento para organizar seus atendimentos.</DialogDescription>
           </DialogHeader>
           <div className="p-6 space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="dept-name" className="text-sm font-bold text-navy">Nome do Departamento</Label>
+              <Label htmlFor="dept-name" className="text-sm font-bold">Nome do Departamento</Label>
               <Input 
                 id="dept-name" 
                 value={deptName}
                 onChange={(e) => setDeptName(e.target.value)}
                 placeholder="Ex: Suporte Premium" 
-                className="border-line focus:ring-coral" 
+                className="border-border bg-background focus:ring-primary" 
               />
             </div>
           </div>
-          <DialogFooter className="p-6 bg-surface/30 border-t border-line">
-            <Button variant="outline" onClick={() => setIsDeptModalOpen(false)} className="border-line font-bold">Cancelar</Button>
-            <Button onClick={handleCreateDept} className="bg-coral hover:bg-coral/90 text-white font-bold">Criar Departamento</Button>
+          <DialogFooter className="p-6 bg-accent/30 border-t border-border">
+            <Button variant="outline" onClick={() => setIsDeptModalOpen(false)} className="border-border font-bold">Cancelar</Button>
+            <Button onClick={handleCreateDept} className="bg-primary hover:bg-primary/90 text-primary-foreground font-bold">Criar Departamento</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
