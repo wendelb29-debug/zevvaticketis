@@ -374,7 +374,7 @@ function EventPage() {
                     {data.event?.producer?.nome?.slice(0, 2).toUpperCase()}
                   </div>
                   <div>
-                    <p className="text-sm font-black text-navy uppercase">{data.event.producer?.nome || "Organização"}</p>
+                    <p className="text-sm font-black text-navy uppercase">{data.event?.producer?.nome || "Organização"}</p>
                     <p className="text-[10px] font-bold text-muted uppercase">Produtor Verificado</p>
                   </div>
                 </div>
