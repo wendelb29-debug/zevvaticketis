@@ -69,6 +69,11 @@ function AdminChatPage() {
     navigate({ to: "/" });
   };
 
+  const handleTransfer = () => {
+    toast.info("Transferindo atendimento...");
+    setIsTransferDialogOpen(false);
+  };
+
   const contacts = [
     { id: "1", name: "João Silva", lastMsg: "Olá, gostaria de saber mais...", time: "Há 10 horas", status: "unread", channel: "wa", direction: 'inbound' },
     { id: "2", name: "Maria Garcia", lastMsg: "Obrigada!", time: "03/08/26, 13:37", status: "read", channel: "wa", direction: 'outbound' },
