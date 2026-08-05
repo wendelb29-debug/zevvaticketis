@@ -19,10 +19,14 @@ import { Card, CardContent } from "@/components/ui/card";
 import { NewCampaignWizard } from "@/components/admin/campaigns/NewCampaignWizard";
 import { cn } from "@/lib/utils";
 
+type EnviosMassivosSearch = {
+  wizard?: boolean;
+}
+
 export const Route = createFileRoute("/admin/envios-massivos")({
-  validateSearch: (search: Record<string, unknown>) => {
+  validateSearch: (search: Record<string, unknown>): EnviosMassivosSearch => {
     return {
-      wizard: search.wizard === "true" || search.wizard === true,
+      wizard: search["wizard"] === "true" || search["wizard"] === true,
     };
   },
   component: EnviosMassivosPage,
@@ -36,7 +40,7 @@ function EnviosMassivosPage() {
   const handleOpenWizard = (open: boolean) => {
     setIsWizardOpen(open);
     if (!open) {
-      navigate({ search: { wizard: undefined } });
+      navigate({ search: (prev: EnviosMassivosSearch) => ({ ...prev, wizard: undefined }) });
     }
   };
 
