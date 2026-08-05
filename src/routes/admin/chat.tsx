@@ -729,6 +729,58 @@ function AdminChatPage() {
         </DialogContent>
       </Dialog>
 
+      {/* Dialog: Transferir Atendimento */}
+      <Dialog open={isTransferDialogOpen} onOpenChange={setIsTransferDialogOpen}>
+        <DialogContent className="max-w-2xl bg-[#1A1D29] border-[#2D313F] text-white">
+          <DialogHeader>
+            <div className="flex items-center gap-3">
+              <DialogTitle className="text-xl font-bold">Transferir atendimento</DialogTitle>
+              <Badge variant="outline" className="bg-[#23262E] border-none text-gray-500 text-[10px] px-2 py-0">20240804-001</Badge>
+            </div>
+            <DialogDescription className="text-gray-400">Escolha o destinatário para transferir este atendimento.</DialogDescription>
+          </DialogHeader>
+          <div className="py-6 space-y-6">
+            <div className="grid grid-cols-2 gap-6">
+              <div className="space-y-2">
+                <Label className="text-[10px] font-bold uppercase tracking-wider text-gray-400">Tipo de transferência</Label>
+                <Select defaultValue="agent">
+                  <SelectTrigger className="bg-[#23262E] border-none text-xs h-11">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent className="bg-[#23262E] border-none text-white">
+                    <SelectItem value="agent">Para Agente</SelectItem>
+                    <SelectItem value="dept">Para Departamento</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="space-y-2">
+                <Label className="text-[10px] font-bold uppercase tracking-wider text-gray-400">Destinatário</Label>
+                <Select>
+                  <SelectTrigger className="bg-[#23262E] border-none text-xs h-11">
+                    <SelectValue placeholder="Selecione um agente" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-[#23262E] border-none text-white">
+                    <SelectItem value="a1">Carlos Aguiar</SelectItem>
+                    <SelectItem value="a2">Ana Pereira</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+            <div className="space-y-2">
+              <Label className="text-[10px] font-bold uppercase tracking-wider text-gray-400">Motivo da transferência</Label>
+              <textarea 
+                className="w-full bg-[#23262E] border-none p-4 rounded-xl text-xs text-white placeholder:text-gray-600 outline-none min-h-[100px] resize-none"
+                placeholder="Explique o motivo da transferência..."
+              />
+            </div>
+          </div>
+          <DialogFooter className="mt-4 flex justify-between sm:justify-between items-center w-full">
+            <button onClick={() => setIsTransferDialogOpen(false)} className="text-sm font-bold hover:underline">Cancelar</button>
+            <button onClick={handleTransfer} className="flex-1 max-w-[400px] py-3 bg-coral hover:bg-coral/90 text-white text-[11px] font-black uppercase tracking-widest rounded-lg">Transferir agora</button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
       <style>{`
         .custom-scrollbar::-webkit-scrollbar { width: 4px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
