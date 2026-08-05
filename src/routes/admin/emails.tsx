@@ -145,8 +145,11 @@ function AdminEmailsPage() {
   }
 
   // Auto-selecionar a primeira integração se nenhuma estiver selecionada
-  if (!selectedIntegrationId && integrations.length > 0) {
-    setSelectedIntegrationId(integrations[0].id);
+  if (!selectedIntegrationId && integrations && integrations.length > 0) {
+    const firstIntegration = integrations[0];
+    if (firstIntegration) {
+      setSelectedIntegrationId(firstIntegration.id);
+    }
   }
 
   return (
@@ -170,7 +173,7 @@ function AdminEmailsPage() {
                     <img src={activeIntegration.photo_url} className="w-12 h-12 rounded-2xl object-cover border-2 border-primary/20" alt="Avatar" />
                   ) : (
                     <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center font-extrabold text-primary">
-                      {activeIntegration.display_name?.[0] || activeIntegration.email_address[0].toUpperCase()}
+                      {activeIntegration?.display_name?.[0] || activeIntegration?.email_address?.[0]?.toUpperCase()}
                     </div>
                   )}
                   <div className="absolute -bottom-1 -right-1 bg-white rounded-full p-0.5 shadow-sm">
