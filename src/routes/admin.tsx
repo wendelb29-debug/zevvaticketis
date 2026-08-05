@@ -78,6 +78,7 @@ function AdminLayout() {
   };
 
   const menuItems = [
+    { label: "Chat", icon: MessageSquare, href: "/admin/chat" },
     { label: "Dashboard", icon: LayoutDashboard, href: "/admin", activeOptions: { exact: true } },
     { label: "Aprovações", icon: CheckSquare, href: "/admin/aprovacoes" },
     { 
@@ -107,7 +108,6 @@ function AdminLayout() {
     { label: "E-mails", icon: Mail, href: "/admin/emails" },
     { label: "Auditoria", icon: History, href: "/admin/auditoria" },
     { label: "Check-in", icon: CheckSquare, href: "/admin/checkin-monitor" },
-    { label: "WhatsApp Chat", icon: MessageSquare, href: "/admin/chat" },
     { label: "Configurações", icon: Settings, href: "/admin/configuracoes" },
   ];
 
