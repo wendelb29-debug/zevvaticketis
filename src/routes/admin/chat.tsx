@@ -56,6 +56,7 @@ function AdminChatPage() {
   const [sortBy, setSortBy] = useState('recent-top');
   const [sidebarWidth, setSidebarWidth] = useState(540);
   const [isResizing, setIsResizing] = useState(false);
+  const [previewContactId, setPreviewContactId] = useState<string | null>(null);
   const navigate = useNavigate();
 
   useEffect(() => {
