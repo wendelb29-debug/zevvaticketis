@@ -7,6 +7,7 @@ import {
   MoreVertical, CheckCircle, Shuffle, Users as PeopleIcon, Folder, Clock, 
   History as HistoryIcon, Calendar, Zap, Copy, Printer, Eye, Tag, AlertCircle, 
   LayoutList, MessageSquare, Filter, SlidersHorizontal, ListFilter,
+  Settings as SettingsIcon,
   Paperclip, Smile, ImageIcon, Play, Volume2, Pencil, X, Home, ChevronRight,
   ArrowUpDown, SortAsc, SortDesc, CalendarDays, Lock, Globe, MessageCircle,
   Music, FileText, Sparkles, Wand2, ArrowUpCircle, AlignLeft, Languages
