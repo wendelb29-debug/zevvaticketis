@@ -295,29 +295,32 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
               <div className="bg-accent/20 rounded-2xl p-8 border border-border">
 
                 {publicType === "arquivo" && (
-                  <div className="h-full flex flex-col items-center justify-center space-y-6">
+                  <div className="h-full flex flex-col items-center justify-center space-y-8">
                     <div className="w-full max-w-xl space-y-4">
-                      <Label className="text-xs font-bold text-white/60">DDI padrão escolhido</Label>
-                      <p className="text-[10px] text-white/40">Escolha o DDI padrão para os contatos importados</p>
-                      <div className="bg-[#1E1E2D] p-3 rounded-lg border border-white/5 flex items-center gap-2">
-                         <span className="text-lg">🇧🇷</span>
-                         <span className="text-sm font-bold">BR Brasil +55</span>
-                         <ChevronDown className="w-4 h-4 ml-auto text-white/40" />
+                      <Label className="text-xs font-bold text-navy uppercase tracking-widest">DDI padrão</Label>
+                      <div className="bg-white p-4 rounded-xl border border-border flex items-center gap-3 shadow-sm">
+                         <span className="text-2xl">🇧🇷</span>
+                         <span className="text-sm font-bold text-navy">Brasil (+55)</span>
+                         <ChevronDown className="w-4 h-4 ml-auto text-muted-fg" />
                       </div>
                     </div>
 
-                    <div className="w-full max-w-xl aspect-[2/1] border-2 border-dashed border-white/10 rounded-2xl flex flex-col items-center justify-center gap-4 bg-[#1E1E2D]/50 hover:bg-[#1E1E2D] transition-all cursor-pointer group">
-                      <div className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center group-hover:scale-110 transition-transform">
-                        <Send className="w-6 h-6 text-white/40 -rotate-45" />
+                    <div className="w-full max-w-xl aspect-[16/7] border-2 border-dashed border-primary/20 rounded-3xl flex flex-col items-center justify-center gap-4 bg-white hover:bg-primary/5 hover:border-primary/40 transition-all cursor-pointer group shadow-sm">
+                      <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center group-hover:scale-110 transition-transform shadow-sm">
+                        <Plus className="w-8 h-8 text-primary" />
                       </div>
                       <div className="text-center space-y-1">
-                        <p className="text-sm font-bold">Envie arquivo .xlsx, .xls ou .csv</p>
-                        <p className="text-xs text-white/40">Arraste e solte ou clique para selecionar</p>
-                        <p className="text-[10px] text-white/20 font-bold mt-4">SUPORTADOS: CSV, XLSX</p>
+                        <p className="text-lg font-manrope font-extrabold text-navy">Importar arquivo</p>
+                        <p className="text-sm text-muted-fg font-medium">Arraste seu arquivo .csv ou .xlsx ou clique para buscar</p>
+                        <div className="flex gap-2 justify-center mt-4">
+                           <span className="px-2 py-1 bg-accent text-[10px] font-extrabold text-muted-fg rounded">CSV</span>
+                           <span className="px-2 py-1 bg-accent text-[10px] font-extrabold text-muted-fg rounded">XLSX</span>
+                        </div>
                       </div>
                     </div>
                   </div>
                 )}
+
 
                 {publicType === "publico" && (
                   <div className="space-y-6">
