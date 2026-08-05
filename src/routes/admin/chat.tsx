@@ -59,6 +59,9 @@ function AdminChatPage() {
   const [isResizing, setIsResizing] = useState(false);
   const [previewContactId, setPreviewContactId] = useState<string | null>(null);
   const navigate = useNavigate();
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [fileType, setFileType] = useState<string | null>(null);
+  const [aiAssistantEnabled, setAiAssistantEnabled] = useState(false);
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
