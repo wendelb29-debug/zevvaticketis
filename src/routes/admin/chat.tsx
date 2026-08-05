@@ -652,10 +652,10 @@ function AdminChatPage() {
                              <span className="text-xs font-medium text-foreground">Aumentar o texto</span>
                            </DropdownMenuItem>
 
-                          <DropdownMenuItem className="flex items-center gap-3 px-3 py-2.5 cursor-pointer hover:bg-coral/5 dark:hover:bg-white/5 rounded-md">
-                            <AlignLeft className="w-4 h-4 text-blue-500" />
-                            <span className="text-xs font-medium dark:text-white/80">Resumir</span>
-                          </DropdownMenuItem>
+                           <DropdownMenuItem className="flex items-center gap-3 px-3 py-2.5 cursor-pointer hover:bg-accent rounded-md">
+                             <AlignLeft className="w-4 h-4 text-blue-500" />
+                             <span className="text-xs font-medium text-foreground">Resumir</span>
+                           </DropdownMenuItem>
 
                           <DropdownMenuItem className="flex items-center gap-3 px-3 py-2.5 cursor-pointer hover:bg-coral/5 dark:hover:bg-white/5 rounded-md">
                             <Smile className="w-4 h-4 text-cyan-400" />
