@@ -21,8 +21,9 @@ function AdminChatPage() {
   const [agentStatus, setAgentStatus] = useState<'online' | 'busy' | 'offline'>('offline');
 
   const contacts = [
-    { id: "1", name: "João Silva", lastMsg: "Olá, gostaria de saber mais...", time: "Há 10 horas", status: "unread", channel: "wa" },
-    { id: "2", name: "Maria Garcia", lastMsg: "Obrigada!", time: "03/08/26, 13:37", status: "read", channel: "wa" },
+    { id: "1", name: "João Silva", lastMsg: "Olá, gostaria de saber mais...", time: "Há 10 horas", status: "unread", channel: "wa", direction: 'inbound' },
+    { id: "2", name: "Maria Garcia", lastMsg: "Obrigada!", time: "03/08/26, 13:37", status: "read", channel: "wa", direction: 'outbound' },
+    { id: "3", name: "Conferência Águas Vivas", lastMsg: "Inscrição confirmada", time: "Há 2 horas", status: "unread", channel: "wa", direction: 'inbound' },
   ];
 
   const messages = [
@@ -33,17 +34,17 @@ function AdminChatPage() {
   return (
     <div className="flex flex-col h-screen bg-[#1a1d29] text-white overflow-hidden font-inter">
       {/* Header Fixo */}
-      <header className="h-14 flex items-center justify-between px-6 border-b border-[#2d3247] bg-[#1a1d29] shrink-0">
+      <header className="h-14 flex items-center justify-between px-6 border-b border-[#2d3247] bg-[#1a1d29] shrink-0 z-10 shadow-lg">
         <div className="flex items-center gap-8">
           <div className="flex items-center gap-2">
             <span className="font-black text-lg tracking-tighter italic">ez.<span className="text-[#d9a94d]">chat</span></span>
           </div>
           <div className="flex items-center gap-4">
             <button className="text-gray-400 hover:text-white transition-colors">
-              <Clock className="w-5 h-5" />
+              <History className="w-5 h-5" />
             </button>
-            <div className="flex items-center gap-2 px-3 py-1.5 bg-[#2d3247] rounded-full text-[10px] font-bold uppercase tracking-wider text-gray-300">
-              <Zap className="w-3 h-3 text-[#d9a94d]" /> Atendimentos
+            <div className="flex items-center gap-2 px-3 py-1.5 bg-[#24283b] rounded-full text-[10px] font-bold uppercase tracking-wider text-gray-300 border border-[#2d3247]">
+              <PeopleIcon className="w-3 h-3 text-[#d9a94d]" /> Atendimentos
             </div>
           </div>
         </div>
@@ -120,13 +121,23 @@ function AdminChatPage() {
                       <span className="text-[9px] text-gray-500 whitespace-nowrap">{contact.time}</span>
                     </div>
                     <div className="flex items-center gap-1 text-[11px] text-gray-400 truncate">
-                      <Send className="w-3 h-3 rotate-45 shrink-0" />
+                      {contact.direction === 'inbound' ? (
+                        <div className="w-3 h-3 rounded-full bg-green-500/10 flex items-center justify-center">
+                          <ChevronDown className="w-2 h-2 text-green-500 rotate-45" />
+                        </div>
+                      ) : (
+                        <div className="w-3 h-3 rounded-full bg-blue-500/10 flex items-center justify-center">
+                          <ChevronDown className="w-2 h-2 text-blue-500 -rotate-135" />
+                        </div>
+                      )}
                       <span className="truncate">{contact.lastMsg}</span>
                     </div>
                   </div>
                   <div className="flex flex-col items-end justify-between py-0.5 shrink-0">
-                    <Eye className="w-3.5 h-3.5 text-gray-600" />
-                    <MoreVertical className="w-3.5 h-3.5 text-gray-600" />
+                    <Eye className="w-3.5 h-3.5 text-gray-600 hover:text-[#d9a94d] transition-colors" />
+                    <button className="p-0.5 hover:bg-[#1a1d29] rounded-md">
+                      <MoreVertical className="w-3.5 h-3.5 text-gray-600" />
+                    </button>
                   </div>
                 </div>
               </div>
