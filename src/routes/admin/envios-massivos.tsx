@@ -46,9 +46,9 @@ function EnviosMassivosPage() {
   const handleOpenWizard = (open: boolean) => {
     setIsWizardOpen(open);
     if (!open) {
-      navigate({ to: "/admin/envios-massivos", search: { wizard: undefined } });
+      navigate({ search: (prev: any) => ({ ...prev, wizard: undefined }) });
     } else {
-      navigate({ to: "/admin/envios-massivos", search: { wizard: true } });
+      navigate({ search: (prev: any) => ({ ...prev, wizard: true }) });
     }
   };
 
