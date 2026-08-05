@@ -810,7 +810,6 @@ const AtendimentoAccordion = () => (
       { id: "classificacoes", icon: Briefcase, title: "Gerenciar Classificações", desc: "Categorização vinculada a departamentos." },
       { id: "gatilhos", icon: Zap, title: "Gatilhos de Atendimento", desc: "Automações baseadas em fluxos." },
       { id: "sla", icon: Clock, title: "Inatividade e SLA", desc: "Configure regras de inatividade e SLA do atendente" },
-      { id: "feriados", icon: CalendarDays, title: "Feriados e Datas Especiais", desc: "Mensagens para datas não úteis." }
     ].map((item) => (
       <AccordionItem key={item.id} value={item.id} className="bg-white rounded-2xl border border-line p-0 overflow-hidden shadow-sm">
         <AccordionTrigger className="px-6 py-5 hover:no-underline group text-left">
@@ -821,6 +820,7 @@ const AtendimentoAccordion = () => (
         </AccordionTrigger>
         <AccordionContent className="px-6 pb-6 pt-2 border-t border-line/50">
           <div className="space-y-12 pt-6">
+
             {/* Parâmetros de inatividade do cliente */}
             <div className="space-y-6">
               <div className="flex items-center justify-between">
