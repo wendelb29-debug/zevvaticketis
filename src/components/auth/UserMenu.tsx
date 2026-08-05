@@ -25,7 +25,8 @@ import {
   DropdownMenuSubContent,
   DropdownMenuPortal
 } from "@/components/ui/dropdown-menu";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { useAvatarUrl } from "@/lib/avatar";
 import { cn } from "@/lib/utils";
 import { useLocation } from "@tanstack/react-router";
 import { useUI, type Theme } from "@/hooks/use-ui";
@@ -44,6 +45,21 @@ export function UserMenu({ user, onLogout, onNavigate, agentStatus, onStatusChan
   const { theme, setTheme, fontSize, setFontSize } = useUI();
   const location = useLocation();
   const isChat = location.pathname === "/admin/chat";
+  const [avatarPath, setAvatarPath] = useState<string | null>(null);
+  const avatarUrl = useAvatarUrl(avatarPath);
+
+  useEffect(() => {
+    async function fetchAvatar() {
+      if (!user) return;
+      const { data } = await supabase
+        .from("profiles")
+        .select("avatar_url")
+        .eq("id", user.id)
+        .maybeSingle();
+      setAvatarPath(data?.avatar_url ?? null);
+    }
+    fetchAvatar();
+  }, [user]);
 
   useEffect(() => {
     async function fetchRole() {
@@ -88,6 +104,7 @@ export function UserMenu({ user, onLogout, onNavigate, agentStatus, onStatusChan
       <DropdownMenuTrigger asChild>
         <button className="flex items-center gap-2 p-1 rounded-full hover:bg-primary/5 transition-all outline-none group border border-transparent hover:border-border">
           <Avatar className="h-8 w-8 border-2 border-white shadow-sm ring-1 ring-border">
+            <AvatarImage src={avatarUrl} className="object-cover" />
             <AvatarFallback className="bg-foreground text-background text-[10px] font-extrabold">
               {initials}
             </AvatarFallback>
