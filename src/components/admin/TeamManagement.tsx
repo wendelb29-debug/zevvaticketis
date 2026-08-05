@@ -82,7 +82,9 @@ const INITIAL_INVITES: Invite[] = [
   { id: "i12", email: "supervisor@savecar.com", role: "Supervisor", invitedBy: "Wendel Bondim", createdAt: "28/07/2026, 14:05:22", expiresAt: "04/08/2026, 14:05:22", status: "Pendente" },
 ];
 
-const ALL_DEPARTMENTS = ["Atendimento", "Benefícios Ativos", "Adm", "Comercial"];
+const ALL_DEPARTMENTS = ["2 Via Boleto", "Adm", "Atendimento", "Benefícios Ativos", "Cadastro", "Comercial", "Suporte"];
+
+const ACCESS_HOURS = ["Integral (24h)", "Comercial (08h - 18h)", "Manhã (08h - 12h)", "Tarde (13h - 18h)", "Noite (18h - 23h)"];
 
 const PERMISSIONS = [
   "Atendente (Padrão)",
