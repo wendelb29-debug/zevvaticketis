@@ -1013,23 +1013,23 @@ function AdminChatPage() {
               </Select>
             </div>
             <div className="space-y-2">
-              <Label className="text-[10px] font-bold uppercase tracking-wider text-gray-400">Canal</Label>
+              <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Canal</Label>
               <Select>
-                <SelectTrigger className="bg-[#23262E] border-none text-xs h-11 text-gray-500">
+                <SelectTrigger className="bg-muted border-none text-xs h-11 text-muted-foreground">
                   <SelectValue placeholder="Selecione um canal" />
                 </SelectTrigger>
-                <SelectContent className="bg-[#23262E] border-none text-white">
+                <SelectContent className="bg-popover border-border text-foreground">
                   <SelectItem value="wa">WhatsApp Suporte</SelectItem>
                 </SelectContent>
               </Select>
             </div>
             <div className="space-y-2">
-              <Label className="text-[10px] font-bold uppercase tracking-wider text-gray-400">Departamento</Label>
+              <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Departamento</Label>
               <Select>
-                <SelectTrigger className="bg-[#23262E] border-none text-xs h-11 text-gray-500">
+                <SelectTrigger className="bg-muted border-none text-xs h-11 text-muted-foreground">
                   <SelectValue placeholder="Selecione um departamento" />
                 </SelectTrigger>
-                <SelectContent className="bg-[#23262E] border-none text-white">
+                <SelectContent className="bg-popover border-border text-foreground">
                   <SelectItem value="vendas">Vendas</SelectItem>
                 </SelectContent>
               </Select>
@@ -1037,14 +1037,14 @@ function AdminChatPage() {
           </div>
           <DialogFooter className="mt-4 flex justify-between sm:justify-between items-center w-full">
             <button onClick={() => setIsActiveTicketDialogOpen(false)} className="text-sm font-bold hover:underline">Cancelar</button>
-            <button className="flex-1 max-w-[400px] py-3 bg-[#2F323D] text-gray-500 text-[11px] font-black uppercase tracking-widest rounded-lg cursor-not-allowed">Escolher Destinatário</button>
+            <button className="flex-1 max-w-[400px] py-3 bg-muted text-muted-foreground/50 text-[11px] font-black uppercase tracking-widest rounded-lg cursor-not-allowed">Escolher Destinatário</button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
 
       {/* Dialog: Finalizar Atendimento */}
       <Dialog open={isFinishDialogOpen} onOpenChange={setIsFinishDialogOpen}>
-        <DialogContent className="max-w-2xl bg-[#1A1D29] border-[#2D313F] text-white">
+        <DialogContent className="max-w-2xl bg-popover border-border text-foreground">
           <DialogHeader>
             <div className="flex items-center gap-3">
               <DialogTitle className="text-xl font-bold">Finalizar atendimento</DialogTitle>
