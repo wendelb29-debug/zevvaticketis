@@ -10,7 +10,7 @@ import { Switch } from "@/components/ui/switch";
 import { 
   Users, Settings, Shield, Clock, Tag, MessageSquare, Workflow, Plus, 
   Edit2, Trash2, X, Zap, Ticket, Calendar, Globe, Bell, 
-  Layers, Lock, Database, Smartphone, Sliders
+  Layers, Lock, Database, Smartphone, Sliders, Search, ListChecks
 } from "lucide-react";
 import { toast } from "sonner";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
