@@ -2,14 +2,13 @@ import { createFileRoute, Outlet, redirect, useNavigate, Link, useLocation } fro
 import { supabase } from "@/integrations/supabase/client";
 import { useEffect, useState } from "react";
 import { UserMenu } from "@/components/auth/UserMenu";
+import { useUI } from "@/hooks/use-ui";
 import { 
   LayoutDashboard, 
   CheckSquare, 
   Users, 
   CreditCard, 
-  Globe, 
   Settings,
-  ShieldCheck,
   ChevronLeft,
   ChevronRight,
   ChevronDown,
@@ -18,8 +17,8 @@ import {
   UserCog,
   MessageSquare,
   Megaphone,
-  LayoutList,
-  Home
+  Sun,
+  Moon,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -30,8 +29,10 @@ export const Route = createFileRoute("/admin")({
 function AdminLayout() {
   const [isAdmin, setIsAdmin] = useState<boolean | null>(null);
   const [user, setUser] = useState<any>(null);
+  const [isTransitioning, setIsTransitioning] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
+  const { theme, setTheme } = useUI();
   const [openGroup, setOpenGroup] = useState<string | null>(null);
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(() => {
     if (typeof window !== "undefined") {
@@ -64,6 +65,13 @@ function AdminLayout() {
     checkAdmin();
   }, []);
 
+  // Handle route transition loading state
+  useEffect(() => {
+    setIsTransitioning(true);
+    const timer = setTimeout(() => setIsTransitioning(false), 300);
+    return () => clearTimeout(timer);
+  }, [location.pathname]);
+
   const handleLogout = async () => {
     await supabase.auth.signOut();
     navigate({ to: "/" });
@@ -91,7 +99,6 @@ function AdminLayout() {
     { 
       label: "Marketing", 
       icon: Megaphone, 
-
       children: [
         { label: "Anúncios", href: "/admin/marketing/anuncios" },
         { label: "Publicidade", href: "/admin/marketing/publicidade" },
@@ -105,7 +112,6 @@ function AdminLayout() {
   ];
 
   useEffect(() => {
-    // Auto-expand group if current route matches a child
     menuItems.forEach(item => {
       if (item.children?.some(child => location.pathname === child.href)) {
         setOpenGroup(item.label);
@@ -115,8 +121,8 @@ function AdminLayout() {
 
   if (isAdmin === null) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-surface">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-coral"></div>
+      <div className="flex items-center justify-center min-h-screen bg-background">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
       </div>
     );
   }
@@ -126,21 +132,20 @@ function AdminLayout() {
     return null;
   }
 
-
   const SidebarContent = () => (
     <div className={cn(
-      "flex flex-col h-full bg-white border-r border-line py-8 font-inter transition-all duration-200",
+      "flex flex-col h-full bg-card border-r border-border py-8 font-inter transition-all duration-200",
       isSidebarCollapsed ? "w-20" : "w-72"
     )}>
       <div className={cn("px-6 mb-12 flex items-center justify-between", isSidebarCollapsed && "px-4 justify-center")}>
         {!isSidebarCollapsed && (
-          <Link to="/" className="text-xl font-manrope font-extrabold text-coral tracking-tighter">
-            ZEVVA <span className="text-navy">ADMIN</span>
+          <Link to="/" className="text-xl font-manrope font-extrabold text-primary tracking-tighter">
+            ZEVVA <span className="text-foreground">ADMIN</span>
           </Link>
         )}
         <button 
           onClick={toggleSidebar}
-          className="p-2 hover:bg-surface-2 rounded-lg transition-colors text-navy"
+          className="p-2 hover:bg-accent rounded-lg transition-colors text-foreground"
         >
           {isSidebarCollapsed ? <ChevronRight className="w-5 h-5" /> : <ChevronLeft className="w-5 h-5" />}
         </button>
@@ -159,7 +164,7 @@ function AdminLayout() {
                   onClick={() => setOpenGroup(isOpen ? null : item.label)}
                   className={cn(
                     "w-full flex items-center justify-between py-3.5 px-4 rounded-xl text-sm font-extrabold transition-all duration-200",
-                    hasActiveChild ? "text-coral bg-coral/5" : "text-navy hover:bg-surface-2"
+                    hasActiveChild ? "text-primary bg-primary/5" : "text-foreground hover:bg-accent"
                   )}
                 >
                   <div className="flex items-center gap-3">
@@ -176,8 +181,8 @@ function AdminLayout() {
                         key={child.label}
                         to={child.href as any}
                         className="block py-2 rounded-lg text-xs font-bold transition-all duration-200"
-                        activeProps={{ className: "text-coral" }}
-                        inactiveProps={{ className: "text-navy/60 hover:text-navy" }}
+                        activeProps={{ className: "text-primary" }}
+                        inactiveProps={{ className: "text-muted-fg hover:text-foreground" }}
                       >
                         {child.label}
                       </Link>
@@ -197,8 +202,8 @@ function AdminLayout() {
                 "flex items-center gap-3 py-3.5 rounded-xl text-sm font-extrabold transition-all duration-200",
                 isSidebarCollapsed ? "px-0 justify-center" : "px-4"
               )}
-              activeProps={{ className: "bg-coral text-white shadow-lg shadow-coral/30" }}
-              inactiveProps={{ className: "text-navy hover:bg-surface-2 hover:text-navy" }}
+              activeProps={{ className: "bg-primary text-primary-foreground shadow-lg shadow-primary/30" }}
+              inactiveProps={{ className: "text-foreground hover:bg-accent" }}
               title={isSidebarCollapsed ? item.label : undefined}
             >
               <item.icon className="w-5 h-5 shrink-0" />
@@ -207,11 +212,37 @@ function AdminLayout() {
           );
         })}
       </nav>
+
+      {/* Theme Switcher in Sidebar */}
+      {!isSidebarCollapsed && (
+        <div className="px-4 mt-auto pt-4 border-t border-border">
+          <div className="flex bg-accent rounded-lg p-1">
+            <button 
+              onClick={() => setTheme('light')}
+              className={cn(
+                "flex-1 flex items-center justify-center gap-2 py-2 rounded-md text-xs font-bold transition-all",
+                theme === 'light' ? "bg-primary text-primary-foreground shadow-sm" : "text-muted-fg hover:text-foreground"
+              )}
+            >
+              <Sun className="w-3.5 h-3.5" /> Claro
+            </button>
+            <button 
+              onClick={() => setTheme('dark')}
+              className={cn(
+                "flex-1 flex items-center justify-center gap-2 py-2 rounded-md text-xs font-bold transition-all",
+                theme === 'dark' ? "bg-primary text-primary-foreground shadow-sm" : "text-muted-fg hover:text-foreground"
+              )}
+            >
+              <Moon className="w-3.5 h-3.5" /> Escuro
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 
   return (
-    <div className="min-h-screen bg-surface flex">
+    <div className="min-h-screen bg-background flex text-foreground">
       {/* Desktop Sidebar */}
       {location.pathname !== "/admin/chat" && (
         <aside className={cn(
@@ -222,11 +253,11 @@ function AdminLayout() {
         </aside>
       )}
 
-      <div className="flex-1 flex flex-col min-h-screen">
+      <div className="flex-1 flex flex-col min-h-screen relative">
         {location.pathname !== "/admin/chat" && (
-          <header className="h-20 bg-white/80 backdrop-blur-md border-b border-line sticky top-0 z-40 px-6 sm:px-10 flex items-center justify-between font-inter">
+          <header className="h-20 bg-card/80 backdrop-blur-md border-b border-border sticky top-0 z-40 px-6 sm:px-10 flex items-center justify-between font-inter">
             <div className="flex items-center gap-4">
-              <span className="text-xs font-extrabold uppercase tracking-widest text-coral bg-coral/5 px-3 py-1 rounded-full border border-coral/10">
+              <span className="text-xs font-extrabold uppercase tracking-widest text-primary bg-primary/5 px-3 py-1 rounded-full border border-primary/10">
                 Gestão Global
               </span>
             </div>
@@ -244,10 +275,17 @@ function AdminLayout() {
         )}
 
         <main className={cn(
-          "p-6 sm:p-10",
-          location.pathname === "/admin/chat" && "p-0 sm:p-0"
+          "p-6 sm:p-10 transition-opacity duration-300",
+          location.pathname === "/admin/chat" && "p-0 sm:p-0",
+          isTransitioning ? "opacity-0" : "opacity-100"
         )}>
-          <Outlet />
+          {isTransitioning ? (
+            <div className="w-full h-full flex items-center justify-center py-20">
+               <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+            </div>
+          ) : (
+            <Outlet />
+          )}
         </main>
       </div>
     </div>
