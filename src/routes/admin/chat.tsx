@@ -915,10 +915,10 @@ function AdminChatPage() {
           <DialogFooter className="mt-6 flex justify-between sm:justify-between items-center w-full">
             <button onClick={() => setIsFilterDialogOpen(false)} className="text-sm font-bold hover:underline">Cancelar</button>
             <div className="flex gap-4">
-              <button className="flex items-center gap-2 text-xs font-bold text-gray-400 hover:text-white">
+              <button className="flex items-center gap-2 text-xs font-bold text-muted-foreground hover:text-foreground">
                 <ListFilter className="w-4 h-4" /> Limpar filtros
               </button>
-              <button onClick={() => { toast.success("Filtros aplicados"); setIsFilterDialogOpen(false); }} className="bg-[#FFD31A] hover:bg-[#FFD31A]/90 text-black px-8 py-2.5 rounded-lg text-xs font-black uppercase tracking-widest">Aplicar</button>
+              <button onClick={() => { toast.success("Filtros aplicados"); setIsFilterDialogOpen(false); }} className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-2.5 rounded-lg text-xs font-black uppercase tracking-widest">Aplicar</button>
             </div>
           </DialogFooter>
         </DialogContent>
