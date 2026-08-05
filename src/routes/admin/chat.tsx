@@ -93,6 +93,8 @@ function AdminChatPage() {
                 user={user}
                 onLogout={handleLogout}
                 onNavigate={(path) => navigate({ to: path as any })}
+                agentStatus={agentStatus}
+                onStatusChange={setAgentStatus}
               />
             )}
           </div>

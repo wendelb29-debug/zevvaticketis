@@ -4,7 +4,13 @@ import {
   User as UserIcon, 
   ShieldCheck, 
   Briefcase,
-  ChevronDown
+  ChevronDown,
+  Monitor,
+  Palette,
+  Type,
+  Settings as SettingsIcon,
+  LogOut,
+  Bell
 } from "lucide-react";
 import { 
   DropdownMenu, 
@@ -12,19 +18,28 @@ import {
   DropdownMenuItem, 
   DropdownMenuLabel, 
   DropdownMenuSeparator, 
-  DropdownMenuTrigger 
+  DropdownMenuTrigger,
+  DropdownMenuSub,
+  DropdownMenuSubTrigger,
+  DropdownMenuSubContent,
+  DropdownMenuPortal
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { cn } from "@/lib/utils";
+import { useLocation } from "@tanstack/react-router";
 
 interface UserMenuProps {
   user: any;
   onLogout: () => void;
   onNavigate: (path: string) => void;
+  agentStatus?: 'online' | 'busy' | 'offline';
+  onStatusChange?: (status: 'online' | 'busy' | 'offline') => void;
 }
 
-export function UserMenu({ user, onLogout, onNavigate }: UserMenuProps) {
+export function UserMenu({ user, onLogout, onNavigate, agentStatus, onStatusChange }: UserMenuProps) {
   const [role, setRole] = useState<{ label: string; color: string } | null>(null);
+  const location = useLocation();
+  const isChat = location.pathname === "/admin/chat";
 
   useEffect(() => {
     async function fetchRole() {
@@ -73,16 +88,25 @@ export function UserMenu({ user, onLogout, onNavigate }: UserMenuProps) {
               {initials}
             </AvatarFallback>
           </Avatar>
+          {isChat && (
+            <div className={cn(
+              "absolute -top-0.5 -right-0.5 w-3 h-3 rounded-full border-2 border-white",
+              agentStatus === 'online' ? "bg-green-500" : agentStatus === 'busy' ? "bg-amber-500" : "bg-navy/20"
+            )} />
+          )}
           <div className="flex items-center gap-1">
              <ChevronDown className="w-4 h-4 text-muted group-hover:text-navy transition-colors" />
           </div>
         </button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-56 mt-2 rounded-xl p-2 border-line shadow-xl font-inter">
-        <DropdownMenuLabel className="px-3 py-3">
-          <div className="flex flex-col gap-1">
+      <DropdownMenuContent align="end" className="w-64 mt-2 rounded-xl p-0 border-line shadow-2xl font-inter overflow-hidden bg-white/95 backdrop-blur-md">
+        <DropdownMenuLabel className="px-4 py-5 bg-gradient-to-br from-navy/5 to-transparent">
+          <div className="flex flex-col gap-1.5">
             <p className="text-sm font-extrabold text-navy truncate">
               {user?.user_metadata?.nome || user?.email}
+            </p>
+            <p className="text-[11px] text-navy/40 font-medium truncate mb-1">
+              {user?.email}
             </p>
             {role && (
               <span className={cn(
@@ -94,7 +118,82 @@ export function UserMenu({ user, onLogout, onNavigate }: UserMenuProps) {
             )}
           </div>
         </DropdownMenuLabel>
-        <DropdownMenuSeparator className="bg-line mx-2" />
+        <DropdownMenuSeparator className="bg-line m-0" />
+        
+        <div className="p-1.5">
+          {isChat && onStatusChange && (
+            <DropdownMenuSub>
+              <DropdownMenuSubTrigger className="flex items-center gap-2 px-3 py-2.5 rounded-lg text-sm font-bold text-navy cursor-pointer hover:bg-surface">
+                <div className={cn(
+                  "w-2.5 h-2.5 rounded-full",
+                  agentStatus === 'online' ? "bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.4)]" : 
+                  agentStatus === 'busy' ? "bg-amber-500 shadow-[0_0_8px_rgba(245,158,11,0.4)]" : 
+                  "bg-navy/20"
+                )} />
+                <span className="capitalize">{agentStatus || 'Offline'}</span>
+              </DropdownMenuSubTrigger>
+              <DropdownMenuPortal>
+                <DropdownMenuSubContent className="w-40 rounded-xl p-1.5 border-line shadow-xl font-inter bg-white/95 backdrop-blur-md">
+                  <DropdownMenuItem onClick={() => onStatusChange('online')} className="flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-bold text-navy cursor-pointer">
+                    <div className="w-2 h-2 rounded-full bg-green-500" /> Online
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => onStatusChange('busy')} className="flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-bold text-navy cursor-pointer">
+                    <div className="w-2 h-2 rounded-full bg-amber-500" /> Ocupado
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => onStatusChange('offline')} className="flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-bold text-navy cursor-pointer">
+                    <div className="w-2 h-2 rounded-full bg-navy/20" /> Offline
+                  </DropdownMenuItem>
+                </DropdownMenuSubContent>
+              </DropdownMenuPortal>
+            </DropdownMenuSub>
+          )}
+
+          <DropdownMenuItem 
+            onClick={() => onNavigate("/app/perfil")}
+            className="flex items-center gap-2 px-3 py-2.5 rounded-lg text-sm font-bold text-navy cursor-pointer hover:bg-surface"
+          >
+            <UserIcon className="w-4 h-4 text-navy/40" />
+            Minha Conta
+          </DropdownMenuItem>
+
+          <DropdownMenuSub>
+            <DropdownMenuSubTrigger className="flex items-center gap-2 px-3 py-2.5 rounded-lg text-sm font-bold text-navy cursor-pointer hover:bg-surface">
+              <Palette className="w-4 h-4 text-navy/40" />
+              Alterar tema
+            </DropdownMenuSubTrigger>
+            <DropdownMenuPortal>
+              <DropdownMenuSubContent className="w-40 rounded-xl p-1.5 border-line shadow-xl font-inter bg-white/95 backdrop-blur-md">
+                <DropdownMenuItem className="text-xs font-bold text-navy">Claro</DropdownMenuItem>
+                <DropdownMenuItem className="text-xs font-bold text-navy">Escuro</DropdownMenuItem>
+                <DropdownMenuItem className="text-xs font-bold text-navy">Sistema</DropdownMenuItem>
+              </DropdownMenuSubContent>
+            </DropdownMenuPortal>
+          </DropdownMenuSub>
+
+          <DropdownMenuSub>
+            <DropdownMenuSubTrigger className="flex items-center gap-2 px-3 py-2.5 rounded-lg text-sm font-bold text-navy cursor-pointer hover:bg-surface">
+              <Type className="w-4 h-4 text-navy/40" />
+              <div className="flex flex-1 justify-between items-center">
+                <span>Tamanho do texto</span>
+                <span className="text-[10px] text-navy/40">100%</span>
+              </div>
+            </DropdownMenuSubTrigger>
+            <DropdownMenuPortal>
+              <DropdownMenuSubContent className="w-48 rounded-xl p-4 border-line shadow-xl font-inter bg-white/95 backdrop-blur-md">
+                <div className="space-y-3">
+                  <p className="text-[10px] font-black uppercase tracking-widest text-navy/40">Ajustar zoom</p>
+                  <div className="flex items-center gap-3">
+                    <button className="w-6 h-6 flex items-center justify-center rounded-md border border-line text-navy hover:bg-surface">-</button>
+                    <div className="flex-1 h-1 bg-coral/10 rounded-full relative">
+                      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3 h-3 bg-coral rounded-full shadow-sm" />
+                    </div>
+                    <button className="w-6 h-6 flex items-center justify-center rounded-md border border-line text-navy hover:bg-surface">+</button>
+                  </div>
+                </div>
+              </DropdownMenuSubContent>
+            </DropdownMenuPortal>
+          </DropdownMenuSub>
+
         
         {role?.label === "Admin" && (
           <DropdownMenuItem 
@@ -116,21 +215,23 @@ export function UserMenu({ user, onLogout, onNavigate }: UserMenuProps) {
           </DropdownMenuItem>
         )}
 
-        <DropdownMenuItem 
-          onClick={() => onNavigate("/app")}
-          className="flex items-center gap-2 px-3 py-2.5 rounded-lg text-sm font-bold text-navy cursor-pointer hover:bg-surface"
-        >
-          <UserIcon className="w-4 h-4 text-navy" />
-          Minha Área
-        </DropdownMenuItem>
+          <DropdownMenuItem 
+            onClick={() => onNavigate("/admin/configuracoes")}
+            className="flex items-center gap-2 px-3 py-2.5 rounded-lg text-sm font-bold text-navy cursor-pointer hover:bg-surface"
+          >
+            <SettingsIcon className="w-4 h-4 text-navy/40" />
+            Configurações
+          </DropdownMenuItem>
 
-        <DropdownMenuSeparator className="bg-line mx-2" />
-        <DropdownMenuItem 
-          onClick={onLogout}
-          className="flex items-center gap-2 px-3 py-2.5 rounded-lg text-sm font-bold text-destructive cursor-pointer hover:bg-destructive/5"
-        >
-          Sair
-        </DropdownMenuItem>
+          <DropdownMenuSeparator className="bg-line mx-2" />
+          <DropdownMenuItem 
+            onClick={onLogout}
+            className="flex items-center gap-2 px-3 py-2.5 rounded-lg text-sm font-bold text-destructive cursor-pointer hover:bg-destructive/5"
+          >
+            <LogOut className="w-4 h-4 text-destructive/60" />
+            Sair
+          </DropdownMenuItem>
+        </div>
       </DropdownMenuContent>
     </DropdownMenu>
   );
