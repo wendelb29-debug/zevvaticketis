@@ -835,7 +835,7 @@ function AdminChatPage() {
         <DialogContent className="max-w-2xl bg-popover border-border text-foreground">
           <DialogHeader>
             <DialogTitle className="text-xl font-bold">Filtros</DialogTitle>
-            <DialogDescription className="text-gray-400">Selecione os filtros que deseja aplicar aos tickets.</DialogDescription>
+            <DialogDescription className="text-muted-foreground">Selecione os filtros que deseja aplicar aos tickets.</DialogDescription>
           </DialogHeader>
           <div className="grid grid-cols-3 gap-6 py-4">
             <div className="space-y-2">
