@@ -371,7 +371,7 @@ function EventPage() {
                 <h4 className="text-[10px] font-black text-muted uppercase tracking-widest">Realização</h4>
                 <div className="flex items-center gap-4">
                   <div className="w-12 h-12 bg-surface rounded-2xl flex items-center justify-center border border-line font-black text-navy text-xs">
-                    {data.event.producer?.nome?.slice(0, 2).toUpperCase()}
+                    {data.event?.producer?.nome?.slice(0, 2).toUpperCase()}
                   </div>
                   <div>
                     <p className="text-sm font-black text-navy uppercase">{data.event.producer?.nome || "Organização"}</p>
