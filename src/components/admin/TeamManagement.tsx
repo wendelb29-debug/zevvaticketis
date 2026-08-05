@@ -127,7 +127,9 @@ export function TeamManagement() {
   const [statsFor, setStatsFor] = useState<Member | null>(null);
   const [removing, setRemoving] = useState<Member | null>(null);
   const [addOpen, setAddOpen] = useState(false);
-  const [newUser, setNewUser] = useState({ name: "", email: "", department: ALL_DEPARTMENTS[0]!, permission: PERMISSIONS[0]! });
+  const [newUser, setNewUser] = useState({ name: "", email: "", departments: [] as string[], permission: "", accessHours: "" });
+  const [deptSearch, setDeptSearch] = useState("");
+  const [sending, setSending] = useState(false);
   const [invites, setInvites] = useState<Invite[]>(INITIAL_INVITES);
   const [inviteSearch, setInviteSearch] = useState("");
   const [inviteStatus, setInviteStatus] = useState("todos");
