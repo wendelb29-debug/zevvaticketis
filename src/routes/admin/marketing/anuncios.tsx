@@ -58,7 +58,7 @@ function AnunciosPage() {
   return (
     <div className="space-y-6">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <h1 className="text-2xl font-manrope font-extrabold text-navy">Anúncios (Todos os Eventos)</h1>
+        <h1 className="text-2xl font-manrope font-extrabold text-navy">saber e informar um envento</h1>
         
         <div className="relative w-full md:w-80">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-navy/40" />
@@ -114,13 +114,14 @@ function AnunciosPage() {
                   </td>
                   <td className="px-6 py-4 text-right">
                     <div className="flex items-center justify-end gap-2">
-                      <button 
-                        onClick={() => toast.info("Funcionalidade de gerenciamento em desenvolvimento")}
+                      <Link 
+                        to="/eventos/$eventId"
+                        params={{ eventId: event.id }}
                         className="p-2 hover:bg-surface rounded-lg transition-colors text-navy/40 hover:text-navy"
                         title="Gerenciar Anúncio"
                       >
                         <Search className="w-4 h-4" />
-                      </button>
+                      </Link>
                       <a 
                         href={`/eventos/${event.id}`} 
                         target="_blank" 
