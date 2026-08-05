@@ -79,7 +79,7 @@ export const completeGmailConnect = createServerFn({ method: "POST" })
     }
 
     await saveConnectionKeyForUser(context.userId, CONNECTOR_ID, connectionAPIKey, account);
-    console.log("[User Connected]", context.userId, account.email);
+    console.log("[Connection Saved]", context.userId, account.email);
     return { ok: true };
   });
 
