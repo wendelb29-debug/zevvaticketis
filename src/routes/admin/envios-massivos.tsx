@@ -18,16 +18,15 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { NewCampaignWizard } from "@/components/admin/campaigns/NewCampaignWizard";
 import { cn } from "@/lib/utils";
-import { z } from "zod";
 
-const searchSchema = z.object({
-  wizard: z.boolean().optional(),
-});
-
-type EnviosMassivosSearch = z.infer<typeof searchSchema>;
 
 export const Route = createFileRoute("/admin/envios-massivos")({
-  validateSearch: (search) => searchSchema.parse(search),
+  validateSearch: (search: Record<string, unknown>) => {
+    const raw = search["wizard"];
+    return {
+      wizard: raw === true || raw === "true" || raw === '"true"' ? true : undefined,
+    };
+  },
   component: EnviosMassivosPage,
 });
 
