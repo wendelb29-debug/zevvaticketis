@@ -166,16 +166,16 @@ function SettingsPage() {
             </Card>
 
             <div className="md:col-span-2 space-y-6">
-              <Card className="border-line overflow-hidden shadow-sm">
-                <CardHeader className="bg-surface/50 border-b border-line">
-                  <CardTitle className="text-lg font-manrope font-bold text-navy">Distribuição de Tickets</CardTitle>
-                  <CardDescription>Configure como os novos atendimentos são atribuídos.</CardDescription>
+              <Card className="border-border bg-card overflow-hidden shadow-sm">
+                <CardHeader className="bg-accent/50 border-b border-border">
+                  <CardTitle className="text-lg font-manrope font-bold text-foreground">Distribuição de Tickets</CardTitle>
+                  <CardDescription className="text-muted-fg">Configure como os novos atendimentos são atribuídos.</CardDescription>
                 </CardHeader>
                 <CardContent className="p-6 space-y-6">
-                  <div className="flex items-center justify-between p-4 bg-white border border-line rounded-xl shadow-sm">
+                  <div className="flex items-center justify-between p-4 bg-card border border-border rounded-xl shadow-sm">
                     <div className="space-y-0.5">
-                      <Label className="text-sm font-bold text-navy">Distribuição Automática</Label>
-                      <p className="text-xs text-navy/60">Atribui automaticamente novos tickets aos agentes disponíveis.</p>
+                      <Label className="text-sm font-bold text-foreground">Distribuição Automática</Label>
+                      <p className="text-xs text-muted-fg">Atribui automaticamente novos tickets aos agentes disponíveis.</p>
                     </div>
                     <Switch defaultChecked />
                   </div>
