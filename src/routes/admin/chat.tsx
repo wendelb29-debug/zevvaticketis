@@ -974,10 +974,10 @@ function AdminChatPage() {
               </div>
             </div>
             <div className="space-y-2">
-              <Label className="text-[10px] font-bold uppercase tracking-wider text-gray-400">Período</Label>
-              <button className="w-full bg-[#23262E] text-left px-4 h-10 rounded-lg text-xs text-gray-400">Selecionar período</button>
+              <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Período</Label>
+              <button className="w-full bg-muted text-left px-4 h-10 rounded-lg text-xs text-muted-foreground">Selecionar período</button>
             </div>
-            <button className="w-full py-3 bg-[#2F323D] text-gray-500 text-xs font-black uppercase tracking-widest rounded-lg cursor-not-allowed">Buscar</button>
+            <button className="w-full py-3 bg-muted text-muted-foreground/50 text-xs font-black uppercase tracking-widest rounded-lg cursor-not-allowed">Buscar</button>
           </div>
         </DialogContent>
       </Dialog>
