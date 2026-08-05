@@ -10,6 +10,7 @@ function CheckinMonitorPage() {
   const { data: logs, isLoading } = useQuery({
     queryKey: ["checkin-logs-global"],
     queryFn: async () => {
+      // @ts-ignore
       const { data } = await supabase
         .from("checkin_logs")
         .select(`

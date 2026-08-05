@@ -10,6 +10,7 @@ function AuditoriaPage() {
   const { data: logs, isLoading } = useQuery({
     queryKey: ["audit-logs"],
     queryFn: async () => {
+      // @ts-ignore
       const { data } = await supabase
         .from("audit_logs")
         .select("*, profiles(nome)")

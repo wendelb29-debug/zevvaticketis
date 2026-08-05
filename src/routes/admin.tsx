@@ -103,7 +103,10 @@ function AdminLayout() {
   return (
     <div className="min-h-screen bg-surface flex">
       {/* Desktop Sidebar */}
-      <aside className="hidden lg:block w-72 h-screen sticky top-0">
+      <aside className={cn(
+        "hidden lg:block h-screen sticky top-0 transition-all duration-200",
+        isSidebarCollapsed ? "w-20" : "w-72"
+      )}>
         <SidebarContent />
       </aside>
 

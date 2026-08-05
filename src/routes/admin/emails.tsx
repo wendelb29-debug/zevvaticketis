@@ -14,7 +14,9 @@ function EmailsPage() {
   const { data: logs, isLoading } = useQuery({
     queryKey: ["email-logs", filter],
     queryFn: async () => {
+      // @ts-ignore
       let query = supabase.from("email_logs").select("*").order("enviado_em", { ascending: false });
+      // @ts-ignore
       if (filter !== "todos") query = query.eq("status", filter);
       const { data } = await query;
       return data;
