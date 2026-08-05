@@ -366,7 +366,18 @@ export function TeamManagement() {
                     status: "offline",
                   },
                 ]);
-                setInvites([{ id: crypto.randomUUID(), email: newUser.email, sentAt: new Date().toLocaleDateString("pt-BR"), status: "Pendente" }, ...invites]);
+                setInvites([
+                  {
+                    id: crypto.randomUUID(),
+                    email: newUser.email,
+                    role: newUser.permission.includes("Supervisor") ? "Supervisor" : newUser.permission.includes("Admin") ? "Administrador" : "Atendente",
+                    invitedBy: "Você",
+                    createdAt: new Date().toLocaleString("pt-BR"),
+                    expiresAt: new Date(Date.now() + 7 * 864e5).toLocaleString("pt-BR"),
+                    status: "Pendente",
+                  },
+                  ...invites,
+                ]);
                 setNewUser({ name: "", email: "", department: ALL_DEPARTMENTS[0]!, permission: PERMISSIONS[0]! });
                 setAddOpen(false);
                 toast.success("Convite enviado!");
@@ -380,34 +391,166 @@ export function TeamManagement() {
 
       {/* Invites */}
       <Dialog open={invitesOpen} onOpenChange={setInvitesOpen}>
-        <DialogContent className="bg-card border-border sm:max-w-lg">
+        <DialogContent className="bg-card border-border max-w-[95vw] sm:max-w-5xl">
           <DialogHeader>
             <DialogTitle>Convites enviados</DialogTitle>
-            <DialogDescription>Acompanhe o status dos convites de acesso.</DialogDescription>
+            <DialogDescription>Aqui você pode visualizar os convites enviados de usuários para o projeto.</DialogDescription>
           </DialogHeader>
-          <div className="space-y-2">
-            {invites.map((i) => (
-              <div key={i.id} className="flex items-center justify-between rounded-lg border border-border px-4 py-3">
-                <div>
-                  <p className="text-sm font-semibold text-foreground">{i.email}</p>
-                  <p className="text-xs text-muted-fg">Enviado em {i.sentAt}</p>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Badge variant="outline" className="font-normal">{i.status}</Badge>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    onClick={() => { setInvites(invites.filter((x) => x.id !== i.id)); toast.success("Convite cancelado"); }}
-                  >
-                    <Trash2 className="w-4 h-4 text-destructive" />
-                  </Button>
-                </div>
-              </div>
-            ))}
-            {invites.length === 0 && <p className="text-sm text-muted-fg py-6 text-center">Nenhum convite pendente.</p>}
+
+          {/* Filters */}
+          <div className="rounded-xl border border-border bg-background/40 p-4 flex flex-wrap items-end gap-4">
+            <div className="space-y-1.5 min-w-[200px] flex-1">
+              <Label className="text-xs">Pesquisar</Label>
+              <Input
+                placeholder="Email ou convidado por..."
+                value={inviteSearch}
+                onChange={(e) => { setInviteSearch(e.target.value); setInvitePage(1); }}
+              />
+            </div>
+            <div className="space-y-1.5 w-40">
+              <Label className="text-xs">Status</Label>
+              <Select value={inviteStatus} onValueChange={(v) => { setInviteStatus(v); setInvitePage(1); }}>
+                <SelectTrigger><SelectValue /></SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="todos">Todos</SelectItem>
+                  <SelectItem value="Aceito">Aceito</SelectItem>
+                  <SelectItem value="Pendente">Pendente</SelectItem>
+                  <SelectItem value="Expirado">Expirado</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="space-y-1.5 w-40">
+              <Label className="text-xs">Cargo</Label>
+              <Select value={inviteRole} onValueChange={(v) => { setInviteRole(v); setInvitePage(1); }}>
+                <SelectTrigger><SelectValue /></SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="todos">Todos</SelectItem>
+                  {INVITE_ROLES.map((r) => <SelectItem key={r} value={r}>{r}</SelectItem>)}
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="space-y-1.5 w-44">
+              <Label className="text-xs">Convidado por</Label>
+              <Select value={inviteBy} onValueChange={(v) => { setInviteBy(v); setInvitePage(1); }}>
+                <SelectTrigger><SelectValue /></SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="todos">Todos</SelectItem>
+                  {inviteSenders.map((s) => <SelectItem key={s} value={s}>{s}</SelectItem>)}
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="space-y-1.5 w-28">
+              <Label className="text-xs">Mostrar</Label>
+              <Select value={invitePageSize} onValueChange={(v) => { setInvitePageSize(v); setInvitePage(1); }}>
+                <SelectTrigger><SelectValue /></SelectTrigger>
+                <SelectContent>
+                  {["10", "25", "50"].map((n) => <SelectItem key={n} value={n}>{n}</SelectItem>)}
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+
+          {/* Table */}
+          <div className="rounded-xl border border-border overflow-x-auto max-h-[45vh] overflow-y-auto">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>E-mail</TableHead>
+                  <TableHead>Cargo</TableHead>
+                  <TableHead>Convidado por</TableHead>
+                  <TableHead>Criado em</TableHead>
+                  <TableHead>Válido até</TableHead>
+                  <TableHead>Status</TableHead>
+                  <TableHead className="text-right">Ações</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {invitesPageRows.map((i) => (
+                  <TableRow key={i.id}>
+                    <TableCell className="font-medium text-foreground">{i.email}</TableCell>
+                    <TableCell className="text-muted-fg">{i.role}</TableCell>
+                    <TableCell className="text-muted-fg">{i.invitedBy}</TableCell>
+                    <TableCell className="text-muted-fg whitespace-nowrap">{i.createdAt}</TableCell>
+                    <TableCell className="text-muted-fg whitespace-nowrap">{i.expiresAt}</TableCell>
+                    <TableCell>
+                      <span className={
+                        i.status === "Aceito" ? "text-sm font-semibold text-emerald-500"
+                        : i.status === "Expirado" ? "text-sm font-semibold text-amber-500"
+                        : "text-sm font-semibold text-primary"
+                      }>{i.status}</span>
+                    </TableCell>
+                    <TableCell>
+                      <div className="flex items-center justify-end gap-1">
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          title="Reenviar convite"
+                          disabled={i.status === "Aceito"}
+                          onClick={() => {
+                            setInvites(invites.map((x) => x.id === i.id ? {
+                              ...x,
+                              status: "Pendente",
+                              createdAt: new Date().toLocaleString("pt-BR"),
+                              expiresAt: new Date(Date.now() + 7 * 864e5).toLocaleString("pt-BR"),
+                            } : x));
+                            toast.success(`Convite reenviado para ${i.email}`);
+                          }}
+                        >
+                          <Send className="w-4 h-4" />
+                        </Button>
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          title="Excluir convite"
+                          onClick={() => {
+                            setInvites(invites.filter((x) => x.id !== i.id));
+                            toast.success("Convite excluído");
+                          }}
+                        >
+                          <Trash2 className="w-4 h-4 text-destructive" />
+                        </Button>
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                ))}
+                {invitesPageRows.length === 0 && (
+                  <TableRow>
+                    <TableCell colSpan={7} className="text-center text-muted-fg py-8">Nenhum convite encontrado.</TableCell>
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>
+          </div>
+
+          {/* Pagination */}
+          <div className="flex flex-wrap items-center justify-between gap-3 text-sm text-muted-fg">
+            <span>
+              Mostrando {filteredInvites.length === 0 ? 0 : (invitePageSafe - 1) * invitePerPage + 1} até{" "}
+              {Math.min(invitePageSafe * invitePerPage, filteredInvites.length)} de {filteredInvites.length} registros
+            </span>
+            <span>Página {invitePageSafe} de {inviteTotalPages}</span>
+            <div className="flex items-center gap-1">
+              <Button variant="outline" size="sm" disabled={invitePageSafe === 1} onClick={() => setInvitePage(invitePageSafe - 1)}>
+                Anterior
+              </Button>
+              {Array.from({ length: inviteTotalPages }).map((_, idx) => (
+                <Button
+                  key={idx}
+                  variant={idx + 1 === invitePageSafe ? "default" : "outline"}
+                  size="sm"
+                  onClick={() => setInvitePage(idx + 1)}
+                >
+                  {idx + 1}
+                </Button>
+              ))}
+              <Button variant="outline" size="sm" disabled={invitePageSafe === inviteTotalPages} onClick={() => setInvitePage(invitePageSafe + 1)}>
+                Próxima
+              </Button>
+            </div>
           </div>
         </DialogContent>
       </Dialog>
+
 
       {/* Edit */}
       <Dialog open={!!editing} onOpenChange={(o) => !o && setEditing(null)}>
