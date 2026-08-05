@@ -86,7 +86,11 @@ function AnunciosPage() {
             </thead>
             <tbody className="divide-y divide-line font-inter">
               {filteredEvents?.map((event: any) => (
-                <tr key={event.id} className="hover:bg-surface/50 transition-colors">
+                <tr 
+                  key={event.id} 
+                  className="hover:bg-surface/50 transition-colors cursor-pointer"
+                  onClick={() => toast.info(`Gerenciando: ${event.title}. Funcionalidade de edição completa em desenvolvimento.`)}
+                >
                   <td className="px-6 py-4 font-extrabold text-navy text-sm">
                     {event.title}
                   </td>
