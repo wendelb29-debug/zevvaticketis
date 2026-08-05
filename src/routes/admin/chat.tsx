@@ -799,7 +799,7 @@ function AdminChatPage() {
         </div>
 
         {/* 9. BARRA VERTICAL DE AÇÕES (52px) */}
-        <div className="w-[52px] border-l border-[#E5E7EB] dark:border-white/5 flex flex-col items-center py-6 gap-4 bg-white dark:bg-[#161922] shrink-0 z-10">
+        <div className="w-[52px] border-l border-border flex flex-col items-center py-6 gap-4 bg-card shrink-0 z-10">
           {[
             { icon: CheckCircle, label: "Finalizar", onClick: () => setIsFinishDialogOpen(true) },
             { icon: Shuffle, label: "Transferir", onClick: () => setIsTransferDialogOpen(true) },
