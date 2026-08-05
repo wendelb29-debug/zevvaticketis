@@ -7,10 +7,38 @@ import {
   MoreVertical, CheckCircle, Shuffle, Users as PeopleIcon, Folder, Clock, 
   History as HistoryIcon, Calendar, Zap, Copy, Printer, Eye, Tag, AlertCircle, 
   LayoutList, MessageSquare, Filter, SlidersHorizontal, ListFilter,
-  Paperclip, Smile, Image as ImageIcon, Play, Volume2, Pencil, X, Home, ChevronRight
+  Paperclip, Smile, ImageIcon, Play, Volume2, Pencil, X, Home, ChevronRight,
+  ArrowUpDown, SortAsc, SortDesc, CalendarDays, Lock, Globe, MessageCircle
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Badge } from '@/components/ui/badge';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
+import { toast } from "sonner";
 
 export const Route = createFileRoute('/admin/chat')({
   component: AdminChatPage,
