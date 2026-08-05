@@ -96,8 +96,9 @@ function AdminEmailsPage() {
   }
 
   // Si no hay cuenta seleccionada, seleccionamos la primera
-  if (!selectedAccountId && accounts && accounts.length > 0) {
-    setSelectedAccountId(accounts[0].id);
+  if (!selectedAccountId && Array.isArray(accounts) && accounts.length > 0) {
+    const firstAccount = accounts[0] as any;
+    setSelectedAccountId(firstAccount.id);
   }
 
   return (
