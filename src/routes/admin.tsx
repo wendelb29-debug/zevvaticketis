@@ -202,7 +202,7 @@ function AdminLayout() {
               {...(item.activeOptions ? { activeOptions: item.activeOptions } : {})}
               className={cn(
                 "flex items-center gap-3 py-3.5 rounded-xl text-sm font-extrabold transition-all duration-200 border-2",
-                isSidebarCollapsed ? "px-0 justify-center" : "px-4 justify-center",
+                isSidebarCollapsed ? "px-0 justify-center" : (isChat ? "px-4 justify-center" : "px-4"),
                 isChat && "bg-primary text-primary-foreground border-transparent shadow-lg shadow-primary/30"
               )}
               {...(!isChat ? {
