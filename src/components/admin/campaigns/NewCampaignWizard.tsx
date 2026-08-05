@@ -116,68 +116,80 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
         </DialogHeader>
 
 
-        <div className="p-8 min-h-[600px] bg-[#1E1E2D]">
+        <div className="p-8 min-h-[600px] bg-background">
           {step === 1 && (
-            <div className="grid grid-cols-1 lg:grid-cols-[350px_1fr] gap-8 animate-in fade-in duration-300">
-              <div className="space-y-6">
+            <div className="grid grid-cols-1 lg:grid-cols-[380px_1fr] gap-12 animate-in fade-in slide-in-from-bottom-4 duration-500">
+              <div className="space-y-8">
                 <div>
-                  <h2 className="text-lg font-bold mb-1">Dados da campanha</h2>
-                  <p className="text-sm text-white/40">Defina o nome e os canais de envio da sua campanha</p>
+                  <h2 className="text-xl font-manrope font-extrabold text-navy uppercase tracking-tight">Dados da campanha</h2>
+                  <p className="text-sm text-muted-fg mt-1">Defina o nome e os canais de envio da sua campanha</p>
                 </div>
 
-                <div className="space-y-4">
+                <div className="space-y-5">
                   <div className="space-y-2">
-                    <Label className="text-xs font-bold text-white/60">Nome da campanha <span className="text-red-500">*</span></Label>
+                    <Label className="text-xs font-bold text-navy uppercase tracking-widest">Nome da campanha <span className="text-primary">*</span></Label>
                     <Input 
-                      placeholder="Digite o nome da campanha" 
+                      placeholder="Ex: Show Ana Carolina - Lembrete" 
                       value={campaignName}
                       onChange={(e) => setCampaignName(e.target.value)}
-                      className="bg-[#2A2A3C] border-none text-white h-12 focus-visible:ring-1 focus-visible:ring-[#FFCC00]"
+                      className="bg-accent/30 border-border text-foreground h-12 rounded-xl focus-visible:ring-primary"
                     />
                   </div>
 
                   <div className="space-y-2">
-                    <Label className="text-xs font-bold text-white/60">Descrição da campanha</Label>
-                    <textarea 
-                      placeholder="Digite a descrição da campanha" 
-                      value={description}
-                      onChange={(e) => setDescription(e.target.value)}
-                      className="w-full bg-[#2A2A3C] border-none text-white min-h-[100px] p-3 rounded-md focus:outline-none focus:ring-1 focus:ring-[#FFCC00] text-sm"
-                    />
+                    <Label className="text-xs font-bold text-navy uppercase tracking-widest">Tipo de canal <span className="text-primary">*</span></Label>
+                    <div className="grid grid-cols-2 gap-3">
+                      <button 
+                        onClick={() => setChannelType("gupshup")}
+                        className={cn(
+                          "flex flex-col items-center justify-center p-4 rounded-xl border-2 transition-all duration-300 gap-2 group",
+                          channelType === "gupshup" 
+                            ? "bg-primary/5 border-primary shadow-sm" 
+                            : "bg-background border-border hover:border-primary/30"
+                        )}
+                      >
+                        <div className={cn(
+                          "p-2 rounded-lg transition-colors",
+                          channelType === "gupshup" ? "bg-primary text-white" : "bg-accent text-muted-fg group-hover:bg-primary/10 group-hover:text-primary"
+                        )}>
+                          <MessageSquare className="w-5 h-5" />
+                        </div>
+                        <span className={cn("text-xs font-bold", channelType === "gupshup" ? "text-primary" : "text-muted-fg")}>WhatsApp</span>
+                      </button>
+                      <button 
+                        onClick={() => setChannelType("email")}
+                        className={cn(
+                          "flex flex-col items-center justify-center p-4 rounded-xl border-2 transition-all duration-300 gap-2 group",
+                          channelType === "email" 
+                            ? "bg-primary/5 border-primary shadow-sm" 
+                            : "bg-background border-border hover:border-primary/30"
+                        )}
+                      >
+                        <div className={cn(
+                          "p-2 rounded-lg transition-colors",
+                          channelType === "email" ? "bg-primary text-white" : "bg-accent text-muted-fg group-hover:bg-primary/10 group-hover:text-primary"
+                        )}>
+                          <Mail className="w-5 h-5" />
+                        </div>
+                        <span className={cn("text-xs font-bold", channelType === "email" ? "text-primary" : "text-muted-fg")}>E-mail</span>
+                      </button>
+                    </div>
                   </div>
 
                   <div className="space-y-2">
-                    <Label className="text-xs font-bold text-white/60">Tipo de canal <span className="text-red-500">*</span></Label>
-                    <Select value={channelType} onValueChange={setChannelType}>
-                      <SelectTrigger className="bg-[#2A2A3C] border-none text-white h-12">
-                        <SelectValue placeholder="Selecione o tipo" />
-                      </SelectTrigger>
-                      <SelectContent className="bg-[#2A2A3C] border-white/10 text-white">
-                        <SelectItem value="gupshup">Gupshup</SelectItem>
-                        <SelectItem value="email">E-mail</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label className="text-xs font-bold text-white/60">Canais <span className="text-red-500">*</span></Label>
+                    <Label className="text-xs font-bold text-navy uppercase tracking-widest">Canal de saída <span className="text-primary">*</span></Label>
                     <Select value={channel} onValueChange={setChannel}>
-                      <SelectTrigger className="bg-[#2A2A3C] border-none text-white h-12">
+                      <SelectTrigger className="bg-accent/30 border-border text-foreground h-12 rounded-xl">
                         <SelectValue placeholder="Selecione o canal" />
                       </SelectTrigger>
-                      <SelectContent className="bg-[#2A2A3C] border-white/10 text-white">
-                        <SelectItem value="savecar">Savecar - 34 9867-9585</SelectItem>
+                      <SelectContent className="bg-background border-border">
+                        <SelectItem value="savecar">Zevva Oficial - 34 9867-9585</SelectItem>
                       </SelectContent>
                     </Select>
-                    <div className="flex gap-2 p-3 bg-[#2A2A3C]/50 rounded-lg mt-2">
-                      <HelpCircle className="w-4 h-4 text-[#FFCC00] shrink-0" />
-                      <p className="text-[10px] text-white/40 leading-relaxed">
-                        Caso seu canal não esteja aparecendo aqui, verifique nas configurações do canal desejado se ele está habilitado para envio massivo.
-                      </p>
-                    </div>
                   </div>
                 </div>
               </div>
+
 
               <div className="bg-[#2A2A3C]/30 rounded-2xl flex items-center justify-center p-12 border border-white/5">
                 <div className="max-w-md w-full text-center space-y-6">
