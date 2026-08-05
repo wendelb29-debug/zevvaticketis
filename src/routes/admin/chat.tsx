@@ -1064,55 +1064,62 @@ function AdminChatPage() {
 
       {/* Dialog: Finalizar Atendimento */}
       <Dialog open={isFinishDialogOpen} onOpenChange={setIsFinishDialogOpen}>
-        <DialogContent className="max-w-2xl bg-card border-border text-foreground shadow-2xl">
-          <DialogHeader className="space-y-4">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-              <DialogTitle className="text-xl font-bold">Finalizar atendimento</DialogTitle>
-              <Badge variant="outline" className="bg-muted border-border text-muted-foreground text-[10px] px-3 py-1 font-mono w-fit">
-                20240804-001
+        <DialogContent className="max-w-2xl bg-card border-border text-foreground shadow-2xl overflow-hidden p-0">
+          <DialogHeader className="p-6 bg-accent/20 border-b border-border">
+            <div className="flex items-center justify-between w-full">
+              <DialogTitle className="text-xl font-manrope font-extrabold">Finalizar atendimento</DialogTitle>
+              <Badge variant="outline" className="bg-background border-border text-muted-fg text-[10px] px-3 py-1 font-mono">
+                TKT-{selectedContactId || '000'}
               </Badge>
             </div>
-            <DialogDescription className="text-muted-foreground text-left">
-              Ao finalizar este atendimento, o ticket será fechado e não poderá ser reaberto.
+            <DialogDescription className="text-muted-fg mt-2 font-inter text-sm">
+              Ao finalizar este atendimento, o ticket será arquivado no histórico.
             </DialogDescription>
           </DialogHeader>
-          <div className="py-4 space-y-6">
-            <div className="bg-primary/10 border border-primary/20 rounded-lg p-3 flex items-center gap-3 text-[11px] text-primary font-medium">
-              <AlertCircle className="w-4 h-4" /> Não há classificações disponíveis para este departamento.
+          
+          <div className="p-6 space-y-6 bg-card">
+            <div className="bg-primary/5 border border-primary/20 rounded-xl p-4 flex items-center gap-3 text-xs text-primary font-bold">
+              <AlertCircle className="w-5 h-5 shrink-0" />
+              <span>Certifique-se de preencher as observações antes de concluir o atendimento.</span>
             </div>
+            
             <div className="space-y-3">
-              <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Observações</Label>
-              <div className="bg-muted rounded-xl border border-border overflow-hidden">
-                <div className="flex items-center gap-4 px-4 py-3 border-b border-border">
-                  <div className="flex gap-4 text-muted-foreground">
-                     <span className="font-serif font-bold">B</span>
-                     <span className="italic font-serif">I</span>
-                     <span className="line-through font-serif">S</span>
-                     <span className="font-mono">{"<>"}</span>
+              <Label className="text-xs font-bold uppercase tracking-wider text-muted-fg ml-1">Resumo do Atendimento</Label>
+              <div className="bg-background rounded-xl border border-border overflow-hidden focus-within:border-primary/50 transition-colors shadow-sm">
+                <div className="flex items-center gap-4 px-4 py-3 bg-accent/30 border-b border-border">
+                  <div className="flex gap-4 text-muted-fg">
+                     <button type="button" className="hover:text-primary transition-colors"><AlignLeft className="w-4 h-4" /></button>
+                     <button type="button" className="hover:text-primary transition-colors"><Languages className="w-4 h-4" /></button>
                   </div>
                   <div className="flex-1" />
-                  <div className="flex gap-4 text-muted-foreground">
-                    <Smile className="w-4 h-4" />
-                    <Pencil className="w-4 h-4" />
+                  <div className="flex gap-4 text-muted-fg">
+                    <button type="button" className="hover:text-primary transition-colors"><Smile className="w-4 h-4" /></button>
+                    <button type="button" className="hover:text-primary transition-colors"><Paperclip className="w-4 h-4" /></button>
                   </div>
                 </div>
                 <textarea 
-                  className="w-full bg-transparent p-6 min-h-[160px] outline-none text-sm resize-none text-foreground"
-                  placeholder="Descreva o atendimento..."
+                  className="w-full bg-transparent p-6 min-h-[160px] outline-none text-sm resize-none text-foreground font-inter leading-relaxed"
+                  placeholder="Descreva o que foi resolvido ou pendências importantes..."
                 />
-                <div className="flex items-center justify-between px-4 py-3 border-t border-border">
-                   <Zap className="w-4 h-4 text-muted-foreground" />
+                <div className="flex items-center justify-between px-4 py-3 bg-accent/10 border-t border-border">
+                   <Zap className="w-4 h-4 text-primary animate-pulse" />
                    <div className="flex items-center gap-3">
-                     <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">0 / 512</span>
-                     <MoreVertical className="w-4 h-4 text-muted-foreground" />
+                     <span className="text-[10px] font-bold text-muted-fg uppercase tracking-widest">0 / 1024</span>
+                     <MoreVertical className="w-4 h-4 text-muted-fg" />
                    </div>
                 </div>
               </div>
             </div>
           </div>
-          <DialogFooter className="mt-4 flex justify-between sm:justify-between items-center w-full">
-            <button onClick={() => setIsFinishDialogOpen(false)} className="text-sm font-bold hover:underline">Cancelar</button>
-            <button onClick={() => { toast.success("Atendimento finalizado"); setIsFinishDialogOpen(false); }} className="flex-1 max-w-[400px] py-3 bg-primary hover:bg-primary/90 text-primary-foreground text-[11px] font-black uppercase tracking-widest rounded-lg">Finalizar atendimento</button>
+          
+          <DialogFooter className="p-6 bg-accent/10 border-t border-border flex flex-col sm:flex-row gap-3 items-center">
+            <Button variant="ghost" onClick={() => setIsFinishDialogOpen(false)} className="w-full sm:w-auto font-bold order-2 sm:order-1">Cancelar</Button>
+            <Button 
+              onClick={() => { toast.success("Atendimento finalizado com sucesso!"); setIsFinishDialogOpen(false); }} 
+              className="w-full sm:flex-1 bg-primary hover:bg-primary/90 text-primary-foreground font-bold order-1 sm:order-2 h-12 text-sm uppercase tracking-wider"
+            >
+              Concluir Atendimento
+            </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
