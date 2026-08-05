@@ -18,7 +18,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { NewCampaignWizard } from "@/components/admin/campaigns/NewCampaignWizard";
 import { cn } from "@/lib/utils";
-import { z } from "zod";
+
 
 export const Route = createFileRoute("/admin/envios-massivos")({
   validateSearch: (search: Record<string, unknown>) => {
