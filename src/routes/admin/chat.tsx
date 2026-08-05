@@ -15,9 +15,9 @@ import {
 import { cn } from '@/lib/utils';
 import { toast } from "sonner";
 
-const READ_RECEIPT_BLUE = "#315DA8";
-const ONLINE_STATUS_GREEN = "#24B667";
-const ATTENDANCE_GOLD = "#FFD31A"; // Keep as gold if requested to evaluate, or swap to coral if it's the brand color. User suggested evaluating. I will use a constant.
+const READ_RECEIPT_BLUE = "READ_RECEIPT_BLUE";
+const ONLINE_STATUS_GREEN = "ONLINE_STATUS_GREEN";
+const ATTENDANCE_GOLD = "ATTENDANCE_GOLD"; // Keep as gold if requested to evaluate, or swap to coral if it's the brand color. User suggested evaluating. I will use a constant.
 import { Badge } from '@/components/ui/badge';
 import {
   DropdownMenu,
@@ -560,8 +560,8 @@ function AdminChatPage() {
                       </div>
                       <div className="w-px h-8 bg-border" />
                       <div className="flex flex-col">
-                        <span className="text-[9px] font-bold text-[#24B667] uppercase tracking-widest">Oferta</span>
-                        <span className="text-xl font-bold text-[#24B667] tracking-tighter">R$ 273,02</span>
+                        <span className="text-[9px] font-bold text-[ONLINE_STATUS_GREEN] uppercase tracking-widest">Oferta</span>
+                        <span className="text-xl font-bold text-[ONLINE_STATUS_GREEN] tracking-tighter">R$ 273,02</span>
                       </div>
                     </div>
                     <button className="w-full py-2.5 bg-primary text-primary-foreground text-[11px] font-bold uppercase tracking-widest rounded-xl hover:bg-primary/90 transition-all flex items-center justify-center gap-2">
@@ -782,7 +782,7 @@ function AdminChatPage() {
             /* 3. ESTADO ONLINE SEM CONVERSA SELECIONADA */
             <div className="flex-1 flex flex-col items-center justify-center p-12 text-center space-y-6">
                <div className="relative">
-                 <div className="w-24 h-24 rounded-full bg-[#24B667]/5 flex items-center justify-center animate-pulse">
+                 <div className="w-24 h-24 rounded-full bg-[ONLINE_STATUS_GREEN]/5 flex items-center justify-center animate-pulse">
                      <div className="w-12 h-12 rounded-full bg-green-500 border-4 border-background shadow-lg"></div>
                  </div>
                </div>
