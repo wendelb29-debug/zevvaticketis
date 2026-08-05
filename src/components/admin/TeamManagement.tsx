@@ -92,10 +92,30 @@ export function TeamManagement() {
   const [removing, setRemoving] = useState<Member | null>(null);
   const [addOpen, setAddOpen] = useState(false);
   const [newUser, setNewUser] = useState({ name: "", email: "", department: ALL_DEPARTMENTS[0]!, permission: PERMISSIONS[0]! });
-  const [invites, setInvites] = useState([
-    { id: "i1", email: "novo.agente@savecar.com", sentAt: "02/08/2026", status: "Pendente" },
-    { id: "i2", email: "supervisor@savecar.com", sentAt: "28/07/2026", status: "Aceito" },
-  ]);
+  const [invites, setInvites] = useState<Invite[]>(INITIAL_INVITES);
+  const [inviteSearch, setInviteSearch] = useState("");
+  const [inviteStatus, setInviteStatus] = useState("todos");
+  const [inviteRole, setInviteRole] = useState("todos");
+  const [inviteBy, setInviteBy] = useState("todos");
+  const [invitePageSize, setInvitePageSize] = useState("10");
+  const [invitePage, setInvitePage] = useState(1);
+
+  const filteredInvites = useMemo(() => {
+    const q = inviteSearch.trim().toLowerCase();
+    return invites.filter((i) =>
+      (!q || i.email.toLowerCase().includes(q) || i.invitedBy.toLowerCase().includes(q)) &&
+      (inviteStatus === "todos" || i.status === inviteStatus) &&
+      (inviteRole === "todos" || i.role === inviteRole) &&
+      (inviteBy === "todos" || i.invitedBy === inviteBy)
+    );
+  }, [invites, inviteSearch, inviteStatus, inviteRole, inviteBy]);
+
+  const invitePerPage = Number(invitePageSize);
+  const inviteTotalPages = Math.max(1, Math.ceil(filteredInvites.length / invitePerPage));
+  const invitePageSafe = Math.min(invitePage, inviteTotalPages);
+  const invitesPageRows = filteredInvites.slice((invitePageSafe - 1) * invitePerPage, invitePageSafe * invitePerPage);
+  const inviteSenders = Array.from(new Set(invites.map((i) => i.invitedBy)));
+
 
   const filtered = useMemo(() => {
     return members.filter((m) => {
