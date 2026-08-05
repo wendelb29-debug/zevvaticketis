@@ -583,8 +583,178 @@ function AdminChatPage() {
                 ) : (
                   <div className="flex gap-3 items-end">
                     <div className="flex gap-1.5 mb-1 shrink-0">
-                       <button className="p-2 hover:bg-[#FAFAFA] dark:hover:bg-white/5 text-[#667085] dark:text-white/40 rounded-lg transition-all border border-transparent hover:border-[#E5E7EB] dark:hover:border-white/5"><Plus className="w-5 h-5" /></button>
-                      <button className="p-2 hover:bg-[#FAFAFA] dark:hover:bg-white/5 text-[#667085] dark:text-white/40 rounded-lg transition-all border border-transparent hover:border-[#E5E7EB] dark:hover:border-white/5"><Smile className="w-5 h-5" /></button>
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <button className="p-2 hover:bg-[#FAFAFA] dark:hover:bg-white/5 text-[#667085] dark:text-white/40 rounded-lg transition-all border border-transparent hover:border-[#E5E7EB] dark:hover:border-white/5">
+                            <Plus className="w-5 h-5" />
+                          </button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="start" side="top" className="w-[220px] bg-white dark:bg-[#1C1F28] border-line dark:border-white/10 p-1 shadow-2xl">
+                          <DropdownMenuItem onClick={() => { setFileType('image/*'); fileInputRef.current?.click(); }} className="flex items-center gap-3 px-3 py-2.5 cursor-pointer hover:bg-coral/5 dark:hover:bg-white/5 rounded-md">
+                            <ImageIcon className="w-4 h-4 text-blue-500" />
+                            <span className="text-xs font-medium dark:text-white/80">Fotos e Vídeos</span>
+                          </DropdownMenuItem>
+                          <DropdownMenuItem onClick={() => { setFileType('audio/*'); fileInputRef.current?.click(); }} className="flex items-center gap-3 px-3 py-2.5 cursor-pointer hover:bg-coral/5 dark:hover:bg-white/5 rounded-md">
+                            <Music className="w-4 h-4 text-purple-500" />
+                            <span className="text-xs font-medium dark:text-white/80">Áudio</span>
+                          </DropdownMenuItem>
+                          <DropdownMenuItem onClick={() => { setFileType('.pdf,.doc,.docx,.xls,.xlsx'); fileInputRef.current?.click(); }} className="flex items-center gap-3 px-3 py-2.5 cursor-pointer hover:bg-coral/5 dark:hover:bg-white/5 rounded-md">
+                            <FileText className="w-4 h-4 text-blue-400" />
+                            <span className="text-xs font-medium dark:text-white/80">Documento</span>
+                          </DropdownMenuItem>
+                          <DropdownMenuSeparator className="bg-line dark:bg-white/5" />
+                          <DropdownMenuItem className="flex items-center justify-between px-3 py-2.5 cursor-pointer hover:bg-coral/5 dark:hover:bg-white/5 rounded-md">
+                            <div className="flex items-center gap-3">
+                              <AlertCircle className="w-4 h-4 text-amber-500" />
+                              <span className="text-xs font-medium dark:text-white/80">Mensagem interna</span>
+                            </div>
+                            <div className="w-4 h-4 rounded-full border border-line dark:border-white/20 flex items-center justify-center">
+                              <span className="text-[8px] font-bold text-gray-400">i</span>
+                            </div>
+                          </DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+
+                      <button className="p-2 hover:bg-[#FAFAFA] dark:hover:bg-white/5 text-[#667085] dark:text-white/40 rounded-lg transition-all border border-transparent hover:border-[#E5E7EB] dark:hover:border-white/5">
+                        <Smile className="w-5 h-5" />
+                      </button>
+
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <button className="p-2 hover:bg-[#FAFAFA] dark:hover:bg-white/5 text-[#667085] dark:text-white/40 rounded-lg transition-all border border-transparent hover:border-[#E5E7EB] dark:hover:border-white/5">
+                            <Sparkles className="w-5 h-5" />
+                          </button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="start" side="top" className="w-[280px] bg-white dark:bg-[#1C1F28] border-line dark:border-white/10 p-1 shadow-2xl overflow-y-auto max-h-[450px]">
+                          <DropdownMenuLabel className="text-[10px] font-black text-gray-400 uppercase tracking-widest px-3 py-2 flex items-center gap-2">
+                            <Sparkles className="w-3 h-3 text-coral" /> Assistente de IA
+                          </DropdownMenuLabel>
+                          
+                          <div className="px-3 py-2">
+                             <div className="flex flex-col gap-1.5 p-2 bg-surface-2 dark:bg-[#0F1117] rounded-lg border border-line dark:border-white/5">
+                               <div className="flex items-center gap-2 text-[10px] font-bold text-gray-400 uppercase">
+                                 <Pencil className="w-3 h-3" /> Criar texto
+                               </div>
+                               <p className="text-[9px] text-gray-500 italic">Descreva em pelo menos 20 caracteres</p>
+                             </div>
+                          </div>
+
+                          <DropdownMenuItem className="flex items-center gap-3 px-3 py-2.5 cursor-pointer hover:bg-coral/5 dark:hover:bg-white/5 rounded-md">
+                            <Wand2 className="w-4 h-4 text-amber-500" />
+                            <span className="text-xs font-medium dark:text-white/80">Melhorar texto</span>
+                          </DropdownMenuItem>
+                          
+                          <DropdownMenuItem className="flex items-center gap-3 px-3 py-2.5 cursor-pointer hover:bg-coral/5 dark:hover:bg-white/5 rounded-md">
+                            <ArrowUpCircle className="w-4 h-4 text-green-500" />
+                            <span className="text-xs font-medium dark:text-white/80">Aumentar o texto</span>
+                          </DropdownMenuItem>
+
+                          <DropdownMenuItem className="flex items-center gap-3 px-3 py-2.5 cursor-pointer hover:bg-coral/5 dark:hover:bg-white/5 rounded-md">
+                            <AlignLeft className="w-4 h-4 text-blue-500" />
+                            <span className="text-xs font-medium dark:text-white/80">Resumir</span>
+                          </DropdownMenuItem>
+
+                          <DropdownMenuItem className="flex items-center gap-3 px-3 py-2.5 cursor-pointer hover:bg-coral/5 dark:hover:bg-white/5 rounded-md">
+                            <Smile className="w-4 h-4 text-cyan-400" />
+                            <span className="text-xs font-medium dark:text-white/80">Adicionar emojis</span>
+                          </DropdownMenuItem>
+
+                          <DropdownMenuSeparator className="bg-line dark:bg-white/5" />
+
+                          <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                              <div className="flex items-center justify-between px-3 py-2.5 cursor-pointer hover:bg-coral/5 dark:hover:bg-white/5 rounded-md">
+                                <div className="flex items-center gap-3">
+                                  <Volume2 className="w-4 h-4 text-amber-600" />
+                                  <span className="text-xs font-medium dark:text-white/80">Alterar o tom</span>
+                                </div>
+                                <ChevronRight className="w-3 h-3 text-gray-400" />
+                              </div>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent side="right" className="bg-white dark:bg-[#1C1F28] border-line dark:border-white/10 p-1 shadow-xl">
+                              {['Comunicativo', 'Bem-humorado', 'Entusiasmado', 'Informativo', 'Profissional', 'Inteligente', 'Confiável'].map(tone => (
+                                <DropdownMenuItem key={tone} className="text-xs px-3 py-2 hover:bg-coral/5 dark:hover:bg-white/5 cursor-pointer rounded-md">
+                                  {tone}
+                                </DropdownMenuItem>
+                              ))}
+                            </DropdownMenuContent>
+                          </DropdownMenu>
+
+                          <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                              <div className="flex items-center justify-between px-3 py-2.5 cursor-pointer hover:bg-coral/5 dark:hover:bg-white/5 rounded-md">
+                                <div className="flex items-center gap-3">
+                                  <LayoutList className="w-4 h-4 text-red-500" />
+                                  <span className="text-xs font-medium dark:text-white/80">Alterar o sotaque</span>
+                                </div>
+                                <ChevronRight className="w-3 h-3 text-gray-400" />
+                              </div>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent side="right" className="bg-white dark:bg-[#1C1F28] border-line dark:border-white/10 p-1 shadow-xl max-h-[300px] overflow-y-auto">
+                              {['Gaúcho', 'Carioca', 'Paulista', 'Mineiro', 'Nordestino', 'Baiano', 'Nortista', 'Sertanejo', 'Catarinense', 'Paranaense'].map(accent => (
+                                <DropdownMenuItem key={accent} className="text-xs px-3 py-2 hover:bg-coral/5 dark:hover:bg-white/5 cursor-pointer rounded-md">
+                                  {accent}
+                                </DropdownMenuItem>
+                              ))}
+                            </DropdownMenuContent>
+                          </DropdownMenu>
+
+                          <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                              <div className="flex items-center justify-between px-3 py-2.5 cursor-pointer hover:bg-coral/5 dark:hover:bg-white/5 rounded-md">
+                                <div className="flex items-center gap-3">
+                                  <Globe className="w-4 h-4 text-blue-400" />
+                                  <span className="text-xs font-medium dark:text-white/80">Traduzir</span>
+                                </div>
+                                <ChevronRight className="w-3 h-3 text-gray-400" />
+                              </div>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent side="right" className="bg-white dark:bg-[#1C1F28] border-line dark:border-white/10 p-1 shadow-xl">
+                              {[
+                                { label: 'Para Inglês', flag: '🇺🇸' },
+                                { label: 'Para Português', flag: '🇧🇷' },
+                                { label: 'Para Espanhol', flag: '🇪🇸' }
+                              ].map(lang => (
+                                <DropdownMenuItem key={lang.label} className="flex items-center gap-2 text-xs px-3 py-2 hover:bg-coral/5 dark:hover:bg-white/5 cursor-pointer rounded-md">
+                                  <span>{lang.flag}</span> {lang.label}
+                                </DropdownMenuItem>
+                              ))}
+                            </DropdownMenuContent>
+                          </DropdownMenu>
+
+                          <DropdownMenuSeparator className="bg-line dark:bg-white/5" />
+
+                          <div className="px-3 py-2 flex items-center justify-between">
+                             <div className="flex items-center gap-2">
+                               <Switch 
+                                 checked={aiAssistantEnabled} 
+                                 onCheckedChange={setAiAssistantEnabled}
+                                 className="scale-75 data-[state=checked]:bg-coral" 
+                               />
+                               <span className="text-[10px] font-bold dark:text-white/60">Assistente automático</span>
+                             </div>
+                             <div className="w-4 h-4 rounded-full border border-line dark:border-white/20 flex items-center justify-center cursor-help">
+                               <span className="text-[8px] font-bold text-gray-400">i</span>
+                             </div>
+                          </div>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+
+                      <button className="p-2 hover:bg-[#FAFAFA] dark:hover:bg-white/5 text-[#667085] dark:text-white/40 rounded-lg transition-all border border-transparent hover:border-[#E5E7EB] dark:hover:border-white/5">
+                        <Volume2 className="w-5 h-5" />
+                      </button>
+
+                      <input 
+                        type="file" 
+                        ref={fileInputRef} 
+                        accept={fileType || undefined} 
+                        className="hidden" 
+                        onChange={(e) => {
+                          if (e.target.files?.[0]) {
+                            toast.success(`Arquivo ${e.target.files[0].name} selecionado`);
+                          }
+                        }}
+                      />
                     </div>
                     <div className="flex-1 relative">
                       <textarea 
