@@ -14,7 +14,8 @@ import {
   ChevronRight,
   Mail,
   History,
-  UserCog
+  UserCog,
+  MessageSquare
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -91,6 +92,7 @@ function AdminLayout() {
     { label: "Auditoria", icon: History, href: "/admin/auditoria" },
     { label: "Usuários", icon: UserCog, href: "/admin/usuarios" },
     { label: "Check-in", icon: CheckSquare, href: "/admin/checkin-monitor" },
+    { label: "WhatsApp Chat", icon: MessageSquare, href: "/admin/chat" },
     { label: "Configurações", icon: Settings, href: "/admin/configuracoes" },
   ];
 
