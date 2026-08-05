@@ -173,7 +173,7 @@ function ProdutorDashboard() {
       </div>
 
       {/* Events Table Section */}
-      <div className="bg-white rounded-[24px] border border-border shadow-sm overflow-hidden">
+      <div className="bg-card rounded-[24px] border border-border shadow-sm overflow-hidden">
         <Tabs defaultValue="events" className="w-full">
           <div className="px-8 pt-8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
             <TabsList className="bg-muted p-1 rounded-xl h-11">
