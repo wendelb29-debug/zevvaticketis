@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery } from "@tanstack/react-query";
 import { Search, Filter, Ban, CheckCircle, ExternalLink } from "lucide-react";
@@ -88,8 +88,7 @@ function AnunciosPage() {
               {filteredEvents?.map((event: any) => (
                 <tr 
                   key={event.id} 
-                  className="hover:bg-surface/50 transition-colors cursor-pointer"
-                  onClick={() => toast.info(`Gerenciando: ${event.title}. Funcionalidade de edição completa em desenvolvimento.`)}
+                  className="hover:bg-surface/50 transition-colors"
                 >
                   <td className="px-6 py-4 font-extrabold text-navy text-sm">
                     {event.title}
