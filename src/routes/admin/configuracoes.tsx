@@ -10,7 +10,7 @@ import { Switch } from "@/components/ui/switch";
 import { 
   Users, Settings, Shield, Clock, Tag, MessageSquare, Workflow, Plus, 
   Edit2, Trash2, X, Zap, Ticket, Calendar, Globe, Bell, 
-  Layers, Lock, Database, Smartphone, Sliders
+  Layers, Lock, Database, Smartphone, Sliders, Search, ListChecks
 } from "lucide-react";
 import { toast } from "sonner";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
@@ -47,6 +47,8 @@ function AuthGuard() {
 }
 
 type Dept = { id: string; name: string; members: number };
+type DeptFull = Dept & { agents: string[]; restrictions: string[] };
+
 
 function OptionRadio({
   label, hint, selected, onSelect,
@@ -217,13 +219,98 @@ function SettingsPage() {
   const [isDeptModalOpen, setIsDeptModalOpen] = useState(false);
   const [isTagModalOpen, setIsTagModalOpen] = useState(false);
   const [deptName, setDeptName] = useState("");
+  const [editingDeptId, setEditingDeptId] = useState<string | null>(null);
+  const [deptAgents, setDeptAgents] = useState<string[]>([]);
+  const [deptRestrictions, setDeptRestrictions] = useState<string[]>([]);
+  const [agentSearch, setAgentSearch] = useState("");
+  const [restrictSearch, setRestrictSearch] = useState("");
   const [tagName, setTagName] = useState("");
   const [tagColor, setTagColor] = useState("#E8604A");
 
-  const [departments] = useState([
-    { id: "1", name: "Suporte", members: 5 },
-    { id: "2", name: "Comercial", members: 3 },
+  const [agents] = useState([
+    { id: "u1", name: "Alice Vieira", email: "alicevieirai214@gmail.com" },
+    { id: "u2", name: "Bárbara Carvalho", email: "barbara864carvalho@gmail.com" },
+    { id: "u3", name: "Carolina Silva", email: "carol.12godinho@gmail.com" },
+    { id: "u4", name: "Daiane Silva", email: "daiane@zevva.com" },
+    { id: "u5", name: "Eduardo Lima", email: "edulima27.eh@gmail.com" },
+    { id: "u6", name: "Mayck Souza", email: "mayck@zevva.com" },
   ]);
+
+  const [departments, setDepartments] = useState<DeptFull[]>([
+    { id: "1", name: "Suporte", members: 5, agents: ["u1", "u3"], restrictions: [] },
+    { id: "2", name: "Comercial", members: 3, agents: ["u6"], restrictions: [] },
+  ]);
+
+  const filteredAgents = agents.filter(
+    (a) =>
+      a.name.toLowerCase().includes(agentSearch.toLowerCase()) ||
+      a.email.toLowerCase().includes(agentSearch.toLowerCase())
+  );
+  const filteredRestrictDepts = departments.filter(
+    (d) => d.id !== editingDeptId && d.name.toLowerCase().includes(restrictSearch.toLowerCase())
+  );
+
+  const resetDeptForm = () => {
+    setDeptName("");
+    setEditingDeptId(null);
+    setDeptAgents([]);
+    setDeptRestrictions([]);
+    setAgentSearch("");
+    setRestrictSearch("");
+  };
+
+  const openNewDept = () => {
+    resetDeptForm();
+    setIsDeptModalOpen(true);
+  };
+
+  const openEditDept = (dept: DeptFull) => {
+    setEditingDeptId(dept.id);
+    setDeptName(dept.name);
+    setDeptAgents(dept.agents);
+    setDeptRestrictions(dept.restrictions);
+    setAgentSearch("");
+    setRestrictSearch("");
+    setIsDeptModalOpen(true);
+  };
+
+  const removeDept = (id: string) => {
+    setDepartments((prev) =>
+      prev
+        .filter((d) => d.id !== id)
+        .map((d) => ({ ...d, restrictions: d.restrictions.filter((r) => r !== id) }))
+    );
+    toast.success("Departamento removido.");
+  };
+
+  const saveDept = () => {
+    if (!deptName.trim()) return;
+    if (editingDeptId) {
+      setDepartments((prev) =>
+        prev.map((d) =>
+          d.id === editingDeptId
+            ? { ...d, name: deptName.trim(), agents: deptAgents, restrictions: deptRestrictions, members: deptAgents.length }
+            : d
+        )
+      );
+      toast.success("Departamento atualizado!");
+    } else {
+      setDepartments((prev) => [
+        ...prev,
+        {
+          id: crypto.randomUUID(),
+          name: deptName.trim(),
+          members: deptAgents.length,
+          agents: deptAgents,
+          restrictions: deptRestrictions,
+        },
+      ]);
+      toast.success("Departamento criado!");
+    }
+    setIsDeptModalOpen(false);
+    resetDeptForm();
+  };
+
 
   const [tags] = useState([
     { id: "1", name: "Urgente", color: "#ef4444" },
@@ -274,30 +361,51 @@ function SettingsPage() {
               </AccordionTrigger>
               <AccordionContent className="px-6 pb-6 pt-2">
                 <div className="flex justify-end mb-4">
-                  <Button onClick={() => setIsDeptModalOpen(true)} size="sm" className="bg-primary text-white gap-2 font-bold">
-                    <Plus className="w-4 h-4" /> Novo Departamento
+                  <Button onClick={openNewDept} size="sm" className="bg-primary text-white gap-2 font-bold">
+                    <Plus className="w-4 h-4" /> Criar departamento
                   </Button>
                 </div>
                 <div className="space-y-2">
                   {departments.map(dept => (
-                    <div key={dept.id} className="flex items-center justify-between p-4 bg-background border border-border rounded-xl group hover:border-primary/30 transition-all">
-                      <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold">
+                    <div key={dept.id} className="flex items-center justify-between gap-4 p-4 bg-background border border-border rounded-xl group hover:border-primary/30 transition-all">
+                      <div className="flex items-center gap-3 min-w-0">
+                        <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold shrink-0">
                           {dept.name.charAt(0)}
                         </div>
-                        <div>
+                        <div className="min-w-0">
                           <p className="font-bold">{dept.name}</p>
-                          <p className="text-xs text-muted-fg">{dept.members} membros ativos</p>
+                          <div className="flex flex-wrap gap-1 mt-1">
+                            {dept.agents.length === 0 && (
+                              <span className="text-xs text-muted-fg">Nenhum atendente atribuído</span>
+                            )}
+                            {dept.agents.slice(0, 3).map((id) => (
+                              <span key={id} className="px-2 py-0.5 rounded-full border border-border text-xs font-bold">
+                                {agents.find((a) => a.id === id)?.name ?? id}
+                              </span>
+                            ))}
+                            {dept.agents.length > 3 && (
+                              <span className="px-2 py-0.5 rounded-full border border-border text-xs font-bold">
+                                +{dept.agents.length - 3}
+                              </span>
+                            )}
+                          </div>
                         </div>
                       </div>
-                      <div className="flex items-center gap-2">
-                        <Button variant="ghost" size="icon" className="hover:text-primary"><Edit2 className="w-4 h-4" /></Button>
-                        <Button variant="ghost" size="icon" className="hover:text-error"><Trash2 className="w-4 h-4" /></Button>
+                      <div className="flex items-center gap-2 shrink-0">
+                        <span className={cn(
+                          "text-xs font-bold px-2 py-1 rounded-full",
+                          dept.restrictions.length > 0 ? "bg-primary/10 text-primary" : "text-muted-fg"
+                        )}>
+                          {dept.restrictions.length > 0 ? "Transferências restritas" : "Global"}
+                        </span>
+                        <Button variant="ghost" size="icon" className="hover:text-primary" onClick={() => openEditDept(dept)}><Edit2 className="w-4 h-4" /></Button>
+                        <Button variant="ghost" size="icon" className="hover:text-error" onClick={() => removeDept(dept.id)}><Trash2 className="w-4 h-4" /></Button>
                       </div>
                     </div>
                   ))}
                 </div>
               </AccordionContent>
+
             </AccordionItem>
 
             <AccordionItem value="tags" className="border-border bg-card rounded-xl overflow-hidden shadow-sm border">
@@ -448,29 +556,138 @@ function SettingsPage() {
       </Tabs>
 
       {/* Dept Modal */}
-      <Dialog open={isDeptModalOpen} onOpenChange={setIsDeptModalOpen}>
-        <DialogContent className="sm:max-w-[425px] bg-card border-border p-0 overflow-hidden text-foreground border shadow-2xl">
+      <Dialog open={isDeptModalOpen} onOpenChange={(o) => { setIsDeptModalOpen(o); if (!o) resetDeptForm(); }}>
+        <DialogContent className="sm:max-w-[560px] bg-card border-border p-0 overflow-hidden text-foreground border shadow-2xl">
           <DialogHeader className="p-6 bg-accent/20 border-b border-border">
-            <DialogTitle className="text-xl font-manrope font-extrabold">Criar Departamento</DialogTitle>
-            <DialogDescription className="text-muted-fg">Organize sua equipe em áreas especializadas.</DialogDescription>
+            <DialogTitle className="text-xl font-manrope font-extrabold">
+              {editingDeptId ? "Editar departamento" : "Criar departamento"}
+            </DialogTitle>
+            <DialogDescription className="text-muted-fg">
+              Crie departamentos para organizar e distribuir os atendimentos.
+            </DialogDescription>
           </DialogHeader>
-          <div className="p-6 space-y-4">
+          <div className="p-6 space-y-5 max-h-[60vh] overflow-y-auto">
             <div className="space-y-2">
-              <Label className="text-sm font-bold">Nome do Departamento</Label>
-              <Input 
+              <Label className="text-sm font-bold">Nome <span className="text-error">*</span></Label>
+              <Input
                 value={deptName}
                 onChange={(e) => setDeptName(e.target.value)}
-                placeholder="Ex: Financeiro" 
-                className="border-border bg-background focus:ring-primary" 
+                placeholder="Insira o nome"
+                className="border-border bg-background focus:ring-primary"
               />
+            </div>
+
+            <div className="space-y-2">
+              <Label className="text-sm font-bold">Atendentes</Label>
+              <p className="text-xs text-muted-fg">
+                Os atendimentos deste departamento serão distribuídos apenas para os usuários selecionados.
+              </p>
+              <div className="rounded-xl border border-border bg-background overflow-hidden">
+                <div className="flex items-center gap-2 px-3 py-2 border-b border-border">
+                  <Search className="w-4 h-4 text-muted-fg" />
+                  <input
+                    value={agentSearch}
+                    onChange={(e) => setAgentSearch(e.target.value)}
+                    placeholder="Buscar..."
+                    className="flex-1 bg-transparent text-sm outline-none"
+                  />
+                  <button
+                    type="button"
+                    title="Selecionar todos"
+                    onClick={() =>
+                      setDeptAgents(
+                        deptAgents.length === filteredAgents.length ? [] : filteredAgents.map((a) => a.id)
+                      )
+                    }
+                    className="text-muted-fg hover:text-primary transition-colors"
+                  >
+                    <ListChecks className="w-4 h-4" />
+                  </button>
+                </div>
+                <div className="max-h-44 overflow-y-auto divide-y divide-border">
+                  {filteredAgents.map((a) => (
+                    <label key={a.id} className="flex items-center gap-3 px-3 py-2 cursor-pointer hover:bg-primary/5">
+                      <input
+                        type="checkbox"
+                        className="accent-[var(--color-primary)] w-4 h-4"
+                        checked={deptAgents.includes(a.id)}
+                        onChange={() =>
+                          setDeptAgents((prev) =>
+                            prev.includes(a.id) ? prev.filter((x) => x !== a.id) : [...prev, a.id]
+                          )
+                        }
+                      />
+                      <span className="text-sm font-bold">
+                        {a.name} <span className="text-muted-fg font-normal">({a.email})</span>
+                      </span>
+                    </label>
+                  ))}
+                  {filteredAgents.length === 0 && (
+                    <p className="px-3 py-4 text-sm text-muted-fg">Nenhum usuário encontrado.</p>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <Label className="text-sm font-bold">Restringir recebimento de transferências</Label>
+              <p className="text-xs text-muted-fg">
+                Selecione os departamentos que NÃO poderão transferir conversas para este departamento.
+              </p>
+              <div className="rounded-xl border border-border bg-background overflow-hidden">
+                <div className="flex items-center gap-2 px-3 py-2 border-b border-border">
+                  <Search className="w-4 h-4 text-muted-fg" />
+                  <input
+                    value={restrictSearch}
+                    onChange={(e) => setRestrictSearch(e.target.value)}
+                    placeholder="Buscar..."
+                    className="flex-1 bg-transparent text-sm outline-none"
+                  />
+                  <button
+                    type="button"
+                    title="Selecionar todos"
+                    onClick={() =>
+                      setDeptRestrictions(
+                        deptRestrictions.length === filteredRestrictDepts.length
+                          ? []
+                          : filteredRestrictDepts.map((d) => d.id)
+                      )
+                    }
+                    className="text-muted-fg hover:text-primary transition-colors"
+                  >
+                    <ListChecks className="w-4 h-4" />
+                  </button>
+                </div>
+                <div className="max-h-40 overflow-y-auto divide-y divide-border">
+                  {filteredRestrictDepts.map((d) => (
+                    <label key={d.id} className="flex items-center gap-3 px-3 py-2 cursor-pointer hover:bg-primary/5">
+                      <input
+                        type="checkbox"
+                        className="accent-[var(--color-primary)] w-4 h-4"
+                        checked={deptRestrictions.includes(d.id)}
+                        onChange={() =>
+                          setDeptRestrictions((prev) =>
+                            prev.includes(d.id) ? prev.filter((x) => x !== d.id) : [...prev, d.id]
+                          )
+                        }
+                      />
+                      <span className="text-sm font-bold">{d.name}</span>
+                    </label>
+                  ))}
+                  {filteredRestrictDepts.length === 0 && (
+                    <p className="px-3 py-4 text-sm text-muted-fg">Nenhum departamento disponível.</p>
+                  )}
+                </div>
+              </div>
             </div>
           </div>
           <DialogFooter className="p-6 bg-accent/10 border-t border-border gap-2">
-            <Button variant="outline" onClick={() => setIsDeptModalOpen(false)} className="border-border font-bold">Cancelar</Button>
-            <Button onClick={() => { setIsDeptModalOpen(false); toast.success("Departamento criado!"); }} className="bg-primary text-white font-bold">Criar</Button>
+            <Button variant="outline" onClick={() => { setIsDeptModalOpen(false); resetDeptForm(); }} className="border-border font-bold">Cancelar</Button>
+            <Button disabled={!deptName.trim()} onClick={saveDept} className="bg-primary text-white font-bold">Salvar</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
+
 
       {/* Tag Modal */}
       <Dialog open={isTagModalOpen} onOpenChange={setIsTagModalOpen}>
