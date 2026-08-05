@@ -10,7 +10,7 @@ import {
   AccordionContent, 
   AccordionItem, 
   AccordionTrigger 
-} from "@/accordion-ui";
+} from "@/components/ui/accordion";
 import { 
   Headset, 
   Users, 
