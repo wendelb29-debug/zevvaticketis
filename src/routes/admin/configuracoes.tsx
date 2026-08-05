@@ -805,8 +805,9 @@ const AtendimentoAccordion = () => (
       </AccordionContent>
     </AccordionItem>
 
-
+    <>
     {[
+
       { id: "classificacoes", icon: Briefcase, title: "Gerenciar Classificações", desc: "Categorização vinculada a departamentos." },
       { id: "gatilhos", icon: Zap, title: "Gatilhos de Atendimento", desc: "Automações baseadas em fluxos." },
       { id: "sla", icon: Clock, title: "Inatividade e SLA", desc: "Configure regras de inatividade e SLA do atendente" },
