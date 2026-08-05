@@ -47,6 +47,8 @@ function AuthGuard() {
 }
 
 type Dept = { id: string; name: string; members: number };
+type DeptFull = Dept & { agents: string[]; restrictions: string[] };
+
 
 function OptionRadio({
   label, hint, selected, onSelect,
