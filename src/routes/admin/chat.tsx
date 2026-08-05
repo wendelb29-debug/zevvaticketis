@@ -823,8 +823,8 @@ function AdminChatPage() {
                 i === 0 ? "bg-primary text-primary-foreground shadow-lg" : "text-muted-foreground hover:bg-primary/5 hover:text-primary"
             )} title={action.label}>
               <action.icon className="w-5 h-5" />
-              {i === 0 && <span className="absolute left-[-80px] top-1/2 -translate-y-1/2 bg-[#23262E] text-white text-[10px] font-bold px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">Finalizar</span>}
-              {i === 1 && <span className="absolute left-[-80px] top-1/2 -translate-y-1/2 bg-[#23262E] text-white text-[10px] font-bold px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none text-coral">Transferir</span>}
+              {i === 0 && <span className="absolute left-[-80px] top-1/2 -translate-y-1/2 bg-popover text-popover-foreground border border-border text-[10px] font-bold px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">Finalizar</span>}
+              {i === 1 && <span className="absolute left-[-80px] top-1/2 -translate-y-1/2 bg-popover text-popover-foreground border border-border text-[10px] font-bold px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none text-primary">Transferir</span>}
             </button>
           ))}
         </div>
