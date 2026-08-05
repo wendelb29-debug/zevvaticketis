@@ -66,10 +66,10 @@ function AprovacoesPage() {
               <tr key={org.id} className="hover:bg-accent transition-colors">
                 <td className="px-6 py-4">
                   <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 bg-coral/10 rounded flex items-center justify-center text-coral">
+                    <div className="w-8 h-8 bg-primary/10 rounded flex items-center justify-center text-primary">
                       <Building2 className="w-4 h-4" />
                     </div>
-                    <span className="font-bold text-navy">{org.nome}</span>
+                    <span className="font-bold text-foreground">{org.nome}</span>
                   </div>
                 </td>
                 <td className="px-6 py-4 text-sm font-medium">{org.documento || "---"}</td>
