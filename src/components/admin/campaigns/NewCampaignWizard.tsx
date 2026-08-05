@@ -191,37 +191,33 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
               </div>
 
 
-              <div className="bg-[#2A2A3C]/30 rounded-2xl flex items-center justify-center p-12 border border-white/5">
-                <div className="max-w-md w-full text-center space-y-6">
+              <div className="bg-accent/20 rounded-2xl flex items-center justify-center p-12 border border-border">
+                <div className="max-w-md w-full text-center space-y-8">
                   <div className="flex justify-center">
-                    <div className="bg-[#FFCC00] p-1.5 rounded-lg">
-                      <div className="bg-[#FFCC00] text-[#1E1E2D] p-1 rounded-sm">
-                        <MessageSquare className="w-6 h-6 fill-current" />
+                    <div className="bg-primary/10 p-4 rounded-3xl">
+                      <div className="bg-primary text-white p-3 rounded-2xl shadow-lg shadow-primary/30">
+                        {channelType === "email" ? <Mail className="w-8 h-8" /> : <MessageSquare className="w-8 h-8" />}
                       </div>
                     </div>
                   </div>
-                  <div className="space-y-2">
-                    <div className="inline-block px-3 py-1 bg-[#FFCC00]/10 text-[#FFCC00] text-[10px] font-bold rounded-full border border-[#FFCC00]/20 uppercase tracking-wider">
-                      ✨ Novidade
+                  <div className="space-y-3">
+                    <div className="inline-block px-3 py-1 bg-primary/10 text-primary text-[10px] font-extrabold rounded-full border border-primary/20 uppercase tracking-widest">
+                      ✨ Zevva Campaign
                     </div>
-                    <h3 className="text-xl font-bold">Crie mensagens diretas</h3>
-                    <p className="text-sm text-white/40">Dispare texto, mídia e mais — com variáveis personalizadas por contato, sem precisar montar um fluxo.</p>
+                    <h3 className="text-2xl font-manrope font-extrabold text-navy">Crie mensagens profissionais</h3>
+                    <p className="text-sm text-muted-fg leading-relaxed">Dispare conteúdo personalizado com variáveis para cada contato de forma simples e rápida.</p>
                   </div>
                   
-                  <div className="bg-[#1E1E2D]/80 rounded-2xl p-6 border border-white/5 shadow-2xl relative group">
-                    <div className="space-y-3 text-left">
-                      <div className="bg-[#FFCC00]/20 text-[#FFCC00] px-3 py-1.5 rounded-lg text-xs font-medium inline-block">
-                        Olá <span className="text-[#FFCC00] font-bold">{"{{"}nome{"}}"}</span>! 👋
+                  <div className="bg-white rounded-2xl p-6 border border-border shadow-xl relative overflow-hidden group">
+                    <div className="absolute top-0 left-0 w-1 h-full bg-primary" />
+                    <div className="space-y-4 text-left">
+                      <div className="bg-accent/50 text-navy px-4 py-2 rounded-xl text-sm font-bold inline-block border border-border">
+                        Olá <span className="text-primary">{"{{"}nome{"}}"}</span>! 👋
                       </div>
-                      <div className="bg-white/5 rounded-xl aspect-[1.8/1] flex items-center justify-center border border-white/5 group-hover:bg-white/10 transition-colors">
+                      <div className="bg-accent/20 rounded-xl aspect-[16/9] flex items-center justify-center border border-dashed border-border group-hover:bg-accent/40 transition-colors">
                         <div className="text-center space-y-2">
-                          <ImageIcon className="w-6 h-6 text-white/20 mx-auto" />
-                          <p className="text-[10px] text-white/40 font-bold uppercase tracking-widest">Oferta exclusiva 🔥</p>
-                        </div>
-                      </div>
-                      <div className="flex justify-end">
-                        <div className="bg-white/5 px-2 py-1 rounded-full text-[8px] text-white/40 flex items-center gap-1">
-                          <Clock className="w-3 h-3" /> espera 3s
+                          <ImageIcon className="w-8 h-8 text-muted-fg/30 mx-auto" />
+                          <p className="text-[10px] text-muted-fg font-extrabold uppercase tracking-widest">Sua Imagem Aqui</p>
                         </div>
                       </div>
                     </div>
@@ -229,14 +225,13 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
 
                   <div className="flex flex-wrap justify-center gap-2">
                     {[
-                      { icon: FileText, label: "Texto", color: "text-orange-400" },
-                      { icon: ImageIcon, label: "Imagem", color: "text-green-400" },
-                      { icon: Smartphone, label: "Áudio", color: "text-blue-400" },
-                      { icon: Clock, label: "Espera", color: "text-purple-400" },
-                      { icon: Users, label: "{" + "{variáveis}" + "}", color: "text-cyan-400" }
+                      { icon: FileText, label: "Texto" },
+                      { icon: ImageIcon, label: "Imagem" },
+                      { icon: Smartphone, label: "Botão" },
+                      { icon: Users, label: "Variáveis" }
                     ].map((btn) => (
-                      <div key={btn.label} className="flex items-center gap-2 px-3 py-1.5 bg-white/5 rounded-lg text-[10px] font-bold text-white/60 hover:bg-white/10 cursor-default transition-colors">
-                        <btn.icon className={cn("w-3 h-3", btn.color)} /> {btn.label}
+                      <div key={btn.label} className="flex items-center gap-2 px-4 py-2 bg-white border border-border rounded-xl text-xs font-extrabold text-navy hover:border-primary/50 cursor-default transition-all shadow-sm">
+                        <btn.icon className="w-3.5 h-3.5 text-primary" /> {btn.label}
                       </div>
                     ))}
                   </div>
@@ -244,6 +239,7 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
               </div>
             </div>
           )}
+
 
           {step === 2 && (
             <div className="grid grid-cols-1 lg:grid-cols-[300px_1fr] gap-8 animate-in fade-in duration-300">
