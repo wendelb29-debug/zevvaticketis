@@ -676,9 +676,9 @@ function AdminChatPage() {
                              </DropdownMenuTrigger>
                              <DropdownMenuContent side="right" className="bg-popover border border-border p-1 shadow-xl">
                               {['Comunicativo', 'Bem-humorado', 'Entusiasmado', 'Informativo', 'Profissional', 'Inteligente', 'Confiável'].map(tone => (
-                                <DropdownMenuItem key={tone} className="text-xs px-3 py-2 hover:bg-coral/5 dark:hover:bg-white/5 cursor-pointer rounded-md">
-                                  {tone}
-                                </DropdownMenuItem>
+                                 <DropdownMenuItem key={tone} className="text-xs px-3 py-2 hover:bg-accent cursor-pointer rounded-md text-foreground">
+                                   {tone}
+                                 </DropdownMenuItem>
                               ))}
                             </DropdownMenuContent>
                           </DropdownMenu>
