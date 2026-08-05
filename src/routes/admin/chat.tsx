@@ -400,19 +400,19 @@ function AdminChatPage() {
                         <Play className="w-4 h-4 fill-current" />
                       </button>
                       <div className="flex-1 h-1 bg-white/10 rounded-full relative">
-                        <div className="absolute inset-0 w-1/3 bg-coral rounded-full" />
+                        <div className="absolute inset-0 w-1/3 bg-primary rounded-full" />
                       </div>
-                      <span className="text-[10px] text-white/40">0:44</span>
+                      <span className="text-[10px] text-muted-foreground">0:44</span>
                     </div>
                     <div className="flex justify-end mt-1">
-                      <span className="text-[9px] text-white/40">10:21</span>
+                      <span className="text-[9px] text-muted-foreground">10:21</span>
                     </div>
                   </div>
                 </div>
 
                 {/* Card de imagem simulado */}
                 <div className="flex flex-col gap-2 max-w-[80%] self-start">
-                  <div className="bg-[#1C1F28] text-white p-2 rounded-2xl rounded-tl-none shadow-md border border-white/5">
+                  <div className="bg-card text-foreground p-2 rounded-2xl rounded-tl-none shadow-md border border-border">
                     <div className="bg-white rounded-lg p-3 text-navy mb-2 overflow-hidden">
                        <p className="text-[10px] font-bold text-navy/60 uppercase mb-1">Mensalidade</p>
                        <div className="flex flex-col gap-0.5">
@@ -421,15 +421,15 @@ function AdminChatPage() {
                        </div>
                     </div>
                     <div className="flex justify-end mt-1 px-1">
-                      <span className="text-[9px] text-white/40">10:23</span>
+                      <span className="text-[9px] text-muted-foreground">10:23</span>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div className="p-3 bg-[#1C1F28] text-center border-t border-white/5">
-              <p className="text-[10px] text-white/30 font-medium">Pré-visualização — não marca como lida e não abre a conversa.</p>
+            <div className="p-3 bg-secondary text-center border-t border-border">
+              <p className="text-[10px] text-muted-foreground font-medium">Pré-visualização — não marca como lida e não abre a conversa.</p>
             </div>
           </DialogContent>
         </Dialog>
