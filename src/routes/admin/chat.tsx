@@ -1,5 +1,7 @@
-import { createFileRoute, Link } from '@tanstack/react-router';
-import { useState } from 'react';
+import { createFileRoute, Link, useNavigate } from '@tanstack/react-router';
+import { useState, useEffect } from 'react';
+import { supabase } from "@/integrations/supabase/client";
+import { UserMenu } from "@/components/auth/UserMenu";
 import { 
   Search, Send, User, Check, CheckCheck, Phone, Plus, Bell, ChevronDown, 
   MoreVertical, CheckCircle, Shuffle, Users as PeopleIcon, Folder, Clock, 
@@ -17,6 +19,21 @@ export const Route = createFileRoute('/admin/chat')({
 function AdminChatPage() {
   const [selectedContactId, setSelectedContactId] = useState<string | null>("1");
   const [agentStatus, setAgentStatus] = useState<'online' | 'busy' | 'offline'>('offline');
+  const [user, setUser] = useState<any>(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    async function getUser() {
+      const { data: { user } } = await supabase.auth.getUser();
+      setUser(user);
+    }
+    getUser();
+  }, []);
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    navigate({ to: "/" });
+  };
 
   const contacts = [
     { id: "1", name: "João Silva", lastMsg: "Olá, gostaria de saber mais...", time: "Há 10 horas", status: "unread", channel: "wa", direction: 'inbound' },
@@ -61,23 +78,23 @@ function AdminChatPage() {
             <Bell className="w-5 h-5" />
             <span className="absolute top-1.5 right-1.5 w-3 h-3 bg-coral rounded-full text-[8px] flex items-center justify-center border-2 border-white text-white font-bold">3</span>
           </button>
+          
           <div className="flex items-center gap-3 pl-4 border-l border-line">
-            <div className="text-right">
-              <div className="text-xs font-black text-navy uppercase">Admin Zevva</div>
+            <div className="text-right hidden sm:block">
+              <div className="text-[10px] font-black text-navy uppercase leading-tight">Admin Zevva</div>
               <div className={cn(
-                "text-[9px] font-black uppercase tracking-widest",
+                "text-[9px] font-black uppercase tracking-widest leading-tight",
                 agentStatus === 'online' ? "text-green-500" : agentStatus === 'busy' ? "text-amber-500" : "text-navy/40"
               )}>{agentStatus}</div>
             </div>
-            <div className="relative cursor-pointer group">
-              <div className="w-10 h-10 rounded-2xl bg-surface-2 border border-line overflow-hidden flex items-center justify-center font-black text-navy/40">
-                <User className="w-6 h-6" />
-              </div>
-              <div className={cn(
-                "absolute -bottom-1 -right-1 w-4 h-4 rounded-full border-4 border-white shadow-sm",
-                agentStatus === 'online' ? "bg-green-500" : agentStatus === 'busy' ? "bg-amber-500" : "bg-navy/20"
-              )} />
-            </div>
+            
+            {user && (
+              <UserMenu 
+                user={user}
+                onLogout={handleLogout}
+                onNavigate={(path) => navigate({ to: path as any })}
+              />
+            )}
           </div>
         </div>
       </header>
