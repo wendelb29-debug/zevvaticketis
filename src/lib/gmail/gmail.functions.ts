@@ -7,12 +7,11 @@ const GATEWAY_BASE_URL = "https://connector-gateway.lovable.dev";
 const CONNECTOR_ID = "google_mail";
 
 const GMAIL_SCOPES = [
+  "openid",
   "https://www.googleapis.com/auth/userinfo.email",
   "https://www.googleapis.com/auth/userinfo.profile",
-  "openid",
   "https://www.googleapis.com/auth/gmail.readonly",
   "https://www.googleapis.com/auth/gmail.send",
-  "https://www.googleapis.com/auth/gmail.modify",
 ];
 
 /** [OAuth Start] Gera a URL de consentimento do Google para o usuário logado. */
