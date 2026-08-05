@@ -67,7 +67,7 @@ export const sendTeamInvite = createServerFn({ method: "POST" })
     }
 
     const { error: mailError } = await supabaseAdmin.auth.admin.inviteUserByEmail(data.email, {
-      redirectTo: data.redirectTo,
+      ...(data.redirectTo ? { redirectTo: data.redirectTo } : {}),
       data: {
         invited_permission: data.permission,
         invited_departments: data.departments,
