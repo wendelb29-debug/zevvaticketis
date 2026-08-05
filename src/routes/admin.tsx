@@ -18,7 +18,8 @@ import {
   UserCog,
   MessageSquare,
   Megaphone,
-  LayoutList
+  LayoutList,
+  Home
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
