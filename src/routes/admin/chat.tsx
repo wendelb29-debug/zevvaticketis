@@ -984,7 +984,7 @@ function AdminChatPage() {
 
       {/* Dialog: Iniciar Atendimento Ativo */}
       <Dialog open={isActiveTicketDialogOpen} onOpenChange={setIsActiveTicketDialogOpen}>
-        <DialogContent className="max-w-2xl bg-[#1A1D29] border-[#2D313F] text-white">
+        <DialogContent className="max-w-2xl bg-popover border-border text-foreground">
           <DialogHeader>
             <DialogTitle className="text-xl font-bold">Iniciar Atendimento Ativo</DialogTitle>
             <DialogDescription className="text-gray-400">Escolha um cliente para iniciar um novo atendimento ativo</DialogDescription>
