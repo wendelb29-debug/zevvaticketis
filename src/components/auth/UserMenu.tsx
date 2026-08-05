@@ -103,13 +103,13 @@ export function UserMenu({ user, onLogout, onNavigate, agentStatus, onStatusChan
           </div>
         </button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-64 mt-2 rounded-xl p-0 border-line shadow-2xl font-inter overflow-hidden bg-white/95 backdrop-blur-md">
-        <DropdownMenuLabel className="px-4 py-5 bg-gradient-to-br from-navy/5 to-transparent">
+      <DropdownMenuContent align="end" className="w-64 mt-2 rounded-xl p-0 border-border shadow-2xl font-inter overflow-hidden bg-popover/95 backdrop-blur-md">
+        <DropdownMenuLabel className="px-4 py-5 bg-gradient-to-br from-foreground/5 to-transparent">
           <div className="flex flex-col gap-1.5">
-            <p className="text-sm font-extrabold text-navy truncate">
+            <p className="text-sm font-extrabold text-foreground truncate">
               {user?.user_metadata?.nome || user?.email}
             </p>
-            <p className="text-[11px] text-navy/40 font-medium truncate mb-1">
+            <p className="text-[11px] text-muted-foreground font-medium truncate mb-1">
               {user?.email}
             </p>
             {role && (
@@ -122,17 +122,17 @@ export function UserMenu({ user, onLogout, onNavigate, agentStatus, onStatusChan
             )}
           </div>
         </DropdownMenuLabel>
-        <DropdownMenuSeparator className="bg-line m-0" />
+        <DropdownMenuSeparator className="bg-border m-0" />
         
         <div className="p-1.5">
           {isChat && onStatusChange && (
             <DropdownMenuSub>
-              <DropdownMenuSubTrigger className="flex items-center gap-2 px-3 py-2.5 rounded-lg text-sm font-bold text-navy cursor-pointer hover:bg-surface">
+              <DropdownMenuSubTrigger className="flex items-center gap-2 px-3 py-2.5 rounded-lg text-sm font-bold text-foreground cursor-pointer hover:bg-muted">
                 <div className={cn(
                   "w-2.5 h-2.5 rounded-full",
                   agentStatus === 'online' ? "bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.4)]" : 
                   agentStatus === 'busy' ? "bg-amber-500 shadow-[0_0_8px_rgba(245,158,11,0.4)]" : 
-                  "bg-navy/20"
+                  "bg-foreground/20"
                 )} />
                 <span className="capitalize">{agentStatus || 'Offline'}</span>
               </DropdownMenuSubTrigger>
