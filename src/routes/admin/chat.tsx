@@ -1048,13 +1048,17 @@ function AdminChatPage() {
 
       {/* Dialog: Finalizar Atendimento */}
       <Dialog open={isFinishDialogOpen} onOpenChange={setIsFinishDialogOpen}>
-        <DialogContent className="max-w-2xl bg-popover border-border text-foreground">
-          <DialogHeader>
-            <div className="flex items-center gap-3">
+        <DialogContent className="max-w-2xl bg-card border-border text-foreground shadow-2xl">
+          <DialogHeader className="space-y-4">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <DialogTitle className="text-xl font-bold">Finalizar atendimento</DialogTitle>
-              <Badge variant="outline" className="bg-muted border-none text-muted-foreground text-[10px] px-2 py-0">20240804-001</Badge>
+              <Badge variant="outline" className="bg-muted border-border text-muted-foreground text-[10px] px-3 py-1 font-mono w-fit">
+                20240804-001
+              </Badge>
             </div>
-            <DialogDescription className="text-muted-foreground">Ao finalizar este atendimento, o ticket será fechado e não poderá ser reaberto.</DialogDescription>
+            <DialogDescription className="text-muted-foreground text-left">
+              Ao finalizar este atendimento, o ticket será fechado e não poderá ser reaberto.
+            </DialogDescription>
           </DialogHeader>
           <div className="py-4 space-y-6">
             <div className="bg-primary/10 border border-primary/20 rounded-lg p-3 flex items-center gap-3 text-[11px] text-primary font-medium">
