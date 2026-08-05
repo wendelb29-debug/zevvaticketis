@@ -329,7 +329,6 @@ function AdminChatPage() {
           ))}
         </div>
       </div>
-      </div>
 
       <style>{`
         .custom-scrollbar-fina::-webkit-scrollbar {
