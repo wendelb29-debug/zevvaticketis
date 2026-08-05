@@ -7,12 +7,11 @@ const GATEWAY_BASE_URL = "https://connector-gateway.lovable.dev";
 const CONNECTOR_ID = "google_mail";
 
 const GMAIL_SCOPES = [
+  "openid",
   "https://www.googleapis.com/auth/userinfo.email",
   "https://www.googleapis.com/auth/userinfo.profile",
-  "openid",
   "https://www.googleapis.com/auth/gmail.readonly",
   "https://www.googleapis.com/auth/gmail.send",
-  "https://www.googleapis.com/auth/gmail.modify",
 ];
 
 /** [OAuth Start] Gera a URL de consentimento do Google para o usuário logado. */
@@ -32,6 +31,7 @@ export const startGmailConnect = createServerFn({ method: "POST" })
     const existing = await getConnectionKeyForUser(context.userId, CONNECTOR_ID);
 
     console.log("[OAuth Start] user:", context.userId, "reconnect:", !!existing);
+    console.log("[OAuth Config] Redirect URI para Google Cloud Console: https://connector-gateway.lovable.dev/oauth/callback");
 
     const { authorizationUrl } = await authorizeAppUserOAuth({
       gatewayBaseUrl: GATEWAY_BASE_URL,
@@ -79,7 +79,7 @@ export const completeGmailConnect = createServerFn({ method: "POST" })
     }
 
     await saveConnectionKeyForUser(context.userId, CONNECTOR_ID, connectionAPIKey, account);
-    console.log("[User Connected]", context.userId, account.email);
+    console.log("[Connection Saved]", context.userId, account.email);
     return { ok: true };
   });
 
