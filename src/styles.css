@@ -16,7 +16,6 @@
   }
 }
 
-
 @theme {
   --font-fredoka: "Fredoka", sans-serif;
   --font-baloo: "Baloo 2", sans-serif;
@@ -28,17 +27,76 @@
   --color-coral: #E8604A;
   --color-coral-dark: #C94733;
   --color-navy: #14182A;
-  --color-gold: #B8925A; /* Mantido como variável, mas não será usado para ações */
+  --color-gold: #B8925A;
   --color-surface: #F7F7F7;
   --color-line: rgba(0,0,0,0.09);
   --color-muted: #717171;
   --color-good: #10B981;
   --color-error: #EF4444;
 
+  /* Semantic Tokens for Theme Switching */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted-bg: var(--muted-bg);
+  --color-muted-fg: var(--muted-fg);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
   @keyframes pulse-subtle {
     0%, 100% { opacity: 1; transform: scale(1); }
     50% { opacity: 0.7; transform: scale(1.02); }
   }
+}
+
+:root {
+  --background: #FFFFFF;
+  --foreground: #14182A;
+  --card: #FFFFFF;
+  --card-foreground: #14182A;
+  --popover: #FFFFFF;
+  --popover-foreground: #14182A;
+  --primary: #E8604A;
+  --primary-foreground: #FFFFFF;
+  --secondary: #F7F7F7;
+  --secondary-foreground: #14182A;
+  --muted-bg: #F1F5F9;
+  --muted-fg: #64748B;
+  --accent: #F1F5F9;
+  --accent-foreground: #14182A;
+  --border: rgba(0,0,0,0.09);
+  --input: rgba(0,0,0,0.09);
+  --ring: #E8604A;
+}
+
+.dark {
+  --background: #14182A;
+  --foreground: #F1F5F9;
+  --card: #1E253A;
+  --card-foreground: #F1F5F9;
+  --popover: #1E253A;
+  --popover-foreground: #F1F5F9;
+  --primary: #E8604A;
+  --primary-foreground: #FFFFFF;
+  --secondary: #1E253A;
+  --secondary-foreground: #F1F5F9;
+  --muted-bg: #1E253A;
+  --muted-fg: #94A3B8;
+  --accent: #1E253A;
+  --accent-foreground: #F1F5F9;
+  --border: rgba(255,255,255,0.1);
+  --input: rgba(255,255,255,0.1);
+  --ring: #E8604A;
 }
 
 @utility animate-pulse-subtle {
@@ -50,8 +108,11 @@
 }
 
 @layer base {
+  * {
+    @apply border-border;
+  }
   body {
-    @apply font-inter;
+    @apply font-inter bg-background text-foreground;
   }
   
   h1, h2, h3, h4, h5, h6 {
@@ -68,11 +129,11 @@
 }
 
 .glass-panel {
-  @apply bg-white/10 backdrop-blur-md border border-white/20;
+  @apply bg-card/10 backdrop-blur-md border border-border;
 }
 
 .dark-panel {
-  @apply bg-navy/95 border border-white/5;
+  @apply bg-card/95 border border-border;
 }
 
 @keyframes infinite-scroll {
@@ -84,8 +145,6 @@
   animation: infinite-scroll 40s linear infinite;
 }
 
-
-/* Marca d'água removida */
 #lovable-badge,
 a[href*="lovable.dev"],
 a[href*="gptengineer"],
