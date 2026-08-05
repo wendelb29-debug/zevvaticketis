@@ -790,7 +790,7 @@ function AdminChatPage() {
                </div>
                <button 
                 onClick={() => setIsActiveTicketDialogOpen(true)}
-                className="px-8 py-3 bg-white dark:bg-coral border-2 border-coral dark:border-coral text-coral dark:text-white text-[14px] font-bold rounded-xl hover:bg-coral/5 dark:hover:bg-coral/90 transition-colors shadow-sm"
+                className="px-8 py-3 bg-primary text-primary-foreground text-[14px] font-bold rounded-xl hover:bg-primary/90 transition-colors shadow-sm"
               >
                  Iniciar nova conversa
                </button>
