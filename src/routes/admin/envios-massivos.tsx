@@ -1,5 +1,5 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { useState, useEffect } from "react";
 import { 
   Megaphone, 
   Plus, 
@@ -18,13 +18,39 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { NewCampaignWizard } from "@/components/admin/campaigns/NewCampaignWizard";
 import { cn } from "@/lib/utils";
+import { z } from "zod";
+
+const searchSchema = z.object({
+  wizard: z.boolean().optional(),
+});
+
+type EnviosMassivosSearch = z.infer<typeof searchSchema>;
 
 export const Route = createFileRoute("/admin/envios-massivos")({
+  validateSearch: (search) => searchSchema.parse(search),
   component: EnviosMassivosPage,
 });
 
 function EnviosMassivosPage() {
-  const [isWizardOpen, setIsWizardOpen] = useState(false);
+  const search = Route.useSearch();
+  const [isWizardOpen, setIsWizardOpen] = useState(!!search.wizard);
+  const navigate = useNavigate();
+
+  // Sync state if URL changes
+  useEffect(() => {
+    if (search.wizard !== isWizardOpen) {
+      setIsWizardOpen(!!search.wizard);
+    }
+  }, [search.wizard]);
+
+  const handleOpenWizard = (open: boolean) => {
+    setIsWizardOpen(open);
+    if (!open) {
+      navigate({ search: { wizard: undefined } as any });
+    } else {
+      navigate({ search: { wizard: true } as any });
+    }
+  };
 
   return (
     <div className="p-8 max-w-7xl mx-auto space-y-8 animate-in fade-in duration-500">
@@ -34,7 +60,7 @@ function EnviosMassivosPage() {
           <p className="text-sm text-muted-fg mt-2 font-medium">Ferramenta completa de campanhas multicanal Zevva.</p>
         </div>
         <Button 
-          onClick={() => setIsWizardOpen(true)}
+          onClick={() => handleOpenWizard(true)}
           className="bg-primary hover:bg-primary/90 text-primary-foreground gap-2 font-extrabold px-8 h-12 shadow-lg shadow-primary/20 rounded-xl"
         >
           <Plus className="w-5 h-5" /> NOVA CAMPANHA
@@ -135,7 +161,7 @@ function EnviosMassivosPage() {
         </div>
       </div>
       
-      <NewCampaignWizard open={isWizardOpen} onOpenChange={setIsWizardOpen} />
+      <NewCampaignWizard open={isWizardOpen} onOpenChange={handleOpenWizard} />
     </div>
   );
 }

@@ -80,7 +80,15 @@ function AdminLayout() {
 
   const menuItems = [
     { label: "Chat", icon: MessageSquare, href: "/admin/chat" },
-    { label: "Envios Massivos", icon: Megaphone, href: "/admin/envios-massivos" },
+    { 
+      label: "Envios Massivos", 
+      icon: Megaphone, 
+      children: [
+        { label: "Criar novo", href: "/admin/envios-massivos", query: { wizard: "true" } },
+        { label: "Envios", href: "/admin/envios-massivos" },
+        { label: "Modelos", href: "/admin/envios-massivos/modelos" },
+      ]
+    },
     { label: "Dashboard", icon: LayoutDashboard, href: "/admin", activeOptions: { exact: true } },
     { label: "Check-in", icon: CheckSquare, href: "/admin/checkin-monitor" },
 
@@ -182,6 +190,7 @@ function AdminLayout() {
                       <Link
                         key={child.label}
                         to={child.href as any}
+                        search={child.query as any}
                         className="block py-2 rounded-lg text-xs font-bold transition-all duration-200"
                         activeProps={{ className: "text-primary" }}
                         inactiveProps={{ className: "text-muted-fg hover:text-foreground" }}
