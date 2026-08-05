@@ -458,6 +458,269 @@ function AdminChatPage() {
         </div>
       </div>
 
+      {/* Dialog: Filtros */}
+      <Dialog open={isFilterDialogOpen} onOpenChange={setIsFilterDialogOpen}>
+        <DialogContent className="max-w-2xl bg-[#1A1D29] border-[#2D313F] text-white">
+          <DialogHeader>
+            <DialogTitle className="text-xl font-bold">Filtros</DialogTitle>
+            <DialogDescription className="text-gray-400">Selecione os filtros que deseja aplicar aos tickets.</DialogDescription>
+          </DialogHeader>
+          <div className="grid grid-cols-3 gap-6 py-4">
+            <div className="space-y-2">
+              <Label className="text-[10px] font-bold uppercase tracking-wider text-gray-400">Projeto</Label>
+              <Select defaultValue="all">
+                <SelectTrigger className="bg-[#23262E] border-none text-xs h-10">
+                  <SelectValue placeholder="Selecione uma opção" />
+                </SelectTrigger>
+                <SelectContent className="bg-[#23262E] border-none text-white">
+                  <SelectItem value="all">Todos os Projetos</SelectItem>
+                  <SelectItem value="zevva">Zevva Tickets</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="space-y-2">
+              <Label className="text-[10px] font-bold uppercase tracking-wider text-gray-400">Tipo de canal</Label>
+              <Select>
+                <SelectTrigger className="bg-[#23262E] border-none text-xs h-10">
+                  <SelectValue placeholder="Selecione uma opção" />
+                </SelectTrigger>
+                <SelectContent className="bg-[#23262E] border-none text-white">
+                  <SelectItem value="wa">WhatsApp</SelectItem>
+                  <SelectItem value="email">Email</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="space-y-2">
+              <Label className="text-[10px] font-bold uppercase tracking-wider text-gray-400">Tipo de atendimento</Label>
+              <Select defaultValue="receptivo">
+                <SelectTrigger className="bg-[#23262E] border-none text-xs h-10">
+                  <SelectValue placeholder="Ativo e receptivo" />
+                </SelectTrigger>
+                <SelectContent className="bg-[#23262E] border-none text-white">
+                  <SelectItem value="receptivo">Ativo e receptivo</SelectItem>
+                  <SelectItem value="only-receptivo">Apenas receptivo</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+          <div className="grid grid-cols-2 gap-6 py-2">
+            <div className="space-y-2">
+              <Label className="text-[10px] font-bold uppercase tracking-wider text-gray-400">Departamentos</Label>
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-500" />
+                <Input placeholder="Buscar..." className="bg-[#23262E] border-none pl-9 h-10 text-xs" />
+              </div>
+            </div>
+            <div className="space-y-2">
+              <div className="flex items-center gap-1">
+                <Label className="text-[10px] font-bold uppercase tracking-wider text-gray-400">Tags</Label>
+                <AlertCircle className="w-3 h-3 text-coral" />
+              </div>
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-500" />
+                <Input placeholder="Buscar..." className="bg-[#23262E] border-none pl-9 h-10 text-xs" />
+              </div>
+            </div>
+          </div>
+          <div className="py-4">
+             <div className="bg-[#315DA8]/20 border border-[#315DA8]/30 rounded-lg p-3 text-center text-[11px] text-[#315DA8] font-medium">
+               Selecione um projeto para selecionar os canais (não é necessário selecionar um canal para filtrar)
+             </div>
+          </div>
+          <div className="space-y-4 py-2">
+            <Label className="text-[10px] font-bold uppercase tracking-wider text-gray-400">Preferências</Label>
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <span className="text-xs text-gray-400">Mensagens agendadas</span>
+                <Switch />
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-xs text-gray-400">Mensagens não lidas</span>
+                <Switch />
+              </div>
+            </div>
+          </div>
+          <DialogFooter className="mt-6 flex justify-between sm:justify-between items-center w-full">
+            <button onClick={() => setIsFilterDialogOpen(false)} className="text-sm font-bold hover:underline">Cancelar</button>
+            <div className="flex gap-4">
+              <button className="flex items-center gap-2 text-xs font-bold text-gray-400 hover:text-white">
+                <ListFilter className="w-4 h-4" /> Limpar filtros
+              </button>
+              <button onClick={() => { toast.success("Filtros aplicados"); setIsFilterDialogOpen(false); }} className="bg-[#FFD31A] hover:bg-[#FFD31A]/90 text-black px-8 py-2.5 rounded-lg text-xs font-black uppercase tracking-widest">Aplicar</button>
+            </div>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Dialog: Histórico de Conversas */}
+      <Dialog open={isHistoryDialogOpen} onOpenChange={setIsHistoryDialogOpen}>
+        <DialogContent className="max-w-2xl bg-[#1A1D29] border-[#2D313F] text-white">
+          <DialogHeader>
+            <DialogTitle className="text-xl font-bold">Histórico de conversas</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-6 py-4">
+            <div className="space-y-2">
+              <Label className="text-[10px] font-bold uppercase tracking-wider text-gray-400">Projeto</Label>
+              <Select defaultValue="zevva">
+                <SelectTrigger className="bg-[#23262E] border-none text-xs h-10">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent className="bg-[#23262E] border-none text-white">
+                  <SelectItem value="zevva">Zevva Tickets</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="space-y-2">
+              <Label className="text-[10px] font-bold uppercase tracking-wider text-gray-400">Pesquisar por protocolo, nome ou telefone <span className="text-coral">*</span></Label>
+              <div className="relative">
+                <Input placeholder="Buscar por protocolo, nome ou telefone" className="bg-[#23262E] border-none h-11 text-xs pr-12" />
+                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] text-gray-500 font-bold">0 / 255</span>
+              </div>
+            </div>
+            <div className="grid grid-cols-2 gap-6">
+              <div className="space-y-2">
+                <Label className="text-[10px] font-bold uppercase tracking-wider text-gray-400">Tipo de canal</Label>
+                <Select>
+                  <SelectTrigger className="bg-[#23262E] border-none text-xs h-10">
+                    <SelectValue placeholder="Selecione os tipos de canais" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-[#23262E] border-none text-white">
+                    <SelectItem value="wa">WhatsApp</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="space-y-2">
+                <Label className="text-[10px] font-bold uppercase tracking-wider text-gray-400">Canais</Label>
+                <Select>
+                  <SelectTrigger className="bg-[#23262E] border-none text-xs h-10">
+                    <SelectValue placeholder="Selecione um ou mais canais" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-[#23262E] border-none text-white">
+                    <SelectItem value="c1">Canal 1</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+            <div className="space-y-2">
+              <Label className="text-[10px] font-bold uppercase tracking-wider text-gray-400">Período</Label>
+              <button className="w-full bg-[#23262E] text-left px-4 h-10 rounded-lg text-xs text-gray-400">Selecionar período</button>
+            </div>
+            <button className="w-full py-3 bg-[#2F323D] text-gray-500 text-xs font-black uppercase tracking-widest rounded-lg cursor-not-allowed">Buscar</button>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Dialog: Iniciar Atendimento Ativo */}
+      <Dialog open={isActiveTicketDialogOpen} onOpenChange={setIsActiveTicketDialogOpen}>
+        <DialogContent className="max-w-2xl bg-[#1A1D29] border-[#2D313F] text-white">
+          <DialogHeader>
+            <DialogTitle className="text-xl font-bold">Iniciar Atendimento Ativo</DialogTitle>
+            <DialogDescription className="text-gray-400">Escolha um cliente para iniciar um novo atendimento ativo</DialogDescription>
+          </DialogHeader>
+          <div className="grid grid-cols-2 gap-6 py-6">
+            <div className="space-y-2">
+              <Label className="text-[10px] font-bold uppercase tracking-wider text-gray-400">Organização</Label>
+              <Select defaultValue="zevva">
+                <SelectTrigger className="bg-[#23262E] border-none text-xs h-11">
+                  <SelectValue placeholder="Zevva" />
+                </SelectTrigger>
+                <SelectContent className="bg-[#23262E] border-none text-white">
+                  <SelectItem value="zevva">Zevva</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="space-y-2">
+              <Label className="text-[10px] font-bold uppercase tracking-wider text-gray-400">Projeto</Label>
+              <Select defaultValue="zevva-br">
+                <SelectTrigger className="bg-[#23262E] border-none text-xs h-11">
+                  <SelectValue placeholder="Zevva Tickets" />
+                </SelectTrigger>
+                <SelectContent className="bg-[#23262E] border-none text-white">
+                  <SelectItem value="zevva-br">Zevva Tickets</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="space-y-2">
+              <Label className="text-[10px] font-bold uppercase tracking-wider text-gray-400">Canal</Label>
+              <Select>
+                <SelectTrigger className="bg-[#23262E] border-none text-xs h-11 text-gray-500">
+                  <SelectValue placeholder="Selecione um canal" />
+                </SelectTrigger>
+                <SelectContent className="bg-[#23262E] border-none text-white">
+                  <SelectItem value="wa">WhatsApp Suporte</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="space-y-2">
+              <Label className="text-[10px] font-bold uppercase tracking-wider text-gray-400">Departamento</Label>
+              <Select>
+                <SelectTrigger className="bg-[#23262E] border-none text-xs h-11 text-gray-500">
+                  <SelectValue placeholder="Selecione um departamento" />
+                </SelectTrigger>
+                <SelectContent className="bg-[#23262E] border-none text-white">
+                  <SelectItem value="vendas">Vendas</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+          <DialogFooter className="mt-4 flex justify-between sm:justify-between items-center w-full">
+            <button onClick={() => setIsActiveTicketDialogOpen(false)} className="text-sm font-bold hover:underline">Cancelar</button>
+            <button className="flex-1 max-w-[400px] py-3 bg-[#2F323D] text-gray-500 text-[11px] font-black uppercase tracking-widest rounded-lg cursor-not-allowed">Escolher Destinatário</button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Dialog: Finalizar Atendimento */}
+      <Dialog open={isFinishDialogOpen} onOpenChange={setIsFinishDialogOpen}>
+        <DialogContent className="max-w-2xl bg-[#1A1D29] border-[#2D313F] text-white">
+          <DialogHeader>
+            <div className="flex items-center gap-3">
+              <DialogTitle className="text-xl font-bold">Finalizar atendimento</DialogTitle>
+              <Badge variant="outline" className="bg-[#23262E] border-none text-gray-500 text-[10px] px-2 py-0">20240804-001</Badge>
+            </div>
+            <DialogDescription className="text-gray-400">Ao finalizar este atendimento, o ticket será fechado e não poderá ser reaberto.</DialogDescription>
+          </DialogHeader>
+          <div className="py-4 space-y-6">
+            <div className="bg-[#315DA8]/20 border border-[#315DA8]/30 rounded-lg p-3 flex items-center gap-3 text-[11px] text-[#315DA8] font-medium">
+              <AlertCircle className="w-4 h-4" /> Não há classificações disponíveis para este departamento.
+            </div>
+            <div className="space-y-3">
+              <Label className="text-[10px] font-bold uppercase tracking-wider text-gray-400">Observações</Label>
+              <div className="bg-[#23262E] rounded-xl border border-white/5 overflow-hidden">
+                <div className="flex items-center gap-4 px-4 py-3 border-b border-white/5">
+                  <div className="flex gap-4 text-gray-400">
+                     <span className="font-serif font-bold">B</span>
+                     <span className="italic font-serif">I</span>
+                     <span className="line-through font-serif">S</span>
+                     <span className="font-mono">{"<>"}</span>
+                  </div>
+                  <div className="flex-1" />
+                  <div className="flex gap-4 text-gray-400">
+                    <Smile className="w-4 h-4" />
+                    <Pencil className="w-4 h-4" />
+                  </div>
+                </div>
+                <textarea 
+                  className="w-full bg-transparent p-6 min-h-[160px] outline-none text-sm resize-none"
+                  placeholder="Descreva o atendimento..."
+                />
+                <div className="flex items-center justify-between px-4 py-3 border-t border-white/5">
+                   <Zap className="w-4 h-4 text-gray-500" />
+                   <div className="flex items-center gap-3">
+                     <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">0 / 512</span>
+                     <MoreVertical className="w-4 h-4 text-gray-500" />
+                   </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <DialogFooter className="mt-4 flex justify-between sm:justify-between items-center w-full">
+            <button onClick={() => setIsFinishDialogOpen(false)} className="text-sm font-bold hover:underline">Cancelar</button>
+            <button onClick={() => { toast.success("Atendimento finalizado"); setIsFinishDialogOpen(false); }} className="flex-1 max-w-[400px] py-3 bg-coral hover:bg-coral/90 text-white text-[11px] font-black uppercase tracking-widest rounded-lg">Finalizar atendimento</button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
       <style>{`
         .custom-scrollbar::-webkit-scrollbar { width: 4px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
