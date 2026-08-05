@@ -805,12 +805,13 @@ const AtendimentoAccordion = () => (
       </AccordionContent>
     </AccordionItem>
 
+    {/* Sections: Classificações, Gatilhos, SLA */}
 
     {[
+
       { id: "classificacoes", icon: Briefcase, title: "Gerenciar Classificações", desc: "Categorização vinculada a departamentos." },
       { id: "gatilhos", icon: Zap, title: "Gatilhos de Atendimento", desc: "Automações baseadas em fluxos." },
       { id: "sla", icon: Clock, title: "Inatividade e SLA", desc: "Configure regras de inatividade e SLA do atendente" },
-      { id: "feriados", icon: CalendarDays, title: "Feriados e Datas Especiais", desc: "Mensagens para datas não úteis." }
     ].map((item) => (
       <AccordionItem key={item.id} value={item.id} className="bg-white rounded-2xl border border-line p-0 overflow-hidden shadow-sm">
         <AccordionTrigger className="px-6 py-5 hover:no-underline group text-left">
@@ -821,6 +822,8 @@ const AtendimentoAccordion = () => (
         </AccordionTrigger>
         <AccordionContent className="px-6 pb-6 pt-2 border-t border-line/50">
           <div className="space-y-12 pt-6">
+
+
             {/* Parâmetros de inatividade do cliente */}
             <div className="space-y-6">
               <div className="flex items-center justify-between">
@@ -991,11 +994,211 @@ const AtendimentoAccordion = () => (
         </AccordionContent>
       </AccordionItem>
     ))}
+
+
+    <AccordionItem value="feriados" className="bg-white rounded-2xl border border-line p-0 overflow-hidden shadow-sm">
+      <AccordionTrigger className="px-6 py-5 hover:no-underline group text-left">
+
+        <div className="flex items-center gap-3 text-left">
+          <CalendarDays className="w-5 h-5 text-coral" />
+          <ConfigItemHeader 
+            title="Feriados e Datas Especiais" 
+            description="Cadastre feriados nacionais, regionais ou datas com horário reduzido" 
+          />
+        </div>
+      </AccordionTrigger>
+      <AccordionContent className="px-6 pb-6 pt-2 border-t border-line/50">
+        <div className="space-y-6 pt-6">
+          <div className="bg-[#EBF3FF] p-4 rounded-xl flex items-center gap-3 border border-[#EBF3FF] shadow-sm">
+            <div className="bg-[#3B82F6] p-1.5 rounded-full">
+              <Clock className="w-3.5 h-3.5 text-white" />
+            </div>
+            <p className="text-xs font-bold text-[#3B82F6]">
+              Os horários abaixo seguem o fuso horário do projeto: America/Sao Paulo.
+            </p>
+          </div>
+
+          <div className="flex justify-end">
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button className="bg-[#D9A94D] text-white hover:bg-[#D9A94D]/90 gap-2 rounded-xl h-11 px-6 font-bold shadow-lg shadow-[#D9A94D]/20">
+                  <Plus className="w-4 h-4" /> Adicionar feriado
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="max-w-2xl p-0 overflow-hidden border-none shadow-2xl rounded-3xl">
+                <DialogHeader className="px-8 py-6 border-b shrink-0">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <DialogTitle className="text-xl font-bold text-navy">Adicionar feriado</DialogTitle>
+                      <p className="text-sm text-navy/40 font-medium">Cadastre um feriado nacional, regional ou outra data especial.</p>
+                    </div>
+                  </div>
+                </DialogHeader>
+                
+                <div className="bg-[#EBF3FF] mx-8 mt-6 p-3 rounded-xl flex items-center gap-3 border border-[#EBF3FF]">
+                  <Clock className="w-4 h-4 text-[#3B82F6]" />
+                  <p className="text-[11px] font-bold text-[#3B82F6]">
+                    Os horários abaixo seguem o fuso horário do projeto: America/Sao Paulo.
+                  </p>
+                </div>
+
+                <ScrollArea className="max-h-[70vh]">
+                  <div className="p-8 space-y-6 pt-6">
+                    <div className="space-y-2">
+                      <Label className="text-xs font-bold text-navy flex items-center gap-1">
+                        Aplica a <Info className="w-3 h-3 text-navy/30" />
+                      </Label>
+                      <Select defaultValue="global">
+                        <SelectTrigger className="h-12 rounded-xl border-line bg-surface-2 text-sm font-medium">
+                          <SelectValue placeholder="Todos os departamentos (global)" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="global">Todos os departamentos (global)</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label className="text-xs font-bold text-navy">
+                        Nome do feriado <span className="text-coral">*</span>
+                      </Label>
+                      <div className="relative">
+                        <Input placeholder="Ex.: Natal, Aniversário da empresa" className="rounded-xl border-line h-12 bg-surface-2 pr-12 text-sm" />
+                        <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] text-navy/20 font-bold">0 / 255</span>
+                      </div>
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label className="text-xs font-bold text-navy">
+                        Data <span className="text-coral">*</span>
+                      </Label>
+                      <div className="relative">
+                        <Input type="text" placeholder="dd/mm/aaaa" className="rounded-xl border-line h-12 bg-surface-2 pr-12 text-sm" />
+                        <CalendarDays className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-navy/20" />
+                        <span className="absolute right-10 top-1/2 -translate-y-1/2 text-[10px] text-navy/20 font-bold mr-2">0 / 255</span>
+                      </div>
+                      <div className="flex items-center gap-2 pt-1">
+                        <Checkbox id="repetir" className="rounded border-line" />
+                        <Label htmlFor="repetir" className="text-xs font-bold text-navy cursor-pointer">Repetir todo ano</Label>
+                      </div>
+                    </div>
+
+                    <div className="space-y-3">
+                      <Label className="text-xs font-bold text-navy">
+                        Como o atendimento funciona neste dia? <span className="text-coral">*</span>
+                      </Label>
+                      <div className="grid grid-cols-2 gap-0 border border-line rounded-xl overflow-hidden h-11">
+                        <Button className="rounded-none bg-[#FFF8E6] text-navy hover:bg-[#FFF8E6] border-r border-line text-xs font-bold shadow-none h-full">Dia inteiro fechado</Button>
+                        <Button variant="ghost" className="rounded-none text-navy/40 text-xs font-bold hover:bg-surface-2 h-full">Horário reduzido</Button>
+                      </div>
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label className="text-xs font-bold text-navy flex items-center gap-1">
+                        Mensagem automática <Info className="w-3 h-3 text-navy/30" />
+                      </Label>
+                      <div className="border border-line rounded-2xl overflow-hidden bg-white shadow-sm">
+                        <div className="p-2 border-b border-line flex items-center gap-3 bg-surface-1">
+                          <Button variant="ghost" size="icon" className="h-8 w-8 font-serif font-bold text-navy/60">B</Button>
+                          <Button variant="ghost" size="icon" className="h-8 w-8 italic text-navy/60">I</Button>
+                          <Button variant="ghost" size="icon" className="h-8 w-8 line-through text-navy/60">S</Button>
+                          <Button variant="ghost" size="icon" className="h-8 w-8 text-navy/60">{"<"}{" >"}</Button>
+                          <div className="ml-auto flex items-center gap-2">
+                            <Button variant="ghost" size="icon" className="h-8 w-8 text-navy/60 text-lg">☺</Button>
+                            <Button variant="ghost" size="icon" className="h-8 w-8 text-navy/60">⟲</Button>
+                          </div>
+                        </div>
+                        <textarea 
+                          className="w-full min-h-[120px] p-4 text-sm outline-none resize-none placeholder:text-navy/20" 
+                          placeholder="Digite a mensagem que será enviada..."
+                        />
+                        <div className="p-2 border-t border-line flex items-center justify-between bg-surface-1">
+                          <Zap className="w-4 h-4 text-[#D9A94D] cursor-pointer" />
+                          <div className="flex items-center gap-2">
+                            <span className="text-[10px] text-navy/20 font-bold">0 / 2000</span>
+                            <div className="w-4 h-4 border border-line rounded-sm flex items-center justify-center cursor-pointer">
+                              <Search className="w-2 h-2 text-navy/20" />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <p className="text-[10px] text-navy/30 font-bold pt-1">💡 Suporta variáveis dinâmicas — passe o mouse no ícone para ver exemplos.</p>
+                    </div>
+
+                    <div className="space-y-4">
+                      <div className="flex flex-col gap-1">
+                        <Label className="text-xs font-bold text-navy">Quando enviar esta mensagem?</Label>
+                        <p className="text-[10px] leading-relaxed text-navy/30 font-bold">Selecione em quais momentos o aviso é enviado ao cliente. Sem nenhuma opção marcada, o feriado fica "silencioso" — nenhuma mensagem é enviada e ele serve apenas para excluir o dia das métricas de tempo útil de atendimento.</p>
+                      </div>
+                      
+                      <div className="space-y-3">
+                        <div className="flex items-center gap-2">
+                          <Checkbox id="inicio" className="rounded border-line" />
+                          <div className="flex items-center gap-1">
+                            <Label htmlFor="inicio" className="text-xs font-bold text-navy cursor-pointer">Logo no início da conversa</Label>
+                            <Info className="w-3 h-3 text-navy/30" />
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Checkbox id="transfer" defaultChecked className="rounded border-line data-[state=checked]:bg-[#D9A94D] data-[state=checked]:border-[#D9A94D]" />
+                          <div className="flex items-center gap-1">
+                            <Label htmlFor="transfer" className="text-xs font-bold text-navy cursor-pointer">Ao transferir para um atendente humano</Label>
+                            <Info className="w-3 h-3 text-navy/30" />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </ScrollArea>
+                <DialogFooter className="px-8 py-6 border-t bg-surface-2 flex items-center justify-end w-full">
+                  <Button className="bg-[#D9A94D] text-white hover:bg-[#D9A94D]/90 font-bold px-10 h-12 rounded-xl shadow-lg shadow-[#D9A94D]/20 transition-all active:scale-95">
+                    Salvar feriado
+                  </Button>
+                </DialogFooter>
+              </DialogContent>
+            </Dialog>
+          </div>
+
+          <div className="border border-line rounded-2xl overflow-hidden bg-white shadow-sm">
+            <Table>
+              <TableHeader className="bg-surface-2">
+                <TableRow className="hover:bg-transparent border-line">
+                  <TableHead className="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-navy/30">Nome</TableHead>
+                  <TableHead className="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-navy/30">Departamento</TableHead>
+                  <TableHead className="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-navy/30">Data</TableHead>
+                  <TableHead className="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-navy/30">Cobertura</TableHead>
+                  <TableHead className="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-navy/30">Recorrente</TableHead>
+                  <TableHead className="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-navy/30">Mensagem automática</TableHead>
+                  <TableHead className="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-navy/30">Criado por</TableHead>
+                  <TableHead className="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-navy/30">Criado em</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                <TableRow>
+                  <TableCell colSpan={8} className="h-64 text-center">
+                    <div className="flex flex-col items-center justify-center gap-3">
+                      <div className="bg-surface-2 p-3 rounded-2xl border border-line">
+                        <RefreshCcw className="w-8 h-8 text-navy/10" />
+                      </div>
+                      <div className="space-y-1">
+                        <p className="text-sm font-bold text-navy">Nenhum registro encontrado</p>
+                        <p className="text-[11px] text-navy/30 font-medium">Tente ajustar os filtros ou adicionar novos registros</p>
+                      </div>
+                    </div>
+                  </TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
+          </div>
+        </div>
+      </AccordionContent>
+    </AccordionItem>
   </Accordion>
 );
 
 const EquipeAccordion = () => (
   <Accordion type="single" collapsible className="space-y-4">
+
     {[
       { id: "equipe", icon: Users, title: "Gerenciar Equipe", desc: "Tabela de usuários, e-mails e permissões." },
       { id: "permissoes", icon: ShieldCheck, title: "Gerenciar Permissões", desc: "Criação de papéis e controle granular." },
