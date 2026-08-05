@@ -725,7 +725,7 @@ function AdminChatPage() {
                             </DropdownMenuContent>
                           </DropdownMenu>
 
-                          <DropdownMenuSeparator className="bg-line dark:bg-white/5" />
+                          <DropdownMenuSeparator className="bg-border" />
 
                           <div className="px-3 py-2 flex items-center justify-between">
                              <div className="flex items-center gap-2">
