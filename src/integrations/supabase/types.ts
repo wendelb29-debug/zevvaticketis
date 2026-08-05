@@ -47,24 +47,36 @@ export type Database = {
           admin_id: string | null
           alvo_id: string
           alvo_tipo: string
+          categoria: string | null
           created_at: string | null
+          dados_antes: Json
+          dados_depois: Json
           id: string
+          payload: Json
         }
         Insert: {
           acao: string
           admin_id?: string | null
           alvo_id: string
           alvo_tipo: string
+          categoria?: string | null
           created_at?: string | null
+          dados_antes?: Json
+          dados_depois?: Json
           id?: string
+          payload?: Json
         }
         Update: {
           acao?: string
           admin_id?: string | null
           alvo_id?: string
           alvo_tipo?: string
+          categoria?: string | null
           created_at?: string | null
+          dados_antes?: Json
+          dados_depois?: Json
           id?: string
+          payload?: Json
         }
         Relationships: []
       }

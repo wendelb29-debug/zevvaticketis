@@ -17,6 +17,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
 import { TeamManagement } from "@/components/admin/TeamManagement";
+import { AuditoriaPanel } from "@/components/admin/AuditoriaPanel";
 import { useQuery } from "@tanstack/react-query";
 
 
@@ -215,67 +216,9 @@ function DistribuicaoConversas({ departments }: { departments: Dept[] }) {
 }
 
 function AuditoriaTab() {
-  const { data: logs, isLoading } = useQuery({
-    queryKey: ["audit-logs"],
-    queryFn: async () => {
-      const { data } = await (supabase
-        .from("audit_logs" as any)
-        .select("*, profiles(nome)")
-        .order("created_at", { ascending: false }) as any);
-      return data;
-    }
-  });
-
-  if (isLoading) return <div className="p-10 text-center text-muted-fg animate-pulse">Carregando logs de auditoria...</div>;
-
-  return (
-    <div className="space-y-6">
-      <div className="bg-card rounded-xl border border-border overflow-hidden shadow-sm">
-        <div className="overflow-x-auto">
-          <table className="w-full text-left">
-            <thead className="bg-accent/50 text-muted-fg text-[11px] font-extrabold uppercase tracking-widest border-b border-border">
-              <tr>
-                <th className="px-6 py-4">Admin</th>
-                <th className="px-6 py-4">Ação</th>
-                <th className="px-6 py-4">Alvo</th>
-                <th className="px-6 py-4 text-right">Data</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-border/50">
-              {logs?.map((log: any) => (
-                <tr key={log.id} className="hover:bg-accent/30 transition-colors group">
-                  <td className="px-6 py-4">
-                    <div className="flex items-center gap-2">
-                      <div className="w-7 h-7 rounded-full bg-primary/10 flex items-center justify-center text-[10px] font-bold text-primary">
-                        {log.profiles?.nome?.charAt(0) || 'S'}
-                      </div>
-                      <span className="font-bold text-sm text-foreground">{log.profiles?.nome || 'Sistema'}</span>
-                    </div>
-                  </td>
-                  <td className="px-6 py-4 text-sm font-medium">{log.acao}</td>
-                  <td className="px-6 py-4">
-                    <div className="flex flex-col">
-                      <span className="text-sm font-bold text-foreground">{log.alvo_tipo}</span>
-                      <span className="text-[10px] text-muted-fg font-mono truncate max-w-[150px]">{log.alvo_id}</span>
-                    </div>
-                  </td>
-                  <td className="px-6 py-4 text-right">
-                    <span className="text-xs text-muted-fg font-inter">{new Date(log.created_at).toLocaleString()}</span>
-                  </td>
-                </tr>
-              ))}
-              {(!logs || logs.length === 0) && (
-                <tr>
-                  <td colSpan={4} className="px-6 py-12 text-center text-muted-fg font-inter">Nenhum log de auditoria encontrado.</td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-  );
+  return <AuditoriaPanel />;
 }
+
 
 function SettingsPage() {
 
