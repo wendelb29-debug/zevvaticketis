@@ -22,15 +22,23 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/admin/envios-massivos")({
   validateSearch: (search: Record<string, unknown>) => {
     return {
-      wizard: (search.wizard as string) === "true",
+      wizard: search.wizard === "true" || search.wizard === true,
     };
   },
   component: EnviosMassivosPage,
 });
 
 function EnviosMassivosPage() {
-  const { wizard } = Route.useSearch();
-  const [isWizardOpen, setIsWizardOpen] = useState(wizard);
+  const search = Route.useSearch();
+  const [isWizardOpen, setIsWizardOpen] = useState(!!search.wizard);
+  const navigate = useNavigate();
+
+  const handleOpenWizard = (open: boolean) => {
+    setIsWizardOpen(open);
+    if (!open) {
+      navigate({ search: { wizard: undefined } });
+    }
+  };
 
   return (
     <div className="p-8 max-w-7xl mx-auto space-y-8 animate-in fade-in duration-500">
