@@ -456,13 +456,13 @@ function AdminChatPage() {
                   </div>
                 </div>
                 <div className="flex items-center gap-2">
-                  <button className="p-2 hover:bg-[#FAFAFA] text-[#667085] rounded-lg transition-colors border border-transparent hover:border-[#E5E7EB]">
+                   <button className="p-2 hover:bg-[#FAFAFA] dark:hover:bg-white/5 text-[#667085] dark:text-white/40 rounded-lg transition-colors border border-transparent hover:border-[#E5E7EB] dark:hover:border-white/5">
                     <Search className="w-[18px] h-[18px]" />
                   </button>
-                  <button className="p-2 hover:bg-[#FAFAFA] text-[#667085] rounded-lg transition-colors border border-transparent hover:border-[#E5E7EB]">
+                  <button className="p-2 hover:bg-[#FAFAFA] dark:hover:bg-white/5 text-[#667085] dark:text-white/40 rounded-lg transition-colors border border-transparent hover:border-[#E5E7EB] dark:hover:border-white/5">
                     <Phone className="w-[18px] h-[18px]" />
                   </button>
-                  <button className="p-2 hover:bg-[#FAFAFA] text-[#667085] rounded-lg transition-colors border border-transparent hover:border-[#E5E7EB]">
+                  <button className="p-2 hover:bg-[#FAFAFA] dark:hover:bg-white/5 text-[#667085] dark:text-white/40 rounded-lg transition-colors border border-transparent hover:border-[#E5E7EB] dark:hover:border-white/5">
                     <MoreVertical className="w-[18px] h-[18px]" />
                   </button>
                 </div>
