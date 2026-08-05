@@ -195,24 +195,24 @@ function SettingsPage() {
                 </CardContent>
               </Card>
 
-              <Card className="border-line overflow-hidden shadow-sm">
-                <CardHeader className="bg-surface/50 border-b border-line flex flex-row items-center justify-between">
+              <Card className="border-border bg-card overflow-hidden shadow-sm">
+                <CardHeader className="bg-accent/50 border-b border-border flex flex-row items-center justify-between">
                   <div>
-                    <CardTitle className="text-lg font-manrope font-bold text-navy">Departamentos</CardTitle>
-                    <CardDescription>Gerencie as áreas de atendimento.</CardDescription>
+                    <CardTitle className="text-lg font-manrope font-bold text-foreground">Departamentos</CardTitle>
+                    <CardDescription className="text-muted-fg">Gerencie as áreas de atendimento.</CardDescription>
                   </div>
-                  <Button onClick={() => setIsDeptModalOpen(true)} size="sm" className="bg-coral hover:bg-coral/90 text-white gap-2 font-bold rounded-lg shadow-md shadow-coral/20">
+                  <Button onClick={() => setIsDeptModalOpen(true)} size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground gap-2 font-bold rounded-lg shadow-md shadow-primary/20">
                     <Plus className="w-4 h-4" />
                     Adicionar
                   </Button>
                 </CardHeader>
                 <CardContent className="p-0">
-                  <div className="divide-y divide-line">
+                  <div className="divide-y divide-border">
                     {departments.map(dept => (
-                      <div key={dept.id} className="p-4 flex items-center justify-between hover:bg-surface transition-colors">
+                      <div key={dept.id} className="p-4 flex items-center justify-between hover:bg-accent transition-colors">
                         <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 rounded-full bg-coral/10 flex items-center justify-center">
-                            <Users className="w-5 h-5 text-coral" />
+                          <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                            <Users className="w-5 h-5 text-primary" />
                           </div>
                           <div>
                             <p className="text-sm font-bold text-navy">{dept.name}</p>
