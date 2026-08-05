@@ -352,7 +352,7 @@ function AdminChatPage() {
 
         {/* Modal de Pré-visualização */}
         <Dialog open={!!previewContactId} onOpenChange={(open) => !open && setPreviewContactId(null)}>
-          <DialogContent className="max-w-2xl p-0 overflow-hidden border border-border bg-popover shadow-2xl">
+          <DialogContent className="max-w-2xl p-0 overflow-hidden border border-border bg-card shadow-2xl">
             <div className="flex items-center justify-between p-4 border-b border-border bg-muted/30">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold">
