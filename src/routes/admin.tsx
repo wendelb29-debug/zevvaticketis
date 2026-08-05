@@ -2,6 +2,7 @@ import { createFileRoute, Outlet, redirect, useNavigate, Link, useLocation } fro
 import { supabase } from "@/integrations/supabase/client";
 import { useEffect, useState } from "react";
 import { UserMenu } from "@/components/auth/UserMenu";
+import { BreadcrumbNavigation } from "@/components/layout/BreadcrumbNavigation";
 import { useUI } from "@/hooks/use-ui";
 import { 
   LayoutDashboard, 
@@ -200,10 +201,13 @@ function AdminLayout() {
               {...(item.activeOptions ? { activeOptions: item.activeOptions } : {})}
               className={cn(
                 "flex items-center gap-3 py-3.5 rounded-xl text-sm font-extrabold transition-all duration-200",
-                isSidebarCollapsed ? "px-0 justify-center" : "px-4"
+                isSidebarCollapsed ? "px-0 justify-center" : "px-4",
+                item.label === "Chat" && "bg-primary text-primary-foreground shadow-lg shadow-primary/30"
               )}
-              activeProps={{ className: "bg-primary text-primary-foreground shadow-lg shadow-primary/30" }}
-              inactiveProps={{ className: "text-foreground hover:bg-accent" }}
+              {...(item.label !== "Chat" ? {
+                activeProps: { className: "bg-primary text-primary-foreground shadow-lg shadow-primary/30" },
+                inactiveProps: { className: "text-foreground hover:bg-accent" }
+              } : {})}
               title={isSidebarCollapsed ? item.label : undefined}
             >
               <item.icon className="w-5 h-5 shrink-0" />
@@ -254,6 +258,12 @@ function AdminLayout() {
           location.pathname === "/admin/chat" && "p-0 sm:p-0",
           isTransitioning ? "opacity-0" : "opacity-100"
         )}>
+          {location.pathname !== "/admin/chat" && (
+            <div className="mb-6">
+              <BreadcrumbNavigation />
+            </div>
+          )}
+          
           {isTransitioning ? (
             <div className="w-full h-full flex items-center justify-center py-20">
                <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin" />

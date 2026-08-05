@@ -39,6 +39,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useUI } from "@/hooks/use-ui";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
+import { BreadcrumbNavigation } from "@/components/layout/BreadcrumbNavigation";
 import { 
   AlertDialog,
   AlertDialogAction,
@@ -100,10 +101,11 @@ function UserProfile() {
 
   async function fetchTickets() {
     const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return;
     const { data } = await supabase
       .from("tickets")
       .select("*, events(title, location, city, start_date)")
-      .eq("owner_id", user?.id)
+      .eq("owner_id", user.id)
       .limit(3);
     if (data) setMyTickets(data);
   }
@@ -168,10 +170,11 @@ function UserProfile() {
   const handleRemovePhoto = async () => {
     try {
       const { data: { user } } = await supabase.auth.getUser();
+      if (!user) throw new Error("Usuário não autenticado");
       const { error } = await supabase
         .from('profiles')
         .update({ avatar_url: null })
-        .eq('id', user?.id);
+        .eq('id', user.id);
 
       if (error) throw error;
       setProfile({ ...profile, avatar_url: null });
@@ -249,7 +252,8 @@ function UserProfile() {
   );
 
   return (
-    <div className="space-y-10 font-inter max-w-2xl mx-auto pb-20">
+    <div className="space-y-10 font-inter max-w-2xl mx-auto pb-20 pt-6">
+      <BreadcrumbNavigation />
       <div className="space-y-1">
         <h1 className="text-3xl font-manrope font-extrabold text-navy">Meu Perfil</h1>
         <p className="text-muted font-medium">Gerencie suas informações pessoais e preferências.</p>

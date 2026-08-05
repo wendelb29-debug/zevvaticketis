@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { BreadcrumbNavigation } from "@/components/layout/BreadcrumbNavigation";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/app/")({
@@ -75,7 +76,8 @@ function MyTickets() {
   );
 
   return (
-    <div className="space-y-8 font-inter">
+    <div className="space-y-8 font-inter pt-6">
+      <BreadcrumbNavigation />
       <div className="flex flex-col gap-2">
         <h1 className="text-3xl font-manrope font-extrabold text-navy">Meus Ingressos</h1>
         <p className="text-muted font-medium">Gerencie suas reservas e acesse seus QR codes.</p>
