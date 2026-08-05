@@ -943,10 +943,10 @@ function AdminChatPage() {
               </Select>
             </div>
             <div className="space-y-2">
-              <Label className="text-[10px] font-bold uppercase tracking-wider text-gray-400">Pesquisar por protocolo, nome ou telefone <span className="text-coral">*</span></Label>
+              <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Pesquisar por protocolo, nome ou telefone <span className="text-primary">*</span></Label>
               <div className="relative">
-                <Input placeholder="Buscar por protocolo, nome ou telefone" className="bg-[#23262E] border-none h-11 text-xs pr-12" />
-                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] text-gray-500 font-bold">0 / 255</span>
+                <Input placeholder="Buscar por protocolo, nome ou telefone" className="bg-muted border-none h-11 text-xs pr-12" />
+                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] text-muted-foreground font-bold">0 / 255</span>
               </div>
             </div>
             <div className="grid grid-cols-2 gap-6">
