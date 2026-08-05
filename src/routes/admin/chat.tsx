@@ -907,7 +907,7 @@ function AdminChatPage() {
                 <Switch />
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-xs text-gray-400">Mensagens não lidas</span>
+                <span className="text-xs text-muted-foreground">Mensagens não lidas</span>
                 <Switch />
               </div>
             </div>
