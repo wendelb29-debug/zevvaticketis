@@ -23,10 +23,15 @@ import { Route as ProdutorPendenteRouteImport } from './routes/produtor-pendente
 import { Route as Char91DotmcpChar93ListToolsRouteImport } from './routes/[.mcp]/list-tools'
 import { Route as Char91DotwellKnownChar93OauthProtectedResourceRouteImport } from './routes/[.well-known]/oauth-protected-resource'
 import { Route as AdminAprovacoesRouteImport } from './routes/admin/aprovacoes'
+import { Route as AdminAuditoriaRouteImport } from './routes/admin/auditoria'
+import { Route as AdminCheckinMonitorRouteImport } from './routes/admin/checkin-monitor'
 import { Route as AdminConfiguracoesRouteImport } from './routes/admin/configuracoes'
+import { Route as AdminEmailsRouteImport } from './routes/admin/emails'
+import { Route as AdminMarketingRouteImport } from './routes/admin/marketing'
 import { Route as AdminPaisesMoedasRouteImport } from './routes/admin/paises-moedas'
 import { Route as AdminPlanosRouteImport } from './routes/admin/planos'
 import { Route as AdminProdutoresRouteImport } from './routes/admin/produtores'
+import { Route as AdminUsuariosRouteImport } from './routes/admin/usuarios'
 import { Route as AppIndexRouteImport } from './routes/app/index'
 import { Route as AppHistoricoRouteImport } from './routes/app/historico'
 import { Route as AppPerfilRouteImport } from './routes/app/perfil'
@@ -112,9 +117,29 @@ const AdminAprovacoesRoute = AdminAprovacoesRouteImport.update({
   path: '/aprovacoes',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminAuditoriaRoute = AdminAuditoriaRouteImport.update({
+  id: '/auditoria',
+  path: '/auditoria',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminCheckinMonitorRoute = AdminCheckinMonitorRouteImport.update({
+  id: '/checkin-monitor',
+  path: '/checkin-monitor',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminConfiguracoesRoute = AdminConfiguracoesRouteImport.update({
   id: '/configuracoes',
   path: '/configuracoes',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminEmailsRoute = AdminEmailsRouteImport.update({
+  id: '/emails',
+  path: '/emails',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminMarketingRoute = AdminMarketingRouteImport.update({
+  id: '/marketing',
+  path: '/marketing',
   getParentRoute: () => AdminRoute,
 } as any)
 const AdminPaisesMoedasRoute = AdminPaisesMoedasRouteImport.update({
@@ -130,6 +155,11 @@ const AdminPlanosRoute = AdminPlanosRouteImport.update({
 const AdminProdutoresRoute = AdminProdutoresRouteImport.update({
   id: '/produtores',
   path: '/produtores',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminUsuariosRoute = AdminUsuariosRouteImport.update({
+  id: '/usuarios',
+  path: '/usuarios',
   getParentRoute: () => AdminRoute,
 } as any)
 const AppIndexRoute = AppIndexRouteImport.update({
@@ -209,10 +239,15 @@ export interface FileRoutesByFullPath {
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/admin/aprovacoes': typeof AdminAprovacoesRoute
+  '/admin/auditoria': typeof AdminAuditoriaRoute
+  '/admin/checkin-monitor': typeof AdminCheckinMonitorRoute
   '/admin/configuracoes': typeof AdminConfiguracoesRoute
+  '/admin/emails': typeof AdminEmailsRoute
+  '/admin/marketing': typeof AdminMarketingRoute
   '/admin/paises-moedas': typeof AdminPaisesMoedasRoute
   '/admin/planos': typeof AdminPlanosRoute
   '/admin/produtores': typeof AdminProdutoresRoute
+  '/admin/usuarios': typeof AdminUsuariosRoute
   '/app/historico': typeof AppHistoricoRoute
   '/app/perfil': typeof AppPerfilRoute
   '/auth/callback': typeof AuthCallbackRoute
@@ -239,10 +274,15 @@ export interface FileRoutesByTo {
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/admin/aprovacoes': typeof AdminAprovacoesRoute
+  '/admin/auditoria': typeof AdminAuditoriaRoute
+  '/admin/checkin-monitor': typeof AdminCheckinMonitorRoute
   '/admin/configuracoes': typeof AdminConfiguracoesRoute
+  '/admin/emails': typeof AdminEmailsRoute
+  '/admin/marketing': typeof AdminMarketingRoute
   '/admin/paises-moedas': typeof AdminPaisesMoedasRoute
   '/admin/planos': typeof AdminPlanosRoute
   '/admin/produtores': typeof AdminProdutoresRoute
+  '/admin/usuarios': typeof AdminUsuariosRoute
   '/app/historico': typeof AppHistoricoRoute
   '/app/perfil': typeof AppPerfilRoute
   '/auth/callback': typeof AuthCallbackRoute
@@ -272,10 +312,15 @@ export interface FileRoutesById {
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/admin/aprovacoes': typeof AdminAprovacoesRoute
+  '/admin/auditoria': typeof AdminAuditoriaRoute
+  '/admin/checkin-monitor': typeof AdminCheckinMonitorRoute
   '/admin/configuracoes': typeof AdminConfiguracoesRoute
+  '/admin/emails': typeof AdminEmailsRoute
+  '/admin/marketing': typeof AdminMarketingRoute
   '/admin/paises-moedas': typeof AdminPaisesMoedasRoute
   '/admin/planos': typeof AdminPlanosRoute
   '/admin/produtores': typeof AdminProdutoresRoute
+  '/admin/usuarios': typeof AdminUsuariosRoute
   '/app/historico': typeof AppHistoricoRoute
   '/app/perfil': typeof AppPerfilRoute
   '/auth/callback': typeof AuthCallbackRoute
@@ -306,10 +351,15 @@ export interface FileRouteTypes {
     | '/.mcp/list-tools'
     | '/.well-known/oauth-protected-resource'
     | '/admin/aprovacoes'
+    | '/admin/auditoria'
+    | '/admin/checkin-monitor'
     | '/admin/configuracoes'
+    | '/admin/emails'
+    | '/admin/marketing'
     | '/admin/paises-moedas'
     | '/admin/planos'
     | '/admin/produtores'
+    | '/admin/usuarios'
     | '/app/historico'
     | '/app/perfil'
     | '/auth/callback'
@@ -336,10 +386,15 @@ export interface FileRouteTypes {
     | '/.mcp/list-tools'
     | '/.well-known/oauth-protected-resource'
     | '/admin/aprovacoes'
+    | '/admin/auditoria'
+    | '/admin/checkin-monitor'
     | '/admin/configuracoes'
+    | '/admin/emails'
+    | '/admin/marketing'
     | '/admin/paises-moedas'
     | '/admin/planos'
     | '/admin/produtores'
+    | '/admin/usuarios'
     | '/app/historico'
     | '/app/perfil'
     | '/auth/callback'
@@ -368,10 +423,15 @@ export interface FileRouteTypes {
     | '/.mcp/list-tools'
     | '/.well-known/oauth-protected-resource'
     | '/admin/aprovacoes'
+    | '/admin/auditoria'
+    | '/admin/checkin-monitor'
     | '/admin/configuracoes'
+    | '/admin/emails'
+    | '/admin/marketing'
     | '/admin/paises-moedas'
     | '/admin/planos'
     | '/admin/produtores'
+    | '/admin/usuarios'
     | '/app/historico'
     | '/app/perfil'
     | '/auth/callback'
@@ -505,11 +565,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminAprovacoesRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/auditoria': {
+      id: '/admin/auditoria'
+      path: '/auditoria'
+      fullPath: '/admin/auditoria'
+      preLoaderRoute: typeof AdminAuditoriaRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/checkin-monitor': {
+      id: '/admin/checkin-monitor'
+      path: '/checkin-monitor'
+      fullPath: '/admin/checkin-monitor'
+      preLoaderRoute: typeof AdminCheckinMonitorRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/configuracoes': {
       id: '/admin/configuracoes'
       path: '/configuracoes'
       fullPath: '/admin/configuracoes'
       preLoaderRoute: typeof AdminConfiguracoesRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/emails': {
+      id: '/admin/emails'
+      path: '/emails'
+      fullPath: '/admin/emails'
+      preLoaderRoute: typeof AdminEmailsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/marketing': {
+      id: '/admin/marketing'
+      path: '/marketing'
+      fullPath: '/admin/marketing'
+      preLoaderRoute: typeof AdminMarketingRouteImport
       parentRoute: typeof AdminRoute
     }
     '/admin/paises-moedas': {
@@ -531,6 +619,13 @@ declare module '@tanstack/react-router' {
       path: '/produtores'
       fullPath: '/admin/produtores'
       preLoaderRoute: typeof AdminProdutoresRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/usuarios': {
+      id: '/admin/usuarios'
+      path: '/usuarios'
+      fullPath: '/admin/usuarios'
+      preLoaderRoute: typeof AdminUsuariosRouteImport
       parentRoute: typeof AdminRoute
     }
     '/app/': {
@@ -622,18 +717,28 @@ declare module '@tanstack/react-router' {
 
 interface AdminRouteChildren {
   AdminAprovacoesRoute: typeof AdminAprovacoesRoute
+  AdminAuditoriaRoute: typeof AdminAuditoriaRoute
+  AdminCheckinMonitorRoute: typeof AdminCheckinMonitorRoute
   AdminConfiguracoesRoute: typeof AdminConfiguracoesRoute
+  AdminEmailsRoute: typeof AdminEmailsRoute
+  AdminMarketingRoute: typeof AdminMarketingRoute
   AdminPaisesMoedasRoute: typeof AdminPaisesMoedasRoute
   AdminPlanosRoute: typeof AdminPlanosRoute
   AdminProdutoresRoute: typeof AdminProdutoresRoute
+  AdminUsuariosRoute: typeof AdminUsuariosRoute
 }
 
 const AdminRouteChildren: AdminRouteChildren = {
   AdminAprovacoesRoute: AdminAprovacoesRoute,
+  AdminAuditoriaRoute: AdminAuditoriaRoute,
+  AdminCheckinMonitorRoute: AdminCheckinMonitorRoute,
   AdminConfiguracoesRoute: AdminConfiguracoesRoute,
+  AdminEmailsRoute: AdminEmailsRoute,
+  AdminMarketingRoute: AdminMarketingRoute,
   AdminPaisesMoedasRoute: AdminPaisesMoedasRoute,
   AdminPlanosRoute: AdminPlanosRoute,
   AdminProdutoresRoute: AdminProdutoresRoute,
+  AdminUsuariosRoute: AdminUsuariosRoute,
 }
 
 const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
