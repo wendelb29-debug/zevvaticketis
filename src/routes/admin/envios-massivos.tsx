@@ -68,12 +68,13 @@ function EnviosMassivosPage() {
 
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
         {[
-          { label: "Total enviadas", value: "0", icon: Megaphone, color: "text-blue-600", bg: "bg-blue-50" },
-          { label: "Entregues", value: "0", icon: CheckCircle, color: "text-green-600", bg: "bg-green-50" },
-          { label: "Falharam", value: "0", icon: AlertCircle, color: "text-red-600", bg: "bg-red-50" },
-          { label: "Aguardando", value: "0", icon: Clock, color: "text-amber-600", bg: "bg-amber-50" },
-          { label: "Taxa Abertura", value: "0%", icon: TrendingUp, color: "text-purple-600", bg: "bg-purple-50" },
-          { label: "Taxa Resposta", value: "0%", icon: Users, color: "text-cyan-600", bg: "bg-cyan-50" },
+          { label: "Total enviadas", value: "0", icon: Megaphone, color: "text-primary", bg: "bg-primary/5" },
+          { label: "Entregues", value: "0", icon: CheckCircle, color: "text-primary", bg: "bg-primary/5" },
+          { label: "Falharam", value: "0", icon: AlertCircle, color: "text-error", bg: "bg-error/5" },
+          { label: "Aguardando", value: "0", icon: Clock, color: "text-navy", bg: "bg-accent" },
+          { label: "Taxa Abertura", value: "0%", icon: TrendingUp, color: "text-primary", bg: "bg-primary/5" },
+          { label: "Taxa Resposta", value: "0%", icon: Users, color: "text-primary", bg: "bg-primary/5" },
+
         ].map((stat, i) => (
           <Card key={i} className="border-border shadow-sm hover:shadow-md transition-all duration-300 group">
             <CardContent className="p-4 flex flex-col items-center text-center gap-3">
