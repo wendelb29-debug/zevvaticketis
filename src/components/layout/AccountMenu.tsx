@@ -23,6 +23,7 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { cn } from "@/lib/utils";
 import { Progress } from "@/components/ui/progress";
+import { useAvatarUrl } from "@/lib/avatar";
 
 interface AccountMenuProps {
   user: any;
@@ -35,6 +36,7 @@ export function AccountMenu({ user, onLogout, onNavigate, onOpenAuth }: AccountM
   const [profile, setProfile] = useState<any>(null);
   const [isProducer, setIsProducer] = useState(false);
   const [completionPercentage, setCompletionPercentage] = useState(0);
+  const avatarUrl = useAvatarUrl(profile?.avatar_url);
 
   useEffect(() => {
     async function fetchData() {
@@ -113,7 +115,7 @@ export function AccountMenu({ user, onLogout, onNavigate, onOpenAuth }: AccountM
         <button className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-line hover:border-coral/30 hover:shadow-md transition-all outline-none bg-white active:scale-95 group">
           <Menu className="w-4 h-4 text-navy transition-colors group-hover:text-coral" />
           <Avatar className="w-8 h-8 border border-line">
-            <AvatarImage src={profile?.avatar_url} className="object-cover" />
+            <AvatarImage src={avatarUrl} className="object-cover" />
             <AvatarFallback className="bg-gradient-to-br from-coral/20 to-coral/40 text-[10px] font-black text-navy uppercase">
               {initials}
             </AvatarFallback>
@@ -125,7 +127,7 @@ export function AccountMenu({ user, onLogout, onNavigate, onOpenAuth }: AccountM
         {/* Header */}
         <div className="p-5 flex items-center gap-4 bg-surface/30">
           <Avatar className="w-14 h-14 border-2 border-white shadow-sm">
-            <AvatarImage src={profile?.avatar_url} className="object-cover" />
+            <AvatarImage src={avatarUrl} className="object-cover" />
             <AvatarFallback className="bg-gradient-to-br from-coral/20 to-coral/40 text-lg font-black text-navy uppercase">
               {initials}
             </AvatarFallback>

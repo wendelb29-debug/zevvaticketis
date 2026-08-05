@@ -51,6 +51,8 @@ import { useUI } from "@/hooks/use-ui";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { BreadcrumbNavigation } from "@/components/layout/BreadcrumbNavigation";
+import { AvatarCropDialog } from "@/components/profile/AvatarCropDialog";
+import { useAvatarUrl, clearAvatarCache, AVATAR_BUCKET } from "@/lib/avatar";
 import { 
   AlertDialog,
   AlertDialogAction,
@@ -82,6 +84,8 @@ function UserProfile() {
   const [activities, setActivities] = useState<any[]>([]);
   const [newPassword, setNewPassword] = useState({ current: "", new: "", confirm: "" });
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [cropSrc, setCropSrc] = useState<string | null>(null);
+  const avatarUrl = useAvatarUrl(profile?.avatar_url);
   const { theme, setTheme } = useUI();
 
   useEffect(() => {
@@ -130,8 +134,9 @@ function UserProfile() {
     ]);
   }
 
-  const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
+    event.target.value = "";
     if (!file) return;
 
     const allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
@@ -144,33 +149,36 @@ function UserProfile() {
       return;
     }
 
+    const reader = new FileReader();
+    reader.onload = () => setCropSrc(reader.result as string);
+    reader.readAsDataURL(file);
+  };
+
+  const handleCroppedUpload = async (blob: Blob) => {
     setUploading(true);
     try {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) throw new Error("Usuário não autenticado");
 
-      const fileExt = file.name.split('.').pop();
-      const filePath = `${user.id}/avatar-${Date.now()}.${fileExt}`;
+      const filePath = `${user.id}/avatar-${Date.now()}.jpg`;
 
       const { error: uploadError } = await supabase.storage
-        .from('avatars')
-        .upload(filePath, file, { upsert: true });
+        .from(AVATAR_BUCKET)
+        .upload(filePath, blob, { upsert: true, contentType: "image/jpeg" });
 
       if (uploadError) throw uploadError;
 
-      const { data: { publicUrl } } = supabase.storage
-        .from('avatars')
-        .getPublicUrl(filePath || "");
-
       const { error: updateError } = await supabase
         .from('profiles')
-        .update({ avatar_url: publicUrl })
+        .update({ avatar_url: filePath })
         .eq('id', user.id);
 
       if (updateError) throw updateError;
 
-      setProfile({ ...profile, avatar_url: publicUrl });
-      toast.success("Foto atualizada com sucesso!");
+      clearAvatarCache();
+      setProfile({ ...profile, avatar_url: filePath });
+      setCropSrc(null);
+      toast.success("Foto atualizada em todo o sistema!");
     } catch (error: any) {
       toast.error("Erro ao fazer upload: " + error.message);
     } finally {
@@ -188,6 +196,7 @@ function UserProfile() {
         .eq('id', user.id);
 
       if (error) throw error;
+      clearAvatarCache();
       setProfile({ ...profile, avatar_url: null });
       toast.success("Foto removida.");
     } catch (error: any) {
@@ -264,6 +273,13 @@ function UserProfile() {
 
   return (
     <div className="space-y-10 font-inter max-w-2xl mx-auto pb-20 pt-6">
+      <AvatarCropDialog
+        open={!!cropSrc}
+        imageSrc={cropSrc}
+        saving={uploading}
+        onClose={() => setCropSrc(null)}
+        onConfirm={handleCroppedUpload}
+      />
       <BreadcrumbNavigation />
       <div className="space-y-1">
         <h1 className="text-3xl font-manrope font-extrabold text-navy">Meu Perfil</h1>
@@ -283,7 +299,7 @@ function UserProfile() {
           <div className="flex flex-col items-center gap-6 pb-4">
             <div className="relative group">
               <Avatar className="w-32 h-32 border-4 border-surface shadow-xl">
-                <AvatarImage src={profile?.avatar_url} className="object-cover" />
+                <AvatarImage src={avatarUrl} className="object-cover" />
                 <AvatarFallback className="bg-gradient-to-br from-coral/20 to-coral/40 text-2xl font-black text-navy uppercase">
                   {initials}
                 </AvatarFallback>
@@ -299,7 +315,7 @@ function UserProfile() {
               <input 
                 type="file" 
                 ref={fileInputRef} 
-                onChange={handleFileUpload} 
+                onChange={handleFileSelect} 
                 className="hidden" 
                 accept="image/*"
               />
