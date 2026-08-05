@@ -20,7 +20,7 @@ import {
   DropdownMenuSeparator, 
   DropdownMenuTrigger 
 } from "@/components/ui/dropdown-menu";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { cn } from "@/lib/utils";
 import { Progress } from "@/components/ui/progress";
 
@@ -110,25 +110,31 @@ export function AccountMenu({ user, onLogout, onNavigate, onOpenAuth }: AccountM
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <button className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-line hover:border-coral/30 hover:shadow-sm transition-all outline-none bg-white">
-          <Menu className="w-4 h-4 text-navy" />
-          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-coral/20 to-coral/40 flex items-center justify-center border border-coral/30">
-            <span className="text-[10px] font-extrabold text-navy">{initials}</span>
-          </div>
+        <button className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-line hover:border-coral/30 hover:shadow-md transition-all outline-none bg-white active:scale-95 group">
+          <Menu className="w-4 h-4 text-navy transition-colors group-hover:text-coral" />
+          <Avatar className="w-8 h-8 border border-line">
+            <AvatarImage src={profile?.avatar_url} className="object-cover" />
+            <AvatarFallback className="bg-gradient-to-br from-coral/20 to-coral/40 text-[10px] font-black text-navy uppercase">
+              {initials}
+            </AvatarFallback>
+          </Avatar>
         </button>
       </DropdownMenuTrigger>
       
-      <DropdownMenuContent align="end" className="w-[280px] mt-2 rounded-[16px] p-0 border-line shadow-xl overflow-hidden font-manrope bg-white animate-in fade-in zoom-in-95 duration-200">
+      <DropdownMenuContent align="end" className="w-[300px] mt-2 rounded-[24px] p-0 border-line shadow-2xl overflow-hidden font-manrope bg-white animate-in fade-in zoom-in-95 duration-200">
         {/* Header */}
-        <div className="p-4 flex items-center gap-3 bg-surface/30">
-          <div className="w-12 h-12 rounded-full bg-gradient-to-br from-coral/20 to-coral/40 flex items-center justify-center border border-coral/30 shadow-sm">
-            <span className="text-sm font-extrabold text-navy">{initials}</span>
-          </div>
-          <div className="flex flex-col">
-            <p className="text-sm font-extrabold text-navy truncate max-w-[180px]">
+        <div className="p-5 flex items-center gap-4 bg-surface/30">
+          <Avatar className="w-14 h-14 border-2 border-white shadow-sm">
+            <AvatarImage src={profile?.avatar_url} className="object-cover" />
+            <AvatarFallback className="bg-gradient-to-br from-coral/20 to-coral/40 text-lg font-black text-navy uppercase">
+              {initials}
+            </AvatarFallback>
+          </Avatar>
+          <div className="flex flex-col min-w-0">
+            <p className="text-base font-extrabold text-navy truncate">
               {profile?.nome || "Usuário"}
             </p>
-            <p className="text-[10px] text-muted font-bold truncate max-w-[180px]">
+            <p className="text-[11px] text-muted font-bold truncate">
               {user?.email}
             </p>
           </div>
