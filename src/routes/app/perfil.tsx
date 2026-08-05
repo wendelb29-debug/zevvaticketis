@@ -29,7 +29,18 @@ import {
   Phone,
   Hash,
   AlertTriangle,
-  ChevronDown
+  ChevronDown,
+  Activity,
+  Workflow,
+  Users,
+  Star,
+  Bot,
+  Layers,
+  Radio,
+  FileText,
+  Scan,
+  Coins,
+  Info
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -334,52 +345,88 @@ function UserProfile() {
               <Bell className="w-6 h-6" />
             </div>
             <h2 className="text-xl font-manrope font-extrabold text-navy">Notificações</h2>
+            <Button variant="outline" size="sm" className="ml-auto rounded-lg text-[10px] font-bold uppercase tracking-wider h-8">Ativar tudo</Button>
           </div>
 
-          <div className="space-y-4">
-            <div className="flex items-center justify-between p-4 bg-surface rounded-xl opacity-80 cursor-not-allowed">
-              <div className="space-y-1">
-                <div className="flex items-center gap-2">
-                  <p className="font-bold text-navy">Confirmação de compra</p>
-                  <CheckCircle2 className="w-3 h-3 text-good" />
-                </div>
-                <p className="text-xs text-muted font-medium">Envio imediato após transação.</p>
-              </div>
-              <Switch checked disabled />
-            </div>
+          <p className="text-xs text-muted font-medium mb-6">Escolha quais alertas você recebe e por onde.</p>
 
-            <div className="flex items-center justify-between p-4 bg-surface rounded-xl">
-              <div className="space-y-1">
-                <p className="font-bold text-navy">Lembrete de evento</p>
-                <p className="text-xs text-muted font-medium">Aviso 24h antes do início da caravana.</p>
-              </div>
-              <Switch 
-                checked={profile?.notif_lembrete_evento} 
-                onCheckedChange={(val) => setProfile({...profile, notif_lembrete_evento: val})}
-              />
-            </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {/* Fila e SLA */}
+            <NotificationItem 
+              icon={Activity} 
+              title="Fila e SLA" 
+              description="Fila crítica e demora no atendimento." 
+            />
+            
+            {/* Canais */}
+            <NotificationItem 
+              icon={Radio} 
+              title="Canais" 
+              description="Conexão de WhatsApp, Instagram e outros." 
+            />
 
-            <div className="flex items-center justify-between p-4 bg-surface rounded-xl opacity-80 cursor-not-allowed">
-              <div className="space-y-1">
-                <div className="flex items-center gap-2">
-                  <p className="font-bold text-navy">Mudanças no evento</p>
-                  <AlertCircle className="w-3 h-3 text-coral" />
-                </div>
-                <p className="text-xs text-muted font-medium">Avisos críticos de segurança ou logística.</p>
-              </div>
-              <Switch checked disabled />
-            </div>
+            {/* Fluxos */}
+            <NotificationItem 
+              icon={Workflow} 
+              title="Fluxos" 
+              description="Erros e mudanças nos seus fluxos." 
+            />
 
-            <div className="flex items-center justify-between p-4 bg-surface rounded-xl">
-              <div className="space-y-1">
-                <p className="font-bold text-navy">Novidades e promoções</p>
-                <p className="text-xs text-muted font-medium">Ofertas exclusivas e novos destinos.</p>
-              </div>
-              <Switch 
-                checked={profile?.notif_novidades} 
-                onCheckedChange={(val) => setProfile({...profile, notif_novidades: val})}
-              />
-            </div>
+            {/* Relatórios */}
+            <NotificationItem 
+              icon={FileText} 
+              title="Relatórios" 
+              description="Relatórios e backups prontos." 
+            />
+
+            {/* Equipe */}
+            <NotificationItem 
+              icon={Users} 
+              title="Equipe" 
+              description="Convites e mudanças na equipe." 
+            />
+
+            {/* Contatos */}
+            <NotificationItem 
+              icon={Scan} 
+              title="Contatos" 
+              description="Bloqueios e sincronização de contatos." 
+            />
+
+            {/* Pesquisas (CSAT) */}
+            <NotificationItem 
+              icon={Star} 
+              title="Pesquisas (CSAT)" 
+              description="Resultados de pesquisas de satisfação." 
+            />
+
+            {/* Análise de conteúdo */}
+            <NotificationItem 
+              icon={Info} 
+              title="Análise de conteúdo" 
+              description="Mensagens que acionaram regras." 
+            />
+
+            {/* Supervisor IA */}
+            <NotificationItem 
+              icon={Bot} 
+              title="Supervisor IA" 
+              description="Alertas e falhas da auditoria automática..." 
+            />
+
+            {/* Plano e cobrança */}
+            <NotificationItem 
+              icon={Coins} 
+              title="Plano e cobrança" 
+              description="Bloqueios e nível do projeto." 
+            />
+
+            {/* Modelos */}
+            <NotificationItem 
+              icon={Layers} 
+              title="Modelos" 
+              description="Falhas na sincronização de modelos." 
+            />
           </div>
         </div>
 
@@ -437,6 +484,33 @@ function UserProfile() {
             {saving ? <Loader2 className="w-5 h-5 animate-spin" /> : "Salvar Alterações"}
           </Button>
         </div>
+      </div>
+    </div>
+  );
+}
+
+function NotificationItem({ icon: Icon, title, description }: { icon: any, title: string, description: string }) {
+  return (
+    <div className="flex items-center justify-between p-4 bg-surface/50 rounded-2xl border border-line/5 hover:border-coral/20 transition-all group">
+      <div className="flex items-center gap-4">
+        <div className="p-2.5 bg-navy/5 rounded-xl text-navy/40 group-hover:text-coral group-hover:bg-coral/10 transition-colors">
+          <Icon className="w-5 h-5" />
+        </div>
+        <div className="space-y-0.5">
+          <div className="flex items-center gap-1.5">
+            <p className="text-sm font-bold text-navy">{title}</p>
+            <Info className="w-3 h-3 text-muted/40 cursor-help" />
+          </div>
+          <p className="text-[10px] text-muted font-medium leading-tight">{description}</p>
+        </div>
+      </div>
+      <div className="flex items-center gap-2">
+        <button className="p-2 bg-navy/5 rounded-lg text-navy/40 hover:text-coral hover:bg-coral-dark transition-all" title="No app">
+          <Bell className="w-3.5 h-3.5" />
+        </button>
+        <button className="p-2 bg-navy/5 rounded-lg text-navy/40 hover:text-coral hover:bg-coral-dark transition-all" title="E-mail">
+          <Mail className="w-3.5 h-3.5" />
+        </button>
       </div>
     </div>
   );
