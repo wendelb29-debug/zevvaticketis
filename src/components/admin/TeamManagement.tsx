@@ -49,7 +49,35 @@ type Member = {
   status: "online" | "offline";
 };
 
+type Invite = {
+  id: string;
+  email: string;
+  role: string;
+  invitedBy: string;
+  createdAt: string;
+  expiresAt: string;
+  status: "Aceito" | "Pendente" | "Expirado";
+};
+
+const INVITE_ROLES = ["Atendente", "Supervisor", "Administrador"];
+
+const INITIAL_INVITES: Invite[] = [
+  { id: "i1", email: "thayllathayy1@gmail.com", role: "Atendente", invitedBy: "Rafael Marcenes", createdAt: "27/07/2026, 11:40:18", expiresAt: "03/08/2026, 11:40:18", status: "Aceito" },
+  { id: "i2", email: "apgabrielera@gmail.com", role: "Atendente", invitedBy: "Wendel Bondim", createdAt: "17/07/2026, 10:49:13", expiresAt: "24/07/2026, 10:49:13", status: "Aceito" },
+  { id: "i3", email: "joaomenezessav1200@gmail.com", role: "Atendente", invitedBy: "Rafael Marcenes", createdAt: "16/07/2026, 16:02:09", expiresAt: "23/07/2026, 16:02:09", status: "Aceito" },
+  { id: "i4", email: "bittencourtmiucha@gmail.com", role: "Atendente", invitedBy: "Rafael Marcenes", createdAt: "16/07/2026, 15:33:38", expiresAt: "23/07/2026, 15:33:38", status: "Aceito" },
+  { id: "i5", email: "joaomeneezea1200@gmail.com", role: "Atendente", invitedBy: "Rafael Marcenes", createdAt: "16/07/2026, 15:33:06", expiresAt: "23/07/2026, 17:03:24", status: "Expirado" },
+  { id: "i6", email: "kamillasavecar@gmail.com", role: "Atendente", invitedBy: "Rafael Marcenes", createdAt: "16/07/2026, 15:33:05", expiresAt: "23/07/2026, 15:33:05", status: "Aceito" },
+  { id: "i7", email: "damascenomatheus74@outlook.com", role: "Atendente", invitedBy: "Rafael Marcenes", createdAt: "16/07/2026, 15:33:05", expiresAt: "23/07/2026, 15:33:05", status: "Aceito" },
+  { id: "i8", email: "alicevieiraii214@gmail.com", role: "Atendente", invitedBy: "Rafael Marcenes", createdAt: "16/07/2026, 15:33:05", expiresAt: "23/07/2026, 15:33:05", status: "Aceito" },
+  { id: "i9", email: "juliandreoup@gmail.com", role: "Atendente", invitedBy: "Rafael Marcenes", createdAt: "16/07/2026, 15:33:04", expiresAt: "23/07/2026, 15:33:04", status: "Expirado" },
+  { id: "i10", email: "garraoeduarda@gmail.com", role: "Atendente", invitedBy: "Rafael Marcenes", createdAt: "16/07/2026, 09:20:48", expiresAt: "23/07/2026, 09:20:48", status: "Aceito" },
+  { id: "i11", email: "novo.agente@savecar.com", role: "Atendente", invitedBy: "Wendel Bondim", createdAt: "02/08/2026, 09:12:00", expiresAt: "09/08/2026, 09:12:00", status: "Pendente" },
+  { id: "i12", email: "supervisor@savecar.com", role: "Supervisor", invitedBy: "Wendel Bondim", createdAt: "28/07/2026, 14:05:22", expiresAt: "04/08/2026, 14:05:22", status: "Pendente" },
+];
+
 const ALL_DEPARTMENTS = ["Atendimento", "Benefícios Ativos", "Adm", "Comercial"];
+
 const PERMISSIONS = [
   "Atendente (Padrão)",
   "Atendente",
