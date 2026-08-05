@@ -718,9 +718,9 @@ function AdminChatPage() {
                                 { label: 'Para Português', flag: '🇧🇷' },
                                 { label: 'Para Espanhol', flag: '🇪🇸' }
                               ].map(lang => (
-                                <DropdownMenuItem key={lang.label} className="flex items-center gap-2 text-xs px-3 py-2 hover:bg-coral/5 dark:hover:bg-white/5 cursor-pointer rounded-md">
-                                  <span>{lang.flag}</span> {lang.label}
-                                </DropdownMenuItem>
+                                 <DropdownMenuItem key={lang.label} className="flex items-center gap-2 text-xs px-3 py-2 hover:bg-accent cursor-pointer rounded-md text-foreground">
+                                   <span>{lang.flag}</span> {lang.label}
+                                 </DropdownMenuItem>
                               ))}
                             </DropdownMenuContent>
                           </DropdownMenu>
