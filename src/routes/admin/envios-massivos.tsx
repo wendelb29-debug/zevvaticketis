@@ -1,5 +1,5 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { 
   Megaphone, 
   Plus, 
@@ -37,10 +37,19 @@ function EnviosMassivosPage() {
   const [isWizardOpen, setIsWizardOpen] = useState(!!search.wizard);
   const navigate = useNavigate();
 
+  // Sync state if URL changes
+  useEffect(() => {
+    if (search.wizard !== isWizardOpen) {
+      setIsWizardOpen(!!search.wizard);
+    }
+  }, [search.wizard]);
+
   const handleOpenWizard = (open: boolean) => {
     setIsWizardOpen(open);
     if (!open) {
-      navigate({ search: (prev: EnviosMassivosSearch) => ({ ...prev, wizard: undefined }) });
+      navigate({ search: {} });
+    } else {
+      navigate({ search: { wizard: true } });
     }
   };
 
