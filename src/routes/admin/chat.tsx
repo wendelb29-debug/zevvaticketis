@@ -153,9 +153,78 @@ function AdminChatPage() {
                 />
               </div>
               <div className="flex gap-1">
-                <button className="p-2 bg-surface-2 rounded-lg text-navy/40 hover:text-navy border border-line"><LayoutList className="w-4 h-4" /></button>
-                <button className="p-2 bg-surface-2 rounded-lg text-navy/40 hover:text-navy border border-line"><Clock className="w-4 h-4" /></button>
-                <button className="p-2 bg-coral rounded-lg text-white"><Plus className="w-4 h-4" /></button>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <button className="p-2 bg-surface-2 rounded-lg text-navy/40 hover:text-navy border border-line">
+                      <ArrowUpDown className="w-4 h-4" />
+                    </button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end" className="w-[300px] bg-[#23262E] border-none text-white p-2">
+                    <DropdownMenuLabel className="text-[10px] font-bold text-gray-400 uppercase tracking-widest px-2 py-2">Tipos de Ordenação</DropdownMenuLabel>
+                    <DropdownMenuItem 
+                      onClick={() => setSortBy('recent-top')}
+                      className={cn("flex items-center justify-between px-3 py-2.5 rounded-lg cursor-pointer", sortBy === 'recent-top' ? "bg-coral/20 text-coral" : "hover:bg-white/5")}
+                    >
+                      <div className="flex items-center gap-3">
+                        <MessageSquare className="w-4 h-4" />
+                        <span className="text-xs">Mensagem mais recente no topo (Padrão)</span>
+                      </div>
+                      <SortDesc className="w-3.5 h-3.5" />
+                    </DropdownMenuItem>
+                    <DropdownMenuItem 
+                      onClick={() => setSortBy('oldest-top')}
+                      className={cn("flex items-center justify-between px-3 py-2.5 rounded-lg cursor-pointer", sortBy === 'oldest-top' ? "bg-coral/20 text-coral" : "hover:bg-white/5")}
+                    >
+                      <div className="flex items-center gap-3">
+                        <MessageSquare className="w-4 h-4" />
+                        <span className="text-xs">Mensagem mais antiga no topo</span>
+                      </div>
+                      <SortAsc className="w-3.5 h-3.5" />
+                    </DropdownMenuItem>
+                    <DropdownMenuItem 
+                      onClick={() => setSortBy('created-recent')}
+                      className={cn("flex items-center justify-between px-3 py-2.5 rounded-lg cursor-pointer", sortBy === 'created-recent' ? "bg-coral/20 text-coral" : "hover:bg-white/5")}
+                    >
+                      <div className="flex items-center gap-3">
+                        <CalendarDays className="w-4 h-4" />
+                        <span className="text-xs">Data de criação mais recente no topo</span>
+                      </div>
+                      <SortDesc className="w-3.5 h-3.5" />
+                    </DropdownMenuItem>
+                    <DropdownMenuItem 
+                      onClick={() => setSortBy('created-oldest')}
+                      className={cn("flex items-center justify-between px-3 py-2.5 rounded-lg cursor-pointer", sortBy === 'created-oldest' ? "bg-coral/20 text-coral" : "hover:bg-white/5")}
+                    >
+                      <div className="flex items-center gap-3">
+                        <CalendarDays className="w-4 h-4" />
+                        <span className="text-xs">Data de criação mais antiga no topo</span>
+                      </div>
+                      <SortAsc className="w-3.5 h-3.5" />
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+
+                <button 
+                  onClick={() => setIsFilterDialogOpen(true)}
+                  className="p-2 bg-surface-2 rounded-lg text-navy/40 hover:text-navy border border-line"
+                >
+                  <Filter className="w-4 h-4" />
+                </button>
+                
+                <button 
+                  onClick={() => setIsHistoryDialogOpen(true)}
+                  className="p-2 bg-surface-2 rounded-lg text-navy/40 hover:text-navy border border-line"
+                >
+                  <HistoryIcon className="w-4 h-4" />
+                </button>
+
+                <button 
+                  onClick={() => setIsActiveTicketDialogOpen(true)}
+                  className="p-2 bg-coral rounded-lg text-white"
+                  title="Iniciar atendimento ativo"
+                >
+                  <Plus className="w-4 h-4" />
+                </button>
               </div>
             </div>
             <div className="text-[10px] text-gray-500 font-bold uppercase px-1">Exibindo {contacts.length} atendimentos de {contacts.length}</div>
