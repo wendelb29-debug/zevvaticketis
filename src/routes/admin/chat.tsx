@@ -13,6 +13,11 @@ import {
   Music, FileText, Sparkles, Wand2, ArrowUpCircle, AlignLeft, Languages
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { toast } from "sonner";
+
+const READ_RECEIPT_BLUE = "#315DA8";
+const ONLINE_STATUS_GREEN = "#24B667";
+const ATTENDANCE_GOLD = "#FFD31A"; // Keep as gold if requested to evaluate, or swap to coral if it's the brand color. User suggested evaluating. I will use a constant.
 import { Badge } from '@/components/ui/badge';
 import {
   DropdownMenu,
@@ -40,7 +45,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
-import { toast } from "sonner";
 
 export const Route = createFileRoute('/admin/chat')({
   component: AdminChatPage,
@@ -119,7 +123,7 @@ function AdminChatPage() {
   ];
 
   return (
-    <div className="flex flex-col h-screen bg-background text-foreground overflow-hidden font-inter">
+    <div className="flex flex-col h-screen bg-background text-foreground overflow-hidden font-inter transition-colors duration-300">
       {/* Header Fixo */}
       <header className="h-16 flex items-center justify-between px-6 border-b border-border bg-card shrink-0 z-10 shadow-sm">
         <div className="flex items-center gap-8">
@@ -156,7 +160,7 @@ function AdminChatPage() {
               <div className="text-[10px] font-black text-navy uppercase leading-tight">Admin Zevva</div>
               <div className={cn(
                 "text-[9px] font-black uppercase tracking-widest leading-tight",
-                agentStatus === 'online' ? "text-green-500" : agentStatus === 'busy' ? "text-amber-500" : "text-navy/40"
+                agentStatus === 'online' ? "text-green-500" : agentStatus === 'busy' ? "text-amber-500" : "text-muted-foreground"
               )}>{agentStatus}</div>
             </div>
             
@@ -194,7 +198,7 @@ function AdminChatPage() {
               isResizing ? "bg-coral/40" : "hover:bg-coral/20"
             )}
           >
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[2px] h-8 bg-line dark:bg-white/10 group-hover:bg-coral transition-colors rounded-full" />
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[2px] h-8 bg-border group-hover:bg-coral transition-colors rounded-full" />
           </div>
 
           <div className="p-4 space-y-4">
@@ -286,7 +290,7 @@ function AdminChatPage() {
                 </button>
               </div>
             </div>
-            <div className="text-[10px] text-gray-500 font-bold uppercase px-1">Exibindo {contacts.length} atendimentos de {contacts.length}</div>
+            <div className="text-[10px] text-muted-foreground font-bold uppercase px-1">Exibindo {contacts.length} atendimentos de {contacts.length}</div>
           </div>
 
           <div className="flex-1 overflow-y-auto visible-scrollbar px-2">
@@ -311,9 +315,9 @@ function AdminChatPage() {
                   <div className="flex-1 min-w-0">
                     <div className="flex justify-between items-center mb-0.5">
                       <span className="font-bold text-sm truncate text-foreground">{contact.name}</span>
-                      <span className="text-[9px] text-gray-500 whitespace-nowrap">{contact.time}</span>
+                      <span className="text-[9px] text-muted-foreground whitespace-nowrap">{contact.time}</span>
                     </div>
-                    <div className="flex items-center gap-1 text-[11px] text-gray-400 truncate">
+                    <div className="flex items-center gap-1 text-[11px] text-muted-foreground truncate">
                       {contact.direction === 'inbound' ? (
                         <div className="w-3 h-3 rounded-full bg-green-500/10 flex items-center justify-center">
                           <ChevronDown className="w-2 h-2 text-green-500 rotate-45" />

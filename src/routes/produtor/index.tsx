@@ -59,7 +59,7 @@ function ProdutorDashboard() {
   return (
     <div className="space-y-10 font-inter max-w-6xl mx-auto">
       <div className="space-y-2">
-        <h1 className="text-3xl font-manrope font-extrabold text-navy">
+        <h1 className="text-3xl font-manrope font-extrabold text-foreground">
           {getTimeGreeting()}, {user?.user_metadata?.nome?.split(' ')[0] || user?.email?.split('@')[0]}!
         </h1>
         <p className="text-muted font-medium">Já publicou seu evento?</p>
@@ -77,10 +77,10 @@ function ProdutorDashboard() {
           <button 
             key={item.label}
             onClick={() => navigate({ to: '/criar-evento' })}
-            className="group flex flex-col items-start p-6 rounded-[24px] border border-line bg-white hover:border-coral/30 hover:shadow-xl transition-all duration-300 text-left"
+            className="group flex flex-col items-start p-6 rounded-[24px] border border-border bg-card hover:border-coral/30 hover:shadow-xl transition-all duration-300 text-left"
           >
             <div className={cn("p-3 rounded-2xl mb-4 group-hover:scale-110 transition-transform bg-gradient-to-br", item.color)}>
-              <item.icon className="w-6 h-6 text-navy" />
+              <item.icon className="w-6 h-6 text-foreground" />
       </div>
 
       {/* Theme Preview Section */}

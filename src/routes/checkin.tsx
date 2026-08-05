@@ -43,8 +43,8 @@ function CheckinApp() {
   };
 
   return (
-    <div className="min-h-screen bg-navy text-white font-inter flex flex-col">
-      <header className="h-16 border-b border-white/10 px-6 flex items-center justify-between sticky top-0 z-50 bg-navy">
+    <div className="min-h-screen bg-background text-foreground font-inter flex flex-col">
+      <header className="h-16 border-b border-border px-6 flex items-center justify-between sticky top-0 z-50 bg-background">
         <div className="text-xl font-manrope font-extrabold text-coral tracking-tighter">
           ZEVVA <span className="text-white">CHECK-IN</span>
         </div>

@@ -97,13 +97,13 @@ function EventPage() {
   return (
     <div className={cn("min-h-screen bg-bg text-navy font-inter selection:bg-coral/20", theme.fontFamily)}>
       {/* Sticky Secondary Nav / Header */}
-      <header className="fixed top-0 left-0 right-0 z-[100] bg-white/80 backdrop-blur-xl border-b border-line h-20 px-6 flex items-center justify-between transition-all duration-300">
+      <header className="fixed top-0 left-0 right-0 z-[100] bg-background/80 backdrop-blur-xl border-b border-border h-20 px-6 flex items-center justify-between transition-all duration-300">
         <div className="flex items-center gap-6">
-          <Link to="/" className="w-10 h-10 rounded-full border border-line flex items-center justify-center hover:bg-surface transition-all active:scale-90">
+          <Link to="/" className="w-10 h-10 rounded-full border border-border flex items-center justify-center hover:bg-muted transition-all active:scale-90">
             <ArrowLeft className="w-5 h-5" />
           </Link>
           <div className="hidden sm:block">
-            <h2 className="text-sm font-black text-navy truncate max-w-[200px] md:max-w-md">{event.title}</h2>
+            <h2 className="text-sm font-black text-foreground truncate max-w-[200px] md:max-w-md">{event.title}</h2>
             <div className="flex items-center gap-2 text-[10px] font-bold text-muted uppercase tracking-tighter">
               <Calendar className="w-3 h-3" />
               {event.start_date && format(new Date(event.start_date), "dd 'de' MMMM", { locale: ptBR })}
