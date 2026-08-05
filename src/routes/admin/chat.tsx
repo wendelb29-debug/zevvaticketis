@@ -1170,6 +1170,10 @@ function AdminChatPage() {
       </Dialog>
 
       <style>{`
+        .chat-container {
+          background-image: none !important;
+          background-color: var(--background) !important;
+        }
         .custom-scrollbar::-webkit-scrollbar { width: 4px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(232, 96, 74, 0.1); border-radius: 10px; }
