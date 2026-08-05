@@ -54,6 +54,7 @@ function AdminChatPage() {
   const [isActiveTicketDialogOpen, setIsActiveTicketDialogOpen] = useState(false);
   const [isFinishDialogOpen, setIsFinishDialogOpen] = useState(false);
   const [isTransferDialogOpen, setIsTransferDialogOpen] = useState(false);
+  const [isChatSettingsOpen, setIsChatSettingsOpen] = useState(false);
   const [sortBy, setSortBy] = useState('recent-top');
   const [sidebarWidth, setSidebarWidth] = useState(540);
   const [isResizing, setIsResizing] = useState(false);
@@ -165,6 +166,7 @@ function AdminChatPage() {
                 onNavigate={(path) => navigate({ to: path as any })}
                 agentStatus={agentStatus}
                 onStatusChange={setAgentStatus}
+                onOpenSettings={() => setIsChatSettingsOpen(true)}
               />
             )}
           </div>
