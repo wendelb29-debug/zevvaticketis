@@ -78,14 +78,15 @@ function AdminLayout() {
   };
 
   const menuItems = [
+    { label: "Chat", icon: MessageSquare, href: "/admin/chat" },
     { label: "Dashboard", icon: LayoutDashboard, href: "/admin", activeOptions: { exact: true } },
-    { label: "Aprovações", icon: CheckSquare, href: "/admin/aprovacoes" },
     { 
       label: "Usuários", 
       icon: UserCog, 
       children: [
         { label: "Todos os Usuários", href: "/admin/usuarios" },
         { label: "Produtores", href: "/admin/produtores" },
+        { label: "Aprovações", href: "/admin/aprovacoes" },
       ]
     },
     { 
@@ -105,10 +106,15 @@ function AdminLayout() {
       ]
     },
     { label: "E-mails", icon: Mail, href: "/admin/emails" },
-    { label: "Auditoria", icon: History, href: "/admin/auditoria" },
     { label: "Check-in", icon: CheckSquare, href: "/admin/checkin-monitor" },
-    { label: "WhatsApp Chat", icon: MessageSquare, href: "/admin/chat" },
-    { label: "Configurações", icon: Settings, href: "/admin/configuracoes" },
+    { 
+      label: "Configurações", 
+      icon: Settings, 
+      children: [
+        { label: "Geral", href: "/admin/configuracoes" },
+        { label: "Auditoria", href: "/admin/auditoria" },
+      ]
+    },
   ];
 
   useEffect(() => {
@@ -164,7 +170,7 @@ function AdminLayout() {
                   onClick={() => setOpenGroup(isOpen ? null : item.label)}
                   className={cn(
                     "w-full flex items-center justify-between py-3.5 px-4 rounded-xl text-sm font-extrabold transition-all duration-200",
-                    hasActiveChild ? "text-primary bg-primary/5" : "text-foreground hover:bg-accent"
+                    hasActiveChild ? "text-primary bg-primary/5" : "text-primary bg-white hover:bg-accent"
                   )}
                 >
                   <div className="flex items-center gap-3">
@@ -203,7 +209,7 @@ function AdminLayout() {
                 isSidebarCollapsed ? "px-0 justify-center" : "px-4"
               )}
               activeProps={{ className: "bg-primary text-primary-foreground shadow-lg shadow-primary/30" }}
-              inactiveProps={{ className: "text-foreground hover:bg-accent" }}
+              inactiveProps={{ className: "text-primary hover:bg-accent bg-white" }}
               title={isSidebarCollapsed ? item.label : undefined}
             >
               <item.icon className="w-5 h-5 shrink-0" />
@@ -213,31 +219,6 @@ function AdminLayout() {
         })}
       </nav>
 
-      {/* Theme Switcher in Sidebar */}
-      {!isSidebarCollapsed && (
-        <div className="px-4 mt-auto pt-4 border-t border-border">
-          <div className="flex bg-accent rounded-lg p-1">
-            <button 
-              onClick={() => setTheme('light')}
-              className={cn(
-                "flex-1 flex items-center justify-center gap-2 py-2 rounded-md text-xs font-bold transition-all",
-                theme === 'light' ? "bg-primary text-primary-foreground shadow-sm" : "text-muted-fg hover:text-foreground"
-              )}
-            >
-              <Sun className="w-3.5 h-3.5" /> Claro
-            </button>
-            <button 
-              onClick={() => setTheme('dark')}
-              className={cn(
-                "flex-1 flex items-center justify-center gap-2 py-2 rounded-md text-xs font-bold transition-all",
-                theme === 'dark' ? "bg-primary text-primary-foreground shadow-sm" : "text-muted-fg hover:text-foreground"
-              )}
-            >
-              <Moon className="w-3.5 h-3.5" /> Escuro
-            </button>
-          </div>
-        </div>
-      )}
     </div>
   );
 
