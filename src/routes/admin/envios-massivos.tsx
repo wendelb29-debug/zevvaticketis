@@ -46,9 +46,9 @@ function EnviosMassivosPage() {
   const handleOpenWizard = (open: boolean) => {
     setIsWizardOpen(open);
     if (!open) {
-      navigate({ search: (prev: any) => ({ ...prev, wizard: undefined }) });
+      navigate({ search: { wizard: undefined } });
     } else {
-      navigate({ search: (prev: any) => ({ ...prev, wizard: true }) });
+      navigate({ search: { wizard: true } });
     }
   };
 
