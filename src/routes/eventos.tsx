@@ -63,7 +63,7 @@ function EventPage() {
         setLoading(false);
       });
     }
-  }, [search.id]);
+  }, [search.id, getEvent]);
 
   if (loading) return (
     <div className="min-h-screen bg-bg p-8 space-y-8 max-w-7xl mx-auto pt-24">
@@ -79,14 +79,13 @@ function EventPage() {
     </div>
   );
 
-  if (!data || !data.event) return <div className="p-20 text-center font-manrope font-black text-navy text-2xl">Evento não encontrado.</div>;
+  if (!data?.event) return <div className="p-20 text-center font-manrope font-black text-navy text-2xl">Evento não encontrado.</div>;
 
   const event = data.event;
   const ticketTypes = data.ticketTypes || [];
   const itinerary = data.itinerary || [];
   
   const total = ticketTypes.reduce((acc: number, t: any) => acc + (quantities[t.id] || 0) * t.valor, 0);
-  const totalTickets = Object.values(quantities).reduce((a, b) => a + b, 0);
 
   const updateQuantity = (id: string, delta: number) => {
     setQuantities(prev => ({
@@ -135,6 +134,7 @@ function EventPage() {
           <img 
             src={event.cover_image || "https://images.unsplash.com/photo-1544971587-b842c27f8e14?auto=format&fit=crop&q=80&w=1600"} 
             className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" 
+            alt={event.title}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-navy/90 via-navy/20 to-transparent" />
           
@@ -332,7 +332,7 @@ function EventPage() {
                 <div className="space-y-6">
                   {ticketTypes.some((t: any) => (quantities[t.id] || 0) > 0) ? (
                     <div className="space-y-4">
-                      {ticketTypes.map((t: any) => quantities[t.id] > 0 && (
+                      {ticketTypes.map((t: any) => (quantities[t.id] || 0) > 0 && (
                         <div key={t.id} className="flex justify-between items-start border-b border-white/10 pb-4 animate-in fade-in zoom-in-95">
                           <div className="space-y-1">
                             <p className="text-sm font-black text-white">{t.nome}</p>
@@ -374,10 +374,10 @@ function EventPage() {
                 <h4 className="text-[10px] font-black text-muted uppercase tracking-widest">Realização</h4>
                 <div className="flex items-center gap-4">
                   <div className="w-12 h-12 bg-surface rounded-2xl flex items-center justify-center border border-line font-black text-navy text-xs">
-                    {event?.producer?.nome?.slice(0, 2).toUpperCase()}
+                    {event.producer?.nome?.slice(0, 2).toUpperCase()}
                   </div>
                   <div>
-                    <p className="text-sm font-black text-navy uppercase">{event?.producer?.nome || "Organização"}</p>
+                    <p className="text-sm font-black text-navy uppercase">{event.producer?.nome || "Organização"}</p>
                     <p className="text-[10px] font-bold text-muted uppercase">Produtor Verificado</p>
                   </div>
                 </div>
