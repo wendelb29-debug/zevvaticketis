@@ -836,7 +836,7 @@ function AdminChatPage() {
 
       {/* Dialog: Filtros */}
       <Dialog open={isFilterDialogOpen} onOpenChange={setIsFilterDialogOpen}>
-        <DialogContent className="max-w-2xl bg-popover border-border text-foreground">
+        <DialogContent className="max-w-2xl bg-card border-border text-foreground">
           <DialogHeader>
             <DialogTitle className="text-xl font-bold">Filtros</DialogTitle>
             <DialogDescription className="text-muted-foreground">Selecione os filtros que deseja aplicar aos tickets.</DialogDescription>
