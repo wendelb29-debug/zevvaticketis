@@ -1,451 +1,315 @@
-import { createFileRoute, useNavigate } from '@tanstack/react-router';
-import { useState, useEffect } from 'react';
+import { createFileRoute } from '@tanstack/react-router';
+import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { 
-  getEmailIntegrations, 
-  getIndividualEmailMessages, 
-  startGmailOAuth, 
-  disconnectGmail,
-  sendIndividualEmail 
-} from '@/lib/email/email.functions';
-import { 
-  Mail, 
-  Inbox, 
-  Send, 
-  Star, 
-  AlertCircle, 
-  Trash2, 
-  Archive, 
-  Search, 
-  Plus, 
-  RefreshCw,
-  ChevronRight,
-  User,
-  MoreVertical,
-  ArrowLeft,
-  X,
-  LogOut,
-  CheckCircle2,
-  ExternalLink
+import {
+  getGmailStatus,
+  startGmailConnect,
+  listGmailMessages,
+  sendGmailMessage,
+  disconnectGmailAccount,
+} from '@/lib/gmail/gmail.functions';
+import {
+  Mail, Inbox, Send, Star, Search, RefreshCw, LogOut, ShieldCheck,
+  PenSquare, Loader2, AlertCircle, FileWarning,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { format } from 'date-fns';
-import { ptBR } from 'date-fns/locale';
 import { toast } from 'sonner';
-import { supabase } from '@/integrations/supabase/client';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import {
+  Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter,
+} from '@/components/ui/dialog';
 
 export const Route = createFileRoute('/admin/emails')({
   component: AdminEmailsPage,
+  head: () => ({
+    meta: [
+      { title: 'E-mails — Zevva Admin' },
+      { name: 'description', content: 'Conecte sua conta Gmail pessoal e gerencie seus e-mails dentro do Zevva Admin.' },
+      { property: 'og:title', content: 'E-mails — Zevva Admin' },
+      { property: 'og:description', content: 'Caixa de entrada individual e privada por usuário no Zevva Admin.' },
+      { property: 'og:type', content: 'website' },
+      { name: 'twitter:card', content: 'summary' },
+    ],
+  }),
 });
 
+const FOLDERS = [
+  { id: 'INBOX', label: 'Caixa de entrada', icon: Inbox },
+  { id: 'SENT', label: 'Enviados', icon: Send },
+  { id: 'STARRED', label: 'Favoritos', icon: Star },
+  { id: 'SPAM', label: 'Spam', icon: FileWarning },
+];
+
+function waitForOAuthCompletion(popup: Window) {
+  return new Promise<void>((resolve, reject) => {
+    let poll: number | undefined;
+    const cleanup = () => {
+      window.removeEventListener('message', onMessage);
+      if (poll !== undefined) window.clearInterval(poll);
+    };
+    const onMessage = (event: MessageEvent) => {
+      const type = event.data?.type;
+      if (
+        event.origin !== window.location.origin ||
+        event.source !== popup ||
+        event.data?.connectorId !== 'google_mail' ||
+        (type !== 'appUserConnectorOAuthComplete' && type !== 'appUserConnectorOAuthFailed')
+      ) return;
+      cleanup();
+      if (type === 'appUserConnectorOAuthComplete') { resolve(); return; }
+      popup.close();
+      reject(new Error('A conexão com o Google falhou.'));
+    };
+    window.addEventListener('message', onMessage);
+    poll = window.setInterval(() => {
+      if (!popup.closed) return;
+      cleanup();
+      reject(new Error('Janela fechada antes de concluir a autorização.'));
+    }, 500);
+  });
+}
+
 function AdminEmailsPage() {
-  const [selectedIntegrationId, setSelectedIntegrationId] = useState<string | null>(null);
-  const [activeFolder, setActiveFolder] = useState('inbox');
-  const [selectedMessageId, setSelectedMessageId] = useState<string | null>(null);
-  const [isComposeOpen, setIsComposeOpen] = useState(false);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [currentUser, setCurrentUser] = useState<any>(null);
-  
   const queryClient = useQueryClient();
+  const [folder, setFolder] = useState('INBOX');
+  const [search, setSearch] = useState('');
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [composeOpen, setComposeOpen] = useState(false);
+  const [connecting, setConnecting] = useState(false);
 
-  useEffect(() => {
-    supabase.auth.getUser().then(({ data: { user } }) => {
-      setCurrentUser(user);
-    });
-  }, []);
+  const statusQuery = useQuery({
+    queryKey: ['gmail', 'status'],
+    queryFn: () => getGmailStatus(),
+  });
+  const connected = statusQuery.data?.connected === true;
 
-  const { data: integrations = [], isLoading: loadingIntegrations } = useQuery({
-    queryKey: ['email_integrations'],
-    queryFn: () => getEmailIntegrations(),
+  const messagesQuery = useQuery({
+    queryKey: ['gmail', 'messages', folder, search],
+    queryFn: () => listGmailMessages({ data: { labelId: folder, q: search || undefined, maxResults: 20 } }),
+    enabled: connected,
   });
 
-  const { data: messages = [], isLoading: loadingMessages } = useQuery({
-    queryKey: ['email_messages_individual', selectedIntegrationId, activeFolder, searchTerm],
-    queryFn: () => getIndividualEmailMessages({ 
-      data: { 
-        integrationId: selectedIntegrationId!, 
-        folder: activeFolder,
-        search: searchTerm
-      } 
-    }),
-    enabled: !!selectedIntegrationId,
-  });
-
-  const connectMutation = useMutation({
-    mutationFn: () => startGmailOAuth(),
-    onSuccess: (data) => {
-      window.location.href = data.url;
+  const connect = async () => {
+    setConnecting(true);
+    const popup = window.open('', 'zevva-gmail-oauth', 'width=600,height=720');
+    if (!popup) {
+      setConnecting(false);
+      toast.error('Pop-up bloqueado. Libere pop-ups e tente novamente.');
+      return;
     }
-  });
+    try {
+      const { authorizationUrl } = await startGmailConnect();
+      const completion = waitForOAuthCompletion(popup);
+      popup.location.href = authorizationUrl;
+      await completion;
+      await queryClient.invalidateQueries({ queryKey: ['gmail'] });
+      toast.success('Conta Google conectada com sucesso.');
+    } catch (e: any) {
+      popup.close();
+      toast.error(e?.message ?? 'Não foi possível conectar sua conta Google.');
+    } finally {
+      setConnecting(false);
+    }
+  };
 
   const disconnectMutation = useMutation({
-    mutationFn: (id: string) => disconnectGmail({ data: { integrationId: id } }),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['email_integrations'] });
-      setSelectedIntegrationId(null);
-      toast.success("Gmail desconectado com sucesso");
-    }
+    mutationFn: () => disconnectGmailAccount(),
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ['gmail'] });
+      setSelectedId(null);
+      toast.success('Conta desconectada.');
+    },
+    onError: (e: any) => toast.error(e?.message ?? 'Falha ao desconectar.'),
   });
 
-  const sendMutation = useMutation({
-    mutationFn: (data: { to: string, subject: string, content: string }) => 
-      sendIndividualEmail({ 
-        data: { 
-          integrationId: selectedIntegrationId!, 
-          ...data 
-        } 
-      }),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['email_messages_individual'] });
-      setIsComposeOpen(false);
-      toast.success("E-mail enviado com sucesso");
-    }
-  });
-
-  const selectedMessage = messages.find(m => m.id === selectedMessageId);
-  const activeIntegration = integrations.find(i => i.id === selectedIntegrationId);
-
-  const folders = [
-    { id: 'inbox', label: 'Caixa de Entrada', icon: Inbox },
-    { id: 'sent', label: 'Enviados', icon: Send },
-    { id: 'important', label: 'Importante', icon: Star },
-    { id: 'spam', label: 'Spam', icon: AlertCircle },
-    { id: 'trash', label: 'Lixeira', icon: Trash2 },
-    { id: 'archive', label: 'Arquivo', icon: Archive },
-  ];
-
-  if (loadingIntegrations) return <div className="p-10 text-center font-inter text-muted-fg animate-pulse">Carregando integrações...</div>;
-
-  // Pantalla inicial si no hay cuenta conectada
-  if (integrations.length === 0) {
+  if (statusQuery.isLoading) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-[70vh] text-center p-8 animate-in fade-in duration-700">
-        <div className="bg-card p-12 rounded-[40px] border border-border shadow-xl max-w-xl w-full">
-          <div className="w-24 h-24 rounded-3xl bg-primary/5 flex items-center justify-center mb-8 mx-auto rotate-3 hover:rotate-0 transition-transform duration-500">
-            <Mail className="w-12 h-12 text-primary" />
+      <div className="flex h-[70vh] items-center justify-center">
+        <Loader2 className="h-6 w-6 animate-spin text-primary" />
+      </div>
+    );
+  }
+
+  if (!connected) {
+    return (
+      <div className="flex min-h-[70vh] items-center justify-center p-6">
+        <div className="w-full max-w-lg rounded-2xl border border-border bg-card p-10 text-center shadow-sm">
+          <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-primary/10">
+            <Mail className="h-8 w-8 text-primary" />
           </div>
-          <h2 className="text-3xl font-manrope font-extrabold text-foreground mb-4">Conecte seu e-mail</h2>
-          <p className="text-muted-fg mb-10 font-inter leading-relaxed text-lg">
-            Conecte sua conta Gmail para gerenciar seus e-mails dentro do Zevva de forma individual e segura.
+          <h1 className="text-2xl font-bold text-foreground">Conecte seu Gmail</h1>
+          <p className="mt-3 text-sm text-muted-foreground">
+            Cada usuário conecta a própria conta Google. Suas mensagens são privadas — nenhum
+            outro usuário do Zevva tem acesso à sua caixa de entrada.
           </p>
-          <button
-            onClick={() => connectMutation.mutate()}
-            disabled={connectMutation.isPending}
-            className="w-full flex items-center justify-center gap-4 px-8 py-5 bg-primary text-primary-foreground rounded-2xl font-extrabold text-xl shadow-2xl shadow-primary/30 hover:bg-primary/90 transition-all active:scale-95 disabled:opacity-50"
-          >
-            <img src="https://www.google.com/favicon.ico" className="w-6 h-6 rounded-full bg-white p-0.5" alt="Google" />
-            Conectar Gmail
-          </button>
-          <p className="mt-8 text-xs text-muted-fg font-inter">
-            Ao conectar, você concede acesso para ler e enviar e-mails através da plataforma.
+          <Button className="mt-8 w-full" size="lg" onClick={connect} disabled={connecting}>
+            {connecting ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Mail className="mr-2 h-4 w-4" />}
+            Conectar com o Google
+          </Button>
+          <p className="mt-4 flex items-center justify-center gap-2 text-xs text-muted-foreground">
+            <ShieldCheck className="h-3.5 w-3.5" /> Autorização OAuth 2.0 segura — você pode desconectar quando quiser.
           </p>
         </div>
       </div>
     );
   }
 
-  // Auto-selecionar a primeira integração se nenhuma estiver selecionada
-  if (!selectedIntegrationId && integrations && integrations.length > 0) {
-    const firstIntegration = integrations[0];
-    if (firstIntegration) {
-      setSelectedIntegrationId(firstIntegration.id);
-    }
-  }
+  const messages = messagesQuery.data ?? [];
+  const selected = messages.find((m) => m.id === selectedId) ?? null;
 
   return (
-    <div className="flex flex-col h-[calc(100vh-140px)] bg-background font-inter animate-in fade-in duration-500">
-      <div className="flex flex-1 overflow-hidden gap-6">
-        
-        {/* Sidebar Esquerda: Navegação e Contas */}
-        <div className="w-72 flex flex-col gap-6 h-full overflow-hidden">
-          
-          {/* Status da Conta Conectada */}
-          <div className="bg-card p-5 rounded-3xl border border-border shadow-sm">
-            <div className="flex items-center gap-2 mb-4">
-              <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-              <span className="text-[10px] font-extrabold uppercase tracking-widest text-primary">Gmail conectado</span>
-            </div>
-            
-            {activeIntegration && (
-              <div className="flex items-center gap-4">
-                <div className="relative">
-                  {activeIntegration.photo_url ? (
-                    <img src={activeIntegration.photo_url} className="w-12 h-12 rounded-2xl object-cover border-2 border-primary/20" alt="Avatar" />
-                  ) : (
-                    <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center font-extrabold text-primary">
-                      {activeIntegration?.display_name?.[0] || activeIntegration?.email_address?.[0]?.toUpperCase()}
-                    </div>
-                  )}
-                  <div className="absolute -bottom-1 -right-1 bg-white rounded-full p-0.5 shadow-sm">
-                    <img src="https://www.google.com/favicon.ico" className="w-3 h-3" alt="G" />
-                  </div>
-                </div>
-                <div className="flex-1 min-w-0">
-                  <h4 className="text-sm font-extrabold text-foreground truncate">{activeIntegration.display_name || 'Usuário Zevva'}</h4>
-                  <p className="text-[11px] text-muted-fg truncate">{activeIntegration.email_address}</p>
-                </div>
-              </div>
-            )}
-            
-            <div className="grid grid-cols-2 gap-2 mt-5 pt-4 border-t border-border/50">
-              <button 
-                onClick={() => setSelectedMessageId(null)}
-                className="text-[10px] font-extrabold text-muted-fg hover:text-primary flex items-center gap-1.5 transition-colors"
-              >
-                <RefreshCw className="w-3 h-3" /> Atualizar
-              </button>
-              <button 
-                onClick={() => activeIntegration && disconnectMutation.mutate(activeIntegration.id)}
-                className="text-[10px] font-extrabold text-red-500/70 hover:text-red-500 flex items-center gap-1.5 transition-colors"
-              >
-                <LogOut className="w-3 h-3" /> Desconectar
-              </button>
-            </div>
-          </div>
-
-          {/* Pastas */}
-          <div className="bg-card flex-1 p-4 rounded-3xl border border-border shadow-sm overflow-y-auto custom-scrollbar">
+    <div className="flex h-[calc(100vh-8rem)] gap-4 p-4">
+      {/* Sidebar */}
+      <aside className="flex w-60 shrink-0 flex-col rounded-xl border border-border bg-card p-3">
+        <Button className="mb-4 w-full" onClick={() => setComposeOpen(true)}>
+          <PenSquare className="mr-2 h-4 w-4" /> Escrever
+        </Button>
+        <nav className="space-y-1">
+          {FOLDERS.map((f) => (
             <button
-              onClick={() => setIsComposeOpen(true)}
-              className="w-full py-4 bg-primary text-primary-foreground rounded-2xl font-extrabold shadow-xl shadow-primary/20 flex items-center justify-center gap-3 mb-6 hover:translate-y-[-2px] transition-all active:scale-95"
+              key={f.id}
+              onClick={() => { setFolder(f.id); setSelectedId(null); }}
+              className={cn(
+                'flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors',
+                folder === f.id
+                  ? 'border border-primary/40 font-semibold text-foreground'
+                  : 'text-muted-foreground hover:bg-primary/5',
+              )}
             >
-              <Plus className="w-5 h-5" />
-              Novo e-mail
+              <f.icon className="h-4 w-4" /> {f.label}
             </button>
-
-            <div className="space-y-1.5">
-              {folders.map(folder => (
-                <button
-                  key={folder.id}
-                  onClick={() => {
-                    setActiveFolder(folder.id);
-                    setSelectedMessageId(null);
-                  }}
-                  className={cn(
-                    "w-full px-4 py-3.5 flex items-center justify-between rounded-2xl text-sm transition-all group",
-                    activeFolder === folder.id 
-                      ? "bg-primary/5 text-primary font-extrabold border border-primary/10" 
-                      : "text-muted-fg font-bold hover:bg-accent/50 hover:text-foreground"
-                  )}
-                >
-                  <div className="flex items-center gap-3">
-                    <folder.icon className={cn("w-4 h-4", activeFolder === folder.id ? "text-primary" : "text-muted-fg group-hover:text-foreground")} />
-                    {folder.label}
-                  </div>
-                  {activeFolder === folder.id && <div className="w-1.5 h-1.5 rounded-full bg-primary" />}
-                </button>
-              ))}
-            </div>
-          </div>
+          ))}
+        </nav>
+        <div className="mt-auto border-t border-border pt-3">
+          <p className="truncate text-xs font-medium text-foreground">{statusQuery.data?.email ?? 'Conta conectada'}</p>
+          <Button
+            variant="ghost"
+            size="sm"
+            className="mt-2 w-full justify-start text-destructive hover:text-destructive"
+            onClick={() => disconnectMutation.mutate()}
+            disabled={disconnectMutation.isPending}
+          >
+            <LogOut className="mr-2 h-4 w-4" /> Desconectar conta
+          </Button>
         </div>
+      </aside>
 
-        {/* Listagem de Mensagens */}
-        <div className="w-[420px] bg-card rounded-[32px] border border-border shadow-sm flex flex-col overflow-hidden">
-          <div className="p-6 border-b border-border bg-accent/10">
-            <div className="relative group">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-fg group-focus-within:text-primary transition-colors" />
-              <input
-                type="text"
-                placeholder="Pesquisar mensagens..."
-                className="w-full pl-11 pr-5 py-3.5 bg-background rounded-2xl border border-border/50 text-sm focus:ring-4 focus:ring-primary/5 focus:border-primary transition-all font-inter"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-              />
-            </div>
+      {/* List */}
+      <section className="flex w-[26rem] shrink-0 flex-col rounded-xl border border-border bg-card">
+        <div className="flex items-center gap-2 border-b border-border p-3">
+          <div className="relative flex-1">
+            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+            <Input
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Pesquisar e-mails"
+              className="pl-9"
+            />
           </div>
-
-          <div className="flex-1 overflow-y-auto custom-scrollbar">
-            {loadingMessages ? (
-              <div className="flex flex-col items-center justify-center h-full p-10 gap-4">
-                <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin" />
-                <span className="text-xs text-muted-fg font-extrabold uppercase tracking-widest">Sincronizando...</span>
-              </div>
-            ) : !messages || messages.length === 0 ? (
-              <div className="flex flex-col items-center justify-center h-full p-10 text-center opacity-40">
-                <Mail className="w-12 h-12 mb-4 text-muted-fg" />
-                <p className="text-xs font-extrabold text-muted-fg uppercase tracking-widest">Caixa vazia</p>
-              </div>
-            ) : (
-              messages.map((msg: any) => (
-                <button
-                  key={msg.id}
-                  onClick={() => setSelectedMessageId(msg.id)}
-                  className={cn(
-                    "w-full p-5 text-left border-b border-border/50 transition-all hover:bg-primary/[0.02] relative",
-                    selectedMessageId === msg.id ? "bg-primary/[0.04] after:absolute after:left-0 after:top-0 after:bottom-0 after:w-1 after:bg-primary" : "",
-                    !msg.is_read ? "bg-background" : "opacity-70"
-                  )}
-                >
-                  <div className="flex justify-between items-center mb-2">
-                    <span className={cn("text-sm truncate max-w-[70%]", !msg.is_read ? "font-extrabold text-foreground" : "font-bold text-muted-fg")}>
-                      {msg.from_name || msg.from_email}
-                    </span>
-                    <span className="text-[10px] font-extrabold text-muted-fg font-inter whitespace-nowrap">
-                      {msg.received_at ? format(new Date(msg.received_at), 'HH:mm', { locale: ptBR }) : ''}
-                    </span>
-                  </div>
-                  <h4 className={cn("text-xs truncate mb-2 leading-relaxed", !msg.is_read ? "font-extrabold text-foreground" : "font-semibold text-foreground/80")}>
-                    {msg.subject || '(Sem assunto)'}
-                  </h4>
-                  <p className="text-[11px] text-muted-fg line-clamp-2 font-inter leading-relaxed">
-                    {msg.snippet}
-                  </p>
-                </button>
-              ))
-            )}
-          </div>
+          <Button variant="ghost" size="icon" onClick={() => messagesQuery.refetch()}>
+            <RefreshCw className={cn('h-4 w-4', messagesQuery.isFetching && 'animate-spin')} />
+          </Button>
         </div>
-
-        {/* Visualização da Mensagem */}
-        <div className="flex-1 bg-card rounded-[32px] border border-border shadow-sm flex flex-col overflow-hidden">
-          {selectedMessage ? (
-            <>
-              <div className="h-20 px-8 border-b border-border bg-accent/5 flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <button className="p-2.5 hover:bg-background rounded-xl text-muted-fg transition-all hover:text-primary"><Star className="w-5 h-5" /></button>
-                  <button className="p-2.5 hover:bg-background rounded-xl text-muted-fg transition-all hover:text-primary"><Archive className="w-5 h-5" /></button>
-                  <button className="p-2.5 hover:bg-background rounded-xl text-muted-fg transition-all hover:text-red-500"><Trash2 className="w-5 h-5" /></button>
-                </div>
-                <div className="flex items-center gap-4">
-                  <span className="text-[10px] font-extrabold text-muted-fg uppercase tracking-widest bg-background px-3 py-1.5 rounded-lg border border-border/50">
-                    {activeFolder}
-                  </span>
-                  <button className="p-2.5 hover:bg-background rounded-xl text-muted-fg transition-all"><MoreVertical className="w-5 h-5" /></button>
-                </div>
-              </div>
-
-              <div className="flex-1 overflow-y-auto p-12 custom-scrollbar">
-                <div className="max-w-3xl mx-auto">
-                  <h1 className="text-3xl font-manrope font-extrabold text-foreground mb-10 leading-tight">
-                    {selectedMessage.subject}
-                  </h1>
-
-                  <div className="flex items-center gap-5 mb-12 pb-8 border-b border-border/50">
-                    <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center font-extrabold text-primary text-xl uppercase shadow-inner">
-                      {selectedMessage.from_name?.[0] || selectedMessage.from_email?.[0]}
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center justify-between mb-1">
-                        <h3 className="font-extrabold text-lg text-foreground truncate">{selectedMessage.from_name}</h3>
-                        <span className="text-xs text-muted-fg font-inter font-medium">
-                          {selectedMessage.received_at ? format(new Date(selectedMessage.received_at), "d 'de' MMMM, HH:mm", { locale: ptBR }) : ''}
-                        </span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <p className="text-xs text-muted-fg font-inter font-semibold">&lt;{selectedMessage.from_email}&gt;</p>
-                        <div className="w-1 h-1 rounded-full bg-border" />
-                        <p className="text-[10px] text-primary font-extrabold uppercase tracking-widest">Para mim</p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="prose prose-sm max-w-none text-foreground/90 font-inter leading-loose text-base whitespace-pre-wrap">
-                    {selectedMessage.body_text || selectedMessage.snippet}
-                  </div>
-                </div>
-              </div>
-
-              <div className="p-8 bg-accent/10 border-t border-border mt-auto">
-                <div className="max-w-3xl mx-auto flex gap-4">
-                  <button className="flex-1 py-4 bg-background border border-border rounded-2xl text-sm font-extrabold text-foreground hover:bg-accent hover:translate-y-[-2px] transition-all shadow-sm flex items-center justify-center gap-2 active:scale-95">
-                    <RefreshCw className="w-4 h-4 text-primary" /> Responder
-                  </button>
-                  <button className="flex-1 py-4 bg-background border border-border rounded-2xl text-sm font-extrabold text-foreground hover:bg-accent hover:translate-y-[-2px] transition-all shadow-sm flex items-center justify-center gap-2 active:scale-95">
-                    <Plus className="w-4 h-4 text-primary" /> Encaminhar
-                  </button>
-                </div>
-              </div>
-            </>
-          ) : (
-            <div className="flex-1 flex flex-col items-center justify-center text-center p-20 animate-in fade-in zoom-in duration-500">
-              <div className="w-32 h-32 rounded-[40px] bg-accent/20 flex items-center justify-center mb-8 shadow-inner rotate-3">
-                <Mail className="w-12 h-12 text-muted-fg/40" />
-              </div>
-              <h3 className="text-2xl font-manrope font-extrabold text-foreground mb-4">Selecione um e-mail</h3>
-              <p className="text-base text-muted-fg max-w-xs font-inter leading-relaxed">
-                Clique em uma mensagem na lista para visualizar o conteúdo completo.
-              </p>
+        <div className="flex-1 overflow-y-auto">
+          {messagesQuery.isLoading && (
+            <div className="flex h-40 items-center justify-center"><Loader2 className="h-5 w-5 animate-spin text-primary" /></div>
+          )}
+          {messagesQuery.isError && (
+            <div className="flex flex-col items-center gap-2 p-6 text-center text-sm text-destructive">
+              <AlertCircle className="h-5 w-5" />
+              {(messagesQuery.error as Error)?.message}
             </div>
           )}
+          {!messagesQuery.isLoading && messages.length === 0 && (
+            <p className="p-6 text-center text-sm text-muted-foreground">Nenhuma mensagem aqui.</p>
+          )}
+          {messages.map((m) => (
+            <button
+              key={m.id}
+              onClick={() => setSelectedId(m.id)}
+              className={cn(
+                'block w-full border-b border-border px-4 py-3 text-left transition-colors hover:bg-primary/5',
+                selectedId === m.id && 'bg-primary/5',
+              )}
+            >
+              <div className="flex items-center justify-between gap-2">
+                <span className={cn('truncate text-sm', m.unread ? 'font-bold text-foreground' : 'text-foreground')}>
+                  {m.from}
+                </span>
+                <span className="shrink-0 text-[11px] text-muted-foreground">
+                  {m.date ? new Date(m.date).toLocaleDateString('pt-BR') : ''}
+                </span>
+              </div>
+              <p className="truncate text-sm text-foreground">{m.subject}</p>
+              <p className="truncate text-xs text-muted-foreground">{m.snippet}</p>
+            </button>
+          ))}
         </div>
-      </div>
+      </section>
 
-      {/* Compose Modal */}
-      {isComposeOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-6 bg-background/80 backdrop-blur-md animate-in fade-in duration-300">
-          <div className="w-full max-w-3xl bg-card rounded-[40px] shadow-2xl overflow-hidden animate-in zoom-in-95 duration-300 border border-border border-t-8 border-t-primary">
-            <div className="px-10 py-8 border-b border-border flex items-center justify-between bg-accent/5">
-              <div className="flex items-center gap-4">
-                <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
-                  <Mail className="w-5 h-5 text-primary" />
-                </div>
-                <h2 className="text-xl font-manrope font-extrabold text-foreground">Escrever Mensagem</h2>
-              </div>
-              <button 
-                onClick={() => setIsComposeOpen(false)} 
-                className="p-3 hover:bg-accent rounded-2xl transition-all text-muted-fg hover:text-foreground"
-              >
-                <X className="w-6 h-6" />
-              </button>
+      {/* Reader */}
+      <section className="flex-1 overflow-y-auto rounded-xl border border-border bg-card p-6">
+        {selected ? (
+          <div className="space-y-4">
+            <h2 className="text-xl font-bold text-foreground">{selected.subject}</h2>
+            <div className="text-sm text-muted-foreground">
+              <p><span className="font-medium text-foreground">De:</span> {selected.from}</p>
+              <p><span className="font-medium text-foreground">Para:</span> {selected.to}</p>
+              <p>{selected.date}</p>
             </div>
-            
-            <form className="p-10 space-y-6" onSubmit={(e) => {
-              e.preventDefault();
-              const formData = new FormData(e.currentTarget);
-              sendMutation.mutate({
-                to: formData.get('to') as string,
-                subject: formData.get('subject') as string,
-                content: formData.get('content') as string,
-              });
-            }}>
-              <div className="grid grid-cols-2 gap-6">
-                <div className="space-y-2">
-                  <label className="text-[10px] font-extrabold uppercase tracking-widest text-primary ml-1 block">De (Sua conta)</label>
-                  <div className="w-full px-6 py-4 bg-accent/30 rounded-2xl border border-border/50 text-sm font-bold text-muted-fg flex items-center gap-3">
-                    <CheckCircle2 className="w-4 h-4 text-green-500" />
-                    {activeIntegration?.email_address}
-                  </div>
-                </div>
-                <div className="space-y-2">
-                  <label className="text-[10px] font-extrabold uppercase tracking-widest text-muted-fg ml-1 block">Para</label>
-                  <input name="to" type="email" required className="w-full px-6 py-4 bg-background rounded-2xl border border-border focus:ring-4 focus:ring-primary/5 focus:border-primary transition-all text-sm font-bold placeholder:font-normal" placeholder="exemplo@email.com" />
-                </div>
-              </div>
-              
-              <div className="space-y-2">
-                <label className="text-[10px] font-extrabold uppercase tracking-widest text-muted-fg ml-1 block">Assunto</label>
-                <input name="subject" type="text" required className="w-full px-6 py-4 bg-background rounded-2xl border border-border focus:ring-4 focus:ring-primary/5 focus:border-primary transition-all text-sm font-bold placeholder:font-normal" placeholder="Assunto da mensagem" />
-              </div>
-              
-              <div className="space-y-2">
-                <label className="text-[10px] font-extrabold uppercase tracking-widest text-muted-fg ml-1 block">Mensagem</label>
-                <textarea name="content" required className="w-full px-6 py-6 bg-background rounded-2xl border border-border focus:ring-4 focus:ring-primary/5 focus:border-primary transition-all text-sm font-medium min-h-[250px] leading-relaxed custom-scrollbar" placeholder="Escreva seu conteúdo aqui..."></textarea>
-              </div>
-              
-              <div className="flex items-center justify-between pt-6 mt-6 border-t border-border/50">
-                <p className="text-xs text-muted-fg font-inter italic flex items-center gap-2">
-                  <ExternalLink className="w-3 h-3" /> Sua mensagem será enviada via Gmail API oficial.
-                </p>
-                <div className="flex gap-4">
-                  <button type="button" onClick={() => setIsComposeOpen(false)} className="px-8 py-4 font-extrabold text-muted-fg hover:text-foreground transition-all">Cancelar</button>
-                  <button 
-                    type="submit" 
-                    disabled={sendMutation.isPending}
-                    className="px-12 py-4 bg-primary text-primary-foreground rounded-2xl font-extrabold shadow-2xl shadow-primary/30 hover:bg-primary/90 hover:translate-y-[-2px] transition-all active:scale-95 flex items-center gap-3 disabled:opacity-50"
-                  >
-                    {sendMutation.isPending ? (
-                      <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                    ) : (
-                      <Send className="w-5 h-5" />
-                    )}
-                    Enviar agora
-                  </button>
-                </div>
-              </div>
-            </form>
+            <p className="whitespace-pre-wrap border-t border-border pt-4 text-sm text-foreground">
+              {selected.snippet}
+            </p>
           </div>
-        </div>
-      )}
+        ) : (
+          <div className="flex h-full flex-col items-center justify-center text-muted-foreground">
+            <Mail className="mb-3 h-10 w-10 opacity-40" />
+            <p className="text-sm">Selecione um e-mail para ler</p>
+          </div>
+        )}
+      </section>
+
+      <ComposeDialog open={composeOpen} onOpenChange={setComposeOpen} />
     </div>
+  );
+}
+
+function ComposeDialog({ open, onOpenChange }: { open: boolean; onOpenChange: (v: boolean) => void }) {
+  const [to, setTo] = useState('');
+  const [subject, setSubject] = useState('');
+  const [body, setBody] = useState('');
+
+  const sendMutation = useMutation({
+    mutationFn: () => sendGmailMessage({ data: { to, subject, body } }),
+    onSuccess: () => {
+      toast.success('E-mail enviado.');
+      setTo(''); setSubject(''); setBody('');
+      onOpenChange(false);
+    },
+    onError: (e: any) => toast.error(e?.message ?? 'Falha ao enviar e-mail.'),
+  });
+
+  return (
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent className="bg-card sm:max-w-xl">
+        <DialogHeader>
+          <DialogTitle>Novo e-mail</DialogTitle>
+        </DialogHeader>
+        <div className="space-y-3">
+          <Input placeholder="Para" value={to} onChange={(e) => setTo(e.target.value)} />
+          <Input placeholder="Assunto" value={subject} onChange={(e) => setSubject(e.target.value)} />
+          <Textarea rows={10} placeholder="Escreva sua mensagem…" value={body} onChange={(e) => setBody(e.target.value)} />
+        </div>
+        <DialogFooter>
+          <Button variant="ghost" onClick={() => onOpenChange(false)}>Cancelar</Button>
+          <Button onClick={() => sendMutation.mutate()} disabled={!to || sendMutation.isPending}>
+            {sendMutation.isPending ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Send className="mr-2 h-4 w-4" />}
+            Enviar
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   );
 }

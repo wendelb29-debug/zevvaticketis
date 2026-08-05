@@ -50,6 +50,7 @@ import { Route as AdminMarketingAnunciosRouteImport } from './routes/admin/marke
 import { Route as AdminMarketingPublicidadeRouteImport } from './routes/admin/marketing/publicidade'
 import { Route as ApiPublicEmailOauthCallbackRouteImport } from './routes/api/public/email-oauth-callback'
 import { Route as ApiPublicUazapiWebhookRouteImport } from './routes/api/public/uazapi-webhook'
+import { Route as OauthGoogleReturnRouteImport } from './routes/oauth/google/return'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -261,6 +262,11 @@ const ApiPublicUazapiWebhookRoute = ApiPublicUazapiWebhookRouteImport.update({
   path: '/api/public/uazapi-webhook',
   getParentRoute: () => rootRouteImport,
 } as any)
+const OauthGoogleReturnRoute = OauthGoogleReturnRouteImport.update({
+  id: '/oauth/google/return',
+  path: '/oauth/google/return',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -303,6 +309,7 @@ export interface FileRoutesByFullPath {
   '/admin/marketing/publicidade': typeof AdminMarketingPublicidadeRoute
   '/api/public/email-oauth-callback': typeof ApiPublicEmailOauthCallbackRoute
   '/api/public/uazapi-webhook': typeof ApiPublicUazapiWebhookRoute
+  '/oauth/google/return': typeof OauthGoogleReturnRoute
   '/admin/marketing/': typeof AdminMarketingIndexRoute
 }
 export interface FileRoutesByTo {
@@ -343,6 +350,7 @@ export interface FileRoutesByTo {
   '/admin/marketing/publicidade': typeof AdminMarketingPublicidadeRoute
   '/api/public/email-oauth-callback': typeof ApiPublicEmailOauthCallbackRoute
   '/api/public/uazapi-webhook': typeof ApiPublicUazapiWebhookRoute
+  '/oauth/google/return': typeof OauthGoogleReturnRoute
   '/admin/marketing': typeof AdminMarketingIndexRoute
 }
 export interface FileRoutesById {
@@ -387,6 +395,7 @@ export interface FileRoutesById {
   '/admin/marketing/publicidade': typeof AdminMarketingPublicidadeRoute
   '/api/public/email-oauth-callback': typeof ApiPublicEmailOauthCallbackRoute
   '/api/public/uazapi-webhook': typeof ApiPublicUazapiWebhookRoute
+  '/oauth/google/return': typeof OauthGoogleReturnRoute
   '/admin/marketing/': typeof AdminMarketingIndexRoute
 }
 export interface FileRouteTypes {
@@ -432,6 +441,7 @@ export interface FileRouteTypes {
     | '/admin/marketing/publicidade'
     | '/api/public/email-oauth-callback'
     | '/api/public/uazapi-webhook'
+    | '/oauth/google/return'
     | '/admin/marketing/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -472,6 +482,7 @@ export interface FileRouteTypes {
     | '/admin/marketing/publicidade'
     | '/api/public/email-oauth-callback'
     | '/api/public/uazapi-webhook'
+    | '/oauth/google/return'
     | '/admin/marketing'
   id:
     | '__root__'
@@ -515,6 +526,7 @@ export interface FileRouteTypes {
     | '/admin/marketing/publicidade'
     | '/api/public/email-oauth-callback'
     | '/api/public/uazapi-webhook'
+    | '/oauth/google/return'
     | '/admin/marketing/'
   fileRoutesById: FileRoutesById
 }
@@ -537,6 +549,7 @@ export interface RootRouteChildren {
   Char91DotmcpChar93InvokeToolToolRoute: typeof Char91DotmcpChar93InvokeToolToolRoute
   ApiPublicEmailOauthCallbackRoute: typeof ApiPublicEmailOauthCallbackRoute
   ApiPublicUazapiWebhookRoute: typeof ApiPublicUazapiWebhookRoute
+  OauthGoogleReturnRoute: typeof OauthGoogleReturnRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -828,6 +841,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicUazapiWebhookRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/oauth/google/return': {
+      id: '/oauth/google/return'
+      path: '/oauth/google/return'
+      fullPath: '/oauth/google/return'
+      preLoaderRoute: typeof OauthGoogleReturnRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -923,6 +943,7 @@ const rootRouteChildren: RootRouteChildren = {
   Char91DotmcpChar93InvokeToolToolRoute: Char91DotmcpChar93InvokeToolToolRoute,
   ApiPublicEmailOauthCallbackRoute: ApiPublicEmailOauthCallbackRoute,
   ApiPublicUazapiWebhookRoute: ApiPublicUazapiWebhookRoute,
+  OauthGoogleReturnRoute: OauthGoogleReturnRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
