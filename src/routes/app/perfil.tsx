@@ -505,11 +505,11 @@ function NotificationItem({ icon: Icon, title, description }: { icon: any, title
         </div>
       </div>
       <div className="flex items-center gap-2">
-        <button className="p-2 bg-navy/5 rounded-lg text-navy/40 hover:text-coral hover:bg-coral/10 transition-all">
-          <Bell className="w-3.5 h-3.5" title="No app" />
+        <button className="p-2 bg-navy/5 rounded-lg text-navy/40 hover:text-coral hover:bg-coral-dark transition-all" title="No app">
+          <Bell className="w-3.5 h-3.5" />
         </button>
-        <button className="p-2 bg-navy/5 rounded-lg text-navy/40 hover:text-coral hover:bg-coral/10 transition-all">
-          <Mail className="w-3.5 h-3.5" title="E-mail" />
+        <button className="p-2 bg-navy/5 rounded-lg text-navy/40 hover:text-coral hover:bg-coral-dark transition-all" title="E-mail">
+          <Mail className="w-3.5 h-3.5" />
         </button>
       </div>
     </div>
