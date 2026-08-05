@@ -313,83 +313,160 @@ export function TeamManagement() {
 
       {/* Add user */}
       <Dialog open={addOpen} onOpenChange={setAddOpen}>
-        <DialogContent className="bg-card border-border">
+        <DialogContent className="bg-card border-border max-w-xl">
           <DialogHeader>
-            <DialogTitle>Adicionar usuário</DialogTitle>
-            <DialogDescription>Envie um convite de acesso para um novo membro.</DialogDescription>
+            <DialogTitle className="font-manrope font-extrabold">Adicionar usuário</DialogTitle>
+            <DialogDescription>Adicione usuários para compor a sua equipe</DialogDescription>
           </DialogHeader>
-          <div className="space-y-4">
-            <div className="space-y-1.5">
-              <Label>Nome</Label>
-              <Input value={newUser.name} onChange={(e) => setNewUser({ ...newUser, name: e.target.value })} />
-            </div>
+
+          <div className="space-y-5">
             <div className="space-y-1.5">
               <Label>E-mail</Label>
-              <Input type="email" value={newUser.email} onChange={(e) => setNewUser({ ...newUser, email: e.target.value })} />
+              <Input
+                type="email"
+                placeholder="Insira o e-mail"
+                value={newUser.email}
+                onChange={(e) => setNewUser({ ...newUser, email: e.target.value })}
+              />
             </div>
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-1.5">
-                <Label>Departamento</Label>
-                <Select value={newUser.department} onValueChange={(v) => setNewUser({ ...newUser, department: v })}>
-                  <SelectTrigger><SelectValue /></SelectTrigger>
-                  <SelectContent>
-                    {ALL_DEPARTMENTS.map((d) => <SelectItem key={d} value={d}>{d}</SelectItem>)}
-                  </SelectContent>
-                </Select>
+
+            <div className="space-y-1.5">
+              <Label>Permissão</Label>
+              <Select value={newUser.permission} onValueChange={(v) => setNewUser({ ...newUser, permission: v })}>
+                <SelectTrigger><SelectValue placeholder="Selecione uma permissão" /></SelectTrigger>
+                <SelectContent>
+                  {PERMISSIONS.map((p) => <SelectItem key={p} value={p}>{p}</SelectItem>)}
+                </SelectContent>
+              </Select>
+              <div className="flex gap-2 items-start rounded-xl border border-primary/40 bg-primary/5 p-3 text-xs text-muted-fg">
+                <Info className="w-4 h-4 text-primary shrink-0 mt-0.5" />
+                <p>
+                  Permissão. Define o que o usuário vê e pode fazer no projeto. Administrador e Supervisor mantêm
+                  acesso amplo; Atendente e permissões personalizadas ficam restritas aos departamentos vinculados
+                  ao usuário.
+                </p>
               </div>
-              <div className="space-y-1.5">
-                <Label>Permissão</Label>
-                <Select value={newUser.permission} onValueChange={(v) => setNewUser({ ...newUser, permission: v })}>
-                  <SelectTrigger><SelectValue /></SelectTrigger>
-                  <SelectContent>
-                    {PERMISSIONS.map((p) => <SelectItem key={p} value={p}>{p}</SelectItem>)}
-                  </SelectContent>
-                </Select>
+            </div>
+
+            <div className="space-y-1.5">
+              <Label>Departamentos onde atende como atendente</Label>
+              <div className="rounded-xl border border-border overflow-hidden">
+                <div className="flex items-center gap-2 px-3 py-2 border-b border-border">
+                  <Search className="w-4 h-4 text-muted-fg" />
+                  <input
+                    value={deptSearch}
+                    onChange={(e) => setDeptSearch(e.target.value)}
+                    placeholder="Buscar..."
+                    className="flex-1 bg-transparent text-sm outline-none placeholder:text-muted-fg"
+                  />
+                  <button
+                    type="button"
+                    title="Selecionar todos"
+                    onClick={() =>
+                      setNewUser({
+                        ...newUser,
+                        departments:
+                          newUser.departments.length === ALL_DEPARTMENTS.length ? [] : [...ALL_DEPARTMENTS],
+                      })
+                    }
+                    className="text-muted-fg hover:text-primary"
+                  >
+                    <ListChecks className="w-4 h-4" />
+                  </button>
+                </div>
+                <div className="max-h-40 overflow-y-auto divide-y divide-border/60">
+                  {ALL_DEPARTMENTS.filter((d) => d.toLowerCase().includes(deptSearch.trim().toLowerCase())).map((d) => (
+                    <label key={d} className="flex items-center gap-3 px-3 py-2 text-sm cursor-pointer hover:bg-primary/5">
+                      <Checkbox
+                        checked={newUser.departments.includes(d)}
+                        onCheckedChange={(checked) =>
+                          setNewUser({
+                            ...newUser,
+                            departments: checked
+                              ? [...newUser.departments, d]
+                              : newUser.departments.filter((x) => x !== d),
+                          })
+                        }
+                      />
+                      {d}
+                    </label>
+                  ))}
+                </div>
               </div>
+            </div>
+
+            <div className="space-y-1.5">
+              <Label>Horário de acesso</Label>
+              <Select value={newUser.accessHours} onValueChange={(v) => setNewUser({ ...newUser, accessHours: v })}>
+                <SelectTrigger><SelectValue placeholder="Selecione uma opção" /></SelectTrigger>
+                <SelectContent>
+                  {ACCESS_HOURS.map((h) => <SelectItem key={h} value={h}>{h}</SelectItem>)}
+                </SelectContent>
+              </Select>
             </div>
           </div>
+
           <DialogFooter>
-            <Button variant="outline" onClick={() => setAddOpen(false)}>Cancelar</Button>
+            <Button variant="ghost" onClick={() => setAddOpen(false)}>Cancelar</Button>
             <Button
-              onClick={() => {
-                if (!newUser.name || !newUser.email) {
-                  toast.error("Preencha nome e e-mail.");
+              disabled={sending}
+              onClick={async () => {
+                if (!newUser.email) {
+                  toast.error("Informe o e-mail do convidado.");
                   return;
                 }
-                setMembers([
-                  ...members,
-                  {
-                    id: crypto.randomUUID(),
-                    name: newUser.name,
-                    email: newUser.email,
-                    departments: [newUser.department],
-                    supervision: [],
-                    permission: newUser.permission,
-                    status: "offline",
-                  },
-                ]);
-                setInvites([
-                  {
-                    id: crypto.randomUUID(),
-                    email: newUser.email,
-                    role: newUser.permission.includes("Supervisor") ? "Supervisor" : newUser.permission.includes("Admin") ? "Administrador" : "Atendente",
-                    invitedBy: "Você",
-                    createdAt: new Date().toLocaleString("pt-BR"),
-                    expiresAt: new Date(Date.now() + 7 * 864e5).toLocaleString("pt-BR"),
-                    status: "Pendente",
-                  },
-                  ...invites,
-                ]);
-                setNewUser({ name: "", email: "", department: ALL_DEPARTMENTS[0]!, permission: PERMISSIONS[0]! });
-                setAddOpen(false);
-                toast.success("Convite enviado!");
+                if (!newUser.permission) {
+                  toast.error("Selecione uma permissão.");
+                  return;
+                }
+                setSending(true);
+                try {
+                  const res = await sendTeamInvite({
+                    data: {
+                      email: newUser.email,
+                      permission: newUser.permission,
+                      departments: newUser.departments,
+                      accessHours: newUser.accessHours || undefined,
+                      redirectTo: `${window.location.origin}/auth/callback`,
+                    },
+                  });
+                  if (!res.success) {
+                    toast.error(res.message);
+                    return;
+                  }
+                  setInvites([
+                    {
+                      id: crypto.randomUUID(),
+                      email: newUser.email,
+                      role: newUser.permission.includes("Supervisor")
+                        ? "Supervisor"
+                        : newUser.permission.includes("Admin")
+                          ? "Administrador"
+                          : "Atendente",
+                      invitedBy: "Você",
+                      createdAt: new Date().toLocaleString("pt-BR"),
+                      expiresAt: new Date(Date.now() + 7 * 864e5).toLocaleString("pt-BR"),
+                      status: "Pendente",
+                    },
+                    ...invites,
+                  ]);
+                  setNewUser({ name: "", email: "", departments: [], permission: "", accessHours: "" });
+                  setDeptSearch("");
+                  setAddOpen(false);
+                  toast.success(res.message);
+                } catch {
+                  toast.error("Falha ao enviar o convite.");
+                } finally {
+                  setSending(false);
+                }
               }}
             >
-              Enviar convite
+              {sending ? "Enviando..." : "Enviar convite"}
             </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
+
 
       {/* Invites */}
       <Dialog open={invitesOpen} onOpenChange={setInvitesOpen}>
