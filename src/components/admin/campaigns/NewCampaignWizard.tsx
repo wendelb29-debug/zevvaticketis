@@ -66,54 +66,55 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-6xl p-0 overflow-hidden bg-[#1E1E2D] border-none text-white rounded-none">
-        <DialogHeader className="p-0 border-b border-white/5 bg-[#1E1E2D]">
+        <DialogContent className="max-w-6xl p-0 overflow-hidden bg-background border border-border text-foreground rounded-2xl">
+        <DialogHeader className="p-0 border-b border-border bg-background">
           <div className="flex items-center justify-between px-8 py-6">
+            <div className="flex flex-col">
+              <DialogTitle className="text-xl font-manrope font-extrabold text-navy">Nova Campanha</DialogTitle>
+              <p className="text-sm text-muted-fg mt-0.5">Configure seu envio</p>
+            </div>
+            
             <div className="flex items-center gap-12">
               {steps.map((s) => (
-                <div key={s.number} className="flex items-center gap-4 relative">
+                <div key={s.number} className="flex items-center gap-3 relative">
                   <div className={cn(
-                    "w-8 h-8 rounded-lg flex items-center justify-center text-sm font-bold transition-colors",
-                    step === s.number ? "bg-[#FFCC00] text-[#1E1E2D]" : "bg-white/10 text-white/40",
-                    step > s.number && "bg-[#FFCC00] text-[#1E1E2D]"
+                    "w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold transition-colors border",
+                    step === s.number ? "bg-primary text-white border-primary" : 
+                    step > s.number ? "bg-primary/10 text-primary border-primary" : "bg-background text-muted-fg border-border"
                   )}>
                     {step > s.number ? <Check className="w-4 h-4" /> : s.number}
                   </div>
-                  <div className="flex flex-col">
-                    <span className={cn(
-                      "text-sm font-bold",
-                      step >= s.number ? "text-white" : "text-white/40"
-                    )}>{s.label}</span>
-                    <span className="text-[10px] text-white/40">{s.sublabel}</span>
-                  </div>
+                  <span className={cn(
+                    "text-sm font-bold",
+                    step === s.number ? "text-primary" : "text-foreground"
+                  )}>{s.label}</span>
                   {s.number < 4 && (
-                    <div className="absolute -right-8 top-1/2 -translate-y-1/2 w-4 h-[1px] bg-white/10" />
+                    <div className="absolute -right-8 top-1/2 -translate-y-1/2 w-4 h-[1px] bg-border" />
                   )}
                 </div>
               ))}
             </div>
             
-            <div className="flex gap-2">
-              {step > 1 && (
-                <Button 
-                  variant="ghost" 
-                  onClick={prevStep}
-                  className="bg-white/5 hover:bg-white/10 text-white border-none rounded-lg px-6"
-                >
-                  <ChevronLeft className="w-4 h-4 mr-2" /> Anterior
-                </Button>
-              )}
-              {canGoNext && step < 4 && (
-                <Button 
-                  onClick={nextStep}
-                  className="bg-[#FFCC00] hover:bg-[#FFD633] text-[#1E1E2D] font-bold rounded-lg px-8"
-                >
-                  Próximo <ChevronRight className="w-4 h-4 ml-2" />
-                </Button>
-              )}
+            <div className="flex gap-3">
+              <Button 
+                variant="outline"
+                onClick={prevStep}
+                disabled={step === 1}
+                className="border-primary/20 text-primary hover:bg-accent font-bold px-6"
+              >
+                Voltar
+              </Button>
+              <Button 
+                onClick={nextStep}
+                disabled={!canGoNext || step === 4}
+                className="bg-primary hover:bg-primary/90 text-white font-bold px-8 shadow-lg shadow-primary/20"
+              >
+                Próximo
+              </Button>
             </div>
           </div>
         </DialogHeader>
+
 
         <div className="p-8 min-h-[600px] bg-[#1E1E2D]">
           {step === 1 && (
