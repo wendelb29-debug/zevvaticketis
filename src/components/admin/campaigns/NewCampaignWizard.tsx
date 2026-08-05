@@ -364,54 +364,54 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
                 {publicType === "manual" && (
                   <div className="space-y-6">
                     <div>
-                      <h3 className="text-sm font-bold mb-1">Para quem quer enviar?</h3>
-                      <p className="text-xs text-white/40">Adicione os contatos que receberão as mensagens. Telefone é obrigatório.</p>
+                      <h3 className="text-lg font-manrope font-extrabold text-navy">Entrada Manual</h3>
+                      <p className="text-sm text-muted-fg mt-1">Adicione os contatos que receberão as mensagens.</p>
                     </div>
 
-                    <div className="bg-[#FFCC00]/5 border border-dashed border-[#FFCC00]/30 p-3 rounded-lg flex gap-3">
-                       <HelpCircle className="w-4 h-4 text-[#FFCC00] shrink-0" />
-                       <p className="text-[10px] text-[#FFCC00]">Cole uma lista CSV. Com cabeçalho (ex.: Nome, Telefone, CPF), as colunas extras viram variáveis automaticamente.</p>
+                    <div className="bg-primary/5 border border-dashed border-primary/30 p-4 rounded-xl flex gap-3">
+                       <HelpCircle className="w-5 h-5 text-primary shrink-0" />
+                       <p className="text-xs text-navy font-medium">Você pode colar uma lista no formato <strong>Nome, Telefone</strong>. Colunas extras serão tratadas como variáveis personalizadas.</p>
                     </div>
 
                     <div className="space-y-4">
-                      <div className="p-4 bg-[#1E1E2D]/50 border border-white/5 rounded-xl space-y-4">
-                        <div className="flex items-center gap-2 text-[10px] font-bold text-white/40 uppercase tracking-widest">
-                          <span className="text-[#FFCC00]">{"{ }"}</span> Variáveis personalizadas
+                      <div className="p-5 bg-white border border-border rounded-2xl shadow-sm space-y-4">
+                        <div className="flex items-center gap-2 text-[10px] font-extrabold text-navy uppercase tracking-widest">
+                          <span className="text-primary">{"{ }"}</span> Variáveis Dinâmicas
                         </div>
-                        <div className="flex gap-2">
-                           <Input placeholder="ex.: cpf, empresa..." className="bg-[#1E1E2D] border-white/10 h-10 text-xs" />
-                           <Button size="sm" className="bg-white/5 hover:bg-white/10 text-white/60">
+                        <div className="flex gap-3">
+                           <Input placeholder="Ex: empresa, cpf..." className="bg-accent/30 border-border h-11 text-sm rounded-xl" />
+                           <Button variant="outline" size="sm" className="border-primary text-primary hover:bg-primary/5 h-11 px-6 rounded-xl font-bold">
                              <Plus className="w-4 h-4 mr-2" /> Variável
                            </Button>
                         </div>
-                        <p className="text-[10px] text-white/40 italic">Use no conteúdo como {"{{"}variável{"}}"}. Nome e Telefone já são padrão.</p>
+                        <p className="text-[10px] text-muted-fg italic font-medium">As variáveis ficam disponíveis no criador de conteúdo.</p>
                       </div>
 
-                      <div className="grid grid-cols-[1fr_1fr_40px] gap-4">
+                      <div className="grid grid-cols-[1fr_1fr_48px] gap-4 items-end">
                         <div className="space-y-2">
-                          <Label className="text-[10px] font-bold text-white/40 uppercase">Nome</Label>
-                          <Input placeholder="Nome do contato" className="bg-[#1E1E2D] border-white/10 h-11" />
+                          <Label className="text-[10px] font-extrabold text-navy uppercase tracking-widest">Nome completo</Label>
+                          <Input placeholder="Nome do contato" className="bg-accent/30 border-border h-12 rounded-xl" />
                         </div>
                         <div className="space-y-2">
-                          <Label className="text-[10px] font-bold text-white/40 uppercase">Telefone</Label>
+                          <Label className="text-[10px] font-extrabold text-navy uppercase tracking-widest">Whatsapp / Telefone</Label>
                           <div className="flex">
-                            <div className="bg-[#1E1E2D] border border-r-0 border-white/10 h-11 px-3 flex items-center gap-2 rounded-l-md">
-                              <span>🇧🇷</span>
-                              <ChevronDown className="w-3 h-3 text-white/40" />
-                              <span className="text-xs font-bold">+55</span>
+                            <div className="bg-accent/50 border border-r-0 border-border h-12 px-4 flex items-center gap-2 rounded-l-xl">
+                              <span className="text-xl">🇧🇷</span>
+                              <span className="text-xs font-bold text-navy">+55</span>
                             </div>
-                            <Input className="bg-[#1E1E2D] border-white/10 h-11 rounded-l-none" />
+                            <Input placeholder="(00) 00000-0000" className="bg-accent/30 border-border h-12 rounded-l-none rounded-r-xl" />
                           </div>
                         </div>
-                        <div className="pt-8">
-                           <Button variant="ghost" size="icon" className="text-white/20 hover:text-red-500">
-                             <Trash2 className="w-4 h-4" />
+                        <div>
+                           <Button variant="ghost" size="icon" className="h-12 w-12 text-muted-fg/40 hover:text-error hover:bg-error/10 rounded-xl">
+                             <Trash2 className="w-5 h-5" />
                            </Button>
                         </div>
                       </div>
 
-                      <Button variant="ghost" className="w-full bg-transparent border border-dashed border-[#FFCC00]/30 text-[#FFCC00] hover:bg-[#FFCC00]/5 h-10">
+                      <Button variant="ghost" className="w-full border border-dashed border-primary/30 text-primary hover:bg-primary/5 h-12 rounded-xl font-bold">
                         <Plus className="w-4 h-4 mr-2" /> Adicionar nova linha
+
                       </Button>
                     </div>
                   </div>
