@@ -1,124 +1,76 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useServerFn } from "@tanstack/react-start";
-import { promotePlatformAdmin } from "@/lib/admin.functions";
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { toast } from "sonner";
-import { ShieldCheck, Mail, Loader2, Settings } from "lucide-react";
+import { 
+  Tabs, 
+  TabsContent, 
+  TabsList, 
+  TabsTrigger 
+} from "@/components/ui/tabs";
+import { 
+  Accordion, 
+  AccordionContent, 
+  AccordionItem, 
+  AccordionTrigger 
+} from "@/components/ui/accordion";
+import { 
+  Headset, 
+  Users, 
+  Settings, 
+  ChevronRight,
+  ShieldCheck,
+  Mail,
+  Smartphone
+} from "lucide-react";
 
 export const Route = createFileRoute("/admin/configuracoes")({
-  component: AdminSettings,
+  component: ConfigPage,
 });
 
-function AdminSettings() {
-  const [email, setEmail] = useState("");
-  const [loading, setLoading] = useState(false);
-  const promote = useServerFn(promotePlatformAdmin);
-
-  const handlePromote = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!email) return;
-
-    setLoading(true);
-    try {
-      const result = await promote({ data: { email: email.trim().toLowerCase() } });
-
-      if (result.success) {
-        toast.success(result.message);
-        setEmail("");
-      } else {
-        toast.error(result.message);
-      }
-    } catch (error: any) {
-      console.error("Error promoting admin:", error);
-      toast.error("Erro ao promover usuário.");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-
+function ConfigPage() {
   return (
-    <div className="max-w-4xl mx-auto space-y-8 font-inter animate-fade-in">
+    <div className="max-w-6xl mx-auto space-y-8 p-6 font-inter">
       <div>
-        <h1 className="text-3xl font-manrope font-extrabold text-navy mb-2">
-          Configurações da Plataforma
-        </h1>
-        <p className="text-navy/60">
-          Gerencie permissões globais e acessos administrativos de forma segura.
-        </p>
+        <h1 className="text-3xl font-manrope font-extrabold text-navy mb-2">Configurações do Projeto</h1>
+        <p className="text-navy/60">Configure o comportamento do sistema, equipe e automações.</p>
       </div>
 
-      <div className="grid gap-6">
-        <Card className="border-line shadow-sm overflow-hidden border-t-4 border-t-coral">
-          <CardHeader className="bg-surface-2/30 border-b border-line pb-8">
-            <div className="flex items-start gap-4">
-              <div className="p-3 bg-coral/10 rounded-2xl">
-                <ShieldCheck className="w-6 h-6 text-coral" />
-              </div>
-              <div>
-                <CardTitle className="text-2xl font-manrope font-extrabold text-navy mb-1">
-                  Promover Novo Administrador
-                </CardTitle>
-                <CardDescription className="text-navy/60 text-base">
-                  Digite o e-mail de um usuário existente para conceder acesso total à administração da plataforma.
-                </CardDescription>
-              </div>
-            </div>
-          </CardHeader>
-          <CardContent className="pt-8 pb-10">
-            <form onSubmit={handlePromote} className="max-w-2xl">
-              <div className="flex flex-col sm:flex-row gap-4">
-                <div className="relative flex-1">
-                  <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-navy/30" />
-                  <Input
-                    type="email"
-                    placeholder="exemplo@email.com"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="pl-12 h-14 bg-surface-2 border-line focus:ring-coral/20 focus:border-coral transition-all font-medium text-navy text-lg rounded-2xl"
-                    required
-                  />
+      <Tabs defaultValue="atendimento" className="w-full">
+        <TabsList className="bg-white border border-line rounded-xl p-1 w-full justify-start h-auto gap-2">
+          <TabsTrigger value="atendimento" className="data-[state=active]:bg-coral data-[state=active]:text-white data-[state=active]:shadow-sm px-6 py-2.5 rounded-lg font-bold transition-all">
+            <Headset className="w-4 h-4 mr-2" /> Atendimento
+          </TabsTrigger>
+          <TabsTrigger value="equipe" className="data-[state=active]:bg-coral data-[state=active]:text-white data-[state=active]:shadow-sm px-6 py-2.5 rounded-lg font-bold transition-all">
+            <Users className="w-4 h-4 mr-2" /> Equipe e Recursos
+          </TabsTrigger>
+          <TabsTrigger value="sistema" className="data-[state=active]:bg-coral data-[state=active]:text-white data-[state=active]:shadow-sm px-6 py-2.5 rounded-lg font-bold transition-all">
+            <Settings className="w-4 h-4 mr-2" /> Sistema
+          </TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="atendimento" className="space-y-4 pt-6">
+          <Accordion type="single" collapsible className="space-y-4">
+            <AccordionItem value="geral" className="bg-white rounded-2xl border border-line p-4 shadow-sm">
+              <AccordionTrigger className="hover:no-underline font-bold text-navy flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <Smartphone className="w-5 h-5 text-coral" />
+                  Configurações Gerais
                 </div>
-                <Button 
-                  type="submit" 
-                  disabled={loading || !email}
-                  className="h-14 px-10 bg-coral hover:bg-coral/90 text-white font-extrabold rounded-2xl shadow-xl shadow-coral/20 disabled:opacity-50 transition-all text-lg min-w-[200px]"
-                >
-                  {loading ? (
-                    <>
-                      <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                      Processando...
-                    </>
-                  ) : (
-                    "Promover"
-                  )}
-                </Button>
-              </div>
-              <div className="mt-6 p-4 bg-navy/5 rounded-xl border border-navy/10">
-                <p className="text-xs text-navy/60 leading-relaxed">
-                  <span className="font-bold text-navy uppercase mr-2 tracking-wider">Atenção:</span> 
-                  Esta ação é irreversível através desta interface e concede controle total sobre o sistema, incluindo gestão de produtores, aprovação de eventos e configurações globais.
-                </p>
-              </div>
-            </form>
-          </CardContent>
-        </Card>
+              </AccordionTrigger>
+              <AccordionContent className="pt-4 text-navy/60">
+                Conteúdo de configurações gerais de atendimento...
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
+        </TabsContent>
 
-        <Card className="border-line shadow-sm border-dashed">
-          <CardContent className="py-16 flex flex-col items-center justify-center text-center">
-            <div className="p-4 bg-navy/5 rounded-2xl mb-5">
-              <Settings className="w-8 h-8 text-navy/20" />
-            </div>
-            <h3 className="text-navy/40 font-manrope font-bold text-lg">Módulos em Desenvolvimento</h3>
-            <p className="text-sm font-medium text-navy/30 max-w-xs mt-1">
-              Logs de auditoria, gestão de taxas globais e manutenção do sistema estarão disponíveis aqui em breve.
-            </p>
-          </CardContent>
-        </Card>
-      </div>
+        <TabsContent value="equipe" className="pt-6">
+          <p className="text-navy/60">Configurações de equipe...</p>
+        </TabsContent>
+
+        <TabsContent value="sistema" className="pt-6">
+          <p className="text-navy/60">Configurações de sistema...</p>
+        </TabsContent>
+      </Tabs>
     </div>
   );
 }
