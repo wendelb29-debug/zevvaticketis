@@ -1099,7 +1099,7 @@ const AtendimentoAccordion = () => (
                           <Button variant="ghost" size="icon" className="h-8 w-8 font-serif font-bold text-navy/60">B</Button>
                           <Button variant="ghost" size="icon" className="h-8 w-8 italic text-navy/60">I</Button>
                           <Button variant="ghost" size="icon" className="h-8 w-8 line-through text-navy/60">S</Button>
-                          <Button variant="ghost" size="icon" className="h-8 w-8 text-navy/60">{"< >"}</Button>
+                          <Button variant="ghost" size="icon" className="h-8 w-8 text-navy/60">{"<"}{" >"}</Button>
                           <div className="ml-auto flex items-center gap-2">
                             <Button variant="ghost" size="icon" className="h-8 w-8 text-navy/60 text-lg">☺</Button>
                             <Button variant="ghost" size="icon" className="h-8 w-8 text-navy/60">⟲</Button>
