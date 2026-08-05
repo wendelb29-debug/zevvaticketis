@@ -31,6 +31,7 @@ export const startGmailConnect = createServerFn({ method: "POST" })
     const existing = await getConnectionKeyForUser(context.userId, CONNECTOR_ID);
 
     console.log("[OAuth Start] user:", context.userId, "reconnect:", !!existing);
+    console.log("[OAuth Config] Redirect URI para Google Cloud Console: https://connector-gateway.lovable.dev/oauth/callback");
 
     const { authorizationUrl } = await authorizeAppUserOAuth({
       gatewayBaseUrl: GATEWAY_BASE_URL,
