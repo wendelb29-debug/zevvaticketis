@@ -18,8 +18,10 @@ import { Route as CriarEventoRouteImport } from './routes/criar-evento'
 import { Route as EventosRouteImport } from './routes/eventos'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as McpRouteImport } from './routes/mcp'
+import { Route as PoliticaDePrivacidadeRouteImport } from './routes/politica-de-privacidade'
 import { Route as ProdutorRouteImport } from './routes/produtor'
 import { Route as ProdutorPendenteRouteImport } from './routes/produtor-pendente'
+import { Route as TermosDeUsoRouteImport } from './routes/termos-de-uso'
 import { Route as Char91DotmcpChar93ListToolsRouteImport } from './routes/[.mcp]/list-tools'
 import { Route as Char91DotwellKnownChar93OauthProtectedResourceRouteImport } from './routes/[.well-known]/oauth-protected-resource'
 import { Route as AdminIndexRouteImport } from './routes/admin/index'
@@ -97,6 +99,11 @@ const McpRoute = McpRouteImport.update({
   path: '/mcp',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PoliticaDePrivacidadeRoute = PoliticaDePrivacidadeRouteImport.update({
+  id: '/politica-de-privacidade',
+  path: '/politica-de-privacidade',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ProdutorRoute = ProdutorRouteImport.update({
   id: '/produtor',
   path: '/produtor',
@@ -105,6 +112,11 @@ const ProdutorRoute = ProdutorRouteImport.update({
 const ProdutorPendenteRoute = ProdutorPendenteRouteImport.update({
   id: '/produtor-pendente',
   path: '/produtor-pendente',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TermosDeUsoRoute = TermosDeUsoRouteImport.update({
+  id: '/termos-de-uso',
+  path: '/termos-de-uso',
   getParentRoute: () => rootRouteImport,
 } as any)
 const Char91DotmcpChar93ListToolsRoute =
@@ -277,8 +289,10 @@ export interface FileRoutesByFullPath {
   '/eventos': typeof EventosRoute
   '/login': typeof LoginRoute
   '/mcp': typeof McpRoute
+  '/politica-de-privacidade': typeof PoliticaDePrivacidadeRoute
   '/produtor': typeof ProdutorRouteWithChildren
   '/produtor-pendente': typeof ProdutorPendenteRoute
+  '/termos-de-uso': typeof TermosDeUsoRoute
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/admin/aprovacoes': typeof AdminAprovacoesRoute
@@ -319,7 +333,9 @@ export interface FileRoutesByTo {
   '/eventos': typeof EventosRoute
   '/login': typeof LoginRoute
   '/mcp': typeof McpRoute
+  '/politica-de-privacidade': typeof PoliticaDePrivacidadeRoute
   '/produtor-pendente': typeof ProdutorPendenteRoute
+  '/termos-de-uso': typeof TermosDeUsoRoute
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/admin/aprovacoes': typeof AdminAprovacoesRoute
@@ -363,8 +379,10 @@ export interface FileRoutesById {
   '/eventos': typeof EventosRoute
   '/login': typeof LoginRoute
   '/mcp': typeof McpRoute
+  '/politica-de-privacidade': typeof PoliticaDePrivacidadeRoute
   '/produtor': typeof ProdutorRouteWithChildren
   '/produtor-pendente': typeof ProdutorPendenteRoute
+  '/termos-de-uso': typeof TermosDeUsoRoute
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/admin/aprovacoes': typeof AdminAprovacoesRoute
@@ -409,8 +427,10 @@ export interface FileRouteTypes {
     | '/eventos'
     | '/login'
     | '/mcp'
+    | '/politica-de-privacidade'
     | '/produtor'
     | '/produtor-pendente'
+    | '/termos-de-uso'
     | '/.mcp/list-tools'
     | '/.well-known/oauth-protected-resource'
     | '/admin/aprovacoes'
@@ -451,7 +471,9 @@ export interface FileRouteTypes {
     | '/eventos'
     | '/login'
     | '/mcp'
+    | '/politica-de-privacidade'
     | '/produtor-pendente'
+    | '/termos-de-uso'
     | '/.mcp/list-tools'
     | '/.well-known/oauth-protected-resource'
     | '/admin/aprovacoes'
@@ -494,8 +516,10 @@ export interface FileRouteTypes {
     | '/eventos'
     | '/login'
     | '/mcp'
+    | '/politica-de-privacidade'
     | '/produtor'
     | '/produtor-pendente'
+    | '/termos-de-uso'
     | '/.mcp/list-tools'
     | '/.well-known/oauth-protected-resource'
     | '/admin/aprovacoes'
@@ -539,8 +563,10 @@ export interface RootRouteChildren {
   EventosRoute: typeof EventosRoute
   LoginRoute: typeof LoginRoute
   McpRoute: typeof McpRoute
+  PoliticaDePrivacidadeRoute: typeof PoliticaDePrivacidadeRoute
   ProdutorRoute: typeof ProdutorRouteWithChildren
   ProdutorPendenteRoute: typeof ProdutorPendenteRoute
+  TermosDeUsoRoute: typeof TermosDeUsoRoute
   Char91DotmcpChar93ListToolsRoute: typeof Char91DotmcpChar93ListToolsRoute
   Char91DotwellKnownChar93OauthProtectedResourceRoute: typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   AuthCallbackRoute: typeof AuthCallbackRoute
@@ -615,6 +641,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof McpRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/politica-de-privacidade': {
+      id: '/politica-de-privacidade'
+      path: '/politica-de-privacidade'
+      fullPath: '/politica-de-privacidade'
+      preLoaderRoute: typeof PoliticaDePrivacidadeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/produtor': {
       id: '/produtor'
       path: '/produtor'
@@ -627,6 +660,13 @@ declare module '@tanstack/react-router' {
       path: '/produtor-pendente'
       fullPath: '/produtor-pendente'
       preLoaderRoute: typeof ProdutorPendenteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/termos-de-uso': {
+      id: '/termos-de-uso'
+      path: '/termos-de-uso'
+      fullPath: '/termos-de-uso'
+      preLoaderRoute: typeof TermosDeUsoRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/.mcp/list-tools': {
@@ -933,8 +973,10 @@ const rootRouteChildren: RootRouteChildren = {
   EventosRoute: EventosRoute,
   LoginRoute: LoginRoute,
   McpRoute: McpRoute,
+  PoliticaDePrivacidadeRoute: PoliticaDePrivacidadeRoute,
   ProdutorRoute: ProdutorRouteWithChildren,
   ProdutorPendenteRoute: ProdutorPendenteRoute,
+  TermosDeUsoRoute: TermosDeUsoRoute,
   Char91DotmcpChar93ListToolsRoute: Char91DotmcpChar93ListToolsRoute,
   Char91DotwellKnownChar93OauthProtectedResourceRoute:
     Char91DotwellKnownChar93OauthProtectedResourceRoute,
