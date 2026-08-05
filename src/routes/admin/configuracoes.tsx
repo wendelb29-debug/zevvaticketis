@@ -297,24 +297,24 @@ function SettingsPage() {
 
       {/* Tag Modal */}
       <Dialog open={isTagModalOpen} onOpenChange={setIsTagModalOpen}>
-        <DialogContent className="sm:max-w-[425px] bg-white border-line p-0 overflow-hidden">
-          <DialogHeader className="p-6 bg-surface/50 border-b border-line">
-            <DialogTitle className="text-xl font-manrope font-extrabold text-navy">Nova Tag</DialogTitle>
-            <DialogDescription>Crie classificações para seus atendimentos.</DialogDescription>
+        <DialogContent className="sm:max-w-[425px] bg-card border-border p-0 overflow-hidden text-foreground">
+          <DialogHeader className="p-6 bg-accent/50 border-b border-border">
+            <DialogTitle className="text-xl font-manrope font-extrabold">Nova Tag</DialogTitle>
+            <DialogDescription className="text-muted-fg">Crie classificações para seus atendimentos.</DialogDescription>
           </DialogHeader>
           <div className="p-6 space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="tag-name" className="text-sm font-bold text-navy">Nome da Tag</Label>
+              <Label htmlFor="tag-name" className="text-sm font-bold">Nome da Tag</Label>
               <Input 
                 id="tag-name" 
                 value={tagName}
                 onChange={(e) => setTagName(e.target.value)}
                 placeholder="Ex: Reclamação" 
-                className="border-line focus:ring-coral" 
+                className="border-border bg-background focus:ring-primary" 
               />
             </div>
             <div className="space-y-2">
-              <Label className="text-sm font-bold text-navy">Cor de Identificação</Label>
+              <Label className="text-sm font-bold">Cor de Identificação</Label>
               <div className="flex gap-2">
                 {["#ef4444", "#3b82f6", "#10b981", "#f59e0b", "#8b5cf6", "#E8604A"].map(color => (
                   <button
@@ -322,7 +322,7 @@ function SettingsPage() {
                     onClick={() => setTagColor(color)}
                     className={cn(
                       "w-8 h-8 rounded-full border-2 transition-transform hover:scale-110",
-                      tagColor === color ? "border-navy" : "border-transparent"
+                      tagColor === color ? "border-foreground" : "border-transparent"
                     )}
                     style={{ backgroundColor: color }}
                   />
@@ -330,9 +330,9 @@ function SettingsPage() {
               </div>
             </div>
           </div>
-          <DialogFooter className="p-6 bg-surface/30 border-t border-line">
-            <Button variant="outline" onClick={() => setIsTagModalOpen(false)} className="border-line font-bold">Cancelar</Button>
-            <Button onClick={handleCreateTag} className="bg-coral hover:bg-coral/90 text-white font-bold">Salvar Tag</Button>
+          <DialogFooter className="p-6 bg-accent/30 border-t border-border">
+            <Button variant="outline" onClick={() => setIsTagModalOpen(false)} className="border-border font-bold">Cancelar</Button>
+            <Button onClick={handleCreateTag} className="bg-primary hover:bg-primary/90 text-primary-foreground font-bold">Salvar Tag</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
