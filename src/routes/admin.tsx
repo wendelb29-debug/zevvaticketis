@@ -2,6 +2,7 @@ import { createFileRoute, Outlet, redirect, useNavigate, Link, useLocation } fro
 import { supabase } from "@/integrations/supabase/client";
 import { useEffect, useState } from "react";
 import { UserMenu } from "@/components/auth/UserMenu";
+import { NotificationBell } from "@/components/admin/notifications/NotificationBell";
 import { GlobalBreadcrumb } from "@/components/layout/GlobalBreadcrumb";
 import { useUI } from "@/hooks/use-ui";
 import { 
@@ -100,6 +101,7 @@ function AdminLayout() {
       children: [
         { label: "Anúncios", href: "/admin/marketing/anuncios" },
         { label: "Publicidade", href: "/admin/marketing/publicidade" },
+        { label: "Push Notifications", href: "/admin/marketing/push" },
       ]
     },
     { 
@@ -270,6 +272,7 @@ function AdminLayout() {
             </div>
 
             <div className="flex items-center gap-3 sm:gap-6">
+              <NotificationBell />
               {user && (
                 <UserMenu 
                   user={user}
