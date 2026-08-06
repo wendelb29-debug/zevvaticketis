@@ -52,6 +52,7 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
   const [channelType, setChannelType] = useState("gupshup");
   const [channel, setChannel] = useState("savecar");
   const [publicType, setPublicType] = useState("arquivo");
+  const [contentType, setContentType] = useState("mensagem");
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
   const [csvPreview, setCsvPreview] = useState<string[][]>([]);
 
@@ -550,6 +551,7 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
                               <SelectContent>
                                 <SelectItem value="nome">Nome</SelectItem>
                                 <SelectItem value="telefone">Telefone</SelectItem>
+                                <SelectItem value="departamento">Departamento</SelectItem>
                                 <SelectItem value="variavel">Variável de fluxo</SelectItem>
                                 <SelectItem value="descartar">Descartar</SelectItem>
                               </SelectContent>
@@ -585,74 +587,144 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
           )}
 
           {step === 4 && (
-            <div className="grid grid-cols-1 lg:grid-cols-[1fr_400px] gap-12 animate-in fade-in slide-in-from-bottom-4 duration-500">
+            <div className="grid grid-cols-1 lg:grid-cols-[380px_1fr] gap-12 animate-in fade-in slide-in-from-bottom-4 duration-500">
               <div className="space-y-8">
                 <div>
-                  <h2 className="text-xl font-manrope font-extrabold text-navy uppercase tracking-tight">Criar Mensagem</h2>
-                  <p className="text-sm text-muted-fg mt-1">Escreva o conteúdo que será enviado para seu público</p>
+                  <h2 className="text-xl font-manrope font-extrabold text-navy uppercase tracking-tight">Conteúdo</h2>
+                  <p className="text-sm text-muted-fg mt-1">Definição do conteúdo a ser enviado</p>
                 </div>
 
-                <div className="space-y-6">
-                  <div className="bg-white border border-border rounded-2xl shadow-sm overflow-hidden">
-                    <div className="p-3 border-b border-border bg-accent/30 flex items-center justify-between">
-                      <div className="flex gap-1">
-                        <Button variant="ghost" size="sm" className="h-8 px-2 text-muted-fg hover:text-primary">
-                          <Smile className="w-4 h-4" />
-                        </Button>
-                        <Button variant="ghost" size="sm" className="h-8 px-2 text-muted-fg hover:text-primary">
-                          <ImageIcon className="w-4 h-4" />
-                        </Button>
-                        <Button variant="ghost" size="sm" className="h-8 px-2 text-muted-fg hover:text-primary">
-                          <FileText className="w-4 h-4" />
-                        </Button>
+                <div className="space-y-4">
+                  <Label className="text-xs font-bold text-navy uppercase tracking-widest">Tipo de conteúdo</Label>
+                  <div className="space-y-3">
+                    {[
+                      { id: "mensagem", label: "Criar mensagem", desc: "Selecione o template a enviar e configure as variáveis e ações de botões, se necessário", icon: MessageSquare, badge: "NEW" },
+                      { id: "departamento", label: "Enviar por departamento", desc: "A execução é feita pelos usuários que estiverem mapeados com este departamento", icon: Users },
+                    ].map((item) => (
+                      <div 
+                        key={item.id}
+                        onClick={() => setContentType(item.id)}
+                        className={cn(
+                          "p-4 rounded-xl border transition-all duration-300 cursor-pointer flex items-center gap-4 group",
+                          contentType === item.id 
+                            ? "bg-primary/5 border-primary shadow-sm ring-1 ring-primary/20" 
+                            : "bg-background border-border hover:border-primary/30"
+                        )}
+                      >
+                        <div className={cn(
+                          "w-10 h-10 rounded-lg flex items-center justify-center transition-colors",
+                          contentType === item.id ? "bg-primary text-white" : "bg-accent text-muted-fg group-hover:bg-primary/10 group-hover:text-primary"
+                        )}>
+                          <item.icon className="w-5 h-5" />
+                        </div>
+                        <div className="flex-1">
+                          <div className="flex items-center gap-2">
+                            <p className={cn("text-sm font-bold", contentType === item.id ? "text-primary" : "text-navy")}>{item.label}</p>
+                            {item.badge && <span className="bg-primary/10 text-primary text-[8px] px-1.5 py-0.5 rounded font-black">{item.badge}</span>}
+                          </div>
+                          <p className="text-[10px] text-muted-fg font-medium leading-tight mt-0.5">{item.desc}</p>
+                        </div>
+                        <div className={cn(
+                          "w-4 h-4 rounded-full border flex items-center justify-center",
+                          contentType === item.id ? "border-primary bg-primary" : "border-border"
+                        )}>
+                          {contentType === item.id && <Check className="w-2.5 h-2.5 text-white" />}
+                        </div>
                       </div>
-                      <div className="flex gap-2">
-                        {["nome", "evento", "data", "local"].map(v => (
-                          <Button key={v} variant="outline" size="sm" className="h-6 px-2 text-[10px] font-extrabold uppercase border-primary/20 text-primary hover:bg-primary/5">
-                            {"{{"}{v}{"}}"}
-                          </Button>
-                        ))}
-                      </div>
-                    </div>
-                    <textarea 
-                      placeholder="Escreva sua mensagem aqui..."
-                      className="w-full min-h-[300px] p-6 text-navy focus:outline-none resize-none leading-relaxed"
-                    />
-                    <div className="p-4 border-t border-border bg-accent/10 flex justify-between items-center">
-                      <p className="text-[10px] text-muted-fg font-bold uppercase tracking-widest">Aproximadamente 120 caracteres</p>
-                      <Button variant="outline" size="sm" className="border-border text-navy hover:bg-accent font-bold">
-                        <Plus className="w-4 h-4 mr-2" /> Botão CTA
-                      </Button>
-                    </div>
+                    ))}
                   </div>
                 </div>
               </div>
 
-              <div className="bg-accent/20 rounded-2xl p-8 border border-border flex flex-col">
-                <div className="mb-6">
-                  <h3 className="text-sm font-extrabold text-navy uppercase tracking-widest">Pré-visualização</h3>
-                  <p className="text-[10px] text-muted-fg mt-1">Como o cliente verá no {channelType === "email" ? "E-mail" : "WhatsApp"}</p>
-                </div>
-
-                <div className="flex-1 bg-[#E5DDD5] rounded-3xl p-4 shadow-inner relative overflow-hidden border-4 border-navy/10">
-                  <div className="absolute top-0 left-0 w-full h-12 bg-[#075E54] flex items-center px-4 gap-3">
-                    <div className="w-8 h-8 rounded-full bg-white/20" />
-                    <div className="flex-1">
-                      <div className="w-24 h-2 bg-white/30 rounded" />
-                      <div className="w-16 h-1 bg-white/20 rounded mt-1" />
-                    </div>
-                  </div>
-                  <div className="mt-16 space-y-4">
-                    <div className="bg-white rounded-xl p-3 shadow-sm max-w-[85%] relative">
-                      <p className="text-xs text-navy">Olá {"{{"}nome{"}}"}! 👋</p>
-                      <div className="mt-2 aspect-video bg-accent/50 rounded-lg flex items-center justify-center border border-dashed border-border">
-                         <ImageIcon className="w-6 h-6 text-muted-fg/20" />
+              <div className="bg-accent/20 rounded-2xl p-8 border border-border">
+                {contentType === "mensagem" ? (
+                  <div className="grid grid-cols-1 lg:grid-cols-[1fr_350px] gap-8">
+                    <div className="space-y-6">
+                      <div className="bg-white border border-border rounded-2xl shadow-sm overflow-hidden">
+                        <div className="p-3 border-b border-border bg-accent/30 flex items-center justify-between">
+                          <div className="flex gap-1">
+                            <Button variant="ghost" size="sm" className="h-8 px-2 text-muted-fg hover:text-primary">
+                              <Smile className="w-4 h-4" />
+                            </Button>
+                            <Button variant="ghost" size="sm" className="h-8 px-2 text-muted-fg hover:text-primary">
+                              <ImageIcon className="w-4 h-4" />
+                            </Button>
+                            <Button variant="ghost" size="sm" className="h-8 px-2 text-muted-fg hover:text-primary">
+                              <FileText className="w-4 h-4" />
+                            </Button>
+                          </div>
+                          <div className="flex gap-2">
+                            {["nome", "departamento", "evento"].map(v => (
+                              <Button key={v} variant="outline" size="sm" className="h-6 px-2 text-[10px] font-extrabold uppercase border-primary/20 text-primary hover:bg-primary/5">
+                                {"{{"}{v}{"}}"}
+                              </Button>
+                            ))}
+                          </div>
+                        </div>
+                        <textarea 
+                          placeholder="Escreva sua mensagem aqui..."
+                          className="w-full min-h-[250px] p-6 text-navy focus:outline-none resize-none leading-relaxed"
+                        />
+                        <div className="p-4 border-t border-border bg-accent/10 flex justify-between items-center">
+                          <p className="text-[10px] text-muted-fg font-bold uppercase tracking-widest">Aproximadamente 120 caracteres</p>
+                          <Button variant="outline" size="sm" className="border-border text-navy hover:bg-accent font-bold">
+                            <Plus className="w-4 h-4 mr-2" /> Botão CTA
+                          </Button>
+                        </div>
                       </div>
-                      <p className="text-xs text-navy mt-2 leading-relaxed">Prepare-se para o melhor evento do ano! Te esperamos no local...</p>
-                      <span className="text-[8px] text-muted-fg absolute bottom-1 right-2 uppercase font-bold">14:30</span>
+                    </div>
+
+                    <div className="bg-white rounded-3xl p-4 shadow-sm relative overflow-hidden border border-border flex flex-col h-[400px]">
+                      <div className="bg-[#075E54] p-3 flex items-center gap-3 -mx-4 -mt-4 mb-4">
+                        <div className="w-8 h-8 rounded-full bg-white/20" />
+                        <div className="flex-1">
+                          <div className="w-24 h-2 bg-white/30 rounded" />
+                          <div className="w-16 h-1 bg-white/20 rounded mt-1" />
+                        </div>
+                      </div>
+                      <div className="space-y-4 flex-1 bg-[#E5DDD5] -mx-4 p-4 overflow-y-auto">
+                        <div className="bg-white rounded-xl p-3 shadow-sm max-w-[85%] relative">
+                          <p className="text-xs text-navy">Olá {"{{"}nome{"}}"}! 👋</p>
+                          <div className="mt-2 aspect-video bg-accent/50 rounded-lg flex items-center justify-center border border-dashed border-border">
+                             <ImageIcon className="w-6 h-6 text-muted-fg/20" />
+                          </div>
+                          <p className="text-xs text-navy mt-2 leading-relaxed">Prepare-se para o melhor evento do ano!</p>
+                          <span className="text-[8px] text-muted-fg absolute bottom-1 right-2 uppercase font-bold">14:30</span>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                </div>
+                ) : (
+                  <div className="space-y-6">
+                    <div>
+                      <h3 className="text-lg font-manrope font-extrabold text-navy">Selecione o Departamento</h3>
+                      <p className="text-sm text-muted-fg mt-1">Escolha o departamento que será responsável por este disparo.</p>
+                    </div>
+                    
+                    <div className="space-y-4">
+                      <div className="space-y-2">
+                        <Label className="text-xs font-bold text-navy uppercase tracking-widest">Departamento <span className="text-primary">*</span></Label>
+                        <Select>
+                          <SelectTrigger className="bg-white border-border h-12 rounded-xl">
+                            <SelectValue placeholder="Selecione um departamento" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="vendas">Vendas</SelectItem>
+                            <SelectItem value="suporte">Suporte</SelectItem>
+                            <SelectItem value="financeiro">Financeiro</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+
+                      <div className="p-4 bg-primary/5 border border-dashed border-primary/30 rounded-xl flex gap-3">
+                        <HelpCircle className="w-5 h-5 text-primary shrink-0" />
+                        <p className="text-xs text-navy font-medium leading-relaxed">
+                          Ao selecionar um departamento, as respostas deste disparo serão direcionadas automaticamente para os usuários que estiverem mapeados com este departamento.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           )}
