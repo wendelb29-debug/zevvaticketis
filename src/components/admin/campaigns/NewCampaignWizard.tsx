@@ -137,73 +137,80 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
         </DialogHeader>
 
 
-        <div className="p-8 min-h-[600px] bg-background">
+        <div className="p-8 min-h-[600px] bg-white">
           {step === 1 && (
-            <div className="grid grid-cols-1 lg:grid-cols-[380px_1fr] gap-12 animate-in fade-in slide-in-from-bottom-4 duration-500">
+            <div className="grid grid-cols-1 lg:grid-cols-[400px_1fr] gap-12 animate-in fade-in slide-in-from-bottom-4 duration-500">
               <div className="space-y-8">
                 <div>
-                  <h2 className="text-xl font-manrope font-extrabold text-navy uppercase tracking-tight">Dados da campanha</h2>
-                  <p className="text-sm text-muted-fg mt-1">Defina o nome e os canais de envio da sua campanha</p>
+                  <h2 className="text-xl font-manrope font-extrabold text-[#0F172A] uppercase tracking-tight">Dados da campanha</h2>
+                  <p className="text-sm text-[#64748B] mt-1">Defina o nome e os canais de envio da sua campanha</p>
                 </div>
 
-                <div className="space-y-5">
+                <div className="space-y-6">
                   <div className="space-y-2">
-                    <Label className="text-xs font-bold text-navy uppercase tracking-widest">Nome da campanha <span className="text-primary">*</span></Label>
+                    <Label className="text-xs font-black text-[#0F172A] uppercase tracking-widest">Nome da campanha <span className="text-[#F06452]">*</span></Label>
                     <Input 
                       placeholder="Ex: Show Ana Carolina - Lembrete" 
                       value={campaignName}
                       onChange={(e) => setCampaignName(e.target.value)}
-                      className="bg-accent/30 border-border text-foreground h-12 rounded-xl focus-visible:ring-primary"
+                      className="bg-white border-[#E5E7EB] text-[#0F172A] h-12 rounded-xl focus-visible:ring-[#F06452]"
                     />
                   </div>
 
-                  <div className="space-y-2">
-                    <Label className="text-xs font-bold text-navy uppercase tracking-widest">Tipo de canal <span className="text-primary">*</span></Label>
-                    <div className="grid grid-cols-2 gap-3">
+                  <div className="space-y-3">
+                    <Label className="text-xs font-black text-[#0F172A] uppercase tracking-widest">Escolha o canal <span className="text-[#F06452]">*</span></Label>
+                    <div className="grid grid-cols-1 gap-4">
                       <button 
                         onClick={() => setChannelType("gupshup")}
                         className={cn(
-                          "flex flex-col items-center justify-center p-4 rounded-xl border-2 transition-all duration-300 gap-2 group",
+                          "flex items-center p-5 rounded-2xl border-2 transition-all duration-300 gap-4 group text-left",
                           channelType === "gupshup" 
-                            ? "bg-primary/5 border-primary shadow-sm" 
-                            : "bg-background border-border hover:border-primary/30"
+                            ? "bg-[#FDF0ED] border-[#F06452] shadow-sm" 
+                            : "bg-white border-[#E5E7EB] hover:border-[#F06452]/30"
                         )}
                       >
                         <div className={cn(
-                          "p-2 rounded-lg transition-colors",
-                          channelType === "gupshup" ? "bg-primary text-white" : "bg-accent text-muted-fg group-hover:bg-primary/10 group-hover:text-primary"
+                          "w-12 h-12 rounded-xl flex items-center justify-center transition-colors",
+                          channelType === "gupshup" ? "bg-[#F06452] text-white" : "bg-slate-100 text-[#64748B] group-hover:bg-[#FDF0ED] group-hover:text-[#F06452]"
                         )}>
-                          <MessageSquare className="w-5 h-5" />
+                          <MessageSquare className="w-6 h-6" />
                         </div>
-                        <span className={cn("text-xs font-bold", channelType === "gupshup" ? "text-primary" : "text-muted-fg")}>WhatsApp</span>
+                        <div className="flex-1">
+                          <p className={cn("text-sm font-bold", channelType === "gupshup" ? "text-[#F06452]" : "text-[#0F172A]")}>Enviar pelo WhatsApp</p>
+                          <p className="text-[11px] text-[#64748B] font-medium">Envie mensagens para clientes e participantes.</p>
+                        </div>
                       </button>
+                      
                       <button 
                         onClick={() => setChannelType("email")}
                         className={cn(
-                          "flex flex-col items-center justify-center p-4 rounded-xl border-2 transition-all duration-300 gap-2 group",
+                          "flex items-center p-5 rounded-2xl border-2 transition-all duration-300 gap-4 group text-left",
                           channelType === "email" 
-                            ? "bg-primary/5 border-primary shadow-sm" 
-                            : "bg-background border-border hover:border-primary/30"
+                            ? "bg-[#FDF0ED] border-[#F06452] shadow-sm" 
+                            : "bg-white border-[#E5E7EB] hover:border-[#F06452]/30"
                         )}
                       >
                         <div className={cn(
-                          "p-2 rounded-lg transition-colors",
-                          channelType === "email" ? "bg-primary text-white" : "bg-accent text-muted-fg group-hover:bg-primary/10 group-hover:text-primary"
+                          "w-12 h-12 rounded-xl flex items-center justify-center transition-colors",
+                          channelType === "email" ? "bg-[#F06452] text-white" : "bg-slate-100 text-[#64748B] group-hover:bg-[#FDF0ED] group-hover:text-[#F06452]"
                         )}>
-                          <Mail className="w-5 h-5" />
+                          <Mail className="w-6 h-6" />
                         </div>
-                        <span className={cn("text-xs font-bold", channelType === "email" ? "text-primary" : "text-muted-fg")}>E-mail</span>
+                        <div className="flex-1">
+                          <p className={cn("text-sm font-bold", channelType === "email" ? "text-[#F06452]" : "text-[#0F172A]")}>Enviar por E-mail</p>
+                          <p className="text-[11px] text-[#64748B] font-medium">Crie campanhas profissionais.</p>
+                        </div>
                       </button>
                     </div>
                   </div>
 
                   <div className="space-y-2">
-                    <Label className="text-xs font-bold text-navy uppercase tracking-widest">Canal de saída <span className="text-primary">*</span></Label>
+                    <Label className="text-xs font-black text-[#0F172A] uppercase tracking-widest">Canal de saída <span className="text-[#F06452]">*</span></Label>
                     <Select value={channel} onValueChange={setChannel}>
-                      <SelectTrigger className="bg-accent/30 border-border text-foreground h-12 rounded-xl">
+                      <SelectTrigger className="bg-white border-[#E5E7EB] text-[#0F172A] h-12 rounded-xl">
                         <SelectValue placeholder="Selecione o canal" />
                       </SelectTrigger>
-                      <SelectContent className="bg-background border-border">
+                      <SelectContent className="bg-white border-[#E5E7EB]">
                         <SelectItem value="savecar">Zevva Oficial - 34 9867-9585</SelectItem>
                       </SelectContent>
                     </Select>
@@ -212,49 +219,36 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
               </div>
 
 
-              <div className="bg-accent/20 rounded-2xl flex items-center justify-center p-12 border border-border">
+              <div className="bg-slate-50 rounded-3xl flex items-center justify-center p-12 border border-[#E5E7EB]">
                 <div className="max-w-md w-full text-center space-y-8">
                   <div className="flex justify-center">
-                    <div className="bg-primary/10 p-4 rounded-3xl">
-                      <div className="bg-primary text-white p-3 rounded-2xl shadow-lg shadow-primary/30">
-                        {channelType === "email" ? <Mail className="w-8 h-8" /> : <MessageSquare className="w-8 h-8" />}
+                    <div className="bg-[#FDF0ED] p-5 rounded-[2rem]">
+                      <div className="bg-[#F06452] text-white p-4 rounded-2xl shadow-xl shadow-[#F06452]/20">
+                        {channelType === "email" ? <Mail className="w-10 h-10" /> : <MessageSquare className="w-10 h-10" />}
                       </div>
                     </div>
                   </div>
                   <div className="space-y-3">
-                    <div className="inline-block px-3 py-1 bg-primary/10 text-primary text-[10px] font-extrabold rounded-full border border-primary/20 uppercase tracking-widest">
-                      ✨ Zevva Campaign
+                    <div className="inline-block px-4 py-1.5 bg-[#FDF0ED] text-[#F06452] text-[11px] font-black rounded-full border border-[#F06452]/10 uppercase tracking-[0.1em]">
+                      Zevva Campaigns
                     </div>
-                    <h3 className="text-2xl font-manrope font-extrabold text-navy">Crie mensagens profissionais</h3>
-                    <p className="text-sm text-muted-fg leading-relaxed">Dispare conteúdo personalizado com variáveis para cada contato de forma simples e rápida.</p>
+                    <h3 className="text-2xl font-manrope font-extrabold text-[#0F172A]">Crie mensagens premium</h3>
+                    <p className="text-sm text-[#64748B] leading-relaxed">Personalize cada disparo e aumente sua conversão com a tecnologia Zevva.</p>
                   </div>
                   
-                  <div className="bg-white rounded-2xl p-6 border border-border shadow-xl relative overflow-hidden group">
-                    <div className="absolute top-0 left-0 w-1 h-full bg-primary" />
+                  <div className="bg-white rounded-2xl p-6 border border-[#E5E7EB] shadow-2xl relative overflow-hidden group">
+                    <div className="absolute top-0 left-0 w-1.5 h-full bg-[#F06452]" />
                     <div className="space-y-4 text-left">
-                      <div className="bg-accent/50 text-navy px-4 py-2 rounded-xl text-sm font-bold inline-block border border-border">
-                        Olá <span className="text-primary">{"{{"}nome{"}}"}</span>! 👋
+                      <div className="bg-slate-50 text-[#0F172A] px-4 py-2.5 rounded-xl text-sm font-bold inline-block border border-[#E5E7EB]">
+                        Olá <span className="text-[#F06452]">{"{{"}nome{"}}"}</span>! 👋
                       </div>
-                      <div className="bg-accent/20 rounded-xl aspect-[16/9] flex items-center justify-center border border-dashed border-border group-hover:bg-accent/40 transition-colors">
+                      <div className="bg-slate-50 rounded-xl aspect-[16/9] flex items-center justify-center border border-dashed border-[#E5E7EB] group-hover:bg-slate-100 transition-colors">
                         <div className="text-center space-y-2">
-                          <ImageIcon className="w-8 h-8 text-muted-fg/30 mx-auto" />
-                          <p className="text-[10px] text-muted-fg font-extrabold uppercase tracking-widest">Sua Imagem Aqui</p>
+                          <ImageIcon className="w-10 h-10 text-slate-300 mx-auto" />
+                          <p className="text-[10px] text-[#64748B] font-black uppercase tracking-[0.2em]">Sua Imagem Aqui</p>
                         </div>
                       </div>
                     </div>
-                  </div>
-
-                  <div className="flex flex-wrap justify-center gap-2">
-                    {[
-                      { icon: FileText, label: "Texto" },
-                      { icon: ImageIcon, label: "Imagem" },
-                      { icon: Smartphone, label: "Botão" },
-                      { icon: Users, label: "Variáveis" }
-                    ].map((btn) => (
-                      <div key={btn.label} className="flex items-center gap-2 px-4 py-2 bg-white border border-border rounded-xl text-xs font-extrabold text-navy hover:border-primary/50 cursor-default transition-all shadow-sm">
-                        <btn.icon className="w-3.5 h-3.5 text-primary" /> {btn.label}
-                      </div>
-                    ))}
                   </div>
                 </div>
               </div>
