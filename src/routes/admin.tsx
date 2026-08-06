@@ -263,13 +263,27 @@ function AdminLayout() {
         <Link
           to="/admin/configuracoes"
           className={cn(
-            "flex items-center gap-3 py-3.5 px-4 rounded-xl text-sm font-extrabold transition-all duration-200 border-2 border-border bg-card text-foreground hover:bg-accent",
+            "flex items-center gap-3 py-3.5 px-4 rounded-xl text-sm font-extrabold transition-all duration-300 border-2 border-border bg-card text-foreground hover:bg-accent outline-none focus:ring-2 focus:ring-primary focus:border-primary active:scale-[0.98]",
             isSidebarCollapsed && "px-0 justify-center"
           )}
-          title="Configurações Rápidas"
         >
-          <Settings className="w-5 h-5 shrink-0" />
-          {!isSidebarCollapsed && <span className="truncate">Configurações</span>}
+          {isSidebarCollapsed ? (
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <div className="flex items-center justify-center w-full h-full">
+                  <Settings className="w-5 h-5 shrink-0" />
+                </div>
+              </TooltipTrigger>
+              <TooltipContent side="right">
+                <p className="font-black uppercase tracking-widest text-[10px]">Configurações</p>
+              </TooltipContent>
+            </Tooltip>
+          ) : (
+            <>
+              <Settings className="w-5 h-5 shrink-0" />
+              <span className="truncate">Configurações</span>
+            </>
+          )}
         </Link>
       </div>
 
