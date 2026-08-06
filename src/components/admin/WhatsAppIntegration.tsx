@@ -11,7 +11,8 @@ import {
   Smartphone, CheckCircle2, AlertCircle, Copy, Save, 
   Settings2, Activity, List, Layout, Send, Rocket, 
   Trash2, Edit2, ExternalLink, RefreshCw, Eye, MessageSquare,
-  FileText, CheckSquare, Plus
+  FileText, CheckSquare, Plus, Download, Link, UserCheck, Clock,
+  Check, X
 } from "lucide-react";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
