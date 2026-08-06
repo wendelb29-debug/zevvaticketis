@@ -85,9 +85,11 @@ function AdminChatPage() {
       setSidebarWidth(newWidth);
     };
 
-    const handleMouseUp = () => {
+    const handleMouseUp = (e: MouseEvent) => {
+      if (!isResizing) return;
       setIsResizing(false);
-      localStorage.setItem("chat-sidebar-width", String(sidebarWidth));
+      const finalWidth = Math.min(Math.max(300, e.clientX), 800);
+      localStorage.setItem("chat-sidebar-width", String(finalWidth));
       document.body.style.cursor = 'default';
     };
 
