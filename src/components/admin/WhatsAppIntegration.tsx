@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -91,6 +91,7 @@ export function WhatsAppIntegration() {
       }).replace(',', ' -'));
 
       toast.success("Diagnóstico concluído com sucesso!");
+      logAction("Diagnóstico de API", "meta_api", "diagnostico", diagnostics);
     } catch (error) {
       console.error(error);
       toast.error("Falha ao validar conexão com a API Meta.");
