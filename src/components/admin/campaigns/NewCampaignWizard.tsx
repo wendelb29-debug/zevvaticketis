@@ -100,7 +100,26 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
             
             <div className="flex items-center gap-6 xl:gap-12 flex-1 justify-center overflow-x-auto no-scrollbar mx-4 py-2">
               {steps.map((s) => (
-                <div key={s.number} className="flex items-center gap-2 relative">
+                <button 
+                  key={s.number} 
+                  className={cn(
+                    "flex items-center gap-2 relative transition-all duration-300",
+                    s.number > step && "opacity-50 cursor-not-allowed",
+                    s.number <= step && "cursor-pointer hover:opacity-80"
+                  )}
+                  onClick={() => {
+                    if (s.number < step) {
+                      setStep(s.number as Step);
+                    } else if (s.number === step) {
+                      // Do nothing
+                    } else {
+                      // Only allow jumping forward if validation passes (canGoNext)
+                      // and it's the immediate next step. For simplicity and safety,
+                      // we usually only allow clicking previous steps.
+                    }
+                  }}
+                  disabled={s.number > step}
+                >
                   <div className={cn(
                     "w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold transition-all border-2",
                     step === s.number ? "bg-[#F06452] text-white border-[#F06452] shadow-sm" : 
@@ -115,7 +134,7 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
                   {s.number < 5 && (
                     <div className="absolute -right-7 top-1/2 -translate-y-1/2 w-4 h-[1px] bg-[#E5E7EB]" />
                   )}
-                </div>
+                </button>
               ))}
             </div>
             
