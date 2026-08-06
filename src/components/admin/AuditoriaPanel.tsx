@@ -7,7 +7,8 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import {
   Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
 } from "@/components/ui/select";
-import { Eye, RefreshCcw, ChevronLeft, ChevronRight, ShieldCheck, Download } from "lucide-react";
+import { Eye, RefreshCcw, ChevronLeft, ChevronRight, ShieldCheck, Download, FileText } from "lucide-react";
+import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 
 type AuditLog = {
@@ -149,6 +150,11 @@ export function AuditoriaPanel() {
     link.click();
   };
 
+  const exportPDF = () => {
+    toast.info("Geração de PDF iniciada...");
+    window.print();
+  };
+
   return (
     <div className="space-y-4">
       <div className="rounded-xl border border-border bg-card shadow-sm">
@@ -157,17 +163,27 @@ export function AuditoriaPanel() {
             <ShieldCheck className="w-5 h-5 text-primary mt-0.5" />
             <div>
               <h3 className="font-bold text-foreground">Auditoria</h3>
-              <p className="text-xs text-muted-fg">eu localizar rapidamente ações por tipo, usuário e intervalo de datas. Implemente filtros e busca na aba de Auditoria para eu localizar rapidamente ações por tipo, usuário e intervalo de datas. Adicione a opção de exportar os registros da Auditoria em CSV (e/ou PDF) para eu baixar e compartilhar o histórico.</p>
+              <p className="text-xs text-muted-fg">Localize rapidamente ações por tipo, usuário e intervalo de datas. Baixe e compartilhe o histórico em CSV ou PDF quando precisar.</p>
             </div>
           </div>
-          <Button 
-            onClick={exportCSV}
-            variant="outline" 
-            size="sm" 
-            className="border-primary text-primary hover:bg-primary/10 gap-2 font-bold shrink-0 self-start sm:self-center"
-          >
-            <Download className="w-4 h-4" /> Exportar CSV
-          </Button>
+          <div className="flex items-center gap-2 shrink-0 self-start sm:self-center">
+            <Button 
+              onClick={exportCSV}
+              variant="outline" 
+              size="sm" 
+              className="border-primary text-primary hover:bg-primary/10 gap-2 font-bold"
+            >
+              <Download className="w-4 h-4" /> CSV
+            </Button>
+            <Button 
+              onClick={exportPDF}
+              variant="outline" 
+              size="sm" 
+              className="border-primary text-primary hover:bg-primary/10 gap-2 font-bold"
+            >
+              <FileText className="w-4 h-4" /> PDF
+            </Button>
+          </div>
         </div>
 
         {/* Filtros */}
