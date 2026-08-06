@@ -273,13 +273,15 @@ function SettingsPage({ session }: { session: any }) {
 
   const [notificarMudancasFila, setNotificarMudancasFila] = useState(true);
   const [notificarCanal, setNotificarCanal] = useState("whatsapp");
-  const [templateNotificacao, setTemplateNotificacao] = useState("Olá {agente}, houve uma mudança na fila {fila}. Novo status: {status}");
+  const [templateNotificacao, setTemplateNotificacao] = useState("Olá {agente}, houve uma mudança na fila {fila}. Status anterior: {status_anterior} -> Novo status: {status_atual} em {data_mudanca}");
   const [isTemplateModalOpen, setIsTemplateModalOpen] = useState(false);
   const [isHistoryModalOpen, setIsHistoryModalOpen] = useState(false);
   const [notificacoesHistory] = useState([
-    { id: "1", target: "Alice Vieira", canal: "WhatsApp", data: "2026-08-06 14:20", evento: "Mudança de Status: Suporte" },
-    { id: "2", target: "Mayck Souza", canal: "E-mail", data: "2026-08-06 15:10", evento: "Novo Agente: Comercial" },
+    { id: "1", target: "Alice Vieira", canal: "WhatsApp", data: "2026-08-06 14:20", evento: "Mudança de Status: Suporte", status: "enviado", motivo: "" },
+    { id: "2", target: "Mayck Souza", canal: "E-mail", data: "2026-08-06 15:10", evento: "Novo Agente: Comercial", status: "falhou", motivo: "Servidor SMTP indisponível" },
+    { id: "3", target: "Carolina Silva", canal: "WhatsApp", data: "2026-08-06 15:45", evento: "Mudança de Fila: Suporte", status: "em processamento", motivo: "" },
   ]);
+
 
 
 
@@ -694,16 +696,6 @@ function SettingsPage({ session }: { session: any }) {
           <TeamManagement />
           <Accordion type="single" collapsible className="w-full space-y-4">
 
-            <AccordionItem value="usuarios" className="border-border bg-card rounded-xl border overflow-hidden shadow-sm">
-              <AccordionTrigger className="px-6 py-5 font-bold text-lg hover:no-underline hover:bg-accent/50 transition-colors">
-                <div className="flex items-center gap-3">
-                  <Users className="w-5 h-5 text-primary" /> Gerenciar Usuários
-                </div>
-              </AccordionTrigger>
-              <AccordionContent className="px-6 pb-6 pt-2">
-                 <p className="text-sm text-muted-fg">Administre os acessos dos seus agentes e colaboradores.</p>
-              </AccordionContent>
-            </AccordionItem>
             <AccordionItem value="permissoes" className="border-border bg-card rounded-xl border overflow-hidden shadow-sm">
               <AccordionTrigger className="px-6 py-5 font-bold text-lg hover:no-underline hover:bg-accent/50 transition-colors">
                 <div className="flex items-center gap-3">
@@ -959,9 +951,25 @@ function SettingsPage({ session }: { session: any }) {
                 className="w-full rounded-lg border border-border bg-background p-3 text-sm focus:ring-primary outline-none"
                 placeholder="Ex: Olá {agente}, houve uma mudança..."
               />
-              <p className="text-[10px] text-muted-fg italic">Use variáveis como {"{agente}"}, {"{fila}"} e {"{status}"}.</p>
+              <p className="text-[10px] text-muted-fg italic">
+                Variáveis: {"{agente}"}, {"{fila}"}, {"{status_anterior}"}, {"{status_atual}"}, {"{data_mudanca}"}
+              </p>
+            </div>
+
+            <div className="rounded-xl border border-border bg-accent/10 p-4 space-y-2">
+              <Label className="text-[10px] uppercase font-bold text-muted-fg">Pré-visualização</Label>
+              <div className="bg-background rounded-lg p-3 text-xs border border-border shadow-inner">
+                {templateNotificacao
+                  .replace("{agente}", "Alice Vieira")
+                  .replace("{fila}", "Suporte")
+                  .replace("{status_anterior}", "Ativo")
+                  .replace("{status_atual}", "Em pausa")
+                  .replace("{data_mudanca}", "06/08/2026 14:20")
+                }
+              </div>
             </div>
           </div>
+
           <DialogFooter className="p-6 bg-accent/10 border-t border-border gap-2">
             <Button variant="outline" onClick={() => setIsTemplateModalOpen(false)} className="border-border font-bold">Cancelar</Button>
             <Button onClick={() => { setIsTemplateModalOpen(false); toast.success("Template salvo!"); }} className="bg-primary text-white font-bold">Salvar Template</Button>
@@ -982,6 +990,7 @@ function SettingsPage({ session }: { session: any }) {
                 <tr>
                   <th className="px-6 py-3">Destinatário</th>
                   <th className="px-6 py-3">Canal</th>
+                  <th className="px-6 py-3">Status</th>
                   <th className="px-6 py-3">Data</th>
                   <th className="px-6 py-3">Evento</th>
                 </tr>
@@ -993,11 +1002,26 @@ function SettingsPage({ session }: { session: any }) {
                     <td className="px-6 py-4">
                       <Badge variant="outline" className="text-[10px] font-bold">{log.canal}</Badge>
                     </td>
+                    <td className="px-6 py-4">
+                      <div className="flex flex-col gap-1">
+                        <Badge 
+                          variant={
+                            log.status === 'enviado' ? 'default' : 
+                            log.status === 'falhou' ? 'destructive' : 'secondary'
+                          } 
+                          className="text-[9px] font-bold w-fit"
+                        >
+                          {log.status.toUpperCase()}
+                        </Badge>
+                        {log.motivo && <span className="text-[10px] text-destructive leading-tight">{log.motivo}</span>}
+                      </div>
+                    </td>
                     <td className="px-6 py-4 text-muted-fg text-xs">{log.data}</td>
                     <td className="px-6 py-4 text-xs">{log.evento}</td>
                   </tr>
                 ))}
               </tbody>
+
             </table>
           </div>
           <DialogFooter className="p-6 bg-accent/10 border-t border-border">
