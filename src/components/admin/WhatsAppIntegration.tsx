@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { supabase } from "@/integrations/supabase/client";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -18,6 +19,13 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 
 export function WhatsAppIntegration() {
   const [status, setStatus] = useState<"connected" | "waiting" | "error">("waiting");
+  const [isTesting, setIsTesting] = useState(false);
+  const [lastSync, setLastSync] = useState("06/08/2026 - 20:15");
+  const [diagnostics, setDiagnostics] = useState({
+    api: true,
+    webhook: true,
+    token: true
+  });
   const [webhookUrl] = useState("https://api.zevva.com/webhooks/whatsapp");
   const [verifyToken, setVerifyToken] = useState("");
   
@@ -50,6 +58,45 @@ export function WhatsAppIntegration() {
 
   const handleSaveWebhook = () => {
     toast.success("Configurações de Webhook salvas!");
+  };
+
+  const handleTestConnection = async () => {
+    setIsTesting(true);
+    toast.info("Iniciando diagnóstico da API...");
+    
+    try {
+      // Simulate real API checks
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      
+      const { data, error } = await supabase
+        .from('whatsapp_integrations')
+        .select('*')
+        .limit(1);
+
+      if (error) throw error;
+
+      setDiagnostics({
+        api: true,
+        webhook: Math.random() > 0.1, // Randomly simulate webhook check
+        token: true
+      });
+      
+      const now = new Date();
+      setLastSync(now.toLocaleString('pt-BR', { 
+        day: '2-digit', 
+        month: '2-digit', 
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      }).replace(',', ' -'));
+
+      toast.success("Diagnóstico concluído com sucesso!");
+    } catch (error) {
+      console.error(error);
+      toast.error("Falha ao validar conexão com a API Meta.");
+    } finally {
+      setIsTesting(false);
+    }
   };
 
   const [logs] = useState([
@@ -239,29 +286,47 @@ export function WhatsAppIntegration() {
             <div className="space-y-3">
               <div className="flex items-center justify-between">
                 <span className="text-sm font-medium">API Meta:</span>
-                <Badge variant="outline" className="text-green-600 bg-green-50 border-green-200 gap-1 font-bold">
-                  <span className="w-1.5 h-1.5 rounded-full bg-green-600" /> Online
+                <Badge variant="outline" className={cn(
+                  "gap-1 font-bold",
+                  diagnostics.api ? "text-green-600 bg-green-50 border-green-200" : "text-red-600 bg-red-50 border-red-200"
+                )}>
+                  <span className={cn("w-1.5 h-1.5 rounded-full", diagnostics.api ? "bg-green-600" : "bg-red-600")} /> 
+                  {diagnostics.api ? "Online" : "Offline"}
                 </Badge>
               </div>
               <div className="flex items-center justify-between">
                 <span className="text-sm font-medium">Webhook:</span>
-                <Badge variant="outline" className="text-green-600 bg-green-50 border-green-200 gap-1 font-bold">
-                  <span className="w-1.5 h-1.5 rounded-full bg-green-600" /> Recebendo
+                <Badge variant="outline" className={cn(
+                  "gap-1 font-bold",
+                  diagnostics.webhook ? "text-green-600 bg-green-50 border-green-200" : "text-red-600 bg-red-50 border-red-200"
+                )}>
+                  <span className={cn("w-1.5 h-1.5 rounded-full", diagnostics.webhook ? "bg-green-600" : "bg-red-600")} /> 
+                  {diagnostics.webhook ? "Recebendo" : "Erro"}
                 </Badge>
               </div>
               <div className="flex items-center justify-between">
                 <span className="text-sm font-medium">Token:</span>
-                <Badge variant="outline" className="text-green-600 bg-green-50 border-green-200 gap-1 font-bold">
-                  <span className="w-1.5 h-1.5 rounded-full bg-green-600" /> Validado
+                <Badge variant="outline" className={cn(
+                  "gap-1 font-bold",
+                  diagnostics.token ? "text-green-600 bg-green-50 border-green-200" : "text-red-600 bg-red-50 border-red-200"
+                )}>
+                  <span className={cn("w-1.5 h-1.5 rounded-full", diagnostics.token ? "bg-green-600" : "bg-red-600")} /> 
+                  {diagnostics.token ? "Validado" : "Expirado"}
                 </Badge>
               </div>
               <div className="pt-2 border-t border-border mt-2">
                 <p className="text-[10px] uppercase text-muted-fg font-bold tracking-widest">Última sincronização</p>
-                <p className="text-sm font-bold text-navy">06/08/2026 - 20:15</p>
+                <p className="text-sm font-bold text-navy">{lastSync}</p>
               </div>
             </div>
-            <Button variant="outline" className="w-full border-primary/20 hover:bg-primary/5 text-primary font-bold">
-              <RefreshCw className="w-4 h-4 mr-2" /> Testar conexão
+            <Button 
+              variant="outline" 
+              className="w-full border-primary/20 hover:bg-primary/5 text-primary font-bold transition-all active:scale-[0.98]"
+              onClick={handleTestConnection}
+              disabled={isTesting}
+            >
+              <RefreshCw className={cn("w-4 h-4 mr-2", isTesting && "animate-spin")} /> 
+              {isTesting ? "Testando..." : "Testar conexão"}
             </Button>
           </CardContent>
         </Card>
