@@ -276,7 +276,9 @@ function SettingsPage({ session }: { session: any }) {
   const [templateNotificacao, setTemplateNotificacao] = useState("Olá {agente}, houve uma mudança na fila {fila}. Status anterior: {status_anterior} -> Novo status: {status_atual} em {data_mudanca}");
   const [isTemplateModalOpen, setIsTemplateModalOpen] = useState(false);
   const [isHistoryModalOpen, setIsHistoryModalOpen] = useState(false);
-  const [notificacoesHistory] = useState([
+  const [isTestModalOpen, setIsTestModalOpen] = useState(false);
+  const [testRecipient, setTestRecipient] = useState("Alice Vieira");
+  const [notificacoesHistory, setNotificacoesHistory] = useState([
     { id: "TRY-7782", target: "Alice Vieira", canal: "WhatsApp", data: "2026-08-06 14:20", evento: "Mudança de Status: Suporte", status: "enviado", motivo: "", fila: "Suporte", resposta: "Meta API: Message delivered" },
     { id: "TRY-7783", target: "Mayck Souza", canal: "E-mail", data: "2026-08-06 15:10", evento: "Novo Agente: Comercial", status: "falhou", motivo: "Servidor SMTP indisponível", fila: "Comercial", resposta: "550 5.1.1 The email account that you tried to reach does not exist" },
     { id: "TRY-7784", target: "Carolina Silva", canal: "WhatsApp", data: "2026-08-06 15:45", evento: "Mudança de Fila: Suporte", status: "em processamento", motivo: "", fila: "Suporte", resposta: "Pending callback from Meta" },
@@ -469,6 +471,9 @@ function SettingsPage({ session }: { session: any }) {
                     </div>
                     {notificarMudancasFila && (
                       <div className="flex items-center gap-2">
+                        <Button variant="outline" size="sm" onClick={() => setIsTestModalOpen(true)} className="h-8 text-[10px] font-bold border-primary/20 hover:bg-primary/10">
+                          <Zap className="w-3.5 h-3.5 mr-1" /> PRÉ-TESTE
+                        </Button>
                         <Button variant="outline" size="sm" onClick={() => setIsTemplateModalOpen(true)} className="h-8 text-[10px] font-bold border-primary/20 hover:bg-primary/10">
                           <MessageSquare className="w-3.5 h-3.5 mr-1" /> TEMPLATE
                         </Button>
@@ -985,6 +990,67 @@ function SettingsPage({ session }: { session: any }) {
         </DialogContent>
       </Dialog>
 
+      {/* Modal de Pré-teste */}
+      <Dialog open={isTestModalOpen} onOpenChange={setIsTestModalOpen}>
+        <DialogContent className="sm:max-w-[425px] bg-card border-border p-0 overflow-hidden text-foreground border shadow-2xl">
+          <DialogHeader className="p-6 bg-accent/20 border-b border-border">
+            <DialogTitle className="text-xl font-manrope font-extrabold">Enviar Notificação de Teste</DialogTitle>
+            <DialogDescription className="text-muted-fg">Valide o template atual enviando uma notificação real com dados de exemplo.</DialogDescription>
+          </DialogHeader>
+          <div className="p-6 space-y-4">
+            <div className="space-y-2">
+              <Label className="text-sm font-bold">Destinatário de Exemplo</Label>
+              <select 
+                className="w-full h-9 rounded-md border border-input bg-background px-3 py-1 text-sm"
+                value={testRecipient}
+                onChange={(e) => setTestRecipient(e.target.value)}
+              >
+                {agents.map(a => (
+                  <option key={a.id} value={a.name}>{a.name} ({a.email})</option>
+                ))}
+              </select>
+            </div>
+
+            <div className="rounded-xl border border-border bg-accent/10 p-4 space-y-2">
+              <Label className="text-[10px] uppercase font-bold text-muted-fg">Como o {notificarCanal} será enviado:</Label>
+              <div className="bg-background rounded-lg p-3 text-xs border border-border shadow-inner whitespace-pre-wrap leading-relaxed">
+                {templateNotificacao
+                  .replace("{agente}", testRecipient)
+                  .replace("{fila}", "Suporte")
+                  .replace("{status_anterior}", "Ativo")
+                  .replace("{status_atual}", "Em pausa")
+                  .replace("{data_mudanca}", new Date().toLocaleString("pt-BR"))
+                }
+              </div>
+            </div>
+          </div>
+          <DialogFooter className="p-6 bg-accent/10 border-t border-border gap-2">
+            <Button variant="outline" onClick={() => setIsTestModalOpen(false)} className="border-border font-bold">Cancelar</Button>
+            <Button 
+              onClick={() => { 
+                setIsTestModalOpen(false); 
+                toast.success(`Notificação de teste enviada via ${notificarCanal.toUpperCase()}!`);
+                const newLog = {
+                  id: `TRY-${Math.floor(1000 + Math.random() * 9000)}`,
+                  target: testRecipient,
+                  canal: notificarCanal.charAt(0).toUpperCase() + notificarCanal.slice(1),
+                  data: new Date().toLocaleString("pt-BR").slice(0, 16),
+                  evento: "Teste de Template",
+                  status: "enviado",
+                  motivo: "",
+                  fila: "Suporte",
+                  resposta: "Simulado: Sucesso no envio de teste"
+                };
+                setNotificacoesHistory(prev => [newLog, ...prev]);
+              }} 
+              className="bg-primary text-white font-bold gap-2"
+            >
+              <Smartphone className="w-4 h-4" /> Enviar Agora
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
       {/* Histórico Notificações Modal */}
       <Dialog open={isHistoryModalOpen} onOpenChange={setIsHistoryModalOpen}>
         <DialogContent className="sm:max-w-[900px] bg-card border-border p-0 overflow-hidden text-foreground border shadow-2xl">
@@ -992,6 +1058,42 @@ function SettingsPage({ session }: { session: any }) {
             <DialogTitle className="text-xl font-manrope font-extrabold">Histórico de Notificações</DialogTitle>
             <DialogDescription className="text-muted-fg">Consulte os registros de notificações enviadas com filtros avançados e detalhes técnicos.</DialogDescription>
           </DialogHeader>
+          
+          <div className="p-4 bg-accent/5 border-b border-border">
+            <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
+              <div className="bg-background p-3 rounded-lg border border-border shadow-sm flex flex-col items-center justify-center">
+                <span className="text-[10px] font-bold text-muted-fg uppercase tracking-wider">Taxa de Sucesso</span>
+                <span className="text-xl font-manrope font-extrabold text-primary">
+                  {Math.round((notificacoesHistory.filter(h => h.status === 'enviado').length / Math.max(1, notificacoesHistory.length)) * 100)}%
+                </span>
+              </div>
+              <div className="bg-background p-3 rounded-lg border border-border shadow-sm flex flex-col items-center justify-center">
+                <span className="text-[10px] font-bold text-muted-fg uppercase tracking-wider">Falhas (Geral)</span>
+                <span className="text-xl font-manrope font-extrabold text-destructive">
+                  {notificacoesHistory.filter(h => h.status === 'falhou').length}
+                </span>
+              </div>
+              <div className="bg-background p-3 rounded-lg border border-border shadow-sm flex flex-col items-center justify-center">
+                <span className="text-[10px] font-bold text-muted-fg uppercase tracking-wider">Maior Gargalo</span>
+                <span className="text-xs font-bold text-foreground">
+                  {(() => {
+                    const counts: Record<string, number> = {};
+                    notificacoesHistory.filter(h => h.status === 'falhou').forEach(h => {
+                      counts[h.fila] = (counts[h.fila] || 0) + 1;
+                    });
+                    const max = Object.entries(counts).sort((a,b) => b[1] - a[1])[0];
+                    return max ? `${max[0]} (${max[1]})` : "Nenhum";
+                  })()}
+                </span>
+              </div>
+              <div className="bg-background p-3 rounded-lg border border-border shadow-sm flex flex-col items-center justify-center">
+                <span className="text-[10px] font-bold text-muted-fg uppercase tracking-wider">Melhor Canal</span>
+                <span className="text-xs font-bold text-primary flex items-center gap-1">
+                   <Zap className="w-3 h-3" /> WhatsApp
+                </span>
+              </div>
+            </div>
+          </div>
           
           <div className="p-4 border-b border-border bg-background/50 grid grid-cols-1 md:grid-cols-4 gap-3">
             <div className="space-y-1">
@@ -1051,6 +1153,7 @@ function SettingsPage({ session }: { session: any }) {
             <table className="w-full text-left text-sm min-w-[800px]">
               <thead className="bg-accent/50 text-[10px] uppercase font-bold text-muted-fg sticky top-0">
                 <tr>
+                  <th className="px-6 py-3 text-center">Ações</th>
                   <th className="px-6 py-3">ID Tentativa</th>
                   <th className="px-6 py-3">Horário</th>
                   <th className="px-6 py-3">Destinatário</th>
@@ -1071,6 +1174,29 @@ function SettingsPage({ session }: { session: any }) {
                   })
                   .map((log) => (
                     <tr key={log.id} className="hover:bg-accent/20 transition-colors">
+                      <td className="px-4 py-4 text-center">
+                        {log.status === 'falhou' && (
+                          <Button 
+                            variant="ghost" 
+                            size="icon" 
+                            title="Reenviar Notificação"
+                            onClick={() => {
+                              toast.loading("Reenviando notificação...", { id: log.id });
+                              setTimeout(() => {
+                                setNotificacoesHistory(prev => prev.map(h => 
+                                  h.id === log.id 
+                                    ? { ...h, status: 'enviado', motivo: '', resposta: `Reenvio manual OK: ${new Date().toLocaleString("pt-BR")}` }
+                                    : h
+                                ));
+                                toast.success("Notificação reenviada com sucesso!", { id: log.id });
+                              }, 1500);
+                            }}
+                            className="h-8 w-8 text-primary hover:bg-primary/10"
+                          >
+                            <Zap className="w-4 h-4" />
+                          </Button>
+                        )}
+                      </td>
                       <td className="px-6 py-4 font-mono text-[10px] text-muted-fg">{log.id}</td>
                       <td className="px-6 py-4 text-xs whitespace-nowrap">{log.data}</td>
                       <td className="px-6 py-4 font-bold">{log.target}</td>
