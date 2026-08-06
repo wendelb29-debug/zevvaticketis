@@ -272,6 +272,15 @@ function SettingsPage({ session }: { session: any }) {
   ]);
 
   const [notificarMudancasFila, setNotificarMudancasFila] = useState(true);
+  const [notificarCanal, setNotificarCanal] = useState("whatsapp");
+  const [templateNotificacao, setTemplateNotificacao] = useState("Olá {agente}, houve uma mudança na fila {fila}. Novo status: {status}");
+  const [isTemplateModalOpen, setIsTemplateModalOpen] = useState(false);
+  const [isHistoryModalOpen, setIsHistoryModalOpen] = useState(false);
+  const [notificacoesHistory] = useState([
+    { id: "1", target: "Alice Vieira", canal: "WhatsApp", data: "2026-08-06 14:20", evento: "Mudança de Status: Suporte" },
+    { id: "2", target: "Mayck Souza", canal: "E-mail", data: "2026-08-06 15:10", evento: "Novo Agente: Comercial" },
+  ]);
+
 
 
 
@@ -433,21 +442,58 @@ function SettingsPage({ session }: { session: any }) {
                   Crie, edite e gerencie as filas de atendimento vinculadas a departamentos. 
                   Apenas usuários vinculados à fila e ao departamento poderão realizar o atendimento e visualizar o fluxo.
                 </p>
-                <div className="flex flex-col sm:flex-row items-center justify-between gap-4 py-2 border-y border-border/50">
-                  <div className="flex items-center gap-3">
-                    <Switch 
-                      checked={notificarMudancasFila} 
-                      onCheckedChange={setNotificarMudancasFila} 
-                      id="notify-queue-changes"
-                    />
-                    <Label htmlFor="notify-queue-changes" className="text-sm font-bold cursor-pointer">
-                      Notificar mudanças de fila
-                    </Label>
+                <div className="bg-primary/5 rounded-xl border border-primary/10 p-4 space-y-4">
+                  <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                    <div className="flex items-center gap-3">
+                      <Switch 
+                        checked={notificarMudancasFila} 
+                        onCheckedChange={setNotificarMudancasFila} 
+                        id="notify-queue-changes"
+                      />
+                      <div>
+                        <Label htmlFor="notify-queue-changes" className="text-sm font-bold cursor-pointer">
+                          Notificar mudanças de fila
+                        </Label>
+                        <p className="text-[11px] text-muted-fg">Notifica agentes ou departamentos sobre alterações no fluxo.</p>
+                      </div>
+                    </div>
+                    {notificarMudancasFila && (
+                      <div className="flex items-center gap-2">
+                        <Button variant="outline" size="sm" onClick={() => setIsTemplateModalOpen(true)} className="h-8 text-[10px] font-bold border-primary/20 hover:bg-primary/10">
+                          <MessageSquare className="w-3.5 h-3.5 mr-1" /> TEMPLATE
+                        </Button>
+                        <Button variant="outline" size="sm" onClick={() => setIsHistoryModalOpen(true)} className="h-8 text-[10px] font-bold border-primary/20 hover:bg-primary/10">
+                          <History className="w-3.5 h-3.5 mr-1" /> HISTÓRICO
+                        </Button>
+                      </div>
+                    )}
                   </div>
-                  <Button size="sm" onClick={openNewDept} className="bg-primary text-white gap-2 font-bold shadow-lg shadow-primary/20 w-full sm:w-auto">
-                    <Plus className="w-4 h-4" /> Criar nova fila
-                  </Button>
+
+                  {notificarMudancasFila && (
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
+                      <div className="space-y-1.5">
+                        <Label className="text-[10px] uppercase font-bold text-muted-fg">Canal de Notificação</Label>
+                        <div className="flex gap-2">
+                          {["whatsapp", "email", "interno"].map((canal) => (
+                            <button
+                              key={canal}
+                              onClick={() => setNotificarCanal(canal)}
+                              className={cn(
+                                "flex-1 py-1.5 px-2 rounded-lg border text-[10px] font-bold uppercase transition-all",
+                                notificarCanal === canal 
+                                  ? "bg-primary text-primary-foreground border-primary" 
+                                  : "bg-background border-border text-muted-fg hover:border-primary/50"
+                              )}
+                            >
+                              {canal}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </div>
+
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                   {departments.map(dept => (
@@ -895,6 +941,71 @@ function SettingsPage({ session }: { session: any }) {
           </DialogFooter>
         </DialogContent>
       </Dialog>
+      
+      {/* Template Notificação Modal */}
+      <Dialog open={isTemplateModalOpen} onOpenChange={setIsTemplateModalOpen}>
+        <DialogContent className="sm:max-w-[425px] bg-card border-border p-0 overflow-hidden text-foreground border shadow-2xl">
+          <DialogHeader className="p-6 bg-accent/20 border-b border-border">
+            <DialogTitle className="text-xl font-manrope font-extrabold">Template de Notificação</DialogTitle>
+            <DialogDescription className="text-muted-fg">Padronize o texto das notificações de mudanças de fila.</DialogDescription>
+          </DialogHeader>
+          <div className="p-6 space-y-4">
+            <div className="space-y-2">
+              <Label className="text-sm font-bold">Conteúdo da Mensagem</Label>
+              <textarea 
+                value={templateNotificacao}
+                onChange={(e) => setTemplateNotificacao(e.target.value)}
+                rows={4}
+                className="w-full rounded-lg border border-border bg-background p-3 text-sm focus:ring-primary outline-none"
+                placeholder="Ex: Olá {agente}, houve uma mudança..."
+              />
+              <p className="text-[10px] text-muted-fg italic">Use variáveis como {"{agente}"}, {"{fila}"} e {"{status}"}.</p>
+            </div>
+          </div>
+          <DialogFooter className="p-6 bg-accent/10 border-t border-border gap-2">
+            <Button variant="outline" onClick={() => setIsTemplateModalOpen(false)} className="border-border font-bold">Cancelar</Button>
+            <Button onClick={() => { setIsTemplateModalOpen(false); toast.success("Template salvo!"); }} className="bg-primary text-white font-bold">Salvar Template</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Histórico Notificações Modal */}
+      <Dialog open={isHistoryModalOpen} onOpenChange={setIsHistoryModalOpen}>
+        <DialogContent className="sm:max-w-[600px] bg-card border-border p-0 overflow-hidden text-foreground border shadow-2xl">
+          <DialogHeader className="p-6 bg-accent/20 border-b border-border">
+            <DialogTitle className="text-xl font-manrope font-extrabold">Histórico de Notificações</DialogTitle>
+            <DialogDescription className="text-muted-fg">Consulte os registros de notificações enviadas recentemente.</DialogDescription>
+          </DialogHeader>
+          <div className="p-0 max-h-[400px] overflow-y-auto">
+            <table className="w-full text-left text-sm">
+              <thead className="bg-accent/50 text-[10px] uppercase font-bold text-muted-fg sticky top-0">
+                <tr>
+                  <th className="px-6 py-3">Destinatário</th>
+                  <th className="px-6 py-3">Canal</th>
+                  <th className="px-6 py-3">Data</th>
+                  <th className="px-6 py-3">Evento</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-border">
+                {notificacoesHistory.map((log) => (
+                  <tr key={log.id} className="hover:bg-accent/20 transition-colors">
+                    <td className="px-6 py-4 font-bold">{log.target}</td>
+                    <td className="px-6 py-4">
+                      <Badge variant="outline" className="text-[10px] font-bold">{log.canal}</Badge>
+                    </td>
+                    <td className="px-6 py-4 text-muted-fg text-xs">{log.data}</td>
+                    <td className="px-6 py-4 text-xs">{log.evento}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <DialogFooter className="p-6 bg-accent/10 border-t border-border">
+            <Button variant="outline" onClick={() => setIsHistoryModalOpen(false)} className="border-border font-bold w-full">Fechar</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
     </div>
   );
 }
