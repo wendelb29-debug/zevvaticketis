@@ -87,30 +87,30 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-        <DialogContent className="max-w-6xl p-0 overflow-hidden bg-background border border-border text-foreground rounded-2xl">
-        <DialogHeader className="p-0 border-b border-border bg-background">
+        <DialogContent className="max-w-6xl p-0 overflow-hidden bg-white border border-border text-[#0F172A] rounded-2xl">
+        <DialogHeader className="p-0 border-b border-border bg-white relative">
           <div className="flex items-center justify-between px-8 py-6">
             <div className="flex flex-col">
-              <DialogTitle className="text-xl font-manrope font-extrabold text-navy">Nova Campanha</DialogTitle>
-              <p className="text-sm text-muted-fg mt-0.5">Configure seu envio</p>
+              <DialogTitle className="text-xl font-manrope font-extrabold text-[#0F172A]">Nova Campanha</DialogTitle>
+              <p className="text-sm text-[#64748B] mt-0.5">Configure seu envio WhatsApp ou E-mail</p>
             </div>
             
             <div className="flex items-center gap-12">
               {steps.map((s) => (
                 <div key={s.number} className="flex items-center gap-2 relative">
                   <div className={cn(
-                    "w-7 h-7 rounded-full flex items-center justify-center text-[10px] font-bold transition-colors border",
-                    step === s.number ? "bg-primary text-white border-primary" : 
-                    step > s.number ? "bg-primary/10 text-primary border-primary" : "bg-background text-muted-fg border-border"
+                    "w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold transition-all border-2",
+                    step === s.number ? "bg-[#F06452] text-white border-[#F06452] shadow-sm" : 
+                    step > s.number ? "bg-white text-[#F06452] border-[#F06452]" : "bg-white text-[#0F172A] border-[#E5E7EB]"
                   )}>
-                    {step > s.number ? <Check className="w-3 h-3" /> : s.number}
+                    {step > s.number ? <Check className="w-4 h-4" /> : s.number}
                   </div>
                   <span className={cn(
-                    "text-[10px] font-bold uppercase tracking-wider hidden xl:inline",
-                    step === s.number ? "text-primary" : "text-foreground"
+                    "text-[10px] font-extrabold uppercase tracking-widest hidden xl:inline",
+                    step === s.number ? "text-[#F06452]" : "text-[#0F172A]"
                   )}>{s.label}</span>
                   {s.number < 5 && (
-                    <div className="absolute -right-7 top-1/2 -translate-y-1/2 w-4 h-[1px] bg-border" />
+                    <div className="absolute -right-7 top-1/2 -translate-y-1/2 w-4 h-[1px] bg-[#E5E7EB]" />
                   )}
                 </div>
               ))}
@@ -121,89 +121,96 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
                 variant="outline"
                 onClick={prevStep}
                 disabled={step === 1}
-                className="border-primary/20 text-primary hover:bg-accent font-bold px-6"
+                className="border-[#E5E7EB] text-[#0F172A] hover:bg-slate-50 font-bold px-6 h-11 rounded-xl"
               >
                 Voltar
               </Button>
               <Button 
                 onClick={nextStep}
                 disabled={!canGoNext || step === 5}
-                className="bg-primary hover:bg-primary/90 text-white font-bold px-8 shadow-lg shadow-primary/20"
+                className="bg-[#F06452] hover:bg-[#D95342] text-white font-bold px-8 h-11 rounded-xl shadow-lg shadow-[#F06452]/20"
               >
-                Próximo
+                Continuar
               </Button>
             </div>
           </div>
         </DialogHeader>
 
 
-        <div className="p-8 min-h-[600px] bg-background">
+        <div className="p-8 min-h-[600px] bg-white">
           {step === 1 && (
-            <div className="grid grid-cols-1 lg:grid-cols-[380px_1fr] gap-12 animate-in fade-in slide-in-from-bottom-4 duration-500">
+            <div className="grid grid-cols-1 lg:grid-cols-[400px_1fr] gap-12 animate-in fade-in slide-in-from-bottom-4 duration-500">
               <div className="space-y-8">
                 <div>
-                  <h2 className="text-xl font-manrope font-extrabold text-navy uppercase tracking-tight">Dados da campanha</h2>
-                  <p className="text-sm text-muted-fg mt-1">Defina o nome e os canais de envio da sua campanha</p>
+                  <h2 className="text-xl font-manrope font-extrabold text-[#0F172A] uppercase tracking-tight">Dados da campanha</h2>
+                  <p className="text-sm text-[#64748B] mt-1">Defina o nome e os canais de envio da sua campanha</p>
                 </div>
 
-                <div className="space-y-5">
+                <div className="space-y-6">
                   <div className="space-y-2">
-                    <Label className="text-xs font-bold text-navy uppercase tracking-widest">Nome da campanha <span className="text-primary">*</span></Label>
+                    <Label className="text-xs font-black text-[#0F172A] uppercase tracking-widest">Nome da campanha <span className="text-[#F06452]">*</span></Label>
                     <Input 
                       placeholder="Ex: Show Ana Carolina - Lembrete" 
                       value={campaignName}
                       onChange={(e) => setCampaignName(e.target.value)}
-                      className="bg-accent/30 border-border text-foreground h-12 rounded-xl focus-visible:ring-primary"
+                      className="bg-white border-[#E5E7EB] text-[#0F172A] h-12 rounded-xl focus-visible:ring-[#F06452]"
                     />
                   </div>
 
-                  <div className="space-y-2">
-                    <Label className="text-xs font-bold text-navy uppercase tracking-widest">Tipo de canal <span className="text-primary">*</span></Label>
-                    <div className="grid grid-cols-2 gap-3">
+                  <div className="space-y-3">
+                    <Label className="text-xs font-black text-[#0F172A] uppercase tracking-widest">Escolha o canal <span className="text-[#F06452]">*</span></Label>
+                    <div className="grid grid-cols-1 gap-4">
                       <button 
                         onClick={() => setChannelType("gupshup")}
                         className={cn(
-                          "flex flex-col items-center justify-center p-4 rounded-xl border-2 transition-all duration-300 gap-2 group",
+                          "flex items-center p-5 rounded-2xl border-2 transition-all duration-300 gap-4 group text-left",
                           channelType === "gupshup" 
-                            ? "bg-primary/5 border-primary shadow-sm" 
-                            : "bg-background border-border hover:border-primary/30"
+                            ? "bg-[#FDF0ED] border-[#F06452] shadow-sm" 
+                            : "bg-white border-[#E5E7EB] hover:border-[#F06452]/30"
                         )}
                       >
                         <div className={cn(
-                          "p-2 rounded-lg transition-colors",
-                          channelType === "gupshup" ? "bg-primary text-white" : "bg-accent text-muted-fg group-hover:bg-primary/10 group-hover:text-primary"
+                          "w-12 h-12 rounded-xl flex items-center justify-center transition-colors",
+                          channelType === "gupshup" ? "bg-[#F06452] text-white" : "bg-slate-100 text-[#64748B] group-hover:bg-[#FDF0ED] group-hover:text-[#F06452]"
                         )}>
-                          <MessageSquare className="w-5 h-5" />
+                          <MessageSquare className="w-6 h-6" />
                         </div>
-                        <span className={cn("text-xs font-bold", channelType === "gupshup" ? "text-primary" : "text-muted-fg")}>WhatsApp</span>
+                        <div className="flex-1">
+                          <p className={cn("text-sm font-bold", channelType === "gupshup" ? "text-[#F06452]" : "text-[#0F172A]")}>Enviar pelo WhatsApp</p>
+                          <p className="text-[11px] text-[#64748B] font-medium">Envie mensagens para clientes e participantes.</p>
+                        </div>
                       </button>
+                      
                       <button 
                         onClick={() => setChannelType("email")}
                         className={cn(
-                          "flex flex-col items-center justify-center p-4 rounded-xl border-2 transition-all duration-300 gap-2 group",
+                          "flex items-center p-5 rounded-2xl border-2 transition-all duration-300 gap-4 group text-left",
                           channelType === "email" 
-                            ? "bg-primary/5 border-primary shadow-sm" 
-                            : "bg-background border-border hover:border-primary/30"
+                            ? "bg-[#FDF0ED] border-[#F06452] shadow-sm" 
+                            : "bg-white border-[#E5E7EB] hover:border-[#F06452]/30"
                         )}
                       >
                         <div className={cn(
-                          "p-2 rounded-lg transition-colors",
-                          channelType === "email" ? "bg-primary text-white" : "bg-accent text-muted-fg group-hover:bg-primary/10 group-hover:text-primary"
+                          "w-12 h-12 rounded-xl flex items-center justify-center transition-colors",
+                          channelType === "email" ? "bg-[#F06452] text-white" : "bg-slate-100 text-[#64748B] group-hover:bg-[#FDF0ED] group-hover:text-[#F06452]"
                         )}>
-                          <Mail className="w-5 h-5" />
+                          <Mail className="w-6 h-6" />
                         </div>
-                        <span className={cn("text-xs font-bold", channelType === "email" ? "text-primary" : "text-muted-fg")}>E-mail</span>
+                        <div className="flex-1">
+                          <p className={cn("text-sm font-bold", channelType === "email" ? "text-[#F06452]" : "text-[#0F172A]")}>Enviar por E-mail</p>
+                          <p className="text-[11px] text-[#64748B] font-medium">Crie campanhas profissionais.</p>
+                        </div>
                       </button>
                     </div>
                   </div>
 
                   <div className="space-y-2">
-                    <Label className="text-xs font-bold text-navy uppercase tracking-widest">Canal de saída <span className="text-primary">*</span></Label>
+                    <Label className="text-xs font-black text-[#0F172A] uppercase tracking-widest">Canal de saída <span className="text-[#F06452]">*</span></Label>
                     <Select value={channel} onValueChange={setChannel}>
-                      <SelectTrigger className="bg-accent/30 border-border text-foreground h-12 rounded-xl">
+                      <SelectTrigger className="bg-white border-[#E5E7EB] text-[#0F172A] h-12 rounded-xl">
                         <SelectValue placeholder="Selecione o canal" />
                       </SelectTrigger>
-                      <SelectContent className="bg-background border-border">
+                      <SelectContent className="bg-white border-[#E5E7EB]">
                         <SelectItem value="savecar">Zevva Oficial - 34 9867-9585</SelectItem>
                       </SelectContent>
                     </Select>
@@ -212,49 +219,36 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
               </div>
 
 
-              <div className="bg-accent/20 rounded-2xl flex items-center justify-center p-12 border border-border">
+              <div className="bg-slate-50 rounded-3xl flex items-center justify-center p-12 border border-[#E5E7EB]">
                 <div className="max-w-md w-full text-center space-y-8">
                   <div className="flex justify-center">
-                    <div className="bg-primary/10 p-4 rounded-3xl">
-                      <div className="bg-primary text-white p-3 rounded-2xl shadow-lg shadow-primary/30">
-                        {channelType === "email" ? <Mail className="w-8 h-8" /> : <MessageSquare className="w-8 h-8" />}
+                    <div className="bg-[#FDF0ED] p-5 rounded-[2rem]">
+                      <div className="bg-[#F06452] text-white p-4 rounded-2xl shadow-xl shadow-[#F06452]/20">
+                        {channelType === "email" ? <Mail className="w-10 h-10" /> : <MessageSquare className="w-10 h-10" />}
                       </div>
                     </div>
                   </div>
                   <div className="space-y-3">
-                    <div className="inline-block px-3 py-1 bg-primary/10 text-primary text-[10px] font-extrabold rounded-full border border-primary/20 uppercase tracking-widest">
-                      ✨ Zevva Campaign
+                    <div className="inline-block px-4 py-1.5 bg-[#FDF0ED] text-[#F06452] text-[11px] font-black rounded-full border border-[#F06452]/10 uppercase tracking-[0.1em]">
+                      Zevva Campaigns
                     </div>
-                    <h3 className="text-2xl font-manrope font-extrabold text-navy">Crie mensagens profissionais</h3>
-                    <p className="text-sm text-muted-fg leading-relaxed">Dispare conteúdo personalizado com variáveis para cada contato de forma simples e rápida.</p>
+                    <h3 className="text-2xl font-manrope font-extrabold text-[#0F172A]">Crie mensagens premium</h3>
+                    <p className="text-sm text-[#64748B] leading-relaxed">Personalize cada disparo e aumente sua conversão com a tecnologia Zevva.</p>
                   </div>
                   
-                  <div className="bg-white rounded-2xl p-6 border border-border shadow-xl relative overflow-hidden group">
-                    <div className="absolute top-0 left-0 w-1 h-full bg-primary" />
+                  <div className="bg-white rounded-2xl p-6 border border-[#E5E7EB] shadow-2xl relative overflow-hidden group">
+                    <div className="absolute top-0 left-0 w-1.5 h-full bg-[#F06452]" />
                     <div className="space-y-4 text-left">
-                      <div className="bg-accent/50 text-navy px-4 py-2 rounded-xl text-sm font-bold inline-block border border-border">
-                        Olá <span className="text-primary">{"{{"}nome{"}}"}</span>! 👋
+                      <div className="bg-slate-50 text-[#0F172A] px-4 py-2.5 rounded-xl text-sm font-bold inline-block border border-[#E5E7EB]">
+                        Olá <span className="text-[#F06452]">{"{{"}nome{"}}"}</span>! 👋
                       </div>
-                      <div className="bg-accent/20 rounded-xl aspect-[16/9] flex items-center justify-center border border-dashed border-border group-hover:bg-accent/40 transition-colors">
+                      <div className="bg-slate-50 rounded-xl aspect-[16/9] flex items-center justify-center border border-dashed border-[#E5E7EB] group-hover:bg-slate-100 transition-colors">
                         <div className="text-center space-y-2">
-                          <ImageIcon className="w-8 h-8 text-muted-fg/30 mx-auto" />
-                          <p className="text-[10px] text-muted-fg font-extrabold uppercase tracking-widest">Sua Imagem Aqui</p>
+                          <ImageIcon className="w-10 h-10 text-slate-300 mx-auto" />
+                          <p className="text-[10px] text-[#64748B] font-black uppercase tracking-[0.2em]">Sua Imagem Aqui</p>
                         </div>
                       </div>
                     </div>
-                  </div>
-
-                  <div className="flex flex-wrap justify-center gap-2">
-                    {[
-                      { icon: FileText, label: "Texto" },
-                      { icon: ImageIcon, label: "Imagem" },
-                      { icon: Smartphone, label: "Botão" },
-                      { icon: Users, label: "Variáveis" }
-                    ].map((btn) => (
-                      <div key={btn.label} className="flex items-center gap-2 px-4 py-2 bg-white border border-border rounded-xl text-xs font-extrabold text-navy hover:border-primary/50 cursor-default transition-all shadow-sm">
-                        <btn.icon className="w-3.5 h-3.5 text-primary" /> {btn.label}
-                      </div>
-                    ))}
                   </div>
                 </div>
               </div>
@@ -263,16 +257,16 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
 
 
           {step === 2 && (
-            <div className="grid grid-cols-1 lg:grid-cols-[380px_1fr] gap-12 animate-in fade-in slide-in-from-bottom-4 duration-500">
+            <div className="grid grid-cols-1 lg:grid-cols-[400px_1fr] gap-12 animate-in fade-in slide-in-from-bottom-4 duration-500">
               <div className="space-y-8">
                 <div>
-                  <h2 className="text-xl font-manrope font-extrabold text-navy uppercase tracking-tight">Público Alvo</h2>
-                  <p className="text-sm text-muted-fg mt-1">Selecione o público que receberá as mensagens da sua campanha</p>
+                  <h2 className="text-xl font-manrope font-extrabold text-[#0F172A] uppercase tracking-tight">Público Alvo</h2>
+                  <p className="text-sm text-[#64748B] mt-1">Selecione o público que receberá as mensagens da sua campanha</p>
                 </div>
 
                 <div className="space-y-4">
                   <div className="space-y-3">
-                    <Label className="text-xs font-bold text-navy uppercase tracking-widest">Origem dos contatos</Label>
+                    <Label className="text-xs font-black text-[#0F172A] uppercase tracking-widest">Origem dos contatos</Label>
                     
                     <div className="space-y-3">
                       {[
@@ -284,27 +278,27 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
                           key={item.id}
                           onClick={() => setPublicType(item.id)}
                           className={cn(
-                            "p-4 rounded-xl border transition-all duration-300 cursor-pointer flex items-center gap-4 group",
+                            "p-5 rounded-2xl border transition-all duration-300 cursor-pointer flex items-center gap-4 group",
                             publicType === item.id 
-                              ? "bg-primary/5 border-primary shadow-sm ring-1 ring-primary/20" 
-                              : "bg-background border-border hover:border-primary/30"
+                              ? "bg-[#FDF0ED] border-[#F06452] shadow-sm" 
+                              : "bg-white border-[#E5E7EB] hover:border-[#F06452]/30"
                           )}
                         >
                           <div className={cn(
-                            "w-10 h-10 rounded-lg flex items-center justify-center transition-colors",
-                            publicType === item.id ? "bg-primary text-white" : "bg-accent text-muted-fg group-hover:bg-primary/10 group-hover:text-primary"
+                            "w-12 h-12 rounded-xl flex items-center justify-center transition-colors",
+                            publicType === item.id ? "bg-[#F06452] text-white" : "bg-slate-100 text-[#64748B] group-hover:bg-[#FDF0ED] group-hover:text-[#F06452]"
                           )}>
-                            <item.icon className="w-5 h-5" />
+                            <item.icon className="w-6 h-6" />
                           </div>
                           <div className="flex-1">
-                            <p className={cn("text-sm font-bold", publicType === item.id ? "text-primary" : "text-navy")}>{item.label}</p>
-                            <p className="text-[10px] text-muted-fg font-medium">{item.desc}</p>
+                            <p className={cn("text-sm font-bold", publicType === item.id ? "text-[#F06452]" : "text-[#0F172A]")}>{item.label}</p>
+                            <p className="text-[11px] text-[#64748B] font-medium">{item.desc}</p>
                           </div>
                           <div className={cn(
-                            "w-4 h-4 rounded-full border flex items-center justify-center",
-                            publicType === item.id ? "border-primary bg-primary" : "border-border"
+                            "w-5 h-5 rounded-full border-2 flex items-center justify-center",
+                            publicType === item.id ? "border-[#F06452] bg-[#F06452]" : "border-[#E5E7EB]"
                           )}>
-                            {publicType === item.id && <Check className="w-2.5 h-2.5 text-white" />}
+                            {publicType === item.id && <Check className="w-3 h-3 text-white" />}
                           </div>
                         </div>
                       ))}
@@ -313,25 +307,25 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
                 </div>
               </div>
 
-              <div className="bg-accent/20 rounded-2xl p-8 border border-border">
+              <div className="bg-slate-50 rounded-3xl p-8 border border-[#E5E7EB]">
 
                 {publicType === "arquivo" && (
                   <div className="h-full flex flex-col space-y-6">
                     <div className="grid grid-cols-2 gap-6">
                       <div className="space-y-4">
-                        <Label className="text-xs font-bold text-navy uppercase tracking-widest">DDI padrão</Label>
-                        <div className="bg-white p-4 rounded-xl border border-border flex items-center gap-3 shadow-sm">
+                        <Label className="text-xs font-black text-[#0F172A] uppercase tracking-widest">DDI padrão</Label>
+                        <div className="bg-white p-4 rounded-xl border border-[#E5E7EB] flex items-center gap-3 shadow-sm">
                            <span className="text-2xl">🇧🇷</span>
-                           <span className="text-sm font-bold text-navy">Brasil (+55)</span>
-                           <ChevronDown className="w-4 h-4 ml-auto text-muted-fg" />
+                           <span className="text-sm font-bold text-[#0F172A]">Brasil (+55)</span>
+                           <ChevronDown className="w-4 h-4 ml-auto text-[#64748B]" />
                         </div>
                       </div>
                       <div className="space-y-4">
-                        <Label className="text-xs font-bold text-navy uppercase tracking-widest">Ações</Label>
+                        <Label className="text-xs font-black text-[#0F172A] uppercase tracking-widest">Ações</Label>
                         <div className="flex gap-3">
                           <Button 
                             variant="outline" 
-                            className="flex-1 border-dashed border-primary/40 text-primary hover:bg-primary/5 h-14 rounded-xl font-bold"
+                            className="flex-1 border-dashed border-[#F06452]/40 text-[#F06452] hover:bg-[#FDF0ED] h-14 rounded-xl font-bold"
                             onClick={() => {
                               setUploadedFile(null);
                               setCsvPreview([]);
@@ -345,7 +339,7 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
 
                     {!uploadedFile ? (
                       <div className="flex-1 flex flex-col items-center justify-center">
-                        <div className="w-full max-w-xl aspect-[16/7] border-2 border-dashed border-primary/20 rounded-3xl flex flex-col items-center justify-center gap-4 bg-white hover:bg-primary/5 hover:border-primary/40 transition-all cursor-pointer group shadow-sm relative">
+                        <div className="w-full max-w-xl aspect-[16/7] border-2 border-dashed border-[#F06452]/20 rounded-3xl flex flex-col items-center justify-center gap-4 bg-white hover:bg-[#FDF0ED] hover:border-[#F06452]/40 transition-all cursor-pointer group shadow-sm relative">
                           <input 
                             type="file" 
                             accept=".csv, .xlsx" 
@@ -354,74 +348,70 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
                               const file = e.target.files?.[0];
                               if (file) {
                                 setUploadedFile(file);
-                                // Mock preview data
                                 setCsvPreview([
                                   ["telefone", "urlLink", "body1", "body2"],
                                   ["(34)9966-01526", "https://mundialeassociacoes.s...", "JOSE VALTER DA SILVA SANT...", "OQB9980"],
                                   ["(34)9970-91428", "https://mundialeassociacoes.s...", "VANDERLEI ANTONIO ROSA", "HLZ4A76"],
-                                  ["(34)99928-3379", "https://mundialeassociacoes.s...", "DAIANE OLIVEIRA CONSTANTI...", "BES5F59"],
-                                  ["(34)99813-2720", "https://mundialeassociacoes.s...", "JAQUELINE MARIA DE ASSIS SI...", "PVH5993"],
-                                  ["(31)9926-85919", "https://mundialeassociacoes.s...", "CLEVERSON DE SOUZA COSTA", "SHN7B75"],
-                                  ["(34)9965-75904", "https://mundialeassociacoes.s...", "VICTOR HUGO MOTTA MOREIRA", "PXO8303"]
+                                  ["(34)99928-3379", "https://mundialeassociacoes.s...", "DAIANE OLIVEIRA CONSTANTI...", "BES5F59"]
                                 ]);
                               }
                             }}
                           />
-                          <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center group-hover:scale-110 transition-transform shadow-sm">
-                            <Plus className="w-8 h-8 text-primary" />
+                          <div className="w-16 h-16 rounded-2xl bg-[#FDF0ED] flex items-center justify-center group-hover:scale-110 transition-transform shadow-sm">
+                            <Plus className="w-8 h-8 text-[#F06452]" />
                           </div>
                           <div className="text-center space-y-1">
-                            <p className="text-lg font-manrope font-extrabold text-navy">Importar arquivo</p>
-                            <p className="text-sm text-muted-fg font-medium">Nessa parte poder arrastar pra cá o arquivo ou clicar pra abrir somente arquivos CSV ou XLSX do computador</p>
+                            <p className="text-lg font-manrope font-extrabold text-[#0F172A]">Importar arquivo</p>
+                            <p className="text-sm text-[#64748B] font-medium">Nessa parte poder arrastar pra cá o arquivo ou clicar pra abrir somente arquivos CSV ou XLSX do computador</p>
                             <div className="flex gap-2 justify-center mt-4">
-                               <span className="px-2 py-1 bg-accent text-[10px] font-extrabold text-muted-fg rounded">CSV</span>
-                               <span className="px-2 py-1 bg-accent text-[10px] font-extrabold text-muted-fg rounded">XLSX</span>
+                               <span className="px-3 py-1 bg-slate-100 text-[10px] font-black text-[#64748B] rounded-lg">CSV</span>
+                               <span className="px-3 py-1 bg-slate-100 text-[10px] font-black text-[#64748B] rounded-lg">XLSX</span>
                             </div>
                           </div>
                         </div>
                       </div>
                     ) : (
-                      <div className="flex-1 bg-white rounded-2xl border border-border shadow-sm overflow-hidden flex flex-col">
-                        <div className="p-4 border-b border-border bg-accent/5 flex items-center justify-between">
+                      <div className="flex-1 bg-white rounded-2xl border border-[#E5E7EB] shadow-sm overflow-hidden flex flex-col">
+                        <div className="p-4 border-b border-[#E5E7EB] bg-slate-50 flex items-center justify-between">
                           <div className="flex items-center gap-3">
-                            <div className="p-2 bg-primary/10 rounded-lg">
-                              <FileText className="w-4 h-4 text-primary" />
+                            <div className="p-2 bg-[#FDF0ED] rounded-lg">
+                              <FileText className="w-4 h-4 text-[#F06452]" />
                             </div>
                             <div>
-                              <p className="text-sm font-bold text-navy">{uploadedFile.name}</p>
-                              <p className="text-[10px] text-muted-fg">{(uploadedFile.size / 1024).toFixed(1)} KB • {csvPreview.length - 1} contatos encontrados</p>
+                              <p className="text-sm font-bold text-[#0F172A]">{uploadedFile.name}</p>
+                              <p className="text-[10px] text-[#64748B] font-medium">{(uploadedFile.size / 1024).toFixed(1)} KB • {csvPreview.length - 1} contatos encontrados</p>
                             </div>
                           </div>
-                          <div className="flex items-center gap-2 px-3 py-1.5 bg-green-500/10 text-green-600 rounded-full border border-green-500/20 text-[10px] font-bold uppercase tracking-wider">
-                            <Check className="w-3 h-3 mr-1" /> Arquivo Carregado
+                          <div className="flex items-center gap-2 px-3 py-1.5 bg-green-50 text-green-600 rounded-full border border-green-100 text-[10px] font-black uppercase tracking-wider">
+                            <Check className="w-3 h-3" /> Arquivo Carregado
                           </div>
                         </div>
                         
-                        <div className="p-4 border-b border-border bg-amber-500/5 flex items-center gap-3">
+                        <div className="p-4 border-b border-[#E5E7EB] bg-amber-50 flex items-center gap-3">
                           <AlertCircle className="w-4 h-4 text-amber-500" />
-                          <p className="text-xs font-medium text-amber-700">Confirme se os cabeçalhos das colunas estão corretos antes de prosseguir.</p>
+                          <p className="text-xs font-semibold text-amber-700">Confirme se os cabeçalhos das colunas estão corretos antes de prosseguir.</p>
                         </div>
 
                         <ScrollArea className="flex-1">
                           <table className="w-full text-left border-collapse">
-                            <thead className="sticky top-0 bg-accent/30 z-10">
+                            <thead className="sticky top-0 bg-slate-50 z-10">
                               <tr>
-                                <th className="p-4 border-b border-border text-[10px] font-extrabold text-muted-fg uppercase tracking-widest w-12 text-center">#</th>
+                                <th className="p-4 border-b border-[#E5E7EB] text-[10px] font-black text-[#64748B] uppercase tracking-widest w-12 text-center">#</th>
                                 {csvPreview[0]?.map((header, i) => (
-                                  <th key={i} className="p-4 border-b border-border text-[10px] font-extrabold text-navy uppercase tracking-widest">{header}</th>
+                                  <th key={i} className="p-4 border-b border-[#E5E7EB] text-[10px] font-black text-[#0F172A] uppercase tracking-widest">{header}</th>
                                 ))}
                               </tr>
                             </thead>
                             <tbody>
                               {csvPreview.slice(1).map((row, rowIndex) => (
-                                <tr key={rowIndex} className="border-b border-border/50 hover:bg-accent/10 transition-colors">
+                                <tr key={rowIndex} className="border-b border-[#E5E7EB] hover:bg-slate-50/80 transition-colors">
                                   <td className="p-4 text-center">
-                                    <div className="w-4 h-4 rounded-full border border-primary flex items-center justify-center mx-auto">
-                                      <div className="w-2 h-2 rounded-full bg-primary" />
+                                    <div className="w-4 h-4 rounded-full border border-[#F06452] flex items-center justify-center mx-auto">
+                                      <div className="w-2 h-2 rounded-full bg-[#F06452]" />
                                     </div>
                                   </td>
                                   {row.map((cell, cellIndex) => (
-                                    <td key={cellIndex} className="p-4 text-sm font-medium text-navy truncate max-w-[200px]">{cell}</td>
+                                    <td key={cellIndex} className="p-4 text-sm font-medium text-[#0F172A] truncate max-w-[200px]">{cell}</td>
                                   ))}
                                 </tr>
                               ))}
@@ -539,37 +529,37 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
                 <p className="text-sm text-muted-fg mt-1">Relacione as colunas da planilha aos campos obrigatórios e variáveis do template.</p>
               </div>
 
-              <div className="p-4 bg-primary/5 border border-primary/20 rounded-xl flex items-center gap-3">
-                <AlertCircle className="w-5 h-5 text-primary" />
-                <p className="text-xs font-medium text-navy">
+              <div className="p-5 bg-slate-50 border border-[#E5E7EB] rounded-2xl flex items-center gap-4">
+                <AlertCircle className="w-6 h-6 text-[#F06452]" />
+                <p className="text-xs font-semibold text-[#0F172A] leading-relaxed">
                   Exibindo as 3 primeiras linhas do arquivo para você estabelecer o vínculo visual entre as colunas e os campos. 
-                  É obrigatório ter pelo menos uma coluna mapeada como <span className="font-bold">Telefone</span>.
+                  É obrigatório ter pelo menos uma coluna mapeada como <span className="font-bold text-[#F06452]">Telefone</span>.
                 </p>
               </div>
 
-              <div className="bg-white rounded-2xl border border-border shadow-sm overflow-hidden">
+              <div className="bg-white rounded-2xl border border-[#E5E7EB] shadow-sm overflow-hidden">
                 <table className="w-full text-left border-collapse">
-                  <thead className="bg-accent/30">
+                  <thead className="bg-slate-50">
                     <tr>
                       {csvPreview[0]?.map((header, i) => (
-                        <th key={i} className="p-6 border-b border-border bg-accent/20">
+                        <th key={i} className="p-6 border-b border-[#E5E7EB] bg-slate-50/50">
                           <div className="space-y-4">
                             <div className="flex items-center justify-between">
-                              <span className="text-xs font-extrabold text-navy uppercase tracking-widest">{header}</span>
+                              <span className="text-xs font-black text-[#0F172A] uppercase tracking-widest">{header}</span>
                               <Button 
                                 variant="ghost" 
                                 size="icon" 
-                                className="h-6 w-6 text-muted-fg hover:text-error transition-colors"
+                                className="h-7 w-7 text-[#64748B] hover:text-[#F06452] hover:bg-[#FDF0ED] transition-colors rounded-lg"
                                 onClick={() => removeColumn(i)}
                               >
-                                <Trash2 className="w-3 h-3" />
+                                <Trash2 className="w-4 h-4" />
                               </Button>
                             </div>
                             <Select defaultValue={i === 0 ? "nome" : i === 2 ? "telefone" : "variavel"}>
-                              <SelectTrigger className="bg-white border-border h-11 rounded-xl">
+                              <SelectTrigger className="bg-white border-[#E5E7EB] h-11 rounded-xl focus:ring-[#F06452]">
                                 <SelectValue placeholder="Selecione o campo" />
                               </SelectTrigger>
-                              <SelectContent>
+                              <SelectContent className="bg-white border-[#E5E7EB]">
                                 <SelectItem value="nome">Nome</SelectItem>
                                 <SelectItem value="telefone">Telefone</SelectItem>
                                 <SelectItem value="departamento">Departamento</SelectItem>
@@ -578,12 +568,12 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
                               </SelectContent>
                             </Select>
                             {(i === 0 || i === 2) ? (
-                              <div className="bg-green-500/10 text-green-600 px-3 py-1.5 rounded-lg border border-green-500/20 text-[10px] font-bold flex items-center gap-1.5">
-                                <Check className="w-3 h-3" /> Mapeado
+                              <div className="bg-green-50 text-green-600 px-3 py-1.5 rounded-lg border border-green-100 text-[10px] font-black flex items-center gap-1.5">
+                                <Check className="w-3.5 h-3.5" /> Mapeado
                               </div>
                             ) : (
-                              <div className="bg-primary/10 text-primary px-3 py-1.5 rounded-lg border border-primary/20 text-[10px] font-bold">
-                                Variável de fluxo: {header.toLowerCase()}
+                              <div className="bg-[#FDF0ED] text-[#F06452] px-3 py-1.5 rounded-lg border border-[#F06452]/10 text-[10px] font-black uppercase tracking-tight">
+                                Variável: {header.toLowerCase()}
                               </div>
                             )}
                           </div>
@@ -593,9 +583,9 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
                   </thead>
                   <tbody>
                     {csvPreview.slice(1, 4).map((row, rowIndex) => (
-                      <tr key={rowIndex} className="border-b border-border/50 hover:bg-accent/5 transition-colors">
+                      <tr key={rowIndex} className="border-b border-[#E5E7EB] hover:bg-slate-50 transition-colors">
                         {row.map((cell, cellIndex) => (
-                          <td key={cellIndex} className="p-6 text-sm font-medium text-navy/70 italic truncate max-w-[200px]">
+                          <td key={cellIndex} className="p-6 text-sm font-medium text-[#64748B] italic truncate max-w-[200px]">
                             {cell}
                           </td>
                         ))}
@@ -608,48 +598,48 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
           )}
 
           {step === 4 && (
-            <div className="grid grid-cols-1 lg:grid-cols-[380px_1fr] gap-12 animate-in fade-in slide-in-from-bottom-4 duration-500">
+            <div className="grid grid-cols-1 lg:grid-cols-[400px_1fr] gap-12 animate-in fade-in slide-in-from-bottom-4 duration-500">
               <div className="space-y-8">
                 <div>
-                  <h2 className="text-xl font-manrope font-extrabold text-navy uppercase tracking-tight">Conteúdo</h2>
-                  <p className="text-sm text-muted-fg mt-1">Definição do conteúdo a ser enviado</p>
+                  <h2 className="text-xl font-manrope font-extrabold text-[#0F172A] uppercase tracking-tight">Conteúdo</h2>
+                  <p className="text-sm text-[#64748B] mt-1">Definição do conteúdo a ser enviado</p>
                 </div>
 
                 <div className="space-y-4">
-                  <Label className="text-xs font-bold text-navy uppercase tracking-widest">Tipo de conteúdo</Label>
+                  <Label className="text-xs font-black text-[#0F172A] uppercase tracking-widest">Tipo de conteúdo</Label>
                   <div className="space-y-3">
                     {[
-                      { id: "mensagem", label: "Criar mensagem", desc: "Selecione o template a enviar e configure as variáveis e ações de botões, se necessário", icon: MessageSquare, badge: "NEW" },
-                      { id: "departamento", label: "Enviar por departamento", desc: "A execução é feita pelos usuários que estiverem mapeados com este departamento", icon: Users },
+                      { id: "mensagem", label: "Criar mensagem", desc: "Selecione o template a enviar e configure as variáveis e ações de botões.", icon: MessageSquare, badge: "NEW" },
+                      { id: "departamento", label: "Enviar por departamento", desc: "A execução é feita pelos usuários que estiverem mapeados com este departamento.", icon: Users },
                     ].map((item) => (
                       <div 
                         key={item.id}
                         onClick={() => setContentType(item.id)}
                         className={cn(
-                          "p-4 rounded-xl border transition-all duration-300 cursor-pointer flex items-center gap-4 group",
+                          "p-5 rounded-2xl border transition-all duration-300 cursor-pointer flex items-center gap-4 group",
                           contentType === item.id 
-                            ? "bg-primary/5 border-primary shadow-sm ring-1 ring-primary/20" 
-                            : "bg-background border-border hover:border-primary/30"
+                            ? "bg-[#FDF0ED] border-[#F06452] shadow-sm" 
+                            : "bg-white border-[#E5E7EB] hover:border-[#F06452]/30"
                         )}
                       >
                         <div className={cn(
-                          "w-10 h-10 rounded-lg flex items-center justify-center transition-colors",
-                          contentType === item.id ? "bg-primary text-white" : "bg-accent text-muted-fg group-hover:bg-primary/10 group-hover:text-primary"
+                          "w-12 h-12 rounded-xl flex items-center justify-center transition-colors",
+                          contentType === item.id ? "bg-[#F06452] text-white" : "bg-slate-100 text-[#64748B] group-hover:bg-[#FDF0ED] group-hover:text-[#F06452]"
                         )}>
-                          <item.icon className="w-5 h-5" />
+                          <item.icon className="w-6 h-6" />
                         </div>
                         <div className="flex-1">
                           <div className="flex items-center gap-2">
-                            <p className={cn("text-sm font-bold", contentType === item.id ? "text-primary" : "text-navy")}>{item.label}</p>
-                            {item.badge && <span className="bg-primary/10 text-primary text-[8px] px-1.5 py-0.5 rounded font-black">{item.badge}</span>}
+                            <p className={cn("text-sm font-bold", contentType === item.id ? "text-[#F06452]" : "text-[#0F172A]")}>{item.label}</p>
+                            {item.badge && <span className="bg-[#F06452] text-white text-[8px] px-1.5 py-0.5 rounded-md font-black">{item.badge}</span>}
                           </div>
-                          <p className="text-[10px] text-muted-fg font-medium leading-tight mt-0.5">{item.desc}</p>
+                          <p className="text-[11px] text-[#64748B] font-medium leading-tight mt-0.5">{item.desc}</p>
                         </div>
                         <div className={cn(
-                          "w-4 h-4 rounded-full border flex items-center justify-center",
-                          contentType === item.id ? "border-primary bg-primary" : "border-border"
+                          "w-5 h-5 rounded-full border-2 flex items-center justify-center",
+                          contentType === item.id ? "border-[#F06452] bg-[#F06452]" : "border-[#E5E7EB]"
                         )}>
-                          {contentType === item.id && <Check className="w-2.5 h-2.5 text-white" />}
+                          {contentType === item.id && <Check className="w-3 h-3 text-white" />}
                         </div>
                       </div>
                     ))}
@@ -657,26 +647,23 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
                 </div>
               </div>
 
-              <div className="bg-accent/20 rounded-2xl p-8 border border-border">
+              <div className="bg-slate-50 rounded-3xl p-8 border border-[#E5E7EB]">
                 {contentType === "mensagem" ? (
                   <div className="grid grid-cols-1 lg:grid-cols-[1fr_350px] gap-8">
                     <div className="space-y-6">
-                      <div className="bg-white border border-border rounded-2xl shadow-sm overflow-hidden">
-                        <div className="p-3 border-b border-border bg-accent/30 flex items-center justify-between">
-                          <div className="flex gap-1">
-                            <Button variant="ghost" size="sm" className="h-8 px-2 text-muted-fg hover:text-primary">
-                              <Smile className="w-4 h-4" />
+                      <div className="bg-white border border-[#E5E7EB] rounded-2xl shadow-xl overflow-hidden">
+                        <div className="p-4 border-b border-[#E5E7EB] bg-slate-50 flex items-center justify-between">
+                          <div className="flex gap-2">
+                            <Button variant="ghost" size="sm" className="h-9 w-9 p-0 text-[#64748B] hover:text-[#F06452] hover:bg-[#FDF0ED]">
+                              <Smile className="w-5 h-5" />
                             </Button>
-                            <Button variant="ghost" size="sm" className="h-8 px-2 text-muted-fg hover:text-primary">
-                              <ImageIcon className="w-4 h-4" />
-                            </Button>
-                            <Button variant="ghost" size="sm" className="h-8 px-2 text-muted-fg hover:text-primary">
-                              <FileText className="w-4 h-4" />
+                            <Button variant="ghost" size="sm" className="h-9 w-9 p-0 text-[#64748B] hover:text-[#F06452] hover:bg-[#FDF0ED]">
+                              <ImageIcon className="w-5 h-5" />
                             </Button>
                           </div>
                           <div className="flex gap-2">
-                            {["nome", "departamento", "evento"].map(v => (
-                              <Button key={v} variant="outline" size="sm" className="h-6 px-2 text-[10px] font-extrabold uppercase border-primary/20 text-primary hover:bg-primary/5">
+                            {["nome", "departamento"].map(v => (
+                              <Button key={v} variant="outline" size="sm" className="h-7 px-3 text-[10px] font-black uppercase border-[#F06452]/20 text-[#F06452] hover:bg-[#FDF0ED] rounded-lg">
                                 {"{{"}{v}{"}}"}
                               </Button>
                             ))}
@@ -684,52 +671,52 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
                         </div>
                         <textarea 
                           placeholder="Escreva sua mensagem aqui..."
-                          className="w-full min-h-[250px] p-6 text-navy focus:outline-none resize-none leading-relaxed"
+                          className="w-full min-h-[250px] p-6 text-[#0F172A] focus:outline-none resize-none leading-relaxed text-sm bg-white"
                         />
-                        <div className="p-4 border-t border-border bg-accent/10 flex justify-between items-center">
-                          <p className="text-[10px] text-muted-fg font-bold uppercase tracking-widest">Aproximadamente 120 caracteres</p>
-                          <Button variant="outline" size="sm" className="border-border text-navy hover:bg-accent font-bold">
+                        <div className="p-4 border-t border-[#E5E7EB] bg-slate-50 flex justify-between items-center">
+                          <p className="text-[10px] text-[#64748B] font-black uppercase tracking-widest">Aprox. 120 caracteres</p>
+                          <Button variant="outline" size="sm" className="border-[#E5E7EB] text-[#0F172A] hover:bg-white font-bold h-9 rounded-xl">
                             <Plus className="w-4 h-4 mr-2" /> Botão CTA
                           </Button>
                         </div>
                       </div>
                     </div>
 
-                    <div className="bg-white rounded-3xl p-4 shadow-sm relative overflow-hidden border border-border flex flex-col h-[400px]">
-                      <div className="bg-[#075E54] p-3 flex items-center gap-3 -mx-4 -mt-4 mb-4">
-                        <div className="w-8 h-8 rounded-full bg-white/20" />
+                    <div className="bg-white rounded-[2.5rem] p-4 shadow-2xl relative overflow-hidden border border-[#E5E7EB] flex flex-col h-[450px]">
+                      <div className="bg-[#075E54] p-4 flex items-center gap-3 -mx-4 -mt-4 mb-4">
+                        <div className="w-10 h-10 rounded-full bg-white/20" />
                         <div className="flex-1">
-                          <div className="w-24 h-2 bg-white/30 rounded" />
-                          <div className="w-16 h-1 bg-white/20 rounded mt-1" />
+                          <div className="w-28 h-2.5 bg-white/30 rounded" />
+                          <div className="w-20 h-1.5 bg-white/20 rounded mt-1.5" />
                         </div>
                       </div>
-                      <div className="space-y-4 flex-1 bg-[#E5DDD5] -mx-4 p-4 overflow-y-auto">
-                        <div className="bg-white rounded-xl p-3 shadow-sm max-w-[85%] relative">
-                          <p className="text-xs text-navy">Olá {"{{"}nome{"}}"}! 👋</p>
-                          <div className="mt-2 aspect-video bg-accent/50 rounded-lg flex items-center justify-center border border-dashed border-border">
-                             <ImageIcon className="w-6 h-6 text-muted-fg/20" />
+                      <div className="space-y-4 flex-1 bg-[#E5DDD5] -mx-4 p-5 overflow-y-auto">
+                        <div className="bg-white rounded-2xl p-4 shadow-md max-w-[90%] relative">
+                          <p className="text-sm text-[#0F172A]">Olá {"{{"}nome{"}}"}! 👋</p>
+                          <div className="mt-3 aspect-video bg-slate-50 rounded-xl flex items-center justify-center border border-dashed border-[#E5E7EB]">
+                             <ImageIcon className="w-8 h-8 text-slate-300" />
                           </div>
-                          <p className="text-xs text-navy mt-2 leading-relaxed">Prepare-se para o melhor evento do ano!</p>
-                          <span className="text-[8px] text-muted-fg absolute bottom-1 right-2 uppercase font-bold">14:30</span>
+                          <p className="text-sm text-[#0F172A] mt-3 leading-relaxed">Seu embarque está confirmado!</p>
+                          <span className="text-[9px] text-[#64748B] absolute bottom-2 right-3 uppercase font-black">14:30</span>
                         </div>
                       </div>
                     </div>
                   </div>
                 ) : (
-                  <div className="space-y-6">
+                  <div className="space-y-8">
                     <div>
-                      <h3 className="text-lg font-manrope font-extrabold text-navy">Selecione o Departamento</h3>
-                      <p className="text-sm text-muted-fg mt-1">Escolha o departamento que será responsável por este disparo.</p>
+                      <h3 className="text-lg font-manrope font-extrabold text-[#0F172A]">Selecione o Departamento</h3>
+                      <p className="text-sm text-[#64748B] mt-1">Escolha o setor responsável por este disparo.</p>
                     </div>
                     
-                    <div className="space-y-4">
+                    <div className="space-y-5">
                       <div className="space-y-2">
-                        <Label className="text-xs font-bold text-navy uppercase tracking-widest">Departamento <span className="text-primary">*</span></Label>
+                        <Label className="text-xs font-black text-[#0F172A] uppercase tracking-widest">Departamento <span className="text-[#F06452]">*</span></Label>
                         <Select>
-                          <SelectTrigger className="bg-white border-border h-12 rounded-xl">
+                          <SelectTrigger className="bg-white border-[#E5E7EB] h-12 rounded-xl focus:ring-[#F06452]">
                             <SelectValue placeholder="Selecione um departamento" />
                           </SelectTrigger>
-                          <SelectContent>
+                          <SelectContent className="bg-white border-[#E5E7EB]">
                             <SelectItem value="vendas">Vendas</SelectItem>
                             <SelectItem value="suporte">Suporte</SelectItem>
                             <SelectItem value="financeiro">Financeiro</SelectItem>
@@ -737,10 +724,10 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
                         </Select>
                       </div>
 
-                      <div className="p-4 bg-primary/5 border border-dashed border-primary/30 rounded-xl flex gap-3">
-                        <HelpCircle className="w-5 h-5 text-primary shrink-0" />
-                        <p className="text-xs text-navy font-medium leading-relaxed">
-                          Ao selecionar um departamento, as respostas deste disparo serão direcionadas automaticamente para os usuários que estiverem mapeados com este departamento.
+                      <div className="p-5 bg-[#FDF0ED] border border-dashed border-[#F06452]/20 rounded-2xl flex gap-4">
+                        <HelpCircle className="w-6 h-6 text-[#F06452] shrink-0" />
+                        <p className="text-xs text-[#0F172A] font-semibold leading-relaxed">
+                          As respostas deste disparo serão direcionadas automaticamente para os usuários vinculados a este departamento.
                         </p>
                       </div>
                     </div>
@@ -754,70 +741,69 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
             <div className="animate-in fade-in slide-in-from-bottom-4 duration-500 space-y-8">
               <div className="flex items-center justify-between">
                 <div className="space-y-1">
-                  <h2 className="text-xl font-manrope font-extrabold text-navy uppercase tracking-tight">Configurações</h2>
-                  <p className="text-sm text-muted-fg">Configurações adicionais para o envio</p>
+                  <h2 className="text-xl font-manrope font-extrabold text-[#0F172A] uppercase tracking-tight">Configurações</h2>
+                  <p className="text-sm text-[#64748B]">Configurações adicionais para o envio</p>
                 </div>
               </div>
 
-              <div className="bg-primary/5 border border-primary/20 rounded-2xl p-4 flex items-center gap-4">
-                <div className="bg-primary/10 p-2 rounded-xl">
-                  <Rocket className="w-5 h-5 text-primary" />
+              <div className="bg-[#FDF0ED] border border-[#F06452]/20 rounded-2xl p-5 flex items-center gap-4">
+                <div className="bg-[#F06452] p-2.5 rounded-xl shadow-lg shadow-[#F06452]/20">
+                  <Rocket className="w-5 h-5 text-white" />
                 </div>
-                <div className="flex-1 text-sm">
-                  <span className="text-muted-fg">Hoje este envio dispara </span>
-                  <span className="font-bold text-primary">50 contatos por vez</span>
-                  <span className="text-muted-fg">, com pausa de </span>
-                  <span className="font-bold text-primary">10 min entre lotes</span>
-                  <span className="text-muted-fg"> — cerca de </span>
-                  <span className="font-bold text-primary">300 mensagens por hora</span>
-                  <span className="text-muted-fg">, somente das </span>
-                  <span className="font-bold text-primary">00:00 às 23:59</span>
-                  <span className="text-muted-fg">.</span>
+                <div className="flex-1 text-sm text-[#0F172A]">
+                  <span className="text-[#64748B]">Hoje este envio dispara </span>
+                  <span className="font-black text-[#F06452]">50 contatos por vez</span>
+                  <span className="text-[#64748B]">, com pausa de </span>
+                  <span className="font-black text-[#F06452]">10 min entre lotes</span>
+                  <span className="text-[#64748B]"> — cerca de </span>
+                  <span className="font-black text-[#F06452]">300 mensagens por hora</span>
+                  <span className="text-[#64748B]">, somente das </span>
+                  <span className="font-black text-[#F06452]">00:00 às 23:59</span>
+                  <span className="text-[#64748B]">.</span>
                 </div>
               </div>
 
               <div className="space-y-4">
                 <div className="space-y-1">
-                  <Label className="text-xs font-bold text-navy uppercase tracking-widest">Com que rapidez enviar?</Label>
-                  <p className="text-[10px] text-muted-fg">Quanto mais rápido, maior a chance das mensagens serem marcadas como spam.</p>
+                  <Label className="text-xs font-black text-[#0F172A] uppercase tracking-widest">Com que rapidez enviar?</Label>
+                  <p className="text-[11px] text-[#64748B] font-medium">Quanto mais rápido, maior a chance das mensagens serem marcadas como spam.</p>
                 </div>
                 
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                   {[
-                    { id: "lento", label: "Lento", speed: "10 contatos a cada 15 min", total: "≈40 por hora", desc: "Ideal para campanhas longas. Nesta opção a chance de banimento é baixa.", risk: "Risco baixo", icon: "🐢" },
-                    { id: "medio", label: "Médio (Recomendado)", speed: "50 contatos a cada 10 min", total: "≈300 por hora", desc: "Ideal para as campanhas. Velocidade razoável e risco de banimento baixo.", risk: "Risco baixo", recommended: true, icon: "🐢" },
-                    { id: "rapido", label: "Rápido", speed: "100 contatos a cada 5 min", total: "≈1200 por hora", desc: "Entrega mais rápida. Pode causar problemas de banimento.", risk: "Pode causar bloqueio", icon: "🐇" },
-                    { id: "manual", label: "Manual", speed: "Você define - sob medida", total: "", desc: "Defina manualmente a velocidade de envio de mensagens da sua campanha.", risk: "Personalizado", icon: "✋" }
+                    { id: "lento", label: "Lento", speed: "10 contatos / 15 min", total: "≈40/h", risk: "Risco baixo", icon: "🐢" },
+                    { id: "medio", label: "Médio (Rec.)", speed: "50 contatos / 10 min", total: "≈300/h", risk: "Risco baixo", recommended: true, icon: "🐢" },
+                    { id: "rapido", label: "Rápido", speed: "100 contatos / 5 min", total: "≈1200/h", risk: "Risco moderado", icon: "🐇" },
+                    { id: "manual", label: "Manual", speed: "Defina você mesmo", total: "", risk: "Personalizado", icon: "✋" }
                   ].map((item) => (
                     <div 
                       key={item.id}
                       onClick={() => setSendingSpeed(item.id)}
                       className={cn(
-                        "p-4 rounded-xl border-2 transition-all cursor-pointer flex flex-col gap-3 relative group",
-                        sendingSpeed === item.id ? "bg-primary/5 border-primary shadow-sm" : "bg-white border-border hover:border-primary/30"
+                        "p-5 rounded-2xl border-2 transition-all cursor-pointer flex flex-col gap-4 relative group",
+                        sendingSpeed === item.id ? "bg-[#FDF0ED] border-[#F06452] shadow-sm" : "bg-white border-[#E5E7EB] hover:border-[#F06452]/30"
                       )}
                     >
                       <div className="flex items-center justify-between">
-                        <span className="text-xl">{item.icon}</span>
-                        {sendingSpeed === item.id && <div className="w-4 h-4 rounded-full bg-primary flex items-center justify-center"><Check className="w-2.5 h-2.5 text-white" /></div>}
+                        <span className="text-2xl">{item.icon}</span>
+                        {sendingSpeed === item.id && <div className="w-5 h-5 rounded-full bg-[#F06452] flex items-center justify-center shadow-md shadow-[#F06452]/20"><Check className="w-3 h-3 text-white" /></div>}
                       </div>
                       <div className="space-y-1">
-                        <p className={cn("text-sm font-bold", sendingSpeed === item.id ? "text-primary" : "text-navy")}>{item.label}</p>
-                        <p className="text-[10px] font-bold text-navy/70">{item.speed} · {item.total}</p>
+                        <p className={cn("text-sm font-bold", sendingSpeed === item.id ? "text-[#F06452]" : "text-[#0F172A]")}>{item.label}</p>
+                        <p className="text-[10px] font-black text-[#0F172A]/70 uppercase tracking-tight">{item.speed}</p>
                       </div>
-                      <div className="h-[2px] w-full bg-accent relative overflow-hidden rounded-full">
+                      <div className="h-1.5 w-full bg-slate-100 relative overflow-hidden rounded-full">
                         <div className={cn(
-                          "absolute top-0 left-0 h-full bg-primary transition-all duration-500",
+                          "absolute top-0 left-0 h-full bg-[#F06452] transition-all duration-700 ease-in-out",
                           item.id === "lento" ? "w-1/4" : item.id === "medio" ? "w-2/4" : item.id === "rapido" ? "w-full" : "w-0"
                         )} />
                       </div>
-                      <p className="text-[10px] text-muted-fg leading-tight">{item.desc}</p>
                       <div className="flex gap-1.5 flex-wrap">
                         <span className={cn(
-                          "text-[8px] px-1.5 py-0.5 rounded font-black uppercase tracking-wider",
+                          "text-[9px] px-2 py-0.5 rounded-md font-black uppercase tracking-tight",
                           item.id === "rapido" ? "bg-amber-100 text-amber-600" : "bg-green-100 text-green-600"
                         )}>{item.risk}</span>
-                        {item.recommended && <span className="bg-primary/10 text-primary text-[8px] px-1.5 py-0.5 rounded font-black uppercase tracking-wider">Recomendado</span>}
+                        {item.recommended && <span className="bg-[#F06452] text-white text-[9px] px-2 py-0.5 rounded-md font-black uppercase tracking-tight">Recomendado</span>}
                       </div>
                     </div>
                   ))}
@@ -825,120 +811,117 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
               </div>
 
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                <div className="bg-white rounded-2xl border border-border p-6 space-y-6 shadow-sm">
-                  <div className="flex items-center gap-3">
-                    <div className="bg-accent p-2 rounded-lg"><Users className="w-4 h-4 text-navy" /></div>
+                <div className="bg-white rounded-[2rem] border border-[#E5E7EB] p-8 space-y-6 shadow-xl shadow-slate-200/50">
+                  <div className="flex items-center gap-4">
+                    <div className="bg-slate-100 p-2.5 rounded-xl"><Users className="w-5 h-5 text-[#0F172A]" /></div>
                     <div className="space-y-0.5">
-                      <h4 className="text-sm font-bold text-navy">Envio em lotes</h4>
-                      <p className="text-[10px] text-muted-fg leading-tight">O sistema manda um grupo de contatos, faz uma pausa e continua. Isso deixa o envio mais natural.</p>
+                      <h4 className="text-sm font-black text-[#0F172A] uppercase tracking-tight">Envio em lotes</h4>
+                      <p className="text-[11px] text-[#64748B] leading-tight font-medium">O sistema manda um grupo, pausa e continua. Mais natural.</p>
                     </div>
                   </div>
 
-                  <div className="bg-accent/30 rounded-xl p-4 flex gap-4 overflow-x-auto no-scrollbar">
+                  <div className="bg-slate-50 rounded-2xl p-5 flex gap-4 overflow-x-auto no-scrollbar border border-[#E5E7EB]">
                     {[1, 2, 3].map(i => (
-                      <div key={i} className="min-w-[140px] bg-white border border-border rounded-lg p-3 text-center space-y-1.5">
-                        <p className="text-[10px] font-black text-primary uppercase">Lote {i}</p>
-                        <p className="text-xs font-bold text-navy">50 contatos</p>
-                        <div className="flex items-center justify-center gap-1.5 pt-1.5 border-t border-accent">
-                          <Clock className="w-3 h-3 text-muted-fg" />
-                          <span className="text-[10px] font-bold text-muted-fg">10 min</span>
+                      <div key={i} className="min-w-[150px] bg-white border border-[#E5E7EB] rounded-xl p-4 text-center space-y-2 shadow-sm">
+                        <p className="text-[10px] font-black text-[#F06452] uppercase tracking-widest">Lote {i}</p>
+                        <p className="text-sm font-black text-[#0F172A]">50 contatos</p>
+                        <div className="flex items-center justify-center gap-2 pt-2 border-t border-slate-50">
+                          <Clock className="w-3.5 h-3.5 text-[#64748B]" />
+                          <span className="text-[11px] font-bold text-[#64748B]">10 min</span>
                         </div>
                       </div>
                     ))}
                   </div>
 
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-2 gap-5">
                     <div className="space-y-2">
-                      <Label className="text-xs font-bold text-navy uppercase tracking-widest">Contatos por lote</Label>
+                      <Label className="text-xs font-black text-[#0F172A] uppercase tracking-widest">Contatos / Lote</Label>
                       <Input 
                         type="number" 
                         value={contactsPerBatch}
                         onChange={(e) => setContactsPerBatch(Number(e.target.value))}
-                        className="bg-accent/30 border-border h-11 rounded-xl font-bold text-navy"
+                        className="bg-white border-[#E5E7EB] h-12 rounded-xl font-bold text-[#0F172A] focus:ring-[#F06452]"
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label className="text-xs font-bold text-navy uppercase tracking-widest">Intervalo entre lotes (em minutos)</Label>
+                      <Label className="text-xs font-black text-[#0F172A] uppercase tracking-widest">Pausa (minutos)</Label>
                       <Input 
                         type="number" 
                         value={intervalBetweenBatches}
                         onChange={(e) => setIntervalBetweenBatches(Number(e.target.value))}
-                        className="bg-accent/30 border-border h-11 rounded-xl font-bold text-navy"
+                        className="bg-white border-[#E5E7EB] h-12 rounded-xl font-bold text-[#0F172A] focus:ring-[#F06452]"
                       />
                     </div>
                   </div>
 
-                  <div className="bg-primary/5 text-primary p-3 rounded-xl flex items-center gap-3 border border-primary/10">
-                    <Clock className="w-4 h-4" />
-                    <p className="text-[10px] font-bold">Os horários abaixo seguem o fuso horário do projeto: America/Sao Paulo.</p>
+                  <div className="bg-[#FDF0ED] text-[#F06452] p-4 rounded-xl flex items-center gap-3 border border-[#F06452]/10">
+                    <Clock className="w-5 h-5" />
+                    <p className="text-[10px] font-black uppercase tracking-tight">Fuso horário: America/Sao Paulo</p>
                   </div>
 
-                  <div className="pt-4 border-t border-border flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <div className="bg-accent p-2 rounded-lg"><Calendar className="w-4 h-4 text-navy" /></div>
+                  <div className="pt-6 border-t border-[#E5E7EB] flex items-center justify-between">
+                    <div className="flex items-center gap-4">
+                      <div className="bg-slate-100 p-2.5 rounded-xl"><Calendar className="w-5 h-5 text-[#0F172A]" /></div>
                       <div className="space-y-0.5">
-                        <h4 className="text-sm font-bold text-navy">Agendar data e hora de início?</h4>
-                        <p className="text-[10px] text-muted-fg leading-tight">Define quando a campanha deve começar a enviar. Se não selecionado, começa imediatamente.</p>
+                        <h4 className="text-sm font-black text-[#0F172A] uppercase tracking-tight">Agendar início?</h4>
+                        <p className="text-[11px] text-[#64748B] leading-tight font-medium">Define quando a campanha deve começar.</p>
                       </div>
                     </div>
-                    <Switch checked={isScheduled} onCheckedChange={setIsScheduled} className="data-[state=checked]:bg-primary" />
+                    <Switch checked={isScheduled} onCheckedChange={setIsScheduled} className="data-[state=checked]:bg-[#F06452]" />
                   </div>
                 </div>
 
-                <div className="bg-white rounded-2xl border border-border p-6 space-y-6 shadow-sm flex flex-col">
-                  <div className="flex items-center gap-3">
-                    <div className="bg-accent p-2 rounded-lg"><Clock className="w-4 h-4 text-navy" /></div>
+                <div className="bg-white rounded-[2rem] border border-[#E5E7EB] p-8 space-y-6 shadow-xl shadow-slate-200/50 flex flex-col">
+                  <div className="flex items-center gap-4">
+                    <div className="bg-slate-100 p-2.5 rounded-xl"><Clock className="w-5 h-5 text-[#0F172A]" /></div>
                     <div className="space-y-0.5">
-                      <h4 className="text-sm font-bold text-navy">Horário permitido</h4>
-                      <p className="text-[10px] text-muted-fg leading-tight">Fora dessa faixa o envio pausa e volta sozinho no dia seguinte.</p>
+                      <h4 className="text-sm font-black text-[#0F172A] uppercase tracking-tight">Horário permitido</h4>
+                      <p className="text-[11px] text-[#64748B] leading-tight font-medium">Fora dessa faixa o envio pausa e volta no dia seguinte.</p>
                     </div>
                   </div>
 
-                  <div className="flex-1 flex flex-col justify-center py-4">
-                    <div className="relative h-6 w-full mb-8">
-                      <div className="absolute top-1/2 -translate-y-1/2 w-full h-1 bg-primary rounded-full" />
+                  <div className="flex-1 flex flex-col justify-center py-6">
+                    <div className="relative h-2 w-full mb-10 bg-slate-100 rounded-full">
+                      <div className="absolute top-0 left-0 w-full h-full bg-[#F06452]/20 rounded-full" />
                       {[0, 6, 12, 18, 24].map(h => (
-                        <div key={h} className="absolute top-1/2 -translate-y-1/2 flex flex-col items-center gap-1" style={{ left: `${(h / 24) * 100}%` }}>
-                          <div className="w-1.5 h-1.5 rounded-full bg-primary border-2 border-white shadow-sm" />
-                          <span className="text-[10px] font-bold text-muted-fg mt-4">{h}h</span>
+                        <div key={h} className="absolute top-1/2 -translate-y-1/2 flex flex-col items-center gap-2" style={{ left: `${(h / 24) * 100}%` }}>
+                          <div className="w-3 h-3 rounded-full bg-white border-2 border-[#F06452] shadow-sm" />
+                          <span className="text-[11px] font-black text-[#64748B] mt-5">{h}h</span>
                         </div>
                       ))}
                     </div>
 
-                    <div className="flex items-center gap-6 justify-center mt-4">
+                    <div className="flex items-center gap-8 justify-center mt-6">
                       <div className="space-y-2">
-                        <Label className="text-xs font-bold text-navy uppercase tracking-widest">Começa às</Label>
-                        <div className="flex items-center gap-2">
+                        <Label className="text-xs font-black text-[#0F172A] uppercase tracking-widest">Começa às</Label>
+                        <div className="flex items-center gap-3">
                           <Input 
                             value={startTime}
                             onChange={(e) => setStartTime(e.target.value)}
-                            className="w-24 bg-accent/30 border-border h-11 rounded-xl font-bold text-navy text-center"
+                            className="w-28 bg-white border-[#E5E7EB] h-12 rounded-xl font-bold text-[#0F172A] text-center focus:ring-[#F06452]"
                           />
-                          <Clock className="w-4 h-4 text-muted-fg" />
+                          <Clock className="w-5 h-5 text-[#64748B]" />
                         </div>
                       </div>
                       <div className="space-y-2">
-                        <Label className="text-xs font-bold text-navy uppercase tracking-widest">Para às</Label>
-                        <div className="flex items-center gap-2">
+                        <Label className="text-xs font-black text-[#0F172A] uppercase tracking-widest">Para às</Label>
+                        <div className="flex items-center gap-3">
                           <Input 
                             value={endTime}
                             onChange={(e) => setEndTime(e.target.value)}
-                            className="w-24 bg-accent/30 border-border h-11 rounded-xl font-bold text-navy text-center"
+                            className="w-28 bg-white border-[#E5E7EB] h-12 rounded-xl font-bold text-[#0F172A] text-center focus:ring-[#F06452]"
                           />
-                          <Clock className="w-4 h-4 text-muted-fg" />
+                          <Clock className="w-5 h-5 text-[#64748B]" />
                         </div>
                       </div>
                     </div>
                   </div>
 
                   <Button 
-                    className="w-full bg-primary hover:bg-primary/90 text-white font-extrabold h-14 rounded-2xl shadow-xl shadow-primary/30 text-lg uppercase tracking-tight mt-auto"
-                    onClick={() => {
-                      // Final logic
-                      onOpenChange(false);
-                    }}
+                    className="w-full bg-[#F06452] hover:bg-[#D95342] text-white font-black h-16 rounded-[1.25rem] shadow-2xl shadow-[#F06452]/30 text-lg uppercase tracking-widest mt-auto transition-all transform active:scale-[0.98]"
+                    onClick={() => onOpenChange(false)}
                   >
-                    <Rocket className="w-5 h-5 mr-3" /> Iniciar Envio Agora
+                    <Rocket className="w-6 h-6 mr-3" /> Iniciar Envio Agora
                   </Button>
                 </div>
               </div>
