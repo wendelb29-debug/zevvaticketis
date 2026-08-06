@@ -271,6 +271,9 @@ function SettingsPage({ session }: { session: any }) {
     { id: "2", name: "Comercial", in_service: 8, pending: 2, completed: 30 },
   ]);
 
+  const [notificarMudancasFila, setNotificarMudancasFila] = useState(true);
+
+
 
   const filteredAgents = agents.filter(
     (a) =>
