@@ -1174,6 +1174,29 @@ function SettingsPage({ session }: { session: any }) {
                   })
                   .map((log) => (
                     <tr key={log.id} className="hover:bg-accent/20 transition-colors">
+                      <td className="px-4 py-4 text-center">
+                        {log.status === 'falhou' && (
+                          <Button 
+                            variant="ghost" 
+                            size="icon" 
+                            title="Reenviar Notificação"
+                            onClick={() => {
+                              toast.loading("Reenviando notificação...", { id: log.id });
+                              setTimeout(() => {
+                                setNotificacoesHistory(prev => prev.map(h => 
+                                  h.id === log.id 
+                                    ? { ...h, status: 'enviado', motivo: '', resposta: `Reenvio manual OK: ${new Date().toLocaleString("pt-BR")}` }
+                                    : h
+                                ));
+                                toast.success("Notificação reenviada com sucesso!", { id: log.id });
+                              }, 1500);
+                            }}
+                            className="h-8 w-8 text-primary hover:bg-primary/10"
+                          >
+                            <Zap className="w-4 h-4" />
+                          </Button>
+                        )}
+                      </td>
                       <td className="px-6 py-4 font-mono text-[10px] text-muted-fg">{log.id}</td>
                       <td className="px-6 py-4 text-xs whitespace-nowrap">{log.data}</td>
                       <td className="px-6 py-4 font-bold">{log.target}</td>
