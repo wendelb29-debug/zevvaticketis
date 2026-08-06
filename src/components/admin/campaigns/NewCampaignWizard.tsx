@@ -134,7 +134,7 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
                   {s.number < 5 && (
                     <div className="absolute -right-7 top-1/2 -translate-y-1/2 w-4 h-[1px] bg-[#E5E7EB]" />
                   )}
-                </div>
+                </button>
               ))}
             </div>
             
