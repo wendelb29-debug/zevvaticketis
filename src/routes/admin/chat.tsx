@@ -12,9 +12,11 @@ import {
   Settings as SettingsIcon, Sun, Moon,
   Paperclip, Smile, ImageIcon, Play, Volume2, Pencil, X, Home, ChevronRight,
   ArrowUpDown, SortAsc, SortDesc, CalendarDays, Lock, Globe, MessageCircle,
-  Music, FileText, Sparkles, Wand2, ArrowUpCircle, AlignLeft, Languages
+  Music, FileText, Sparkles, Wand2, ArrowUpCircle, AlignLeft, Languages,
+  PanelLeftClose, PanelLeftOpen
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { toast } from "sonner";
 
 const READ_RECEIPT_BLUE = "READ_RECEIPT_BLUE";
