@@ -1059,6 +1059,42 @@ function SettingsPage({ session }: { session: any }) {
             <DialogDescription className="text-muted-fg">Consulte os registros de notificações enviadas com filtros avançados e detalhes técnicos.</DialogDescription>
           </DialogHeader>
           
+          <div className="p-4 bg-accent/5 border-b border-border">
+            <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
+              <div className="bg-background p-3 rounded-lg border border-border shadow-sm flex flex-col items-center justify-center">
+                <span className="text-[10px] font-bold text-muted-fg uppercase tracking-wider">Taxa de Sucesso</span>
+                <span className="text-xl font-manrope font-extrabold text-primary">
+                  {Math.round((notificacoesHistory.filter(h => h.status === 'enviado').length / Math.max(1, notificacoesHistory.length)) * 100)}%
+                </span>
+              </div>
+              <div className="bg-background p-3 rounded-lg border border-border shadow-sm flex flex-col items-center justify-center">
+                <span className="text-[10px] font-bold text-muted-fg uppercase tracking-wider">Falhas (Geral)</span>
+                <span className="text-xl font-manrope font-extrabold text-destructive">
+                  {notificacoesHistory.filter(h => h.status === 'falhou').length}
+                </span>
+              </div>
+              <div className="bg-background p-3 rounded-lg border border-border shadow-sm flex flex-col items-center justify-center">
+                <span className="text-[10px] font-bold text-muted-fg uppercase tracking-wider">Maior Gargalo</span>
+                <span className="text-xs font-bold text-foreground">
+                  {(() => {
+                    const counts: Record<string, number> = {};
+                    notificacoesHistory.filter(h => h.status === 'falhou').forEach(h => {
+                      counts[h.fila] = (counts[h.fila] || 0) + 1;
+                    });
+                    const max = Object.entries(counts).sort((a,b) => b[1] - a[1])[0];
+                    return max ? `${max[0]} (${max[1]})` : "Nenhum";
+                  })()}
+                </span>
+              </div>
+              <div className="bg-background p-3 rounded-lg border border-border shadow-sm flex flex-col items-center justify-center">
+                <span className="text-[10px] font-bold text-muted-fg uppercase tracking-wider">Melhor Canal</span>
+                <span className="text-xs font-bold text-primary flex items-center gap-1">
+                   <Zap className="w-3 h-3" /> WhatsApp
+                </span>
+              </div>
+            </div>
+          </div>
+          
           <div className="p-4 border-b border-border bg-background/50 grid grid-cols-1 md:grid-cols-4 gap-3">
             <div className="space-y-1">
               <Label className="text-[10px] uppercase font-bold text-muted-fg">Buscar</Label>
