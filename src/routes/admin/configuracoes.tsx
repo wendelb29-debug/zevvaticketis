@@ -316,6 +316,8 @@ function SettingsPage() {
 
   const saveDept = () => {
     if (!deptName.trim()) return;
+    const action = editingDeptId ? "QUEUE_UPDATE" : "QUEUE_CREATE";
+    
     if (editingDeptId) {
       setDepartments((prev) =>
         prev.map((d) =>
@@ -324,27 +326,29 @@ function SettingsPage() {
             : d
         )
       );
-      toast.success("Departamento atualizado!");
+      toast.success("Fila de atendimento atualizada!");
     } else {
       const newId = crypto.randomUUID();
-      setDepartments((prev) => [
-        ...prev,
-        {
-          id: newId,
-          name: deptName.trim(),
-          members: deptAgents.length,
-          agents: deptAgents,
-          restrictions: deptRestrictions,
-          status: "ativo",
-          department_id: newId
-        },
-      ]);
-      toast.success("Departamento criado!");
+      const newQueue = {
+        id: newId,
+        name: deptName.trim(),
+        members: deptAgents.length,
+        agents: deptAgents,
+        restrictions: deptRestrictions,
+        status: "ativo" as const,
+        department_id: newId
+      };
+      setDepartments((prev) => [...prev, newQueue]);
+      toast.success("Fila de atendimento criada!");
     }
 
+    // Registro na Auditoria para rastreabilidade de alterações nas filas
+    console.log(`Auditoria: ${action} - Fila: ${deptName.trim()} - Usuário: ${session?.user?.email}`);
+    
     setIsDeptModalOpen(false);
     resetDeptForm();
   };
+
 
 
   const [tags] = useState([
