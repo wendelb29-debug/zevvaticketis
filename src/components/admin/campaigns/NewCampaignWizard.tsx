@@ -737,53 +737,59 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
                       )}
                     </div>
 
-                    <div className="bg-white rounded-[2.5rem] p-4 shadow-2xl relative overflow-hidden border border-[#E5E7EB] flex flex-col h-auto min-h-[450px]">
-                      <div className="bg-[#075E54] p-4 flex items-center gap-3 -mx-4 -mt-4 mb-4">
-                        <div className="w-10 h-10 rounded-full bg-white/20" />
+                    <div className="bg-[#E5DDD5] rounded-[2.5rem] p-4 shadow-2xl relative overflow-hidden border border-[#D1D7DB] flex flex-col h-auto min-h-[500px]">
+                      {/* WhatsApp Header */}
+                      <div className="bg-[#008069] p-4 flex items-center gap-3 -mx-4 -mt-4 mb-4">
+                        <div className="w-9 h-9 rounded-full bg-[#D1D7DB] flex items-center justify-center">
+                          <Users className="w-5 h-5 text-white" />
+                        </div>
                         <div className="flex-1">
-                          <div className="w-28 h-2.5 bg-white/30 rounded" />
-                          <div className="w-20 h-1.5 bg-white/20 rounded mt-1.5" />
+                          <div className="text-white text-sm font-medium">Zevva Business</div>
+                          <div className="text-white/70 text-[10px]">online</div>
                         </div>
                       </div>
-                      <div className="space-y-4 flex-1 bg-[#E5DDD5] -mx-4 p-5 overflow-y-auto min-h-[300px]">
-                        <div className="bg-white rounded-2xl p-4 shadow-md max-w-[90%] relative">
-                          <div className="whitespace-pre-wrap text-sm text-[#0F172A]">
-                            {messageText || "Escreva sua mensagem aqui..."}
-                          </div>
+
+                      {/* Message Area */}
+                      <div className="space-y-4 flex-1 -mx-4 p-5 overflow-y-auto">
+                        <div className="bg-white rounded-lg shadow-[0_1px_0.5px_rgba(0,0,0,0.13)] max-w-[85%] relative ml-2">
+                          {/* Triangle tip */}
+                          <div className="absolute top-0 -left-2 w-0 h-0 border-t-[10px] border-t-white border-l-[10px] border-l-transparent" />
                           
-                          {messageImage && (
-                            <div className="mt-3 overflow-hidden rounded-xl border border-[#E5E7EB]">
-                              <img src={messageImage} alt="Preview" className="w-full h-auto object-cover" />
-                              <Button 
-                                variant="destructive" 
-                                size="icon" 
-                                className="absolute top-2 right-2 h-7 w-7 rounded-full"
-                                onClick={() => setMessageImage(null)}
-                              >
-                                <Trash2 className="w-3 h-3" />
-                              </Button>
-                            </div>
-                          )}
-                          
-                          {!messageImage && (
-                            <div className="mt-3 aspect-video bg-slate-50 rounded-xl flex items-center justify-center border border-dashed border-[#E5E7EB]">
-                               <ImageIcon className="w-8 h-8 text-slate-300" />
-                            </div>
-                          )}
-                          
-                          <span className="text-[9px] text-[#64748B] block mt-2 text-right uppercase font-black">14:30</span>
-                        </div>
-                        
-                        {ctaButtons.length > 0 && (
-                          <div className="mt-2 space-y-1 max-w-[90%]">
-                            {ctaButtons.map((btn) => (
-                              <div key={btn.id} className="bg-white rounded-xl py-2.5 px-4 shadow-sm flex items-center justify-center gap-2 border-t border-[#E5E7EB] cursor-default active:bg-slate-50 transition-colors">
-                                <MousePointer2 className="w-3.5 h-3.5 text-[#00a884]" />
-                                <span className="text-[13px] font-medium text-[#00a884]">{btn.label}</span>
+                          <div className="p-2 pb-1">
+                            {messageImage && (
+                              <div className="mb-2 overflow-hidden rounded-md">
+                                <img src={messageImage} alt="Preview" className="w-full h-auto object-cover max-h-60" />
                               </div>
-                            ))}
+                            )}
+                            
+                            {!messageImage && messageText && (
+                              <div className="mb-2 aspect-video bg-[#F0F2F5] rounded-md flex items-center justify-center">
+                                 <ImageIcon className="w-8 h-8 text-[#ACB1B6]" />
+                              </div>
+                            )}
+
+                            <div className="whitespace-pre-wrap text-[13.5px] leading-relaxed text-[#111b21] px-1">
+                              {messageText || "Escreva sua mensagem aqui..."}
+                            </div>
+                            
+                            <div className="flex justify-end items-center gap-1 mt-1">
+                              <span className="text-[10px] text-[#667781]">14:30</span>
+                              <Check className="w-3 h-3 text-[#53bdeb]" />
+                            </div>
                           </div>
-                        )}
+
+                          {/* CTA Buttons - WhatsApp Style */}
+                          {ctaButtons.length > 0 && (
+                            <div className="border-t border-[#f0f2f5] mt-1">
+                              {ctaButtons.map((btn) => (
+                                <div key={btn.id} className="py-2.5 px-4 flex items-center justify-center gap-2 border-b last:border-b-0 border-[#f0f2f5] cursor-default bg-white hover:bg-[#f8f9fa] active:bg-[#f1f2f3] transition-colors first:rounded-b-none last:rounded-b-lg">
+                                  <MousePointer2 className="w-3.5 h-3.5 text-[#00a884]" />
+                                  <span className="text-[14px] font-normal text-[#00a884]">{btn.label}</span>
+                                </div>
+                              ))}
+                            </div>
+                          )}
+                        </div>
                       </div>
                     </div>
                   </div>
