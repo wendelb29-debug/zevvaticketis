@@ -928,6 +928,7 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
               </div>
             </div>
           )}
+          </div>
         </ScrollArea>
       </DialogContent>
     </Dialog>
