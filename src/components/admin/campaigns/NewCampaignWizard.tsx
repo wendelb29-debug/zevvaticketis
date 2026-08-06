@@ -811,120 +811,117 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
               </div>
 
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                <div className="bg-white rounded-2xl border border-border p-6 space-y-6 shadow-sm">
-                  <div className="flex items-center gap-3">
-                    <div className="bg-accent p-2 rounded-lg"><Users className="w-4 h-4 text-navy" /></div>
+                <div className="bg-white rounded-[2rem] border border-[#E5E7EB] p-8 space-y-6 shadow-xl shadow-slate-200/50">
+                  <div className="flex items-center gap-4">
+                    <div className="bg-slate-100 p-2.5 rounded-xl"><Users className="w-5 h-5 text-[#0F172A]" /></div>
                     <div className="space-y-0.5">
-                      <h4 className="text-sm font-bold text-navy">Envio em lotes</h4>
-                      <p className="text-[10px] text-muted-fg leading-tight">O sistema manda um grupo de contatos, faz uma pausa e continua. Isso deixa o envio mais natural.</p>
+                      <h4 className="text-sm font-black text-[#0F172A] uppercase tracking-tight">Envio em lotes</h4>
+                      <p className="text-[11px] text-[#64748B] leading-tight font-medium">O sistema manda um grupo, pausa e continua. Mais natural.</p>
                     </div>
                   </div>
 
-                  <div className="bg-accent/30 rounded-xl p-4 flex gap-4 overflow-x-auto no-scrollbar">
+                  <div className="bg-slate-50 rounded-2xl p-5 flex gap-4 overflow-x-auto no-scrollbar border border-[#E5E7EB]">
                     {[1, 2, 3].map(i => (
-                      <div key={i} className="min-w-[140px] bg-white border border-border rounded-lg p-3 text-center space-y-1.5">
-                        <p className="text-[10px] font-black text-primary uppercase">Lote {i}</p>
-                        <p className="text-xs font-bold text-navy">50 contatos</p>
-                        <div className="flex items-center justify-center gap-1.5 pt-1.5 border-t border-accent">
-                          <Clock className="w-3 h-3 text-muted-fg" />
-                          <span className="text-[10px] font-bold text-muted-fg">10 min</span>
+                      <div key={i} className="min-w-[150px] bg-white border border-[#E5E7EB] rounded-xl p-4 text-center space-y-2 shadow-sm">
+                        <p className="text-[10px] font-black text-[#F06452] uppercase tracking-widest">Lote {i}</p>
+                        <p className="text-sm font-black text-[#0F172A]">50 contatos</p>
+                        <div className="flex items-center justify-center gap-2 pt-2 border-t border-slate-50">
+                          <Clock className="w-3.5 h-3.5 text-[#64748B]" />
+                          <span className="text-[11px] font-bold text-[#64748B]">10 min</span>
                         </div>
                       </div>
                     ))}
                   </div>
 
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-2 gap-5">
                     <div className="space-y-2">
-                      <Label className="text-xs font-bold text-navy uppercase tracking-widest">Contatos por lote</Label>
+                      <Label className="text-xs font-black text-[#0F172A] uppercase tracking-widest">Contatos / Lote</Label>
                       <Input 
                         type="number" 
                         value={contactsPerBatch}
                         onChange={(e) => setContactsPerBatch(Number(e.target.value))}
-                        className="bg-accent/30 border-border h-11 rounded-xl font-bold text-navy"
+                        className="bg-white border-[#E5E7EB] h-12 rounded-xl font-bold text-[#0F172A] focus:ring-[#F06452]"
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label className="text-xs font-bold text-navy uppercase tracking-widest">Intervalo entre lotes (em minutos)</Label>
+                      <Label className="text-xs font-black text-[#0F172A] uppercase tracking-widest">Pausa (minutos)</Label>
                       <Input 
                         type="number" 
                         value={intervalBetweenBatches}
                         onChange={(e) => setIntervalBetweenBatches(Number(e.target.value))}
-                        className="bg-accent/30 border-border h-11 rounded-xl font-bold text-navy"
+                        className="bg-white border-[#E5E7EB] h-12 rounded-xl font-bold text-[#0F172A] focus:ring-[#F06452]"
                       />
                     </div>
                   </div>
 
-                  <div className="bg-primary/5 text-primary p-3 rounded-xl flex items-center gap-3 border border-primary/10">
-                    <Clock className="w-4 h-4" />
-                    <p className="text-[10px] font-bold">Os horários abaixo seguem o fuso horário do projeto: America/Sao Paulo.</p>
+                  <div className="bg-[#FDF0ED] text-[#F06452] p-4 rounded-xl flex items-center gap-3 border border-[#F06452]/10">
+                    <Clock className="w-5 h-5" />
+                    <p className="text-[10px] font-black uppercase tracking-tight">Fuso horário: America/Sao Paulo</p>
                   </div>
 
-                  <div className="pt-4 border-t border-border flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <div className="bg-accent p-2 rounded-lg"><Calendar className="w-4 h-4 text-navy" /></div>
+                  <div className="pt-6 border-t border-[#E5E7EB] flex items-center justify-between">
+                    <div className="flex items-center gap-4">
+                      <div className="bg-slate-100 p-2.5 rounded-xl"><Calendar className="w-5 h-5 text-[#0F172A]" /></div>
                       <div className="space-y-0.5">
-                        <h4 className="text-sm font-bold text-navy">Agendar data e hora de início?</h4>
-                        <p className="text-[10px] text-muted-fg leading-tight">Define quando a campanha deve começar a enviar. Se não selecionado, começa imediatamente.</p>
+                        <h4 className="text-sm font-black text-[#0F172A] uppercase tracking-tight">Agendar início?</h4>
+                        <p className="text-[11px] text-[#64748B] leading-tight font-medium">Define quando a campanha deve começar.</p>
                       </div>
                     </div>
-                    <Switch checked={isScheduled} onCheckedChange={setIsScheduled} className="data-[state=checked]:bg-primary" />
+                    <Switch checked={isScheduled} onCheckedChange={setIsScheduled} className="data-[state=checked]:bg-[#F06452]" />
                   </div>
                 </div>
 
-                <div className="bg-white rounded-2xl border border-border p-6 space-y-6 shadow-sm flex flex-col">
-                  <div className="flex items-center gap-3">
-                    <div className="bg-accent p-2 rounded-lg"><Clock className="w-4 h-4 text-navy" /></div>
+                <div className="bg-white rounded-[2rem] border border-[#E5E7EB] p-8 space-y-6 shadow-xl shadow-slate-200/50 flex flex-col">
+                  <div className="flex items-center gap-4">
+                    <div className="bg-slate-100 p-2.5 rounded-xl"><Clock className="w-5 h-5 text-[#0F172A]" /></div>
                     <div className="space-y-0.5">
-                      <h4 className="text-sm font-bold text-navy">Horário permitido</h4>
-                      <p className="text-[10px] text-muted-fg leading-tight">Fora dessa faixa o envio pausa e volta sozinho no dia seguinte.</p>
+                      <h4 className="text-sm font-black text-[#0F172A] uppercase tracking-tight">Horário permitido</h4>
+                      <p className="text-[11px] text-[#64748B] leading-tight font-medium">Fora dessa faixa o envio pausa e volta no dia seguinte.</p>
                     </div>
                   </div>
 
-                  <div className="flex-1 flex flex-col justify-center py-4">
-                    <div className="relative h-6 w-full mb-8">
-                      <div className="absolute top-1/2 -translate-y-1/2 w-full h-1 bg-primary rounded-full" />
+                  <div className="flex-1 flex flex-col justify-center py-6">
+                    <div className="relative h-2 w-full mb-10 bg-slate-100 rounded-full">
+                      <div className="absolute top-0 left-0 w-full h-full bg-[#F06452]/20 rounded-full" />
                       {[0, 6, 12, 18, 24].map(h => (
-                        <div key={h} className="absolute top-1/2 -translate-y-1/2 flex flex-col items-center gap-1" style={{ left: `${(h / 24) * 100}%` }}>
-                          <div className="w-1.5 h-1.5 rounded-full bg-primary border-2 border-white shadow-sm" />
-                          <span className="text-[10px] font-bold text-muted-fg mt-4">{h}h</span>
+                        <div key={h} className="absolute top-1/2 -translate-y-1/2 flex flex-col items-center gap-2" style={{ left: `${(h / 24) * 100}%` }}>
+                          <div className="w-3 h-3 rounded-full bg-white border-2 border-[#F06452] shadow-sm" />
+                          <span className="text-[11px] font-black text-[#64748B] mt-5">{h}h</span>
                         </div>
                       ))}
                     </div>
 
-                    <div className="flex items-center gap-6 justify-center mt-4">
+                    <div className="flex items-center gap-8 justify-center mt-6">
                       <div className="space-y-2">
-                        <Label className="text-xs font-bold text-navy uppercase tracking-widest">Começa às</Label>
-                        <div className="flex items-center gap-2">
+                        <Label className="text-xs font-black text-[#0F172A] uppercase tracking-widest">Começa às</Label>
+                        <div className="flex items-center gap-3">
                           <Input 
                             value={startTime}
                             onChange={(e) => setStartTime(e.target.value)}
-                            className="w-24 bg-accent/30 border-border h-11 rounded-xl font-bold text-navy text-center"
+                            className="w-28 bg-white border-[#E5E7EB] h-12 rounded-xl font-bold text-[#0F172A] text-center focus:ring-[#F06452]"
                           />
-                          <Clock className="w-4 h-4 text-muted-fg" />
+                          <Clock className="w-5 h-5 text-[#64748B]" />
                         </div>
                       </div>
                       <div className="space-y-2">
-                        <Label className="text-xs font-bold text-navy uppercase tracking-widest">Para às</Label>
-                        <div className="flex items-center gap-2">
+                        <Label className="text-xs font-black text-[#0F172A] uppercase tracking-widest">Para às</Label>
+                        <div className="flex items-center gap-3">
                           <Input 
                             value={endTime}
                             onChange={(e) => setEndTime(e.target.value)}
-                            className="w-24 bg-accent/30 border-border h-11 rounded-xl font-bold text-navy text-center"
+                            className="w-28 bg-white border-[#E5E7EB] h-12 rounded-xl font-bold text-[#0F172A] text-center focus:ring-[#F06452]"
                           />
-                          <Clock className="w-4 h-4 text-muted-fg" />
+                          <Clock className="w-5 h-5 text-[#64748B]" />
                         </div>
                       </div>
                     </div>
                   </div>
 
                   <Button 
-                    className="w-full bg-primary hover:bg-primary/90 text-white font-extrabold h-14 rounded-2xl shadow-xl shadow-primary/30 text-lg uppercase tracking-tight mt-auto"
-                    onClick={() => {
-                      // Final logic
-                      onOpenChange(false);
-                    }}
+                    className="w-full bg-[#F06452] hover:bg-[#D95342] text-white font-black h-16 rounded-[1.25rem] shadow-2xl shadow-[#F06452]/30 text-lg uppercase tracking-widest mt-auto transition-all transform active:scale-[0.98]"
+                    onClick={() => onOpenChange(false)}
                   >
-                    <Rocket className="w-5 h-5 mr-3" /> Iniciar Envio Agora
+                    <Rocket className="w-6 h-6 mr-3" /> Iniciar Envio Agora
                   </Button>
                 </div>
               </div>
