@@ -43,7 +43,7 @@ interface NewCampaignWizardProps {
   onOpenChange: (open: boolean) => void;
 }
 
-type Step = 1 | 2 | 3 | 4;
+type Step = 1 | 2 | 3 | 4 | 5;
 
 export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps) {
   const [step, setStep] = useState<Step>(1);
@@ -63,8 +63,9 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
   const steps = [
     { number: 1, label: "Dados", sublabel: "Definição dos dados do envio" },
     { number: 2, label: "Público Alvo", sublabel: "Seleção de público para o envio" },
-    { number: 3, label: "Conteúdo", sublabel: "Definição do conteúdo a ser enviado" },
-    { number: 4, label: "Configurações", sublabel: "Configurações adicionais para o envio" },
+    { number: 3, label: "Correspondência", sublabel: "Mapeamento de colunas" },
+    { number: 4, label: "Conteúdo", sublabel: "Definição do conteúdo a ser enviado" },
+    { number: 5, label: "Configurações", sublabel: "Configurações adicionais para o envio" },
   ];
 
   return (
@@ -79,20 +80,20 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
             
             <div className="flex items-center gap-12">
               {steps.map((s) => (
-                <div key={s.number} className="flex items-center gap-3 relative">
+                <div key={s.number} className="flex items-center gap-2 relative">
                   <div className={cn(
-                    "w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold transition-colors border",
+                    "w-7 h-7 rounded-full flex items-center justify-center text-[10px] font-bold transition-colors border",
                     step === s.number ? "bg-primary text-white border-primary" : 
                     step > s.number ? "bg-primary/10 text-primary border-primary" : "bg-background text-muted-fg border-border"
                   )}>
-                    {step > s.number ? <Check className="w-4 h-4" /> : s.number}
+                    {step > s.number ? <Check className="w-3 h-3" /> : s.number}
                   </div>
                   <span className={cn(
-                    "text-sm font-bold",
+                    "text-[10px] font-bold uppercase tracking-wider hidden xl:inline",
                     step === s.number ? "text-primary" : "text-foreground"
                   )}>{s.label}</span>
-                  {s.number < 4 && (
-                    <div className="absolute -right-8 top-1/2 -translate-y-1/2 w-4 h-[1px] bg-border" />
+                  {s.number < 5 && (
+                    <div className="absolute -right-7 top-1/2 -translate-y-1/2 w-4 h-[1px] bg-border" />
                   )}
                 </div>
               ))}
@@ -109,7 +110,7 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
               </Button>
               <Button 
                 onClick={nextStep}
-                disabled={!canGoNext || step === 4}
+                disabled={!canGoNext || step === 5}
                 className="bg-primary hover:bg-primary/90 text-white font-bold px-8 shadow-lg shadow-primary/20"
               >
                 Próximo
@@ -513,8 +514,71 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
               </div>
             </div>
           )}
-
+          
           {step === 3 && (
+            <div className="animate-in fade-in slide-in-from-bottom-4 duration-500 space-y-8">
+              <div>
+                <h2 className="text-xl font-manrope font-extrabold text-navy uppercase tracking-tight">Corresponder colunas</h2>
+                <p className="text-sm text-muted-fg mt-1">Relacione as colunas da planilha aos campos obrigatórios e variáveis do template.</p>
+              </div>
+
+              <div className="p-4 bg-primary/5 border border-primary/20 rounded-xl flex items-center gap-3">
+                <AlertCircle className="w-5 h-5 text-primary" />
+                <p className="text-xs font-medium text-navy">
+                  Exibindo as 3 primeiras linhas do arquivo para você estabelecer o vínculo visual entre as colunas e os campos. 
+                  É obrigatório ter pelo menos uma coluna mapeada como <span className="font-bold">Telefone</span>.
+                </p>
+              </div>
+
+              <div className="bg-white rounded-2xl border border-border shadow-sm overflow-hidden">
+                <table className="w-full text-left border-collapse">
+                  <thead className="bg-accent/30">
+                    <tr>
+                      {csvPreview[0]?.map((header, i) => (
+                        <th key={i} className="p-6 border-b border-border bg-accent/20">
+                          <div className="space-y-4">
+                            <div className="flex items-center justify-between">
+                              <span className="text-xs font-extrabold text-navy uppercase tracking-widest">{header}</span>
+                              <Button variant="ghost" size="icon" className="h-6 w-6 text-muted-fg hover:text-error">
+                                <Trash2 className="w-3 h-3" />
+                              </Button>
+                            </div>
+                            <Select defaultValue="variavel">
+                              <SelectTrigger className="bg-white border-border h-11 rounded-xl">
+                                <SelectValue placeholder="Selecione o campo" />
+                              </SelectTrigger>
+                              <SelectContent>
+                                <SelectItem value="nome">Nome</SelectItem>
+                                <SelectItem value="telefone">Telefone</SelectItem>
+                                <SelectItem value="variavel">Variável de fluxo</SelectItem>
+                                <SelectItem value="descartar">Descartar</SelectItem>
+                              </SelectContent>
+                            </Select>
+                            <div className="bg-green-500/10 text-green-600 px-3 py-1.5 rounded-lg border border-green-500/20 text-[10px] font-bold">
+                              Variável de fluxo: {header.toLowerCase()}
+                            </div>
+                          </div>
+                        </th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {csvPreview.slice(1, 4).map((row, rowIndex) => (
+                      <tr key={rowIndex} className="border-b border-border/50 hover:bg-accent/5 transition-colors">
+                        {row.map((cell, cellIndex) => (
+                          <td key={cellIndex} className="p-6 text-sm font-medium text-navy/70 italic truncate max-w-[200px]">
+                            {cell}
+                          </td>
+                        ))}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          )}
+
+          {step === 4 && (
             <div className="grid grid-cols-1 lg:grid-cols-[1fr_400px] gap-12 animate-in fade-in slide-in-from-bottom-4 duration-500">
               <div className="space-y-8">
                 <div>
@@ -587,7 +651,7 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
             </div>
           )}
 
-          {step === 4 && (
+          {step === 5 && (
             <div className="flex flex-col items-center justify-center h-full text-center space-y-6">
                <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center">
                   <Clock className="w-10 h-10 text-primary" />
