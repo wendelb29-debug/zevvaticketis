@@ -137,7 +137,8 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
         </DialogHeader>
 
 
-        <div className="p-8 min-h-[600px] bg-white">
+        <ScrollArea className="flex-1 bg-white">
+          <div className="p-8">
           {step === 1 && (
             <div className="grid grid-cols-1 lg:grid-cols-[400px_1fr] gap-12 animate-in fade-in slide-in-from-bottom-4 duration-500">
               <div className="space-y-8">
