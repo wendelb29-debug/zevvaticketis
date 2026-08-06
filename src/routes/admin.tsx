@@ -21,6 +21,8 @@ import {
   Sun,
   Moon,
   Rocket,
+  PanelLeftClose,
+  PanelLeftOpen,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -156,8 +158,9 @@ function AdminLayout() {
         <button 
           onClick={toggleSidebar}
           className="p-2 hover:bg-accent rounded-lg transition-colors text-foreground"
+          title={isSidebarCollapsed ? "Expandir menu" : "Recolher menu"}
         >
-          {isSidebarCollapsed ? <ChevronRight className="w-5 h-5" /> : <ChevronLeft className="w-5 h-5" />}
+          {isSidebarCollapsed ? <PanelLeftOpen className="w-5 h-5" /> : <PanelLeftClose className="w-5 h-5" />}
         </button>
       </div>
       
