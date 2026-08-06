@@ -200,7 +200,7 @@ function PushNotificationsPage() {
                         </select>
                       </div>
                       <div className="space-y-3">
-                        <Label className="text-xs font-black uppercase tracking-widest text-muted-fg">Evento Específico</option>
+                        <Label className="text-xs font-black uppercase tracking-widest text-muted-fg">Evento Específico</Label>
                         <select className="w-full h-12 border border-line rounded-xl px-4 font-bold outline-none focus:ring-1 focus:ring-primary text-sm">
                           <option>Nenhum</option>
                           <option>Evento Ana Carolina</option>
@@ -208,7 +208,7 @@ function PushNotificationsPage() {
                         </select>
                       </div>
                       <div className="space-y-3">
-                        <Label className="text-xs font-black uppercase tracking-widest text-muted-fg">Status de Pagamento</option>
+                        <Label className="text-xs font-black uppercase tracking-widest text-muted-fg">Status de Pagamento</Label>
                         <select className="w-full h-12 border border-line rounded-xl px-4 font-bold outline-none focus:ring-1 focus:ring-primary text-sm">
                           <option>Qualquer um</option>
                           <option>Aprovado</option>
@@ -280,7 +280,7 @@ function PushNotificationsPage() {
               { title: "Compra Aprovada", desc: "Envia confirmação imediata após pagamento.", icon: CheckCircle2, status: "Ativa" },
               { title: "Lembrete 24h", desc: "Aviso automático um dia antes do evento.", icon: Clock, status: "Ativa" },
               { title: "Carrinho Abandonado", desc: "Recupere vendas não finalizadas após 2h.", icon: LayoutDashboard, status: "Pausada" },
-              { title: "Feedback Pós-Evento", desc: "Peça avaliação aos participantes.", icon: MessageSquare, status: "Desativada" },
+              { title: "Feedback Pós-Evento", desc: "Peça avaliação aos participantes.", icon: Clock, status: "Desativada" },
               { title: "Novo Curso", desc: "Notifica alunos sobre novas aulas.", icon: Zap, status: "Ativa" },
             ].map((item, i) => (
               <Card key={i} className="border-border shadow-sm group hover:border-primary/30 transition-all cursor-pointer">

@@ -51,6 +51,7 @@ import { Route as Char91DotmcpChar93InvokeToolToolRouteImport } from './routes/[
 import { Route as AdminMarketingIndexRouteImport } from './routes/admin/marketing/index'
 import { Route as AdminMarketingAnunciosRouteImport } from './routes/admin/marketing/anuncios'
 import { Route as AdminMarketingPublicidadeRouteImport } from './routes/admin/marketing/publicidade'
+import { Route as AdminMarketingPushRouteImport } from './routes/admin/marketing/push'
 import { Route as ApiPublicUazapiWebhookRouteImport } from './routes/api/public/uazapi-webhook'
 import { Route as OauthGoogleReturnRouteImport } from './routes/oauth/google/return'
 
@@ -268,6 +269,11 @@ const AdminMarketingPublicidadeRoute =
     path: '/marketing/publicidade',
     getParentRoute: () => AdminRoute,
   } as any)
+const AdminMarketingPushRoute = AdminMarketingPushRouteImport.update({
+  id: '/marketing/push',
+  path: '/marketing/push',
+  getParentRoute: () => AdminRoute,
+} as any)
 const ApiPublicUazapiWebhookRoute = ApiPublicUazapiWebhookRouteImport.update({
   id: '/api/public/uazapi-webhook',
   path: '/api/public/uazapi-webhook',
@@ -321,6 +327,7 @@ export interface FileRoutesByFullPath {
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
   '/admin/marketing/anuncios': typeof AdminMarketingAnunciosRoute
   '/admin/marketing/publicidade': typeof AdminMarketingPublicidadeRoute
+  '/admin/marketing/push': typeof AdminMarketingPushRoute
   '/api/public/uazapi-webhook': typeof ApiPublicUazapiWebhookRoute
   '/oauth/google/return': typeof OauthGoogleReturnRoute
   '/admin/marketing/': typeof AdminMarketingIndexRoute
@@ -364,6 +371,7 @@ export interface FileRoutesByTo {
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
   '/admin/marketing/anuncios': typeof AdminMarketingAnunciosRoute
   '/admin/marketing/publicidade': typeof AdminMarketingPublicidadeRoute
+  '/admin/marketing/push': typeof AdminMarketingPushRoute
   '/api/public/uazapi-webhook': typeof ApiPublicUazapiWebhookRoute
   '/oauth/google/return': typeof OauthGoogleReturnRoute
   '/admin/marketing': typeof AdminMarketingIndexRoute
@@ -411,6 +419,7 @@ export interface FileRoutesById {
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
   '/admin/marketing/anuncios': typeof AdminMarketingAnunciosRoute
   '/admin/marketing/publicidade': typeof AdminMarketingPublicidadeRoute
+  '/admin/marketing/push': typeof AdminMarketingPushRoute
   '/api/public/uazapi-webhook': typeof ApiPublicUazapiWebhookRoute
   '/oauth/google/return': typeof OauthGoogleReturnRoute
   '/admin/marketing/': typeof AdminMarketingIndexRoute
@@ -459,6 +468,7 @@ export interface FileRouteTypes {
     | '/.mcp/invoke-tool/$tool'
     | '/admin/marketing/anuncios'
     | '/admin/marketing/publicidade'
+    | '/admin/marketing/push'
     | '/api/public/uazapi-webhook'
     | '/oauth/google/return'
     | '/admin/marketing/'
@@ -502,6 +512,7 @@ export interface FileRouteTypes {
     | '/.mcp/invoke-tool/$tool'
     | '/admin/marketing/anuncios'
     | '/admin/marketing/publicidade'
+    | '/admin/marketing/push'
     | '/api/public/uazapi-webhook'
     | '/oauth/google/return'
     | '/admin/marketing'
@@ -548,6 +559,7 @@ export interface FileRouteTypes {
     | '/.mcp/invoke-tool/$tool'
     | '/admin/marketing/anuncios'
     | '/admin/marketing/publicidade'
+    | '/admin/marketing/push'
     | '/api/public/uazapi-webhook'
     | '/oauth/google/return'
     | '/admin/marketing/'
@@ -872,6 +884,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminMarketingPublicidadeRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/marketing/push': {
+      id: '/admin/marketing/push'
+      path: '/marketing/push'
+      fullPath: '/admin/marketing/push'
+      preLoaderRoute: typeof AdminMarketingPushRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/api/public/uazapi-webhook': {
       id: '/api/public/uazapi-webhook'
       path: '/api/public/uazapi-webhook'
@@ -904,6 +923,7 @@ interface AdminRouteChildren {
   AdminIndexRoute: typeof AdminIndexRoute
   AdminMarketingAnunciosRoute: typeof AdminMarketingAnunciosRoute
   AdminMarketingPublicidadeRoute: typeof AdminMarketingPublicidadeRoute
+  AdminMarketingPushRoute: typeof AdminMarketingPushRoute
   AdminMarketingIndexRoute: typeof AdminMarketingIndexRoute
 }
 
@@ -922,6 +942,7 @@ const AdminRouteChildren: AdminRouteChildren = {
   AdminIndexRoute: AdminIndexRoute,
   AdminMarketingAnunciosRoute: AdminMarketingAnunciosRoute,
   AdminMarketingPublicidadeRoute: AdminMarketingPublicidadeRoute,
+  AdminMarketingPushRoute: AdminMarketingPushRoute,
   AdminMarketingIndexRoute: AdminMarketingIndexRoute,
 }
 
@@ -989,3 +1010,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
