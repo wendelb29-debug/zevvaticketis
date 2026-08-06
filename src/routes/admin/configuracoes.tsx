@@ -223,6 +223,12 @@ function AuditoriaTab() {
 function SettingsPage() {
   const search = useSearch({ from: "/admin/configuracoes" }) as any;
   const [activeTab, setActiveTab] = useState(search?.tab === "team" ? "equipe" : "atendimento");
+
+  useEffect(() => {
+    if (search?.tab === "team") {
+      setActiveTab("equipe");
+    }
+  }, [search?.tab]);
   const [isDeptModalOpen, setIsDeptModalOpen] = useState(false);
   const [isTagModalOpen, setIsTagModalOpen] = useState(false);
   const [deptName, setDeptName] = useState("");
