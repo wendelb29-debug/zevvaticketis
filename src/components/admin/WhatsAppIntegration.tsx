@@ -473,17 +473,31 @@ export function WhatsAppIntegration() {
 
         <TabsContent value="atendimento" className="animate-in fade-in slide-in-from-bottom-2 duration-300">
           <Tabs defaultValue="templates" className="w-full">
-            <TabsList className="bg-muted/50 p-1 mb-4 h-9">
-              <TabsTrigger value="templates" className="text-[10px] uppercase font-black tracking-wider">
-                <Plus className="w-3 h-3 mr-1" /> Módulo de Criar
-              </TabsTrigger>
-              <TabsTrigger value="aprovacoes" className="text-[10px] uppercase font-black tracking-wider">
-                <CheckSquare className="w-3 h-3 mr-1" /> Aprovações
-              </TabsTrigger>
-              <TabsTrigger value="logs" className="text-[10px] uppercase font-black tracking-wider">
-                <List className="w-3 h-3 mr-1" /> Histórico
-              </TabsTrigger>
-            </TabsList>
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-4">
+              <TabsList className="bg-muted/50 p-1 h-9">
+                <TabsTrigger value="templates" className="text-[10px] uppercase font-black tracking-wider">
+                  <Plus className="w-3 h-3 mr-1" /> Módulo de Criar
+                </TabsTrigger>
+                <TabsTrigger value="aprovacoes" className="text-[10px] uppercase font-black tracking-wider">
+                  <CheckSquare className="w-3 h-3 mr-1" /> Aprovações
+                </TabsTrigger>
+                <TabsTrigger value="vinculos" className="text-[10px] uppercase font-black tracking-wider">
+                  <Link className="w-3 h-3 mr-1" /> Vínculos
+                </TabsTrigger>
+                <TabsTrigger value="logs" className="text-[10px] uppercase font-black tracking-wider">
+                  <List className="w-3 h-3 mr-1" /> Histórico
+                </TabsTrigger>
+              </TabsList>
+              
+              <div className="flex items-center gap-2">
+                <Button variant="outline" size="sm" onClick={() => exportAtendimento('csv')} className="h-8 text-xs font-bold gap-1.5">
+                  <Download className="w-3.5 h-3.5" /> CSV
+                </Button>
+                <Button variant="outline" size="sm" onClick={() => exportAtendimento('pdf')} className="h-8 text-xs font-bold gap-1.5">
+                  <FileText className="w-3.5 h-3.5" /> PDF
+                </Button>
+              </div>
+            </div>
 
             <TabsContent value="templates">
               <Card className="border-border shadow-sm">
@@ -513,9 +527,9 @@ export function WhatsAppIntegration() {
                 <Table>
                   <TableHeader>
                     <TableRow className="hover:bg-transparent">
-                      <TableHead className="text-xs font-black uppercase text-navy/60">Nome do Template</TableHead>
-                      <TableHead className="text-xs font-black uppercase text-navy/60">Categoria</TableHead>
-                      <TableHead className="text-xs font-black uppercase text-navy/60">Status Meta</TableHead>
+                      <TableHead className="text-xs font-black uppercase text-navy/60">Nome</TableHead>
+                      <TableHead className="text-xs font-black uppercase text-navy/60">Status</TableHead>
+                      <TableHead className="text-xs font-black uppercase text-navy/60">Aprovação</TableHead>
                       <TableHead className="text-xs font-black uppercase text-navy/60">Conteúdo</TableHead>
                       <TableHead className="text-xs font-black uppercase text-navy/60 text-right">Ações</TableHead>
                     </TableRow>
@@ -524,16 +538,93 @@ export function WhatsAppIntegration() {
                     {templates.map((t) => (
                       <TableRow key={t.id}>
                         <TableCell className="font-bold">{t.name}</TableCell>
-                        <TableCell><Badge variant="outline" className="font-bold text-[10px]">{t.category}</Badge></TableCell>
                         <TableCell>
-                          <Badge className="bg-green-100 text-green-700 border-green-200">Aprovado</Badge>
+                          <Badge className={cn(
+                            "border-0",
+                            t.status === "APPROVED" ? "bg-green-100 text-green-700" : "bg-yellow-100 text-yellow-700"
+                          )}>
+                            {t.status === "APPROVED" ? "Aprovado" : "Pendente"}
+                          </Badge>
+                        </TableCell>
+                        <TableCell>
+                          {t.approvedBy ? (
+                            <div className="flex flex-col">
+                              <span className="text-xs font-bold flex items-center gap-1">
+                                <UserCheck className="w-3 h-3 text-primary" /> {t.approvedBy}
+                              </span>
+                              <span className="text-[10px] text-muted-fg flex items-center gap-1">
+                                <Clock className="w-2.5 h-2.5" /> {t.approvedAt}
+                              </span>
+                            </div>
+                          ) : (
+                            <span className="text-xs text-muted-fg italic">Aguardando...</span>
+                          )}
                         </TableCell>
                         <TableCell className="text-xs text-muted-fg truncate max-w-[200px]">{t.content}</TableCell>
                         <TableCell className="text-right">
-                          <Button variant="ghost" size="icon" className="h-8 w-8 text-navy/60 hover:text-primary"><Eye className="w-4 h-4" /></Button>
+                          <div className="flex justify-end gap-1">
+                            {t.status !== "APPROVED" && (
+                              <>
+                                <Button variant="ghost" size="icon" className="h-8 w-8 text-green-600 hover:text-green-700 hover:bg-green-50" title="Aprovar">
+                                  <Check className="w-4 h-4" />
+                                </Button>
+                                <Button variant="ghost" size="icon" className="h-8 w-8 text-red-600 hover:text-red-700 hover:bg-red-50" title="Rejeitar">
+                                  <X className="w-4 h-4" />
+                                </Button>
+                              </>
+                            )}
+                            <Button variant="ghost" size="icon" className="h-8 w-8 text-navy/60 hover:text-primary"><Eye className="w-4 h-4" /></Button>
+                          </div>
                         </TableCell>
                       </TableRow>
                     ))}
+                  </TableBody>
+                </Table>
+              </Card>
+            </TabsContent>
+
+            <TabsContent value="vinculos">
+              <Card className="border-border shadow-sm">
+                <CardHeader className="pb-3">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <CardTitle className="text-sm">Vincular Templates a Eventos</CardTitle>
+                      <CardDescription className="text-xs">Gerencie quais templates estão ativos para cada evento específico.</CardDescription>
+                    </div>
+                    <Button size="sm" className="bg-primary text-white font-bold h-8">
+                      <Link className="w-3.5 h-3.5 mr-1" /> Novo Vínculo
+                    </Button>
+                  </div>
+                </CardHeader>
+                <Table>
+                  <TableHeader>
+                    <TableRow className="hover:bg-transparent">
+                      <TableHead className="text-xs font-black uppercase text-navy/60">Template</TableHead>
+                      <TableHead className="text-xs font-black uppercase text-navy/60">Evento Vinculado</TableHead>
+                      <TableHead className="text-xs font-black uppercase text-navy/60">Status</TableHead>
+                      <TableHead className="text-xs font-black uppercase text-navy/60 text-right">Ações</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {templates.filter(t => t.linkedEvent).map((t) => (
+                      <TableRow key={t.id}>
+                        <TableCell className="font-bold">{t.name}</TableCell>
+                        <TableCell className="text-sm text-navy/80">{t.linkedEvent}</TableCell>
+                        <TableCell><Badge className="bg-primary/10 text-primary border-0 font-bold">Ativo</Badge></TableCell>
+                        <TableCell className="text-right">
+                          <Button variant="ghost" size="icon" className="h-8 w-8 text-red-500 hover:text-red-600 hover:bg-red-50" title="Remover Vínculo">
+                            <Trash2 className="w-4 h-4" />
+                          </Button>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                    {templates.every(t => !t.linkedEvent) && (
+                      <TableRow>
+                        <TableCell colSpan={4} className="h-24 text-center text-muted-fg text-sm italic">
+                          Nenhum template vinculado a eventos no momento.
+                        </TableCell>
+                      </TableRow>
+                    )}
                   </TableBody>
                 </Table>
               </Card>
