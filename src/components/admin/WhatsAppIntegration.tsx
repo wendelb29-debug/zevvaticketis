@@ -46,18 +46,39 @@ export function WhatsAppIntegration() {
     contactChange: false
   });
 
+  const logAction = useCallback(async (acao: string, alvo_id: string, alvo_tipo: string, payload: any = {}, antes: any = null, depois: any = null) => {
+    try {
+      const { data: { session } } = await supabase.auth.getSession();
+      await supabase.from('audit_logs' as any).insert({
+        admin_id: session?.user?.id,
+        acao,
+        alvo_id,
+        alvo_tipo,
+        categoria: 'WhatsApp API',
+        payload,
+        dados_antes: antes || {},
+        dados_depois: depois || {}
+      });
+    } catch (err) {
+      console.error('Erro ao registrar log:', err);
+    }
+  }, []);
+
   const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text);
     toast.success("URL copiada com sucesso!");
+    logAction("Copiar URL Webhook", "webhook", "configuracao", { url: text });
   };
 
   const handleSaveConnection = () => {
     toast.success("Configurações da API salvas com sucesso!");
     setStatus("connected");
+    logAction("Salvar Conexão Cloud API", "meta_api", "configuracao", cloudApi, null, cloudApi);
   };
 
   const handleSaveWebhook = () => {
     toast.success("Configurações de Webhook salvas!");
+    logAction("Salvar Webhook", "webhook", "configuracao", { verifyToken, events }, null, { verifyToken, events });
   };
 
   const handleTestConnection = async () => {
