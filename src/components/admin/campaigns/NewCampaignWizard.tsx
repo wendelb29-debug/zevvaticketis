@@ -307,25 +307,25 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
                 </div>
               </div>
 
-              <div className="bg-accent/20 rounded-2xl p-8 border border-border">
+              <div className="bg-slate-50 rounded-3xl p-8 border border-[#E5E7EB]">
 
                 {publicType === "arquivo" && (
                   <div className="h-full flex flex-col space-y-6">
                     <div className="grid grid-cols-2 gap-6">
                       <div className="space-y-4">
-                        <Label className="text-xs font-bold text-navy uppercase tracking-widest">DDI padrão</Label>
-                        <div className="bg-white p-4 rounded-xl border border-border flex items-center gap-3 shadow-sm">
+                        <Label className="text-xs font-black text-[#0F172A] uppercase tracking-widest">DDI padrão</Label>
+                        <div className="bg-white p-4 rounded-xl border border-[#E5E7EB] flex items-center gap-3 shadow-sm">
                            <span className="text-2xl">🇧🇷</span>
-                           <span className="text-sm font-bold text-navy">Brasil (+55)</span>
-                           <ChevronDown className="w-4 h-4 ml-auto text-muted-fg" />
+                           <span className="text-sm font-bold text-[#0F172A]">Brasil (+55)</span>
+                           <ChevronDown className="w-4 h-4 ml-auto text-[#64748B]" />
                         </div>
                       </div>
                       <div className="space-y-4">
-                        <Label className="text-xs font-bold text-navy uppercase tracking-widest">Ações</Label>
+                        <Label className="text-xs font-black text-[#0F172A] uppercase tracking-widest">Ações</Label>
                         <div className="flex gap-3">
                           <Button 
                             variant="outline" 
-                            className="flex-1 border-dashed border-primary/40 text-primary hover:bg-primary/5 h-14 rounded-xl font-bold"
+                            className="flex-1 border-dashed border-[#F06452]/40 text-[#F06452] hover:bg-[#FDF0ED] h-14 rounded-xl font-bold"
                             onClick={() => {
                               setUploadedFile(null);
                               setCsvPreview([]);
@@ -339,7 +339,7 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
 
                     {!uploadedFile ? (
                       <div className="flex-1 flex flex-col items-center justify-center">
-                        <div className="w-full max-w-xl aspect-[16/7] border-2 border-dashed border-primary/20 rounded-3xl flex flex-col items-center justify-center gap-4 bg-white hover:bg-primary/5 hover:border-primary/40 transition-all cursor-pointer group shadow-sm relative">
+                        <div className="w-full max-w-xl aspect-[16/7] border-2 border-dashed border-[#F06452]/20 rounded-3xl flex flex-col items-center justify-center gap-4 bg-white hover:bg-[#FDF0ED] hover:border-[#F06452]/40 transition-all cursor-pointer group shadow-sm relative">
                           <input 
                             type="file" 
                             accept=".csv, .xlsx" 
@@ -348,74 +348,70 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
                               const file = e.target.files?.[0];
                               if (file) {
                                 setUploadedFile(file);
-                                // Mock preview data
                                 setCsvPreview([
                                   ["telefone", "urlLink", "body1", "body2"],
                                   ["(34)9966-01526", "https://mundialeassociacoes.s...", "JOSE VALTER DA SILVA SANT...", "OQB9980"],
                                   ["(34)9970-91428", "https://mundialeassociacoes.s...", "VANDERLEI ANTONIO ROSA", "HLZ4A76"],
-                                  ["(34)99928-3379", "https://mundialeassociacoes.s...", "DAIANE OLIVEIRA CONSTANTI...", "BES5F59"],
-                                  ["(34)99813-2720", "https://mundialeassociacoes.s...", "JAQUELINE MARIA DE ASSIS SI...", "PVH5993"],
-                                  ["(31)9926-85919", "https://mundialeassociacoes.s...", "CLEVERSON DE SOUZA COSTA", "SHN7B75"],
-                                  ["(34)9965-75904", "https://mundialeassociacoes.s...", "VICTOR HUGO MOTTA MOREIRA", "PXO8303"]
+                                  ["(34)99928-3379", "https://mundialeassociacoes.s...", "DAIANE OLIVEIRA CONSTANTI...", "BES5F59"]
                                 ]);
                               }
                             }}
                           />
-                          <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center group-hover:scale-110 transition-transform shadow-sm">
-                            <Plus className="w-8 h-8 text-primary" />
+                          <div className="w-16 h-16 rounded-2xl bg-[#FDF0ED] flex items-center justify-center group-hover:scale-110 transition-transform shadow-sm">
+                            <Plus className="w-8 h-8 text-[#F06452]" />
                           </div>
                           <div className="text-center space-y-1">
-                            <p className="text-lg font-manrope font-extrabold text-navy">Importar arquivo</p>
-                            <p className="text-sm text-muted-fg font-medium">Nessa parte poder arrastar pra cá o arquivo ou clicar pra abrir somente arquivos CSV ou XLSX do computador</p>
+                            <p className="text-lg font-manrope font-extrabold text-[#0F172A]">Importar arquivo</p>
+                            <p className="text-sm text-[#64748B] font-medium">Nessa parte poder arrastar pra cá o arquivo ou clicar pra abrir somente arquivos CSV ou XLSX do computador</p>
                             <div className="flex gap-2 justify-center mt-4">
-                               <span className="px-2 py-1 bg-accent text-[10px] font-extrabold text-muted-fg rounded">CSV</span>
-                               <span className="px-2 py-1 bg-accent text-[10px] font-extrabold text-muted-fg rounded">XLSX</span>
+                               <span className="px-3 py-1 bg-slate-100 text-[10px] font-black text-[#64748B] rounded-lg">CSV</span>
+                               <span className="px-3 py-1 bg-slate-100 text-[10px] font-black text-[#64748B] rounded-lg">XLSX</span>
                             </div>
                           </div>
                         </div>
                       </div>
                     ) : (
-                      <div className="flex-1 bg-white rounded-2xl border border-border shadow-sm overflow-hidden flex flex-col">
-                        <div className="p-4 border-b border-border bg-accent/5 flex items-center justify-between">
+                      <div className="flex-1 bg-white rounded-2xl border border-[#E5E7EB] shadow-sm overflow-hidden flex flex-col">
+                        <div className="p-4 border-b border-[#E5E7EB] bg-slate-50 flex items-center justify-between">
                           <div className="flex items-center gap-3">
-                            <div className="p-2 bg-primary/10 rounded-lg">
-                              <FileText className="w-4 h-4 text-primary" />
+                            <div className="p-2 bg-[#FDF0ED] rounded-lg">
+                              <FileText className="w-4 h-4 text-[#F06452]" />
                             </div>
                             <div>
-                              <p className="text-sm font-bold text-navy">{uploadedFile.name}</p>
-                              <p className="text-[10px] text-muted-fg">{(uploadedFile.size / 1024).toFixed(1)} KB • {csvPreview.length - 1} contatos encontrados</p>
+                              <p className="text-sm font-bold text-[#0F172A]">{uploadedFile.name}</p>
+                              <p className="text-[10px] text-[#64748B] font-medium">{(uploadedFile.size / 1024).toFixed(1)} KB • {csvPreview.length - 1} contatos encontrados</p>
                             </div>
                           </div>
-                          <div className="flex items-center gap-2 px-3 py-1.5 bg-green-500/10 text-green-600 rounded-full border border-green-500/20 text-[10px] font-bold uppercase tracking-wider">
-                            <Check className="w-3 h-3 mr-1" /> Arquivo Carregado
+                          <div className="flex items-center gap-2 px-3 py-1.5 bg-green-50 text-green-600 rounded-full border border-green-100 text-[10px] font-black uppercase tracking-wider">
+                            <Check className="w-3 h-3" /> Arquivo Carregado
                           </div>
                         </div>
                         
-                        <div className="p-4 border-b border-border bg-amber-500/5 flex items-center gap-3">
+                        <div className="p-4 border-b border-[#E5E7EB] bg-amber-50 flex items-center gap-3">
                           <AlertCircle className="w-4 h-4 text-amber-500" />
-                          <p className="text-xs font-medium text-amber-700">Confirme se os cabeçalhos das colunas estão corretos antes de prosseguir.</p>
+                          <p className="text-xs font-semibold text-amber-700">Confirme se os cabeçalhos das colunas estão corretos antes de prosseguir.</p>
                         </div>
 
                         <ScrollArea className="flex-1">
                           <table className="w-full text-left border-collapse">
-                            <thead className="sticky top-0 bg-accent/30 z-10">
+                            <thead className="sticky top-0 bg-slate-50 z-10">
                               <tr>
-                                <th className="p-4 border-b border-border text-[10px] font-extrabold text-muted-fg uppercase tracking-widest w-12 text-center">#</th>
+                                <th className="p-4 border-b border-[#E5E7EB] text-[10px] font-black text-[#64748B] uppercase tracking-widest w-12 text-center">#</th>
                                 {csvPreview[0]?.map((header, i) => (
-                                  <th key={i} className="p-4 border-b border-border text-[10px] font-extrabold text-navy uppercase tracking-widest">{header}</th>
+                                  <th key={i} className="p-4 border-b border-[#E5E7EB] text-[10px] font-black text-[#0F172A] uppercase tracking-widest">{header}</th>
                                 ))}
                               </tr>
                             </thead>
                             <tbody>
                               {csvPreview.slice(1).map((row, rowIndex) => (
-                                <tr key={rowIndex} className="border-b border-border/50 hover:bg-accent/10 transition-colors">
+                                <tr key={rowIndex} className="border-b border-[#E5E7EB] hover:bg-slate-50/80 transition-colors">
                                   <td className="p-4 text-center">
-                                    <div className="w-4 h-4 rounded-full border border-primary flex items-center justify-center mx-auto">
-                                      <div className="w-2 h-2 rounded-full bg-primary" />
+                                    <div className="w-4 h-4 rounded-full border border-[#F06452] flex items-center justify-center mx-auto">
+                                      <div className="w-2 h-2 rounded-full bg-[#F06452]" />
                                     </div>
                                   </td>
                                   {row.map((cell, cellIndex) => (
-                                    <td key={cellIndex} className="p-4 text-sm font-medium text-navy truncate max-w-[200px]">{cell}</td>
+                                    <td key={cellIndex} className="p-4 text-sm font-medium text-[#0F172A] truncate max-w-[200px]">{cell}</td>
                                   ))}
                                 </tr>
                               ))}
