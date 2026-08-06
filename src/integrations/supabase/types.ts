@@ -1279,6 +1279,80 @@ export type Database = {
         }
         Relationships: []
       }
+      whatsapp_integrations: {
+        Row: {
+          access_token: string | null
+          business_id: string | null
+          created_at: string | null
+          id: string
+          phone_number: string | null
+          project_id: string
+          provider: string
+          status: string | null
+          updated_at: string | null
+          verify_token: string | null
+          webhook_url: string | null
+        }
+        Insert: {
+          access_token?: string | null
+          business_id?: string | null
+          created_at?: string | null
+          id?: string
+          phone_number?: string | null
+          project_id: string
+          provider?: string
+          status?: string | null
+          updated_at?: string | null
+          verify_token?: string | null
+          webhook_url?: string | null
+        }
+        Update: {
+          access_token?: string | null
+          business_id?: string | null
+          created_at?: string | null
+          id?: string
+          phone_number?: string | null
+          project_id?: string
+          provider?: string
+          status?: string | null
+          updated_at?: string | null
+          verify_token?: string | null
+          webhook_url?: string | null
+        }
+        Relationships: []
+      }
+      whatsapp_logs: {
+        Row: {
+          action: string
+          created_at: string | null
+          id: string
+          integration_id: string | null
+          response: Json | null
+        }
+        Insert: {
+          action: string
+          created_at?: string | null
+          id?: string
+          integration_id?: string | null
+          response?: Json | null
+        }
+        Update: {
+          action?: string
+          created_at?: string | null
+          id?: string
+          integration_id?: string | null
+          response?: Json | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "whatsapp_logs_integration_id_fkey"
+            columns: ["integration_id"]
+            isOneToOne: false
+            referencedRelation: "whatsapp_integrations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       whatsapp_messages: {
         Row: {
           contact_id: string
@@ -1346,6 +1420,41 @@ export type Database = {
           payload?: Json | null
         }
         Relationships: []
+      }
+      whatsapp_webhook_events: {
+        Row: {
+          created_at: string | null
+          event_type: string
+          id: string
+          integration_id: string | null
+          payload: Json | null
+          status: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          event_type: string
+          id?: string
+          integration_id?: string | null
+          payload?: Json | null
+          status?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          event_type?: string
+          id?: string
+          integration_id?: string | null
+          payload?: Json | null
+          status?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "whatsapp_webhook_events_integration_id_fkey"
+            columns: ["integration_id"]
+            isOneToOne: false
+            referencedRelation: "whatsapp_integrations"
+            referencedColumns: ["id"]
+          },
+        ]
       }
     }
     Views: {
