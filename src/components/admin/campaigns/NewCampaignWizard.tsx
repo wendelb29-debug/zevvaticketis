@@ -78,7 +78,11 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
   const nextStep = () => setStep((s) => (s + 1) as Step);
   const prevStep = () => setStep((s) => (s - 1) as Step);
 
-  const canGoNext = step === 1 ? campaignName.trim().length > 0 : true;
+  const canGoNext = 
+    step === 1 ? campaignName.trim().length > 0 : 
+    step === 2 ? uploadedFile !== null : 
+    step === 3 ? csvPreview.length > 0 :
+    true;
 
   const steps = [
     { number: 1, label: "Dados", sublabel: "Definição dos dados do envio" },
