@@ -775,11 +775,11 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
                         </div>
                         
                         {ctaButtons.length > 0 && (
-                          <div className="space-y-2 max-w-[90%]">
+                          <div className="mt-2 space-y-1 max-w-[90%]">
                             {ctaButtons.map((btn) => (
-                              <div key={btn.id} className="bg-white rounded-xl p-3 shadow-md flex items-center justify-center gap-2 border border-[#E5E7EB] cursor-default">
-                                <MousePointer2 className="w-3 h-3 text-[#F06452]" />
-                                <span className="text-sm font-bold text-[#F06452]">{btn.label}</span>
+                              <div key={btn.id} className="bg-white rounded-xl py-2.5 px-4 shadow-sm flex items-center justify-center gap-2 border-t border-[#E5E7EB] cursor-default active:bg-slate-50 transition-colors">
+                                <MousePointer2 className="w-3.5 h-3.5 text-[#00a884]" />
+                                <span className="text-[13px] font-medium text-[#00a884]">{btn.label}</span>
                               </div>
                             ))}
                           </div>
