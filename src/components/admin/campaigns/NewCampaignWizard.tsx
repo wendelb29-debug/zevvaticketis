@@ -60,6 +60,10 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
   const [csvPreview, setCsvPreview] = useState<string[][]>([]);
 
+  const removeColumn = (index: number) => {
+    setCsvPreview(prev => prev.map(row => row.filter((_, i) => i !== index)));
+  };
+
   // Configurações de envio states
   const [sendingSpeed, setSendingSpeed] = useState("medio");
   const [contactsPerBatch, setContactsPerBatch] = useState(50);
@@ -552,7 +556,12 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
                           <div className="space-y-4">
                             <div className="flex items-center justify-between">
                               <span className="text-xs font-extrabold text-navy uppercase tracking-widest">{header}</span>
-                              <Button variant="ghost" size="icon" className="h-6 w-6 text-muted-fg hover:text-error">
+                              <Button 
+                                variant="ghost" 
+                                size="icon" 
+                                className="h-6 w-6 text-muted-fg hover:text-error transition-colors"
+                                onClick={() => removeColumn(i)}
+                              >
                                 <Trash2 className="w-3 h-3" />
                               </Button>
                             </div>
