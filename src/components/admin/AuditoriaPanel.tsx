@@ -7,7 +7,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import {
   Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
 } from "@/components/ui/select";
-import { Eye, RefreshCcw, ChevronLeft, ChevronRight, ShieldCheck } from "lucide-react";
+import { Eye, RefreshCcw, ChevronLeft, ChevronRight, ShieldCheck, Download } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 type AuditLog = {
@@ -125,15 +125,49 @@ export function AuditoriaPanel() {
 
   const resetPage = <T,>(fn: (v: T) => void) => (v: T) => { fn(v); setPage(1); };
 
+  const exportCSV = () => {
+    const headers = ["Data e hora", "Usuário", "E-mail", "Ação", "Alvo", "ID Alvo", "Categoria"];
+    const rows = filtered.map(log => [
+      new Date(log.created_at).toLocaleString("pt-BR"),
+      log.profiles?.nome || "Sistema",
+      log.profiles?.email || "-",
+      log.acao,
+      log.alvo_tipo,
+      log.alvo_id,
+      log.categoria || "-"
+    ]);
+    
+    const csvContent = [
+      headers.join(","),
+      ...rows.map(r => r.map(c => `"${String(c).replace(/"/g, '""')}"`).join(","))
+    ].join("\n");
+    
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = `auditoria_zevva_${new Date().toISOString().split('T')[0]}.csv`;
+    link.click();
+  };
+
   return (
     <div className="space-y-4">
       <div className="rounded-xl border border-border bg-card shadow-sm">
-        <div className="flex items-start gap-3 px-5 py-4 border-b border-border">
-          <ShieldCheck className="w-5 h-5 text-primary mt-0.5" />
-          <div>
-            <h3 className="font-bold text-foreground">Auditoria</h3>
-            <p className="text-xs text-muted-fg">eu garantir que apenas administradores possam visualizar e auditar as ações.</p>
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 px-5 py-4 border-b border-border">
+          <div className="flex items-start gap-3">
+            <ShieldCheck className="w-5 h-5 text-primary mt-0.5" />
+            <div>
+              <h3 className="font-bold text-foreground">Auditoria</h3>
+              <p className="text-xs text-muted-fg">eu localizar rapidamente ações por tipo, usuário e intervalo de datas. Implemente filtros e busca na aba de Auditoria para eu localizar rapidamente ações por tipo, usuário e intervalo de datas. Adicione a opção de exportar os registros da Auditoria em CSV (e/ou PDF) para eu baixar e compartilhar o histórico.</p>
+            </div>
           </div>
+          <Button 
+            onClick={exportCSV}
+            variant="outline" 
+            size="sm" 
+            className="border-primary text-primary hover:bg-primary/10 gap-2 font-bold shrink-0 self-start sm:self-center"
+          >
+            <Download className="w-4 h-4" /> Exportar CSV
+          </Button>
         </div>
 
         {/* Filtros */}

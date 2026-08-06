@@ -24,7 +24,7 @@ function AuditoriaPage() {
   return (
     <div className="space-y-6 text-foreground">
       <h1 className="text-2xl font-manrope font-extrabold">Auditoria do Sistema</h1>
-      <p className="text-muted-fg text-sm">eu garantir que apenas administradores possam visualizar e auditar as ações.</p>
+      <p className="text-muted-fg text-sm">eu localizar rapidamente ações por tipo, usuário e intervalo de datas. Implemente filtros e busca na aba de Auditoria para eu localizar rapidamente ações por tipo, usuário e intervalo de datas. Adicione a opção de exportar os registros da Auditoria em CSV (e/ou PDF) para eu baixar e compartilhar o histórico.</p>
       
       <div className="bg-card rounded-xl border border-border overflow-hidden shadow-sm">
         <table className="w-full text-left">
