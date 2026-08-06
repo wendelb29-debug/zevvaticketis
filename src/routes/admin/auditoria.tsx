@@ -24,6 +24,7 @@ function AuditoriaPage() {
   return (
     <div className="space-y-6 text-foreground">
       <h1 className="text-2xl font-manrope font-extrabold">Auditoria do Sistema</h1>
+      <p className="text-muted-fg text-sm">eu garantir que apenas administradores possam visualizar e auditar as ações.</p>
       
       <div className="bg-card rounded-xl border border-border overflow-hidden shadow-sm">
         <table className="w-full text-left">

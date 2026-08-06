@@ -132,7 +132,7 @@ export function AuditoriaPanel() {
           <ShieldCheck className="w-5 h-5 text-primary mt-0.5" />
           <div>
             <h3 className="font-bold text-foreground">Auditoria</h3>
-            <p className="text-xs text-muted-fg">Visualize o histórico de alterações e ações de todos os usuários do sistema</p>
+            <p className="text-xs text-muted-fg">eu garantir que apenas administradores possam visualizar e auditar as ações.</p>
           </div>
         </div>
 
