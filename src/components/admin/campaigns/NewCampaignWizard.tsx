@@ -56,6 +56,14 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
   const [csvPreview, setCsvPreview] = useState<string[][]>([]);
 
+  // Configurações de envio states
+  const [sendingSpeed, setSendingSpeed] = useState("medio");
+  const [contactsPerBatch, setContactsPerBatch] = useState(50);
+  const [intervalBetweenBatches, setIntervalBetweenBatches] = useState(10);
+  const [startTime, setStartTime] = useState("00:00");
+  const [endTime, setEndTime] = useState("23:59");
+  const [isScheduled, setIsScheduled] = useState(false);
+
   const nextStep = () => setStep((s) => (s + 1) as Step);
   const prevStep = () => setStep((s) => (s - 1) as Step);
 
