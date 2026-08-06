@@ -2,6 +2,7 @@ import { createFileRoute, Outlet, redirect, useNavigate, Link, useLocation } fro
 import { supabase } from "@/integrations/supabase/client";
 import { useEffect, useState } from "react";
 import { UserMenu } from "@/components/auth/UserMenu";
+import { NotificationBell } from "@/components/admin/notifications/NotificationBell";
 import { GlobalBreadcrumb } from "@/components/layout/GlobalBreadcrumb";
 import { useUI } from "@/hooks/use-ui";
 import { 
