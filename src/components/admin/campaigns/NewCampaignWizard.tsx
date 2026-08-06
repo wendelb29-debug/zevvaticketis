@@ -121,16 +121,16 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
                 variant="outline"
                 onClick={prevStep}
                 disabled={step === 1}
-                className="border-primary/20 text-primary hover:bg-accent font-bold px-6"
+                className="border-[#E5E7EB] text-[#0F172A] hover:bg-slate-50 font-bold px-6 h-11 rounded-xl"
               >
                 Voltar
               </Button>
               <Button 
                 onClick={nextStep}
                 disabled={!canGoNext || step === 5}
-                className="bg-primary hover:bg-primary/90 text-white font-bold px-8 shadow-lg shadow-primary/20"
+                className="bg-[#F06452] hover:bg-[#D95342] text-white font-bold px-8 h-11 rounded-xl shadow-lg shadow-[#F06452]/20"
               >
-                Próximo
+                Continuar
               </Button>
             </div>
           </div>
