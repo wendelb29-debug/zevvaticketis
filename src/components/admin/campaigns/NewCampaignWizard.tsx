@@ -741,70 +741,69 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
             <div className="animate-in fade-in slide-in-from-bottom-4 duration-500 space-y-8">
               <div className="flex items-center justify-between">
                 <div className="space-y-1">
-                  <h2 className="text-xl font-manrope font-extrabold text-navy uppercase tracking-tight">Configurações</h2>
-                  <p className="text-sm text-muted-fg">Configurações adicionais para o envio</p>
+                  <h2 className="text-xl font-manrope font-extrabold text-[#0F172A] uppercase tracking-tight">Configurações</h2>
+                  <p className="text-sm text-[#64748B]">Configurações adicionais para o envio</p>
                 </div>
               </div>
 
-              <div className="bg-primary/5 border border-primary/20 rounded-2xl p-4 flex items-center gap-4">
-                <div className="bg-primary/10 p-2 rounded-xl">
-                  <Rocket className="w-5 h-5 text-primary" />
+              <div className="bg-[#FDF0ED] border border-[#F06452]/20 rounded-2xl p-5 flex items-center gap-4">
+                <div className="bg-[#F06452] p-2.5 rounded-xl shadow-lg shadow-[#F06452]/20">
+                  <Rocket className="w-5 h-5 text-white" />
                 </div>
-                <div className="flex-1 text-sm">
-                  <span className="text-muted-fg">Hoje este envio dispara </span>
-                  <span className="font-bold text-primary">50 contatos por vez</span>
-                  <span className="text-muted-fg">, com pausa de </span>
-                  <span className="font-bold text-primary">10 min entre lotes</span>
-                  <span className="text-muted-fg"> — cerca de </span>
-                  <span className="font-bold text-primary">300 mensagens por hora</span>
-                  <span className="text-muted-fg">, somente das </span>
-                  <span className="font-bold text-primary">00:00 às 23:59</span>
-                  <span className="text-muted-fg">.</span>
+                <div className="flex-1 text-sm text-[#0F172A]">
+                  <span className="text-[#64748B]">Hoje este envio dispara </span>
+                  <span className="font-black text-[#F06452]">50 contatos por vez</span>
+                  <span className="text-[#64748B]">, com pausa de </span>
+                  <span className="font-black text-[#F06452]">10 min entre lotes</span>
+                  <span className="text-[#64748B]"> — cerca de </span>
+                  <span className="font-black text-[#F06452]">300 mensagens por hora</span>
+                  <span className="text-[#64748B]">, somente das </span>
+                  <span className="font-black text-[#F06452]">00:00 às 23:59</span>
+                  <span className="text-[#64748B]">.</span>
                 </div>
               </div>
 
               <div className="space-y-4">
                 <div className="space-y-1">
-                  <Label className="text-xs font-bold text-navy uppercase tracking-widest">Com que rapidez enviar?</Label>
-                  <p className="text-[10px] text-muted-fg">Quanto mais rápido, maior a chance das mensagens serem marcadas como spam.</p>
+                  <Label className="text-xs font-black text-[#0F172A] uppercase tracking-widest">Com que rapidez enviar?</Label>
+                  <p className="text-[11px] text-[#64748B] font-medium">Quanto mais rápido, maior a chance das mensagens serem marcadas como spam.</p>
                 </div>
                 
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                   {[
-                    { id: "lento", label: "Lento", speed: "10 contatos a cada 15 min", total: "≈40 por hora", desc: "Ideal para campanhas longas. Nesta opção a chance de banimento é baixa.", risk: "Risco baixo", icon: "🐢" },
-                    { id: "medio", label: "Médio (Recomendado)", speed: "50 contatos a cada 10 min", total: "≈300 por hora", desc: "Ideal para as campanhas. Velocidade razoável e risco de banimento baixo.", risk: "Risco baixo", recommended: true, icon: "🐢" },
-                    { id: "rapido", label: "Rápido", speed: "100 contatos a cada 5 min", total: "≈1200 por hora", desc: "Entrega mais rápida. Pode causar problemas de banimento.", risk: "Pode causar bloqueio", icon: "🐇" },
-                    { id: "manual", label: "Manual", speed: "Você define - sob medida", total: "", desc: "Defina manualmente a velocidade de envio de mensagens da sua campanha.", risk: "Personalizado", icon: "✋" }
+                    { id: "lento", label: "Lento", speed: "10 contatos / 15 min", total: "≈40/h", risk: "Risco baixo", icon: "🐢" },
+                    { id: "medio", label: "Médio (Rec.)", speed: "50 contatos / 10 min", total: "≈300/h", risk: "Risco baixo", recommended: true, icon: "🐢" },
+                    { id: "rapido", label: "Rápido", speed: "100 contatos / 5 min", total: "≈1200/h", risk: "Risco moderado", icon: "🐇" },
+                    { id: "manual", label: "Manual", speed: "Defina você mesmo", total: "", risk: "Personalizado", icon: "✋" }
                   ].map((item) => (
                     <div 
                       key={item.id}
                       onClick={() => setSendingSpeed(item.id)}
                       className={cn(
-                        "p-4 rounded-xl border-2 transition-all cursor-pointer flex flex-col gap-3 relative group",
-                        sendingSpeed === item.id ? "bg-primary/5 border-primary shadow-sm" : "bg-white border-border hover:border-primary/30"
+                        "p-5 rounded-2xl border-2 transition-all cursor-pointer flex flex-col gap-4 relative group",
+                        sendingSpeed === item.id ? "bg-[#FDF0ED] border-[#F06452] shadow-sm" : "bg-white border-[#E5E7EB] hover:border-[#F06452]/30"
                       )}
                     >
                       <div className="flex items-center justify-between">
-                        <span className="text-xl">{item.icon}</span>
-                        {sendingSpeed === item.id && <div className="w-4 h-4 rounded-full bg-primary flex items-center justify-center"><Check className="w-2.5 h-2.5 text-white" /></div>}
+                        <span className="text-2xl">{item.icon}</span>
+                        {sendingSpeed === item.id && <div className="w-5 h-5 rounded-full bg-[#F06452] flex items-center justify-center shadow-md shadow-[#F06452]/20"><Check className="w-3 h-3 text-white" /></div>}
                       </div>
                       <div className="space-y-1">
-                        <p className={cn("text-sm font-bold", sendingSpeed === item.id ? "text-primary" : "text-navy")}>{item.label}</p>
-                        <p className="text-[10px] font-bold text-navy/70">{item.speed} · {item.total}</p>
+                        <p className={cn("text-sm font-bold", sendingSpeed === item.id ? "text-[#F06452]" : "text-[#0F172A]")}>{item.label}</p>
+                        <p className="text-[10px] font-black text-[#0F172A]/70 uppercase tracking-tight">{item.speed}</p>
                       </div>
-                      <div className="h-[2px] w-full bg-accent relative overflow-hidden rounded-full">
+                      <div className="h-1.5 w-full bg-slate-100 relative overflow-hidden rounded-full">
                         <div className={cn(
-                          "absolute top-0 left-0 h-full bg-primary transition-all duration-500",
+                          "absolute top-0 left-0 h-full bg-[#F06452] transition-all duration-700 ease-in-out",
                           item.id === "lento" ? "w-1/4" : item.id === "medio" ? "w-2/4" : item.id === "rapido" ? "w-full" : "w-0"
                         )} />
                       </div>
-                      <p className="text-[10px] text-muted-fg leading-tight">{item.desc}</p>
                       <div className="flex gap-1.5 flex-wrap">
                         <span className={cn(
-                          "text-[8px] px-1.5 py-0.5 rounded font-black uppercase tracking-wider",
+                          "text-[9px] px-2 py-0.5 rounded-md font-black uppercase tracking-tight",
                           item.id === "rapido" ? "bg-amber-100 text-amber-600" : "bg-green-100 text-green-600"
                         )}>{item.risk}</span>
-                        {item.recommended && <span className="bg-primary/10 text-primary text-[8px] px-1.5 py-0.5 rounded font-black uppercase tracking-wider">Recomendado</span>}
+                        {item.recommended && <span className="bg-[#F06452] text-white text-[9px] px-2 py-0.5 rounded-md font-black uppercase tracking-tight">Recomendado</span>}
                       </div>
                     </div>
                   ))}
