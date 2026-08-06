@@ -118,7 +118,7 @@ function AdminLayout() {
         { label: "Produtores", href: "/admin/produtores" },
       ]
     },
-    { label: "Configurações", icon: Settings, href: "/admin/configuracoes" },
+    
   ];
 
   useEffect(() => {
