@@ -16,6 +16,7 @@ import { toast } from "sonner";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
+import { Badge } from "@/components/ui/badge";
 import { TeamManagement } from "@/components/admin/TeamManagement";
 import { AuditoriaPanel } from "@/components/admin/AuditoriaPanel";
 import { WhatsAppIntegration } from "@/components/admin/WhatsAppIntegration";
