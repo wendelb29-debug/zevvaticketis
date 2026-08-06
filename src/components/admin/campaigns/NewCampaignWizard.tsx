@@ -529,37 +529,37 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
                 <p className="text-sm text-muted-fg mt-1">Relacione as colunas da planilha aos campos obrigatórios e variáveis do template.</p>
               </div>
 
-              <div className="p-4 bg-primary/5 border border-primary/20 rounded-xl flex items-center gap-3">
-                <AlertCircle className="w-5 h-5 text-primary" />
-                <p className="text-xs font-medium text-navy">
+              <div className="p-5 bg-slate-50 border border-[#E5E7EB] rounded-2xl flex items-center gap-4">
+                <AlertCircle className="w-6 h-6 text-[#F06452]" />
+                <p className="text-xs font-semibold text-[#0F172A] leading-relaxed">
                   Exibindo as 3 primeiras linhas do arquivo para você estabelecer o vínculo visual entre as colunas e os campos. 
-                  É obrigatório ter pelo menos uma coluna mapeada como <span className="font-bold">Telefone</span>.
+                  É obrigatório ter pelo menos uma coluna mapeada como <span className="font-bold text-[#F06452]">Telefone</span>.
                 </p>
               </div>
 
-              <div className="bg-white rounded-2xl border border-border shadow-sm overflow-hidden">
+              <div className="bg-white rounded-2xl border border-[#E5E7EB] shadow-sm overflow-hidden">
                 <table className="w-full text-left border-collapse">
-                  <thead className="bg-accent/30">
+                  <thead className="bg-slate-50">
                     <tr>
                       {csvPreview[0]?.map((header, i) => (
-                        <th key={i} className="p-6 border-b border-border bg-accent/20">
+                        <th key={i} className="p-6 border-b border-[#E5E7EB] bg-slate-50/50">
                           <div className="space-y-4">
                             <div className="flex items-center justify-between">
-                              <span className="text-xs font-extrabold text-navy uppercase tracking-widest">{header}</span>
+                              <span className="text-xs font-black text-[#0F172A] uppercase tracking-widest">{header}</span>
                               <Button 
                                 variant="ghost" 
                                 size="icon" 
-                                className="h-6 w-6 text-muted-fg hover:text-error transition-colors"
+                                className="h-7 w-7 text-[#64748B] hover:text-[#F06452] hover:bg-[#FDF0ED] transition-colors rounded-lg"
                                 onClick={() => removeColumn(i)}
                               >
-                                <Trash2 className="w-3 h-3" />
+                                <Trash2 className="w-4 h-4" />
                               </Button>
                             </div>
                             <Select defaultValue={i === 0 ? "nome" : i === 2 ? "telefone" : "variavel"}>
-                              <SelectTrigger className="bg-white border-border h-11 rounded-xl">
+                              <SelectTrigger className="bg-white border-[#E5E7EB] h-11 rounded-xl focus:ring-[#F06452]">
                                 <SelectValue placeholder="Selecione o campo" />
                               </SelectTrigger>
-                              <SelectContent>
+                              <SelectContent className="bg-white border-[#E5E7EB]">
                                 <SelectItem value="nome">Nome</SelectItem>
                                 <SelectItem value="telefone">Telefone</SelectItem>
                                 <SelectItem value="departamento">Departamento</SelectItem>
@@ -568,12 +568,12 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
                               </SelectContent>
                             </Select>
                             {(i === 0 || i === 2) ? (
-                              <div className="bg-green-500/10 text-green-600 px-3 py-1.5 rounded-lg border border-green-500/20 text-[10px] font-bold flex items-center gap-1.5">
-                                <Check className="w-3 h-3" /> Mapeado
+                              <div className="bg-green-50 text-green-600 px-3 py-1.5 rounded-lg border border-green-100 text-[10px] font-black flex items-center gap-1.5">
+                                <Check className="w-3.5 h-3.5" /> Mapeado
                               </div>
                             ) : (
-                              <div className="bg-primary/10 text-primary px-3 py-1.5 rounded-lg border border-primary/20 text-[10px] font-bold">
-                                Variável de fluxo: {header.toLowerCase()}
+                              <div className="bg-[#FDF0ED] text-[#F06452] px-3 py-1.5 rounded-lg border border-[#F06452]/10 text-[10px] font-black uppercase tracking-tight">
+                                Variável: {header.toLowerCase()}
                               </div>
                             )}
                           </div>
@@ -583,9 +583,9 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
                   </thead>
                   <tbody>
                     {csvPreview.slice(1, 4).map((row, rowIndex) => (
-                      <tr key={rowIndex} className="border-b border-border/50 hover:bg-accent/5 transition-colors">
+                      <tr key={rowIndex} className="border-b border-[#E5E7EB] hover:bg-slate-50 transition-colors">
                         {row.map((cell, cellIndex) => (
-                          <td key={cellIndex} className="p-6 text-sm font-medium text-navy/70 italic truncate max-w-[200px]">
+                          <td key={cellIndex} className="p-6 text-sm font-medium text-[#64748B] italic truncate max-w-[200px]">
                             {cell}
                           </td>
                         ))}
