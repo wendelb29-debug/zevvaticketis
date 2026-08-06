@@ -1153,6 +1153,7 @@ function SettingsPage({ session }: { session: any }) {
             <table className="w-full text-left text-sm min-w-[800px]">
               <thead className="bg-accent/50 text-[10px] uppercase font-bold text-muted-fg sticky top-0">
                 <tr>
+                  <th className="px-6 py-3 text-center">Ações</th>
                   <th className="px-6 py-3">ID Tentativa</th>
                   <th className="px-6 py-3">Horário</th>
                   <th className="px-6 py-3">Destinatário</th>
