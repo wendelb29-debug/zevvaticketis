@@ -95,7 +95,7 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
               <p className="text-sm text-[#64748B] mt-0.5">Configure seu envio WhatsApp ou E-mail</p>
             </div>
             
-            <div className="flex items-center gap-12">
+            <div className="flex items-center gap-6 xl:gap-12 flex-1 justify-center overflow-x-auto no-scrollbar mx-4 py-2">
               {steps.map((s) => (
                 <div key={s.number} className="flex items-center gap-2 relative">
                   <div className={cn(
