@@ -87,7 +87,7 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-        <DialogContent className="max-w-6xl p-0 overflow-hidden bg-white border border-border text-[#0F172A] rounded-2xl">
+      <DialogContent className="max-w-6xl p-0 overflow-hidden bg-white border border-border text-[#0F172A] rounded-2xl max-h-[95vh] flex flex-col">
         <DialogHeader className="p-0 border-b border-border bg-white relative">
           <div className="flex items-center justify-between px-8 py-6">
             <div className="flex flex-col">
@@ -95,7 +95,7 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
               <p className="text-sm text-[#64748B] mt-0.5">Configure seu envio WhatsApp ou E-mail</p>
             </div>
             
-            <div className="flex items-center gap-12">
+            <div className="flex items-center gap-6 xl:gap-12 flex-1 justify-center overflow-x-auto no-scrollbar mx-4 py-2">
               {steps.map((s) => (
                 <div key={s.number} className="flex items-center gap-2 relative">
                   <div className={cn(
@@ -116,7 +116,7 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
               ))}
             </div>
             
-            <div className="flex gap-3">
+            <div className="flex gap-3 shrink-0">
               <Button 
                 variant="outline"
                 onClick={prevStep}
@@ -137,7 +137,8 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
         </DialogHeader>
 
 
-        <div className="p-8 min-h-[600px] bg-white">
+        <ScrollArea className="flex-1 bg-white">
+          <div className="p-8">
           {step === 1 && (
             <div className="grid grid-cols-1 lg:grid-cols-[400px_1fr] gap-12 animate-in fade-in slide-in-from-bottom-4 duration-500">
               <div className="space-y-8">
@@ -927,7 +928,8 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
               </div>
             </div>
           )}
-        </div>
+          </div>
+        </ScrollArea>
       </DialogContent>
     </Dialog>
   );
