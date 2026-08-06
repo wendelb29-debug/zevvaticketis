@@ -10,8 +10,9 @@ import { Switch } from "@/components/ui/switch";
 import { 
   Users, Settings, Shield, Clock, Tag, MessageSquare, Workflow, Plus, 
   Edit2, Trash2, X, Zap, Ticket, Calendar, Globe, Bell, 
-  Layers, Lock, Database, Smartphone, Sliders, Search, ListChecks, History
+  Layers, Lock, Database, Smartphone, Sliders, Search, ListChecks, History, PieChart
 } from "lucide-react";
+
 import { toast } from "sonner";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
@@ -432,7 +433,7 @@ function SettingsPage() {
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                   {departments.map(dept => (
-                    <Card key={dept.id} className={cn("border-border bg-background/50 transition-all hover:border-primary/30", dept.status === 'inactive' && "opacity-60")}>
+                    <Card key={dept.id} className={cn("border-border bg-background/50 transition-all hover:border-primary/30", dept.status === 'inativo' && "opacity-60")}>
                       <CardHeader className="p-4 pb-2">
                         <CardTitle className="text-sm flex items-center justify-between font-bold">
                           {dept.name}
