@@ -18,6 +18,7 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { cn } from "@/lib/utils";
 import { TeamManagement } from "@/components/admin/TeamManagement";
 import { AuditoriaPanel } from "@/components/admin/AuditoriaPanel";
+import { WhatsAppIntegration } from "@/components/admin/WhatsAppIntegration";
 import { useQuery } from "@tanstack/react-query";
 
 
@@ -554,7 +555,7 @@ function SettingsPage() {
                 </div>
               </AccordionTrigger>
               <AccordionContent className="px-6 pb-6 pt-2">
-                 <p className="text-sm text-muted-fg">Conecte o Zevva com outras ferramentas de mercado.</p>
+                <WhatsAppIntegration />
               </AccordionContent>
             </AccordionItem>
             <AccordionItem value="pref" className="border-border bg-card rounded-xl border overflow-hidden shadow-sm">
