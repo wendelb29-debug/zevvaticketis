@@ -178,7 +178,7 @@ function AdminLayout() {
       </div>
       
       <nav className="flex-1 space-y-1 px-4 overflow-y-auto custom-scrollbar">
-        {menuItems.map((item) => {
+        {menuItems.map((item, index) => {
           const isGroup = !!item.children;
           const isOpen = openGroup === item.label;
           const hasActiveChild = item.children?.some(child => location.pathname === child.href);
