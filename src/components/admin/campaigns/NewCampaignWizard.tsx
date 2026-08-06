@@ -87,7 +87,7 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-        <DialogContent className="max-w-6xl p-0 overflow-hidden bg-white border border-border text-[#0F172A] rounded-2xl">
+      <DialogContent className="max-w-6xl p-0 overflow-hidden bg-white border border-border text-[#0F172A] rounded-2xl max-h-[95vh] flex flex-col">
         <DialogHeader className="p-0 border-b border-border bg-white relative">
           <div className="flex items-center justify-between px-8 py-6">
             <div className="flex flex-col">
