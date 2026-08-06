@@ -221,8 +221,8 @@ function AuditoriaTab() {
 
 
 function SettingsPage() {
-
-  const [activeTab, setActiveTab] = useState("atendimento");
+  const search = useSearch({ from: "/admin/configuracoes" }) as any;
+  const [activeTab, setActiveTab] = useState(search?.tab === "team" ? "equipe" : "atendimento");
   const [isDeptModalOpen, setIsDeptModalOpen] = useState(false);
   const [isTagModalOpen, setIsTagModalOpen] = useState(false);
   const [deptName, setDeptName] = useState("");
