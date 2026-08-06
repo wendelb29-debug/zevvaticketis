@@ -137,10 +137,11 @@ function AdminChatPage() {
   ];
 
   return (
-    <div className="flex flex-col h-screen bg-background text-foreground overflow-hidden font-inter transition-colors duration-300">
-      {/* Header Fixo */}
-      <header className="h-16 flex items-center justify-between px-6 border-b border-border bg-card shrink-0 z-10 shadow-sm">
-        <div className="flex items-center gap-8">
+    <TooltipProvider>
+      <div className="flex flex-col h-screen bg-background text-foreground overflow-hidden font-inter transition-colors duration-300">
+        {/* Header Fixo */}
+        <header className="h-16 flex items-center justify-between px-6 border-b border-border bg-card shrink-0 z-10 shadow-sm">
+          <div className="flex items-center gap-8">
           <div className="flex items-center gap-4">
             <Link 
               to="/admin" 
