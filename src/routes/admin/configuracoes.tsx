@@ -356,17 +356,52 @@ function SettingsPage() {
 
         <TabsContent value="atendimento" className="space-y-4 focus-visible:outline-none outline-none">
           <Accordion type="single" collapsible className="w-full space-y-4">
+            <AccordionItem value="filas" className="border-border bg-card rounded-xl overflow-hidden shadow-sm border">
+              <AccordionTrigger className="px-6 py-5 font-bold text-lg hover:no-underline hover:bg-accent/50 transition-colors">
+                <div className="flex items-center gap-3">
+                  <Layers className="w-5 h-5 text-primary" />
+                  Filas de Atendimento
+                </div>
+              </AccordionTrigger>
+              <AccordionContent className="px-6 pb-6 pt-2 space-y-4">
+                <p className="text-sm text-muted-fg">Organize o fluxo de entrada de mensagens. Aqui você cria as filas que serão vinculadas aos departamentos. Somente usuários vinculados à fila/departamento poderão realizar o atendimento.</p>
+                <div className="flex justify-end">
+                  <Button size="sm" className="bg-primary text-white gap-2 font-bold">
+                    <Plus className="w-4 h-4" /> Criar nova fila
+                  </Button>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {departments.map(dept => (
+                    <Card key={dept.id} className="border-border bg-background/50">
+                      <CardHeader className="p-4 pb-2">
+                        <CardTitle className="text-sm flex items-center justify-between">
+                          {dept.name}
+                          <Badge variant="outline" className="text-[10px]">{dept.members} Agentes</Badge>
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent className="p-4 pt-0">
+                        <p className="text-xs text-muted-fg mb-3">Fila vinculada ao departamento {dept.name}.</p>
+                        <div className="flex gap-2">
+                          <Button variant="ghost" size="sm" className="h-7 px-2 text-[10px] font-bold">GERENCIAR</Button>
+                          <Button variant="ghost" size="sm" className="h-7 px-2 text-[10px] font-bold text-destructive">EXCLUIR</Button>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+              </AccordionContent>
+            </AccordionItem>
+
             <AccordionItem value="geral" className="border-border bg-card rounded-xl overflow-hidden shadow-sm border">
               <AccordionTrigger className="px-6 py-5 font-bold text-lg hover:no-underline hover:bg-accent/50 transition-colors">
                 <div className="flex items-center gap-3">
-                  <Sliders className="w-5 h-5 text-primary" />
-                  Configurações Gerais de Atendimento
+                  <Workflow className="w-5 h-5 text-primary" />
+                  Distribuição de Conversas
                 </div>
               </AccordionTrigger>
               <AccordionContent className="px-6 pb-6 pt-2 space-y-6">
                 <DistribuicaoConversas departments={departments} />
               </AccordionContent>
-
             </AccordionItem>
 
             <AccordionItem value="departamentos" className="border-border bg-card rounded-xl overflow-hidden shadow-sm border">
