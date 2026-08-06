@@ -30,13 +30,17 @@ import {
   Trash2,
   Filter,
   Check,
-  Rocket
+  Rocket,
+  Zap,
+  MousePointer2,
+  Info
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Checkbox } from "@/components/ui/checkbox";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Switch } from "@/components/ui/switch";
 
 interface NewCampaignWizardProps {
   open: boolean;
@@ -55,6 +59,14 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
   const [contentType, setContentType] = useState("mensagem");
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
   const [csvPreview, setCsvPreview] = useState<string[][]>([]);
+
+  // Configurações de envio states
+  const [sendingSpeed, setSendingSpeed] = useState("medio");
+  const [contactsPerBatch, setContactsPerBatch] = useState(50);
+  const [intervalBetweenBatches, setIntervalBetweenBatches] = useState(10);
+  const [startTime, setStartTime] = useState("00:00");
+  const [endTime, setEndTime] = useState("23:59");
+  const [isScheduled, setIsScheduled] = useState(false);
 
   const nextStep = () => setStep((s) => (s + 1) as Step);
   const prevStep = () => setStep((s) => (s - 1) as Step);
@@ -730,17 +742,197 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
           )}
 
           {step === 5 && (
-            <div className="flex flex-col items-center justify-center h-full text-center space-y-6">
-               <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center">
-                  <Clock className="w-10 h-10 text-primary" />
-               </div>
-               <div>
-                  <h2 className="text-2xl font-manrope font-extrabold text-navy uppercase">Configuração Final</h2>
-                  <p className="text-muted-fg mt-2 max-w-md">Sua campanha está quase pronta para decolar! Revise os dados e agende o melhor horário para o disparo.</p>
-               </div>
-               <Button className="bg-primary hover:bg-primary/90 text-white font-extrabold px-12 h-14 rounded-2xl shadow-xl shadow-primary/30 text-lg uppercase tracking-tight">
-                  <Rocket className="w-5 h-5 mr-3" /> Iniciar Envio Agora
-               </Button>
+            <div className="animate-in fade-in slide-in-from-bottom-4 duration-500 space-y-8">
+              <div className="flex items-center justify-between">
+                <div className="space-y-1">
+                  <h2 className="text-xl font-manrope font-extrabold text-navy uppercase tracking-tight">Configurações</h2>
+                  <p className="text-sm text-muted-fg">Configurações adicionais para o envio</p>
+                </div>
+              </div>
+
+              <div className="bg-primary/5 border border-primary/20 rounded-2xl p-4 flex items-center gap-4">
+                <div className="bg-primary/10 p-2 rounded-xl">
+                  <Rocket className="w-5 h-5 text-primary" />
+                </div>
+                <div className="flex-1 text-sm">
+                  <span className="text-muted-fg">Hoje este envio dispara </span>
+                  <span className="font-bold text-primary">50 contatos por vez</span>
+                  <span className="text-muted-fg">, com pausa de </span>
+                  <span className="font-bold text-primary">10 min entre lotes</span>
+                  <span className="text-muted-fg"> — cerca de </span>
+                  <span className="font-bold text-primary">300 mensagens por hora</span>
+                  <span className="text-muted-fg">, somente das </span>
+                  <span className="font-bold text-primary">00:00 às 23:59</span>
+                  <span className="text-muted-fg">.</span>
+                </div>
+              </div>
+
+              <div className="space-y-4">
+                <div className="space-y-1">
+                  <Label className="text-xs font-bold text-navy uppercase tracking-widest">Com que rapidez enviar?</Label>
+                  <p className="text-[10px] text-muted-fg">Quanto mais rápido, maior a chance das mensagens serem marcadas como spam.</p>
+                </div>
+                
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                  {[
+                    { id: "lento", label: "Lento", speed: "10 contatos a cada 15 min", total: "≈40 por hora", desc: "Ideal para campanhas longas. Nesta opção a chance de banimento é baixa.", risk: "Risco baixo", icon: "🐢" },
+                    { id: "medio", label: "Médio (Recomendado)", speed: "50 contatos a cada 10 min", total: "≈300 por hora", desc: "Ideal para as campanhas. Velocidade razoável e risco de banimento baixo.", risk: "Risco baixo", recommended: true, icon: "🐢" },
+                    { id: "rapido", label: "Rápido", speed: "100 contatos a cada 5 min", total: "≈1200 por hora", desc: "Entrega mais rápida. Pode causar problemas de banimento.", risk: "Pode causar bloqueio", icon: "🐇" },
+                    { id: "manual", label: "Manual", speed: "Você define - sob medida", total: "", desc: "Defina manualmente a velocidade de envio de mensagens da sua campanha.", risk: "Personalizado", icon: "✋" }
+                  ].map((item) => (
+                    <div 
+                      key={item.id}
+                      onClick={() => setSendingSpeed(item.id)}
+                      className={cn(
+                        "p-4 rounded-xl border-2 transition-all cursor-pointer flex flex-col gap-3 relative group",
+                        sendingSpeed === item.id ? "bg-primary/5 border-primary shadow-sm" : "bg-white border-border hover:border-primary/30"
+                      )}
+                    >
+                      <div className="flex items-center justify-between">
+                        <span className="text-xl">{item.icon}</span>
+                        {sendingSpeed === item.id && <div className="w-4 h-4 rounded-full bg-primary flex items-center justify-center"><Check className="w-2.5 h-2.5 text-white" /></div>}
+                      </div>
+                      <div className="space-y-1">
+                        <p className={cn("text-sm font-bold", sendingSpeed === item.id ? "text-primary" : "text-navy")}>{item.label}</p>
+                        <p className="text-[10px] font-bold text-navy/70">{item.speed} · {item.total}</p>
+                      </div>
+                      <div className="h-[2px] w-full bg-accent relative overflow-hidden rounded-full">
+                        <div className={cn(
+                          "absolute top-0 left-0 h-full bg-primary transition-all duration-500",
+                          item.id === "lento" ? "w-1/4" : item.id === "medio" ? "w-2/4" : item.id === "rapido" ? "w-full" : "w-0"
+                        )} />
+                      </div>
+                      <p className="text-[10px] text-muted-fg leading-tight">{item.desc}</p>
+                      <div className="flex gap-1.5 flex-wrap">
+                        <span className={cn(
+                          "text-[8px] px-1.5 py-0.5 rounded font-black uppercase tracking-wider",
+                          item.id === "rapido" ? "bg-amber-100 text-amber-600" : "bg-green-100 text-green-600"
+                        )}>{item.risk}</span>
+                        {item.recommended && <span className="bg-primary/10 text-primary text-[8px] px-1.5 py-0.5 rounded font-black uppercase tracking-wider">Recomendado</span>}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div className="bg-white rounded-2xl border border-border p-6 space-y-6 shadow-sm">
+                  <div className="flex items-center gap-3">
+                    <div className="bg-accent p-2 rounded-lg"><Users className="w-4 h-4 text-navy" /></div>
+                    <div className="space-y-0.5">
+                      <h4 className="text-sm font-bold text-navy">Envio em lotes</h4>
+                      <p className="text-[10px] text-muted-fg leading-tight">O sistema manda um grupo de contatos, faz uma pausa e continua. Isso deixa o envio mais natural.</p>
+                    </div>
+                  </div>
+
+                  <div className="bg-accent/30 rounded-xl p-4 flex gap-4 overflow-x-auto no-scrollbar">
+                    {[1, 2, 3].map(i => (
+                      <div key={i} className="min-w-[140px] bg-white border border-border rounded-lg p-3 text-center space-y-1.5">
+                        <p className="text-[10px] font-black text-primary uppercase">Lote {i}</p>
+                        <p className="text-xs font-bold text-navy">50 contatos</p>
+                        <div className="flex items-center justify-center gap-1.5 pt-1.5 border-t border-accent">
+                          <Clock className="w-3 h-3 text-muted-fg" />
+                          <span className="text-[10px] font-bold text-muted-fg">10 min</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label className="text-xs font-bold text-navy uppercase tracking-widest">Contatos por lote</Label>
+                      <Input 
+                        type="number" 
+                        value={contactsPerBatch}
+                        onChange={(e) => setContactsPerBatch(Number(e.target.value))}
+                        className="bg-accent/30 border-border h-11 rounded-xl font-bold text-navy"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label className="text-xs font-bold text-navy uppercase tracking-widest">Intervalo entre lotes (em minutos)</Label>
+                      <Input 
+                        type="number" 
+                        value={intervalBetweenBatches}
+                        onChange={(e) => setIntervalBetweenBatches(Number(e.target.value))}
+                        className="bg-accent/30 border-border h-11 rounded-xl font-bold text-navy"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="bg-primary/5 text-primary p-3 rounded-xl flex items-center gap-3 border border-primary/10">
+                    <Clock className="w-4 h-4" />
+                    <p className="text-[10px] font-bold">Os horários abaixo seguem o fuso horário do projeto: America/Sao Paulo.</p>
+                  </div>
+
+                  <div className="pt-4 border-t border-border flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className="bg-accent p-2 rounded-lg"><Calendar className="w-4 h-4 text-navy" /></div>
+                      <div className="space-y-0.5">
+                        <h4 className="text-sm font-bold text-navy">Agendar data e hora de início?</h4>
+                        <p className="text-[10px] text-muted-fg leading-tight">Define quando a campanha deve começar a enviar. Se não selecionado, começa imediatamente.</p>
+                      </div>
+                    </div>
+                    <Switch checked={isScheduled} onCheckedChange={setIsScheduled} className="data-[state=checked]:bg-primary" />
+                  </div>
+                </div>
+
+                <div className="bg-white rounded-2xl border border-border p-6 space-y-6 shadow-sm flex flex-col">
+                  <div className="flex items-center gap-3">
+                    <div className="bg-accent p-2 rounded-lg"><Clock className="w-4 h-4 text-navy" /></div>
+                    <div className="space-y-0.5">
+                      <h4 className="text-sm font-bold text-navy">Horário permitido</h4>
+                      <p className="text-[10px] text-muted-fg leading-tight">Fora dessa faixa o envio pausa e volta sozinho no dia seguinte.</p>
+                    </div>
+                  </div>
+
+                  <div className="flex-1 flex flex-col justify-center py-4">
+                    <div className="relative h-6 w-full mb-8">
+                      <div className="absolute top-1/2 -translate-y-1/2 w-full h-1 bg-primary rounded-full" />
+                      {[0, 6, 12, 18, 24].map(h => (
+                        <div key={h} className="absolute top-1/2 -translate-y-1/2 flex flex-col items-center gap-1" style={{ left: `${(h / 24) * 100}%` }}>
+                          <div className="w-1.5 h-1.5 rounded-full bg-primary border-2 border-white shadow-sm" />
+                          <span className="text-[10px] font-bold text-muted-fg mt-4">{h}h</span>
+                        </div>
+                      ))}
+                    </div>
+
+                    <div className="flex items-center gap-6 justify-center mt-4">
+                      <div className="space-y-2">
+                        <Label className="text-xs font-bold text-navy uppercase tracking-widest">Começa às</Label>
+                        <div className="flex items-center gap-2">
+                          <Input 
+                            value={startTime}
+                            onChange={(e) => setStartTime(e.target.value)}
+                            className="w-24 bg-accent/30 border-border h-11 rounded-xl font-bold text-navy text-center"
+                          />
+                          <Clock className="w-4 h-4 text-muted-fg" />
+                        </div>
+                      </div>
+                      <div className="space-y-2">
+                        <Label className="text-xs font-bold text-navy uppercase tracking-widest">Para às</Label>
+                        <div className="flex items-center gap-2">
+                          <Input 
+                            value={endTime}
+                            onChange={(e) => setEndTime(e.target.value)}
+                            className="w-24 bg-accent/30 border-border h-11 rounded-xl font-bold text-navy text-center"
+                          />
+                          <Clock className="w-4 h-4 text-muted-fg" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <Button 
+                    className="w-full bg-primary hover:bg-primary/90 text-white font-extrabold h-14 rounded-2xl shadow-xl shadow-primary/30 text-lg uppercase tracking-tight mt-auto"
+                    onClick={() => {
+                      // Final logic
+                      onOpenChange(false);
+                    }}
+                  >
+                    <Rocket className="w-5 h-5 mr-3" /> Iniciar Envio Agora
+                  </Button>
+                </div>
+              </div>
             </div>
           )}
         </div>
