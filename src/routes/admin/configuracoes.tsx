@@ -10,8 +10,9 @@ import { Switch } from "@/components/ui/switch";
 import { 
   Users, Settings, Shield, Clock, Tag, MessageSquare, Workflow, Plus, 
   Edit2, Trash2, X, Zap, Ticket, Calendar, Globe, Bell, 
-  Layers, Lock, Database, Smartphone, Sliders, Search, ListChecks, History
+  Layers, Lock, Database, Smartphone, Sliders, Search, ListChecks, History, PieChart
 } from "lucide-react";
+
 import { toast } from "sonner";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
@@ -47,11 +48,20 @@ function AuthGuard() {
 
   if (loading) return null;
   if (!session) return null;
-  return <SettingsPage />;
+  return <SettingsPage session={session} />;
 }
 
-type Dept = { id: string; name: string; members: number };
+type Dept = { id: string; name: string; members: number; status: "ativo" | "inativo"; department_id: string };
 type DeptFull = Dept & { agents: string[]; restrictions: string[] };
+
+type QueueStatus = {
+  id: string;
+  name: string;
+  in_service: number;
+  pending: number;
+  completed: number;
+};
+
 
 
 function OptionRadio({
@@ -222,7 +232,7 @@ function AuditoriaTab() {
 }
 
 
-function SettingsPage() {
+function SettingsPage({ session }: { session: any }) {
   const search = useSearch({ from: "/admin/configuracoes" }) as any;
   const [activeTab, setActiveTab] = useState(search?.tab === "team" ? "equipe" : "atendimento");
 
@@ -252,9 +262,15 @@ function SettingsPage() {
   ]);
 
   const [departments, setDepartments] = useState<DeptFull[]>([
-    { id: "1", name: "Suporte", members: 5, agents: ["u1", "u3"], restrictions: [] },
-    { id: "2", name: "Comercial", members: 3, agents: ["u6"], restrictions: [] },
+    { id: "1", name: "Suporte", members: 5, agents: ["u1", "u3"], restrictions: [], status: "ativo", department_id: "1" },
+    { id: "2", name: "Comercial", members: 3, agents: ["u6"], restrictions: [], status: "ativo", department_id: "2" },
   ]);
+
+  const [queueStatus] = useState<QueueStatus[]>([
+    { id: "1", name: "Suporte", in_service: 12, pending: 5, completed: 45 },
+    { id: "2", name: "Comercial", in_service: 8, pending: 2, completed: 30 },
+  ]);
+
 
   const filteredAgents = agents.filter(
     (a) =>
@@ -300,6 +316,8 @@ function SettingsPage() {
 
   const saveDept = () => {
     if (!deptName.trim()) return;
+    const action = editingDeptId ? "QUEUE_UPDATE" : "QUEUE_CREATE";
+    
     if (editingDeptId) {
       setDepartments((prev) =>
         prev.map((d) =>
@@ -308,23 +326,29 @@ function SettingsPage() {
             : d
         )
       );
-      toast.success("Departamento atualizado!");
+      toast.success("Fila de atendimento atualizada!");
     } else {
-      setDepartments((prev) => [
-        ...prev,
-        {
-          id: crypto.randomUUID(),
-          name: deptName.trim(),
-          members: deptAgents.length,
-          agents: deptAgents,
-          restrictions: deptRestrictions,
-        },
-      ]);
-      toast.success("Departamento criado!");
+      const newId = crypto.randomUUID();
+      const newQueue = {
+        id: newId,
+        name: deptName.trim(),
+        members: deptAgents.length,
+        agents: deptAgents,
+        restrictions: deptRestrictions,
+        status: "ativo" as const,
+        department_id: newId
+      };
+      setDepartments((prev) => [...prev, newQueue]);
+      toast.success("Fila de atendimento criada!");
     }
+
+    // Registro na Auditoria para rastreabilidade de alterações nas filas
+    console.log(`Auditoria: ${action} - Fila: ${deptName.trim()} - Usuário: ${session?.user?.email}`);
+    
     setIsDeptModalOpen(false);
     resetDeptForm();
   };
+
 
 
   const [tags] = useState([
@@ -357,6 +381,43 @@ function SettingsPage() {
 
         <TabsContent value="atendimento" className="space-y-4 focus-visible:outline-none outline-none">
           <Accordion type="single" collapsible className="w-full space-y-4">
+            <AccordionItem value="status-filas" className="border-border bg-card rounded-xl overflow-hidden shadow-sm border">
+              <AccordionTrigger className="px-6 py-5 font-bold text-lg hover:no-underline hover:bg-accent/50 transition-colors">
+                <div className="flex items-center gap-3">
+                  <PieChart className="w-5 h-5 text-primary" />
+                  Status das Filas (Tempo Real)
+                </div>
+              </AccordionTrigger>
+              <AccordionContent className="px-6 pb-6 pt-2">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  {queueStatus.map((status) => (
+                    <Card key={status.id} className="border-border bg-background/50">
+                      <CardHeader className="p-4 pb-2 border-b border-border/10">
+                        <CardTitle className="text-sm font-bold flex items-center justify-between">
+                          {status.name}
+                          <Badge variant="outline" className="text-[10px] bg-primary/5">AO VIVO</Badge>
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent className="p-4 flex justify-between items-center">
+                        <div className="text-center">
+                          <p className="text-[10px] text-muted-fg uppercase font-bold">Em atendimento</p>
+                          <p className="text-lg font-extrabold text-primary">{status.in_service}</p>
+                        </div>
+                        <div className="text-center">
+                          <p className="text-[10px] text-muted-fg uppercase font-bold">Pendentes</p>
+                          <p className="text-lg font-extrabold text-error">{status.pending}</p>
+                        </div>
+                        <div className="text-center">
+                          <p className="text-[10px] text-muted-fg uppercase font-bold">Completas</p>
+                          <p className="text-lg font-extrabold text-emerald-500">{status.completed}</p>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+              </AccordionContent>
+            </AccordionItem>
+
             <AccordionItem value="filas" className="border-border bg-card rounded-xl overflow-hidden shadow-sm border">
               <AccordionTrigger className="px-6 py-5 font-bold text-lg hover:no-underline hover:bg-accent/50 transition-colors">
                 <div className="flex items-center gap-3">
@@ -365,26 +426,59 @@ function SettingsPage() {
                 </div>
               </AccordionTrigger>
               <AccordionContent className="px-6 pb-6 pt-2 space-y-4">
-                <p className="text-sm text-muted-fg">Organize o fluxo de entrada de mensagens. Aqui você cria as filas que serão vinculadas aos departamentos. Somente usuários vinculados à fila/departamento poderão realizar o atendimento.</p>
+                <p className="text-sm text-muted-fg">
+                  Crie, edite e gerencie as filas de atendimento vinculadas a departamentos. 
+                  Apenas usuários vinculados à fila e ao departamento poderão realizar o atendimento e visualizar o fluxo.
+                </p>
                 <div className="flex justify-end">
-                  <Button size="sm" className="bg-primary text-white gap-2 font-bold">
+                  <Button size="sm" onClick={openNewDept} className="bg-primary text-white gap-2 font-bold shadow-lg shadow-primary/20">
                     <Plus className="w-4 h-4" /> Criar nova fila
                   </Button>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                   {departments.map(dept => (
-                    <Card key={dept.id} className="border-border bg-background/50">
+                    <Card key={dept.id} className={cn("border-border bg-background/50 transition-all hover:border-primary/30", dept.status === 'inativo' && "opacity-60")}>
                       <CardHeader className="p-4 pb-2">
-                        <CardTitle className="text-sm flex items-center justify-between">
+                        <CardTitle className="text-sm flex items-center justify-between font-bold">
                           {dept.name}
-                          <Badge variant="outline" className="text-[10px]">{dept.members} Agentes</Badge>
+                          <div className="flex gap-1">
+                            <Badge variant={dept.status === 'ativo' ? "default" : "secondary"} className="text-[10px] h-4">
+                              {dept.status === 'ativo' ? 'Ativa' : 'Inativa'}
+                            </Badge>
+                            <Badge variant="outline" className="text-[10px] h-4">{dept.members} Agentes</Badge>
+                          </div>
                         </CardTitle>
                       </CardHeader>
                       <CardContent className="p-4 pt-0">
-                        <p className="text-xs text-muted-fg mb-3">Fila vinculada ao departamento {dept.name}.</p>
+                        <p className="text-[11px] text-muted-fg mb-3 line-clamp-1">Vinculada ao departamento: {dept.name}</p>
                         <div className="flex gap-2">
-                          <Button variant="ghost" size="sm" className="h-7 px-2 text-[10px] font-bold">GERENCIAR</Button>
-                          <Button variant="ghost" size="sm" className="h-7 px-2 text-[10px] font-bold text-destructive">EXCLUIR</Button>
+                          <Button 
+                            variant="secondary" 
+                            size="sm" 
+                            onClick={() => openEditDept(dept)}
+                            className="h-7 px-3 text-[10px] font-extrabold tracking-wider"
+                          >
+                            GERENCIAR
+                          </Button>
+                          <Button 
+                            variant="ghost" 
+                            size="sm" 
+                            onClick={() => {
+                              setDepartments(prev => prev.map(d => d.id === dept.id ? { ...d, status: d.status === 'ativo' ? 'inativo' : 'ativo' } : d));
+                              toast.info(`Fila ${dept.status === 'ativo' ? 'desativada' : 'ativada'}`);
+                            }}
+                            className="h-7 px-3 text-[10px] font-extrabold tracking-wider"
+                          >
+                            {dept.status === 'ativo' ? 'DESATIVAR' : 'ATIVAR'}
+                          </Button>
+                          <Button 
+                            variant="ghost" 
+                            size="sm" 
+                            onClick={() => removeDept(dept.id)}
+                            className="h-7 px-3 text-[10px] font-extrabold tracking-wider text-destructive hover:text-destructive hover:bg-destructive/10"
+                          >
+                            EXCLUIR
+                          </Button>
                         </div>
                       </CardContent>
                     </Card>
@@ -392,6 +486,7 @@ function SettingsPage() {
                 </div>
               </AccordionContent>
             </AccordionItem>
+
 
             <AccordionItem value="geral" className="border-border bg-card rounded-xl overflow-hidden shadow-sm border">
               <AccordionTrigger className="px-6 py-5 font-bold text-lg hover:no-underline hover:bg-accent/50 transition-colors">
