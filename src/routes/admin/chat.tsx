@@ -1264,6 +1264,7 @@ function AdminChatPage() {
           </div>
         </DialogContent>
       </Dialog>
-    </div>
+      </div>
+    </TooltipProvider>
   );
 }
