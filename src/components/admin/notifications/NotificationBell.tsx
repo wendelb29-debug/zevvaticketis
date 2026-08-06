@@ -82,7 +82,7 @@ export function NotificationBell() {
   };
 
   const markAsRead = async (id: string) => {
-    const { error } = await supabase
+    const { error } = await (supabase as any)
       .from('notifications')
       .update({ read: true })
       .eq('id', id);
