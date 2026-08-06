@@ -1,4 +1,4 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, useNavigate, useSearch } from "@tanstack/react-router";
 import { supabase } from "@/integrations/supabase/client";
 import { useState, useEffect } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -221,8 +221,14 @@ function AuditoriaTab() {
 
 
 function SettingsPage() {
+  const search = useSearch({ from: "/admin/configuracoes" }) as any;
+  const [activeTab, setActiveTab] = useState(search?.tab === "team" ? "equipe" : "atendimento");
 
-  const [activeTab, setActiveTab] = useState("atendimento");
+  useEffect(() => {
+    if (search?.tab === "team") {
+      setActiveTab("equipe");
+    }
+  }, [search?.tab]);
   const [isDeptModalOpen, setIsDeptModalOpen] = useState(false);
   const [isTagModalOpen, setIsTagModalOpen] = useState(false);
   const [deptName, setDeptName] = useState("");
