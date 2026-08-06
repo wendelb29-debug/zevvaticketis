@@ -71,6 +71,9 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
   const [startTime, setStartTime] = useState("00:00");
   const [endTime, setEndTime] = useState("23:59");
   const [isScheduled, setIsScheduled] = useState(false);
+  const [messageText, setMessageText] = useState("");
+  const [messageImage, setMessageImage] = useState<string | null>(null);
+  const [ctaButtons, setCtaButtons] = useState<{ id: string; label: string }[]>([]);
 
   const nextStep = () => setStep((s) => (s + 1) as Step);
   const prevStep = () => setStep((s) => (s - 1) as Step);
