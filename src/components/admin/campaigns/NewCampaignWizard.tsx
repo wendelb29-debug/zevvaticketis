@@ -116,7 +116,7 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
               ))}
             </div>
             
-            <div className="flex gap-3">
+            <div className="flex gap-3 shrink-0">
               <Button 
                 variant="outline"
                 onClick={prevStep}
