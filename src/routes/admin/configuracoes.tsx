@@ -48,7 +48,7 @@ function AuthGuard() {
 
   if (loading) return null;
   if (!session) return null;
-  return <SettingsPage />;
+  return <SettingsPage session={session} />;
 }
 
 type Dept = { id: string; name: string; members: number; status: "ativo" | "inativo"; department_id: string };
@@ -232,7 +232,7 @@ function AuditoriaTab() {
 }
 
 
-function SettingsPage() {
+function SettingsPage({ session }: { session: any }) {
   const search = useSearch({ from: "/admin/configuracoes" }) as any;
   const [activeTab, setActiveTab] = useState(search?.tab === "team" ? "equipe" : "atendimento");
 
