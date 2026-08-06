@@ -232,6 +232,7 @@ function AdminLayout() {
             <Link
               key={item.label}
               to={item.href as any}
+              tabIndex={isSidebarCollapsed ? -1 : 0}
               {...(item.activeOptions ? { activeOptions: item.activeOptions } : {})}
               className={cn(
                 "flex items-center gap-3 py-3.5 rounded-xl text-sm font-extrabold transition-all duration-300 border-2 outline-none focus:ring-2 focus:ring-primary focus:border-primary active:scale-[0.98]",
