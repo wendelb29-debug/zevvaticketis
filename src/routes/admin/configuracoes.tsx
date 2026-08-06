@@ -471,6 +471,9 @@ function SettingsPage({ session }: { session: any }) {
                     </div>
                     {notificarMudancasFila && (
                       <div className="flex items-center gap-2">
+                        <Button variant="outline" size="sm" onClick={() => setIsTestModalOpen(true)} className="h-8 text-[10px] font-bold border-primary/20 hover:bg-primary/10">
+                          <Zap className="w-3.5 h-3.5 mr-1" /> PRÉ-TESTE
+                        </Button>
                         <Button variant="outline" size="sm" onClick={() => setIsTemplateModalOpen(true)} className="h-8 text-[10px] font-bold border-primary/20 hover:bg-primary/10">
                           <MessageSquare className="w-3.5 h-3.5 mr-1" /> TEMPLATE
                         </Button>
