@@ -94,7 +94,7 @@ export function NotificationBell() {
   };
 
   const clearAll = async () => {
-    const { error } = await supabase
+    const { error } = await (supabase as any)
       .from('notifications')
       .update({ read: true })
       .eq('read', false);
