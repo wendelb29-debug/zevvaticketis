@@ -11,6 +11,7 @@ import { useEffect, useState, useRef, type ReactNode } from "react";
 import { AuthModal } from "@/components/layout/AuthModal";
 import { useUI } from "@/hooks/use-ui";
 import { LocationModal } from "@/components/home/LocationModal";
+import { ZevvaLoadingScreen } from "@/components/layout/ZevvaLoadingScreen";
 
 
 
@@ -209,6 +210,8 @@ function RootComponent() {
         </div>
       )}
       <Outlet />
+      
+      {isNavigating && <ZevvaLoadingScreen />}
       
       <AuthModal 
         isOpen={activeOverlay === 'auth'} 
