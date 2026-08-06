@@ -33,6 +33,14 @@ export const Route = createFileRoute("/admin/marketing/push")({
 
 function PushNotificationsPage() {
   const [activeTab, setActiveTab] = useState("historico");
+  const [pushContent, setPushContent] = useState({
+    title: "",
+    body: "",
+    link: "",
+    buttonText: "",
+    imageUrl: ""
+  });
+
 
   return (
     <div className="p-8 max-w-7xl mx-auto space-y-8 animate-in fade-in duration-500 font-inter">
@@ -150,13 +158,23 @@ function PushNotificationsPage() {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div className="space-y-3">
                         <Label className="text-xs font-black uppercase tracking-widest text-muted-fg">Título do Push</Label>
-                        <Input placeholder="Ex: Seu ingresso foi confirmado 🎉" className="h-12 border-line focus:ring-primary rounded-xl font-bold" />
+                        <Input 
+                          placeholder="Ex: Seu ingresso foi confirmado 🎉" 
+                          className="h-12 border-line focus:ring-primary rounded-xl font-bold"
+                          value={pushContent.title}
+                          onChange={(e) => setPushContent(prev => ({ ...prev, title: e.target.value }))}
+                        />
                       </div>
                       <div className="space-y-3">
                         <Label className="text-xs font-black uppercase tracking-widest text-muted-fg">Link de Ação</Label>
                         <div className="relative">
                           <LinkIcon className="absolute left-3 top-3.5 w-5 h-5 text-muted-fg" />
-                          <Input placeholder="https://zevva.app/ingresso" className="pl-11 h-12 border-line focus:ring-primary rounded-xl font-bold" />
+                          <Input 
+                            placeholder="https://zevva.app/ingresso" 
+                            className="pl-11 h-12 border-line focus:ring-primary rounded-xl font-bold"
+                            value={pushContent.link}
+                            onChange={(e) => setPushContent(prev => ({ ...prev, link: e.target.value }))}
+                          />
                         </div>
                       </div>
                     </div>
@@ -165,7 +183,9 @@ function PushNotificationsPage() {
                       <Label className="text-xs font-black uppercase tracking-widest text-muted-fg">Corpo da Mensagem</Label>
                       <Textarea 
                         placeholder="Olá João, sua entrada para o evento está disponível." 
-                        className="min-h-[120px] border-line focus:ring-primary rounded-xl font-medium p-4" 
+                        className="min-h-[120px] border-line focus:ring-primary rounded-xl font-medium p-4"
+                        value={pushContent.body}
+                        onChange={(e) => setPushContent(prev => ({ ...prev, body: e.target.value }))}
                       />
                     </div>
 
@@ -179,9 +199,15 @@ function PushNotificationsPage() {
                       </div>
                       <div className="space-y-3">
                         <Label className="text-xs font-black uppercase tracking-widest text-muted-fg">Texto do Botão</Label>
-                        <Input placeholder="Ex: Ver ingresso" className="h-12 border-line focus:ring-primary rounded-xl font-bold" />
+                        <Input 
+                          placeholder="Ex: Ver ingresso" 
+                          className="h-12 border-line focus:ring-primary rounded-xl font-bold"
+                          value={pushContent.buttonText}
+                          onChange={(e) => setPushContent(prev => ({ ...prev, buttonText: e.target.value }))}
+                        />
                       </div>
                     </div>
+
                   </div>
 
                   <div className="pt-8 border-t border-line space-y-6">
@@ -253,15 +279,18 @@ function PushNotificationsPage() {
                       </div>
                       <div className="min-w-0 flex-1">
                         <p className="text-[11px] font-black text-white/60 uppercase tracking-widest">Zevva App • Agora</p>
-                        <p className="text-sm font-black text-white mt-1 truncate">Seu ingresso foi confirmado 🎉</p>
-                        <p className="text-[11px] font-medium text-white/80 mt-1 line-clamp-2">Olá João, sua entrada para o evento está disponível.</p>
+                        <p className="text-sm font-black text-white mt-1 truncate">{pushContent.title || "Seu ingresso foi confirmado 🎉"}</p>
+                        <p className="text-[11px] font-medium text-white/80 mt-1 line-clamp-2">{pushContent.body || "Olá João, sua entrada para o evento está disponível."}</p>
                       </div>
                     </div>
-                    <div className="mt-4 pt-4 border-t border-white/10">
-                      <div className="w-full py-2 bg-white/20 hover:bg-white/30 rounded-lg text-center transition-colors">
-                        <span className="text-[10px] font-black text-white uppercase tracking-widest">Ver ingresso</span>
+                    {pushContent.buttonText && (
+                      <div className="mt-4 pt-4 border-t border-white/10">
+                        <div className="w-full py-2 bg-white/20 hover:bg-white/30 rounded-lg text-center transition-colors">
+                          <span className="text-[10px] font-black text-white uppercase tracking-widest">{pushContent.buttonText}</span>
+                        </div>
                       </div>
-                    </div>
+                    )}
+
                   </div>
                   
                   <div className="mt-60 space-y-3">
