@@ -271,6 +271,9 @@ function SettingsPage({ session }: { session: any }) {
     { id: "2", name: "Comercial", in_service: 8, pending: 2, completed: 30 },
   ]);
 
+  const [notificarMudancasFila, setNotificarMudancasFila] = useState(true);
+
+
 
   const filteredAgents = agents.filter(
     (a) =>
@@ -430,11 +433,22 @@ function SettingsPage({ session }: { session: any }) {
                   Crie, edite e gerencie as filas de atendimento vinculadas a departamentos. 
                   Apenas usuários vinculados à fila e ao departamento poderão realizar o atendimento e visualizar o fluxo.
                 </p>
-                <div className="flex justify-end">
-                  <Button size="sm" onClick={openNewDept} className="bg-primary text-white gap-2 font-bold shadow-lg shadow-primary/20">
+                <div className="flex flex-col sm:flex-row items-center justify-between gap-4 py-2 border-y border-border/50">
+                  <div className="flex items-center gap-3">
+                    <Switch 
+                      checked={notificarMudancasFila} 
+                      onCheckedChange={setNotificarMudancasFila} 
+                      id="notify-queue-changes"
+                    />
+                    <Label htmlFor="notify-queue-changes" className="text-sm font-bold cursor-pointer">
+                      Notificar mudanças de fila
+                    </Label>
+                  </div>
+                  <Button size="sm" onClick={openNewDept} className="bg-primary text-white gap-2 font-bold shadow-lg shadow-primary/20 w-full sm:w-auto">
                     <Plus className="w-4 h-4" /> Criar nova fila
                   </Button>
                 </div>
+
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                   {departments.map(dept => (
                     <Card key={dept.id} className={cn("border-border bg-background/50 transition-all hover:border-primary/30", dept.status === 'inativo' && "opacity-60")}>
