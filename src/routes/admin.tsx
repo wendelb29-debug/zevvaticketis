@@ -284,9 +284,16 @@ function AdminLayout() {
           {isSidebarCollapsed ? (
             <Tooltip>
               <TooltipTrigger asChild>
-                <div className="flex items-center justify-center w-full h-full">
+                <button 
+                  className="flex items-center justify-center w-full h-full outline-none focus:ring-2 focus:ring-primary rounded-lg transition-all"
+                  aria-label="Configurações"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    navigate({ to: "/admin/configuracoes" as any });
+                  }}
+                >
                   <Settings className="w-5 h-5 shrink-0" />
-                </div>
+                </button>
               </TooltipTrigger>
               <TooltipContent side="right">
                 <p className="font-black uppercase tracking-widest text-[10px]">Configurações</p>
