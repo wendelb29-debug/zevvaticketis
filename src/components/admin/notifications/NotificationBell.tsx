@@ -69,7 +69,7 @@ export function NotificationBell() {
   }, []);
 
   const fetchNotifications = async () => {
-    const { data } = await supabase
+    const { data } = await (supabase as any)
       .from('notifications')
       .select('*')
       .order('created_at', { ascending: false })
@@ -77,7 +77,7 @@ export function NotificationBell() {
     
     if (data) {
       setNotifications(data as Notification[]);
-      setUnreadCount(data.filter(n => !n.read).length);
+      setUnreadCount(data.filter((n: any) => !n.read).length);
     }
   };
 
