@@ -987,49 +987,121 @@ function SettingsPage({ session }: { session: any }) {
 
       {/* Histórico Notificações Modal */}
       <Dialog open={isHistoryModalOpen} onOpenChange={setIsHistoryModalOpen}>
-        <DialogContent className="sm:max-w-[600px] bg-card border-border p-0 overflow-hidden text-foreground border shadow-2xl">
+        <DialogContent className="sm:max-w-[900px] bg-card border-border p-0 overflow-hidden text-foreground border shadow-2xl">
           <DialogHeader className="p-6 bg-accent/20 border-b border-border">
             <DialogTitle className="text-xl font-manrope font-extrabold">Histórico de Notificações</DialogTitle>
-            <DialogDescription className="text-muted-fg">Consulte os registros de notificações enviadas recentemente.</DialogDescription>
+            <DialogDescription className="text-muted-fg">Consulte os registros de notificações enviadas com filtros avançados e detalhes técnicos.</DialogDescription>
           </DialogHeader>
-          <div className="p-0 max-h-[400px] overflow-y-auto">
-            <table className="w-full text-left text-sm">
+          
+          <div className="p-4 border-b border-border bg-background/50 grid grid-cols-1 md:grid-cols-4 gap-3">
+            <div className="space-y-1">
+              <Label className="text-[10px] uppercase font-bold text-muted-fg">Buscar</Label>
+              <div className="relative">
+                <Search className="absolute left-2.5 top-2.5 h-3.5 w-3.5 text-muted-fg" />
+                <Input 
+                  placeholder="ID ou Destinatário..." 
+                  value={historyFilter.search}
+                  onChange={(e) => setHistoryFilter(p => ({ ...p, search: e.target.value }))}
+                  className="pl-8 h-8 text-xs"
+                />
+              </div>
+            </div>
+            <div className="space-y-1">
+              <Label className="text-[10px] uppercase font-bold text-muted-fg">Status</Label>
+              <select 
+                className="w-full h-8 rounded-md border border-input bg-background px-3 py-1 text-xs"
+                value={historyFilter.status}
+                onChange={(e) => setHistoryFilter(p => ({ ...p, status: e.target.value }))}
+              >
+                <option value="todos">Todos os Status</option>
+                <option value="enviado">Enviado</option>
+                <option value="falhou">Falhou</option>
+                <option value="em processamento">Processando</option>
+              </select>
+            </div>
+            <div className="space-y-1">
+              <Label className="text-[10px] uppercase font-bold text-muted-fg">Canal</Label>
+              <select 
+                className="w-full h-8 rounded-md border border-input bg-background px-3 py-1 text-xs"
+                value={historyFilter.canal}
+                onChange={(e) => setHistoryFilter(p => ({ ...p, canal: e.target.value }))}
+              >
+                <option value="todos">Todos Canais</option>
+                <option value="whatsapp">WhatsApp</option>
+                <option value="email">E-mail</option>
+                <option value="interno">Interno</option>
+              </select>
+            </div>
+            <div className="space-y-1">
+              <Label className="text-[10px] uppercase font-bold text-muted-fg">Fila</Label>
+              <select 
+                className="w-full h-8 rounded-md border border-input bg-background px-3 py-1 text-xs"
+                value={historyFilter.fila}
+                onChange={(e) => setHistoryFilter(p => ({ ...p, fila: e.target.value }))}
+              >
+                <option value="todos">Todas as Filas</option>
+                {departments.map(d => (
+                  <option key={d.id} value={d.name}>{d.name}</option>
+                ))}
+              </select>
+            </div>
+          </div>
+
+          <div className="p-0 max-h-[500px] overflow-y-auto overflow-x-auto">
+            <table className="w-full text-left text-sm min-w-[800px]">
               <thead className="bg-accent/50 text-[10px] uppercase font-bold text-muted-fg sticky top-0">
                 <tr>
+                  <th className="px-6 py-3">ID Tentativa</th>
+                  <th className="px-6 py-3">Horário</th>
                   <th className="px-6 py-3">Destinatário</th>
-                  <th className="px-6 py-3">Canal</th>
-                  <th className="px-6 py-3">Status</th>
-                  <th className="px-6 py-3">Data</th>
-                  <th className="px-6 py-3">Evento</th>
+                  <th className="px-6 py-3">Status Final</th>
+                  <th className="px-6 py-3">Fila / Canal</th>
+                  <th className="px-6 py-3">Resposta do Provedor</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-border">
-                {notificacoesHistory.map((log) => (
-                  <tr key={log.id} className="hover:bg-accent/20 transition-colors">
-                    <td className="px-6 py-4 font-bold">{log.target}</td>
-                    <td className="px-6 py-4">
-                      <Badge variant="outline" className="text-[10px] font-bold">{log.canal}</Badge>
-                    </td>
-                    <td className="px-6 py-4">
-                      <div className="flex flex-col gap-1">
-                        <Badge 
-                          variant={
-                            log.status === 'enviado' ? 'default' : 
-                            log.status === 'falhou' ? 'destructive' : 'secondary'
-                          } 
-                          className="text-[9px] font-bold w-fit"
-                        >
-                          {log.status.toUpperCase()}
-                        </Badge>
-                        {log.motivo && <span className="text-[10px] text-destructive leading-tight">{log.motivo}</span>}
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 text-muted-fg text-xs">{log.data}</td>
-                    <td className="px-6 py-4 text-xs">{log.evento}</td>
-                  </tr>
-                ))}
+                {notificacoesHistory
+                  .filter(log => {
+                    const matchSearch = (log.id?.toLowerCase().includes(historyFilter.search.toLowerCase()) || 
+                                      log.target?.toLowerCase().includes(historyFilter.search.toLowerCase()));
+                    const matchStatus = historyFilter.status === "todos" || log.status === historyFilter.status;
+                    const matchCanal = historyFilter.canal === "todos" || log.canal.toLowerCase() === historyFilter.canal;
+                    const matchFila = historyFilter.fila === "todos" || log.fila === historyFilter.fila;
+                    return matchSearch && matchStatus && matchCanal && matchFila;
+                  })
+                  .map((log) => (
+                    <tr key={log.id} className="hover:bg-accent/20 transition-colors">
+                      <td className="px-6 py-4 font-mono text-[10px] text-muted-fg">{log.id}</td>
+                      <td className="px-6 py-4 text-xs whitespace-nowrap">{log.data}</td>
+                      <td className="px-6 py-4 font-bold">{log.target}</td>
+                      <td className="px-6 py-4">
+                        <div className="flex flex-col gap-1">
+                          <Badge 
+                            variant={
+                              log.status === 'enviado' ? 'default' : 
+                              log.status === 'falhou' ? 'destructive' : 'secondary'
+                            } 
+                            className="text-[9px] font-bold w-fit"
+                          >
+                            {log.status.toUpperCase()}
+                          </Badge>
+                          {log.motivo && <span className="text-[10px] text-destructive leading-tight font-medium">{log.motivo}</span>}
+                        </div>
+                      </td>
+                      <td className="px-6 py-4">
+                        <div className="flex flex-col">
+                          <span className="text-xs font-bold">{log.fila}</span>
+                          <span className="text-[10px] text-muted-fg">{log.canal}</span>
+                        </div>
+                      </td>
+                      <td className="px-6 py-4">
+                        <div className="max-w-[200px] truncate text-[10px] text-muted-fg italic bg-accent/10 p-1 rounded" title={log.resposta}>
+                          {log.resposta}
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
               </tbody>
-
             </table>
           </div>
           <DialogFooter className="p-6 bg-accent/10 border-t border-border">
@@ -1037,6 +1109,7 @@ function SettingsPage({ session }: { session: any }) {
           </DialogFooter>
         </DialogContent>
       </Dialog>
+
 
     </div>
   );
