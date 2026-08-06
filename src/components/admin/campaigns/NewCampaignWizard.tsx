@@ -543,7 +543,7 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
                                 <Trash2 className="w-3 h-3" />
                               </Button>
                             </div>
-                            <Select defaultValue="variavel">
+                            <Select defaultValue={i === 0 ? "nome" : i === 2 ? "telefone" : "variavel"}>
                               <SelectTrigger className="bg-white border-border h-11 rounded-xl">
                                 <SelectValue placeholder="Selecione o campo" />
                               </SelectTrigger>
@@ -554,9 +554,15 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
                                 <SelectItem value="descartar">Descartar</SelectItem>
                               </SelectContent>
                             </Select>
-                            <div className="bg-green-500/10 text-green-600 px-3 py-1.5 rounded-lg border border-green-500/20 text-[10px] font-bold">
-                              Variável de fluxo: {header.toLowerCase()}
-                            </div>
+                            {(i === 0 || i === 2) ? (
+                              <div className="bg-green-500/10 text-green-600 px-3 py-1.5 rounded-lg border border-green-500/20 text-[10px] font-bold flex items-center gap-1.5">
+                                <Check className="w-3 h-3" /> Mapeado
+                              </div>
+                            ) : (
+                              <div className="bg-primary/10 text-primary px-3 py-1.5 rounded-lg border border-primary/20 text-[10px] font-bold">
+                                Variável de fluxo: {header.toLowerCase()}
+                              </div>
+                            )}
                           </div>
                         </th>
                       ))}
