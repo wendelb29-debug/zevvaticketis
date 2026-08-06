@@ -10,7 +10,8 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { 
   Smartphone, CheckCircle2, AlertCircle, Copy, Save, 
   Settings2, Activity, List, Layout, Send, Rocket, 
-  Trash2, Edit2, ExternalLink, RefreshCw, Eye, MessageSquare
+  Trash2, Edit2, ExternalLink, RefreshCw, Eye, MessageSquare,
+  FileText, CheckSquare, Plus
 } from "lucide-react";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
@@ -404,11 +405,8 @@ export function WhatsAppIntegration() {
           <TabsTrigger value="numbers" className="data-[state=active]:bg-primary data-[state=active]:text-white rounded-lg py-2 px-4 text-xs font-bold">
             <Smartphone className="w-3.5 h-3.5 mr-2" /> Números Conectados
           </TabsTrigger>
-          <TabsTrigger value="templates" className="data-[state=active]:bg-primary data-[state=active]:text-white rounded-lg py-2 px-4 text-xs font-bold">
-            <Layout className="w-3.5 h-3.5 mr-2" /> Templates Aprovados
-          </TabsTrigger>
-          <TabsTrigger value="logs" className="data-[state=active]:bg-primary data-[state=active]:text-white rounded-lg py-2 px-4 text-xs font-bold">
-            <List className="w-3.5 h-3.5 mr-2" /> Histórico de Eventos
+          <TabsTrigger value="atendimento" className="data-[state=active]:bg-primary data-[state=active]:text-white rounded-lg py-2 px-4 text-xs font-bold">
+            <MessageSquare className="w-3.5 h-3.5 mr-2" /> Atendimento Vinculados
           </TabsTrigger>
         </TabsList>
 
@@ -448,65 +446,104 @@ export function WhatsAppIntegration() {
           </Card>
         </TabsContent>
 
-        <TabsContent value="templates" className="animate-in fade-in slide-in-from-bottom-2 duration-300">
-          <Card className="border-border shadow-sm">
-            <Table>
-              <TableHeader>
-                <TableRow className="hover:bg-transparent">
-                  <TableHead className="text-xs font-black uppercase text-navy/60">Nome do Template</TableHead>
-                  <TableHead className="text-xs font-black uppercase text-navy/60">Categoria</TableHead>
-                  <TableHead className="text-xs font-black uppercase text-navy/60">Status Meta</TableHead>
-                  <TableHead className="text-xs font-black uppercase text-navy/60">Variáveis</TableHead>
-                  <TableHead className="text-xs font-black uppercase text-navy/60 text-right">Ações</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {templates.map((t) => (
-                  <TableRow key={t.id}>
-                    <TableCell className="font-bold">{t.name}</TableCell>
-                    <TableCell><Badge variant="outline" className="font-bold text-[10px]">{t.category}</Badge></TableCell>
-                    <TableCell>
-                      <Badge className="bg-green-100 text-green-700 border-green-200">Aprovado</Badge>
-                    </TableCell>
-                    <TableCell className="text-xs text-muted-fg truncate max-w-[200px]">{t.content}</TableCell>
-                    <TableCell className="text-right">
-                      <Button variant="ghost" size="icon" className="h-8 w-8 text-navy/60 hover:text-primary"><Eye className="w-4 h-4" /></Button>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </Card>
-        </TabsContent>
+        <TabsContent value="atendimento" className="animate-in fade-in slide-in-from-bottom-2 duration-300">
+          <Tabs defaultValue="templates" className="w-full">
+            <TabsList className="bg-muted/50 p-1 mb-4 h-9">
+              <TabsTrigger value="templates" className="text-[10px] uppercase font-black tracking-wider">
+                <Plus className="w-3 h-3 mr-1" /> Módulo de Criar
+              </TabsTrigger>
+              <TabsTrigger value="aprovacoes" className="text-[10px] uppercase font-black tracking-wider">
+                <CheckSquare className="w-3 h-3 mr-1" /> Aprovações
+              </TabsTrigger>
+              <TabsTrigger value="logs" className="text-[10px] uppercase font-black tracking-wider">
+                <List className="w-3 h-3 mr-1" /> Histórico
+              </TabsTrigger>
+            </TabsList>
 
-        <TabsContent value="logs" className="animate-in fade-in slide-in-from-bottom-2 duration-300">
-          <Card className="border-border shadow-sm">
-            <Table>
-              <TableHeader>
-                <TableRow className="hover:bg-transparent">
-                  <TableHead className="text-xs font-black uppercase text-navy/60">Data/Hora</TableHead>
-                  <TableHead className="text-xs font-black uppercase text-navy/60">Evento</TableHead>
-                  <TableHead className="text-xs font-black uppercase text-navy/60">Status</TableHead>
-                  <TableHead className="text-xs font-black uppercase text-navy/60">Resposta</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {logs.map((log) => (
-                  <TableRow key={log.id}>
-                    <TableCell className="text-xs font-medium">{log.date}</TableCell>
-                    <TableCell className="font-bold flex items-center gap-2">
-                      {log.event.includes("recebida") ? <MessageSquare className="w-3 h-3 text-blue-500" /> : <Send className="w-3 h-3 text-primary" />}
-                      {log.event}
-                    </TableCell>
-                    <TableCell>
-                      <Badge variant="outline" className="border-green-200 text-green-600 bg-green-50 font-bold">{log.status}</Badge>
-                    </TableCell>
-                    <TableCell className="font-mono text-[10px] text-muted-fg bg-accent/10 rounded px-2 py-1">{log.response}</TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </Card>
+            <TabsContent value="templates">
+              <Card className="border-border shadow-sm">
+                <CardHeader className="pb-3">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <CardTitle className="text-sm">Criar Novo Template</CardTitle>
+                      <CardDescription className="text-xs">Crie templates para serem aprovados pela Meta.</CardDescription>
+                    </div>
+                    <Button size="sm" className="bg-primary text-white font-bold h-8">
+                      <Plus className="w-3.5 h-3.5 mr-1" /> Novo Template
+                    </Button>
+                  </div>
+                </CardHeader>
+                <CardContent>
+                  <div className="bg-accent/10 rounded-lg p-8 border border-dashed border-border flex flex-col items-center justify-center text-center">
+                    <FileText className="w-10 h-10 text-muted-fg/40 mb-3" />
+                    <p className="text-sm font-medium text-navy/70">Interface de criação de templates em desenvolvimento.</p>
+                    <p className="text-xs text-muted-fg mt-1">Aqui você poderá definir nome, categoria e conteúdo com variáveis.</p>
+                  </div>
+                </CardContent>
+              </Card>
+            </TabsContent>
+
+            <TabsContent value="aprovacoes">
+              <Card className="border-border shadow-sm">
+                <Table>
+                  <TableHeader>
+                    <TableRow className="hover:bg-transparent">
+                      <TableHead className="text-xs font-black uppercase text-navy/60">Nome do Template</TableHead>
+                      <TableHead className="text-xs font-black uppercase text-navy/60">Categoria</TableHead>
+                      <TableHead className="text-xs font-black uppercase text-navy/60">Status Meta</TableHead>
+                      <TableHead className="text-xs font-black uppercase text-navy/60">Conteúdo</TableHead>
+                      <TableHead className="text-xs font-black uppercase text-navy/60 text-right">Ações</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {templates.map((t) => (
+                      <TableRow key={t.id}>
+                        <TableCell className="font-bold">{t.name}</TableCell>
+                        <TableCell><Badge variant="outline" className="font-bold text-[10px]">{t.category}</Badge></TableCell>
+                        <TableCell>
+                          <Badge className="bg-green-100 text-green-700 border-green-200">Aprovado</Badge>
+                        </TableCell>
+                        <TableCell className="text-xs text-muted-fg truncate max-w-[200px]">{t.content}</TableCell>
+                        <TableCell className="text-right">
+                          <Button variant="ghost" size="icon" className="h-8 w-8 text-navy/60 hover:text-primary"><Eye className="w-4 h-4" /></Button>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </Card>
+            </TabsContent>
+
+            <TabsContent value="logs">
+              <Card className="border-border shadow-sm">
+                <Table>
+                  <TableHeader>
+                    <TableRow className="hover:bg-transparent">
+                      <TableHead className="text-xs font-black uppercase text-navy/60">Data/Hora</TableHead>
+                      <TableHead className="text-xs font-black uppercase text-navy/60">Evento</TableHead>
+                      <TableHead className="text-xs font-black uppercase text-navy/60">Status</TableHead>
+                      <TableHead className="text-xs font-black uppercase text-navy/60">Resposta</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {logs.map((log) => (
+                      <TableRow key={log.id}>
+                        <TableCell className="text-xs font-medium">{log.date}</TableCell>
+                        <TableCell className="font-bold flex items-center gap-2">
+                          {log.event.includes("recebida") ? <MessageSquare className="w-3 h-3 text-blue-500" /> : <Send className="w-3 h-3 text-primary" />}
+                          {log.event}
+                        </TableCell>
+                        <TableCell>
+                          <Badge variant="outline" className="border-green-200 text-green-600 bg-green-50 font-bold">{log.status}</Badge>
+                        </TableCell>
+                        <TableCell className="font-mono text-[10px] text-muted-fg bg-accent/10 rounded px-2 py-1">{log.response}</TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </Card>
+            </TabsContent>
+          </Tabs>
         </TabsContent>
       </Tabs>
     </div>
