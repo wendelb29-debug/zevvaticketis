@@ -26,6 +26,7 @@ import {
   PanelLeftOpen,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 export const Route = createFileRoute("/admin")({
   component: AdminLayout,
@@ -147,23 +148,33 @@ function AdminLayout() {
   }
 
   const SidebarContent = () => (
-    <div className={cn(
-      "flex flex-col h-full bg-card border-r border-border py-8 font-inter transition-all duration-200",
-      isSidebarCollapsed ? "w-20" : "w-72"
-    )}>
+    <TooltipProvider>
+      <div className={cn(
+        "flex flex-col h-full bg-card border-r border-border py-8 font-inter transition-all duration-300 ease-in-out",
+        isSidebarCollapsed ? "w-20" : "w-72"
+      )}>
       <div className={cn("px-6 mb-12 flex items-center justify-between", isSidebarCollapsed && "px-4 justify-center")}>
         {!isSidebarCollapsed && (
           <Link to="/" className="text-xl font-manrope font-extrabold text-primary tracking-tighter">
             ZEVVA <span className="text-foreground">ADMIN</span>
           </Link>
         )}
-        <button 
-          onClick={toggleSidebar}
-          className="p-2 hover:bg-accent rounded-lg transition-colors text-foreground"
-          title={isSidebarCollapsed ? "Expandir menu" : "Recolher menu"}
-        >
-          {isSidebarCollapsed ? <PanelLeftOpen className="w-5 h-5" /> : <PanelLeftClose className="w-5 h-5" />}
-        </button>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <button 
+              onClick={toggleSidebar}
+              className="p-2 hover:bg-accent focus:bg-accent focus:ring-2 focus:ring-primary rounded-lg transition-all text-foreground outline-none active:scale-95"
+              aria-label={isSidebarCollapsed ? "Expandir barra lateral" : "Recolher barra lateral"}
+            >
+              {isSidebarCollapsed ? <PanelLeftOpen className="w-5 h-5" /> : <PanelLeftClose className="w-5 h-5" />}
+            </button>
+          </TooltipTrigger>
+          <TooltipContent side="right">
+            <p className="font-black uppercase tracking-widest text-[10px]">
+              {isSidebarCollapsed ? "Expandir" : "Recolher"}
+            </p>
+          </TooltipContent>
+        </Tooltip>
       </div>
       
       <nav className="flex-1 space-y-1 px-4 overflow-y-auto custom-scrollbar">
@@ -178,8 +189,8 @@ function AdminLayout() {
                 <button
                   onClick={() => setOpenGroup(isOpen ? null : item.label)}
                   className={cn(
-                    "w-full flex items-center justify-between py-3.5 px-4 rounded-xl text-sm font-extrabold transition-all duration-200 border-2",
-                    hasActiveChild ? "border-border bg-transparent text-foreground" : "border-transparent text-foreground hover:bg-accent"
+                    "w-full flex items-center justify-between py-3.5 px-4 rounded-xl text-sm font-extrabold transition-all duration-300 border-2 outline-none focus:ring-2 focus:ring-primary focus:border-primary active:scale-[0.98]",
+                    hasActiveChild ? "border-border bg-transparent text-foreground" : "border-transparent text-foreground hover:bg-accent/50"
                   )}
                 >
                   <div className="flex items-center gap-3">
@@ -217,18 +228,32 @@ function AdminLayout() {
               to={item.href as any}
               {...(item.activeOptions ? { activeOptions: item.activeOptions } : {})}
               className={cn(
-                "flex items-center gap-3 py-3.5 rounded-xl text-sm font-extrabold transition-all duration-200 border-2",
+                "flex items-center gap-3 py-3.5 rounded-xl text-sm font-extrabold transition-all duration-300 border-2 outline-none focus:ring-2 focus:ring-primary focus:border-primary active:scale-[0.98]",
                 isSidebarCollapsed ? "px-0 justify-center" : (isChat ? "px-4 justify-center" : "px-4"),
                 isChat && "bg-primary text-primary-foreground border-transparent shadow-lg shadow-primary/30"
               )}
               {...(!isChat ? {
                 activeProps: { className: "border-border bg-transparent text-foreground shadow-none" },
-                inactiveProps: { className: "border-transparent text-foreground hover:bg-accent" }
+                inactiveProps: { className: "border-transparent text-foreground hover:bg-accent/50" }
               } : {})}
-              title={isSidebarCollapsed ? item.label : undefined}
             >
-              <item.icon className="w-5 h-5 shrink-0" />
-              {!isSidebarCollapsed && <span className="truncate">{item.label}</span>}
+              {isSidebarCollapsed ? (
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <div className="flex items-center justify-center w-full h-full">
+                      <item.icon className="w-5 h-5 shrink-0" />
+                    </div>
+                  </TooltipTrigger>
+                  <TooltipContent side="right">
+                    <p className="font-black uppercase tracking-widest text-[10px]">{item.label}</p>
+                  </TooltipContent>
+                </Tooltip>
+              ) : (
+                <>
+                  <item.icon className="w-5 h-5 shrink-0" />
+                  <span className="truncate">{item.label}</span>
+                </>
+              )}
             </Link>
           );
         })}
@@ -249,7 +274,8 @@ function AdminLayout() {
       </div>
 
 
-    </div>
+      </div>
+    </TooltipProvider>
   );
 
   return (
@@ -257,7 +283,7 @@ function AdminLayout() {
       {/* Desktop Sidebar */}
       {location.pathname !== "/admin/chat" && (
         <aside className={cn(
-          "hidden lg:block h-screen sticky top-0 transition-all duration-200",
+          "hidden lg:block h-screen sticky top-0 transition-all duration-300 ease-in-out",
           isSidebarCollapsed ? "w-20" : "w-72"
         )}>
           <SidebarContent />
