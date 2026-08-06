@@ -1,8 +1,12 @@
 -- Enum for notification types
-create type public.notification_category as enum ('sistema', 'vendas', 'atendimento', 'marketing');
+do $$ begin
+    create type public.notification_category as enum ('sistema', 'vendas', 'atendimento', 'marketing');
+exception
+    when duplicate_object then null;
+end $$;
 
 -- Notifications table
-create table public.notifications (
+create table if not exists public.notifications (
     id uuid primary key default gen_random_uuid(),
     user_id uuid references auth.users(id) on delete cascade not null,
     project_id uuid, -- Optional, for project-specific alerts
@@ -30,7 +34,7 @@ to authenticated
 using (auth.uid() = user_id);
 
 -- Push Campaigns
-create table public.push_campaigns (
+create table if not exists public.push_campaigns (
     id uuid primary key default gen_random_uuid(),
     title text not null,
     message text not null,
@@ -58,7 +62,7 @@ to authenticated
 using (public.has_role(auth.uid(), 'admin'));
 
 -- Notification Preferences
-create table public.notification_preferences (
+create table if not exists public.notification_preferences (
     user_id uuid primary key references auth.users(id) on delete cascade,
     sales_alerts boolean not null default true,
     messages_alerts boolean not null default true,
