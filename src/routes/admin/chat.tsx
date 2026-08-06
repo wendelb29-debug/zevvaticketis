@@ -149,28 +149,6 @@ function AdminChatPage() {
               zevva.<span className="text-foreground">chat</span>
             </span>
           </div>
-          <div className="flex items-center gap-4">
-            <div className="flex bg-accent rounded-lg p-1 border border-border">
-              <button 
-                onClick={() => setTheme('light')}
-                className={cn(
-                  "px-3 py-1.5 rounded-md text-[10px] font-black uppercase tracking-wider transition-all",
-                  theme === 'light' ? "bg-primary text-primary-foreground shadow-sm" : "text-muted-fg hover:text-foreground"
-                )}
-              >
-                ☀ CLARO
-              </button>
-              <button 
-                onClick={() => setTheme('dark')}
-                className={cn(
-                  "px-3 py-1.5 rounded-md text-[10px] font-black uppercase tracking-wider transition-all",
-                  theme === 'dark' ? "bg-primary text-primary-foreground shadow-sm" : "text-muted-fg hover:text-foreground"
-                )}
-              >
-                🌙 ESCURO
-              </button>
-            </div>
-          </div>
         </div>
         
         <div className="flex items-center gap-6">
