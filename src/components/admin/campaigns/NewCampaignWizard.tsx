@@ -87,30 +87,30 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-        <DialogContent className="max-w-6xl p-0 overflow-hidden bg-background border border-border text-foreground rounded-2xl">
-        <DialogHeader className="p-0 border-b border-border bg-background">
+        <DialogContent className="max-w-6xl p-0 overflow-hidden bg-white border border-border text-[#0F172A] rounded-2xl">
+        <DialogHeader className="p-0 border-b border-border bg-white relative">
           <div className="flex items-center justify-between px-8 py-6">
             <div className="flex flex-col">
-              <DialogTitle className="text-xl font-manrope font-extrabold text-navy">Nova Campanha</DialogTitle>
-              <p className="text-sm text-muted-fg mt-0.5">Configure seu envio</p>
+              <DialogTitle className="text-xl font-manrope font-extrabold text-[#0F172A]">Nova Campanha</DialogTitle>
+              <p className="text-sm text-[#64748B] mt-0.5">Configure seu envio WhatsApp ou E-mail</p>
             </div>
             
             <div className="flex items-center gap-12">
               {steps.map((s) => (
                 <div key={s.number} className="flex items-center gap-2 relative">
                   <div className={cn(
-                    "w-7 h-7 rounded-full flex items-center justify-center text-[10px] font-bold transition-colors border",
-                    step === s.number ? "bg-primary text-white border-primary" : 
-                    step > s.number ? "bg-primary/10 text-primary border-primary" : "bg-background text-muted-fg border-border"
+                    "w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold transition-all border-2",
+                    step === s.number ? "bg-[#F06452] text-white border-[#F06452] shadow-sm" : 
+                    step > s.number ? "bg-white text-[#F06452] border-[#F06452]" : "bg-white text-[#0F172A] border-[#E5E7EB]"
                   )}>
-                    {step > s.number ? <Check className="w-3 h-3" /> : s.number}
+                    {step > s.number ? <Check className="w-4 h-4" /> : s.number}
                   </div>
                   <span className={cn(
-                    "text-[10px] font-bold uppercase tracking-wider hidden xl:inline",
-                    step === s.number ? "text-primary" : "text-foreground"
+                    "text-[10px] font-extrabold uppercase tracking-widest hidden xl:inline",
+                    step === s.number ? "text-[#F06452]" : "text-[#0F172A]"
                   )}>{s.label}</span>
                   {s.number < 5 && (
-                    <div className="absolute -right-7 top-1/2 -translate-y-1/2 w-4 h-[1px] bg-border" />
+                    <div className="absolute -right-7 top-1/2 -translate-y-1/2 w-4 h-[1px] bg-[#E5E7EB]" />
                   )}
                 </div>
               ))}
