@@ -21,6 +21,8 @@ import {
   Sun,
   Moon,
   Rocket,
+  PanelLeftClose,
+  PanelLeftOpen,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
