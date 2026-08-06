@@ -306,13 +306,22 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
                       </div>
                     </div>
 
-                    <div className="w-full max-w-xl aspect-[16/7] border-2 border-dashed border-primary/20 rounded-3xl flex flex-col items-center justify-center gap-4 bg-white hover:bg-primary/5 hover:border-primary/40 transition-all cursor-pointer group shadow-sm">
+                    <div className="w-full max-w-xl aspect-[16/7] border-2 border-dashed border-primary/20 rounded-3xl flex flex-col items-center justify-center gap-4 bg-white hover:bg-primary/5 hover:border-primary/40 transition-all cursor-pointer group shadow-sm relative">
+                      <input 
+                        type="file" 
+                        accept=".csv, .xlsx" 
+                        className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" 
+                        onChange={(e) => {
+                          const file = e.target.files?.[0];
+                          if (file) console.log("Arquivo selecionado:", file.name);
+                        }}
+                      />
                       <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center group-hover:scale-110 transition-transform shadow-sm">
                         <Plus className="w-8 h-8 text-primary" />
                       </div>
                       <div className="text-center space-y-1">
                         <p className="text-lg font-manrope font-extrabold text-navy">Importar arquivo</p>
-                        <p className="text-sm text-muted-fg font-medium">Arraste seu arquivo .csv ou .xlsx ou clique para buscar</p>
+                        <p className="text-sm text-muted-fg font-medium">Nessa parte poder arrastar pra cá o arquivo ou clicar pra abrir somente arquivos CSV ou XLSX do computador</p>
                         <div className="flex gap-2 justify-center mt-4">
                            <span className="px-2 py-1 bg-accent text-[10px] font-extrabold text-muted-fg rounded">CSV</span>
                            <span className="px-2 py-1 bg-accent text-[10px] font-extrabold text-muted-fg rounded">XLSX</span>
