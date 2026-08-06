@@ -52,6 +52,8 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
   const [channelType, setChannelType] = useState("gupshup");
   const [channel, setChannel] = useState("savecar");
   const [publicType, setPublicType] = useState("arquivo");
+  const [uploadedFile, setUploadedFile] = useState<File | null>(null);
+  const [csvPreview, setCsvPreview] = useState<string[][]>([]);
 
   const nextStep = () => setStep((s) => (s + 1) as Step);
   const prevStep = () => setStep((s) => (s - 1) as Step);
