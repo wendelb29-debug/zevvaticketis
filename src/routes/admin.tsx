@@ -178,7 +178,7 @@ function AdminLayout() {
       </div>
       
       <nav className="flex-1 space-y-1 px-4 overflow-y-auto custom-scrollbar">
-        {menuItems.map((item) => {
+        {menuItems.map((item, index) => {
           const isGroup = !!item.children;
           const isOpen = openGroup === item.label;
           const hasActiveChild = item.children?.some(child => location.pathname === child.href);
@@ -188,6 +188,12 @@ function AdminLayout() {
               <div key={item.label} className="space-y-1">
                 <button
                   onClick={() => setOpenGroup(isOpen ? null : item.label)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      setOpenGroup(isOpen ? null : item.label);
+                    }
+                  }}
                   className={cn(
                     "w-full flex items-center justify-between py-3.5 px-4 rounded-xl text-sm font-extrabold transition-all duration-300 border-2 outline-none focus:ring-2 focus:ring-primary focus:border-primary active:scale-[0.98]",
                     hasActiveChild ? "border-border bg-transparent text-foreground" : "border-transparent text-foreground hover:bg-accent/50"
@@ -207,9 +213,9 @@ function AdminLayout() {
                         key={child.label}
                         to={child.href as any}
                         search={child.query as any}
-                        className="block py-2 rounded-lg text-xs font-bold transition-all duration-200"
-                        activeProps={{ className: "text-primary" }}
-                        inactiveProps={{ className: "text-muted-fg hover:text-foreground" }}
+                        className="block py-2 rounded-lg text-xs font-bold transition-all duration-200 outline-none focus:ring-2 focus:ring-primary focus:text-primary active:scale-[0.98]"
+                        activeProps={{ className: "text-primary ring-2 ring-primary/20" }}
+                        inactiveProps={{ className: "text-muted-fg hover:text-foreground hover:bg-accent/30" }}
                       >
                         {child.label}
                       </Link>
@@ -226,6 +232,7 @@ function AdminLayout() {
             <Link
               key={item.label}
               to={item.href as any}
+              tabIndex={isSidebarCollapsed ? -1 : 0}
               {...(item.activeOptions ? { activeOptions: item.activeOptions } : {})}
               className={cn(
                 "flex items-center gap-3 py-3.5 rounded-xl text-sm font-extrabold transition-all duration-300 border-2 outline-none focus:ring-2 focus:ring-primary focus:border-primary active:scale-[0.98]",
@@ -240,9 +247,16 @@ function AdminLayout() {
               {isSidebarCollapsed ? (
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <div className="flex items-center justify-center w-full h-full">
+                    <button 
+                      className="flex items-center justify-center w-full h-full outline-none focus:ring-2 focus:ring-primary rounded-lg transition-all"
+                      aria-label={item.label}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        navigate({ to: item.href as any });
+                      }}
+                    >
                       <item.icon className="w-5 h-5 shrink-0" />
-                    </div>
+                    </button>
                   </TooltipTrigger>
                   <TooltipContent side="right">
                     <p className="font-black uppercase tracking-widest text-[10px]">{item.label}</p>
@@ -270,9 +284,16 @@ function AdminLayout() {
           {isSidebarCollapsed ? (
             <Tooltip>
               <TooltipTrigger asChild>
-                <div className="flex items-center justify-center w-full h-full">
+                <button 
+                  className="flex items-center justify-center w-full h-full outline-none focus:ring-2 focus:ring-primary rounded-lg transition-all"
+                  aria-label="Configurações"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    navigate({ to: "/admin/configuracoes" as any });
+                  }}
+                >
                   <Settings className="w-5 h-5 shrink-0" />
-                </div>
+                </button>
               </TooltipTrigger>
               <TooltipContent side="right">
                 <p className="font-black uppercase tracking-widest text-[10px]">Configurações</p>

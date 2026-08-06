@@ -12,9 +12,11 @@ import {
   Settings as SettingsIcon, Sun, Moon,
   Paperclip, Smile, ImageIcon, Play, Volume2, Pencil, X, Home, ChevronRight,
   ArrowUpDown, SortAsc, SortDesc, CalendarDays, Lock, Globe, MessageCircle,
-  Music, FileText, Sparkles, Wand2, ArrowUpCircle, AlignLeft, Languages
+  Music, FileText, Sparkles, Wand2, ArrowUpCircle, AlignLeft, Languages,
+  PanelLeftClose, PanelLeftOpen
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { toast } from "sonner";
 
 const READ_RECEIPT_BLUE = "READ_RECEIPT_BLUE";
@@ -63,7 +65,13 @@ function AdminChatPage() {
   const [isTransferDialogOpen, setIsTransferDialogOpen] = useState(false);
   const [isChatSettingsOpen, setIsChatSettingsOpen] = useState(false);
   const [sortBy, setSortBy] = useState('recent-top');
-  const [sidebarWidth, setSidebarWidth] = useState(540);
+  const [sidebarWidth, setSidebarWidth] = useState(() => {
+    if (typeof window !== "undefined") {
+      const saved = localStorage.getItem("chat-sidebar-width");
+      return saved ? parseInt(saved, 10) : 540;
+    }
+    return 540;
+  });
   const [isResizing, setIsResizing] = useState(false);
   const [previewContactId, setPreviewContactId] = useState<string | null>(null);
   const navigate = useNavigate();
@@ -79,8 +87,11 @@ function AdminChatPage() {
       setSidebarWidth(newWidth);
     };
 
-    const handleMouseUp = () => {
+    const handleMouseUp = (e: MouseEvent) => {
+      if (!isResizing) return;
       setIsResizing(false);
+      const finalWidth = Math.min(Math.max(300, e.clientX), 800);
+      localStorage.setItem("chat-sidebar-width", String(finalWidth));
       document.body.style.cursor = 'default';
     };
 
@@ -126,10 +137,11 @@ function AdminChatPage() {
   ];
 
   return (
-    <div className="flex flex-col h-screen bg-background text-foreground overflow-hidden font-inter transition-colors duration-300">
-      {/* Header Fixo */}
-      <header className="h-16 flex items-center justify-between px-6 border-b border-border bg-card shrink-0 z-10 shadow-sm">
-        <div className="flex items-center gap-8">
+    <TooltipProvider>
+      <div className="flex flex-col h-screen bg-background text-foreground overflow-hidden font-inter transition-colors duration-300">
+        {/* Header Fixo */}
+        <header className="h-16 flex items-center justify-between px-6 border-b border-border bg-card shrink-0 z-10 shadow-sm">
+          <div className="flex items-center gap-8">
           <div className="flex items-center gap-4">
             <Link 
               to="/admin" 
@@ -141,28 +153,6 @@ function AdminChatPage() {
             <span className="font-black text-lg tracking-tighter text-primary italic">
               zevva.<span className="text-foreground">chat</span>
             </span>
-          </div>
-          <div className="flex items-center gap-4">
-            <div className="flex bg-accent rounded-lg p-1 border border-border">
-              <button 
-                onClick={() => setTheme('light')}
-                className={cn(
-                  "px-3 py-1.5 rounded-md text-[10px] font-black uppercase tracking-wider transition-all",
-                  theme === 'light' ? "bg-primary text-primary-foreground shadow-sm" : "text-muted-fg hover:text-foreground"
-                )}
-              >
-                ☀ CLARO
-              </button>
-              <button 
-                onClick={() => setTheme('dark')}
-                className={cn(
-                  "px-3 py-1.5 rounded-md text-[10px] font-black uppercase tracking-wider transition-all",
-                  theme === 'dark' ? "bg-primary text-primary-foreground shadow-sm" : "text-muted-fg hover:text-foreground"
-                )}
-              >
-                🌙 ESCURO
-              </button>
-            </div>
           </div>
         </div>
         
@@ -1275,5 +1265,6 @@ function AdminChatPage() {
         </DialogContent>
       </Dialog>
     </div>
+    </TooltipProvider>
   );
 }
