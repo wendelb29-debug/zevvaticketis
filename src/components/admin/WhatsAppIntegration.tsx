@@ -133,8 +133,32 @@ export function WhatsAppIntegration() {
   ]);
 
   const [templates] = useState([
-    { id: 1, name: "confirmacao_ingresso", category: "Utility", status: "APPROVED", content: "Olá {{nome}}, seu ingresso para {{evento}} está confirmado." }
+    { 
+      id: 1, 
+      name: "confirmacao_ingresso", 
+      category: "Utility", 
+      status: "APPROVED", 
+      content: "Olá {{nome}}, seu ingresso para {{evento}} está confirmado.",
+      linkedEvent: "Conferência Internacional de Pastores 2026",
+      approvedBy: "Mayck Souza",
+      approvedAt: "05/08/2026 14:30"
+    },
+    { 
+      id: 2, 
+      name: "boas_vindas_caravana", 
+      category: "Marketing", 
+      status: "PENDING", 
+      content: "Olá {{nome}}, seja bem-vindo à caravana {{caravana}}!",
+      linkedEvent: null,
+      approvedBy: null,
+      approvedAt: null
+    }
   ]);
+
+  const exportAtendimento = (type: 'csv' | 'pdf') => {
+    toast.success(`Exportando histórico em ${type.toUpperCase()}...`);
+    if (type === 'pdf') window.print();
+  };
 
   return (
     <div className="space-y-6 animate-in fade-in duration-500">
