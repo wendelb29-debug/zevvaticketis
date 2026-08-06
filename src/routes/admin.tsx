@@ -188,6 +188,12 @@ function AdminLayout() {
               <div key={item.label} className="space-y-1">
                 <button
                   onClick={() => setOpenGroup(isOpen ? null : item.label)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      setOpenGroup(isOpen ? null : item.label);
+                    }
+                  }}
                   className={cn(
                     "w-full flex items-center justify-between py-3.5 px-4 rounded-xl text-sm font-extrabold transition-all duration-300 border-2 outline-none focus:ring-2 focus:ring-primary focus:border-primary active:scale-[0.98]",
                     hasActiveChild ? "border-border bg-transparent text-foreground" : "border-transparent text-foreground hover:bg-accent/50"
@@ -207,9 +213,9 @@ function AdminLayout() {
                         key={child.label}
                         to={child.href as any}
                         search={child.query as any}
-                        className="block py-2 rounded-lg text-xs font-bold transition-all duration-200"
-                        activeProps={{ className: "text-primary" }}
-                        inactiveProps={{ className: "text-muted-fg hover:text-foreground" }}
+                        className="block py-2 rounded-lg text-xs font-bold transition-all duration-200 outline-none focus:ring-2 focus:ring-primary focus:text-primary active:scale-[0.98]"
+                        activeProps={{ className: "text-primary ring-2 ring-primary/20" }}
+                        inactiveProps={{ className: "text-muted-fg hover:text-foreground hover:bg-accent/30" }}
                       >
                         {child.label}
                       </Link>
