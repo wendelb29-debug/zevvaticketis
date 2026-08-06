@@ -229,6 +229,21 @@ function AdminLayout() {
         })}
       </nav>
 
+      <div className="px-4 mt-auto mb-6">
+        <Link
+          to="/admin/configuracoes"
+          className={cn(
+            "flex items-center gap-3 py-3.5 px-4 rounded-xl text-sm font-extrabold transition-all duration-200 border-2 border-border bg-card text-foreground hover:bg-accent",
+            isSidebarCollapsed && "px-0 justify-center"
+          )}
+          title="Configurações Rápidas"
+        >
+          <Settings className="w-5 h-5 shrink-0" />
+          {!isSidebarCollapsed && <span className="truncate">Configurações</span>}
+        </Link>
+      </div>
+
+
     </div>
   );
 
