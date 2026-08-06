@@ -257,16 +257,16 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
 
 
           {step === 2 && (
-            <div className="grid grid-cols-1 lg:grid-cols-[380px_1fr] gap-12 animate-in fade-in slide-in-from-bottom-4 duration-500">
+            <div className="grid grid-cols-1 lg:grid-cols-[400px_1fr] gap-12 animate-in fade-in slide-in-from-bottom-4 duration-500">
               <div className="space-y-8">
                 <div>
-                  <h2 className="text-xl font-manrope font-extrabold text-navy uppercase tracking-tight">Público Alvo</h2>
-                  <p className="text-sm text-muted-fg mt-1">Selecione o público que receberá as mensagens da sua campanha</p>
+                  <h2 className="text-xl font-manrope font-extrabold text-[#0F172A] uppercase tracking-tight">Público Alvo</h2>
+                  <p className="text-sm text-[#64748B] mt-1">Selecione o público que receberá as mensagens da sua campanha</p>
                 </div>
 
                 <div className="space-y-4">
                   <div className="space-y-3">
-                    <Label className="text-xs font-bold text-navy uppercase tracking-widest">Origem dos contatos</Label>
+                    <Label className="text-xs font-black text-[#0F172A] uppercase tracking-widest">Origem dos contatos</Label>
                     
                     <div className="space-y-3">
                       {[
@@ -278,27 +278,27 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
                           key={item.id}
                           onClick={() => setPublicType(item.id)}
                           className={cn(
-                            "p-4 rounded-xl border transition-all duration-300 cursor-pointer flex items-center gap-4 group",
+                            "p-5 rounded-2xl border transition-all duration-300 cursor-pointer flex items-center gap-4 group",
                             publicType === item.id 
-                              ? "bg-primary/5 border-primary shadow-sm ring-1 ring-primary/20" 
-                              : "bg-background border-border hover:border-primary/30"
+                              ? "bg-[#FDF0ED] border-[#F06452] shadow-sm" 
+                              : "bg-white border-[#E5E7EB] hover:border-[#F06452]/30"
                           )}
                         >
                           <div className={cn(
-                            "w-10 h-10 rounded-lg flex items-center justify-center transition-colors",
-                            publicType === item.id ? "bg-primary text-white" : "bg-accent text-muted-fg group-hover:bg-primary/10 group-hover:text-primary"
+                            "w-12 h-12 rounded-xl flex items-center justify-center transition-colors",
+                            publicType === item.id ? "bg-[#F06452] text-white" : "bg-slate-100 text-[#64748B] group-hover:bg-[#FDF0ED] group-hover:text-[#F06452]"
                           )}>
-                            <item.icon className="w-5 h-5" />
+                            <item.icon className="w-6 h-6" />
                           </div>
                           <div className="flex-1">
-                            <p className={cn("text-sm font-bold", publicType === item.id ? "text-primary" : "text-navy")}>{item.label}</p>
-                            <p className="text-[10px] text-muted-fg font-medium">{item.desc}</p>
+                            <p className={cn("text-sm font-bold", publicType === item.id ? "text-[#F06452]" : "text-[#0F172A]")}>{item.label}</p>
+                            <p className="text-[11px] text-[#64748B] font-medium">{item.desc}</p>
                           </div>
                           <div className={cn(
-                            "w-4 h-4 rounded-full border flex items-center justify-center",
-                            publicType === item.id ? "border-primary bg-primary" : "border-border"
+                            "w-5 h-5 rounded-full border-2 flex items-center justify-center",
+                            publicType === item.id ? "border-[#F06452] bg-[#F06452]" : "border-[#E5E7EB]"
                           )}>
-                            {publicType === item.id && <Check className="w-2.5 h-2.5 text-white" />}
+                            {publicType === item.id && <Check className="w-3 h-3 text-white" />}
                           </div>
                         </div>
                       ))}
