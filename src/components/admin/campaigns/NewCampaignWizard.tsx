@@ -71,6 +71,9 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
   const [startTime, setStartTime] = useState("00:00");
   const [endTime, setEndTime] = useState("23:59");
   const [isScheduled, setIsScheduled] = useState(false);
+  const [messageText, setMessageText] = useState("");
+  const [messageImage, setMessageImage] = useState<string | null>(null);
+  const [ctaButtons, setCtaButtons] = useState<{ id: string; label: string }[]>([]);
 
   const nextStep = () => setStep((s) => (s + 1) as Step);
   const prevStep = () => setStep((s) => (s - 1) as Step);
@@ -658,13 +661,34 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
                             <Button variant="ghost" size="sm" className="h-9 w-9 p-0 text-[#64748B] hover:text-[#F06452] hover:bg-[#FDF0ED]">
                               <Smile className="w-5 h-5" />
                             </Button>
-                            <Button variant="ghost" size="sm" className="h-9 w-9 p-0 text-[#64748B] hover:text-[#F06452] hover:bg-[#FDF0ED]">
-                              <ImageIcon className="w-5 h-5" />
-                            </Button>
+                            <label className="cursor-pointer">
+                              <div className="h-9 w-9 flex items-center justify-center text-[#64748B] hover:text-[#F06452] hover:bg-[#FDF0ED] rounded-md transition-colors">
+                                <ImageIcon className="w-5 h-5" />
+                              </div>
+                              <input 
+                                type="file" 
+                                className="hidden" 
+                                accept="image/*"
+                                onChange={(e) => {
+                                  const file = e.target.files?.[0];
+                                  if (file) {
+                                    const reader = new FileReader();
+                                    reader.onloadend = () => setMessageImage(reader.result as string);
+                                    reader.readAsDataURL(file);
+                                  }
+                                }}
+                              />
+                            </label>
                           </div>
                           <div className="flex gap-2">
                             {["nome", "departamento"].map(v => (
-                              <Button key={v} variant="outline" size="sm" className="h-7 px-3 text-[10px] font-black uppercase border-[#F06452]/20 text-[#F06452] hover:bg-[#FDF0ED] rounded-lg">
+                              <Button 
+                                key={v} 
+                                variant="outline" 
+                                size="sm" 
+                                className="h-7 px-3 text-[10px] font-black uppercase border-[#F06452]/20 text-[#F06452] hover:bg-[#FDF0ED] rounded-lg"
+                                onClick={() => setMessageText(prev => prev + `{{${v}}}`)}
+                              >
                                 {"{{"}{v}{"}}"}
                               </Button>
                             ))}
@@ -673,17 +697,47 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
                         <textarea 
                           placeholder="Escreva sua mensagem aqui..."
                           className="w-full min-h-[250px] p-6 text-[#0F172A] focus:outline-none resize-none leading-relaxed text-sm bg-white"
+                          value={messageText}
+                          onChange={(e) => setMessageText(e.target.value)}
                         />
                         <div className="p-4 border-t border-[#E5E7EB] bg-slate-50 flex justify-between items-center">
-                          <p className="text-[10px] text-[#64748B] font-black uppercase tracking-widest">Aprox. 120 caracteres</p>
-                          <Button variant="outline" size="sm" className="border-[#E5E7EB] text-[#0F172A] hover:bg-white font-bold h-9 rounded-xl">
+                          <p className="text-[10px] text-[#64748B] font-black uppercase tracking-widest">Aprox. {messageText.length} caracteres</p>
+                          <Button 
+                            variant="outline" 
+                            size="sm" 
+                            className="border-[#E5E7EB] text-[#0F172A] hover:bg-white font-bold h-9 rounded-xl"
+                            onClick={() => setCtaButtons(prev => [...prev, { id: crypto.randomUUID(), label: "Clique aqui" }])}
+                          >
                             <Plus className="w-4 h-4 mr-2" /> Botão CTA
                           </Button>
                         </div>
                       </div>
+                      
+                      {ctaButtons.length > 0 && (
+                        <div className="space-y-3">
+                          <Label className="text-[10px] font-black text-[#0F172A] uppercase tracking-widest">Botões CTA</Label>
+                          {ctaButtons.map((btn) => (
+                            <div key={btn.id} className="flex gap-2">
+                              <Input 
+                                value={btn.label}
+                                onChange={(e) => setCtaButtons(prev => prev.map(b => b.id === btn.id ? { ...b, label: e.target.value } : b))}
+                                className="bg-white border-[#E5E7EB] h-10 rounded-xl flex-1"
+                              />
+                              <Button 
+                                variant="ghost" 
+                                size="icon" 
+                                className="text-muted-fg hover:text-[#F06452]"
+                                onClick={() => setCtaButtons(prev => prev.filter(b => b.id !== btn.id))}
+                              >
+                                <Trash2 className="w-4 h-4" />
+                              </Button>
+                            </div>
+                          ))}
+                        </div>
+                      )}
                     </div>
 
-                    <div className="bg-white rounded-[2.5rem] p-4 shadow-2xl relative overflow-hidden border border-[#E5E7EB] flex flex-col h-[450px]">
+                    <div className="bg-white rounded-[2.5rem] p-4 shadow-2xl relative overflow-hidden border border-[#E5E7EB] flex flex-col h-auto min-h-[450px]">
                       <div className="bg-[#075E54] p-4 flex items-center gap-3 -mx-4 -mt-4 mb-4">
                         <div className="w-10 h-10 rounded-full bg-white/20" />
                         <div className="flex-1">
@@ -691,15 +745,45 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
                           <div className="w-20 h-1.5 bg-white/20 rounded mt-1.5" />
                         </div>
                       </div>
-                      <div className="space-y-4 flex-1 bg-[#E5DDD5] -mx-4 p-5 overflow-y-auto">
+                      <div className="space-y-4 flex-1 bg-[#E5DDD5] -mx-4 p-5 overflow-y-auto min-h-[300px]">
                         <div className="bg-white rounded-2xl p-4 shadow-md max-w-[90%] relative">
-                          <p className="text-sm text-[#0F172A]">Olá {"{{"}nome{"}}"}! 👋</p>
-                          <div className="mt-3 aspect-video bg-slate-50 rounded-xl flex items-center justify-center border border-dashed border-[#E5E7EB]">
-                             <ImageIcon className="w-8 h-8 text-slate-300" />
+                          <div className="whitespace-pre-wrap text-sm text-[#0F172A]">
+                            {messageText || "Escreva sua mensagem aqui..."}
                           </div>
-                          <p className="text-sm text-[#0F172A] mt-3 leading-relaxed">Seu embarque está confirmado!</p>
-                          <span className="text-[9px] text-[#64748B] absolute bottom-2 right-3 uppercase font-black">14:30</span>
+                          
+                          {messageImage && (
+                            <div className="mt-3 overflow-hidden rounded-xl border border-[#E5E7EB]">
+                              <img src={messageImage} alt="Preview" className="w-full h-auto object-cover" />
+                              <Button 
+                                variant="destructive" 
+                                size="icon" 
+                                className="absolute top-2 right-2 h-7 w-7 rounded-full"
+                                onClick={() => setMessageImage(null)}
+                              >
+                                <Trash2 className="w-3 h-3" />
+                              </Button>
+                            </div>
+                          )}
+                          
+                          {!messageImage && (
+                            <div className="mt-3 aspect-video bg-slate-50 rounded-xl flex items-center justify-center border border-dashed border-[#E5E7EB]">
+                               <ImageIcon className="w-8 h-8 text-slate-300" />
+                            </div>
+                          )}
+                          
+                          <span className="text-[9px] text-[#64748B] block mt-2 text-right uppercase font-black">14:30</span>
                         </div>
+                        
+                        {ctaButtons.length > 0 && (
+                          <div className="space-y-2 max-w-[90%]">
+                            {ctaButtons.map((btn) => (
+                              <div key={btn.id} className="bg-white rounded-xl p-3 shadow-md flex items-center justify-center gap-2 border border-[#E5E7EB] cursor-default">
+                                <MousePointer2 className="w-3 h-3 text-[#F06452]" />
+                                <span className="text-sm font-bold text-[#F06452]">{btn.label}</span>
+                              </div>
+                            ))}
+                          </div>
+                        )}
                       </div>
                     </div>
                   </div>
