@@ -60,6 +60,10 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
   const [csvPreview, setCsvPreview] = useState<string[][]>([]);
 
+  const removeColumn = (index: number) => {
+    setCsvPreview(prev => prev.map(row => row.filter((_, i) => i !== index)));
+  };
+
   // Configurações de envio states
   const [sendingSpeed, setSendingSpeed] = useState("medio");
   const [contactsPerBatch, setContactsPerBatch] = useState(50);
