@@ -276,7 +276,9 @@ function SettingsPage({ session }: { session: any }) {
   const [templateNotificacao, setTemplateNotificacao] = useState("Olá {agente}, houve uma mudança na fila {fila}. Status anterior: {status_anterior} -> Novo status: {status_atual} em {data_mudanca}");
   const [isTemplateModalOpen, setIsTemplateModalOpen] = useState(false);
   const [isHistoryModalOpen, setIsHistoryModalOpen] = useState(false);
-  const [notificacoesHistory] = useState([
+  const [isTestModalOpen, setIsTestModalOpen] = useState(false);
+  const [testRecipient, setTestRecipient] = useState("Alice Vieira");
+  const [notificacoesHistory, setNotificacoesHistory] = useState([
     { id: "TRY-7782", target: "Alice Vieira", canal: "WhatsApp", data: "2026-08-06 14:20", evento: "Mudança de Status: Suporte", status: "enviado", motivo: "", fila: "Suporte", resposta: "Meta API: Message delivered" },
     { id: "TRY-7783", target: "Mayck Souza", canal: "E-mail", data: "2026-08-06 15:10", evento: "Novo Agente: Comercial", status: "falhou", motivo: "Servidor SMTP indisponível", fila: "Comercial", resposta: "550 5.1.1 The email account that you tried to reach does not exist" },
     { id: "TRY-7784", target: "Carolina Silva", canal: "WhatsApp", data: "2026-08-06 15:45", evento: "Mudança de Fila: Suporte", status: "em processamento", motivo: "", fila: "Suporte", resposta: "Pending callback from Meta" },
