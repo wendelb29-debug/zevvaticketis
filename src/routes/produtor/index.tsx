@@ -1,233 +1,181 @@
-import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
-import { useEffect, useState } from "react";
-import { 
-  Plus, 
-  MapPin, 
-  Video, 
-  Smartphone, 
-  CheckCircle2, 
-  ChevronRight,
-  TrendingUp,
-  Ticket,
-  DollarSign,
-  Calendar,
-  Eye,
-  ArrowRight,
-  Sparkles
-} from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
-import { CATEGORY_THEMES, CategoryType, getThemeByCategory } from "@/lib/categoryThemes";
-import { cn } from "@/lib/utils";
-import { Roadmap } from "@/components/produtor/Roadmap";
+import { Plus, Users, Ticket, DollarSign, Calendar } from "lucide-react";
 
 export const Route = createFileRoute("/produtor/")({
   component: ProdutorDashboard,
 });
 
 function ProdutorDashboard() {
-  const [user, setUser] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    async function getData() {
+  const { data: stats, isLoading: loadingStats } = useQuery({
+    queryKey: ["producer-stats"],
+    queryFn: async () => {
       const { data: { user } } = await supabase.auth.getUser();
-      setUser(user);
-      setLoading(false);
+      if (!user) return null;
+
+      const { data: events } = await supabase
+        .from("events" as any)
+        .select("id, status")
+        .eq("produtor_id", user.id);
+
+      const eventIds = events?.map(e => e.id) || [];
+      
+      const { data: orders } = await supabase
+        .from("orders" as any)
+        .select("valor_total")
+        .in("evento_id", eventIds)
+        .eq("status", "pago");
+
+      const faturamento = orders?.reduce((acc, curr) => acc + Number(curr.valor_total), 0) || 0;
+      const vendas = orders?.length || 0;
+
+      return {
+        eventosCriados: events?.length || 0,
+        vendasRealizadas: vendas,
+        faturamento: faturamento,
+        ingressosVendidos: vendas, // Simplifying for MVP
+      };
     }
-    getData();
-  }, []);
+  });
 
-  const getTimeGreeting = () => {
-    const hour = new Date().getHours();
-    if (hour < 12) return "Bom dia";
-    if (hour < 18) return "Boa tarde";
-    return "Boa noite";
-  };
-
-  if (loading) return null;
-
-  const stats = [
-    { label: "Eventos publicados", value: "0", color: "text-foreground" },
-    { label: "Ingressos vendidos", value: "0", color: "text-coral" },
-    { label: "Receita total", value: "US$ 0,00", color: "text-green-500" },
-  ];
+  const { data: events, isLoading: loadingEvents } = useQuery({
+    queryKey: ["producer-events"],
+    queryFn: async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      const { data } = await supabase
+        .from("events" as any)
+        .select("*, ticket_types(quantidade_total, quantidade_disponivel)")
+        .eq("produtor_id", user?.id)
+        .order("created_at", { ascending: false });
+      return data;
+    }
+  });
 
   return (
-    <div className="space-y-10 font-inter max-w-6xl mx-auto">
-      <div className="space-y-2">
-        <h1 className="text-3xl font-manrope font-extrabold text-foreground">
-          {getTimeGreeting()}, {user?.user_metadata?.nome?.split(' ')[0] || user?.email?.split('@')[0]}!
-        </h1>
-        <p className="text-muted-foreground font-medium">Já publicou seu evento?</p>
-      </div>
-
-      <Roadmap />
-
-      {/* Action Buttons */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-        {[
-          { label: "Criar evento presencial", icon: MapPin, desc: "Viagens, caravanas e shows", color: "from-coral/10 to-coral/5" },
-          { label: "Criar evento online", icon: Video, desc: "Lives, webinars e reuniões", color: "from-navy/10 to-navy/5" },
-          { label: "Criar conteúdo digital", icon: Smartphone, desc: "E-books, cursos e guias", color: "from-good/10 to-good/5" },
-        ].map((item) => (
-          <button 
-            key={item.label}
-            onClick={() => navigate({ to: '/criar-evento' })}
-            className="group flex flex-col items-start p-6 rounded-[24px] border border-border bg-card hover:border-coral/30 hover:shadow-xl transition-all duration-300 text-left"
-          >
-            <div className={cn("p-3 rounded-2xl mb-4 group-hover:scale-110 transition-transform bg-gradient-to-br", item.color)}>
-              <item.icon className="w-6 h-6 text-foreground" />
-      </div>
-
-      {/* Theme Preview Section */}
-      <div className="bg-card rounded-[32px] border border-border p-8 space-y-8 shadow-sm">
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-          <div className="space-y-1">
-            <h2 className="text-xl font-manrope font-extrabold text-foreground flex items-center gap-2">
-              <Sparkles className="w-5 h-5 text-coral" /> Prévia de Temas Visuais
-            </h2>
-            <p className="text-xs text-muted-foreground font-medium uppercase tracking-widest">Veja como seu evento aparecerá para os participantes</p>
-          </div>
-          <Link to="/eventos" search={{ id: undefined, categoria: "CARAVANAS INTERNACIONAIS" }} className="text-[10px] font-extrabold text-primary uppercase tracking-widest hover:underline">
-            Ver página pública completa
+    <div className="container mx-auto py-8 space-y-8">
+      <div className="flex justify-between items-center">
+        <div>
+          <h1 className="text-3xl font-bold text-gray-900">Painel do Produtor</h1>
+          <p className="text-gray-500">Gerencie seus eventos e acompanhe suas vendas.</p>
+        </div>
+        <Button asChild className="bg-coral hover:bg-coral/90 text-white">
+          <Link to="/produtor/novo-evento">
+            <Plus className="mr-2 h-4 w-4" /> Criar Evento
           </Link>
-        </div>
-
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
-          {(Object.keys(CATEGORY_THEMES) as CategoryType[]).map((catName) => {
-            const theme = CATEGORY_THEMES[catName];
-            const Icon = theme.icon;
-            return (
-              <button 
-                key={catName}
-                onClick={() => navigate({ to: '/eventos', search: { categoria: catName } as any })}
-                className="group p-4 rounded-2xl border-2 border-border hover:border-navy transition-all text-center space-y-3 bg-muted/30 active:scale-95"
-                style={{ borderColor: theme.accentColor + '40' }}
-              >
-                <div 
-                  className="w-12 h-12 rounded-xl mx-auto flex items-center justify-center text-white shadow-lg group-hover:scale-110 transition-transform"
-                  style={{ backgroundColor: theme.accentColor }}
-                >
-                  <Icon className="w-6 h-6" />
-                </div>
-                <p className="text-[9px] font-extrabold uppercase tracking-widest text-foreground leading-tight">{theme.name}</p>
-                <div className="pt-2 flex justify-center">
-                  <Eye className="w-3.5 h-3.5 text-muted-foreground group-hover:text-foreground" />
-                </div>
-              </button>
-            );
-          })}
-        </div>
-      </div>
-            <h3 className="font-bold text-foreground mb-1">{item.label}</h3>
-            <p className="text-xs text-muted-foreground font-medium">{item.desc}</p>
-          </button>
-        ))}
+        </Button>
       </div>
 
-      {/* Info Banner */}
-      <div className="relative overflow-hidden rounded-[32px] p-8 sm:p-12 text-white dark-panel">
-        <div className="absolute top-0 right-0 w-1/2 h-full bg-coral/5 -skew-x-12 translate-x-1/4 pointer-events-none" />
-        <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          <div className="space-y-8">
-            <div className="space-y-4">
-              <h2 className="text-3xl sm:text-4xl font-manrope font-extrabold leading-tight">
-                Seu evento pode vender ainda mais!
-              </h2>
-              <p className="text-white/70 font-medium text-lg">
-                Alcance pessoas em todo o mundo com a tecnologia da Zevva Tickets.
-              </p>
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between pb-2">
+            <CardTitle className="text-sm font-medium">Eventos Criados</CardTitle>
+            <Calendar className="h-4 w-4 text-gray-400" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">{stats?.eventosCriados || 0}</div>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between pb-2">
+            <CardTitle className="text-sm font-medium">Vendas Realizadas</CardTitle>
+            <Ticket className="h-4 w-4 text-gray-400" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">{stats?.vendasRealizadas || 0}</div>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between pb-2">
+            <CardTitle className="text-sm font-medium">Faturamento</CardTitle>
+            <DollarSign className="h-4 w-4 text-gray-400" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">R$ {stats?.faturamento.toLocaleString("pt-BR", { minimumFractionDigits: 2 }) || "0,00"}</div>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between pb-2">
+            <CardTitle className="text-sm font-medium">Ingressos Vendidos</CardTitle>
+            <Users className="h-4 w-4 text-gray-400" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">{stats?.ingressosVendidos || 0}</div>
+          </CardContent>
+        </Card>
+      </div>
+
+      <div className="space-y-4">
+        <h2 className="text-xl font-semibold">Meus Eventos</h2>
+        <div className="grid gap-4">
+          {events?.map((event: any) => (
+            <Card key={event.id}>
+              <CardContent className="flex items-center p-6 gap-6">
+                <div className="w-24 h-24 rounded-lg bg-gray-100 flex-shrink-0 overflow-hidden">
+                  {event.imagem_url ? (
+                    <img src={event.imagem_url} alt={event.nome} className="w-full h-full object-cover" />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center text-gray-400">
+                      <ImageIcon className="h-8 w-8" />
+                    </div>
+                  )}
+                </div>
+                <div className="flex-grow">
+                  <div className="flex items-center gap-2 mb-1">
+                    <h3 className="text-lg font-bold">{event.nome}</h3>
+                    <Badge variant={
+                      event.status === 'publicado' ? 'success' : 
+                      event.status === 'aguardando_aprovacao' ? 'warning' : 'secondary'
+                    }>
+                      {event.status === 'publicado' ? 'Publicado' : 
+                       event.status === 'aguardando_aprovacao' ? 'Em Aprovação' : 'Rascunho'}
+                    </Badge>
+                  </div>
+                  <div className="text-sm text-gray-500 space-y-1">
+                    <p>{new Date(event.data_inicio).toLocaleDateString("pt-BR", { dateStyle: 'long' })}</p>
+                    <p>{event.cidade}, {event.localizacao}</p>
+                  </div>
+                </div>
+                <div className="text-right space-y-2">
+                  <div className="text-sm font-medium">
+                    {event.ticket_types?.reduce((acc: number, curr: any) => acc + (curr.quantidade_total - curr.quantidade_disponivel), 0)} / {event.ticket_types?.reduce((acc: number, curr: any) => acc + curr.quantidade_total, 0)} vendidos
+                  </div>
+                  <Button variant="outline" size="sm">Gerenciar</Button>
+                </div>
+              </CardContent>
+            </Card>
+          ))}
+          {events?.length === 0 && (
+            <div className="text-center py-12 border-2 border-dashed rounded-lg text-gray-500">
+              Você ainda não criou nenhum evento.
             </div>
-            
-            <ul className="space-y-4">
-              {[
-                "Venda pacotes, caravanas, experiências e ingressos.",
-                "Acompanhe vendas e participantes em um só lugar.",
-                "Gerencie tudo diretamente pela Zevva Tickets."
-              ].map((text) => (
-                <li key={text} className="flex items-center gap-3 font-semibold text-white/90">
-                  <CheckCircle2 className="w-5 h-5 text-coral flex-shrink-0" />
-                  {text}
-                </li>
-              ))}
-            </ul>
-
-            <Button className="h-14 px-10 bg-gradient-to-r from-coral to-coral-dark text-white font-extrabold rounded-xl shadow-lg shadow-coral/20 hover:opacity-90 border-0 uppercase tracking-widest text-sm">
-              Começar agora
-            </Button>
-          </div>
-
-          <div className="hidden lg:grid grid-cols-2 gap-4">
-            {stats.map((stat) => (
-              <div key={stat.label} className="glass-panel backdrop-blur-md p-6 rounded-2xl text-center shadow-lg bg-white/5">
-                <p className="text-3xl font-manrope font-extrabold mb-1 text-white">{stat.value}</p>
-                <p className="text-[10px] uppercase tracking-widest font-extrabold text-white/90">{stat.label}</p>
-              </div>
-            ))}
-          </div>
+          )}
         </div>
-      </div>
-
-      {/* Events Table Section */}
-      <div className="bg-card rounded-[24px] border border-border shadow-sm overflow-hidden">
-        <Tabs defaultValue="events" className="w-full">
-          <div className="px-8 pt-8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-            <TabsList className="bg-muted p-1 rounded-xl h-11">
-              <TabsTrigger value="events" className="rounded-lg px-6 font-bold data-[state=active]:bg-card data-[state=active]:text-foreground data-[state=active]:shadow-sm">Meus eventos</TabsTrigger>
-              <TabsTrigger value="contents" className="rounded-lg px-6 font-bold data-[state=active]:bg-card data-[state=active]:text-foreground data-[state=active]:shadow-sm">Meus conteúdos</TabsTrigger>
-            </TabsList>
-            
-            <Button 
-              onClick={() => navigate({ to: '/criar-evento' })}
-              className="bg-navy hover:bg-navy/90 text-white font-bold rounded-xl h-11 px-6"
-            >
-              <Plus className="w-4 h-4 mr-2" /> Criar novo evento
-            </Button>
-          </div>
-
-          <TabsContent value="events" className="p-0 mt-6">
-            <div className="border-t border-border">
-              {/* Table Header */}
-              <div className="bg-muted/50 grid grid-cols-12 gap-4 px-8 py-4 text-[10px] uppercase font-extrabold tracking-widest text-muted-foreground">
-                <div className="col-span-5">Evento</div>
-                <div className="col-span-2 text-center">Data</div>
-                <div className="col-span-2 text-center">Vendas</div>
-                <div className="col-span-2 text-center">Status</div>
-                <div className="col-span-1"></div>
-              </div>
-
-              {/* Empty State */}
-              <div className="flex flex-col items-center justify-center py-20 px-8 text-center space-y-6">
-                <div className="w-20 h-20 bg-muted rounded-full flex items-center justify-center">
-                  <Ticket className="w-10 h-10 text-muted-foreground" />
-                </div>
-                <div className="space-y-2">
-                  <h3 className="text-xl font-bold text-foreground">Você ainda não criou nenhum evento.</h3>
-                  <p className="text-muted-foreground font-medium max-w-xs">
-                    Comece a vender agora mesmo criando seu primeiro evento presencial ou online.
-                  </p>
-                </div>
-                <Button 
-                  variant="outline" 
-                  onClick={() => navigate({ to: '/criar-evento' })}
-                  className="h-11 px-8 rounded-xl font-bold border-coral text-coral hover:bg-coral hover:text-white transition-all"
-                >
-                  Criar meu primeiro evento
-                </Button>
-              </div>
-            </div>
-          </TabsContent>
-
-          <TabsContent value="contents" className="py-20 text-center text-muted-foreground font-medium">
-            Você ainda não possui conteúdos digitais cadastrados.
-          </TabsContent>
-        </Tabs>
       </div>
     </div>
   );
 }
 
+function ImageIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+    >
+      <rect width="18" height="18" x="3" y="3" rx="2" ry="2" />
+      <circle cx="9" cy="9" r="2" />
+      <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21" />
+    </svg>
+  );
+}

@@ -1,516 +1,245 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { useState, useEffect } from "react";
-import { 
-  ChevronLeft, 
-  ChevronRight, 
-  Info, 
-  MapPin, 
-  Clock, 
-  Image as ImageIcon, 
-  DollarSign, 
-  CheckCircle2,
-  Trash2,
-  Plus,
-  Settings,
-  AlertTriangle,
-  Loader2
-} from "lucide-react";
+import { useState } from "react";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { 
-  Select, 
-  SelectContent, 
-  SelectItem, 
-  SelectTrigger, 
-  SelectValue 
-} from "@/components/ui/select";
-import { Switch } from "@/components/ui/switch";
-import { cn } from "@/lib/utils";
-import { supabase } from "@/integrations/supabase/client";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
+import { Plus, Save, ArrowLeft, Image as ImageIcon } from "lucide-react";
 
 export const Route = createFileRoute("/produtor/novo-evento")({
-  component: NewEventWizard,
+  component: NovoEventoPage,
 });
 
-function NewEventWizard() {
-  const [step, setStep] = useState(1);
-  const [loading, setLoading] = useState(false);
+function NovoEventoPage() {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
+  const [loading, setLoading] = useState(false);
 
-  // Form State
   const [formData, setFormData] = useState({
-    title: "",
-    subtitle: "",
-    description: "",
-    category: "caravana",
-    event_type: "presencial",
-    location: "",
-    city: "",
-    country_id: "BR",
-    start_date: "",
-    end_date: "",
-    falta_automatica_ativa: false,
-    falta_automatica_minutos: 60,
+    nome: "",
+    descricao: "",
+    categoria: "",
+    cidade: "",
+    localizacao: "",
+    data_inicio: "",
+    imagem_url: "",
   });
 
-  const [tickets, setTickets] = useState([
-    { name: "Lote 1", price: 0, quantity: 100 }
+  const [ticketTypes, setTicketTypes] = useState([
+    { nome: "Individual", preco: 0, quantidade_total: 100 }
   ]);
 
-  // Load draft
-  useEffect(() => {
-    const draft = localStorage.getItem("event_draft");
-    if (draft) {
-      try {
-        const parsed = JSON.parse(draft);
-        setFormData(parsed.formData || formData);
-        setTickets(parsed.tickets || tickets);
-      } catch (e) {
-        console.error("Error loading draft", e);
-      }
-    }
-  }, []);
-
-  // Save draft
-  useEffect(() => {
-    localStorage.setItem("event_draft", JSON.stringify({ formData, tickets }));
-  }, [formData, tickets]);
-
-  const steps = [
-    { id: 1, title: "Básico", icon: Info },
-    { id: 2, title: "Local e Data", icon: MapPin },
-    { id: 3, title: "Ingressos", icon: DollarSign },
-    { id: 4, title: "Configurações", icon: Settings },
-    { id: 5, title: "Revisão", icon: CheckCircle2 },
-  ];
-
-  const handlePublish = async () => {
-    setLoading(true);
-    try {
+  const createEventMutation = useMutation({
+    mutationFn: async () => {
       const { data: { user } } = await supabase.auth.getUser();
-      if (!user) throw new Error("Usuário não autenticado");
+      if (!user) throw new Error("Não autenticado");
 
       // 1. Create Event
       const { data: event, error: eventError } = await supabase
-        .from("events")
+        .from("events" as any)
         .insert({
-          producer_id: user.id,
-          title: formData.title,
-          description: formData.description,
-          category: formData.category,
-          event_type: formData.event_type,
-          location: formData.location,
-          city: formData.city,
-          country_id: formData.country_id,
-          start_date: formData.start_date,
-          end_date: formData.end_date,
-          falta_automatica_ativa: formData.falta_automatica_ativa,
-          falta_automatica_minutos: formData.falta_automatica_minutos,
-          status: "publicado"
+          ...formData,
+          produtor_id: user.id,
+          status: "aguardando_aprovacao"
         })
         .select()
         .single();
 
       if (eventError) throw eventError;
 
-      // 2. Create Tickets
-      const ticketsToInsert = tickets.map(t => ({
-        event_id: event.id,
-        name: t.name,
-        price: t.price,
-        quantity: t.quantity
+      // 2. Create Ticket Types
+      const ticketsToInsert = ticketTypes.map(t => ({
+        ...t,
+        evento_id: event.id,
+        quantidade_disponivel: t.quantidade_total
       }));
 
       const { error: ticketsError } = await supabase
-        .from("tickets")
+        .from("ticket_types" as any)
         .insert(ticketsToInsert);
 
       if (ticketsError) throw ticketsError;
 
-      toast.success("Evento publicado com sucesso!");
-      localStorage.removeItem("event_draft");
+      return event;
+    },
+    onSuccess: () => {
+      toast.success("Evento criado e enviado para aprovação!");
+      queryClient.invalidateQueries({ queryKey: ["producer-events"] });
       navigate({ to: "/produtor" });
-    } catch (err: any) {
-      toast.error(`Erro ao publicar: ${err.message}`);
-    } finally {
-      setLoading(false);
+    },
+    onError: (error: any) => {
+      toast.error("Erro ao criar evento: " + error.message);
     }
+  });
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    createEventMutation.mutate();
   };
 
-
-  const nextStep = () => setStep((s) => Math.min(s + 1, 5));
-  const prevStep = () => setStep((s) => Math.max(s - 1, 1));
+  const addTicketType = () => {
+    setTicketTypes([...ticketTypes, { nome: "", preco: 0, quantidade_total: 0 }]);
+  };
 
   return (
-    <div className="max-w-4xl mx-auto font-inter">
-      <div className="flex items-center gap-4 mb-10">
-        <Button 
-          variant="ghost" 
-          size="icon" 
-          onClick={() => navigate({ to: '/produtor' })}
-          className="rounded-full text-navy"
-        >
-          <ChevronLeft className="w-6 h-6" />
-        </Button>
-        <h1 className="text-3xl font-manrope font-extrabold text-navy">Criar novo evento</h1>
+    <div className="container mx-auto py-8 max-w-4xl">
+      <Button variant="ghost" onClick={() => navigate({ to: "/produtor" })} className="mb-6">
+        <ArrowLeft className="mr-2 h-4 w-4" /> Voltar
+      </Button>
+
+      <div className="flex justify-between items-center mb-8">
+        <h1 className="text-3xl font-bold text-gray-900">Criar Novo Evento</h1>
       </div>
 
-      {/* Stepper */}
-      <div className="flex justify-between items-center mb-12 relative">
-        <div className="absolute top-1/2 left-0 w-full h-0.5 bg-line -z-10 -translate-y-1/2" />
-        {steps.map((s) => (
-          <div key={s.id} className="flex flex-col items-center gap-2 group">
-            <div 
-              className={cn(
-                "w-12 h-12 rounded-full flex items-center justify-center border-2 transition-all duration-300",
-                step === s.id ? "bg-coral border-coral text-white shadow-lg shadow-coral/30" : 
-                step > s.id ? "bg-navy border-navy text-white" : "bg-white border-line text-muted"
-              )}
-            >
-              {step > s.id ? <CheckCircle2 className="w-6 h-6" /> : <s.icon className="w-5 h-5" />}
-            </div>
-            <span className={cn(
-              "text-[10px] uppercase tracking-widest font-extrabold",
-              step === s.id ? "text-coral" : "text-muted"
-            )}>
-              {s.title}
-            </span>
-          </div>
-        ))}
-      </div>
-
-      {/* Form Card */}
-      <div className="bg-white rounded-[32px] border border-line p-8 sm:p-12 shadow-sm min-h-[500px] flex flex-col">
-        <div className="flex-1">
-          {step === 1 && (
-            <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+      <form onSubmit={handleSubmit} className="space-y-8">
+        <Card>
+          <CardHeader>
+            <CardTitle>Informações Básicas</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
-                <h2 className="text-2xl font-bold text-navy">Informações Básicas</h2>
-                <p className="text-muted font-medium">Defina o nome e a descrição do seu evento.</p>
+                <Label htmlFor="nome">Nome do Evento</Label>
+                <Input 
+                  id="nome" 
+                  value={formData.nome} 
+                  onChange={(e) => setFormData({...formData, nome: e.target.value})}
+                  required 
+                />
               </div>
-              <div className="grid gap-6">
-                <div className="space-y-2">
-                  <label className="text-sm font-bold text-navy uppercase tracking-wider">Nome do Evento</label>
+              <div className="space-y-2">
+                <Label htmlFor="categoria">Categoria</Label>
+                <Input 
+                  id="categoria" 
+                  value={formData.categoria} 
+                  onChange={(e) => setFormData({...formData, categoria: e.target.value})}
+                  placeholder="Ex: Show, Workshop, Conferência"
+                />
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="descricao">Descrição</Label>
+              <Textarea 
+                id="descricao" 
+                value={formData.descricao} 
+                onChange={(e) => setFormData({...formData, descricao: e.target.value})}
+                rows={4}
+              />
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="data_inicio">Data e Hora de Início</Label>
+                <Input 
+                  id="data_inicio" 
+                  type="datetime-local" 
+                  value={formData.data_inicio} 
+                  onChange={(e) => setFormData({...formData, data_inicio: e.target.value})}
+                  required 
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="imagem_url">URL do Banner</Label>
+                <div className="flex gap-2">
                   <Input 
-                    placeholder="Ex: Conferência Internacional de Fé 2024" 
-                    className="h-14 rounded-xl border-line focus-visible:ring-coral" 
-                    value={formData.title}
-                    onChange={(e) => setFormData({...formData, title: e.target.value})}
+                    id="imagem_url" 
+                    value={formData.imagem_url} 
+                    onChange={(e) => setFormData({...formData, imagem_url: e.target.value})}
+                    placeholder="https://..."
+                  />
+                  <Button type="button" variant="outline" size="icon">
+                    <ImageIcon className="h-4 w-4" />
+                  </Button>
+                </div>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="cidade">Cidade</Label>
+                <Input 
+                  id="cidade" 
+                  value={formData.cidade} 
+                  onChange={(e) => setFormData({...formData, cidade: e.target.value})}
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="localizacao">Local (Endereço/Nome do local)</Label>
+                <Input 
+                  id="localizacao" 
+                  value={formData.localizacao} 
+                  onChange={(e) => setFormData({...formData, localizacao: e.target.value})}
+                />
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between">
+            <CardTitle>Tipos de Ingressos</CardTitle>
+            <Button type="button" variant="outline" size="sm" onClick={addTicketType}>
+              <Plus className="mr-2 h-4 w-4" /> Adicionar Lote
+            </Button>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            {ticketTypes.map((ticket, index) => (
+              <div key={index} className="grid grid-cols-1 md:grid-cols-3 gap-4 p-4 border rounded-lg bg-gray-50/50">
+                <div className="space-y-2">
+                  <Label>Nome</Label>
+                  <Input 
+                    value={ticket.nome} 
+                    onChange={(e) => {
+                      const newTickets = [...ticketTypes];
+                      newTickets[index].nome = e.target.value;
+                      setTicketTypes(newTickets);
+                    }}
+                    placeholder="Ex: VIP, Inteira"
                   />
                 </div>
                 <div className="space-y-2">
-                  <label className="text-sm font-bold text-navy uppercase tracking-wider">Descrição</label>
-                  <Textarea 
-                    placeholder="Descreva todos os detalhes do seu evento..." 
-                    className="min-h-[150px] rounded-xl border-line focus-visible:ring-coral" 
-                    value={formData.description}
-                    onChange={(e) => setFormData({...formData, description: e.target.value})}
+                  <Label>Preço (R$)</Label>
+                  <Input 
+                    type="number" 
+                    value={ticket.preco} 
+                    onChange={(e) => {
+                      const newTickets = [...ticketTypes];
+                      newTickets[index].preco = Number(e.target.value);
+                      setTicketTypes(newTickets);
+                    }}
                   />
-                </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                  <div className="space-y-2">
-                    <label className="text-sm font-bold text-navy uppercase tracking-wider">Categoria</label>
-                    <Select 
-                      value={formData.category}
-                      onValueChange={(val) => setFormData({...formData, category: val})}
-                    >
-                      <SelectTrigger className="h-14 rounded-xl border-line">
-                        <SelectValue placeholder="Selecione uma categoria" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="caravana">Caravana</SelectItem>
-                        <SelectItem value="conferencia">Conferência</SelectItem>
-                        <SelectItem value="show">Show / Concerto</SelectItem>
-                        <SelectItem value="outros">Outros</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <div className="space-y-2">
-                    <label className="text-sm font-bold text-navy uppercase tracking-wider">Tipo</label>
-                    <Select 
-                      value={formData.event_type}
-                      onValueChange={(val) => setFormData({...formData, event_type: val})}
-                    >
-                      <SelectTrigger className="h-14 rounded-xl border-line">
-                        <SelectValue placeholder="Selecione o tipo" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="presencial">Presencial</SelectItem>
-                        <SelectItem value="online">Online</SelectItem>
-                        <SelectItem value="hibrido">Híbrido</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {step === 2 && (
-            <div className="space-y-8 animate-in fade-in slide-in-from-right-4 duration-500">
-              <div className="space-y-2">
-                <h2 className="text-2xl font-bold text-navy">Local e Data</h2>
-                <p className="text-muted font-medium">Onde e quando o evento irá acontecer.</p>
-              </div>
-              <div className="grid gap-6">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                   <div className="space-y-2">
-                    <label className="text-sm font-bold text-navy uppercase tracking-wider">Cidade</label>
-                    <Input 
-                      placeholder="Ex: Orlando" 
-                      className="h-14 rounded-xl border-line" 
-                      value={formData.city}
-                      onChange={(e) => setFormData({...formData, city: e.target.value})}
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <label className="text-sm font-bold text-navy uppercase tracking-wider">País (ID)</label>
-                    <Input 
-                      placeholder="Ex: US" 
-                      className="h-14 rounded-xl border-line" 
-                      value={formData.country_id}
-                      onChange={(e) => setFormData({...formData, country_id: e.target.value})}
-                    />
-                  </div>
                 </div>
                 <div className="space-y-2">
-                  <label className="text-sm font-bold text-navy uppercase tracking-wider">Endereço Completo</label>
-                  <div className="relative">
-                    <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted" />
-                    <Input 
-                      placeholder="Logradouro, número, bairro..." 
-                      className="h-14 pl-12 rounded-xl border-line" 
-                      value={formData.location}
-                      onChange={(e) => setFormData({...formData, location: e.target.value})}
-                    />
-                  </div>
-                </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                  <div className="space-y-2">
-                    <label className="text-sm font-bold text-navy uppercase tracking-wider">Início do Evento</label>
-                    <Input 
-                      type="datetime-local" 
-                      className="h-14 rounded-xl border-line" 
-                      value={formData.start_date}
-                      onChange={(e) => setFormData({...formData, start_date: e.target.value})}
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <label className="text-sm font-bold text-navy uppercase tracking-wider">Término do Evento</label>
-                    <Input 
-                      type="datetime-local" 
-                      className="h-14 rounded-xl border-line" 
-                      value={formData.end_date}
-                      onChange={(e) => setFormData({...formData, end_date: e.target.value})}
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {step === 3 && (
-            <div className="space-y-8 animate-in fade-in slide-in-from-right-4 duration-500">
-              <div className="space-y-2">
-                <h2 className="text-2xl font-bold text-navy">Ingressos</h2>
-                <p className="text-muted font-medium">Configure os lotes e preços dos ingressos.</p>
-              </div>
-              <div className="space-y-4">
-                {tickets.map((ticket, index) => (
-                  <div key={index} className="p-6 rounded-2xl border border-line bg-surface/30 space-y-4 relative group">
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                      <div className="space-y-2">
-                        <label className="text-[10px] font-extrabold uppercase tracking-widest text-muted">Nome do Lote</label>
-                        <Input 
-                          value={ticket.name}
-                          onChange={(e) => {
-                            const newTickets = [...tickets];
-                            if (newTickets[index]) {
-                              newTickets[index].name = e.target.value;
-                              setTickets(newTickets);
-                            }
-                          }}
-                          className="h-12 rounded-xl"
-                        />
-                      </div>
-                      <div className="space-y-2">
-                        <label className="text-[10px] font-extrabold uppercase tracking-widest text-muted">Preço (US$)</label>
-                        <Input 
-                          type="number"
-                          value={ticket.price}
-                          onChange={(e) => {
-                            const newTickets = [...tickets];
-                            if (newTickets[index]) {
-                              newTickets[index].price = Number(e.target.value);
-                              setTickets(newTickets);
-                            }
-                          }}
-                          className="h-12 rounded-xl"
-                        />
-                      </div>
-                      <div className="space-y-2">
-                        <label className="text-[10px] font-extrabold uppercase tracking-widest text-muted">Quantidade</label>
-                        <Input 
-                          type="number"
-                          value={ticket.quantity}
-                          onChange={(e) => {
-                            const newTickets = [...tickets];
-                            if (newTickets[index]) {
-                              newTickets[index].quantity = Number(e.target.value);
-                              setTickets(newTickets);
-                            }
-                          }}
-                          className="h-12 rounded-xl"
-                        />
-                      </div>
-                    </div>
-                    {tickets.length > 1 && (
-                      <button 
-                        onClick={() => setTickets(tickets.filter((_, i) => i !== index))}
-                        className="absolute -top-2 -right-2 w-8 h-8 bg-white border border-line rounded-full flex items-center justify-center text-destructive shadow-sm hover:bg-destructive hover:text-white transition-all opacity-0 group-hover:opacity-100"
-                      >
-                        <Trash2 className="w-4 h-4" />
-                      </button>
-                    )}
-                  </div>
-                ))}
-                <Button 
-                  variant="outline" 
-                  onClick={() => setTickets([...tickets, { name: `Lote ${tickets.length + 1}`, price: 0, quantity: 100 }])}
-                  className="w-full h-14 rounded-xl border-dashed border-2 border-line text-muted font-bold hover:text-navy hover:border-navy transition-all"
-                >
-                  <Plus className="w-5 h-5 mr-2" /> Adicionar outro lote
-                </Button>
-              </div>
-            </div>
-          )}
-
-          {step === 4 && (
-            <div className="space-y-8 animate-in fade-in slide-in-from-right-4 duration-500">
-              <div className="space-y-2">
-                <h2 className="text-2xl font-bold text-navy">Configurações Avançadas</h2>
-                <p className="text-muted font-medium">Políticas de presença e falta automática.</p>
-              </div>
-              <div className="p-8 rounded-[24px] border border-line bg-surface/20 space-y-8">
-                <div className="flex items-center justify-between">
-                  <div className="space-y-1">
-                    <h4 className="font-bold text-navy">Falta Automática (No-show)</h4>
-                    <p className="text-xs text-muted font-medium">Marcar participante como 'falta' automaticamente após o início.</p>
-                  </div>
-                  <Switch 
-                    checked={formData.falta_automatica_ativa}
-                    onCheckedChange={(val) => setFormData({...formData, falta_automatica_ativa: val})}
+                  <Label>Quantidade</Label>
+                  <Input 
+                    type="number" 
+                    value={ticket.quantidade_total} 
+                    onChange={(e) => {
+                      const newTickets = [...ticketTypes];
+                      newTickets[index].quantidade_total = Number(e.target.value);
+                      setTicketTypes(newTickets);
+                    }}
                   />
                 </div>
-                
-                {formData.falta_automatica_ativa && (
-                  <div className="space-y-4 animate-in slide-in-from-top-2 duration-300">
-                    <div className="space-y-2">
-                      <label className="text-sm font-bold text-navy uppercase tracking-wider">Tempo de tolerância (minutos)</label>
-                      <Input 
-                        type="number"
-                        className="h-14 rounded-xl border-line" 
-                        value={formData.falta_automatica_minutos}
-                        onChange={(e) => setFormData({...formData, falta_automatica_minutos: Number(e.target.value)})}
-                      />
-                      <p className="text-[10px] text-muted font-medium flex items-center gap-1">
-                        <AlertTriangle className="w-3 h-3 text-coral" />
-                        O sistema mudará o status dos ingressos não validados após este período.
-                      </p>
-                    </div>
-                  </div>
-                )}
               </div>
-            </div>
-          )}
+            ))}
+          </CardContent>
+        </Card>
 
-          {step === 5 && (
-            <div className="space-y-8 animate-in fade-in slide-in-from-right-4 duration-500">
-              <div className="space-y-2">
-                <h2 className="text-2xl font-bold text-navy">Revisão Final</h2>
-                <p className="text-muted font-medium">Confira os dados antes de publicar.</p>
-              </div>
-              <div className="grid gap-4">
-                <div className="p-6 rounded-2xl border border-line bg-surface/10 space-y-4">
-                  <div className="flex justify-between items-start">
-                    <div>
-                      <h3 className="text-xl font-extrabold text-navy">{formData.title || "Sem título"}</h3>
-                      <p className="text-sm text-muted font-medium">{formData.city}, {formData.country_id}</p>
-                    </div>
-                    <span className="px-3 py-1 bg-coral text-white text-[10px] font-extrabold uppercase tracking-widest rounded-full">Público</span>
-                  </div>
-                  <div className="grid grid-cols-2 gap-4 pt-4 border-t border-line/50">
-                    <div className="space-y-1">
-                      <p className="text-[10px] uppercase font-extrabold text-muted tracking-widest">Início</p>
-                      <p className="text-sm font-bold text-navy">{formData.start_date ? new Date(formData.start_date).toLocaleString() : "Não definido"}</p>
-                    </div>
-                    <div className="space-y-1">
-                      <p className="text-[10px] uppercase font-extrabold text-muted tracking-widest">Lotes</p>
-                      <p className="text-sm font-bold text-navy">{tickets.length} tipos de ingresso</p>
-                    </div>
-                  </div>
-                </div>
-                <div className="bg-good/5 border border-good/20 p-4 rounded-xl flex items-center gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-good" />
-                  <p className="text-sm font-bold text-good">Tudo pronto! Seu evento será publicado instantaneamente.</p>
-                </div>
-              </div>
-            </div>
-          )}
-        </div>
-
-        <div className="mt-12 flex justify-between items-center border-t border-line pt-8">
-          <Button 
-            variant="ghost" 
-            onClick={prevStep}
-            disabled={step === 1}
-            className="h-14 px-8 rounded-xl font-bold text-muted hover:text-navy"
-          >
-            Anterior
+        <div className="flex justify-end gap-4">
+          <Button type="button" variant="outline" onClick={() => navigate({ to: "/produtor" })}>
+            Cancelar
           </Button>
-          
-          {step < 5 ? (
-            <Button 
-              onClick={nextStep}
-              className="h-14 px-10 rounded-xl bg-navy hover:bg-navy/90 text-white font-bold"
-            >
-              Próximo <ChevronRight className="w-5 h-5 ml-2" />
-            </Button>
-          ) : (
-            <Button 
-              onClick={handlePublish}
-              disabled={loading}
-              className="h-14 px-10 rounded-xl bg-coral hover:bg-coral-dark text-white font-extrabold shadow-lg shadow-coral/20"
-            >
-              {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : "Publicar Evento"}
-            </Button>
-          )}
+          <Button type="submit" disabled={createEventMutation.isPending} className="bg-coral hover:bg-coral/90">
+            {createEventMutation.isPending ? "Criando..." : "Criar Evento e Enviar para Aprovação"}
+          </Button>
         </div>
-      </div>
+      </form>
     </div>
-  );
-}
-
-function Globe(props: any) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <circle cx="12" cy="12" r="10" />
-      <path d="M12 2a14.5 14.5 0 0 0 0 20" />
-      <path d="M12 2a14.5 14.5 0 0 1 0 20" />
-      <path d="M2 12h20" />
-    </svg>
   );
 }
