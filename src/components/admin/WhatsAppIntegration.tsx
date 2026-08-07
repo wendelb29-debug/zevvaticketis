@@ -66,10 +66,22 @@ export function WhatsAppIntegration() {
     }
   }, []);
 
+  const logAccess = useCallback(async (resourceType: string, resourceId?: string) => {
+    try {
+      await supabase.rpc('log_resource_access' as any, {
+        _resource_type: resourceType,
+        _resource_id: resourceId || 'global'
+      });
+    } catch (err) {
+      console.error('Erro ao registrar log de acesso:', err);
+    }
+  }, []);
+
   const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text);
     toast.success("URL copiada com sucesso!");
     logAction("Copiar URL Webhook", "webhook", "configuracao", { url: text });
+    logAccess("webhook_url", "webhook");
   };
 
   const handleSaveConnection = () => {
@@ -157,8 +169,14 @@ export function WhatsAppIntegration() {
 
   const exportAtendimento = (type: 'csv' | 'pdf') => {
     toast.success(`Exportando histórico em ${type.toUpperCase()}...`);
+    logAccess("whatsapp_logs_export", type);
     if (type === 'pdf') window.print();
   };
+
+  // Log initial view of sensitive tabs
+  useEffect(() => {
+    logAccess("whatsapp_integration_panel", "view");
+  }, [logAccess]);
 
   return (
     <div className="space-y-6 animate-in fade-in duration-500">
