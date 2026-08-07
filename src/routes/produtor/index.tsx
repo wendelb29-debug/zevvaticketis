@@ -112,8 +112,9 @@ function ProdutorDashboard() {
         <h2 className="text-xl font-semibold">Meus Eventos</h2>
         <div className="grid gap-4">
           {events?.map((event: any) => (
-            <Card key={event.id}>
-              <CardContent className="flex items-center p-6 gap-6">
+            <Link key={event.id} to={`/eventos/${event.id}`}>
+              <Card>
+                <CardContent className="flex items-center p-6 gap-6 hover:bg-accent/50 transition-colors">
                 <div className="w-24 h-24 rounded-lg bg-gray-100 flex-shrink-0 overflow-hidden">
                   {event.imagem_url ? (
                     <img src={event.imagem_url} alt={event.nome} className="w-full h-full object-cover" />
@@ -143,10 +144,13 @@ function ProdutorDashboard() {
                   <div className="text-sm font-medium">
                     {event.ticket_types?.reduce((acc: number, curr: any) => acc + (curr.quantidade_total - curr.quantidade_disponivel), 0)} / {event.ticket_types?.reduce((acc: number, curr: any) => acc + curr.quantidade_total, 0)} vendidos
                   </div>
-                  <Button variant="outline" size="sm">Gerenciar</Button>
+                  <Button variant="outline" size="sm" asChild onClick={(e) => e.stopPropagation()}>
+                    <Link to={`/eventos/${event.id}`}>Visualizar</Link>
+                  </Button>
                 </div>
               </CardContent>
             </Card>
+          </Link>
           ))}
           {events?.length === 0 && (
             <div className="text-center py-12 border-2 border-dashed rounded-lg text-gray-500">
