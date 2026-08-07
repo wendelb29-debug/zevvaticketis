@@ -59,7 +59,7 @@ function PushNotificationsPage() {
   const fetchAutomations = async () => {
     try {
       const { data, error } = await supabase
-        .from('push_automations')
+        .from('push_automations' as any)
         .select('*')
         .order('created_at', { ascending: true });
       
@@ -78,7 +78,7 @@ function PushNotificationsPage() {
     
     try {
       const { error } = await supabase
-        .from('push_automations')
+        .from('push_automations' as any)
         .update({
           name: selectedAutomation.name,
           status: selectedAutomation.status,
@@ -87,7 +87,7 @@ function PushNotificationsPage() {
           button_text: selectedAutomation.button_text,
           audience: selectedAutomation.audience,
           delay_time: selectedAutomation.delay_time
-        })
+        } as any)
         .eq('id', selectedAutomation.id);
 
       if (error) throw error;
