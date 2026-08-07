@@ -440,12 +440,16 @@ function PushNotificationsPage() {
               <div className="flex gap-4">
                 <Button 
                   onClick={() => {
-                    toast.success("Push enviado com sucesso!");
-                    setActiveTab("historico");
+                    if (isScheduling && (!pushContent.scheduleDate || !pushContent.scheduleTime)) {
+                      toast.error("Por favor, preencha a data e o horário para o agendamento.");
+                      return;
+                    }
+                    setIsConfirming(true);
                   }}
                   className="flex-1 bg-primary text-white font-black uppercase tracking-widest text-xs h-14 rounded-2xl shadow-xl shadow-primary/30"
                 >
-                  <Zap className="w-5 h-5 mr-2" /> Enviar Agora
+                  {isScheduling ? <Calendar className="w-5 h-5 mr-2" /> : <Zap className="w-5 h-5 mr-2" />}
+                  {isScheduling ? "Agendar Disparo" : "Enviar Agora"}
                 </Button>
                 <Button 
                   variant="outline"
@@ -455,7 +459,7 @@ function PushNotificationsPage() {
                     isScheduling ? "bg-navy text-white hover:bg-navy/90" : "bg-white text-navy hover:bg-surface"
                   )}
                 >
-                  <Calendar className="w-5 h-5 mr-2" /> {isScheduling ? "Confirmar Agendamento" : "Agendar Envio"}
+                  <CalendarClock className="w-5 h-5 mr-2" /> {isScheduling ? "Cancelar Agendamento" : "Programar Envio"}
                 </Button>
               </div>
             </div>
