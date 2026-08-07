@@ -677,6 +677,8 @@ function PushNotificationsPage() {
               </div>
             </Card>
           </div>
+        )}
+
         {isConfirming && (
           <div className="fixed inset-0 bg-navy/80 backdrop-blur-md z-[110] flex items-center justify-center p-4 animate-in fade-in duration-300">
             <Card className="w-full max-w-md border-line shadow-2xl rounded-[40px] overflow-hidden animate-in zoom-in-95 duration-300">
