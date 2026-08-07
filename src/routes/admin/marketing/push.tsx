@@ -23,10 +23,12 @@ import {
   Search,
   CalendarDays,
   MoreVertical,
-  CalendarClock
+  CalendarClock,
+  Rocket,
+  Trash2
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
-import { TooltipProvider } from "@/components/ui/tooltip";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
