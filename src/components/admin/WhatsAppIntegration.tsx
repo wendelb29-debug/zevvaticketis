@@ -68,7 +68,7 @@ export function WhatsAppIntegration() {
 
   const logAccess = useCallback(async (resourceType: string, resourceId?: string) => {
     try {
-      await supabase.rpc('log_resource_access', {
+      await supabase.rpc('log_resource_access' as any, {
         _resource_type: resourceType,
         _resource_id: resourceId || 'global'
       });
