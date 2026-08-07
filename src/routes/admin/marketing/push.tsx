@@ -161,13 +161,38 @@ function PushNotificationsPage() {
         </TabsList>
 
         <TabsContent value="metricas" className="space-y-8 animate-in fade-in duration-500">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8">
+            <h3 className="text-xl font-black text-navy uppercase tracking-tight flex items-center gap-2">
+              <TrendingUp className="w-6 h-6 text-primary" /> Métricas Detalhadas
+            </h3>
+            <div className="flex items-center gap-3">
+              <div className="flex items-center gap-2 bg-white border border-line rounded-xl px-4 py-2 shadow-sm">
+                <Filter className="w-4 h-4 text-muted-fg" />
+                <select className="bg-transparent border-none outline-none text-[10px] font-black uppercase tracking-widest text-navy">
+                  <option>Últimos 30 dias</option>
+                  <option>Últimos 7 dias</option>
+                  <option>Hoje</option>
+                  <option>Personalizado</option>
+                </select>
+              </div>
+              <div className="flex items-center gap-2 bg-white border border-line rounded-xl px-4 py-2 shadow-sm">
+                <Users className="w-4 h-4 text-muted-fg" />
+                <select className="bg-transparent border-none outline-none text-[10px] font-black uppercase tracking-widest text-navy">
+                  <option>Todos os Públicos</option>
+                  <option>Compradores</option>
+                  <option>Interessados</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
           <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
             {[
-              { label: "Total Enviado", value: "45.820", icon: Smartphone, color: "text-primary", bg: "bg-primary/5" },
-              { label: "Entregues", value: "44.100", icon: CheckCircle2, color: "text-green-600", bg: "bg-green-50" },
-              { label: "Visualizações", value: "32.400", icon: LayoutDashboard, color: "text-blue-500", bg: "bg-blue-50" },
-              { label: "Cliques", value: "8.920", icon: TrendingUp, color: "text-orange-500", bg: "bg-orange-50" },
-              { label: "Conversões", value: "1.450", icon: Zap, color: "text-navy", bg: "bg-surface" },
+              { label: "Taxa Entrega", value: "98.2%", icon: CheckCircle2, color: "text-green-600", bg: "bg-green-50" },
+              { label: "Cliques", value: "19.5%", icon: TrendingUp, color: "text-orange-500", bg: "bg-orange-50" },
+              { label: "Conversão", value: "4.2%", icon: Zap, color: "text-primary", bg: "bg-primary/5" },
+              { label: "Tempo Leitura", value: "12min", icon: Clock, color: "text-blue-500", bg: "bg-blue-50" },
+              { label: "Volume Total", value: "45.8k", icon: Smartphone, color: "text-navy", bg: "bg-surface" },
             ].map((stat, i) => (
               <Card key={i} className="border-border shadow-sm">
                 <CardContent className="p-4 flex items-center gap-3">
@@ -246,40 +271,43 @@ function PushNotificationsPage() {
               <table className="w-full text-left">
                 <thead className="bg-surface text-muted text-[10px] font-black uppercase tracking-widest">
                   <tr>
-                    <th className="px-8 py-5">Campanha</th>
-                    <th className="px-8 py-5">Público</th>
-                    <th className="px-8 py-5 text-center">Enviados</th>
-                    <th className="px-8 py-5 text-center">Cliques</th>
-                    <th className="px-8 py-5">Data</th>
-                    <th className="px-8 py-5">Status</th>
+                    <th className="px-8 py-5">Campanha / ID</th>
+                    <th className="px-8 py-5">Automation ID</th>
+                    <th className="px-8 py-5 text-center">Status</th>
+                    <th className="px-8 py-5">Enviado em</th>
+                    <th className="px-8 py-5">Lido em</th>
+                    <th className="px-8 py-5">Erros / Logs</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-line">
                   {[
-                    { name: "Confirmar Ingresso 🎉", public: "Todos compradores", sent: "1.200", clicks: "450", date: "05/08/2026", status: "Concluída" },
-                    { name: "Nova Caravana Aberta", public: "Interessados Israel", sent: "850", clicks: "120", date: "04/08/2026", status: "Concluída" },
-                    { name: "Lembrete Evento Amanhã", public: "Inscritos Evento X", sent: "3.400", clicks: "2.100", date: "03/08/2026", status: "Agendada" },
+                    { name: "Confirmar Ingresso 🎉", id: "PUSH-829", auto_id: "auto_pay_1", status: "sent", sent: "05/08/26 14:30", read: "05/08/26 14:35", error: "-" },
+                    { name: "Lembrete Evento 🎒", id: "PUSH-830", auto_id: "auto_rem_24", status: "read", sent: "05/08/26 10:00", read: "05/08/26 10:12", error: "-" },
+                    { name: "Carrinho Abandonado 🛒", id: "PUSH-831", auto_id: "auto_cart_3", status: "failed", sent: "04/08/26 18:00", read: "-", error: "Token Expired" },
                   ].map((row, i) => (
                     <tr key={i} className="hover:bg-surface/50 transition-colors group">
                       <td className="px-8 py-6">
-                        <span className="font-extrabold text-navy group-hover:text-primary transition-colors">{row.name}</span>
+                        <div className="flex flex-col">
+                          <span className="font-extrabold text-navy group-hover:text-primary transition-colors">{row.name}</span>
+                          <span className="text-[9px] font-bold text-muted-fg mt-0.5">{row.id}</span>
+                        </div>
                       </td>
                       <td className="px-8 py-6">
-                        <Badge variant="outline" className="text-[10px] font-bold text-muted-fg uppercase tracking-widest bg-white">
-                          {row.public}
+                        <Badge variant="outline" className="text-[9px] font-bold text-muted-fg uppercase tracking-widest bg-white">
+                          {row.auto_id}
                         </Badge>
                       </td>
-                      <td className="px-8 py-6 text-center font-bold text-navy">{row.sent}</td>
-                      <td className="px-8 py-6 text-center font-bold text-orange-500">{row.clicks}</td>
-                      <td className="px-8 py-6 text-xs font-bold text-muted-fg">{row.date}</td>
-                      <td className="px-8 py-6">
+                      <td className="px-8 py-6 text-center">
                         <Badge className={cn(
                           "text-[9px] font-black uppercase tracking-widest",
-                          row.status === "Concluída" ? "bg-green-500" : "bg-blue-500"
+                          row.status === "sent" ? "bg-blue-500" : row.status === "read" ? "bg-green-500" : "bg-red-500"
                         )}>
                           {row.status}
                         </Badge>
                       </td>
+                      <td className="px-8 py-6 text-[10px] font-bold text-navy">{row.sent}</td>
+                      <td className="px-8 py-6 text-[10px] font-bold text-muted-fg">{row.read}</td>
+                      <td className="px-8 py-6 text-[10px] font-bold text-red-500">{row.error}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -504,6 +532,14 @@ function PushNotificationsPage() {
         </TabsContent>
 
         <TabsContent value="automacoes" className="animate-in fade-in duration-500">
+          <div className="mb-8 p-6 bg-surface/30 border border-line rounded-3xl">
+            <h3 className="text-xl font-black text-navy uppercase tracking-tight flex items-center gap-2 mb-2">
+              <Zap className="w-5 h-5 text-primary" /> Automações Inteligentes
+            </h3>
+            <p className="text-xs font-bold text-muted-fg uppercase tracking-widest leading-relaxed">
+              disparar notificações automaticamente. Criar um histórico detalhado de execuções das automações e dos envios de push (campanha, automation_id, status, sent_at, read_at e erros) para auditoria. Implementar métricas segmentadas por automação (taxa de entregues, cliques, conversões e tempo até leitura) com filtros por período e público.
+            </p>
+          </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {isLoading ? (
               <div className="col-span-full flex flex-col items-center justify-center py-20 text-muted-fg animate-pulse">
