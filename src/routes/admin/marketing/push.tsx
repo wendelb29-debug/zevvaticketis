@@ -38,8 +38,11 @@ function PushNotificationsPage() {
     body: "",
     link: "",
     buttonText: "",
-    imageUrl: ""
+    imageUrl: "",
+    scheduleDate: "",
+    scheduleTime: ""
   });
+  const [isScheduling, setIsScheduling] = useState(false);
 
 
   return (
