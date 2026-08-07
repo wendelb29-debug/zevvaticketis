@@ -250,10 +250,44 @@ function PushNotificationsPage() {
                 </CardContent>
               </Card>
 
+              {isScheduling && (
+                <Card className="border-line shadow-sm rounded-3xl animate-in fade-in slide-in-from-top-4 duration-500">
+                  <CardContent className="p-8 space-y-6">
+                    <h3 className="text-xl font-black text-navy uppercase tracking-tight flex items-center gap-2">
+                      <Calendar className="w-5 h-5 text-primary" /> Agendamento de Disparo
+                    </h3>
+                    <p className="text-xs font-bold text-muted-fg uppercase tracking-widest">
+                      Que eu possa escolher data e horário para disparar a campanha automaticamente.
+                    </p>
+                    
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div className="space-y-3">
+                        <Label className="text-xs font-black uppercase tracking-widest text-muted-fg">Data do Disparo</Label>
+                        <Input 
+                          type="date"
+                          className="h-12 border-line focus:ring-primary rounded-xl font-bold"
+                          value={pushContent.scheduleDate}
+                          onChange={(e) => setPushContent(prev => ({ ...prev, scheduleDate: e.target.value }))}
+                        />
+                      </div>
+                      <div className="space-y-3">
+                        <Label className="text-xs font-black uppercase tracking-widest text-muted-fg">Horário do Disparo</Label>
+                        <Input 
+                          type="time"
+                          className="h-12 border-line focus:ring-primary rounded-xl font-bold"
+                          value={pushContent.scheduleTime}
+                          onChange={(e) => setPushContent(prev => ({ ...prev, scheduleTime: e.target.value }))}
+                        />
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              )}
+
               <div className="flex gap-4">
                 <Button 
                   onClick={() => {
-                    toast.success("Push agendado com sucesso!");
+                    toast.success("Push enviado com sucesso!");
                     setActiveTab("historico");
                   }}
                   className="flex-1 bg-primary text-white font-black uppercase tracking-widest text-xs h-14 rounded-2xl shadow-xl shadow-primary/30"
@@ -262,9 +296,13 @@ function PushNotificationsPage() {
                 </Button>
                 <Button 
                   variant="outline"
-                  className="flex-1 border-line bg-white text-navy font-black uppercase tracking-widest text-xs h-14 rounded-2xl hover:bg-surface transition-all"
+                  onClick={() => setIsScheduling(!isScheduling)}
+                  className={cn(
+                    "flex-1 border-line font-black uppercase tracking-widest text-xs h-14 rounded-2xl transition-all",
+                    isScheduling ? "bg-navy text-white hover:bg-navy/90" : "bg-white text-navy hover:bg-surface"
+                  )}
                 >
-                  <Calendar className="w-5 h-5 mr-2" /> Agendar Envio
+                  <Calendar className="w-5 h-5 mr-2" /> {isScheduling ? "Confirmar Agendamento" : "Agendar Envio"}
                 </Button>
               </div>
             </div>
