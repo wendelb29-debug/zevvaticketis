@@ -51,9 +51,9 @@ function CheckoutPage() {
   useEffect(() => {
     if (userProfile) {
       setFormData({
-        nome: userProfile.nome_completo || "",
+        nome: (userProfile as any).nome_completo || userProfile.nome || "",
         email: userProfile.email || "",
-        cpf: (userProfile as any).documento || ""
+        cpf: (userProfile as any).documento || userProfile.documento || ""
       });
     }
   }, [userProfile]);

@@ -34,8 +34,7 @@ function EventDetailsPage() {
       toast.error("Por favor, selecione um tipo de ingresso.");
       return;
     }
-    // Em uma fase futura, redirecionaremos para o checkout real
-    navigate({ to: "/login" });
+    navigate({ to: `/eventos/${id}/checkout` });
   };
 
   if (isLoading) return (
