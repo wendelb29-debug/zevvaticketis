@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { 
   Smartphone, 
   Plus, 
@@ -14,8 +14,12 @@ import {
   Filter,
   Calendar,
   Zap,
-  LayoutDashboard
+  LayoutDashboard,
+  Save,
+  Loader2,
+  X
 } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
