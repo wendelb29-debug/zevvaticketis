@@ -281,30 +281,33 @@ function PushNotificationsPage() {
                 </thead>
                 <tbody className="divide-y divide-line">
                   {[
-                    { name: "Confirmar Ingresso 🎉", public: "Todos compradores", sent: "1.200", clicks: "450", date: "05/08/2026", status: "Concluída" },
-                    { name: "Nova Caravana Aberta", public: "Interessados Israel", sent: "850", clicks: "120", date: "04/08/2026", status: "Concluída" },
-                    { name: "Lembrete Evento Amanhã", public: "Inscritos Evento X", sent: "3.400", clicks: "2.100", date: "03/08/2026", status: "Agendada" },
+                    { name: "Confirmar Ingresso 🎉", id: "PUSH-829", auto_id: "auto_pay_1", status: "sent", sent: "05/08/26 14:30", read: "05/08/26 14:35", error: "-" },
+                    { name: "Lembrete Evento 🎒", id: "PUSH-830", auto_id: "auto_rem_24", status: "read", sent: "05/08/26 10:00", read: "05/08/26 10:12", error: "-" },
+                    { name: "Carrinho Abandonado 🛒", id: "PUSH-831", auto_id: "auto_cart_3", status: "failed", sent: "04/08/26 18:00", read: "-", error: "Token Expired" },
                   ].map((row, i) => (
                     <tr key={i} className="hover:bg-surface/50 transition-colors group">
                       <td className="px-8 py-6">
-                        <span className="font-extrabold text-navy group-hover:text-primary transition-colors">{row.name}</span>
+                        <div className="flex flex-col">
+                          <span className="font-extrabold text-navy group-hover:text-primary transition-colors">{row.name}</span>
+                          <span className="text-[9px] font-bold text-muted-fg mt-0.5">{row.id}</span>
+                        </div>
                       </td>
                       <td className="px-8 py-6">
-                        <Badge variant="outline" className="text-[10px] font-bold text-muted-fg uppercase tracking-widest bg-white">
-                          {row.public}
+                        <Badge variant="outline" className="text-[9px] font-bold text-muted-fg uppercase tracking-widest bg-white">
+                          {row.auto_id}
                         </Badge>
                       </td>
-                      <td className="px-8 py-6 text-center font-bold text-navy">{row.sent}</td>
-                      <td className="px-8 py-6 text-center font-bold text-orange-500">{row.clicks}</td>
-                      <td className="px-8 py-6 text-xs font-bold text-muted-fg">{row.date}</td>
-                      <td className="px-8 py-6">
+                      <td className="px-8 py-6 text-center">
                         <Badge className={cn(
                           "text-[9px] font-black uppercase tracking-widest",
-                          row.status === "Concluída" ? "bg-green-500" : "bg-blue-500"
+                          row.status === "sent" ? "bg-blue-500" : row.status === "read" ? "bg-green-500" : "bg-red-500"
                         )}>
                           {row.status}
                         </Badge>
                       </td>
+                      <td className="px-8 py-6 text-[10px] font-bold text-navy">{row.sent}</td>
+                      <td className="px-8 py-6 text-[10px] font-bold text-muted-fg">{row.read}</td>
+                      <td className="px-8 py-6 text-[10px] font-bold text-red-500">{row.error}</td>
                     </tr>
                   ))}
                 </tbody>
