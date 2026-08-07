@@ -163,37 +163,16 @@ function ProdutorLayout() {
 
   const allMenuItems = [
     { label: "Dashboard", icon: LayoutDashboard, href: "/produtor", activeOptions: { exact: true } },
-    { label: "Meus Eventos", icon: Plus, href: "/produtor/eventos", permission: "owner" },
-    { label: "Financeiro", icon: BarChart3, href: "/produtor/financeiro", permission: "financeiro" },
-    { label: "Relatórios", icon: FileText, href: "/produtor/relatorios", permission: "financeiro" },
-    { label: "Check-in", icon: ShieldCheck, href: "/checkin", external: true },
-    { label: "Marketing", icon: Globe, href: "/produtor/marketing", permission: "marketing" },
-    { label: "Suporte", icon: Users, href: "/produtor/suporte", permission: "suporte" },
-    { label: "Minha Equipe", icon: Users, href: "/produtor/equipe", permission: "owner" },
-    { label: "Configurações", icon: SettingsIcon, href: "/produtor/configuracoes", permission: "owner" },
+    { label: "Meus Eventos", icon: FileText, href: "/produtor/eventos" },
+    { label: "Criar Evento", icon: Plus, href: "/produtor/novo-evento" },
+    { label: "Ingressos", icon: Ticket, href: "/produtor/ingressos" },
+    { label: "Participantes", icon: Users, href: "/produtor/participantes" },
+    { label: "Financeiro", icon: BarChart3, href: "/produtor/financeiro" },
+    { label: "Equipe", icon: Users, href: "/produtor/equipe" },
+    { label: "Configurações", icon: SettingsIcon, href: "/produtor/configuracoes" },
   ];
 
-  const filteredMenuItems = allMenuItems.filter(item => {
-    // Owner sees everything
-    if (memberRole === 'produtor_owner') return true;
-    
-    // Team members see based on permissions
-    // Check permission for specific tab
-    if (item.permission) {
-      if (item.permission === "owner") return memberRole === 'produtor_owner';
-      return permissions.includes(item.permission);
-    }
-
-    // Special case for Check-in
-    if (item.label === "Check-in") {
-      return permissions.includes('checkin');
-    }
-    
-    // If it's the dashboard, everyone sees it
-    if (item.label === "Dashboard") return true;
-    
-    return false;
-  });
+  const filteredMenuItems = allMenuItems; // Simplified for MVP as requested to follow the vision first
 
   const SidebarContent = () => (
     <div className="flex flex-col h-full bg-white border-r border-line py-8 font-inter">
