@@ -43,7 +43,7 @@ export const Route = createFileRoute("/admin/marketing/push")({
 });
 
 function PushNotificationsPage() {
-  const [activeTab, setActiveTab] = useState("historico");
+  const [activeTab, setActiveTab] = useState("agendados");
   const [pushContent, setPushContent] = useState({
     title: "",
     body: "",
@@ -51,13 +51,16 @@ function PushNotificationsPage() {
     buttonText: "",
     imageUrl: "",
     scheduleDate: "",
-    scheduleTime: ""
+    scheduleTime: "",
+    timezone: "America/Sao_Paulo"
   });
   const [isScheduling, setIsScheduling] = useState(false);
   const [automations, setAutomations] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [selectedAutomation, setSelectedAutomation] = useState<any>(null);
   const [isConfiguring, setIsConfiguring] = useState(false);
+  const [isConfirming, setIsConfirming] = useState(false);
+  const [searchScheduled, setSearchScheduled] = useState("");
 
   useEffect(() => {
     fetchAutomations();
