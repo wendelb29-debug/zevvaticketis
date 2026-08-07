@@ -144,6 +144,62 @@ function PushNotificationsPage() {
           </TabsTrigger>
         </TabsList>
 
+        <TabsContent value="metricas" className="space-y-8 animate-in fade-in duration-500">
+          <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
+            {[
+              { label: "Total Enviado", value: "45.820", icon: Smartphone, color: "text-primary", bg: "bg-primary/5" },
+              { label: "Entregues", value: "44.100", icon: CheckCircle2, color: "text-green-600", bg: "bg-green-50" },
+              { label: "Visualizações", value: "32.400", icon: LayoutDashboard, color: "text-blue-500", bg: "bg-blue-50" },
+              { label: "Cliques", value: "8.920", icon: TrendingUp, color: "text-orange-500", bg: "bg-orange-50" },
+              { label: "Conversões", value: "1.450", icon: Zap, color: "text-navy", bg: "bg-surface" },
+            ].map((stat, i) => (
+              <Card key={i} className="border-border shadow-sm">
+                <CardContent className="p-4 flex items-center gap-3">
+                  <div className={cn("w-10 h-10 rounded-xl flex items-center justify-center", stat.bg)}>
+                    <stat.icon className={cn("w-5 h-5", stat.color)} />
+                  </div>
+                  <div>
+                    <p className="text-[9px] font-black text-muted-fg uppercase tracking-widest">{stat.label}</p>
+                    <p className="text-xl font-black text-navy">{stat.value}</p>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+
+          <Card className="border-line shadow-sm rounded-3xl">
+            <CardContent className="p-8">
+              <div className="flex justify-between items-center mb-8">
+                <h3 className="text-lg font-black text-navy uppercase tracking-tight">Engajamento (Últimos 30 dias)</h3>
+                <div className="flex gap-2">
+                  <Badge variant="outline" className="text-[10px] font-bold text-muted-fg uppercase tracking-widest bg-surface/50 border-line">
+                    Julho 2026
+                  </Badge>
+                </div>
+              </div>
+              
+              <div className="h-[300px] w-full flex items-end justify-between gap-2 px-2">
+                {[45, 60, 40, 80, 55, 90, 70, 85, 50, 65, 95, 75, 80, 60, 45, 55, 70, 90, 85, 100, 80, 65, 50, 45, 60, 75, 80, 95, 100, 110].map((h, i) => (
+                  <div key={i} className="flex-1 group relative">
+                    <div 
+                      className="w-full bg-primary/20 group-hover:bg-primary/50 transition-all rounded-t-sm" 
+                      style={{ height: `${h * 2}px` }}
+                    />
+                    <div className="absolute -top-8 left-1/2 -translate-x-1/2 bg-navy text-white text-[9px] font-bold py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-10">
+                      {h * 10} envios
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <div className="flex justify-between mt-4 px-2 text-[9px] font-black text-muted-fg uppercase tracking-widest">
+                <span>01 Ago</span>
+                <span>15 Ago</span>
+                <span>30 Ago</span>
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
         <TabsContent value="historico" className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             {[
