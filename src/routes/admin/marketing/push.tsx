@@ -414,39 +414,181 @@ function PushNotificationsPage() {
 
         <TabsContent value="automacoes" className="animate-in fade-in duration-500">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[
-              { title: "Compra Aprovada", desc: "Envia confirmação imediata após pagamento.", icon: CheckCircle2, status: "Ativa" },
-              { title: "Lembrete 24h", desc: "Aviso automático um dia antes do evento.", icon: Clock, status: "Ativa" },
-              { title: "Carrinho Abandonado", desc: "Recupere vendas não finalizadas após 2h.", icon: LayoutDashboard, status: "Pausada" },
-              { title: "Feedback Pós-Evento", desc: "Peça avaliação aos participantes.", icon: Clock, status: "Desativada" },
-              { title: "Novo Curso", desc: "Notifica alunos sobre novas aulas.", icon: Zap, status: "Ativa" },
-            ].map((item, i) => (
-              <Card key={i} className="border-border shadow-sm group hover:border-primary/30 transition-all cursor-pointer">
-                <CardContent className="p-6 space-y-4">
-                  <div className="flex justify-between items-start">
-                    <div className="w-12 h-12 rounded-2xl bg-surface flex items-center justify-center group-hover:bg-primary/5 transition-colors">
-                      <item.icon className="w-6 h-6 text-navy group-hover:text-primary transition-colors" />
-                    </div>
-                    <Badge className={cn(
-                      "text-[9px] font-black uppercase tracking-widest",
-                      item.status === "Ativa" ? "bg-green-500" : "bg-muted-fg"
-                    )}>
-                      {item.status}
-                    </Badge>
-                  </div>
-                  <div>
-                    <h3 className="font-black text-navy uppercase tracking-tight">{item.title}</h3>
-                    <p className="text-xs text-muted-fg font-medium mt-1">{item.desc}</p>
-                  </div>
-                  <div className="pt-4 flex gap-2">
-                    <Button variant="outline" size="sm" className="flex-1 h-9 rounded-lg border-line text-[10px] font-black uppercase tracking-widest">Configurar</Button>
-                    <Button variant="ghost" size="sm" className="h-9 w-9 rounded-lg border border-line p-0"><Settings className="w-4 h-4 text-muted-fg" /></Button>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
+            {isLoading ? (
+              <div className="col-span-full flex flex-col items-center justify-center py-20 text-muted-fg animate-pulse">
+                <Loader2 className="w-12 h-12 mb-4 animate-spin" />
+                <p className="font-black uppercase tracking-widest text-[10px]">Carregando automações...</p>
+              </div>
+            ) : (
+              automations.map((item, i) => {
+                const Icon = getIconForTrigger(item.trigger_type);
+                return (
+                  <Card key={item.id} className="border-border shadow-sm group hover:border-primary/30 transition-all cursor-pointer">
+                    <CardContent className="p-6 space-y-4">
+                      <div className="flex justify-between items-start">
+                        <div className="w-12 h-12 rounded-2xl bg-surface flex items-center justify-center group-hover:bg-primary/5 transition-colors">
+                          <Icon className="w-6 h-6 text-navy group-hover:text-primary transition-colors" />
+                        </div>
+                        <Badge className={cn(
+                          "text-[9px] font-black uppercase tracking-widest",
+                          item.status === "active" ? "bg-green-500" : "bg-muted-fg"
+                        )}>
+                          {item.status === 'active' ? 'ATIVA' : item.status === 'paused' ? 'PAUSADA' : 'DESATIVADA'}
+                        </Badge>
+                      </div>
+                      <div>
+                        <h3 className="font-black text-navy uppercase tracking-tight">{item.name}</h3>
+                        <p className="text-xs text-muted-fg font-medium mt-1">{item.description}</p>
+                      </div>
+                      <div className="pt-4 flex gap-2">
+                        <Button 
+                          onClick={() => {
+                            setSelectedAutomation(item);
+                            setIsConfiguring(true);
+                          }}
+                          variant="outline" 
+                          size="sm" 
+                          className="flex-1 h-9 rounded-lg border-line text-[10px] font-black uppercase tracking-widest"
+                        >
+                          Configurar
+                        </Button>
+                        <Button variant="ghost" size="sm" className="h-9 w-9 rounded-lg border border-line p-0">
+                          <Settings className="w-4 h-4 text-muted-fg" />
+                        </Button>
+                      </div>
+                    </CardContent>
+                  </Card>
+                );
+              })
+            )}
           </div>
         </TabsContent>
+
+        {isConfiguring && selectedAutomation && (
+          <div className="fixed inset-0 bg-navy/60 backdrop-blur-sm z-[100] flex items-center justify-center p-4 animate-in fade-in duration-300">
+            <Card className="w-full max-w-2xl border-line shadow-2xl rounded-3xl overflow-hidden animate-in zoom-in-95 duration-300">
+              <div className="p-8 border-b border-line bg-surface/30 flex justify-between items-center">
+                <h2 className="text-xl font-black text-navy uppercase tracking-tight flex items-center gap-2">
+                  <Settings className="w-6 h-6 text-primary" /> Configuração da Automação
+                </h2>
+                <Button variant="ghost" size="sm" onClick={() => setIsConfiguring(false)} className="rounded-xl h-10 w-10 p-0">
+                  <X className="w-5 h-5" />
+                </Button>
+              </div>
+              
+              <ScrollArea className="max-h-[70vh]">
+                <CardContent className="p-8 space-y-8">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="space-y-3">
+                      <Label className="text-xs font-black uppercase tracking-widest text-muted-fg">Nome da Automação</Label>
+                      <Input 
+                        value={selectedAutomation.name}
+                        onChange={(e) => setSelectedAutomation({ ...selectedAutomation, name: e.target.value })}
+                        className="h-12 border-line rounded-xl font-bold"
+                      />
+                    </div>
+                    <div className="space-y-3">
+                      <Label className="text-xs font-black uppercase tracking-widest text-muted-fg">Status</Label>
+                      <select 
+                        value={selectedAutomation.status}
+                        onChange={(e) => setSelectedAutomation({ ...selectedAutomation, status: e.target.value })}
+                        className="w-full h-12 border border-line rounded-xl px-4 font-bold outline-none focus:ring-1 focus:ring-primary text-sm"
+                      >
+                        <option value="active">Ativa</option>
+                        <option value="paused">Pausada</option>
+                        <option value="disabled">Desativada</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="space-y-3">
+                      <Label className="text-xs font-black uppercase tracking-widest text-muted-fg">Gatilho (Trigger)</Label>
+                      <Input 
+                        value={selectedAutomation.trigger_type} 
+                        disabled 
+                        className="h-12 border-line rounded-xl font-bold bg-surface opacity-70"
+                      />
+                    </div>
+                    <div className="space-y-3">
+                      <Label className="text-xs font-black uppercase tracking-widest text-muted-fg">Público Alvo</Label>
+                      <select 
+                        value={selectedAutomation.audience}
+                        onChange={(e) => setSelectedAutomation({ ...selectedAutomation, audience: e.target.value })}
+                        className="w-full h-12 border border-line rounded-xl px-4 font-bold outline-none focus:ring-1 focus:ring-primary text-sm"
+                      >
+                        <option value="all">Todos os Usuários</option>
+                        <option value="buyers">Compradores</option>
+                        <option value="students">Alunos</option>
+                        <option value="producers">Produtores</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div className="space-y-6 pt-4 border-t border-line">
+                    <h4 className="text-sm font-black text-navy uppercase tracking-widest">Conteúdo do Push</h4>
+                    <div className="space-y-4">
+                      <div className="space-y-3">
+                        <Label className="text-xs font-black uppercase tracking-widest text-muted-fg">Título da Mensagem</Label>
+                        <Input 
+                          value={selectedAutomation.title_template || ''}
+                          onChange={(e) => setSelectedAutomation({ ...selectedAutomation, title_template: e.target.value })}
+                          placeholder="Ex: Sua compra foi confirmada! 🎉"
+                          className="h-12 border-line rounded-xl font-bold"
+                        />
+                      </div>
+                      <div className="space-y-3">
+                        <Label className="text-xs font-black uppercase tracking-widest text-muted-fg">Corpo da Mensagem</Label>
+                        <Textarea 
+                          value={selectedAutomation.message_template || ''}
+                          onChange={(e) => setSelectedAutomation({ ...selectedAutomation, message_template: e.target.value })}
+                          placeholder="Use {{nome}}, {{evento}} para variáveis dinâmicas"
+                          className="min-h-[100px] border-line rounded-xl font-medium"
+                        />
+                      </div>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div className="space-y-3">
+                          <Label className="text-xs font-black uppercase tracking-widest text-muted-fg">Texto do Botão</Label>
+                          <Input 
+                            value={selectedAutomation.button_text || ''}
+                            onChange={(e) => setSelectedAutomation({ ...selectedAutomation, button_text: e.target.value })}
+                            placeholder="Ex: Ver ingresso"
+                            className="h-12 border-line rounded-xl font-bold"
+                          />
+                        </div>
+                        <div className="space-y-3">
+                          <Label className="text-xs font-black uppercase tracking-widest text-muted-fg">Aguardar (Delay)</Label>
+                          <Input 
+                            value={selectedAutomation.delay_time || ''}
+                            onChange={(e) => setSelectedAutomation({ ...selectedAutomation, delay_time: e.target.value })}
+                            placeholder="Ex: 2 hours"
+                            className="h-12 border-line rounded-xl font-bold"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </ScrollArea>
+
+              <div className="p-8 bg-surface/50 border-t border-line flex gap-4">
+                <Button 
+                  onClick={() => setIsConfiguring(false)}
+                  variant="outline" 
+                  className="flex-1 h-12 rounded-xl font-black uppercase tracking-widest text-xs border-line"
+                >
+                  Cancelar
+                </Button>
+                <Button 
+                  onClick={handleSaveAutomation}
+                  className="flex-1 h-12 rounded-xl font-black uppercase tracking-widest text-xs bg-primary text-white shadow-lg shadow-primary/20"
+                >
+                  <Save className="w-4 h-4 mr-2" /> Salvar Automação
+                </Button>
+              </div>
+            </Card>
+          </div>
+        )}
       </Tabs>
     </div>
   );
