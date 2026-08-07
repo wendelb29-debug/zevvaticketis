@@ -677,7 +677,194 @@ function PushNotificationsPage() {
               </div>
             </Card>
           </div>
+        {isConfirming && (
+          <div className="fixed inset-0 bg-navy/80 backdrop-blur-md z-[110] flex items-center justify-center p-4 animate-in fade-in duration-300">
+            <Card className="w-full max-w-md border-line shadow-2xl rounded-[40px] overflow-hidden animate-in zoom-in-95 duration-300">
+              <div className="p-8 space-y-8 text-center">
+                <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mx-auto">
+                  {isScheduling ? <CalendarClock className="w-10 h-10 text-primary" /> : <Rocket className="w-10 h-10 text-primary" />}
+                </div>
+                
+                <div className="space-y-2">
+                  <h2 className="text-2xl font-black text-navy uppercase tracking-tighter">
+                    {isScheduling ? "Confirmar Agendamento?" : "Confirmar Envio Imediato?"}
+                  </h2>
+                  <p className="text-sm text-muted-fg font-medium">
+                    Revise os detalhes da campanha antes de prosseguir.
+                  </p>
+                </div>
+
+                <div className="bg-surface rounded-3xl p-6 text-left space-y-4 border border-line">
+                  <div className="space-y-1">
+                    <Label className="text-[10px] font-black uppercase tracking-widest text-muted-fg">Título</Label>
+                    <p className="font-bold text-navy truncate">{pushContent.title || "Sem título"}</p>
+                  </div>
+                  
+                  <div className="grid grid-cols-2 gap-4 pt-2 border-t border-line/50">
+                    <div className="space-y-1">
+                      <Label className="text-[10px] font-black uppercase tracking-widest text-muted-fg">Destinatários</Label>
+                      <p className="font-bold text-navy">Todos os Usuários</p>
+                    </div>
+                    <div className="space-y-1 text-right">
+                      <Label className="text-[10px] font-black uppercase tracking-widest text-muted-fg">Disparo</Label>
+                      <p className="font-bold text-primary">
+                        {isScheduling ? `${pushContent.scheduleDate} às ${pushContent.scheduleTime}` : "Agora"}
+                      </p>
+                    </div>
+                  </div>
+                  
+                  {isScheduling && (
+                    <div className="pt-2 border-t border-line/50 flex items-center gap-2">
+                      <Globe className="w-3 h-3 text-muted-fg" />
+                      <span className="text-[9px] font-black text-muted-fg uppercase tracking-widest">
+                        Fuso: {pushContent.timezone}
+                      </span>
+                    </div>
+                  )}
+                </div>
+
+                <div className="flex gap-4">
+                  <Button 
+                    onClick={() => setIsConfirming(false)}
+                    variant="outline" 
+                    className="flex-1 h-12 rounded-2xl font-black uppercase tracking-widest text-xs border-line"
+                  >
+                    Voltar
+                  </Button>
+                  <Button 
+                    onClick={() => {
+                      toast.success(isScheduling ? "Campanha agendada com sucesso!" : "Push enviado com sucesso!");
+                      setIsConfirming(false);
+                      setActiveTab(isScheduling ? "agendados" : "historico");
+                    }}
+                    className="flex-1 h-12 rounded-2xl font-black uppercase tracking-widest text-xs bg-primary text-white shadow-lg shadow-primary/20"
+                  >
+                    Confirmar
+                  </Button>
+                </div>
+              </div>
+            </Card>
+          </div>
         )}
+
+        <TabsContent value="agendados" className="space-y-6">
+          <div className="bg-white rounded-[40px] border border-line shadow-sm overflow-hidden animate-in fade-in duration-500">
+            <div className="p-8 border-b border-line flex flex-col md:flex-row md:items-center justify-between gap-6 bg-surface/30">
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center">
+                  <CalendarDays className="w-6 h-6 text-primary" />
+                </div>
+                <div>
+                  <h2 className="text-xl font-black text-navy uppercase tracking-tighter">Próximos Disparos</h2>
+                  <p className="text-xs text-muted-fg font-medium">Gerencie suas campanhas agendadas.</p>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-3">
+                <div className="relative w-full md:w-64">
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-fg" />
+                  <Input 
+                    placeholder="Pesquisar agendadas..." 
+                    value={searchScheduled}
+                    onChange={(e) => setSearchScheduled(e.target.value)}
+                    className="pl-9 h-11 border-line rounded-xl text-xs font-bold"
+                  />
+                </div>
+                <Button variant="outline" size="icon" className="h-11 w-11 rounded-xl border-line">
+                  <Filter className="w-4 h-4 text-muted-fg" />
+                </Button>
+              </div>
+            </div>
+
+            <div className="overflow-x-auto">
+              <table className="w-full text-left">
+                <thead className="bg-surface/50 text-muted-fg text-[10px] font-black uppercase tracking-[0.2em]">
+                  <tr>
+                    <th className="px-8 py-5">Campanha</th>
+                    <th className="px-8 py-5">Agendamento</th>
+                    <th className="px-8 py-5">Público</th>
+                    <th className="px-8 py-5">Fuso Horário</th>
+                    <th className="px-8 py-5 text-right">Ações</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-line">
+                  {[
+                    { id: 1, name: "Lembrete Evento Amanhã 🎒", public: "Inscritos Evento X", date: "08/08/2026", time: "09:00", tz: "America/Sao_Paulo", status: "Agendada" },
+                    { id: 2, name: "Nova Caravana Aberta 🌍", public: "Interessados Israel", date: "10/08/2026", time: "14:30", tz: "America/Sao_Paulo", status: "Agendada" },
+                    { id: 3, name: "Checkout Pendente 🛒", public: "Carrinhos abandonados", date: "09/08/2026", time: "18:00", tz: "America/New_York", status: "Agendada" },
+                  ].filter(c => c.name.toLowerCase().includes(searchScheduled.toLowerCase())).map((row) => (
+                    <tr key={row.id} className="hover:bg-surface/30 transition-colors group">
+                      <td className="px-8 py-6">
+                        <div className="flex flex-col">
+                          <span className="font-extrabold text-navy group-hover:text-primary transition-colors">{row.name}</span>
+                          <span className="text-[10px] font-medium text-muted-fg mt-1">ID: #{row.id}</span>
+                        </div>
+                      </td>
+                      <td className="px-8 py-6">
+                        <div className="flex items-center gap-2 text-navy font-bold">
+                          <Clock className="w-3 h-3 text-primary" />
+                          <span>{row.date} às {row.time}</span>
+                        </div>
+                      </td>
+                      <td className="px-8 py-6">
+                        <Badge variant="outline" className="text-[9px] font-black uppercase tracking-widest bg-white border-line text-muted-fg">
+                          {row.public}
+                        </Badge>
+                      </td>
+                      <td className="px-8 py-6 text-[10px] font-black text-muted-fg uppercase tracking-widest">{row.tz}</td>
+                      <td className="px-8 py-6 text-right space-x-2">
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <Button 
+                              variant="ghost" 
+                              size="icon" 
+                              className="h-9 w-9 rounded-lg hover:bg-amber-50 text-amber-500"
+                              onClick={() => {
+                                toast.info("Remarcando campanha #" + row.id);
+                              }}
+                            >
+                              <CalendarClock className="w-4 h-4" />
+                            </Button>
+                          </TooltipTrigger>
+                          <TooltipContent><p className="text-[9px] font-black uppercase tracking-widest">Remarcar</p></TooltipContent>
+                        </Tooltip>
+                        
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <Button 
+                              variant="ghost" 
+                              size="icon" 
+                              className="h-9 w-9 rounded-lg hover:bg-red-50 text-red-500"
+                              onClick={() => {
+                                toast.error("Campanha #" + row.id + " cancelada.");
+                              }}
+                            >
+                              <Trash2 className="w-4 h-4" />
+                            </Button>
+                          </TooltipTrigger>
+                          <TooltipContent><p className="text-[9px] font-black uppercase tracking-widest">Cancelar</p></TooltipContent>
+                        </Tooltip>
+
+                        <button className="p-2 hover:bg-accent rounded-lg transition-colors">
+                          <MoreVertical className="w-4 h-4 text-muted-fg" />
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            
+            <div className="p-8 bg-surface/20 border-t border-line flex items-center justify-between">
+              <p className="text-[10px] font-black text-muted-fg uppercase tracking-[0.2em]">Total de 3 agendamentos pendentes</p>
+              <div className="flex gap-2">
+                <Button variant="outline" size="sm" className="h-9 rounded-xl border-line text-[10px] font-black uppercase tracking-widest">Anterior</Button>
+                <Button variant="outline" size="sm" className="h-9 rounded-xl border-line text-[10px] font-black uppercase tracking-widest">Próximo</Button>
+              </div>
+            </div>
+          </div>
+        </TabsContent>
+
       </Tabs>
       </div>
     </TooltipProvider>
