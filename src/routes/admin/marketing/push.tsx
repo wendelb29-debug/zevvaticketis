@@ -271,12 +271,12 @@ function PushNotificationsPage() {
               <table className="w-full text-left">
                 <thead className="bg-surface text-muted text-[10px] font-black uppercase tracking-widest">
                   <tr>
-                    <th className="px-8 py-5">Campanha</th>
-                    <th className="px-8 py-5">Público</th>
-                    <th className="px-8 py-5 text-center">Enviados</th>
-                    <th className="px-8 py-5 text-center">Cliques</th>
-                    <th className="px-8 py-5">Data</th>
-                    <th className="px-8 py-5">Status</th>
+                    <th className="px-8 py-5">Campanha / ID</th>
+                    <th className="px-8 py-5">Automation ID</th>
+                    <th className="px-8 py-5 text-center">Status</th>
+                    <th className="px-8 py-5">Enviado em</th>
+                    <th className="px-8 py-5">Lido em</th>
+                    <th className="px-8 py-5">Erros / Logs</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-line">
