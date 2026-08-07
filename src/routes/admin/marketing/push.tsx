@@ -504,6 +504,14 @@ function PushNotificationsPage() {
         </TabsContent>
 
         <TabsContent value="automacoes" className="animate-in fade-in duration-500">
+          <div className="mb-8 p-6 bg-surface/30 border border-line rounded-3xl">
+            <h3 className="text-xl font-black text-navy uppercase tracking-tight flex items-center gap-2 mb-2">
+              <Zap className="w-5 h-5 text-primary" /> Automações Inteligentes
+            </h3>
+            <p className="text-xs font-bold text-muted-fg uppercase tracking-widest leading-relaxed">
+              disparar notificações automaticamente. Criar um histórico detalhado de execuções das automações e dos envios de push (campanha, automation_id, status, sent_at, read_at e erros) para auditoria. Implementar métricas segmentadas por automação (taxa de entregues, cliques, conversões e tempo até leitura) com filtros por período e público.
+            </p>
+          </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {isLoading ? (
               <div className="col-span-full flex flex-col items-center justify-center py-20 text-muted-fg animate-pulse">
