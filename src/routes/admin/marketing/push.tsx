@@ -648,6 +648,7 @@ function PushNotificationsPage() {
           </div>
         )}
       </Tabs>
-    </div>
+      </div>
+    </TooltipProvider>
   );
 }
