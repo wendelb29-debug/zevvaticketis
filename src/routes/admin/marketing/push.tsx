@@ -114,7 +114,8 @@ function PushNotificationsPage() {
 
 
   return (
-    <div className="p-8 max-w-7xl mx-auto space-y-8 animate-in fade-in duration-500 font-inter">
+    <TooltipProvider>
+      <div className="p-8 max-w-7xl mx-auto space-y-8 animate-in fade-in duration-500 font-inter">
       <div className="flex justify-between items-end">
         <div>
           <h1 className="text-3xl font-manrope font-black text-navy tracking-tighter uppercase">📱 Push Notifications</h1>
