@@ -39,7 +39,7 @@ function NovoEventoPage() {
       if (!user) throw new Error("Não autenticado");
 
       // 1. Create Event
-      const { data: event, error: eventError } = await supabase
+      const { data: event, error: eventError } = await (supabase
         .from("events" as any)
         .insert({
           ...formData,
@@ -47,7 +47,7 @@ function NovoEventoPage() {
           status: "aguardando_aprovacao"
         })
         .select()
-        .single();
+        .single() as any);
 
       if (eventError) throw eventError;
 
@@ -196,7 +196,7 @@ function NovoEventoPage() {
                     value={ticket.nome} 
                     onChange={(e) => {
                       const newTickets = [...ticketTypes];
-                      newTickets[index].nome = e.target.value;
+                      if (newTickets[index]) newTickets[index].nome = e.target.value;
                       setTicketTypes(newTickets);
                     }}
                     placeholder="Ex: VIP, Inteira"
@@ -209,7 +209,7 @@ function NovoEventoPage() {
                     value={ticket.preco} 
                     onChange={(e) => {
                       const newTickets = [...ticketTypes];
-                      newTickets[index].preco = Number(e.target.value);
+                      if (newTickets[index]) newTickets[index].preco = Number(e.target.value);
                       setTicketTypes(newTickets);
                     }}
                   />
@@ -221,7 +221,7 @@ function NovoEventoPage() {
                     value={ticket.quantidade_total} 
                     onChange={(e) => {
                       const newTickets = [...ticketTypes];
-                      newTickets[index].quantidade_total = Number(e.target.value);
+                      if (newTickets[index]) newTickets[index].quantidade_total = Number(e.target.value);
                       setTicketTypes(newTickets);
                     }}
                   />

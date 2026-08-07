@@ -17,27 +17,27 @@ function ProdutorDashboard() {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) return null;
 
-      const { data: events } = await supabase
+      const { data: events } = await (supabase
         .from("events" as any)
         .select("id, status")
-        .eq("produtor_id", user.id);
+        .eq("produtor_id", user.id) as any);
 
-      const eventIds = events?.map(e => e.id) || [];
+      const eventIds = events?.map((e: any) => e.id) || [];
       
-      const { data: orders } = await supabase
+      const { data: orders } = await (supabase
         .from("orders" as any)
         .select("valor_total")
         .in("evento_id", eventIds)
-        .eq("status", "pago");
+        .eq("status", "pago") as any);
 
-      const faturamento = orders?.reduce((acc, curr) => acc + Number(curr.valor_total), 0) || 0;
+      const faturamento = orders?.reduce((acc: number, curr: any) => acc + Number(curr.valor_total), 0) || 0;
       const vendas = orders?.length || 0;
 
       return {
         eventosCriados: events?.length || 0,
         vendasRealizadas: vendas,
         faturamento: faturamento,
-        ingressosVendidos: vendas, // Simplifying for MVP
+        ingressosVendidos: vendas, 
       };
     }
   });
@@ -127,8 +127,8 @@ function ProdutorDashboard() {
                   <div className="flex items-center gap-2 mb-1">
                     <h3 className="text-lg font-bold">{event.nome}</h3>
                     <Badge variant={
-                      event.status === 'publicado' ? 'success' : 
-                      event.status === 'aguardando_aprovacao' ? 'warning' : 'secondary'
+                      event.status === 'publicado' ? 'default' : 
+                      event.status === 'aguardando_aprovacao' ? 'outline' : 'secondary'
                     }>
                       {event.status === 'publicado' ? 'Publicado' : 
                        event.status === 'aguardando_aprovacao' ? 'Em Aprovação' : 'Rascunho'}
