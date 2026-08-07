@@ -17,7 +17,8 @@ import {
   Settings as SettingsIcon,
   ShieldCheck,
   FileText,
-  UserPlus
+  UserPlus,
+  Ticket
 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
