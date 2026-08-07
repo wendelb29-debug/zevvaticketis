@@ -144,6 +144,9 @@ function PushNotificationsPage() {
           <TabsTrigger value="historico" className="data-[state=active]:bg-primary data-[state=active]:text-white rounded-xl h-11 px-6 font-black uppercase tracking-widest text-[10px] gap-2 transition-all">
             <History className="w-4 h-4" /> Histórico
           </TabsTrigger>
+          <TabsTrigger value="agendados" className="data-[state=active]:bg-primary data-[state=active]:text-white rounded-xl h-11 px-6 font-black uppercase tracking-widest text-[10px] gap-2 transition-all">
+            <CalendarDays className="w-4 h-4" /> Agendados
+          </TabsTrigger>
           <TabsTrigger value="novo" className="data-[state=active]:bg-primary data-[state=active]:text-white rounded-xl h-11 px-6 font-black uppercase tracking-widest text-[10px] gap-2 transition-all">
             <Plus className="w-4 h-4" /> Criar Campanha
           </TabsTrigger>
