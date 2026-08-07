@@ -391,11 +391,26 @@ function PushNotificationsPage() {
               {isScheduling && (
                 <Card className="border-line shadow-sm rounded-3xl animate-in fade-in slide-in-from-top-4 duration-500">
                   <CardContent className="p-8 space-y-6">
-                    <h3 className="text-xl font-black text-navy uppercase tracking-tight flex items-center gap-2">
-                      <Calendar className="w-5 h-5 text-primary" /> Agendamento de Disparo
-                    </h3>
-                    <p className="text-xs font-bold text-muted-fg uppercase tracking-widest">
-                      Que eu possa escolher data e horário para disparar a campanha automaticamente.
+                    <div className="flex justify-between items-center">
+                      <h3 className="text-xl font-black text-navy uppercase tracking-tight flex items-center gap-2">
+                        <Calendar className="w-5 h-5 text-primary" /> Agendamento de Disparo
+                      </h3>
+                      <div className="flex items-center gap-2 bg-surface px-3 py-1.5 rounded-xl border border-line">
+                        <Globe className="w-4 h-4 text-primary" />
+                        <select 
+                          className="bg-transparent border-none outline-none text-[10px] font-black uppercase tracking-widest text-navy"
+                          value={pushContent.timezone}
+                          onChange={(e) => setPushContent(prev => ({ ...prev, timezone: e.target.value }))}
+                        >
+                          <option value="America/Sao_Paulo">Brasília (GMT-3)</option>
+                          <option value="America/New_York">New York (GMT-4)</option>
+                          <option value="Europe/London">London (GMT+1)</option>
+                          <option value="Asia/Tokyo">Tokyo (GMT+9)</option>
+                        </select>
+                      </div>
+                    </div>
+                    <p className="text-xs font-bold text-muted-fg uppercase tracking-widest leading-relaxed">
+                      Escolha data e horário local para o disparo. O sistema ajustará automaticamente para o fuso horário selecionado.
                     </p>
                     
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
