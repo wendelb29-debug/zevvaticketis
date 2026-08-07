@@ -16,6 +16,7 @@ import {
   Globe,
   Plus
 } from "lucide-react";
+import { Input } from "@/components/ui/input";
 import { Navbar } from "@/components/layout/Navbar";
 import { FeaturedCarousel } from "@/components/home/FeaturedCarousel";
 import { EventCard } from "@/components/home/EventCard";
@@ -88,18 +89,18 @@ function HomePage() {
         .maybeSingle();
 
       if (existing) {
-        await supabase
+        await (supabase
           .from("event_favorites" as any)
           .delete()
-          .eq("id", existing.id);
+          .eq("id", existing.id) as any);
         toast.success("Removido dos favoritos");
       } else {
-        await supabase
+        await (supabase
           .from("event_favorites" as any)
           .insert({
             event_id: eventId,
             user_id: session.user.id
-          });
+          }) as any);
         toast.success("Adicionado aos favoritos");
       }
     } catch (error) {
@@ -123,7 +124,7 @@ function HomePage() {
               placeholder="Buscar por evento, cidade ou categoria..."
               className="h-16 pl-12 pr-4 text-lg rounded-2xl shadow-xl border-border bg-white focus-visible:ring-primary"
               value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchTerm(e.target.value)}
             />
           </div>
         </div>
