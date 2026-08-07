@@ -36,31 +36,25 @@ export const Route = createFileRoute("/produtor")({
   beforeLoad: async () => {
     const { data: { session } } = await supabase.auth.getSession();
     if (!session) {
-      throw redirect({ to: "/" });
+      throw redirect({ to: "/login" });
     }
 
-    const { data: member } = await supabase
-      .from("organization_members")
-      .select("organization_id")
-      .eq("user_id", session.user.id)
-      .maybeSingle();
+    const { data: isProdutor } = await supabase.rpc('has_role', {
+      _user_id: session.user.id,
+      _role: 'produtor'
+    });
 
-    if (!member) {
-      throw redirect({ to: "/app" });
-    }
+    if (!isProdutor) {
+      // Fallback: check if they are in organization_members if we haven't migrated yet
+      const { data: member } = await supabase
+        .from("organization_members")
+        .select("organization_id")
+        .eq("user_id", session.user.id)
+        .maybeSingle();
 
-    const { data: org } = await supabase
-      .from("organizations")
-      .select("status")
-      .eq("id", member.organization_id)
-      .maybeSingle();
-
-    if (org?.status === "pendente") {
-      throw redirect({ to: "/produtor-pendente" });
-    }
-
-    if (org?.status === "bloqueado") {
-      // Keep it here to show the blocked UI or redirect to a blocked page
+      if (!member) {
+        throw redirect({ to: "/app" });
+      }
     }
   },
   component: ProdutorLayout,

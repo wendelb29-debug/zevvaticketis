@@ -60,13 +60,12 @@ function AdminLayout() {
       if (!user) return;
       setUser(user);
 
-      const { data } = await supabase
-        .from("platform_admins")
-        .select("id")
-        .eq("user_id", user.id)
-        .single();
+      const { data: isAdminRole } = await supabase.rpc('has_role', { 
+        _user_id: user.id, 
+        _role: 'admin' 
+      });
       
-      setIsAdmin(!!data);
+      setIsAdmin(!!isAdminRole);
     }
     checkAdmin();
   }, []);
