@@ -38,25 +38,25 @@ function HomePage() {
   const [events, setEvents] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedCity, setSelectedCity] = useState<string | null>(null);
+  const [searchTerm, setSearchTerm] = useState("");
   const navigate = useNavigate();
   const { language } = useUI();
   const t = translations[language].home;
 
   useEffect(() => {
     async function fetchEvents() {
-      const { data: featured } = await supabase
+      const { data: featured } = await (supabase
         .from("events")
         .select("*")
-        .eq("destaque", true)
         .eq("status", "publicado")
-        .limit(5);
+        .limit(5) as any);
       
-      const { data: all } = await supabase
+      const { data: all } = await (supabase
         .from("events")
-        .select("*")
+        .select("*, ticket_types(preco)")
         .eq("status", "publicado")
         .order('created_at', { ascending: false })
-        .limit(8);
+        .limit(8) as any);
 
       if (featured) setFeaturedEvents(featured);
       if (all) setEvents(all);
@@ -65,6 +65,11 @@ function HomePage() {
 
     fetchEvents();
   }, []);
+
+  const filteredEvents = events.filter((event: any) => 
+    event.nome.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    (event.cidade && event.cidade.toLowerCase().includes(searchTerm.toLowerCase()))
+  );
 
   const handleToggleFavorite = async (eventId: string) => {
     const { data: { session } } = await supabase.auth.getSession();
@@ -76,7 +81,7 @@ function HomePage() {
 
     try {
       const { data: existing } = await supabase
-        .from("event_favorites")
+        .from("event_favorites" as any)
         .select("*")
         .eq("event_id", eventId)
         .eq("user_id", session.user.id)
@@ -84,13 +89,13 @@ function HomePage() {
 
       if (existing) {
         await supabase
-          .from("event_favorites")
+          .from("event_favorites" as any)
           .delete()
           .eq("id", existing.id);
         toast.success("Removido dos favoritos");
       } else {
         await supabase
-          .from("event_favorites")
+          .from("event_favorites" as any)
           .insert({
             event_id: eventId,
             user_id: session.user.id
@@ -106,9 +111,22 @@ function HomePage() {
     <div className={cn("min-h-screen bg-white", language === 'ar' ? "rtl" : "ltr")} dir={language === 'ar' ? "rtl" : "ltr"}>
       <Navbar selectedCity={selectedCity} />
 
-      <main className="pt-36">
+      <main className="pt-36 relative">
         {/* City Ticker */}
         <CityTicker />
+
+        {/* Search Bar Overlay */}
+        <div className="absolute top-48 left-1/2 -translate-x-1/2 w-full max-w-2xl px-6 z-20">
+          <div className="relative group">
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-fg h-5 w-5 group-focus-within:text-primary transition-colors" />
+            <Input 
+              placeholder="Buscar por evento, cidade ou categoria..."
+              className="h-16 pl-12 pr-4 text-lg rounded-2xl shadow-xl border-border bg-white focus-visible:ring-primary"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+          </div>
+        </div>
 
         {/* Hero Section / Carousel */}
         <section className="px-6 py-8">
@@ -157,13 +175,18 @@ function HomePage() {
               </div>
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {events.map((event) => (
+                {filteredEvents.map((event) => (
                   <EventCard 
                     key={event.id} 
                     event={event} 
                     onToggleFavorite={handleToggleFavorite}
                   />
                 ))}
+                {filteredEvents.length === 0 && (
+                  <div className="col-span-full py-20 text-center text-muted italic">
+                    Nenhum evento encontrado para sua busca.
+                  </div>
+                )}
               </div>
             )}
           </div>
