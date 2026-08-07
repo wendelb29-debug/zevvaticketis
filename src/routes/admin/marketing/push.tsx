@@ -17,7 +17,13 @@ import {
   LayoutDashboard,
   Save,
   Loader2,
-  X
+  X,
+  Globe,
+  AlertTriangle,
+  Search,
+  CalendarDays,
+  MoreVertical,
+  CalendarClock
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { TooltipProvider } from "@/components/ui/tooltip";
