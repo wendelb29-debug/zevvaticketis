@@ -120,6 +120,7 @@ function AdminLayout() {
         { label: "Aprovações", href: "/admin/aprovacoes" },
         { label: "Todos os Usuários", href: "/admin/configuracoes", query: { tab: "team" } },
         { label: "Produtores", href: "/admin/produtores" },
+        { label: "Eventos Pendentes", href: "/admin/aprovacoes", query: { tab: "events" } },
       ]
     },
     

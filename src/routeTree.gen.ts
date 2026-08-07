@@ -45,8 +45,10 @@ import { Route as ProdutorIndexRouteImport } from './routes/produtor/index'
 import { Route as ProdutorConfiguracoesRouteImport } from './routes/produtor/configuracoes'
 import { Route as ProdutorEquipeRouteImport } from './routes/produtor/equipe'
 import { Route as ProdutorFinanceiroRouteImport } from './routes/produtor/financeiro'
+import { Route as ProdutorIngressosRouteImport } from './routes/produtor/ingressos'
 import { Route as ProdutorMarketingRouteImport } from './routes/produtor/marketing'
 import { Route as ProdutorNovoEventoRouteImport } from './routes/produtor/novo-evento'
+import { Route as ProdutorParticipantesRouteImport } from './routes/produtor/participantes'
 import { Route as ProdutorSuporteRouteImport } from './routes/produtor/suporte'
 import { Route as DotlovableOauthConsentRouteImport } from './routes/[.]lovable.oauth.consent'
 import { Route as Char91DotmcpChar93InvokeToolToolRouteImport } from './routes/[.mcp]/invoke-tool/$tool'
@@ -240,6 +242,11 @@ const ProdutorFinanceiroRoute = ProdutorFinanceiroRouteImport.update({
   path: '/financeiro',
   getParentRoute: () => ProdutorRoute,
 } as any)
+const ProdutorIngressosRoute = ProdutorIngressosRouteImport.update({
+  id: '/ingressos',
+  path: '/ingressos',
+  getParentRoute: () => ProdutorRoute,
+} as any)
 const ProdutorMarketingRoute = ProdutorMarketingRouteImport.update({
   id: '/marketing',
   path: '/marketing',
@@ -248,6 +255,11 @@ const ProdutorMarketingRoute = ProdutorMarketingRouteImport.update({
 const ProdutorNovoEventoRoute = ProdutorNovoEventoRouteImport.update({
   id: '/novo-evento',
   path: '/novo-evento',
+  getParentRoute: () => ProdutorRoute,
+} as any)
+const ProdutorParticipantesRoute = ProdutorParticipantesRouteImport.update({
+  id: '/participantes',
+  path: '/participantes',
   getParentRoute: () => ProdutorRoute,
 } as any)
 const ProdutorSuporteRoute = ProdutorSuporteRouteImport.update({
@@ -337,8 +349,10 @@ export interface FileRoutesByFullPath {
   '/produtor/configuracoes': typeof ProdutorConfiguracoesRoute
   '/produtor/equipe': typeof ProdutorEquipeRoute
   '/produtor/financeiro': typeof ProdutorFinanceiroRoute
+  '/produtor/ingressos': typeof ProdutorIngressosRoute
   '/produtor/marketing': typeof ProdutorMarketingRoute
   '/produtor/novo-evento': typeof ProdutorNovoEventoRoute
+  '/produtor/participantes': typeof ProdutorParticipantesRoute
   '/produtor/suporte': typeof ProdutorSuporteRoute
   '/admin/': typeof AdminIndexRoute
   '/app/': typeof AppIndexRoute
@@ -384,8 +398,10 @@ export interface FileRoutesByTo {
   '/produtor/configuracoes': typeof ProdutorConfiguracoesRoute
   '/produtor/equipe': typeof ProdutorEquipeRoute
   '/produtor/financeiro': typeof ProdutorFinanceiroRoute
+  '/produtor/ingressos': typeof ProdutorIngressosRoute
   '/produtor/marketing': typeof ProdutorMarketingRoute
   '/produtor/novo-evento': typeof ProdutorNovoEventoRoute
+  '/produtor/participantes': typeof ProdutorParticipantesRoute
   '/produtor/suporte': typeof ProdutorSuporteRoute
   '/admin': typeof AdminIndexRoute
   '/app': typeof AppIndexRoute
@@ -435,8 +451,10 @@ export interface FileRoutesById {
   '/produtor/configuracoes': typeof ProdutorConfiguracoesRoute
   '/produtor/equipe': typeof ProdutorEquipeRoute
   '/produtor/financeiro': typeof ProdutorFinanceiroRoute
+  '/produtor/ingressos': typeof ProdutorIngressosRoute
   '/produtor/marketing': typeof ProdutorMarketingRoute
   '/produtor/novo-evento': typeof ProdutorNovoEventoRoute
+  '/produtor/participantes': typeof ProdutorParticipantesRoute
   '/produtor/suporte': typeof ProdutorSuporteRoute
   '/admin/': typeof AdminIndexRoute
   '/app/': typeof AppIndexRoute
@@ -487,8 +505,10 @@ export interface FileRouteTypes {
     | '/produtor/configuracoes'
     | '/produtor/equipe'
     | '/produtor/financeiro'
+    | '/produtor/ingressos'
     | '/produtor/marketing'
     | '/produtor/novo-evento'
+    | '/produtor/participantes'
     | '/produtor/suporte'
     | '/admin/'
     | '/app/'
@@ -534,8 +554,10 @@ export interface FileRouteTypes {
     | '/produtor/configuracoes'
     | '/produtor/equipe'
     | '/produtor/financeiro'
+    | '/produtor/ingressos'
     | '/produtor/marketing'
     | '/produtor/novo-evento'
+    | '/produtor/participantes'
     | '/produtor/suporte'
     | '/admin'
     | '/app'
@@ -584,8 +606,10 @@ export interface FileRouteTypes {
     | '/produtor/configuracoes'
     | '/produtor/equipe'
     | '/produtor/financeiro'
+    | '/produtor/ingressos'
     | '/produtor/marketing'
     | '/produtor/novo-evento'
+    | '/produtor/participantes'
     | '/produtor/suporte'
     | '/admin/'
     | '/app/'
@@ -878,6 +902,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProdutorFinanceiroRouteImport
       parentRoute: typeof ProdutorRoute
     }
+    '/produtor/ingressos': {
+      id: '/produtor/ingressos'
+      path: '/ingressos'
+      fullPath: '/produtor/ingressos'
+      preLoaderRoute: typeof ProdutorIngressosRouteImport
+      parentRoute: typeof ProdutorRoute
+    }
     '/produtor/marketing': {
       id: '/produtor/marketing'
       path: '/marketing'
@@ -890,6 +921,13 @@ declare module '@tanstack/react-router' {
       path: '/novo-evento'
       fullPath: '/produtor/novo-evento'
       preLoaderRoute: typeof ProdutorNovoEventoRouteImport
+      parentRoute: typeof ProdutorRoute
+    }
+    '/produtor/participantes': {
+      id: '/produtor/participantes'
+      path: '/participantes'
+      fullPath: '/produtor/participantes'
+      preLoaderRoute: typeof ProdutorParticipantesRouteImport
       parentRoute: typeof ProdutorRoute
     }
     '/produtor/suporte': {
@@ -1046,8 +1084,10 @@ interface ProdutorRouteChildren {
   ProdutorConfiguracoesRoute: typeof ProdutorConfiguracoesRoute
   ProdutorEquipeRoute: typeof ProdutorEquipeRoute
   ProdutorFinanceiroRoute: typeof ProdutorFinanceiroRoute
+  ProdutorIngressosRoute: typeof ProdutorIngressosRoute
   ProdutorMarketingRoute: typeof ProdutorMarketingRoute
   ProdutorNovoEventoRoute: typeof ProdutorNovoEventoRoute
+  ProdutorParticipantesRoute: typeof ProdutorParticipantesRoute
   ProdutorSuporteRoute: typeof ProdutorSuporteRoute
   ProdutorIndexRoute: typeof ProdutorIndexRoute
 }
@@ -1056,8 +1096,10 @@ const ProdutorRouteChildren: ProdutorRouteChildren = {
   ProdutorConfiguracoesRoute: ProdutorConfiguracoesRoute,
   ProdutorEquipeRoute: ProdutorEquipeRoute,
   ProdutorFinanceiroRoute: ProdutorFinanceiroRoute,
+  ProdutorIngressosRoute: ProdutorIngressosRoute,
   ProdutorMarketingRoute: ProdutorMarketingRoute,
   ProdutorNovoEventoRoute: ProdutorNovoEventoRoute,
+  ProdutorParticipantesRoute: ProdutorParticipantesRoute,
   ProdutorSuporteRoute: ProdutorSuporteRoute,
   ProdutorIndexRoute: ProdutorIndexRoute,
 }
