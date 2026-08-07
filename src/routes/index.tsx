@@ -81,12 +81,12 @@ function HomePage() {
     }
 
     try {
-      const { data: existing } = await supabase
+      const { data: existing } = await (supabase
         .from("event_favorites" as any)
         .select("*")
         .eq("event_id", eventId)
         .eq("user_id", session.user.id)
-        .maybeSingle();
+        .maybeSingle() as any);
 
       if (existing) {
         await (supabase
