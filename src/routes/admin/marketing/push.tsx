@@ -47,6 +47,70 @@ function PushNotificationsPage() {
     scheduleTime: ""
   });
   const [isScheduling, setIsScheduling] = useState(false);
+  const [automations, setAutomations] = useState<any[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [selectedAutomation, setSelectedAutomation] = useState<any>(null);
+  const [isConfiguring, setIsConfiguring] = useState(false);
+
+  useEffect(() => {
+    fetchAutomations();
+  }, []);
+
+  const fetchAutomations = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('push_automations')
+        .select('*')
+        .order('created_at', { ascending: true });
+      
+      if (error) throw error;
+      setAutomations(data || []);
+    } catch (error) {
+      console.error('Error fetching automations:', error);
+      toast.error("Erro ao carregar automações");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleSaveAutomation = async () => {
+    if (!selectedAutomation) return;
+    
+    try {
+      const { error } = await supabase
+        .from('push_automations')
+        .update({
+          name: selectedAutomation.name,
+          status: selectedAutomation.status,
+          title_template: selectedAutomation.title_template,
+          message_template: selectedAutomation.message_template,
+          button_text: selectedAutomation.button_text,
+          audience: selectedAutomation.audience,
+          delay_time: selectedAutomation.delay_time
+        })
+        .eq('id', selectedAutomation.id);
+
+      if (error) throw error;
+      
+      toast.success("Automação atualizada com sucesso!");
+      setIsConfiguring(false);
+      fetchAutomations();
+    } catch (error) {
+      console.error('Error saving automation:', error);
+      toast.error("Erro ao salvar automação");
+    }
+  };
+
+  const getIconForTrigger = (trigger: string) => {
+    switch (trigger) {
+      case 'payment_approved': return CheckCircle2;
+      case 'event_reminder_24h': return Clock;
+      case 'abandoned_cart': return LayoutDashboard;
+      case 'post_event_feedback': return Clock;
+      case 'new_course': return Zap;
+      default: return Smartphone;
+    }
+  };
 
 
   return (
