@@ -8,12 +8,14 @@ import {
   ChevronRight,
   Ticket,
   Loader2,
-  Search
+  Search,
+  Download
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { GlobalBreadcrumb } from "@/components/layout/GlobalBreadcrumb";
+import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/app/historico")({
   beforeLoad: async () => {
@@ -35,20 +37,23 @@ function OrderHistory() {
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) return;
 
-    const { data } = await supabase
-      .from("tickets")
+    const { data } = await (supabase
+      .from("tickets" as any)
       .select(`
         *,
-        events:event_id (
-          title,
-          date,
+        events:evento_id (
+          nome_evento,
+          start_date,
           city,
-          thumbnail_url
+          imagem_capa
+        ),
+        ticket_types:ticket_type_id (
+          nome,
+          valor
         )
       `)
-      .eq("owner_id", user.id) // Using owner_id instead of user_id
-      .not('status', 'eq', 'ativo') 
-      .order('created_at', { ascending: false });
+      .eq("usuario_id", user.id) 
+      .order('created_at', { ascending: false }) as any);
     
     if (data) setOrders(data);
     setLoading(false);
@@ -65,8 +70,8 @@ function OrderHistory() {
       <GlobalBreadcrumb className="py-4" />
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div className="space-y-1">
-          <h1 className="text-3xl font-manrope font-extrabold text-navy">Histórico de Pedidos</h1>
-          <p className="text-muted font-medium">Veja seus ingressos usados e pedidos passados.</p>
+          <h1 className="text-3xl font-manrope font-extrabold text-navy">Meus Ingressos</h1>
+          <p className="text-muted font-medium">Veja seus ingressos ativos e históricos de pedidos.</p>
         </div>
         
         <div className="relative w-full sm:w-64">
@@ -91,37 +96,50 @@ function OrderHistory() {
           </div>
         ) : (
           orders.map((order) => (
-            <div key={order.id} className="bg-white rounded-3xl border border-line p-6 flex flex-col sm:flex-row items-center gap-6 hover:shadow-md transition-shadow">
-              <div className="w-full sm:w-32 h-24 rounded-2xl bg-surface overflow-hidden flex-shrink-0">
-                {order.events?.thumbnail_url ? (
-                   <img src={order.events.thumbnail_url} alt="" className="w-full h-full object-cover" />
-                ) : (
-                  <div className="w-full h-full flex items-center justify-center text-muted/20">
-                    <Ticket className="w-8 h-8" />
+            <div key={order.id} className="bg-white rounded-3xl border border-line overflow-hidden hover:shadow-lg transition-all group">
+              <div className="flex flex-col sm:flex-row items-stretch">
+                <div className="w-full sm:w-48 h-48 rounded-2xl bg-surface overflow-hidden flex-shrink-0 m-4">
+                  {order.events?.imagem_capa ? (
+                     <img src={order.events.imagem_capa} alt="" className="w-full h-full object-cover" />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center text-muted/20">
+                      <Ticket className="w-12 h-12" />
+                    </div>
+                  )}
+                </div>
+
+                <div className="flex-grow p-6 space-y-4 flex flex-col justify-center">
+                  <div className="space-y-1">
+                    <div className="flex items-center gap-2">
+                      <h3 className="font-manrope font-extrabold text-xl text-navy">{order.events?.nome_evento}</h3>
+                      <Badge className={cn(
+                        "font-black text-[10px] uppercase",
+                        order.status === 'ativo' ? "bg-green-100 text-green-700" : "bg-muted text-muted-fg"
+                      )}>
+                        {order.status === 'ativo' ? 'Válido' : 'Utilizado'}
+                      </Badge>
+                    </div>
+                    <p className="text-primary font-bold">{order.ticket_types?.nome}</p>
                   </div>
-                )}
-              </div>
-
-              <div className="flex-grow space-y-2 text-center sm:text-left">
-                <div className="flex flex-col sm:flex-row sm:items-center gap-2">
-                  <h3 className="font-manrope font-extrabold text-lg text-navy">{order.events?.title}</h3>
-                  <Badge variant="outline" className="w-fit mx-auto sm:mx-0 font-extrabold text-[10px] uppercase border-line text-muted">
-                    {order.status}
-                  </Badge>
+                  
+                  <div className="flex flex-wrap gap-4 text-xs font-bold text-muted">
+                    <span className="flex items-center gap-1"><Calendar className="w-3.5 h-3.5 text-coral" /> {new Date(order.events?.start_date).toLocaleDateString()}</span>
+                    <span className="flex items-center gap-1"><MapPin className="w-3.5 h-3.5 text-coral" /> {order.events?.city}</span>
+                  </div>
                 </div>
-                <div className="flex flex-wrap justify-center sm:justify-start gap-4 text-xs font-bold text-muted">
-                  <span className="flex items-center gap-1"><Calendar className="w-3.5 h-3.5" /> {new Date(order.events?.date).toLocaleDateString()}</span>
-                  <span className="flex items-center gap-1"><MapPin className="w-3.5 h-3.5" /> {order.events?.city}</span>
-                </div>
-              </div>
 
-              <div className="flex flex-col items-center sm:items-end gap-2">
-                <p className="text-xl font-manrope font-extrabold text-navy">
-                  {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(order.price || 0)}
-                </p>
-                <Button variant="ghost" size="sm" className="font-bold text-coral hover:text-coral-dark h-10 px-4 rounded-lg">
-                  Ver detalhes <ChevronRight className="w-4 h-4 ml-1" />
-                </Button>
+                <div className="w-full sm:w-48 bg-accent/30 p-6 flex flex-col items-center justify-center border-l border-line gap-3">
+                  <div className="bg-white p-2 rounded-xl shadow-sm border border-line">
+                    {/* Placeholder para QR Code real */}
+                    <div className="w-24 h-24 bg-navy flex items-center justify-center text-white text-[8px] text-center p-2 font-mono">
+                      {order.qr_code}
+                    </div>
+                  </div>
+                  <p className="text-[10px] font-black uppercase text-muted tracking-widest">{order.codigo_unico}</p>
+                  <Button variant="outline" size="sm" className="w-full h-9 text-[10px] font-black uppercase tracking-widest">
+                    Download PDF
+                  </Button>
+                </div>
               </div>
             </div>
           ))
