@@ -161,13 +161,38 @@ function PushNotificationsPage() {
         </TabsList>
 
         <TabsContent value="metricas" className="space-y-8 animate-in fade-in duration-500">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8">
+            <h3 className="text-xl font-black text-navy uppercase tracking-tight flex items-center gap-2">
+              <TrendingUp className="w-6 h-6 text-primary" /> Métricas Detalhadas
+            </h3>
+            <div className="flex items-center gap-3">
+              <div className="flex items-center gap-2 bg-white border border-line rounded-xl px-4 py-2 shadow-sm">
+                <Filter className="w-4 h-4 text-muted-fg" />
+                <select className="bg-transparent border-none outline-none text-[10px] font-black uppercase tracking-widest text-navy">
+                  <option>Últimos 30 dias</option>
+                  <option>Últimos 7 dias</option>
+                  <option>Hoje</option>
+                  <option>Personalizado</option>
+                </select>
+              </div>
+              <div className="flex items-center gap-2 bg-white border border-line rounded-xl px-4 py-2 shadow-sm">
+                <Users className="w-4 h-4 text-muted-fg" />
+                <select className="bg-transparent border-none outline-none text-[10px] font-black uppercase tracking-widest text-navy">
+                  <option>Todos os Públicos</option>
+                  <option>Compradores</option>
+                  <option>Interessados</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
           <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
             {[
-              { label: "Total Enviado", value: "45.820", icon: Smartphone, color: "text-primary", bg: "bg-primary/5" },
-              { label: "Entregues", value: "44.100", icon: CheckCircle2, color: "text-green-600", bg: "bg-green-50" },
-              { label: "Visualizações", value: "32.400", icon: LayoutDashboard, color: "text-blue-500", bg: "bg-blue-50" },
-              { label: "Cliques", value: "8.920", icon: TrendingUp, color: "text-orange-500", bg: "bg-orange-50" },
-              { label: "Conversões", value: "1.450", icon: Zap, color: "text-navy", bg: "bg-surface" },
+              { label: "Taxa Entrega", value: "98.2%", icon: CheckCircle2, color: "text-green-600", bg: "bg-green-50" },
+              { label: "Cliques", value: "19.5%", icon: TrendingUp, color: "text-orange-500", bg: "bg-orange-50" },
+              { label: "Conversão", value: "4.2%", icon: Zap, color: "text-primary", bg: "bg-primary/5" },
+              { label: "Tempo Leitura", value: "12min", icon: Clock, color: "text-blue-500", bg: "bg-blue-50" },
+              { label: "Volume Total", value: "45.8k", icon: Smartphone, color: "text-navy", bg: "bg-surface" },
             ].map((stat, i) => (
               <Card key={i} className="border-border shadow-sm">
                 <CardContent className="p-4 flex items-center gap-3">
