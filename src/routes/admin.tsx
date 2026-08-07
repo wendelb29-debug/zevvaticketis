@@ -60,13 +60,12 @@ function AdminLayout() {
       if (!user) return;
       setUser(user);
 
-      const { data } = await supabase
-        .from("platform_admins")
-        .select("id")
-        .eq("user_id", user.id)
-        .single();
+      const { data: isAdminRole } = await supabase.rpc('has_role', { 
+        _user_id: user.id, 
+        _role: 'admin' 
+      });
       
-      setIsAdmin(!!data);
+      setIsAdmin(!!isAdminRole);
     }
     checkAdmin();
   }, []);
@@ -121,6 +120,7 @@ function AdminLayout() {
         { label: "Aprovações", href: "/admin/aprovacoes" },
         { label: "Todos os Usuários", href: "/admin/configuracoes", query: { tab: "team" } },
         { label: "Produtores", href: "/admin/produtores" },
+        { label: "Eventos Pendentes", href: "/admin/aprovacoes", query: { tab: "events" } },
       ]
     },
     

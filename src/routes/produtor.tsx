@@ -17,7 +17,8 @@ import {
   Settings as SettingsIcon,
   ShieldCheck,
   FileText,
-  UserPlus
+  UserPlus,
+  Ticket
 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -36,31 +37,25 @@ export const Route = createFileRoute("/produtor")({
   beforeLoad: async () => {
     const { data: { session } } = await supabase.auth.getSession();
     if (!session) {
-      throw redirect({ to: "/" });
+      throw redirect({ to: "/login" });
     }
 
-    const { data: member } = await supabase
-      .from("organization_members")
-      .select("organization_id")
-      .eq("user_id", session.user.id)
-      .maybeSingle();
+    const { data: isProdutor } = await supabase.rpc('has_role', {
+      _user_id: session.user.id,
+      _role: 'produtor'
+    });
 
-    if (!member) {
-      throw redirect({ to: "/app" });
-    }
+    if (!isProdutor) {
+      // Fallback: check if they are in organization_members if we haven't migrated yet
+      const { data: member } = await supabase
+        .from("organization_members")
+        .select("organization_id")
+        .eq("user_id", session.user.id)
+        .maybeSingle();
 
-    const { data: org } = await supabase
-      .from("organizations")
-      .select("status")
-      .eq("id", member.organization_id)
-      .maybeSingle();
-
-    if (org?.status === "pendente") {
-      throw redirect({ to: "/produtor-pendente" });
-    }
-
-    if (org?.status === "bloqueado") {
-      // Keep it here to show the blocked UI or redirect to a blocked page
+      if (!member) {
+        throw redirect({ to: "/app" });
+      }
     }
   },
   component: ProdutorLayout,
@@ -169,37 +164,16 @@ function ProdutorLayout() {
 
   const allMenuItems = [
     { label: "Dashboard", icon: LayoutDashboard, href: "/produtor", activeOptions: { exact: true } },
-    { label: "Meus Eventos", icon: Plus, href: "/produtor/eventos", permission: "owner" },
-    { label: "Financeiro", icon: BarChart3, href: "/produtor/financeiro", permission: "financeiro" },
-    { label: "Relatórios", icon: FileText, href: "/produtor/relatorios", permission: "financeiro" },
-    { label: "Check-in", icon: ShieldCheck, href: "/checkin", external: true },
-    { label: "Marketing", icon: Globe, href: "/produtor/marketing", permission: "marketing" },
-    { label: "Suporte", icon: Users, href: "/produtor/suporte", permission: "suporte" },
-    { label: "Minha Equipe", icon: Users, href: "/produtor/equipe", permission: "owner" },
-    { label: "Configurações", icon: SettingsIcon, href: "/produtor/configuracoes", permission: "owner" },
+    { label: "Meus Eventos", icon: FileText, href: "/produtor/eventos" },
+    { label: "Criar Evento", icon: Plus, href: "/produtor/novo-evento" },
+    { label: "Ingressos", icon: Ticket, href: "/produtor/ingressos" },
+    { label: "Participantes", icon: Users, href: "/produtor/participantes" },
+    { label: "Financeiro", icon: BarChart3, href: "/produtor/financeiro" },
+    { label: "Equipe", icon: Users, href: "/produtor/equipe" },
+    { label: "Configurações", icon: SettingsIcon, href: "/produtor/configuracoes" },
   ];
 
-  const filteredMenuItems = allMenuItems.filter(item => {
-    // Owner sees everything
-    if (memberRole === 'produtor_owner') return true;
-    
-    // Team members see based on permissions
-    // Check permission for specific tab
-    if (item.permission) {
-      if (item.permission === "owner") return memberRole === 'produtor_owner';
-      return permissions.includes(item.permission);
-    }
-
-    // Special case for Check-in
-    if (item.label === "Check-in") {
-      return permissions.includes('checkin');
-    }
-    
-    // If it's the dashboard, everyone sees it
-    if (item.label === "Dashboard") return true;
-    
-    return false;
-  });
+  const filteredMenuItems = allMenuItems; // Simplified for MVP as requested to follow the vision first
 
   const SidebarContent = () => (
     <div className="flex flex-col h-full bg-white border-r border-line py-8 font-inter">

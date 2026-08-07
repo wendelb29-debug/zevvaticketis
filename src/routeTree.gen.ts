@@ -40,11 +40,15 @@ import { Route as AppIndexRouteImport } from './routes/app/index'
 import { Route as AppHistoricoRouteImport } from './routes/app/historico'
 import { Route as AppPerfilRouteImport } from './routes/app/perfil'
 import { Route as AuthCallbackRouteImport } from './routes/auth/callback'
+import { Route as EventosIdRouteImport } from './routes/eventos/$id'
 import { Route as ProdutorIndexRouteImport } from './routes/produtor/index'
 import { Route as ProdutorConfiguracoesRouteImport } from './routes/produtor/configuracoes'
 import { Route as ProdutorEquipeRouteImport } from './routes/produtor/equipe'
+import { Route as ProdutorFinanceiroRouteImport } from './routes/produtor/financeiro'
+import { Route as ProdutorIngressosRouteImport } from './routes/produtor/ingressos'
 import { Route as ProdutorMarketingRouteImport } from './routes/produtor/marketing'
 import { Route as ProdutorNovoEventoRouteImport } from './routes/produtor/novo-evento'
+import { Route as ProdutorParticipantesRouteImport } from './routes/produtor/participantes'
 import { Route as ProdutorSuporteRouteImport } from './routes/produtor/suporte'
 import { Route as DotlovableOauthConsentRouteImport } from './routes/[.]lovable.oauth.consent'
 import { Route as Char91DotmcpChar93InvokeToolToolRouteImport } from './routes/[.mcp]/invoke-tool/$tool'
@@ -53,6 +57,7 @@ import { Route as AdminMarketingAnunciosRouteImport } from './routes/admin/marke
 import { Route as AdminMarketingPublicidadeRouteImport } from './routes/admin/marketing/publicidade'
 import { Route as AdminMarketingPushRouteImport } from './routes/admin/marketing/push'
 import { Route as ApiPublicUazapiWebhookRouteImport } from './routes/api/public/uazapi-webhook'
+import { Route as EventosIdCheckoutRouteImport } from './routes/eventos/$id.checkout'
 import { Route as OauthGoogleReturnRouteImport } from './routes/oauth/google/return'
 
 const IndexRoute = IndexRouteImport.update({
@@ -212,6 +217,11 @@ const AuthCallbackRoute = AuthCallbackRouteImport.update({
   path: '/auth/callback',
   getParentRoute: () => rootRouteImport,
 } as any)
+const EventosIdRoute = EventosIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => EventosRoute,
+} as any)
 const ProdutorIndexRoute = ProdutorIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -227,6 +237,16 @@ const ProdutorEquipeRoute = ProdutorEquipeRouteImport.update({
   path: '/equipe',
   getParentRoute: () => ProdutorRoute,
 } as any)
+const ProdutorFinanceiroRoute = ProdutorFinanceiroRouteImport.update({
+  id: '/financeiro',
+  path: '/financeiro',
+  getParentRoute: () => ProdutorRoute,
+} as any)
+const ProdutorIngressosRoute = ProdutorIngressosRouteImport.update({
+  id: '/ingressos',
+  path: '/ingressos',
+  getParentRoute: () => ProdutorRoute,
+} as any)
 const ProdutorMarketingRoute = ProdutorMarketingRouteImport.update({
   id: '/marketing',
   path: '/marketing',
@@ -235,6 +255,11 @@ const ProdutorMarketingRoute = ProdutorMarketingRouteImport.update({
 const ProdutorNovoEventoRoute = ProdutorNovoEventoRouteImport.update({
   id: '/novo-evento',
   path: '/novo-evento',
+  getParentRoute: () => ProdutorRoute,
+} as any)
+const ProdutorParticipantesRoute = ProdutorParticipantesRouteImport.update({
+  id: '/participantes',
+  path: '/participantes',
   getParentRoute: () => ProdutorRoute,
 } as any)
 const ProdutorSuporteRoute = ProdutorSuporteRouteImport.update({
@@ -279,6 +304,11 @@ const ApiPublicUazapiWebhookRoute = ApiPublicUazapiWebhookRouteImport.update({
   path: '/api/public/uazapi-webhook',
   getParentRoute: () => rootRouteImport,
 } as any)
+const EventosIdCheckoutRoute = EventosIdCheckoutRouteImport.update({
+  id: '/checkout',
+  path: '/checkout',
+  getParentRoute: () => EventosIdRoute,
+} as any)
 const OauthGoogleReturnRoute = OauthGoogleReturnRouteImport.update({
   id: '/oauth/google/return',
   path: '/oauth/google/return',
@@ -292,7 +322,7 @@ export interface FileRoutesByFullPath {
   '/cadastro': typeof CadastroRoute
   '/checkin': typeof CheckinRoute
   '/criar-evento': typeof CriarEventoRoute
-  '/eventos': typeof EventosRoute
+  '/eventos': typeof EventosRouteWithChildren
   '/login': typeof LoginRoute
   '/mcp': typeof McpRoute
   '/politica-de-privacidade': typeof PoliticaDePrivacidadeRoute
@@ -315,10 +345,14 @@ export interface FileRoutesByFullPath {
   '/app/historico': typeof AppHistoricoRoute
   '/app/perfil': typeof AppPerfilRoute
   '/auth/callback': typeof AuthCallbackRoute
+  '/eventos/$id': typeof EventosIdRouteWithChildren
   '/produtor/configuracoes': typeof ProdutorConfiguracoesRoute
   '/produtor/equipe': typeof ProdutorEquipeRoute
+  '/produtor/financeiro': typeof ProdutorFinanceiroRoute
+  '/produtor/ingressos': typeof ProdutorIngressosRoute
   '/produtor/marketing': typeof ProdutorMarketingRoute
   '/produtor/novo-evento': typeof ProdutorNovoEventoRoute
+  '/produtor/participantes': typeof ProdutorParticipantesRoute
   '/produtor/suporte': typeof ProdutorSuporteRoute
   '/admin/': typeof AdminIndexRoute
   '/app/': typeof AppIndexRoute
@@ -329,6 +363,7 @@ export interface FileRoutesByFullPath {
   '/admin/marketing/publicidade': typeof AdminMarketingPublicidadeRoute
   '/admin/marketing/push': typeof AdminMarketingPushRoute
   '/api/public/uazapi-webhook': typeof ApiPublicUazapiWebhookRoute
+  '/eventos/$id/checkout': typeof EventosIdCheckoutRoute
   '/oauth/google/return': typeof OauthGoogleReturnRoute
   '/admin/marketing/': typeof AdminMarketingIndexRoute
 }
@@ -337,7 +372,7 @@ export interface FileRoutesByTo {
   '/cadastro': typeof CadastroRoute
   '/checkin': typeof CheckinRoute
   '/criar-evento': typeof CriarEventoRoute
-  '/eventos': typeof EventosRoute
+  '/eventos': typeof EventosRouteWithChildren
   '/login': typeof LoginRoute
   '/mcp': typeof McpRoute
   '/politica-de-privacidade': typeof PoliticaDePrivacidadeRoute
@@ -359,10 +394,14 @@ export interface FileRoutesByTo {
   '/app/historico': typeof AppHistoricoRoute
   '/app/perfil': typeof AppPerfilRoute
   '/auth/callback': typeof AuthCallbackRoute
+  '/eventos/$id': typeof EventosIdRouteWithChildren
   '/produtor/configuracoes': typeof ProdutorConfiguracoesRoute
   '/produtor/equipe': typeof ProdutorEquipeRoute
+  '/produtor/financeiro': typeof ProdutorFinanceiroRoute
+  '/produtor/ingressos': typeof ProdutorIngressosRoute
   '/produtor/marketing': typeof ProdutorMarketingRoute
   '/produtor/novo-evento': typeof ProdutorNovoEventoRoute
+  '/produtor/participantes': typeof ProdutorParticipantesRoute
   '/produtor/suporte': typeof ProdutorSuporteRoute
   '/admin': typeof AdminIndexRoute
   '/app': typeof AppIndexRoute
@@ -373,6 +412,7 @@ export interface FileRoutesByTo {
   '/admin/marketing/publicidade': typeof AdminMarketingPublicidadeRoute
   '/admin/marketing/push': typeof AdminMarketingPushRoute
   '/api/public/uazapi-webhook': typeof ApiPublicUazapiWebhookRoute
+  '/eventos/$id/checkout': typeof EventosIdCheckoutRoute
   '/oauth/google/return': typeof OauthGoogleReturnRoute
   '/admin/marketing': typeof AdminMarketingIndexRoute
 }
@@ -384,7 +424,7 @@ export interface FileRoutesById {
   '/cadastro': typeof CadastroRoute
   '/checkin': typeof CheckinRoute
   '/criar-evento': typeof CriarEventoRoute
-  '/eventos': typeof EventosRoute
+  '/eventos': typeof EventosRouteWithChildren
   '/login': typeof LoginRoute
   '/mcp': typeof McpRoute
   '/politica-de-privacidade': typeof PoliticaDePrivacidadeRoute
@@ -407,10 +447,14 @@ export interface FileRoutesById {
   '/app/historico': typeof AppHistoricoRoute
   '/app/perfil': typeof AppPerfilRoute
   '/auth/callback': typeof AuthCallbackRoute
+  '/eventos/$id': typeof EventosIdRouteWithChildren
   '/produtor/configuracoes': typeof ProdutorConfiguracoesRoute
   '/produtor/equipe': typeof ProdutorEquipeRoute
+  '/produtor/financeiro': typeof ProdutorFinanceiroRoute
+  '/produtor/ingressos': typeof ProdutorIngressosRoute
   '/produtor/marketing': typeof ProdutorMarketingRoute
   '/produtor/novo-evento': typeof ProdutorNovoEventoRoute
+  '/produtor/participantes': typeof ProdutorParticipantesRoute
   '/produtor/suporte': typeof ProdutorSuporteRoute
   '/admin/': typeof AdminIndexRoute
   '/app/': typeof AppIndexRoute
@@ -421,6 +465,7 @@ export interface FileRoutesById {
   '/admin/marketing/publicidade': typeof AdminMarketingPublicidadeRoute
   '/admin/marketing/push': typeof AdminMarketingPushRoute
   '/api/public/uazapi-webhook': typeof ApiPublicUazapiWebhookRoute
+  '/eventos/$id/checkout': typeof EventosIdCheckoutRoute
   '/oauth/google/return': typeof OauthGoogleReturnRoute
   '/admin/marketing/': typeof AdminMarketingIndexRoute
 }
@@ -456,10 +501,14 @@ export interface FileRouteTypes {
     | '/app/historico'
     | '/app/perfil'
     | '/auth/callback'
+    | '/eventos/$id'
     | '/produtor/configuracoes'
     | '/produtor/equipe'
+    | '/produtor/financeiro'
+    | '/produtor/ingressos'
     | '/produtor/marketing'
     | '/produtor/novo-evento'
+    | '/produtor/participantes'
     | '/produtor/suporte'
     | '/admin/'
     | '/app/'
@@ -470,6 +519,7 @@ export interface FileRouteTypes {
     | '/admin/marketing/publicidade'
     | '/admin/marketing/push'
     | '/api/public/uazapi-webhook'
+    | '/eventos/$id/checkout'
     | '/oauth/google/return'
     | '/admin/marketing/'
   fileRoutesByTo: FileRoutesByTo
@@ -500,10 +550,14 @@ export interface FileRouteTypes {
     | '/app/historico'
     | '/app/perfil'
     | '/auth/callback'
+    | '/eventos/$id'
     | '/produtor/configuracoes'
     | '/produtor/equipe'
+    | '/produtor/financeiro'
+    | '/produtor/ingressos'
     | '/produtor/marketing'
     | '/produtor/novo-evento'
+    | '/produtor/participantes'
     | '/produtor/suporte'
     | '/admin'
     | '/app'
@@ -514,6 +568,7 @@ export interface FileRouteTypes {
     | '/admin/marketing/publicidade'
     | '/admin/marketing/push'
     | '/api/public/uazapi-webhook'
+    | '/eventos/$id/checkout'
     | '/oauth/google/return'
     | '/admin/marketing'
   id:
@@ -547,10 +602,14 @@ export interface FileRouteTypes {
     | '/app/historico'
     | '/app/perfil'
     | '/auth/callback'
+    | '/eventos/$id'
     | '/produtor/configuracoes'
     | '/produtor/equipe'
+    | '/produtor/financeiro'
+    | '/produtor/ingressos'
     | '/produtor/marketing'
     | '/produtor/novo-evento'
+    | '/produtor/participantes'
     | '/produtor/suporte'
     | '/admin/'
     | '/app/'
@@ -561,6 +620,7 @@ export interface FileRouteTypes {
     | '/admin/marketing/publicidade'
     | '/admin/marketing/push'
     | '/api/public/uazapi-webhook'
+    | '/eventos/$id/checkout'
     | '/oauth/google/return'
     | '/admin/marketing/'
   fileRoutesById: FileRoutesById
@@ -572,7 +632,7 @@ export interface RootRouteChildren {
   CadastroRoute: typeof CadastroRoute
   CheckinRoute: typeof CheckinRoute
   CriarEventoRoute: typeof CriarEventoRoute
-  EventosRoute: typeof EventosRoute
+  EventosRoute: typeof EventosRouteWithChildren
   LoginRoute: typeof LoginRoute
   McpRoute: typeof McpRoute
   PoliticaDePrivacidadeRoute: typeof PoliticaDePrivacidadeRoute
@@ -807,6 +867,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthCallbackRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/eventos/$id': {
+      id: '/eventos/$id'
+      path: '/$id'
+      fullPath: '/eventos/$id'
+      preLoaderRoute: typeof EventosIdRouteImport
+      parentRoute: typeof EventosRoute
+    }
     '/produtor/': {
       id: '/produtor/'
       path: '/'
@@ -828,6 +895,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProdutorEquipeRouteImport
       parentRoute: typeof ProdutorRoute
     }
+    '/produtor/financeiro': {
+      id: '/produtor/financeiro'
+      path: '/financeiro'
+      fullPath: '/produtor/financeiro'
+      preLoaderRoute: typeof ProdutorFinanceiroRouteImport
+      parentRoute: typeof ProdutorRoute
+    }
+    '/produtor/ingressos': {
+      id: '/produtor/ingressos'
+      path: '/ingressos'
+      fullPath: '/produtor/ingressos'
+      preLoaderRoute: typeof ProdutorIngressosRouteImport
+      parentRoute: typeof ProdutorRoute
+    }
     '/produtor/marketing': {
       id: '/produtor/marketing'
       path: '/marketing'
@@ -840,6 +921,13 @@ declare module '@tanstack/react-router' {
       path: '/novo-evento'
       fullPath: '/produtor/novo-evento'
       preLoaderRoute: typeof ProdutorNovoEventoRouteImport
+      parentRoute: typeof ProdutorRoute
+    }
+    '/produtor/participantes': {
+      id: '/produtor/participantes'
+      path: '/participantes'
+      fullPath: '/produtor/participantes'
+      preLoaderRoute: typeof ProdutorParticipantesRouteImport
       parentRoute: typeof ProdutorRoute
     }
     '/produtor/suporte': {
@@ -897,6 +985,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/api/public/uazapi-webhook'
       preLoaderRoute: typeof ApiPublicUazapiWebhookRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/eventos/$id/checkout': {
+      id: '/eventos/$id/checkout'
+      path: '/checkout'
+      fullPath: '/eventos/$id/checkout'
+      preLoaderRoute: typeof EventosIdCheckoutRouteImport
+      parentRoute: typeof EventosIdRoute
     }
     '/oauth/google/return': {
       id: '/oauth/google/return'
@@ -962,11 +1057,37 @@ const AppRouteChildren: AppRouteChildren = {
 
 const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
 
+interface EventosIdRouteChildren {
+  EventosIdCheckoutRoute: typeof EventosIdCheckoutRoute
+}
+
+const EventosIdRouteChildren: EventosIdRouteChildren = {
+  EventosIdCheckoutRoute: EventosIdCheckoutRoute,
+}
+
+const EventosIdRouteWithChildren = EventosIdRoute._addFileChildren(
+  EventosIdRouteChildren,
+)
+
+interface EventosRouteChildren {
+  EventosIdRoute: typeof EventosIdRouteWithChildren
+}
+
+const EventosRouteChildren: EventosRouteChildren = {
+  EventosIdRoute: EventosIdRouteWithChildren,
+}
+
+const EventosRouteWithChildren =
+  EventosRoute._addFileChildren(EventosRouteChildren)
+
 interface ProdutorRouteChildren {
   ProdutorConfiguracoesRoute: typeof ProdutorConfiguracoesRoute
   ProdutorEquipeRoute: typeof ProdutorEquipeRoute
+  ProdutorFinanceiroRoute: typeof ProdutorFinanceiroRoute
+  ProdutorIngressosRoute: typeof ProdutorIngressosRoute
   ProdutorMarketingRoute: typeof ProdutorMarketingRoute
   ProdutorNovoEventoRoute: typeof ProdutorNovoEventoRoute
+  ProdutorParticipantesRoute: typeof ProdutorParticipantesRoute
   ProdutorSuporteRoute: typeof ProdutorSuporteRoute
   ProdutorIndexRoute: typeof ProdutorIndexRoute
 }
@@ -974,8 +1095,11 @@ interface ProdutorRouteChildren {
 const ProdutorRouteChildren: ProdutorRouteChildren = {
   ProdutorConfiguracoesRoute: ProdutorConfiguracoesRoute,
   ProdutorEquipeRoute: ProdutorEquipeRoute,
+  ProdutorFinanceiroRoute: ProdutorFinanceiroRoute,
+  ProdutorIngressosRoute: ProdutorIngressosRoute,
   ProdutorMarketingRoute: ProdutorMarketingRoute,
   ProdutorNovoEventoRoute: ProdutorNovoEventoRoute,
+  ProdutorParticipantesRoute: ProdutorParticipantesRoute,
   ProdutorSuporteRoute: ProdutorSuporteRoute,
   ProdutorIndexRoute: ProdutorIndexRoute,
 }
@@ -991,7 +1115,7 @@ const rootRouteChildren: RootRouteChildren = {
   CadastroRoute: CadastroRoute,
   CheckinRoute: CheckinRoute,
   CriarEventoRoute: CriarEventoRoute,
-  EventosRoute: EventosRoute,
+  EventosRoute: EventosRouteWithChildren,
   LoginRoute: LoginRoute,
   McpRoute: McpRoute,
   PoliticaDePrivacidadeRoute: PoliticaDePrivacidadeRoute,
