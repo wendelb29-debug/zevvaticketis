@@ -35,6 +35,7 @@ interface AccountMenuProps {
 export function AccountMenu({ user, onLogout, onNavigate, onOpenAuth }: AccountMenuProps) {
   const [profile, setProfile] = useState<any>(null);
   const [isProducer, setIsProducer] = useState(false);
+  const [isAdminUser, setIsAdminUser] = useState(false);
   const [completionPercentage, setCompletionPercentage] = useState(0);
   const avatarUrl = useAvatarUrl(profile?.avatar_url);
 
@@ -63,6 +64,12 @@ export function AccountMenu({ user, onLogout, onNavigate, onOpenAuth }: AccountM
         .maybeSingle();
       
       setIsProducer(!!member);
+
+      const { data: isAdminRole } = await supabase.rpc('has_role', { 
+        _user_id: user.id, 
+        _role: 'admin' 
+      });
+      setIsAdminUser(!!isAdminRole);
     }
     fetchData();
   }, [user]);
@@ -208,6 +215,16 @@ export function AccountMenu({ user, onLogout, onNavigate, onOpenAuth }: AccountM
             >
               <Calendar className="w-4 h-4 text-navy/40 group-hover:text-coral transition-colors" />
               Meus eventos
+            </DropdownMenuItem>
+          )}
+
+          {isAdminUser && (
+            <DropdownMenuItem 
+              onClick={() => onNavigate("/admin")}
+              className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-extrabold text-navy cursor-pointer hover:bg-surface group"
+            >
+              <Settings className="w-4 h-4 text-navy/40 group-hover:text-coral transition-colors" />
+              Painel Admin
             </DropdownMenuItem>
           )}
 

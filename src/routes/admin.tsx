@@ -56,14 +56,25 @@ function AdminLayout() {
 
   useEffect(() => {
     async function checkAdmin() {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) return;
-      setUser(user);
+      const { data: { user: authUser }, error: authError } = await supabase.auth.getUser();
+      
+      if (authError || !authUser) {
+        setIsAdmin(false);
+        return;
+      }
 
-      const { data: isAdminRole } = await supabase.rpc('has_role', { 
-        _user_id: user.id, 
+      setUser(authUser);
+
+      const { data: isAdminRole, error: roleError } = await supabase.rpc('has_role', { 
+        _user_id: authUser.id, 
         _role: 'admin' 
       });
+      
+      if (roleError) {
+        console.error("Error checking admin role:", roleError);
+        setIsAdmin(false);
+        return;
+      }
       
       setIsAdmin(!!isAdminRole);
     }
