@@ -1474,6 +1474,14 @@ export type Database = {
             Returns: boolean
           }
         | { Args: { _role: string; _user_id: string }; Returns: boolean }
+      log_resource_access: {
+        Args: {
+          _action?: string
+          _resource_id?: string
+          _resource_type: string
+        }
+        Returns: undefined
+      }
       promote_to_platform_admin: {
         Args: { target_email: string }
         Returns: Json

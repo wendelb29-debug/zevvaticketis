@@ -144,11 +144,17 @@ function AdminLayout() {
   
   if (isAdmin === false) {
     // Log access denied attempt
-    supabase.rpc('log_resource_access', {
-      _resource_type: 'access_denied',
-      _resource_id: location.pathname,
-      _action: '403_forbidden'
-    }).catch(err => console.error('Failed to log access denial:', err));
+    supabase
+      .from('access_logs' as any)
+      .insert({
+        admin_id: user?.id,
+        resource_type: 'access_denied',
+        resource_id: location.pathname,
+        action: '403_forbidden'
+      })
+      .then(({ error }) => {
+        if (error) console.error('Failed to log access denial:', error);
+      });
 
     navigate({ to: "/" });
     return null;
