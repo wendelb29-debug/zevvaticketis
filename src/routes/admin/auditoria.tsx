@@ -39,7 +39,7 @@ function AuditoriaPage() {
         <h1 className="text-3xl font-manrope font-black text-navy tracking-tighter uppercase flex items-center gap-3">
           <History className="w-8 h-8 text-primary" /> Auditoria do Sistema
         </h1>
-        <p className="text-sm text-muted-fg font-medium">Monitoramento completo de ações administrativas e acesso a dados sensíveis.</p>
+        <p className="text-sm text-muted-fg font-medium">Monitoramento completo de ações administrativas e registrar tentativas negadas de acesso (ex.: quando um usuário recebe 403/404 por permissão) no painel de auditoria.</p>
       </div>
 
       <Tabs defaultValue="acoes" className="w-full">
