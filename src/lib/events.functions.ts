@@ -9,7 +9,7 @@ export const getEventDetails = createServerFn({ method: "GET" })
       .from("events")
       .select(`
         *,
-        producer:organizations(*)
+        producer:tenants(*)
       `);
 
     if (data.id) {

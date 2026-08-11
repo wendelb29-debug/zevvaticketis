@@ -5,22 +5,28 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Users, Search, Mail, Phone, Download } from "lucide-react";
 import { Input } from "@/components/ui/input";
+import { useTenants } from "@/hooks/use-tenants";
+
 
 export const Route = createFileRoute("/produtor/participantes")({
   component: ParticipantesPage,
 });
 
 function ParticipantesPage() {
+  const { activeTenant } = useTenants();
   const { data: tickets, isLoading } = useQuery({
-    queryKey: ["producer-participants"],
+    queryKey: ["producer-participants", activeTenant?.id],
+    enabled: !!activeTenant,
     queryFn: async () => {
       const { data } = await (supabase
         .from("tickets" as any)
-        .select("*, profiles:usuario_id(nome_completo, email, telefone), events(nome_evento)")
+        .select("*, profiles:usuario_id(nome_completo, email, telefone), events(nome_evento), ticket_types(nome)")
+        .eq("tenant_id", activeTenant?.id)
         .order("created_at", { ascending: false }) as any);
       return data;
     }
   });
+
 
   return (
     <div className="container mx-auto py-8 space-y-8 font-inter">

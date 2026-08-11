@@ -26,10 +26,12 @@ import {
 } from "@/components/ui/dialog";
 import { Checkbox } from "@/components/ui/checkbox";
 import { toast } from "sonner";
+import { useTenants } from "@/hooks/use-tenants";
 
 export const Route = createFileRoute("/produtor/equipe")({
   component: TeamManagement,
 });
+
 
 const PERMISSIONS = [
   { id: 'checkin', label: 'Check-in' },
@@ -40,6 +42,7 @@ const PERMISSIONS = [
 ];
 
 function TeamManagement() {
+  const { activeTenant } = useTenants();
   const [members, setMembers] = useState<any[]>([]);
   const [invites, setInvites] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -49,25 +52,28 @@ function TeamManagement() {
   const [sendingInvite, setSendingInvite] = useState(false);
 
   useEffect(() => {
-    fetchTeamData();
-  }, []);
+    if (activeTenant) {
+      fetchTeamData();
+    }
+  }, [activeTenant]);
+
 
   async function fetchTeamData() {
+    if (!activeTenant) return;
     setLoading(true);
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) return;
 
-    // Get organization ID
     const { data: member } = await supabase
-      .from("organization_members")
-      .select("organization_id")
-      .eq("user_id", user.id)
+      .from("tenant_members")
+      .select("tenant_id")
+      .eq("tenant_id", activeTenant.id)
+      .limit(1)
       .single();
+
 
     if (member) {
       // Fetch members
       const { data: memberList } = await supabase
-        .from("organization_members")
+        .from("tenant_members")
         .select(`
           *,
           profiles:user_id (
@@ -76,7 +82,7 @@ function TeamManagement() {
             avatar_url
           )
         `)
-        .eq("organization_id", member.organization_id);
+        .eq("tenant_id", member.tenant_id);
       
       if (memberList) setMembers(memberList);
 
@@ -84,7 +90,7 @@ function TeamManagement() {
       const { data: inviteList } = await supabase
         .from("team_invites")
         .select("*")
-        .eq("organization_id", member.organization_id)
+        .eq("tenant_id", member.tenant_id)
         .eq("status", "pendente");
       
       if (inviteList) setInvites(inviteList);
@@ -101,17 +107,17 @@ function TeamManagement() {
       if (!user) throw new Error("Usuário não autenticado");
 
       const { data: member } = await supabase
-        .from("organization_members")
-        .select("organization_id")
+        .from("tenant_members")
+        .select("tenant_id")
         .eq("user_id", user.id)
         .single();
 
-      if (!member?.organization_id) throw new Error("Organização não encontrada");
+      if (!member?.tenant_id) throw new Error("Organização não encontrada");
 
       const { error } = await supabase
         .from("team_invites")
         .insert({
-          organization_id: member.organization_id,
+          tenant_id: member.tenant_id,
           email: inviteEmail,
           permissions: selectedPermissions,
           status: 'pendente'
@@ -229,7 +235,7 @@ function TeamManagement() {
 
                 <div className="flex flex-wrap gap-2">
                   <Badge variant="outline" className="bg-coral/5 text-coral border-coral/20 font-extrabold text-[10px] uppercase px-3">
-                    {member.role === 'produtor_owner' ? 'Dono' : 'Equipe'}
+                    {member.role === 'OWNER' ? 'Dono' : 'Equipe'}
                   </Badge>
                   {(member.permissions as string[] || []).map(perm => (
                     <Badge key={perm} className="bg-navy/5 text-navy border-navy/10 font-extrabold text-[10px] uppercase px-3">
@@ -238,7 +244,7 @@ function TeamManagement() {
                   ))}
                 </div>
 
-                {member.role !== 'produtor_owner' && (
+                {member.role !== 'OWNER' && (
                    <Button variant="ghost" size="icon" className="text-muted hover:text-destructive">
                      <Trash2 className="w-5 h-5" />
                    </Button>

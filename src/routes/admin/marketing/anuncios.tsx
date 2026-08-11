@@ -25,7 +25,7 @@ function AnunciosPage() {
           title, 
           status, 
           category,
-          organizations(nome)
+          tenants(nome)
         `)
         .order('created_at', { ascending: false });
       
@@ -50,7 +50,7 @@ function AnunciosPage() {
 
   const filteredEvents = events?.filter(e => 
     e.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    e.organizations?.nome?.toLowerCase().includes(searchTerm.toLowerCase())
+    e.tenants?.nome?.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   if (isLoading) return <div>Carregando...</div>;
@@ -91,7 +91,7 @@ function AnunciosPage() {
                     {event.title}
                   </td>
                   <td className="px-6 py-4 text-sm text-navy/70 font-medium">
-                    {event.organizations?.nome || "Sem organização"}
+                    {event.tenants?.nome || "Sem organização"}
                   </td>
                   <td className="px-6 py-4">
                     <Badge variant="outline" className="capitalize text-[10px]">

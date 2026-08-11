@@ -76,7 +76,7 @@ export function UserMenu({ user, onLogout, onNavigate, agentStatus, onStatusChan
 
       // Check Producer
       const { data: member } = await supabase
-        .from("organization_members")
+        .from("tenant_members")
         .select("id")
         .eq("user_id", user.id)
         .maybeSingle();

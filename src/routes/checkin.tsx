@@ -34,7 +34,7 @@ export const Route = createFileRoute("/checkin")({
     
     // Check if user is owner/admin of an organization
     const { data: member } = await supabase
-      .from("organization_members")
+      .from("tenant_members")
       .select("id")
       .eq("user_id", authUser.id)
       .maybeSingle();

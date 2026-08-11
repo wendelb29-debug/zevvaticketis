@@ -4,23 +4,28 @@ import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Ticket, Plus, Edit2, Trash2 } from "lucide-react";
+import { useTenants } from "@/hooks/use-tenants";
+
 
 export const Route = createFileRoute("/produtor/ingressos")({
   component: IngressosPage,
 });
 
 function IngressosPage() {
+  const { activeTenant } = useTenants();
   const { data: ticketTypes, isLoading } = useQuery({
-    queryKey: ["producer-ticket-types"],
+    queryKey: ["producer-ticket-types", activeTenant?.id],
+    enabled: !!activeTenant,
     queryFn: async () => {
-      const { data: { user } } = await supabase.auth.getUser();
       const { data } = await (supabase
         .from("ticket_types" as any)
         .select("*, events(nome_evento)")
+        .eq("tenant_id", activeTenant?.id)
         .order("created_at", { ascending: false }) as any);
       return data;
     }
   });
+
 
   return (
     <div className="container mx-auto py-8 space-y-8 font-inter">

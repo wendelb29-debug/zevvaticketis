@@ -23,7 +23,7 @@ function AuthCallbackPage() {
       }
 
       // Completes producer signup securely once authenticated
-      const { ensureProducerOrganization } = await import('@/lib/organizations.functions');
+      const { ensureProducerOrganization } = await import('@/lib/tenants.functions');
       await ensureProducerOrganization();
 
       // Get the correct redirect path based on user role

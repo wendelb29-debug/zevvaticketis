@@ -17,7 +17,7 @@ function MarketingPage() {
       // @ts-ignore - bypassing strict table check for now
       const { data } = await supabase
         .from("events")
-        .select(`id, title, destaque, organizations(nome)`)
+        .select(`id, title, destaque, tenants(nome)`)
         .eq("status", "publicado");
       return data;
     }
@@ -63,7 +63,7 @@ function MarketingPage() {
             {events?.map((event: any) => (
               <tr key={event.id}>
                 <td className="px-6 py-4 font-bold text-navy">{event.title}</td>
-                <td className="px-6 py-4 text-sm">{event.organizations?.nome}</td>
+                <td className="px-6 py-4 text-sm">{event.tenants?.nome}</td>
                 <td className="px-6 py-4">
                   <Switch 
                     checked={event.destaque} 

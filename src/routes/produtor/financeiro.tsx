@@ -12,22 +12,25 @@ import {
   Calendar,
   Wallet
 } from "lucide-react";
+import { useTenants } from "@/hooks/use-tenants";
+
 
 export const Route = createFileRoute("/produtor/financeiro")({
   component: FinanceiroPage,
 });
 
 function FinanceiroPage() {
+  const { activeTenant } = useTenants();
   const { data: stats, isLoading } = useQuery({
-    queryKey: ["producer-financial-stats"],
+    queryKey: ["producer-financial-stats", activeTenant?.id],
+    enabled: !!activeTenant,
     queryFn: async () => {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) return null;
-
       const { data: orders } = await (supabase
         .from("orders" as any)
         .select("valor_total, taxa_plataforma, valor_produtos, created_at, status")
+        .eq("tenant_id", activeTenant?.id)
         .eq("status", "pago") as any);
+
 
       const faturamentoBruto = orders?.reduce((acc: number, curr: any) => acc + Number(curr.valor_total), 0) || 0;
       const taxas = orders?.reduce((acc: number, curr: any) => acc + Number(curr.taxa_plataforma), 0) || 0;

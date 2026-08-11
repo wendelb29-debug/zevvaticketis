@@ -19,22 +19,22 @@ export const getRedirectPath = createServerFn({ method: "GET" })
 
     // 1b & 1c. Check for organization membership
     const { data: member } = await supabase
-      .from("organization_members")
-      .select("organization_id, role, permissions")
+      .from("tenant_members")
+      .select("tenant_id, role, permissions")
       .eq("user_id", user.id)
       .maybeSingle();
 
     if (member) {
       // Rule: Team member with ONLY checkin permission goes straight to /checkin
       const permissions = member.permissions as string[] || [];
-      if (member.role === 'equipe' && permissions.length === 1 && permissions[0] === 'checkin') {
+      if (member.role === 'ADMIN' && permissions.length === 1 && permissions[0] === 'checkin') {
         return "/checkin";
       }
 
       const { data: org } = await supabase
-        .from("organizations")
+        .from("tenants")
         .select("status")
-        .eq("id", member.organization_id)
+        .eq("id", member.tenant_id)
         .maybeSingle();
 
       if (org?.status === "aprovado") return "/produtor";

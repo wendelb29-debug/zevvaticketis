@@ -24,7 +24,10 @@ import { exportToPDF, exportToExcel } from "@/lib/export";
 import { toast } from "sonner";
 import { Link } from "@tanstack/react-router";
 
+import { useTenants } from "@/hooks/use-tenants";
+
 export function ProducerDashboardPanel() {
+  const { activeTenant } = useTenants();
   const [loading, setLoading] = useState(true);
   const [stats, setStats] = useState({
     activeEvents: 0,
@@ -36,19 +39,23 @@ export function ProducerDashboardPanel() {
   const [salesReport, setSalesReport] = useState<any[]>([]);
 
   useEffect(() => {
-    fetchProducerData();
-  }, []);
+    if (activeTenant) {
+      fetchProducerData();
+    }
+  }, [activeTenant]);
+
 
   async function fetchProducerData() {
     setLoading(true);
     try {
       const { data: { user } } = await supabase.auth.getUser();
-      if (!user) return;
+      if (!user || !activeTenant) return;
 
       const { data: eventsData } = await supabase
         .from("events")
         .select("*, ticket_types(*)")
-        .eq("producer_id", user.id);
+        .eq("tenant_id", activeTenant.id);
+
 
       const activeEvents = eventsData?.filter(e => e.status === "publicado").length || 0;
       

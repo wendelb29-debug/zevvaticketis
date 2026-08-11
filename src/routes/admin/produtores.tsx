@@ -15,11 +15,11 @@ function ProdutoresPage() {
   const queryClient = useQueryClient();
   const [filter, setFilter] = useState("all");
   
-  const { data: organizations, isLoading } = useQuery({
+  const { data: tenants, isLoading } = useQuery({
     queryKey: ["all-orgs", filter],
     queryFn: async () => {
       let query = supabase
-        .from("organizations")
+        .from("tenants")
         .select(`
           id, nome, documento, status, created_at,
           countries ( nome )
@@ -39,7 +39,7 @@ function ProdutoresPage() {
     mutationFn: async ({ id, currentStatus }: { id: string, currentStatus: string }) => {
       const nextStatus = currentStatus === 'aprovado' ? 'bloqueado' : 'aprovado';
       const { error } = await supabase
-        .from("organizations")
+        .from("tenants")
         .update({ status: nextStatus })
         .eq("id", id);
       if (error) throw error;
@@ -87,7 +87,7 @@ function ProdutoresPage() {
             </tr>
           </thead>
           <tbody className="divide-y divide-line">
-            {organizations?.map((org: any) => (
+            {tenants?.map((org: any) => (
               <tr key={org.id} className="hover:bg-surface/50 transition-colors">
                 <td className="px-6 py-4">
                   <div className="flex items-center gap-3">
