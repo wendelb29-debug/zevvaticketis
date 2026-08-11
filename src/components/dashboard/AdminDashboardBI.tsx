@@ -152,7 +152,7 @@ export function AdminDashboardBI() {
         source: c.utm_source || "Direto",
         clicks: 0, // Mock for now until tracking is populated
         conv: 0,
-        roi: c.spend > 0 ? (c.budget / c.spend).toFixed(1) : 0,
+        roi: (c.spend ?? 0) > 0 ? ((c.budget ?? 0) / (c.spend ?? 1)).toFixed(1) : 0,
         revenue: 0
       })) || []);
 
