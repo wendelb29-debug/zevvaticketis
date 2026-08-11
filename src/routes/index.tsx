@@ -400,6 +400,8 @@ function HomePage() {
           </div>
         </section>
 
+        <PremiumNewsletter />
+
         <section className="px-6 py-24">
           <div className="max-w-3xl mx-auto space-y-12">
             <div className="text-center space-y-4">
