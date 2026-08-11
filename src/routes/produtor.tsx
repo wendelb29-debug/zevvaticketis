@@ -177,19 +177,23 @@ function ProdutorLayout() {
     );
   }
 
+  const { hasPermission } = useTenants();
+
   const allMenuItems = [
-    { label: "Dashboard", icon: LayoutDashboard, href: "/produtor", activeOptions: { exact: true } },
-    { label: "Meus Eventos", icon: FileText, href: "/produtor/eventos" },
-    { label: "Criar Evento", icon: Plus, href: "/produtor/novo-evento" },
-    { label: "Ingressos", icon: Ticket, href: "/produtor/ingressos" },
-    { label: "Comunicação", icon: Mail, href: "/produtor/email-management" },
-    { label: "Participantes", icon: Users, href: "/produtor/participantes" },
-    { label: "Financeiro", icon: BarChart3, href: "/produtor/financeiro" },
-    { label: "Equipe", icon: Users, href: "/produtor/equipe" },
-    { label: "Configurações", icon: SettingsIcon, href: "/produtor/configuracoes" },
+    { label: "Dashboard", icon: LayoutDashboard, href: "/produtor", activeOptions: { exact: true }, permission: "DASHBOARD" },
+    { label: "Meus Eventos", icon: FileText, href: "/produtor/eventos", permission: "EVENTOS" },
+    { label: "Criar Evento", icon: Plus, href: "/produtor/novo-evento", permission: "EVENTOS" },
+    { label: "Ingressos", icon: Ticket, href: "/produtor/ingressos", permission: "INGRESSOS" },
+    { label: "Comunicação", icon: Mail, href: "/produtor/email-management", permission: "COMUNICACAO" },
+    { label: "Participantes", icon: Users, href: "/produtor/participantes", permission: "PARTICIPANTES" },
+    { label: "Financeiro", icon: BarChart3, href: "/produtor/financeiro", permission: "FINANCEIRO" },
+    { label: "Equipe", icon: Users, href: "/produtor/equipe", permission: "EQUIPE" },
+    { label: "Configurações", icon: SettingsIcon, href: "/produtor/configuracoes", permission: "CONFIGURACOES" },
   ];
 
-  const filteredMenuItems = allMenuItems; // Simplified for MVP as requested to follow the vision first
+  const filteredMenuItems = allMenuItems.filter(item => 
+    !item.permission || hasPermission(item.permission)
+  );
 
   const SidebarContent = () => (
     <div className="flex flex-col h-full bg-white border-r border-line py-8 font-inter">

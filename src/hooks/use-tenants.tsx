@@ -14,8 +14,10 @@ type TenantContextType = {
   activeTenant: Tenant | null;
   tenants: Tenant[];
   loading: boolean;
+  userRole: string | null;
   switchTenant: (tenantId: string) => void;
   refreshTenants: () => Promise<void>;
+  hasPermission: (permission: string) => boolean;
 };
 
 const TenantContext = createContext<TenantContextType | undefined>(undefined);
@@ -23,6 +25,7 @@ const TenantContext = createContext<TenantContextType | undefined>(undefined);
 export function TenantProvider({ children }: { children: React.ReactNode }) {
   const [activeTenant, setActiveTenant] = useState<Tenant | null>(null);
   const [tenants, setTenants] = useState<Tenant[]>([]);
+  const [userRole, setUserRole] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
@@ -38,6 +41,7 @@ export function TenantProvider({ children }: { children: React.ReactNode }) {
       .from("tenant_members")
       .select(`
         tenant_id,
+        role,
         tenants (
           id,
           nome,
@@ -61,9 +65,11 @@ export function TenantProvider({ children }: { children: React.ReactNode }) {
       
       if (savedTenant) {
         setActiveTenant(savedTenant);
+        const member = memberData.find((m: any) => m.tenant_id === savedId);
+        if (member) setUserRole(member.role);
       } else if (fetchedTenants.length > 0) {
-        // Default to first one if none saved
-        // setActiveTenant(fetchedTenants[0]);
+        // Option: Auto-select if only one
+        // if (fetchedTenants.length === 1) switchTenant(fetchedTenants[0].id);
       }
     }
     setLoading(false);
@@ -81,16 +87,44 @@ export function TenantProvider({ children }: { children: React.ReactNode }) {
     };
   }, []);
 
-  const switchTenant = (tenantId: string) => {
+  const switchTenant = async (tenantId: string) => {
     const tenant = tenants.find(t => t.id === tenantId);
     if (tenant) {
       setActiveTenant(tenant);
       localStorage.setItem("zevva_active_tenant_id", tenant.id);
+      
+      // Update role for active tenant
+      const { data: member } = await supabase
+        .from("tenant_members")
+        .select("role")
+        .eq("tenant_id", tenantId)
+        .maybeSingle();
+      
+      if (member) setUserRole(member.role);
     }
   };
 
+  const hasPermission = (permission: string) => {
+    if (!userRole) return false;
+    const role = userRole.toUpperCase();
+    
+    // Platform Admin has all permissions
+    // Note: check_is_platform_admin is separate but for within-tenant logic:
+    if (role === 'OWNER' || role === 'ADMIN') return true;
+    
+    const permissions: Record<string, string[]> = {
+      'MANAGER': ['DASHBOARD', 'EVENTOS', 'INGRESSOS', 'PARTICIPANTES', 'CHECKIN', 'RELATORIOS'],
+      'MARKETING': ['DASHBOARD', 'CAMPANHAS', 'ANUNCIOS', 'METRICAS'],
+      'FINANCEIRO': ['DASHBOARD', 'VENDAS', 'REPASSES', 'RELATORIOS'],
+      'CHECKIN_SUPERVISOR': ['CHECKIN', 'EQUIPE', 'AUDITORIA'],
+      'CHECKIN_OPERATOR': ['CHECKIN', 'SCANNER', 'PARTICIPANTES']
+    };
+
+    return permissions[role]?.includes(permission.toUpperCase()) || false;
+  };
+
   return (
-    <TenantContext.Provider value={{ activeTenant, tenants, loading, switchTenant, refreshTenants }}>
+    <TenantContext.Provider value={{ activeTenant, tenants, loading, userRole, switchTenant, refreshTenants, hasPermission }}>
       {children}
     </TenantContext.Provider>
   );
