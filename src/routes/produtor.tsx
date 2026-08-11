@@ -67,7 +67,7 @@ export const Route = createFileRoute("/produtor")({
 });
 
 function ProdutorLayout() {
-  const { activeTenant, loading: tenantsLoading } = useTenants();
+  const { activeTenant, tenants, switchTenant, loading: tenantsLoading } = useTenants();
   const [status, setStatus] = useState<string | null>(null);
   const [memberRole, setMemberRole] = useState<string | null>(null);
   const [permissions, setPermissions] = useState<string[]>([]);
