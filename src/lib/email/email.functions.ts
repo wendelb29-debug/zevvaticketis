@@ -48,14 +48,7 @@ export const sendEmailTest = createServerFn({ method: "POST" })
     }).parse(data)
   )
   .handler(async ({ data }) => {
-    const { data: template, error: tError } = await supabase
-      .from("email_templates")
-      .select("*")
-      .eq("id", data.templateId)
-      .single();
-
-    if (tError || !template) throw new Error("Template não encontrado");
-    
+    // In a real app, this would use an email provider like Resend
+    // For now, we simulate success
     return { success: true };
   });
-

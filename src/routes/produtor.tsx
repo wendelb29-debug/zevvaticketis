@@ -168,6 +168,7 @@ function ProdutorLayout() {
     { label: "Meus Eventos", icon: FileText, href: "/produtor/eventos" },
     { label: "Criar Evento", icon: Plus, href: "/produtor/novo-evento" },
     { label: "Ingressos", icon: Ticket, href: "/produtor/ingressos" },
+    { label: "Comunicação", icon: Mail, href: "/produtor/email-management" },
     { label: "Participantes", icon: Users, href: "/produtor/participantes" },
     { label: "Financeiro", icon: BarChart3, href: "/produtor/financeiro" },
     { label: "Equipe", icon: Users, href: "/produtor/equipe" },
