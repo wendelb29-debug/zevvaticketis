@@ -820,6 +820,7 @@ function AdminChatPage() {
                       </button>
                     </div>
                   </div>
+                  </div>
                 )}
               </div>
             </>
