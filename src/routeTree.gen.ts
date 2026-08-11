@@ -67,6 +67,7 @@ import { Route as AdminMarketingAnunciosRouteImport } from './routes/admin/marke
 import { Route as AdminMarketingPublicidadeRouteImport } from './routes/admin/marketing/publicidade'
 import { Route as AdminMarketingPushRouteImport } from './routes/admin/marketing/push'
 import { Route as ApiPublicUazapiWebhookRouteImport } from './routes/api/public/uazapi-webhook'
+import { Route as CheckinEventIdRouteImport } from './routes/checkin/event.$id'
 import { Route as EventosIdCheckoutRouteImport } from './routes/eventos/$id.checkout'
 import { Route as OauthGoogleReturnRouteImport } from './routes/oauth/google/return'
 import { Route as ApiPublicTicketsShareTokenRouteImport } from './routes/api/public/tickets/share/$token'
@@ -365,6 +366,11 @@ const ApiPublicUazapiWebhookRoute = ApiPublicUazapiWebhookRouteImport.update({
   path: '/api/public/uazapi-webhook',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CheckinEventIdRoute = CheckinEventIdRouteImport.update({
+  id: '/event/$id',
+  path: '/event/$id',
+  getParentRoute: () => CheckinRoute,
+} as any)
 const EventosIdCheckoutRoute = EventosIdCheckoutRouteImport.update({
   id: '/checkout',
   path: '/checkout',
@@ -439,6 +445,7 @@ export interface FileRoutesByFullPath {
   '/admin/marketing/publicidade': typeof AdminMarketingPublicidadeRoute
   '/admin/marketing/push': typeof AdminMarketingPushRoute
   '/api/public/uazapi-webhook': typeof ApiPublicUazapiWebhookRoute
+  '/checkin/event/$id': typeof CheckinEventIdRoute
   '/eventos/$id/checkout': typeof EventosIdCheckoutRoute
   '/oauth/google/return': typeof OauthGoogleReturnRoute
   '/admin/checkin/': typeof AdminCheckinIndexRoute
@@ -498,6 +505,7 @@ export interface FileRoutesByTo {
   '/admin/marketing/publicidade': typeof AdminMarketingPublicidadeRoute
   '/admin/marketing/push': typeof AdminMarketingPushRoute
   '/api/public/uazapi-webhook': typeof ApiPublicUazapiWebhookRoute
+  '/checkin/event/$id': typeof CheckinEventIdRoute
   '/eventos/$id/checkout': typeof EventosIdCheckoutRoute
   '/oauth/google/return': typeof OauthGoogleReturnRoute
   '/admin/checkin': typeof AdminCheckinIndexRoute
@@ -562,6 +570,7 @@ export interface FileRoutesById {
   '/admin/marketing/publicidade': typeof AdminMarketingPublicidadeRoute
   '/admin/marketing/push': typeof AdminMarketingPushRoute
   '/api/public/uazapi-webhook': typeof ApiPublicUazapiWebhookRoute
+  '/checkin/event/$id': typeof CheckinEventIdRoute
   '/eventos/$id/checkout': typeof EventosIdCheckoutRoute
   '/oauth/google/return': typeof OauthGoogleReturnRoute
   '/admin/checkin/': typeof AdminCheckinIndexRoute
@@ -627,6 +636,7 @@ export interface FileRouteTypes {
     | '/admin/marketing/publicidade'
     | '/admin/marketing/push'
     | '/api/public/uazapi-webhook'
+    | '/checkin/event/$id'
     | '/eventos/$id/checkout'
     | '/oauth/google/return'
     | '/admin/checkin/'
@@ -686,6 +696,7 @@ export interface FileRouteTypes {
     | '/admin/marketing/publicidade'
     | '/admin/marketing/push'
     | '/api/public/uazapi-webhook'
+    | '/checkin/event/$id'
     | '/eventos/$id/checkout'
     | '/oauth/google/return'
     | '/admin/checkin'
@@ -749,6 +760,7 @@ export interface FileRouteTypes {
     | '/admin/marketing/publicidade'
     | '/admin/marketing/push'
     | '/api/public/uazapi-webhook'
+    | '/checkin/event/$id'
     | '/eventos/$id/checkout'
     | '/oauth/google/return'
     | '/admin/checkin/'
@@ -1191,6 +1203,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicUazapiWebhookRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/checkin/event/$id': {
+      id: '/checkin/event/$id'
+      path: '/event/$id'
+      fullPath: '/checkin/event/$id'
+      preLoaderRoute: typeof CheckinEventIdRouteImport
+      parentRoute: typeof CheckinRoute
+    }
     '/eventos/$id/checkout': {
       id: '/eventos/$id/checkout'
       path: '/checkout'
@@ -1278,6 +1297,7 @@ interface CheckinRouteChildren {
   CheckinPresencaRoute: typeof CheckinPresencaRoute
   CheckinScannerRoute: typeof CheckinScannerRoute
   CheckinIndexRoute: typeof CheckinIndexRoute
+  CheckinEventIdRoute: typeof CheckinEventIdRoute
 }
 
 const CheckinRouteChildren: CheckinRouteChildren = {
@@ -1285,6 +1305,7 @@ const CheckinRouteChildren: CheckinRouteChildren = {
   CheckinPresencaRoute: CheckinPresencaRoute,
   CheckinScannerRoute: CheckinScannerRoute,
   CheckinIndexRoute: CheckinIndexRoute,
+  CheckinEventIdRoute: CheckinEventIdRoute,
 }
 
 const CheckinRouteWithChildren =
