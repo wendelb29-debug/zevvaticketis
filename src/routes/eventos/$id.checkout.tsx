@@ -107,7 +107,7 @@ function CheckoutPage() {
         tracking.attributeOrder(data.id, id, totalAmount);
       }
       toast.success("Compra realizada com sucesso!");
-      navigate({ to: "/app/historico" }); // Assuming this exists or will be created
+      navigate({ to: "/tickets" });
     },
     onError: (error: any) => {
       toast.error("Erro ao processar compra: " + error.message);
