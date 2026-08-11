@@ -54,7 +54,7 @@ export const Route = createFileRoute("/admin")({
           action: '403_forbidden'
         });
 
-      throw redirect({ to: "/app" });
+      throw redirect({ to: "/unauthorized" });
     }
   },
   component: AdminLayout,

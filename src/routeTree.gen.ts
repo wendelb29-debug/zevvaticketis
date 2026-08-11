@@ -22,6 +22,7 @@ import { Route as PoliticaDePrivacidadeRouteImport } from './routes/politica-de-
 import { Route as ProdutorRouteImport } from './routes/produtor'
 import { Route as ProdutorPendenteRouteImport } from './routes/produtor-pendente'
 import { Route as TermosDeUsoRouteImport } from './routes/termos-de-uso'
+import { Route as UnauthorizedRouteImport } from './routes/unauthorized'
 import { Route as Char91DotmcpChar93ListToolsRouteImport } from './routes/[.mcp]/list-tools'
 import { Route as Char91DotwellKnownChar93OauthProtectedResourceRouteImport } from './routes/[.well-known]/oauth-protected-resource'
 import { Route as AdminIndexRouteImport } from './routes/admin/index'
@@ -123,6 +124,11 @@ const ProdutorPendenteRoute = ProdutorPendenteRouteImport.update({
 const TermosDeUsoRoute = TermosDeUsoRouteImport.update({
   id: '/termos-de-uso',
   path: '/termos-de-uso',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const UnauthorizedRoute = UnauthorizedRouteImport.update({
+  id: '/unauthorized',
+  path: '/unauthorized',
   getParentRoute: () => rootRouteImport,
 } as any)
 const Char91DotmcpChar93ListToolsRoute =
@@ -329,6 +335,7 @@ export interface FileRoutesByFullPath {
   '/produtor': typeof ProdutorRouteWithChildren
   '/produtor-pendente': typeof ProdutorPendenteRoute
   '/termos-de-uso': typeof TermosDeUsoRoute
+  '/unauthorized': typeof UnauthorizedRoute
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/admin/aprovacoes': typeof AdminAprovacoesRoute
@@ -378,6 +385,7 @@ export interface FileRoutesByTo {
   '/politica-de-privacidade': typeof PoliticaDePrivacidadeRoute
   '/produtor-pendente': typeof ProdutorPendenteRoute
   '/termos-de-uso': typeof TermosDeUsoRoute
+  '/unauthorized': typeof UnauthorizedRoute
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/admin/aprovacoes': typeof AdminAprovacoesRoute
@@ -431,6 +439,7 @@ export interface FileRoutesById {
   '/produtor': typeof ProdutorRouteWithChildren
   '/produtor-pendente': typeof ProdutorPendenteRoute
   '/termos-de-uso': typeof TermosDeUsoRoute
+  '/unauthorized': typeof UnauthorizedRoute
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/admin/aprovacoes': typeof AdminAprovacoesRoute
@@ -485,6 +494,7 @@ export interface FileRouteTypes {
     | '/produtor'
     | '/produtor-pendente'
     | '/termos-de-uso'
+    | '/unauthorized'
     | '/.mcp/list-tools'
     | '/.well-known/oauth-protected-resource'
     | '/admin/aprovacoes'
@@ -534,6 +544,7 @@ export interface FileRouteTypes {
     | '/politica-de-privacidade'
     | '/produtor-pendente'
     | '/termos-de-uso'
+    | '/unauthorized'
     | '/.mcp/list-tools'
     | '/.well-known/oauth-protected-resource'
     | '/admin/aprovacoes'
@@ -586,6 +597,7 @@ export interface FileRouteTypes {
     | '/produtor'
     | '/produtor-pendente'
     | '/termos-de-uso'
+    | '/unauthorized'
     | '/.mcp/list-tools'
     | '/.well-known/oauth-protected-resource'
     | '/admin/aprovacoes'
@@ -639,6 +651,7 @@ export interface RootRouteChildren {
   ProdutorRoute: typeof ProdutorRouteWithChildren
   ProdutorPendenteRoute: typeof ProdutorPendenteRoute
   TermosDeUsoRoute: typeof TermosDeUsoRoute
+  UnauthorizedRoute: typeof UnauthorizedRoute
   Char91DotmcpChar93ListToolsRoute: typeof Char91DotmcpChar93ListToolsRoute
   Char91DotwellKnownChar93OauthProtectedResourceRoute: typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   AuthCallbackRoute: typeof AuthCallbackRoute
@@ -739,6 +752,13 @@ declare module '@tanstack/react-router' {
       path: '/termos-de-uso'
       fullPath: '/termos-de-uso'
       preLoaderRoute: typeof TermosDeUsoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/unauthorized': {
+      id: '/unauthorized'
+      path: '/unauthorized'
+      fullPath: '/unauthorized'
+      preLoaderRoute: typeof UnauthorizedRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/.mcp/list-tools': {
@@ -1122,6 +1142,7 @@ const rootRouteChildren: RootRouteChildren = {
   ProdutorRoute: ProdutorRouteWithChildren,
   ProdutorPendenteRoute: ProdutorPendenteRoute,
   TermosDeUsoRoute: TermosDeUsoRoute,
+  UnauthorizedRoute: UnauthorizedRoute,
   Char91DotmcpChar93ListToolsRoute: Char91DotmcpChar93ListToolsRoute,
   Char91DotwellKnownChar93OauthProtectedResourceRoute:
     Char91DotwellKnownChar93OauthProtectedResourceRoute,
