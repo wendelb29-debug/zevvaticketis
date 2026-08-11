@@ -156,7 +156,6 @@ export function AdminDashboardBI() {
         revenue: c.sales_attribution?.reduce((acc: number, curr: any) => acc + (Number(curr.amount) || 0), 0) || 0
       })) || []);
 
-      // 5. Funnel Data (Simulated for now based on tracking)
       setFunnelData([
         { step: "Visitantes", val: 100 },
         { step: "Visualizou Evento", val: 65 },
@@ -165,22 +164,6 @@ export function AdminDashboardBI() {
         { step: "Conversão", val: 8 }
       ]);
 
-        name: c.name,
-        source: c.utm_source || "Direto",
-        clicks: 0, // Mock for now until tracking is populated
-        conv: 0,
-        roi: (c.spend ?? 0) > 0 ? ((c.budget ?? 0) / (c.spend ?? 1)).toFixed(1) : 0,
-        revenue: 0
-      })) || []);
-
-      setFunnelData([
-        { step: "Visualização", val: 100 },
-        { step: "Clique", val: 15 },
-        { step: "Cadastro", val: 8 },
-        { step: "Carrinho", val: 4 },
-        { step: "Compra", val: 2 },
-        { step: "Check-in", val: 1.8 }
-      ]);
       
     } catch (error) {
       console.error(error);
