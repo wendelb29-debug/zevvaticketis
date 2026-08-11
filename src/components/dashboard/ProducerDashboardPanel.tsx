@@ -51,7 +51,7 @@ export function ProducerDashboardPanel() {
       const { data: eventsData } = await supabase
         .from("events")
         .select("*, ticket_types(*)")
-        .eq("producer_id", user.id);
+        .eq("produtor_id", user.id);
 
       const activeEvents = eventsData?.filter(e => e.status === "publicado").length || 0;
       
@@ -76,7 +76,7 @@ export function ProducerDashboardPanel() {
       setEvents(eventsData || []);
 
       setSalesReport(ordersData?.map(order => ({
-        event: eventsData?.find(e => e.id === order.event_id)?.title || "Evento",
+        event: eventsData?.find(e => e.id === order.event_id)?.nome_evento || "Evento",
         ticket: "Ingresso Geral", // Simplified
         quantity: 1,
         value: order.valor_bruto,
@@ -113,11 +113,18 @@ export function ProducerDashboardPanel() {
           <h1 className="text-3xl font-manrope font-extrabold text-navy">Área do Produtor</h1>
           <p className="text-muted-fg">Gerencie seus eventos e acompanhe suas vendas em tempo real.</p>
         </div>
-        <Button asChild className="bg-coral hover:bg-coral/90 text-white gap-2 px-6 rounded-xl font-bold">
-          <Link to="/produtor/novo-evento">
-            <Plus className="w-5 h-5" /> Criar Evento
-          </Link>
-        </Button>
+        <div className="flex gap-2">
+          <Button asChild variant="outline" className="border-navy text-navy gap-2 px-6 rounded-xl font-bold">
+            <Link to="/produtor/tickets">
+              <Ticket className="w-5 h-5" /> Ver Ingressos
+            </Link>
+          </Button>
+          <Button asChild className="bg-coral hover:bg-coral/90 text-white gap-2 px-6 rounded-xl font-bold">
+            <Link to="/produtor/novo-evento">
+              <Plus className="w-5 h-5" /> Criar Evento
+            </Link>
+          </Button>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
