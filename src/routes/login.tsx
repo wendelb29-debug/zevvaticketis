@@ -36,7 +36,7 @@ function LoginPage() {
           .eq('user_id', userId)
           .maybeSingle();
         if (member) {
-          navigate({ to: '/produtor' });
+          navigate({ to: '/app' });
           return;
         }
 
