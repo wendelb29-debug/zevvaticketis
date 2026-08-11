@@ -121,8 +121,8 @@ function AdminLayout() {
       label: "Check-in", 
       icon: CheckSquare, 
       children: [
-        { label: "Gestão / BI", href: "/admin/checkin" },
-        { label: "Scanner QR", href: "/admin/checkin/scanner" },
+        { label: "Painel Geral", href: "/admin/checkin" },
+        { label: "Relatórios", href: "/admin/checkin", query: { tab: "reports" } },
         { label: "Monitor Global", href: "/admin/checkin-monitor" },
       ]
     },

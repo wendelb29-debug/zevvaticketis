@@ -1,187 +1,141 @@
-import { createFileRoute, useNavigate, redirect } from "@tanstack/react-router";
+import { createFileRoute, Outlet, redirect, useNavigate, Link, useLocation } from "@tanstack/react-router";
 import { supabase } from "@/integrations/supabase/client";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { UserMenu } from "@/components/auth/UserMenu";
-import { QrCode, LogOut, Loader2, CheckCircle2, XCircle } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { 
+  QrCode, 
+  History, 
+  LayoutDashboard,
+  LogOut,
+  ChevronRight,
+  ShieldCheck,
+  CheckCircle2,
+  Users
+} from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/checkin")({
   beforeLoad: async () => {
-    const { data: { session } } = await supabase.auth.getSession();
-    if (!session) {
-      throw redirect({ to: "/" });
+    const { data: { user: authUser }, error: authError } = await supabase.auth.getUser();
+    
+    if (authError || !authUser) {
+      throw redirect({ to: "/login" });
     }
 
+    // Check if user is staff for ANY event (cast to any for event_staff)
+    const { data: staffAssignments } = await (supabase
+      .from("event_staff" as any)
+      .select("id")
+      .eq("user_id", authUser.id)
+      .limit(1) as any);
+
+    const { data: isAdmin } = await supabase.rpc('check_is_platform_admin', { _user_id: authUser.id });
+    
+    // Check if user is owner/admin of an organization
     const { data: member } = await supabase
       .from("organization_members")
-      .select("permissions, role")
-      .eq("user_id", session.user.id)
+      .select("id")
+      .eq("user_id", authUser.id)
       .maybeSingle();
 
-    const permissions = member?.permissions as string[] || [];
-    if (member?.role !== 'produtor_owner' && !permissions.includes('checkin')) {
-      throw redirect({ to: "/app" });
+    if (!isAdmin && !member && (!staffAssignments || staffAssignments.length === 0)) {
+      throw redirect({ to: "/unauthorized" });
     }
   },
-  component: CheckinApp,
+  component: CheckinLayout,
 });
 
-function CheckinApp() {
+function CheckinLayout() {
   const [user, setUser] = useState<any>(null);
-  const [checkinCount, setCheckinCount] = useState(0);
-  const [isScanning, setIsScanning] = useState(false);
-  const [result, setResult] = useState<{ success: boolean; message: string; ticket?: any } | null>(null);
-  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
-    supabase.auth.getUser().then(({ data: { user } }) => {
-      setUser(user);
-    });
-  }, []);
-
-  const handleScan = async (code: string) => {
-    setLoading(true);
-    setResult(null);
-    try {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) throw new Error("Operador não autenticado");
-
-      // 1. Check ticket
-      const { data: ticket, error: ticketError } = await supabase
-        .from("tickets")
-        .select(`
-          *,
-          events (title),
-          profiles:owner_id (full_name)
-        `)
-        .eq("qr_code", code)
-        .maybeSingle();
-
-      if (ticketError) throw ticketError;
-
-      if (!ticket) {
-        setResult({ success: false, message: "INGRESSO INVÁLIDO ❌" });
-      } else if (ticket.status === 'utilizado') {
-        setResult({ success: false, message: "INGRESSO JÁ UTILIZADO ❌", ticket });
-      } else {
-        // 2. Perform check-in
-        const { error: updateError } = await supabase
-          .from("tickets" as any)
-          .update({ status: 'utilizado' })
-          .eq("id", ticket.id);
-
-        if (updateError) throw updateError;
-
-        await supabase
-          .from("checkins_new" as any)
-          .insert({
-            ticket_id: ticket.id,
-            operador_id: user.id,
-            local_checkin: "Scanner Web"
-          });
-
-        setResult({ success: true, message: "VALIDADO ✅", ticket });
-        setCheckinCount(prev => prev + 1);
-      }
-    } catch (err: any) {
-      setResult({ success: false, message: "ERRO NA VALIDAÇÃO: " + err.message });
-    } finally {
-      setLoading(false);
+    async function loadUser() {
+      const { data: { user: authUser } } = await supabase.auth.getUser();
+      setUser(authUser);
     }
-  };
+    loadUser();
+  }, []);
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
     navigate({ to: "/" });
   };
 
+  const menuItems = [
+    { label: "Operação", icon: QrCode, href: "/checkin", activeOptions: { exact: true } },
+    { label: "Scanner", icon: QrCode, href: "/checkin/scanner" },
+    { label: "Presença", icon: Users, href: "/checkin/presenca" },
+    { label: "Histórico", icon: History, href: "/checkin/historico" },
+  ];
+
+  const SidebarContent = () => (
+    <div className="flex flex-col h-full bg-navy text-white py-8 font-inter">
+      <div className="px-6 mb-12">
+        <Link to="/" className="text-xl font-manrope font-black text-white tracking-tighter">
+          ZEVVA <span className="text-coral">STAFF</span>
+        </Link>
+      </div>
+      
+      <nav className="flex-1 space-y-1 px-4">
+        {menuItems.map((item) => (
+          <Link
+            key={item.label}
+            to={item.href as any}
+            {...(item.activeOptions ? { activeOptions: item.activeOptions } : {})}
+            className="flex items-center gap-3 px-4 py-3.5 rounded-xl text-sm font-bold transition-all duration-200"
+            activeProps={{ className: "bg-white/10 text-coral shadow-sm border border-white/5" }}
+            inactiveProps={{ className: "text-white/60 hover:text-white hover:bg-white/5" }}
+          >
+            <item.icon className="w-5 h-5" />
+            {item.label}
+          </Link>
+        ))}
+      </nav>
+
+      <div className="px-4 mt-auto">
+        <button 
+          onClick={handleLogout}
+          className="flex items-center gap-3 w-full px-4 py-3.5 rounded-xl text-sm font-bold text-red-400 hover:bg-red-400/10 transition-colors"
+        >
+          <LogOut className="w-5 h-5" />
+          Sair
+        </button>
+      </div>
+    </div>
+  );
+
   return (
-    <div className="min-h-screen bg-background text-foreground font-inter flex flex-col">
-      <header className="h-16 border-b border-border px-6 flex items-center justify-between sticky top-0 z-50 bg-background">
-        <div className="text-xl font-manrope font-extrabold text-coral tracking-tighter">
-          ZEVVA <span className="text-foreground">CHECK-IN</span>
-        </div>
-        
-        {user && (
-          <UserMenu 
-            user={user}
-            onLogout={handleLogout}
-            onNavigate={(path) => navigate({ to: path as any })}
-          />
-        )}
-      </header>
+    <div className="min-h-screen bg-slate-50 flex font-inter">
+      {/* Sidebar */}
+      <aside className="hidden lg:block w-64 h-screen sticky top-0 shadow-2xl">
+        <SidebarContent />
+      </aside>
 
-      <main className="flex-1 flex flex-col items-center justify-center p-6 space-y-8">
-        {result ? (
-          <div className={cn(
-            "w-full max-w-sm p-8 rounded-[32px] text-center space-y-6 animate-in zoom-in-95 duration-300",
-            result.success ? "bg-green-50 border-2 border-green-500" : "bg-red-50 border-2 border-red-500"
-          )}>
-            <div className="text-6xl mb-4">{result.success ? "✅" : "❌"}</div>
-            <h2 className={cn(
-              "text-2xl font-black uppercase tracking-tighter",
-              result.success ? "text-green-700" : "text-red-700"
-            )}>
-              {result.message}
-            </h2>
-            
-            {result.ticket && (
-              <div className="space-y-1 py-4 border-y border-black/5">
-                <p className="font-bold text-navy">{result.ticket.events?.title}</p>
-                <p className="text-sm font-medium text-muted-fg">{result.ticket.name}</p>
-                <p className="text-xs font-black uppercase tracking-widest text-muted">{result.ticket.qr_code || result.ticket.id.slice(0, 8)}</p>
-              </div>
-            )}
-
-            <Button 
-              className="w-full h-14 bg-navy text-white hover:bg-navy/90 font-extrabold rounded-2xl"
-              onClick={() => setResult(null)}
-            >
-              PRÓXIMA LEITURA
-            </Button>
+      <div className="flex-1 flex flex-col min-h-screen">
+        <header className="h-16 bg-white border-b border-slate-200 sticky top-0 z-40 px-6 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <ShieldCheck className="w-5 h-5 text-coral" />
+            <h1 className="text-sm font-black text-navy uppercase tracking-widest">Controle de Acesso</h1>
           </div>
-        ) : (
-          <>
-            <div className="w-full max-w-sm aspect-square bg-muted border-2 border-dashed border-border rounded-[32px] flex flex-col items-center justify-center gap-4 relative overflow-hidden group">
-              <div className="absolute inset-0 bg-coral/5 animate-pulse"></div>
-              <QrCode className="w-20 h-20 text-coral relative z-10" />
-              <p className="text-sm font-bold text-muted-foreground relative z-10">
-                {loading ? "Validando..." : "Aponte a câmera para o QR Code"}
-              </p>
-              
-              <div className="absolute top-0 left-0 w-full h-1 bg-coral shadow-[0_0_15px_rgba(232,96,74,0.8)] animate-[scan_3s_ease-in-out_infinite]"></div>
-            </div>
 
-            <div className="text-center space-y-2">
-              <div className="text-5xl font-manrope font-extrabold text-coral">{checkinCount}</div>
-              <p className="text-xs font-extrabold uppercase tracking-widest text-muted-foreground">Check-ins Realizados</p>
-            </div>
+          <div className="flex items-center gap-4">
+            {user && (
+              <UserMenu 
+                user={user}
+                onLogout={handleLogout}
+                onNavigate={(path) => navigate({ to: path as any })}
+              />
+            )}
+          </div>
+        </header>
 
-            <div className="flex flex-col gap-4 w-full max-w-sm">
-              <Button 
-                className="w-full h-14 bg-primary text-primary-foreground hover:bg-primary/90 font-extrabold rounded-2xl"
-                disabled={loading}
-                onClick={() => handleScan("ZEVVA-TEST")}
-              >
-                {loading ? <Loader2 className="animate-spin" /> : "SIMULAR LEITURA"}
-              </Button>
-              <p className="text-[10px] text-center text-muted uppercase font-black tracking-widest">
-                Modo manual: Digite o código
-              </p>
-            </div>
-          </>
-        )}
-      </main>
-
-      <style dangerouslySetInnerHTML={{ __html: `
-        @keyframes scan {
-          0%, 100% { top: 0%; }
-          50% { top: 100%; }
-        }
-      `}} />
+        <main className="p-4 sm:p-8 max-w-5xl mx-auto w-full">
+          <Outlet />
+        </main>
+      </div>
     </div>
   );
 }
-
