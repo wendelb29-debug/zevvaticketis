@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
+import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/admin/master")({
   component: MasterAdminPage,
