@@ -15,12 +15,13 @@ import {
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { toast } from "sonner";
+import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/checkin/scanner")({
   component: ScannerPage,
   validateSearch: (search: Record<string, unknown>) => {
     return {
-      eventId: search.eventId as string | undefined
+      eventId: search['eventId'] as string | undefined
     }
   }
 });
@@ -51,7 +52,7 @@ function ScannerPage() {
       setLoading(false);
     }
     loadEvent();
-  }, [eventId]);
+  }, [eventId, navigate]);
 
   const handleManualCheckin = async (code: string) => {
     if (!eventId) return;
@@ -81,7 +82,7 @@ function ScannerPage() {
         .from("tickets")
         .update({ 
             status: 'utilizado',
-            checked_at: new Date().toISOString()
+            checked_in_at: new Date().toISOString()
         } as any)
         .eq("id", ticket.id);
 
