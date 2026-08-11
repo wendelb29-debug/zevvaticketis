@@ -24,6 +24,7 @@ import {
   Rocket,
   PanelLeftClose,
   PanelLeftOpen,
+  Building2,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
@@ -115,6 +116,7 @@ function AdminLayout() {
   };
 
   const menuItems = [
+    { label: "Master Console", icon: Building2, href: "/admin/master" },
     { label: "Chat", icon: MessageSquare, href: "/admin/chat" },
     { label: "Dashboard", icon: LayoutDashboard, href: "/admin", activeOptions: { exact: true } },
     { 

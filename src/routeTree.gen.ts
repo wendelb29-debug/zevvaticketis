@@ -34,6 +34,7 @@ import { Route as AdminConfiguracoesRouteImport } from './routes/admin/configura
 import { Route as AdminEmailTemplatesRouteImport } from './routes/admin/email-templates'
 import { Route as AdminEmailsRouteImport } from './routes/admin/emails'
 import { Route as AdminEnviosMassivosRouteImport } from './routes/admin/envios-massivos'
+import { Route as AdminMasterRouteImport } from './routes/admin/master'
 import { Route as AdminPaisesMoedasRouteImport } from './routes/admin/paises-moedas'
 import { Route as AdminPlanosRouteImport } from './routes/admin/planos'
 import { Route as AdminProdutoresRouteImport } from './routes/admin/produtores'
@@ -204,6 +205,11 @@ const AdminEmailsRoute = AdminEmailsRouteImport.update({
 const AdminEnviosMassivosRoute = AdminEnviosMassivosRouteImport.update({
   id: '/envios-massivos',
   path: '/envios-massivos',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminMasterRoute = AdminMasterRouteImport.update({
+  id: '/master',
+  path: '/master',
   getParentRoute: () => AdminRoute,
 } as any)
 const AdminPaisesMoedasRoute = AdminPaisesMoedasRouteImport.update({
@@ -458,6 +464,7 @@ export interface FileRoutesByFullPath {
   '/admin/email-templates': typeof AdminEmailTemplatesRoute
   '/admin/emails': typeof AdminEmailsRoute
   '/admin/envios-massivos': typeof AdminEnviosMassivosRoute
+  '/admin/master': typeof AdminMasterRoute
   '/admin/paises-moedas': typeof AdminPaisesMoedasRoute
   '/admin/planos': typeof AdminPlanosRoute
   '/admin/produtores': typeof AdminProdutoresRoute
@@ -525,6 +532,7 @@ export interface FileRoutesByTo {
   '/admin/email-templates': typeof AdminEmailTemplatesRoute
   '/admin/emails': typeof AdminEmailsRoute
   '/admin/envios-massivos': typeof AdminEnviosMassivosRoute
+  '/admin/master': typeof AdminMasterRoute
   '/admin/paises-moedas': typeof AdminPaisesMoedasRoute
   '/admin/planos': typeof AdminPlanosRoute
   '/admin/produtores': typeof AdminProdutoresRoute
@@ -596,6 +604,7 @@ export interface FileRoutesById {
   '/admin/email-templates': typeof AdminEmailTemplatesRoute
   '/admin/emails': typeof AdminEmailsRoute
   '/admin/envios-massivos': typeof AdminEnviosMassivosRoute
+  '/admin/master': typeof AdminMasterRoute
   '/admin/paises-moedas': typeof AdminPaisesMoedasRoute
   '/admin/planos': typeof AdminPlanosRoute
   '/admin/produtores': typeof AdminProdutoresRoute
@@ -669,6 +678,7 @@ export interface FileRouteTypes {
     | '/admin/email-templates'
     | '/admin/emails'
     | '/admin/envios-massivos'
+    | '/admin/master'
     | '/admin/paises-moedas'
     | '/admin/planos'
     | '/admin/produtores'
@@ -736,6 +746,7 @@ export interface FileRouteTypes {
     | '/admin/email-templates'
     | '/admin/emails'
     | '/admin/envios-massivos'
+    | '/admin/master'
     | '/admin/paises-moedas'
     | '/admin/planos'
     | '/admin/produtores'
@@ -806,6 +817,7 @@ export interface FileRouteTypes {
     | '/admin/email-templates'
     | '/admin/emails'
     | '/admin/envios-massivos'
+    | '/admin/master'
     | '/admin/paises-moedas'
     | '/admin/planos'
     | '/admin/produtores'
@@ -1055,6 +1067,13 @@ declare module '@tanstack/react-router' {
       path: '/envios-massivos'
       fullPath: '/admin/envios-massivos'
       preLoaderRoute: typeof AdminEnviosMassivosRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/master': {
+      id: '/admin/master'
+      path: '/master'
+      fullPath: '/admin/master'
+      preLoaderRoute: typeof AdminMasterRouteImport
       parentRoute: typeof AdminRoute
     }
     '/admin/paises-moedas': {
@@ -1377,6 +1396,7 @@ interface AdminRouteChildren {
   AdminEmailTemplatesRoute: typeof AdminEmailTemplatesRoute
   AdminEmailsRoute: typeof AdminEmailsRoute
   AdminEnviosMassivosRoute: typeof AdminEnviosMassivosRoute
+  AdminMasterRoute: typeof AdminMasterRoute
   AdminPaisesMoedasRoute: typeof AdminPaisesMoedasRoute
   AdminPlanosRoute: typeof AdminPlanosRoute
   AdminProdutoresRoute: typeof AdminProdutoresRoute
@@ -1400,6 +1420,7 @@ const AdminRouteChildren: AdminRouteChildren = {
   AdminEmailTemplatesRoute: AdminEmailTemplatesRoute,
   AdminEmailsRoute: AdminEmailsRoute,
   AdminEnviosMassivosRoute: AdminEnviosMassivosRoute,
+  AdminMasterRoute: AdminMasterRoute,
   AdminPaisesMoedasRoute: AdminPaisesMoedasRoute,
   AdminPlanosRoute: AdminPlanosRoute,
   AdminProdutoresRoute: AdminProdutoresRoute,
