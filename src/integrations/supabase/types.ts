@@ -1189,6 +1189,7 @@ export type Database = {
           name: string
           project_id: string | null
           status: string
+          tenant_id: string | null
           title_template: string | null
           trigger_type: string
           updated_at: string | null
@@ -1206,6 +1207,7 @@ export type Database = {
           name: string
           project_id?: string | null
           status?: string
+          tenant_id?: string | null
           title_template?: string | null
           trigger_type: string
           updated_at?: string | null
@@ -1223,6 +1225,7 @@ export type Database = {
           name?: string
           project_id?: string | null
           status?: string
+          tenant_id?: string | null
           title_template?: string | null
           trigger_type?: string
           updated_at?: string | null
@@ -1231,6 +1234,13 @@ export type Database = {
           {
             foreignKeyName: "push_automations_project_id_fkey"
             columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "tenants"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "push_automations_tenant_id_fkey"
+            columns: ["tenant_id"]
             isOneToOne: false
             referencedRelation: "tenants"
             referencedColumns: ["id"]
@@ -2022,12 +2032,7 @@ export type Database = {
         Args: { _uid: string }
         Returns: Json
       }
-      get_user_tenants: {
-        Args: never
-        Returns: {
-          tenant_id: string
-        }[]
-      }
+      get_user_tenants: { Args: never; Returns: string[] }
       has_role:
         | {
             Args: {

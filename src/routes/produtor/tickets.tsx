@@ -10,20 +10,19 @@ export const Route = createFileRoute("/produtor/tickets")({
 });
 
 function ProducerTicketsPage() {
+  const { activeTenant } = useTenants();
   const { data: tickets, isLoading } = useQuery({
-    queryKey: ["producer-tickets"],
+    queryKey: ["producer-tickets", activeTenant?.id],
     queryFn: async () => {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) throw new Error("Não autenticado");
-
+      if (!activeTenant) return [];
       const { data } = await supabase
         .from("tickets")
         .select(`
           *,
-          events!inner(title, producer_id),
+          events!inner(title),
           profiles:owner_id(nome_completo, email, telefone)
         `)
-        .eq("events.producer_id", user.id);
+        .eq("tenant_id", activeTenant.id);
       
       return data;
     }
