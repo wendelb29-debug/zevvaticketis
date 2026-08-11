@@ -39,17 +39,20 @@ function MasterAdminPage() {
         supabase.from("tenants").select("*", { count: "exact", head: true }),
         supabase.from("profiles").select("*", { count: "exact", head: true }),
         supabase.from("events").select("*", { count: "exact", head: true }),
-        supabase.from("orders").select("valor_bruto").eq("status", "pago")
+        supabase.from("orders").select("valor_bruto, taxa_plataforma").eq("status", "pago")
       ]);
 
-      const totalRevenue = orders?.reduce((acc, curr) => acc + (Number(curr.valor_bruto) || 0), 0) || 0;
+      const totalGMV = orders?.reduce((acc, curr) => acc + (Number(curr.valor_bruto) || 0), 0) || 0;
+      const platformRevenue = orders?.reduce((acc, curr) => acc + (Number(curr.taxa_plataforma) || 0), 0) || 0;
 
       return {
         tenants: tenantsCount || 0,
         users: usersCount || 0,
         events: eventsCount || 0,
-        revenue: totalRevenue
+        revenue: totalGMV,
+        platformRevenue: platformRevenue
       };
+
     }
   });
 
@@ -99,8 +102,9 @@ function MasterAdminPage() {
             <Building2 size={120} />
           </div>
           <CardHeader className="pb-2">
-            <CardTitle className="text-xs font-black uppercase tracking-widest text-white/60">Total Workspaces</CardTitle>
+            <CardTitle className="text-xs font-black uppercase tracking-widest text-white/60">Produtores Cadastrados</CardTitle>
           </CardHeader>
+
           <CardContent>
             <div className="text-4xl font-manrope font-black">{stats?.tenants || 0}</div>
             <p className="text-xs font-medium text-white/60 mt-2">+12 novos este mês</p>
@@ -132,24 +136,26 @@ function MasterAdminPage() {
             <Ticket size={120} />
           </div>
           <CardHeader className="pb-2">
-            <CardTitle className="text-xs font-black uppercase tracking-widest text-white/60">Receita Total GMV</CardTitle>
+            <CardTitle className="text-xs font-black uppercase tracking-widest text-white/60">Receita Plataforma</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-4xl font-manrope font-black">
-              {stats?.revenue.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}
+              {stats?.platformRevenue.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}
             </div>
-            <p className="text-xs font-medium text-white/60 mt-2">Valor bruto transacionado</p>
+            <p className="text-xs font-medium text-white/60 mt-2">Comissões sobre GMV</p>
           </CardContent>
         </Card>
+
       </div>
 
       <Card className="border-slate-200 shadow-sm rounded-[32px] overflow-hidden">
         <CardHeader className="p-8 border-b border-slate-100 bg-white space-y-4">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
             <div>
-              <CardTitle className="text-2xl font-manrope font-black text-navy">Gerenciamento de Tenants</CardTitle>
-              <CardDescription className="font-medium">Monitore e administre os ambientes da plataforma.</CardDescription>
+              <CardTitle className="text-2xl font-manrope font-black text-navy">Gerenciamento de Produtores</CardTitle>
+              <CardDescription className="font-medium">Monitore GMV, usuários e planos SaaS.</CardDescription>
             </div>
+
             <div className="relative w-full md:w-80">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
               <Input 

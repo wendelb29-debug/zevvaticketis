@@ -1398,6 +1398,7 @@ export type Database = {
         Row: {
           created_at: string | null
           documento: string | null
+          empresa: string | null
           id: string
           logo: string | null
           moeda_padrao_id: string | null
@@ -1409,10 +1410,12 @@ export type Database = {
           status: string | null
           stripe_account_id: string | null
           taxa_percentual_custom: number | null
+          telefone: string | null
         }
         Insert: {
           created_at?: string | null
           documento?: string | null
+          empresa?: string | null
           id?: string
           logo?: string | null
           moeda_padrao_id?: string | null
@@ -1424,10 +1427,12 @@ export type Database = {
           status?: string | null
           stripe_account_id?: string | null
           taxa_percentual_custom?: number | null
+          telefone?: string | null
         }
         Update: {
           created_at?: string | null
           documento?: string | null
+          empresa?: string | null
           id?: string
           logo?: string | null
           moeda_padrao_id?: string | null
@@ -1439,6 +1444,7 @@ export type Database = {
           status?: string | null
           stripe_account_id?: string | null
           taxa_percentual_custom?: number | null
+          telefone?: string | null
         }
         Relationships: [
           {
@@ -2059,6 +2065,14 @@ export type Database = {
         Args: { target_email: string }
         Returns: Json
       }
+      user_has_producer_role: {
+        Args: {
+          _required_roles: Database["public"]["Enums"]["tenant_role"][]
+          _tenant_id: string
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
       app_role: "admin" | "produtor_owner" | "equipe" | "participante"
@@ -2071,6 +2085,7 @@ export type Database = {
         | "CHECKIN_OPERATOR"
         | "FINANCEIRO"
         | "MARKETING"
+        | "CHECKIN_MANAGER"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -2208,6 +2223,7 @@ export const Constants = {
         "CHECKIN_OPERATOR",
         "FINANCEIRO",
         "MARKETING",
+        "CHECKIN_MANAGER",
       ],
     },
   },

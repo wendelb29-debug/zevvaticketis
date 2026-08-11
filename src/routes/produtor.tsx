@@ -191,6 +191,8 @@ function ProdutorLayout() {
     { label: "Configurações", icon: SettingsIcon, href: "/produtor/configuracoes", permission: "CONFIGURACOES" },
   ];
 
+
+
   const filteredMenuItems = allMenuItems.filter(item => 
     !item.permission || hasPermission(item.permission)
   );

@@ -74,6 +74,7 @@ import { Route as ApiPublicUazapiWebhookRouteImport } from './routes/api/public/
 import { Route as CheckinEventIdRouteImport } from './routes/checkin/event.$id'
 import { Route as EventosIdCheckoutRouteImport } from './routes/eventos/$id.checkout'
 import { Route as OauthGoogleReturnRouteImport } from './routes/oauth/google/return'
+import { Route as ProdutorIdDashboardRouteImport } from './routes/produtor/$id.dashboard'
 import { Route as CheckinEventIdIndexRouteImport } from './routes/checkin/event.$id.index'
 import { Route as CheckinEventIdRelatoriosRouteImport } from './routes/checkin/event.$id.relatorios'
 import { Route as CheckinEventIdScannerRouteImport } from './routes/checkin/event.$id.scanner'
@@ -410,6 +411,11 @@ const OauthGoogleReturnRoute = OauthGoogleReturnRouteImport.update({
   path: '/oauth/google/return',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ProdutorIdDashboardRoute = ProdutorIdDashboardRouteImport.update({
+  id: '/$id/dashboard',
+  path: '/$id/dashboard',
+  getParentRoute: () => ProdutorRoute,
+} as any)
 const CheckinEventIdIndexRoute = CheckinEventIdIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -502,6 +508,7 @@ export interface FileRoutesByFullPath {
   '/checkin/event/$id': typeof CheckinEventIdRouteWithChildren
   '/eventos/$id/checkout': typeof EventosIdCheckoutRoute
   '/oauth/google/return': typeof OauthGoogleReturnRoute
+  '/produtor/$id/dashboard': typeof ProdutorIdDashboardRoute
   '/admin/checkin/': typeof AdminCheckinIndexRoute
   '/admin/email-management/': typeof AdminEmailManagementIndexRoute
   '/admin/marketing/': typeof AdminMarketingIndexRoute
@@ -569,6 +576,7 @@ export interface FileRoutesByTo {
   '/api/public/uazapi-webhook': typeof ApiPublicUazapiWebhookRoute
   '/eventos/$id/checkout': typeof EventosIdCheckoutRoute
   '/oauth/google/return': typeof OauthGoogleReturnRoute
+  '/produtor/$id/dashboard': typeof ProdutorIdDashboardRoute
   '/admin/checkin': typeof AdminCheckinIndexRoute
   '/admin/email-management': typeof AdminEmailManagementIndexRoute
   '/admin/marketing': typeof AdminMarketingIndexRoute
@@ -642,6 +650,7 @@ export interface FileRoutesById {
   '/checkin/event/$id': typeof CheckinEventIdRouteWithChildren
   '/eventos/$id/checkout': typeof EventosIdCheckoutRoute
   '/oauth/google/return': typeof OauthGoogleReturnRoute
+  '/produtor/$id/dashboard': typeof ProdutorIdDashboardRoute
   '/admin/checkin/': typeof AdminCheckinIndexRoute
   '/admin/email-management/': typeof AdminEmailManagementIndexRoute
   '/admin/marketing/': typeof AdminMarketingIndexRoute
@@ -716,6 +725,7 @@ export interface FileRouteTypes {
     | '/checkin/event/$id'
     | '/eventos/$id/checkout'
     | '/oauth/google/return'
+    | '/produtor/$id/dashboard'
     | '/admin/checkin/'
     | '/admin/email-management/'
     | '/admin/marketing/'
@@ -783,6 +793,7 @@ export interface FileRouteTypes {
     | '/api/public/uazapi-webhook'
     | '/eventos/$id/checkout'
     | '/oauth/google/return'
+    | '/produtor/$id/dashboard'
     | '/admin/checkin'
     | '/admin/email-management'
     | '/admin/marketing'
@@ -855,6 +866,7 @@ export interface FileRouteTypes {
     | '/checkin/event/$id'
     | '/eventos/$id/checkout'
     | '/oauth/google/return'
+    | '/produtor/$id/dashboard'
     | '/admin/checkin/'
     | '/admin/email-management/'
     | '/admin/marketing/'
@@ -1349,6 +1361,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OauthGoogleReturnRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/produtor/$id/dashboard': {
+      id: '/produtor/$id/dashboard'
+      path: '/$id/dashboard'
+      fullPath: '/produtor/$id/dashboard'
+      preLoaderRoute: typeof ProdutorIdDashboardRouteImport
+      parentRoute: typeof ProdutorRoute
+    }
     '/checkin/event/$id/': {
       id: '/checkin/event/$id/'
       path: '/'
@@ -1523,6 +1542,7 @@ interface ProdutorRouteChildren {
   ProdutorSuporteRoute: typeof ProdutorSuporteRoute
   ProdutorTicketsRoute: typeof ProdutorTicketsRoute
   ProdutorIndexRoute: typeof ProdutorIndexRoute
+  ProdutorIdDashboardRoute: typeof ProdutorIdDashboardRoute
 }
 
 const ProdutorRouteChildren: ProdutorRouteChildren = {
@@ -1537,6 +1557,7 @@ const ProdutorRouteChildren: ProdutorRouteChildren = {
   ProdutorSuporteRoute: ProdutorSuporteRoute,
   ProdutorTicketsRoute: ProdutorTicketsRoute,
   ProdutorIndexRoute: ProdutorIndexRoute,
+  ProdutorIdDashboardRoute: ProdutorIdDashboardRoute,
 }
 
 const ProdutorRouteWithChildren = ProdutorRoute._addFileChildren(

@@ -114,10 +114,11 @@ export function ProducerDashboardPanel() {
     <div className="space-y-8 pb-10">
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-manrope font-extrabold text-navy">Área do Produtor</h1>
-          <p className="text-muted-fg">Gerencie seus eventos e acompanhe suas vendas em tempo real.</p>
+          <h1 className="text-3xl font-manrope font-extrabold text-navy">Workspace: {activeTenant?.nome}</h1>
+          <p className="text-muted-fg font-medium">Dashboard integrado de vendas, marketing e operações.</p>
         </div>
         <div className="flex gap-2">
+
           <Button asChild variant="outline" className="border-navy text-navy gap-2 px-6 rounded-xl font-bold">
             <Link to="/produtor/tickets">
               <Ticket className="w-5 h-5" /> Ver Ingressos
