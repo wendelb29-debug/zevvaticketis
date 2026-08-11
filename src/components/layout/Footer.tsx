@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Mail, Phone, Instagram, Facebook, Globe } from "lucide-react";
+import { Mail, Phone, Globe } from "lucide-react";
 import logoAsset from "@/assets/logo-zevva.png.asset.json";
 
 export function Footer() {
@@ -20,12 +20,6 @@ export function Footer() {
             A plataforma definitiva para caravanas, eventos internacionais e experiências que conectam o Reino.
           </p>
           <div className="flex items-center gap-4">
-            <a href="#" className="w-10 h-10 rounded-full bg-surface border border-line flex items-center justify-center text-navy hover:bg-coral hover:text-white transition-all">
-              <Instagram className="w-4 h-4" />
-            </a>
-            <a href="#" className="w-10 h-10 rounded-full bg-surface border border-line flex items-center justify-center text-navy hover:bg-coral hover:text-white transition-all">
-              <Facebook className="w-4 h-4" />
-            </a>
             <a href="#" className="w-10 h-10 rounded-full bg-surface border border-line flex items-center justify-center text-navy hover:bg-coral hover:text-white transition-all">
               <Globe className="w-4 h-4" />
             </a>
