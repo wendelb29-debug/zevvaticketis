@@ -4,7 +4,6 @@ import { supabase } from "@/integrations/supabase/client";
 import { 
   Users, 
   Calendar, 
-
   DollarSign, 
   TrendingUp,
   Ticket,
@@ -19,8 +18,8 @@ import {
   LineChart as LineChartIcon,
   MapPin,
   Clock,
-  LayoutDashboard,
-  CheckCircle2
+  CheckCircle2,
+  X
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -48,7 +47,14 @@ import {
 } from "recharts";
 import { exportToPDF, exportToExcel } from "@/lib/export";
 import { toast } from "sonner";
-import { format, subDays } from "date-fns";
+import { format, subDays, startOfDay, endOfDay } from "date-fns";
+import { 
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger
+} from "@/components/ui/sheet";
 
 export function AdminDashboardBI() {
   const [period, setPeriod] = useState("30d");
