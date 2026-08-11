@@ -32,6 +32,9 @@ import { getFeaturedEvents } from "@/lib/events.functions";
 import { useServerFn } from "@tanstack/react-start";
 import { Skeleton } from "@/components/ui/skeleton";
 import { PremiumNewsletter } from "@/components/ui/premium-newsletter";
+import { GridPatternCard, GridPatternCardBody } from "@/components/ui/card-with-grid-pattern";
+import { AdmitOneTicket } from "@/components/ui/admit-one-ticket";
+
 
 export const Route = createFileRoute("/")({
   component: HomePage,
@@ -358,8 +361,67 @@ function HomePage() {
           </div>
         </section>
 
+        {/* Admit One Ticket Showcase */}
+        <section className="px-6 py-24 bg-surface/10 overflow-hidden">
+          <div className="max-w-7xl mx-auto space-y-12">
+            <div className="text-center space-y-4">
+              <h2 className="text-3xl md:text-5xl font-manrope font-black text-navy uppercase tracking-tighter">
+                Seu Ingresso Digital
+              </h2>
+              <p className="text-muted-fg font-bold uppercase tracking-widest text-xs">
+                Experiência interativa 3D exclusiva Zevva
+              </p>
+            </div>
+            
+            <div className="max-w-2xl mx-auto">
+              <AdmitOneTicket 
+                title="Congresso Internacional de Liderança"
+                date="15 DE OUTUBRO, 2026"
+                location="SÃO PAULO, BRASIL"
+                price="R$ 450,00"
+                className="shadow-2xl hover:scale-[1.02] transition-transform duration-500"
+              />
+            </div>
+          </div>
+        </section>
+
+        {/* Grid Pattern Showcase - Por que a Zevva? */}
+        <section className="px-6 py-24">
+          <div className="max-w-7xl mx-auto space-y-12">
+            <div className="text-center space-y-4">
+              <h2 className="text-3xl md:text-5xl font-manrope font-black text-navy uppercase tracking-tighter">
+                Por que escolher a Zevva?
+              </h2>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              <GridPatternCard>
+                <GridPatternCardBody>
+                  <h3 className="text-2xl font-manrope font-black text-navy uppercase mb-4">Tecnologia 3D</h3>
+                  <p className="text-muted-fg font-medium">Ingressos interativos com segurança criptográfica e visual premium.</p>
+                </GridPatternCardBody>
+              </GridPatternCard>
+
+              <GridPatternCard>
+                <GridPatternCardBody>
+                  <h3 className="text-2xl font-manrope font-black text-navy uppercase mb-4">Ecossistema</h3>
+                  <p className="text-muted-fg font-medium">Conectamos organizadores e participantes em uma jornada completa.</p>
+                </GridPatternCardBody>
+              </GridPatternCard>
+
+              <GridPatternCard>
+                <GridPatternCardBody>
+                  <h3 className="text-2xl font-manrope font-black text-navy uppercase mb-4">Alcance Global</h3>
+                  <p className="text-muted-fg font-medium">Especialistas em caravanas internacionais e grandes eventos.</p>
+                </GridPatternCardBody>
+              </GridPatternCard>
+            </div>
+          </div>
+        </section>
+
         {/* Produtores e Prova Social */}
         <section className="px-6 py-24 bg-surface/30">
+
           <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
             <div className="space-y-8">
               <div className="space-y-4">
