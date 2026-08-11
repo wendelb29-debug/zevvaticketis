@@ -3,8 +3,16 @@ import { useState, useEffect } from "react";
 import { 
   Search, 
   TrendingUp,
-  ArrowRight
+  ArrowRight,
+  MapPin,
+  Calendar,
+  Star,
+  Bus,
+  Users,
+  Award,
+  BookOpen
 } from "lucide-react";
+
 import { Input } from "@/components/ui/input";
 import { Navbar } from "@/components/layout/Navbar";
 import { FeaturedCarousel } from "@/components/home/FeaturedCarousel";
