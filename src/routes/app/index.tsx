@@ -49,10 +49,11 @@ function WorkspacesPage() {
               <Building2 className="w-6 h-6 text-coral" />
             </div>
             <div>
-              <h1 className="text-2xl font-manrope font-black text-navy tracking-tight">Seus ambientes</h1>
-              <p className="text-slate-500 font-medium">Olá, {userName}</p>
+              <h1 className="text-2xl font-manrope font-black text-navy tracking-tight">Meus Produtores</h1>
+              <p className="text-slate-500 font-medium">Olá, {userName}. Escolha o ambiente que deseja gerenciar.</p>
             </div>
           </div>
+
           <Button variant="ghost" onClick={handleLogout} className="text-navy hover:text-coral font-bold gap-2">
             <LogOut className="w-4 h-4" /> Sair
           </Button>
@@ -104,11 +105,12 @@ function WorkspacesPage() {
             <div className="w-16 h-16 bg-slate-100 group-hover:bg-coral/10 rounded-full flex items-center justify-center mb-4 transition-colors">
               <Plus className="w-8 h-8 text-slate-400 group-hover:text-coral transition-colors" />
             </div>
-            <CardTitle className="text-lg font-manrope font-black text-navy">Novo Ambiente</CardTitle>
+            <CardTitle className="text-lg font-manrope font-black text-navy">Novo Produtor</CardTitle>
             <CardDescription className="text-center font-medium px-4 mt-2">
-              Crie uma nova workspace para gerenciar seus eventos.
+              Crie uma nova workspace de produtor para gerenciar seus eventos.
             </CardDescription>
           </Card>
+
         </div>
       </div>
     </div>

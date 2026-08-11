@@ -5,10 +5,14 @@ import { useNavigate } from "@tanstack/react-router";
 type Tenant = {
   id: string;
   nome: string;
+  empresa: string | null;
   logo: string | null;
   slug: string;
   plan: string;
+  status: string;
+  telefone: string | null;
 };
+
 
 type TenantContextType = {
   activeTenant: Tenant | null;
@@ -45,10 +49,14 @@ export function TenantProvider({ children }: { children: React.ReactNode }) {
         tenants (
           id,
           nome,
+          empresa,
           logo,
           slug,
-          plan
+          plan,
+          status,
+          telefone
         )
+
       `)
       .eq("user_id", user.id);
 
