@@ -9,6 +9,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import { Plus, Save, ArrowLeft, Image as ImageIcon } from "lucide-react";
+import { useTenants } from "@/hooks/use-tenants";
+
 
 export const Route = createFileRoute("/produtor/novo-evento")({
   component: NovoEventoPage,
@@ -17,6 +19,8 @@ export const Route = createFileRoute("/produtor/novo-evento")({
 function NovoEventoPage() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+  const { activeTenant } = useTenants();
+
   const [loading, setLoading] = useState(false);
 
   const [formData, setFormData] = useState({
@@ -36,15 +40,18 @@ function NovoEventoPage() {
   const createEventMutation = useMutation({
     mutationFn: async () => {
       const { data: { user } } = await supabase.auth.getUser();
-      if (!user) throw new Error("Não autenticado");
+      if (!user || !activeTenant) throw new Error("Não autenticado ou ambiente não selecionado");
+
 
       // 1. Create Event
       const { data: event, error: eventError } = await (supabase
         .from("events" as any)
         .insert({
           ...formData,
-          produtor_id: user.id,
+          producer_id: user.id,
+          tenant_id: activeTenant.id,
           status: "aguardando_aprovacao"
+
         })
         .select()
         .single() as any);
@@ -55,7 +62,9 @@ function NovoEventoPage() {
       const ticketsToInsert = ticketTypes.map(t => ({
         ...t,
         evento_id: event.id,
+        tenant_id: activeTenant.id,
         quantidade_disponivel: t.quantidade_total
+
       }));
 
       const { error: ticketsError } = await supabase
