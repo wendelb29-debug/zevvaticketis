@@ -168,7 +168,7 @@ export function ProducerDashboardPanel() {
             <Button variant="outline" size="sm" className="gap-2 border-primary text-primary" onClick={handleExportPDF}>
               <FileText className="w-4 h-4" /> PDF
             </Button>
-            <Button variant="outline" size="sm" className="gap-2 border-primary text-primary" onClick={() => exportToExcel(salesReport, "vendas_produtor", "Vendas")}>
+            <Button variant="outline" size="sm" className="gap-2 border-primary text-primary" onClick={() => exportToExcel([{ name: "Vendas", data: salesReport }], "vendas_produtor")}>
               <FileSpreadsheet className="w-4 h-4" /> Excel
             </Button>
           </div>
