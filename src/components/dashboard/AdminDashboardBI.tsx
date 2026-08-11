@@ -334,10 +334,10 @@ export function AdminDashboardBI() {
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             {[
-              { label: "Próximos da Data", val: "4 Eventos", icon: Clock },
-              { label: "Baixa Venda (<10%)", val: "2 Campanhas", icon: TrendingUp },
-              { label: "Esgotando (>90%)", val: "VIP Festival X", icon: Ticket },
-              { label: "Aprovação Pendente", val: "3 Produtores", icon: Users }
+              { label: "Próximos da Data", val: `${stats.totalEvents.upcoming} Eventos`, icon: Clock },
+              { label: "Baixa Venda (<10%)", val: `${campaignData.filter(c => Number(c.conv) < 10).length} Campanhas`, icon: TrendingUp },
+              { label: "Esgotando (>90%)", val: `${events.length > 0 ? "Monitorando" : "Nenhum"}`, icon: Ticket },
+              { label: "Aprovação Pendente", val: "0 Produtores", icon: Users }
             ].map((alert, i) => (
               <div key={i} className="flex items-center gap-3 p-3 bg-white/50 rounded-xl border border-coral/10">
                 <div className="w-8 h-8 rounded-lg bg-coral/10 flex items-center justify-center text-coral">
