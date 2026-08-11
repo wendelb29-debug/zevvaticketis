@@ -630,11 +630,13 @@ export type Database = {
           event_type: string | null
           falta_automatica_ativa: boolean | null
           falta_automatica_minutos: number | null
+          featured: boolean | null
           id: string
           location: string | null
           min_price: number | null
           organization_id: string | null
           producer_id: string
+          slug: string | null
           start_date: string | null
           status: string | null
           title: string
@@ -651,11 +653,13 @@ export type Database = {
           event_type?: string | null
           falta_automatica_ativa?: boolean | null
           falta_automatica_minutos?: number | null
+          featured?: boolean | null
           id?: string
           location?: string | null
           min_price?: number | null
           organization_id?: string | null
           producer_id: string
+          slug?: string | null
           start_date?: string | null
           status?: string | null
           title: string
@@ -672,11 +676,13 @@ export type Database = {
           event_type?: string | null
           falta_automatica_ativa?: boolean | null
           falta_automatica_minutos?: number | null
+          featured?: boolean | null
           id?: string
           location?: string | null
           min_price?: number | null
           organization_id?: string | null
           producer_id?: string
+          slug?: string | null
           start_date?: string | null
           status?: string | null
           title?: string
