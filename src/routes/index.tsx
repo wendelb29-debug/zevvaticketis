@@ -207,17 +207,44 @@ function HomePage() {
         </section>
 
 
-        <section className="px-6 py-16 bg-surface/30">
-          <div className="max-w-7xl mx-auto space-y-10">
-            <div className="flex justify-between items-end">
-              <div className="space-y-2">
-                <h2 className="text-3xl font-manrope font-extrabold text-navy">{t.categories}</h2>
-                <p className="text-muted font-medium">{t.categoriesSubtitle}</p>
-              </div>
+        <section className="px-6 py-24 bg-surface/30">
+          <div className="max-w-7xl mx-auto space-y-12">
+            <div className="text-center space-y-4">
+              <h2 className="text-3xl md:text-5xl font-manrope font-black text-navy uppercase tracking-tighter">
+                Explore Categorias
+              </h2>
+              <p className="text-muted-fg font-bold uppercase tracking-widest text-xs">
+                O que você deseja vivenciar hoje?
+              </p>
             </div>
             <CategoryGrid />
           </div>
         </section>
+
+        {/* Recomendados - Seção Inteligente */}
+        <section className="px-6 py-24">
+          <div className="max-w-7xl mx-auto space-y-12">
+            <div className="flex justify-between items-end">
+              <div className="space-y-2">
+                <h2 className="text-3xl font-manrope font-black text-navy flex items-center gap-3">
+                  <Star className="w-8 h-8 text-coral animate-pulse" /> Selecionados para você
+                </h2>
+                <p className="text-muted-fg font-bold uppercase tracking-widest text-xs">Com base no seu perfil e localização</p>
+              </div>
+            </div>
+            
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {events.slice(0, 4).map((event) => (
+                <EventCard 
+                  key={event.id} 
+                  event={event} 
+                  onToggleFavorite={handleToggleFavorite}
+                />
+              ))}
+            </div>
+          </div>
+        </section>
+
 
         <section className="px-6 py-20">
           <div className="max-w-7xl mx-auto space-y-12">
