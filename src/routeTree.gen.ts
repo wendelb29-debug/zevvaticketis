@@ -51,6 +51,7 @@ import { Route as ProdutorMarketingRouteImport } from './routes/produtor/marketi
 import { Route as ProdutorNovoEventoRouteImport } from './routes/produtor/novo-evento'
 import { Route as ProdutorParticipantesRouteImport } from './routes/produtor/participantes'
 import { Route as ProdutorSuporteRouteImport } from './routes/produtor/suporte'
+import { Route as TicketsIndexRouteImport } from './routes/tickets/index'
 import { Route as TicketsIdRouteImport } from './routes/tickets/$id'
 import { Route as DotlovableOauthConsentRouteImport } from './routes/[.]lovable.oauth.consent'
 import { Route as Char91DotmcpChar93InvokeToolToolRouteImport } from './routes/[.mcp]/invoke-tool/$tool'
@@ -276,6 +277,11 @@ const ProdutorSuporteRoute = ProdutorSuporteRouteImport.update({
   path: '/suporte',
   getParentRoute: () => ProdutorRoute,
 } as any)
+const TicketsIndexRoute = TicketsIndexRouteImport.update({
+  id: '/tickets/',
+  path: '/tickets/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TicketsIdRoute = TicketsIdRouteImport.update({
   id: '/tickets/$id',
   path: '/tickets/$id',
@@ -383,6 +389,7 @@ export interface FileRoutesByFullPath {
   '/admin/': typeof AdminIndexRoute
   '/app/': typeof AppIndexRoute
   '/produtor/': typeof ProdutorIndexRoute
+  '/tickets/': typeof TicketsIndexRoute
   '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
   '/admin/checkin/scanner': typeof AdminCheckinScannerRoute
@@ -436,6 +443,7 @@ export interface FileRoutesByTo {
   '/admin': typeof AdminIndexRoute
   '/app': typeof AppIndexRoute
   '/produtor': typeof ProdutorIndexRoute
+  '/tickets': typeof TicketsIndexRoute
   '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
   '/admin/checkin/scanner': typeof AdminCheckinScannerRoute
@@ -493,6 +501,7 @@ export interface FileRoutesById {
   '/admin/': typeof AdminIndexRoute
   '/app/': typeof AppIndexRoute
   '/produtor/': typeof ProdutorIndexRoute
+  '/tickets/': typeof TicketsIndexRoute
   '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
   '/admin/checkin/scanner': typeof AdminCheckinScannerRoute
@@ -551,6 +560,7 @@ export interface FileRouteTypes {
     | '/admin/'
     | '/app/'
     | '/produtor/'
+    | '/tickets/'
     | '/.lovable/oauth/consent'
     | '/.mcp/invoke-tool/$tool'
     | '/admin/checkin/scanner'
@@ -604,6 +614,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/app'
     | '/produtor'
+    | '/tickets'
     | '/.lovable/oauth/consent'
     | '/.mcp/invoke-tool/$tool'
     | '/admin/checkin/scanner'
@@ -660,6 +671,7 @@ export interface FileRouteTypes {
     | '/admin/'
     | '/app/'
     | '/produtor/'
+    | '/tickets/'
     | '/.lovable/oauth/consent'
     | '/.mcp/invoke-tool/$tool'
     | '/admin/checkin/scanner'
@@ -692,6 +704,7 @@ export interface RootRouteChildren {
   Char91DotwellKnownChar93OauthProtectedResourceRoute: typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   AuthCallbackRoute: typeof AuthCallbackRoute
   TicketsIdRoute: typeof TicketsIdRoute
+  TicketsIndexRoute: typeof TicketsIndexRoute
   DotlovableOauthConsentRoute: typeof DotlovableOauthConsentRoute
   Char91DotmcpChar93InvokeToolToolRoute: typeof Char91DotmcpChar93InvokeToolToolRoute
   ApiPublicUazapiWebhookRoute: typeof ApiPublicUazapiWebhookRoute
@@ -994,6 +1007,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProdutorSuporteRouteImport
       parentRoute: typeof ProdutorRoute
     }
+    '/tickets/': {
+      id: '/tickets/'
+      path: '/tickets'
+      fullPath: '/tickets/'
+      preLoaderRoute: typeof TicketsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/tickets/$id': {
       id: '/tickets/$id'
       path: '/tickets/$id'
@@ -1210,6 +1230,7 @@ const rootRouteChildren: RootRouteChildren = {
     Char91DotwellKnownChar93OauthProtectedResourceRoute,
   AuthCallbackRoute: AuthCallbackRoute,
   TicketsIdRoute: TicketsIdRoute,
+  TicketsIndexRoute: TicketsIndexRoute,
   DotlovableOauthConsentRoute: DotlovableOauthConsentRoute,
   Char91DotmcpChar93InvokeToolToolRoute: Char91DotmcpChar93InvokeToolToolRoute,
   ApiPublicUazapiWebhookRoute: ApiPublicUazapiWebhookRoute,
