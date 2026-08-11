@@ -222,6 +222,89 @@ export function AdminDashboardBI() {
               </button>
             ))}
           </div>
+
+          <Sheet>
+            <SheetTrigger asChild>
+              <Button variant="outline" className="h-11 rounded-xl border-border bg-white text-navy font-bold gap-2 shadow-sm">
+                <Filter className="w-4 h-4 text-primary" /> Filtros Avançados
+              </Button>
+            </SheetTrigger>
+            <SheetContent className="w-full sm:max-w-md">
+              <SheetHeader className="border-b pb-4 mb-6">
+                <SheetTitle className="text-xl font-manrope font-black text-navy flex items-center gap-2">
+                  <Filter className="w-5 h-5 text-coral" /> Filtros Avançados
+                </SheetTitle>
+              </SheetHeader>
+              
+              <div className="space-y-6">
+                <div className="space-y-2">
+                  <label className="text-[10px] font-black text-muted-fg uppercase tracking-widest">Produtor / Organização</label>
+                  <Select value={filters.producerId} onValueChange={(val) => setFilters({...filters, producerId: val})}>
+                    <SelectTrigger className="w-full h-11 rounded-xl bg-accent/30 border-border">
+                      <SelectValue placeholder="Todos os Produtores" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">Todos os Produtores</SelectItem>
+                      {producers.map(p => (
+                        <SelectItem key={p.id} value={p.id}>{p.nome}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-[10px] font-black text-muted-fg uppercase tracking-widest">Evento Específico</label>
+                  <Select value={filters.eventId} onValueChange={(val) => setFilters({...filters, eventId: val})}>
+                    <SelectTrigger className="w-full h-11 rounded-xl bg-accent/30 border-border">
+                      <SelectValue placeholder="Todos os Eventos" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">Todos os Eventos</SelectItem>
+                      {events.map(e => (
+                        <SelectItem key={e.id} value={e.id}>{e.title}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-[10px] font-black text-muted-fg uppercase tracking-widest">Categoria</label>
+                  <Select value={filters.category} onValueChange={(val) => setFilters({...filters, category: val})}>
+                    <SelectTrigger className="w-full h-11 rounded-xl bg-accent/30 border-border">
+                      <SelectValue placeholder="Todas as Categorias" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">Todas as Categorias</SelectItem>
+                      <SelectItem value="Congressos">Congressos</SelectItem>
+                      <SelectItem value="Festivais">Festivais</SelectItem>
+                      <SelectItem value="Caravanas">Caravanas</SelectItem>
+                      <SelectItem value="Experiências">Experiências</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="pt-6 flex gap-3">
+                  <Button 
+                    className="flex-1 bg-navy text-white font-bold h-12 rounded-xl"
+                    onClick={() => {
+                      fetchBIData();
+                    }}
+                  >
+                    Aplicar Filtros
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    className="h-12 w-12 rounded-xl border-border"
+                    onClick={() => {
+                      setFilters({ eventId: "all", producerId: "all", category: "all" });
+                    }}
+                  >
+                    <X className="w-5 h-5 text-muted-fg" />
+                  </Button>
+                </div>
+              </div>
+            </SheetContent>
+          </Sheet>
           
           <Select onValueChange={handleExport}>
             <SelectTrigger className="w-48 bg-white border-primary/20 text-navy font-bold rounded-xl h-11 shadow-sm">
