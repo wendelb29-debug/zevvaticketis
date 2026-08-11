@@ -68,14 +68,14 @@ export function WhatsAppIntegration() {
 
   const logAccess = useCallback(async (resourceType: string, resourceId?: string) => {
     try {
-      await supabase.rpc('log_resource_access' as any, {
-        _resource_type: resourceType,
-        _resource_id: resourceId || 'global'
+      await logResourceAccess({
+        data: { resourceType, resourceId: resourceId || "global" },
       });
     } catch (err) {
       console.error('Erro ao registrar log de acesso:', err);
     }
   }, []);
+
 
   const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text);
