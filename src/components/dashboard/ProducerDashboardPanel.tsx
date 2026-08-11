@@ -94,10 +94,14 @@ export function ProducerDashboardPanel() {
 
   const handleExportPDF = () => {
     exportToPDF(
-      "Relatório de Vendas - Produtor",
       salesReport,
-      ["event", "value", "fee", "net"],
-      "vendas_produtor"
+      [
+        { header: "Evento", key: "event" },
+        { header: "Valor Bruto", key: "value" },
+        { header: "Taxa", key: "fee" },
+        { header: "Líquido", key: "net" }
+      ],
+      { title: "Relatório de Vendas - Produtor", fileName: "vendas_produtor" }
     );
     toast.success("PDF gerado");
   };
