@@ -153,7 +153,7 @@ export function AdminDashboardPanel() {
       { "Indicador": "Vendas Brutas", "Valor": stats.grossValue },
       { "Indicador": "Comissão Plataforma", "Valor": stats.zevvaRevenue }
     ];
-    exportToExcel(data, "dashboard_zevva", "Resumo");
+    exportToExcel([{ name: "Resumo", data }], "dashboard_zevva");
     toast.success("Excel gerado com sucesso");
   };
 
