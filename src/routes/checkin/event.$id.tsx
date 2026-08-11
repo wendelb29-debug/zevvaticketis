@@ -17,6 +17,7 @@ function EventCheckinLayout() {
   useEffect(() => {
     async function loadEventData() {
       const { data: eventData } = await supabase.from("events").select("*").eq("id", id).single();
+      if (!eventData) return;
       setEvent(eventData);
 
       const { data: { user } } = await supabase.auth.getUser();
