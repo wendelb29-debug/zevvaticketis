@@ -6,11 +6,11 @@ import { supabase } from "@/integrations/supabase/client";
  */
 
 export interface UTMParams {
-  source?: string;
-  medium?: string;
-  campaign?: string;
-  term?: string;
-  content?: string;
+  source?: string | null;
+  medium?: string | null;
+  campaign?: string | null;
+  term?: string | null;
+  content?: string | null;
 }
 
 export const tracking = {
@@ -22,11 +22,11 @@ export const tracking = {
     
     const urlParams = new URLSearchParams(window.location.search);
     const utms: UTMParams = {
-      source: urlParams.get('utm_source') || undefined,
-      medium: urlParams.get('utm_medium') || undefined,
-      campaign: urlParams.get('utm_campaign') || undefined,
-      term: urlParams.get('utm_term') || undefined,
-      content: urlParams.get('utm_content') || undefined,
+      source: urlParams.get('utm_source'),
+      medium: urlParams.get('utm_medium'),
+      campaign: urlParams.get('utm_campaign'),
+      term: urlParams.get('utm_term'),
+      content: urlParams.get('utm_content'),
     };
 
     // Only save if at least source is present
@@ -51,7 +51,8 @@ export const tracking = {
   logEvent: async (eventName: string, metadata: any = {}) => {
     try {
       const utms = tracking.getStoredUTMs();
-      const { data: { user } } = await supabase.auth.getUser();
+      const { data: authData } = await supabase.auth.getUser();
+      const user = authData?.user;
       
       const { error } = await supabase.from('tracking' as any).insert({
         event_name: eventName,
@@ -85,16 +86,16 @@ export const tracking = {
       if (!utms?.campaign) return;
 
       // Find campaign by name or ID if it exists
-      const { data: campaign } = await supabase
+      const { data: campaign } = await (supabase
         .from('campaigns' as any)
         .select('id')
         .ilike('name', utms.campaign)
-        .maybeSingle();
+        .maybeSingle() as any);
 
-      if (campaign) {
+      if (campaign && (campaign as any).id) {
         await supabase.from('sales_attribution' as any).insert({
           order_id: orderId,
-          campaign_id: campaign.id,
+          campaign_id: (campaign as any).id,
           event_id: eventId,
           amount: amount,
           channel: utms.source || 'direct',
