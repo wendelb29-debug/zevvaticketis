@@ -42,6 +42,7 @@ import { Route as AppHistoricoRouteImport } from './routes/app/historico'
 import { Route as AppPerfilRouteImport } from './routes/app/perfil'
 import { Route as AuthCallbackRouteImport } from './routes/auth/callback'
 import { Route as CheckinIndexRouteImport } from './routes/checkin/index'
+import { Route as CheckinScannerRouteImport } from './routes/checkin/scanner'
 import { Route as EventosIdRouteImport } from './routes/eventos/$id'
 import { Route as ProdutorIndexRouteImport } from './routes/produtor/index'
 import { Route as ProdutorConfiguracoesRouteImport } from './routes/produtor/configuracoes'
@@ -233,6 +234,11 @@ const CheckinIndexRoute = CheckinIndexRouteImport.update({
   path: '/',
   getParentRoute: () => CheckinRoute,
 } as any)
+const CheckinScannerRoute = CheckinScannerRouteImport.update({
+  id: '/scanner',
+  path: '/scanner',
+  getParentRoute: () => CheckinRoute,
+} as any)
 const EventosIdRoute = EventosIdRouteImport.update({
   id: '/$id',
   path: '/$id',
@@ -382,6 +388,7 @@ export interface FileRoutesByFullPath {
   '/app/historico': typeof AppHistoricoRoute
   '/app/perfil': typeof AppPerfilRoute
   '/auth/callback': typeof AuthCallbackRoute
+  '/checkin/scanner': typeof CheckinScannerRoute
   '/eventos/$id': typeof EventosIdRouteWithChildren
   '/produtor/configuracoes': typeof ProdutorConfiguracoesRoute
   '/produtor/equipe': typeof ProdutorEquipeRoute
@@ -436,6 +443,7 @@ export interface FileRoutesByTo {
   '/app/historico': typeof AppHistoricoRoute
   '/app/perfil': typeof AppPerfilRoute
   '/auth/callback': typeof AuthCallbackRoute
+  '/checkin/scanner': typeof CheckinScannerRoute
   '/eventos/$id': typeof EventosIdRouteWithChildren
   '/produtor/configuracoes': typeof ProdutorConfiguracoesRoute
   '/produtor/equipe': typeof ProdutorEquipeRoute
@@ -495,6 +503,7 @@ export interface FileRoutesById {
   '/app/historico': typeof AppHistoricoRoute
   '/app/perfil': typeof AppPerfilRoute
   '/auth/callback': typeof AuthCallbackRoute
+  '/checkin/scanner': typeof CheckinScannerRoute
   '/eventos/$id': typeof EventosIdRouteWithChildren
   '/produtor/configuracoes': typeof ProdutorConfiguracoesRoute
   '/produtor/equipe': typeof ProdutorEquipeRoute
@@ -555,6 +564,7 @@ export interface FileRouteTypes {
     | '/app/historico'
     | '/app/perfil'
     | '/auth/callback'
+    | '/checkin/scanner'
     | '/eventos/$id'
     | '/produtor/configuracoes'
     | '/produtor/equipe'
@@ -609,6 +619,7 @@ export interface FileRouteTypes {
     | '/app/historico'
     | '/app/perfil'
     | '/auth/callback'
+    | '/checkin/scanner'
     | '/eventos/$id'
     | '/produtor/configuracoes'
     | '/produtor/equipe'
@@ -667,6 +678,7 @@ export interface FileRouteTypes {
     | '/app/historico'
     | '/app/perfil'
     | '/auth/callback'
+    | '/checkin/scanner'
     | '/eventos/$id'
     | '/produtor/configuracoes'
     | '/produtor/equipe'
@@ -954,6 +966,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CheckinIndexRouteImport
       parentRoute: typeof CheckinRoute
     }
+    '/checkin/scanner': {
+      id: '/checkin/scanner'
+      path: '/scanner'
+      fullPath: '/checkin/scanner'
+      preLoaderRoute: typeof CheckinScannerRouteImport
+      parentRoute: typeof CheckinRoute
+    }
     '/eventos/$id': {
       id: '/eventos/$id'
       path: '/$id'
@@ -1177,10 +1196,12 @@ const AppRouteChildren: AppRouteChildren = {
 const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
 
 interface CheckinRouteChildren {
+  CheckinScannerRoute: typeof CheckinScannerRoute
   CheckinIndexRoute: typeof CheckinIndexRoute
 }
 
 const CheckinRouteChildren: CheckinRouteChildren = {
+  CheckinScannerRoute: CheckinScannerRoute,
   CheckinIndexRoute: CheckinIndexRoute,
 }
 
