@@ -1461,6 +1461,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      check_admin_internal: { Args: { _user_id: string }; Returns: boolean }
       ensure_producer_organization_admin: {
         Args: { _uid: string }
         Returns: Json
