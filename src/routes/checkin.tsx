@@ -23,12 +23,12 @@ export const Route = createFileRoute("/checkin")({
       throw redirect({ to: "/login" });
     }
 
-    // Check if user is staff for ANY event
-    const { data: staffAssignments } = await supabase
-      .from("event_staff")
+    // Check if user is staff for ANY event (cast to any for event_staff)
+    const { data: staffAssignments } = await (supabase
+      .from("event_staff" as any)
       .select("id")
       .eq("user_id", authUser.id)
-      .limit(1);
+      .limit(1) as any);
 
     const { data: isAdmin } = await supabase.rpc('check_is_platform_admin', { _user_id: authUser.id });
     
