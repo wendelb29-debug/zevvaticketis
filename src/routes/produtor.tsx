@@ -180,7 +180,7 @@ function ProdutorLayout() {
   const { hasPermission } = useTenants();
 
   const allMenuItems = [
-    { label: "Dashboard", icon: LayoutDashboard, href: `/produtor/${activeTenant?.id}/dashboard`, activeOptions: { exact: true }, permission: "DASHBOARD" },
+    { label: "Dashboard", icon: LayoutDashboard, href: "/produtor", activeOptions: { exact: true }, permission: "DASHBOARD" },
     { label: "Meus Eventos", icon: FileText, href: "/produtor/eventos", permission: "EVENTOS" },
     { label: "Criar Evento", icon: Plus, href: "/produtor/novo-evento", permission: "EVENTOS" },
     { label: "Ingressos", icon: Ticket, href: "/produtor/ingressos", permission: "INGRESSOS" },
@@ -190,6 +190,7 @@ function ProdutorLayout() {
     { label: "Equipe", icon: Users, href: "/produtor/equipe", permission: "EQUIPE" },
     { label: "Configurações", icon: SettingsIcon, href: "/produtor/configuracoes", permission: "CONFIGURACOES" },
   ];
+
 
 
   const filteredMenuItems = allMenuItems.filter(item => 
