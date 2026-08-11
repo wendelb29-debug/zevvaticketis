@@ -68,7 +68,7 @@ export function UserMenu({ user, onLogout, onNavigate, agentStatus, onStatusChan
       // Check Admin
       const { data: admin } = await supabase
         .from("platform_admins")
-        .select("id")
+        .select("id, user_id")
         .eq("user_id", user.id)
         .maybeSingle();
       
