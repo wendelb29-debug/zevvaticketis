@@ -69,6 +69,7 @@ import { Route as AdminMarketingPushRouteImport } from './routes/admin/marketing
 import { Route as ApiPublicUazapiWebhookRouteImport } from './routes/api/public/uazapi-webhook'
 import { Route as EventosIdCheckoutRouteImport } from './routes/eventos/$id.checkout'
 import { Route as OauthGoogleReturnRouteImport } from './routes/oauth/google/return'
+import { Route as ApiPublicTicketsShareTokenRouteImport } from './routes/api/public/tickets/share/$token'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -374,6 +375,12 @@ const OauthGoogleReturnRoute = OauthGoogleReturnRouteImport.update({
   path: '/oauth/google/return',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicTicketsShareTokenRoute =
+  ApiPublicTicketsShareTokenRouteImport.update({
+    id: '/api/public/tickets/share/$token',
+    path: '/api/public/tickets/share/$token',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -436,6 +443,7 @@ export interface FileRoutesByFullPath {
   '/oauth/google/return': typeof OauthGoogleReturnRoute
   '/admin/checkin/': typeof AdminCheckinIndexRoute
   '/admin/marketing/': typeof AdminMarketingIndexRoute
+  '/api/public/tickets/share/$token': typeof ApiPublicTicketsShareTokenRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -494,6 +502,7 @@ export interface FileRoutesByTo {
   '/oauth/google/return': typeof OauthGoogleReturnRoute
   '/admin/checkin': typeof AdminCheckinIndexRoute
   '/admin/marketing': typeof AdminMarketingIndexRoute
+  '/api/public/tickets/share/$token': typeof ApiPublicTicketsShareTokenRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -557,6 +566,7 @@ export interface FileRoutesById {
   '/oauth/google/return': typeof OauthGoogleReturnRoute
   '/admin/checkin/': typeof AdminCheckinIndexRoute
   '/admin/marketing/': typeof AdminMarketingIndexRoute
+  '/api/public/tickets/share/$token': typeof ApiPublicTicketsShareTokenRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -621,6 +631,7 @@ export interface FileRouteTypes {
     | '/oauth/google/return'
     | '/admin/checkin/'
     | '/admin/marketing/'
+    | '/api/public/tickets/share/$token'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -679,6 +690,7 @@ export interface FileRouteTypes {
     | '/oauth/google/return'
     | '/admin/checkin'
     | '/admin/marketing'
+    | '/api/public/tickets/share/$token'
   id:
     | '__root__'
     | '/'
@@ -741,6 +753,7 @@ export interface FileRouteTypes {
     | '/oauth/google/return'
     | '/admin/checkin/'
     | '/admin/marketing/'
+    | '/api/public/tickets/share/$token'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -767,6 +780,7 @@ export interface RootRouteChildren {
   Char91DotmcpChar93InvokeToolToolRoute: typeof Char91DotmcpChar93InvokeToolToolRoute
   ApiPublicUazapiWebhookRoute: typeof ApiPublicUazapiWebhookRoute
   OauthGoogleReturnRoute: typeof OauthGoogleReturnRoute
+  ApiPublicTicketsShareTokenRoute: typeof ApiPublicTicketsShareTokenRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -1191,6 +1205,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OauthGoogleReturnRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/tickets/share/$token': {
+      id: '/api/public/tickets/share/$token'
+      path: '/api/public/tickets/share/$token'
+      fullPath: '/api/public/tickets/share/$token'
+      preLoaderRoute: typeof ApiPublicTicketsShareTokenRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -1347,6 +1368,7 @@ const rootRouteChildren: RootRouteChildren = {
   Char91DotmcpChar93InvokeToolToolRoute: Char91DotmcpChar93InvokeToolToolRoute,
   ApiPublicUazapiWebhookRoute: ApiPublicUazapiWebhookRoute,
   OauthGoogleReturnRoute: OauthGoogleReturnRoute,
+  ApiPublicTicketsShareTokenRoute: ApiPublicTicketsShareTokenRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

@@ -5,7 +5,7 @@ import { AdmitOneTicket } from "@/components/ui/admit-one-ticket";
 import { Loader2, ArrowLeft, Download, Share2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import html2pdf from "html2pdf.js";
+import { jsPDF } from "jspdf";
 
 export const Route = createFileRoute("/tickets/$id")({
   component: TicketDetail,
@@ -40,8 +40,18 @@ function TicketDetail() {
   });
 
   const downloadPDF = () => {
-    const element = document.getElementById("ticket-to-pdf");
-    html2pdf().from(element).save(`ingresso-${ticket?.id}.pdf`);
+    const doc = new jsPDF();
+    doc.setFontSize(22);
+    doc.text("ZEVVA TICKETS", 14, 20);
+    doc.setFontSize(16);
+    doc.text(ticket?.events?.nome || "Evento", 14, 35);
+    doc.setFontSize(12);
+    doc.text(`Participante: ${ticket?.profiles?.nome || "Convidado"}`, 14, 45);
+    doc.text(`Data: ${ticket?.events?.data_inicio ? new Date(ticket.events.data_inicio).toLocaleDateString("pt-BR") : "N/A"}`, 14, 55);
+    doc.text(`Local: ${ticket?.events?.localizacao || "N/A"}`, 14, 65);
+    doc.text(`Código: ${ticket?.qr_code || ticket?.id.slice(0, 8)}`, 14, 75);
+    doc.text(`Status: ${ticket?.status === "utilizado" ? "UTILIZADO" : "VÁLIDO"}`, 14, 85);
+    doc.save(`ingresso-${ticket?.id}.pdf`);
   };
 
   const shareWhatsApp = () => {
