@@ -257,29 +257,80 @@ export type Database = {
       }
       checkin_logs: {
         Row: {
+          action: string
+          created_at: string | null
+          event_id: string
           id: string
-          operator_id: string
-          resultado: string
-          scanned_at: string | null
+          metadata: Json | null
+          operator_id: string | null
+        }
+        Insert: {
+          action: string
+          created_at?: string | null
+          event_id: string
+          id?: string
+          metadata?: Json | null
+          operator_id?: string | null
+        }
+        Update: {
+          action?: string
+          created_at?: string | null
+          event_id?: string
+          id?: string
+          metadata?: Json | null
+          operator_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "checkin_logs_event_id_fkey"
+            columns: ["event_id"]
+            isOneToOne: false
+            referencedRelation: "events"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      checkin_records: {
+        Row: {
+          checkin_date: string
+          checkin_time: string
+          created_at: string | null
+          event_id: string
+          id: string
+          operator_id: string | null
+          status: string
           ticket_id: string
         }
         Insert: {
+          checkin_date?: string
+          checkin_time?: string
+          created_at?: string | null
+          event_id: string
           id?: string
-          operator_id: string
-          resultado: string
-          scanned_at?: string | null
+          operator_id?: string | null
+          status?: string
           ticket_id: string
         }
         Update: {
+          checkin_date?: string
+          checkin_time?: string
+          created_at?: string | null
+          event_id?: string
           id?: string
-          operator_id?: string
-          resultado?: string
-          scanned_at?: string | null
+          operator_id?: string | null
+          status?: string
           ticket_id?: string
         }
         Relationships: [
           {
-            foreignKeyName: "checkin_logs_ticket_id_fkey"
+            foreignKeyName: "checkin_records_event_id_fkey"
+            columns: ["event_id"]
+            isOneToOne: false
+            referencedRelation: "events"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "checkin_records_ticket_id_fkey"
             columns: ["ticket_id"]
             isOneToOne: false
             referencedRelation: "tickets"
@@ -610,6 +661,38 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "event_favorites_event_id_fkey"
+            columns: ["event_id"]
+            isOneToOne: false
+            referencedRelation: "events"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      event_staff: {
+        Row: {
+          created_at: string | null
+          event_id: string
+          id: string
+          role: Database["public"]["Enums"]["staff_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          event_id: string
+          id?: string
+          role?: Database["public"]["Enums"]["staff_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          event_id?: string
+          id?: string
+          role?: Database["public"]["Enums"]["staff_role"]
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "event_staff_event_id_fkey"
             columns: ["event_id"]
             isOneToOne: false
             referencedRelation: "events"
@@ -1793,6 +1876,10 @@ export type Database = {
             Returns: boolean
           }
         | { Args: { _role: string; _user_id: string }; Returns: boolean }
+      is_event_staff: {
+        Args: { _event_id: string; _user_id: string }
+        Returns: boolean
+      }
       log_resource_access: {
         Args: {
           _action?: string
@@ -1808,6 +1895,7 @@ export type Database = {
     }
     Enums: {
       app_role: "admin" | "produtor_owner" | "equipe" | "participante"
+      staff_role: "scanner_only" | "supervisor"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -1936,6 +2024,7 @@ export const Constants = {
   public: {
     Enums: {
       app_role: ["admin", "produtor_owner", "equipe", "participante"],
+      staff_role: ["scanner_only", "supervisor"],
     },
   },
 } as const
