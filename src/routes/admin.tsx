@@ -152,7 +152,15 @@ function AdminLayout() {
         { label: "Envios", href: "/admin/envios-massivos" },
       ]
     },
-    { label: "E-mails", icon: Mail, href: "/admin/emails" },
+    { 
+      label: "E-mails", 
+      icon: Mail, 
+      children: [
+        { label: "Dashboard", href: "/admin/email-management" },
+        { label: "Templates", href: "/admin/email-templates" },
+        { label: "Gmail Inbox", href: "/admin/emails" },
+      ]
+    },
     { 
       label: "Usuários", 
       icon: UserCog, 

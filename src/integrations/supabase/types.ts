@@ -469,33 +469,76 @@ export type Database = {
       }
       email_logs: {
         Row: {
-          assunto: string
-          destinatario: string
-          enviado_em: string | null
+          created_at: string | null
+          email: string
+          event_id: string | null
+          failed_reason: string | null
           id: string
           metadata: Json | null
+          opened_at: string | null
+          operator_id: string | null
+          sent_at: string | null
           status: string
-          tipo: string
+          subject: string
+          template_id: string | null
+          ticket_id: string | null
+          user_id: string | null
         }
         Insert: {
-          assunto: string
-          destinatario: string
-          enviado_em?: string | null
+          created_at?: string | null
+          email: string
+          event_id?: string | null
+          failed_reason?: string | null
           id?: string
           metadata?: Json | null
+          opened_at?: string | null
+          operator_id?: string | null
+          sent_at?: string | null
           status: string
-          tipo: string
+          subject: string
+          template_id?: string | null
+          ticket_id?: string | null
+          user_id?: string | null
         }
         Update: {
-          assunto?: string
-          destinatario?: string
-          enviado_em?: string | null
+          created_at?: string | null
+          email?: string
+          event_id?: string | null
+          failed_reason?: string | null
           id?: string
           metadata?: Json | null
+          opened_at?: string | null
+          operator_id?: string | null
+          sent_at?: string | null
           status?: string
-          tipo?: string
+          subject?: string
+          template_id?: string | null
+          ticket_id?: string | null
+          user_id?: string | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "email_logs_event_id_fkey"
+            columns: ["event_id"]
+            isOneToOne: false
+            referencedRelation: "events"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "email_logs_template_id_fkey"
+            columns: ["template_id"]
+            isOneToOne: false
+            referencedRelation: "email_templates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "email_logs_ticket_id_fkey"
+            columns: ["ticket_id"]
+            isOneToOne: false
+            referencedRelation: "tickets"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       email_messages: {
         Row: {
@@ -635,6 +678,59 @@ export type Database = {
             columns: ["integration_id"]
             isOneToOne: false
             referencedRelation: "email_integrations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      email_templates: {
+        Row: {
+          body_html: string
+          body_text: string | null
+          category: string
+          created_at: string | null
+          event_id: string | null
+          id: string
+          name: string
+          owner_id: string | null
+          status: string | null
+          subject: string
+          updated_at: string | null
+          variables: Json | null
+        }
+        Insert: {
+          body_html: string
+          body_text?: string | null
+          category: string
+          created_at?: string | null
+          event_id?: string | null
+          id?: string
+          name: string
+          owner_id?: string | null
+          status?: string | null
+          subject: string
+          updated_at?: string | null
+          variables?: Json | null
+        }
+        Update: {
+          body_html?: string
+          body_text?: string | null
+          category?: string
+          created_at?: string | null
+          event_id?: string | null
+          id?: string
+          name?: string
+          owner_id?: string | null
+          status?: string | null
+          subject?: string
+          updated_at?: string | null
+          variables?: Json | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "email_templates_event_id_fkey"
+            columns: ["event_id"]
+            isOneToOne: false
+            referencedRelation: "events"
             referencedColumns: ["id"]
           },
         ]

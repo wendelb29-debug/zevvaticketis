@@ -3,10 +3,12 @@ import { z } from "zod";
 import { supabase } from "@/integrations/supabase/client";
 
 export const resendTicketEmail = createServerFn({ method: "POST" })
-  .input(z.object({
-    logId: z.string(),
-    newEmail: z.string().email().optional(),
-  }))
+  .validator((data: { logId: string; newEmail?: string }) => 
+    z.object({
+      logId: z.string(),
+      newEmail: z.string().email().optional(),
+    }).parse(data)
+  )
   .handler(async ({ data }) => {
     // 1. Get original log
     const { data: log, error: logError } = await supabase
@@ -17,10 +19,7 @@ export const resendTicketEmail = createServerFn({ method: "POST" })
 
     if (logError || !log) throw new Error("Log não encontrado");
 
-    // 2. Here we would call the actual email provider (Gmail API, Resend, etc.)
-    // For now, we simulate success and register a new log
-    console.log(`Simulating resend to ${data.newEmail || log.email}`);
-
+    // 2. Simulate resend
     const { data: newLog, error: newLogError } = await supabase
       .from("email_logs")
       .insert({
@@ -42,10 +41,12 @@ export const resendTicketEmail = createServerFn({ method: "POST" })
   });
 
 export const sendEmailTest = createServerFn({ method: "POST" })
-  .input(z.object({
-    templateId: z.string(),
-    testEmail: z.string().email(),
-  }))
+  .validator((data: { templateId: string; testEmail: string }) => 
+    z.object({
+      templateId: z.string(),
+      testEmail: z.string().email(),
+    }).parse(data)
+  )
   .handler(async ({ data }) => {
     const { data: template, error: tError } = await supabase
       .from("email_templates")
@@ -54,8 +55,7 @@ export const sendEmailTest = createServerFn({ method: "POST" })
       .single();
 
     if (tError || !template) throw new Error("Template não encontrado");
-
-    console.log(`Sending test email to ${data.testEmail} for template ${template.name}`);
     
     return { success: true };
   });
+
