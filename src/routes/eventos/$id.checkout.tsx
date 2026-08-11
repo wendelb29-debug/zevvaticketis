@@ -103,6 +103,9 @@ function CheckoutPage() {
       return order;
     },
     onSuccess: (data: any) => {
+      if (data && data.id) {
+        tracking.attributeOrder(data.id, id, totalAmount);
+      }
       toast.success("Compra realizada com sucesso!");
       navigate({ to: "/app/historico" }); // Assuming this exists or will be created
     },
