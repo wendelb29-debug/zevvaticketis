@@ -8,13 +8,10 @@ import {
   Plus, 
   Download, 
   FileText,
-  Filter,
-  Eye,
   FileSpreadsheet
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { 
   Table, 
   TableBody, 
@@ -51,7 +48,7 @@ export function ProducerDashboardPanel() {
       const { data: eventsData } = await supabase
         .from("events")
         .select("*, ticket_types(*)")
-        .eq("produtor_id", user.id);
+        .eq("producer_id", user.id);
 
       const activeEvents = eventsData?.filter(e => e.status === "publicado").length || 0;
       
@@ -69,15 +66,15 @@ export function ProducerDashboardPanel() {
       setStats({
         activeEvents,
         ticketsSold: ordersData?.length || 0,
-        totalParticipants: ordersData?.length || 0, // Simplified for now
+        totalParticipants: ordersData?.length || 0,
         revenue: revenue - zevvaFees
       });
 
       setEvents(eventsData || []);
 
       setSalesReport(ordersData?.map(order => ({
-        event: eventsData?.find(e => e.id === order.event_id)?.nome_evento || "Evento",
-        ticket: "Ingresso Geral", // Simplified
+        event: eventsData?.find(e => e.id === order.event_id)?.title || "Evento",
+        ticket: "Ingresso Geral",
         quantity: 1,
         value: order.valor_bruto,
         fee: order.taxa_plataforma,
@@ -214,8 +211,4 @@ export function ProducerDashboardPanel() {
       </Card>
     </div>
   );
-}
-
-function cn(...inputs: any[]) {
-  return inputs.filter(Boolean).join(" ");
 }
