@@ -4,7 +4,6 @@ import { supabase } from "@/integrations/supabase/client";
 import { 
   Users, 
   Calendar, 
-
   DollarSign, 
   TrendingUp,
   Ticket,
@@ -19,8 +18,8 @@ import {
   LineChart as LineChartIcon,
   MapPin,
   Clock,
-  LayoutDashboard,
-  CheckCircle2
+  CheckCircle2,
+  X
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -48,10 +47,22 @@ import {
 } from "recharts";
 import { exportToPDF, exportToExcel } from "@/lib/export";
 import { toast } from "sonner";
-import { format, subDays } from "date-fns";
+import { format, subDays, startOfDay, endOfDay } from "date-fns";
+import { 
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger
+} from "@/components/ui/sheet";
 
 export function AdminDashboardBI() {
   const [period, setPeriod] = useState("30d");
+  const [filters, setFilters] = useState({
+    eventId: "all",
+    producerId: "all",
+    category: "all"
+  });
   const [loading, setLoading] = useState(true);
   const [stats, setStats] = useState({
     totalEvents: { active: 0, closed: 0, upcoming: 0 },
@@ -63,39 +74,99 @@ export function AdminDashboardBI() {
 
   const [campaignData, setCampaignData] = useState<any[]>([]);
   const [funnelData, setFunnelData] = useState<any[]>([]);
+  const [events, setEvents] = useState<any[]>([]);
+  const [producers, setProducers] = useState<any[]>([]);
 
   useEffect(() => {
     fetchBIData();
-  }, [period]);
+  }, [period, filters]);
+
+  useEffect(() => {
+    fetchFilterOptions();
+  }, []);
+
+  async function fetchFilterOptions() {
+    const [{ data: eventsData }, { data: producersData }] = await Promise.all([
+      supabase.from("events").select("id, title").order("title"),
+      supabase.from("organizations").select("id, nome").order("nome")
+    ]);
+    if (eventsData) setEvents(eventsData);
+    if (producersData) setProducers(producersData);
+  }
 
   async function fetchBIData() {
     setLoading(true);
     try {
-      // Basic mock data following the BI spec for visual testing
+      let startDate = startOfDay(subDays(new Date(), 30));
+      if (period === "today") startDate = startOfDay(new Date());
+      else if (period === "7d") startDate = startOfDay(subDays(new Date(), 7));
+      
+      const endDate = endOfDay(new Date());
+
+      // 1. Events Stats
+      let eventsQuery = supabase.from("events").select("*");
+      if (filters.producerId !== "all") eventsQuery = eventsQuery.eq("organization_id", filters.producerId);
+      if (filters.category !== "all") eventsQuery = eventsQuery.eq("category", filters.category);
+      
+      const { data: eventsData } = await eventsQuery;
+      const active = eventsData?.filter(e => e.status === "publicado").length || 0;
+      const upcoming = eventsData?.filter(e => e.start_date && new Date(e.start_date) > new Date()).length || 0;
+      
+      // 2. Orders & Sales
+      let ordersQuery = supabase.from("orders").select("*").eq("status", "pago");
+      if (filters.eventId !== "all") ordersQuery = ordersQuery.eq("event_id", filters.eventId);
+      if (filters.producerId !== "all") ordersQuery = ordersQuery.eq("organization_id", filters.producerId);
+      ordersQuery = ordersQuery.gte("created_at", startDate.toISOString()).lte("created_at", endDate.toISOString());
+      
+      const { data: ordersData } = await ordersQuery;
+      const quantity = ordersData?.length || 0;
+      const gross = ordersData?.reduce((acc, curr) => acc + (Number(curr.valor_bruto) || 0), 0) || 0;
+      const averageTicket = quantity > 0 ? gross / quantity : 0;
+
+      // 3. Tickets & Checkins
+      let ticketsQuery = supabase.from("tickets").select("*");
+      if (filters.eventId !== "all") ticketsQuery = ticketsQuery.eq("event_id", filters.eventId);
+      const { data: ticketsData } = await ticketsQuery;
+      
+      const sold = ticketsData?.filter(t => t.status === "vendido" || t.status === "utilizado").length || 0;
+      const available = ticketsData?.filter(t => t.status === "disponivel").length || 0;
+      const used = ticketsData?.filter(t => t.status === "utilizado").length || 0;
+
       setStats({
-        totalEvents: { active: 12, closed: 45, upcoming: 8 },
-        totalTickets: { available: 5000, sold: 3450, reserved: 120, used: 2800 },
-        sales: { quantity: 3450, gross: 285400, averageTicket: 82.72 },
-        users: { new: 450, recurring: 120, byCampaign: 380 },
-        checkin: { expected: 3450, performed: 2800, percentage: 81, missing: 650 }
+        totalEvents: { active, closed: (eventsData?.length || 0) - active, upcoming },
+        totalTickets: { available, sold, reserved: 0, used },
+        sales: { quantity, gross, averageTicket },
+        users: { new: 0, recurring: 0, byCampaign: 0 }, // Would need complex query
+        checkin: { 
+          expected: sold, 
+          performed: used, 
+          percentage: sold > 0 ? Math.round((used / sold) * 100) : 0, 
+          missing: sold - used 
+        }
       });
 
-      setCampaignData([
-        { name: "Festival X - Instagram", source: "Instagram", views: 10000, clicks: 500, signups: 200, sales: 80, revenue: 12000, conv: 16, roi: 4.2 },
-        { name: "Congresso Y - Google", source: "Google", views: 25000, clicks: 1200, signups: 400, sales: 150, revenue: 45000, conv: 12.5, roi: 5.8 },
-        { name: "Trip Z - Facebook", source: "Facebook", views: 8000, clicks: 300, signups: 100, sales: 45, revenue: 9000, conv: 15, roi: 3.5 }
-      ]);
+      // 4. Marketing Performance (using new schema)
+      const { data: campaigns } = await supabase.from("campaigns").select("*, ads(*), sales_attribution(count)");
+      setCampaignData(campaigns?.map(c => ({
+        name: c.name,
+        source: c.utm_source || "Orgânico",
+        clicks: c.ads?.reduce((acc: number, curr: any) => acc + (curr.clicks || 0), 0) || 0,
+        conv: c.sales_attribution ? Math.round((c.sales_attribution.length / (c.ads?.reduce((acc: number, curr: any) => acc + (curr.clicks || 0), 0) || 1)) * 100) : 0,
+        roi: (c.spend ?? 0) > 0 ? (c.sales_attribution?.reduce((acc: number, curr: any) => acc + (Number(curr.amount) || 0), 0) / (c.spend ?? 1)).toFixed(1) : "0",
+        revenue: c.sales_attribution?.reduce((acc: number, curr: any) => acc + (Number(curr.amount) || 0), 0) || 0
+      })) || []);
 
       setFunnelData([
-        { step: "Visualização", val: 100 },
-        { step: "Clique", val: 15 },
-        { step: "Cadastro", val: 8 },
-        { step: "Carrinho", val: 4 },
-        { step: "Compra", val: 2 },
-        { step: "Check-in", val: 1.8 }
+        { step: "Visitantes", val: 100 },
+        { step: "Visualizou Evento", val: 65 },
+        { step: "Checkout", val: 25 },
+        { step: "Pagamento", val: 12 },
+        { step: "Conversão", val: 8 }
       ]);
+
       
     } catch (error) {
+      console.error(error);
       toast.error("Erro ao carregar BI");
     } finally {
       setLoading(false);
@@ -103,14 +174,28 @@ export function AdminDashboardBI() {
   }
 
   const handleExport = (reportType: string) => {
-    toast.promise(
-      new Promise((resolve) => setTimeout(resolve, 1500)),
-      {
-        loading: `Gerando relatório ${reportType}...`,
-        success: `Relatório ${reportType} exportado com sucesso.`,
-        error: 'Erro ao gerar relatório.',
-      }
-    );
+    const columns = [
+      { header: "Métrica", key: "label" },
+      { header: "Valor", key: "value" }
+    ];
+    const data = [
+      { label: "Faturamento Bruto", value: `R$ ${stats.sales.gross.toLocaleString()}` },
+      { label: "Total Ingressos Vendidos", value: stats.totalTickets.sold },
+      { label: "Check-ins Realizados", value: stats.totalTickets.used }
+    ];
+    
+    if (reportType === "financeiro") {
+      exportToPDF(data, columns, { 
+        title: "Relatório Financeiro BI", 
+        fileName: "bi_financeiro",
+        summary: [
+          { label: "Total Bruto", value: `R$ ${stats.sales.gross}` },
+          { label: "Ticket Médio", value: `R$ ${stats.sales.averageTicket.toFixed(2)}` }
+        ]
+      });
+    } else {
+      exportToExcel([{ name: "BI Stats", data }], "bi_export");
+    }
   };
 
   return (
@@ -137,6 +222,89 @@ export function AdminDashboardBI() {
               </button>
             ))}
           </div>
+
+          <Sheet>
+            <SheetTrigger asChild>
+              <Button variant="outline" className="h-11 rounded-xl border-border bg-white text-navy font-bold gap-2 shadow-sm">
+                <Filter className="w-4 h-4 text-primary" /> Filtros Avançados
+              </Button>
+            </SheetTrigger>
+            <SheetContent className="w-full sm:max-w-md">
+              <SheetHeader className="border-b pb-4 mb-6">
+                <SheetTitle className="text-xl font-manrope font-black text-navy flex items-center gap-2">
+                  <Filter className="w-5 h-5 text-coral" /> Filtros Avançados
+                </SheetTitle>
+              </SheetHeader>
+              
+              <div className="space-y-6">
+                <div className="space-y-2">
+                  <label className="text-[10px] font-black text-muted-fg uppercase tracking-widest">Produtor / Organização</label>
+                  <Select value={filters.producerId} onValueChange={(val) => setFilters({...filters, producerId: val})}>
+                    <SelectTrigger className="w-full h-11 rounded-xl bg-accent/30 border-border">
+                      <SelectValue placeholder="Todos os Produtores" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">Todos os Produtores</SelectItem>
+                      {producers.map(p => (
+                        <SelectItem key={p.id} value={p.id}>{p.nome}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-[10px] font-black text-muted-fg uppercase tracking-widest">Evento Específico</label>
+                  <Select value={filters.eventId} onValueChange={(val) => setFilters({...filters, eventId: val})}>
+                    <SelectTrigger className="w-full h-11 rounded-xl bg-accent/30 border-border">
+                      <SelectValue placeholder="Todos os Eventos" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">Todos os Eventos</SelectItem>
+                      {events.map(e => (
+                        <SelectItem key={e.id} value={e.id}>{e.title}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-[10px] font-black text-muted-fg uppercase tracking-widest">Categoria</label>
+                  <Select value={filters.category} onValueChange={(val) => setFilters({...filters, category: val})}>
+                    <SelectTrigger className="w-full h-11 rounded-xl bg-accent/30 border-border">
+                      <SelectValue placeholder="Todas as Categorias" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">Todas as Categorias</SelectItem>
+                      <SelectItem value="Congressos">Congressos</SelectItem>
+                      <SelectItem value="Festivais">Festivais</SelectItem>
+                      <SelectItem value="Caravanas">Caravanas</SelectItem>
+                      <SelectItem value="Experiências">Experiências</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="pt-6 flex gap-3">
+                  <Button 
+                    className="flex-1 bg-navy text-white font-bold h-12 rounded-xl"
+                    onClick={() => {
+                      fetchBIData();
+                    }}
+                  >
+                    Aplicar Filtros
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    className="h-12 w-12 rounded-xl border-border"
+                    onClick={() => {
+                      setFilters({ eventId: "all", producerId: "all", category: "all" });
+                    }}
+                  >
+                    <X className="w-5 h-5 text-muted-fg" />
+                  </Button>
+                </div>
+              </div>
+            </SheetContent>
+          </Sheet>
           
           <Select onValueChange={handleExport}>
             <SelectTrigger className="w-48 bg-white border-primary/20 text-navy font-bold rounded-xl h-11 shadow-sm">
@@ -166,10 +334,10 @@ export function AdminDashboardBI() {
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             {[
-              { label: "Próximos da Data", val: "4 Eventos", icon: Clock },
-              { label: "Baixa Venda (<10%)", val: "2 Campanhas", icon: TrendingUp },
-              { label: "Esgotando (>90%)", val: "VIP Festival X", icon: Ticket },
-              { label: "Aprovação Pendente", val: "3 Produtores", icon: Users }
+              { label: "Próximos da Data", val: `${stats.totalEvents.upcoming} Eventos`, icon: Clock },
+              { label: "Baixa Venda (<10%)", val: `${campaignData.filter(c => Number(c.conv) < 10).length} Campanhas`, icon: TrendingUp },
+              { label: "Esgotando (>90%)", val: `${events.length > 0 ? "Monitorando" : "Nenhum"}`, icon: Ticket },
+              { label: "Aprovação Pendente", val: "0 Produtores", icon: Users }
             ].map((alert, i) => (
               <div key={i} className="flex items-center gap-3 p-3 bg-white/50 rounded-xl border border-coral/10">
                 <div className="w-8 h-8 rounded-lg bg-coral/10 flex items-center justify-center text-coral">
