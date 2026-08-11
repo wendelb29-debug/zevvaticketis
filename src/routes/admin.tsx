@@ -29,6 +29,34 @@ import { cn } from "@/lib/utils";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 export const Route = createFileRoute("/admin")({
+  beforeLoad: async () => {
+    const { data: { user: authUser }, error: authError } = await supabase.auth.getUser();
+    
+    if (authError || !authUser) {
+      throw redirect({ to: "/login" });
+    }
+
+    const { data: isAdminRole, error: roleError } = await supabase.rpc('has_role', { 
+      _user_id: authUser.id, 
+      _role: 'admin' 
+    });
+    
+    if (roleError || !isAdminRole) {
+      console.error("Access denied: Not an admin", roleError);
+      
+      // Log attempt
+      await supabase
+        .from('access_logs' as any)
+        .insert({
+          admin_id: authUser.id,
+          resource_type: 'access_denied',
+          resource_id: '/admin',
+          action: '403_forbidden'
+        });
+
+      throw redirect({ to: "/app" });
+    }
+  },
   component: AdminLayout,
 });
 
@@ -55,30 +83,12 @@ function AdminLayout() {
   };
 
   useEffect(() => {
-    async function checkAdmin() {
-      const { data: { user: authUser }, error: authError } = await supabase.auth.getUser();
-      
-      if (authError || !authUser) {
-        setIsAdmin(false);
-        return;
-      }
-
+    async function loadUser() {
+      const { data: { user: authUser } } = await supabase.auth.getUser();
       setUser(authUser);
-
-      const { data: isAdminRole, error: roleError } = await supabase.rpc('has_role', { 
-        _user_id: authUser.id, 
-        _role: 'admin' 
-      });
-      
-      if (roleError) {
-        console.error("Error checking admin role:", roleError);
-        setIsAdmin(false);
-        return;
-      }
-      
-      setIsAdmin(!!isAdminRole);
+      setIsAdmin(true); // Already verified by beforeLoad
     }
-    checkAdmin();
+    loadUser();
   }, []);
 
   // Handle route transition loading state
@@ -154,20 +164,7 @@ function AdminLayout() {
   }
   
   if (isAdmin === false) {
-    // Log access denied attempt
-    supabase
-      .from('access_logs' as any)
-      .insert({
-        admin_id: user?.id,
-        resource_type: 'access_denied',
-        resource_id: location.pathname,
-        action: '403_forbidden'
-      })
-      .then(({ error }) => {
-        if (error) console.error('Failed to log access denial:', error);
-      });
-
-    navigate({ to: "/" });
+    // This state shouldn't be reached due to beforeLoad, but kept as safety
     return null;
   }
 
