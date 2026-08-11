@@ -84,7 +84,7 @@ function MasterAdminPage() {
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
           <h1 className="text-4xl font-manrope font-black text-navy tracking-tight">Master Console</h1>
-          <p className="text-slate-500 font-medium">Visão global da plataforma Zevva Tickets.</p>
+          <p className="text-slate-500 font-medium">Visão global da plataforma: Todos os Projetos e GMV.</p>
         </div>
         <div className="flex gap-3">
           <Button variant="outline" className="rounded-xl font-bold border-slate-200">
@@ -102,7 +102,7 @@ function MasterAdminPage() {
             <Building2 size={120} />
           </div>
           <CardHeader className="pb-2">
-            <CardTitle className="text-xs font-black uppercase tracking-widest text-white/60">Produtores Cadastrados</CardTitle>
+            <CardTitle className="text-xs font-black uppercase tracking-widest text-white/60">Projetos Ativos</CardTitle>
           </CardHeader>
 
           <CardContent>
@@ -152,8 +152,8 @@ function MasterAdminPage() {
         <CardHeader className="p-8 border-b border-slate-100 bg-white space-y-4">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
             <div>
-              <CardTitle className="text-2xl font-manrope font-black text-navy">Gerenciamento de Produtores</CardTitle>
-              <CardDescription className="font-medium">Monitore GMV, usuários e planos SaaS.</CardDescription>
+              <CardTitle className="text-2xl font-manrope font-black text-navy">Gerenciamento de Projetos</CardTitle>
+              <CardDescription className="font-medium">Monitore GMV, usuários e performance de todos os ambientes.</CardDescription>
             </div>
 
             <div className="relative w-full md:w-80">
@@ -172,7 +172,7 @@ function MasterAdminPage() {
             <table className="w-full text-left">
               <thead>
                 <tr className="bg-slate-50 text-[10px] font-black uppercase tracking-widest text-slate-400 border-b border-slate-100">
-                  <th className="px-8 py-4">Ambiente</th>
+                  <th className="px-8 py-4">Projeto</th>
                   <th className="px-8 py-4">Plano</th>
                   <th className="px-8 py-4">Status</th>
                   <th className="px-8 py-4">Equipe</th>

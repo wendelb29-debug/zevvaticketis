@@ -102,7 +102,7 @@ export function Navbar({ selectedCity }: { selectedCity?: string | null }) {
               className="flex items-center gap-2 text-xs font-extrabold text-navy hover:text-coral transition-colors uppercase tracking-widest"
             >
               <Ticket className="w-4 h-4 text-coral" />
-              {translations[language].nav.myTickets}
+              Meus Ingressos / Projetos
             </Link>
             
             <div 

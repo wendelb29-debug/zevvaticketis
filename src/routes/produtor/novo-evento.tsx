@@ -101,7 +101,7 @@ function NovoEventoPage() {
       </Button>
 
       <div className="flex justify-between items-center mb-8">
-        <h1 className="text-3xl font-bold text-gray-900">Criar Novo Evento</h1>
+        <h1 className="text-3xl font-bold text-gray-900">Criar Novo Evento no Projeto</h1>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-8">

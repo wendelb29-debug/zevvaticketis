@@ -31,8 +31,8 @@ function IngressosPage() {
     <div className="container mx-auto py-8 space-y-8 font-inter">
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-manrope font-extrabold text-navy">Gestão de Ingressos</h1>
-          <p className="text-muted font-medium">Controle lotes, preços e disponibilidade.</p>
+          <h1 className="text-3xl font-manrope font-extrabold text-navy">Ingressos do Projeto</h1>
+          <p className="text-muted font-medium">Controle lotes, preços e disponibilidade do ambiente selecionado.</p>
         </div>
       </div>
 

@@ -51,8 +51,8 @@ function FinanceiroPage() {
     <div className="container mx-auto py-8 space-y-8 font-inter">
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-manrope font-extrabold text-navy">Financeiro</h1>
-          <p className="text-muted font-medium">Acompanhe suas receitas, taxas e repasses.</p>
+          <h1 className="text-3xl font-manrope font-extrabold text-navy">Financeiro do Projeto</h1>
+          <p className="text-muted font-medium">Acompanhe receitas, taxas e repasses deste ambiente.</p>
         </div>
         <div className="flex gap-3">
           <Button variant="outline" className="rounded-xl border-line">

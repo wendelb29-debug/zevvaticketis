@@ -114,8 +114,8 @@ export function ProducerDashboardPanel() {
     <div className="space-y-8 pb-10">
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-manrope font-extrabold text-navy">Workspace: {activeTenant?.nome}</h1>
-          <p className="text-muted-fg font-medium">Dashboard integrado de vendas, marketing e operações.</p>
+          <h1 className="text-3xl font-manrope font-extrabold text-navy">Projeto: {activeTenant?.nome}</h1>
+          <p className="text-muted-fg font-medium">Dashboard integrado de vendas e operações deste ambiente.</p>
         </div>
         <div className="flex gap-2">
 

@@ -211,7 +211,7 @@ export function AccountMenu({ user, onLogout, onNavigate, onOpenAuth }: AccountM
               className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-extrabold text-navy cursor-pointer hover:bg-surface group"
             >
               <Calendar className="w-4 h-4 text-navy/40 group-hover:text-coral transition-colors" />
-              Meus Produtores
+              Meus Projetos
             </DropdownMenuItem>
           )}
 

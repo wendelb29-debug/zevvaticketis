@@ -148,8 +148,8 @@ function TeamManagement() {
     <div className="space-y-8 font-inter max-w-6xl mx-auto">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div className="space-y-1">
-          <h1 className="text-3xl font-manrope font-extrabold text-navy">Minha Equipe</h1>
-          <p className="text-muted font-medium">Gerencie membros e permissões da sua organização.</p>
+          <h1 className="text-3xl font-manrope font-extrabold text-navy">Equipe do Projeto</h1>
+          <p className="text-muted font-medium">Gerencie membros e permissões deste ambiente.</p>
         </div>
 
         <Dialog open={isInviteOpen} onOpenChange={setIsInviteOpen}>

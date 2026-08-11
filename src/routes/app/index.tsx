@@ -3,15 +3,15 @@ import { useTenants } from "@/hooks/use-tenants";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { LayoutDashboard, LogOut, Plus, Building2, ShieldCheck, User } from "lucide-react";
+import { LogOut, Plus, Building2, ShieldCheck } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useEffect, useState } from "react";
 
 export const Route = createFileRoute("/app/")({
-  component: WorkspacesPage,
+  component: ProjectsPage,
 });
 
-function WorkspacesPage() {
+function ProjectsPage() {
   const { tenants, loading, switchTenant } = useTenants();
   const navigate = useNavigate();
   const [userName, setUserName] = useState("");
@@ -49,7 +49,7 @@ function WorkspacesPage() {
               <Building2 className="w-6 h-6 text-coral" />
             </div>
             <div>
-              <h1 className="text-2xl font-manrope font-black text-navy tracking-tight">Meus Produtores</h1>
+              <h1 className="text-2xl font-manrope font-black text-navy tracking-tight">Meus Projetos</h1>
               <p className="text-slate-500 font-medium">Olá, {userName}. Escolha o ambiente que deseja gerenciar.</p>
             </div>
           </div>
@@ -91,7 +91,7 @@ function WorkspacesPage() {
                 
                 <div className="flex items-center gap-2 pt-2 border-t border-slate-100">
                   <ShieldCheck className="w-4 h-4 text-emerald-500" />
-                  <span className="text-xs font-black uppercase text-slate-400">Administrador</span>
+                  <span className="text-xs font-black uppercase text-slate-400">Ambiente de Produção</span>
                 </div>
 
                 <Button className="w-full bg-navy hover:bg-coral text-white font-black uppercase tracking-widest text-[10px] py-6 rounded-xl group-hover:shadow-lg group-hover:shadow-coral/30 transition-all duration-300">
@@ -105,9 +105,9 @@ function WorkspacesPage() {
             <div className="w-16 h-16 bg-slate-100 group-hover:bg-coral/10 rounded-full flex items-center justify-center mb-4 transition-colors">
               <Plus className="w-8 h-8 text-slate-400 group-hover:text-coral transition-colors" />
             </div>
-            <CardTitle className="text-lg font-manrope font-black text-navy">Novo Produtor</CardTitle>
+            <CardTitle className="text-lg font-manrope font-black text-navy">Novo Projeto</CardTitle>
             <CardDescription className="text-center font-medium px-4 mt-2">
-              Crie uma nova workspace de produtor para gerenciar seus eventos.
+              Crie um novo ambiente para gerenciar seus eventos.
             </CardDescription>
           </Card>
 

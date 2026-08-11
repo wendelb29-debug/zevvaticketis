@@ -95,8 +95,8 @@ function OrgSettings() {
   return (
     <div className="space-y-10 font-inter max-w-4xl mx-auto">
       <div className="space-y-1">
-        <h1 className="text-3xl font-manrope font-extrabold text-navy">Configurações</h1>
-        <p className="text-muted font-medium">Dados da organização e preferências da conta.</p>
+        <h1 className="text-3xl font-manrope font-extrabold text-navy">Configurações do Projeto</h1>
+        <p className="text-muted font-medium">Dados do ambiente de operação e preferências.</p>
       </div>
 
       <div className="grid gap-8">
@@ -106,12 +106,13 @@ function OrgSettings() {
             <div className="p-3 bg-coral/10 rounded-2xl text-coral">
               <Building2 className="w-6 h-6" />
             </div>
-            <h2 className="text-xl font-manrope font-extrabold text-navy">Dados da Organização</h2>
+            <h2 className="text-xl font-manrope font-extrabold text-navy">Dados do Projeto</h2>
           </div>
+
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div className="space-y-2">
-              <label className="text-[10px] font-extrabold uppercase tracking-widest text-muted">Nome da Organização</label>
+              <label className="text-[10px] font-extrabold uppercase tracking-widest text-muted">Nome do Projeto</label>
               <Input 
                 value={org?.nome || ""} 
                 onChange={(e) => setOrg({...org, nome: e.target.value})}
