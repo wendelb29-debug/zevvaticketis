@@ -130,20 +130,51 @@ function HomePage() {
         <CityTicker />
 
 
-        <section className="px-6 py-8">
-          <div className="max-w-7xl mx-auto">
-            <FeaturedCarousel events={featuredEvents.slice(0, 5)} />
+        {/* Main Search & Quick Filters */}
+        <section className="relative -mt-16 z-20 px-6">
+          <div className="max-w-4xl mx-auto bg-white p-6 md:p-8 rounded-[32px] shadow-2xl border border-line space-y-6">
+            <div className="flex flex-col md:flex-row gap-4">
+              <div className="relative flex-[2]">
+                <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-muted h-5 w-5" />
+                <Input 
+                  placeholder="🔎 O que você procura? Ex: Congresso, Curso..."
+                  className="h-14 pl-12 text-lg rounded-2xl border-2 border-line bg-surface/50 focus-visible:ring-coral"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                />
+              </div>
+              
+              <div className="flex-[1.5] flex gap-2">
+                <button className="flex-1 h-14 bg-surface border-2 border-line rounded-2xl text-xs font-black text-navy uppercase flex items-center justify-center gap-2 hover:bg-line transition-all">
+                  <MapPin className="w-4 h-4 text-coral" /> Localização
+                </button>
+                <button className="flex-1 h-14 bg-surface border-2 border-line rounded-2xl text-xs font-black text-navy uppercase flex items-center justify-center gap-2 hover:bg-line transition-all">
+                  <Calendar className="w-4 h-4 text-coral" /> Data
+                </button>
+              </div>
+
+              <button className="h-14 px-8 bg-coral text-white font-black rounded-2xl hover:bg-coral-dark transition-all shadow-lg active:scale-95">
+                BUSCAR EXPERIÊNCIAS
+              </button>
+            </div>
+            
+            <div className="flex flex-wrap items-center gap-4 text-[10px] font-bold text-muted uppercase tracking-widest pt-4 border-t border-line">
+              <span>Buscas em alta:</span>
+              <button className="px-3 py-1 bg-accent/30 rounded-full hover:bg-accent transition-colors">#Israel2027</button>
+              <button className="px-3 py-1 bg-accent/30 rounded-full hover:bg-accent transition-colors">#Liderança</button>
+              <button className="px-3 py-1 bg-accent/30 rounded-full hover:bg-accent transition-colors">#Festivais</button>
+            </div>
           </div>
         </section>
 
-        {/* Premium Featured Events (Coverflow) */}
-        <section className="py-20 bg-accent/5">
-          <div className="max-w-7xl mx-auto px-6 mb-12 text-center">
+        {/* Featured Coverflow */}
+        <section className="py-24 bg-surface/10">
+          <div className="max-w-7xl mx-auto px-6 mb-16 text-center">
             <h2 className="text-3xl md:text-5xl font-manrope font-black text-navy uppercase tracking-tighter">
-              Eventos em Destaque
+              Experiências em destaque
             </h2>
             <p className="text-muted-fg font-bold mt-4 uppercase tracking-widest text-xs md:text-sm">
-              Experiências que você não pode perder
+              Seleção exclusiva Zevva para você
             </p>
           </div>
           
@@ -156,15 +187,17 @@ function HomePage() {
               events={featuredEvents.map(e => ({
                 id: e.id,
                 nome: e.nome_evento || e.nome,
-                cidade: e.cidade,
+                cidade: e.cidade || e.location_city,
                 categoria: e.categoria,
                 imagem_url: e.imagem_capa || e.imagem_url,
                 data_inicio: e.data_inicio || e.start_date,
-                slug: e.slug
+                slug: e.slug,
+                min_price: e.price_from || (e.ticket_types?.[0]?.preco)
               }))} 
             />
           )}
         </section>
+
 
         <section className="px-6 py-16 bg-surface/30">
           <div className="max-w-7xl mx-auto space-y-10">
