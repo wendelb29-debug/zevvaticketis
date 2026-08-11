@@ -4,7 +4,7 @@ import * as React from "react";
 import { useEffect, useRef, forwardRef, useState } from "react";
 import { cn } from "@/lib/utils";
 
-const vertexShaderSource = \`#version 300 es
+const vertexShaderSource = `#version 300 es
 precision mediump float;
 
 layout(location = 0) in vec4 a_position;
@@ -62,9 +62,9 @@ void main() {
   v_objectUV /= u_scale;
   v_objectUV = graphicRotation * v_objectUV;
 }
-\`;
+`;
 
-const fragmentShaderSource = \`#version 300 es
+const fragmentShaderSource = `#version 300 es
 precision mediump float;
 
 in vec2 v_objectUV;
@@ -107,7 +107,7 @@ void main() {
 
     outColor = vec4(col, 1.0);
 }
-\`;
+`;
 
 interface AdmitOneTicketProps {
   title: string;
@@ -157,6 +157,8 @@ export const AdmitOneTicket = forwardRef<HTMLDivElement, AdmitOneTicketProps>(
       gl.enableVertexAttribArray(pos);
       gl.vertexAttribPointer(pos, 2, gl.FLOAT, false, 0, 0);
 
+      let animationFrameId: number;
+
       const render = (time: number) => {
         if (!containerRef.current || !canvasRef.current) return;
         const width = containerRef.current.clientWidth;
@@ -183,10 +185,11 @@ export const AdmitOneTicket = forwardRef<HTMLDivElement, AdmitOneTicketProps>(
         gl.uniform1f(gl.getUniformLocation(program, "u_offsetY"), 0);
 
         gl.drawArrays(gl.TRIANGLES, 0, 6);
-        requestAnimationFrame(render);
+        animationFrameId = requestAnimationFrame(render);
       };
 
-      requestAnimationFrame(render);
+      animationFrameId = requestAnimationFrame(render);
+      return () => cancelAnimationFrame(animationFrameId);
     }, [mouse]);
 
     const handleMouseMove = (e: React.MouseEvent) => {
