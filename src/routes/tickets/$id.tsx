@@ -21,14 +21,14 @@ function TicketDetail() {
         .from("tickets")
         .select(`
           *,
-          events (
-            nome,
+          events!inner (
+            nome_evento,
             localizacao,
             cidade,
             data_inicio
           ),
           profiles:owner_id (
-            full_name
+            nome_completo
           )
         `)
         .eq("id", id)
@@ -40,22 +40,23 @@ function TicketDetail() {
   });
 
   const downloadPDF = () => {
+    if (!ticket) return;
     const doc = new jsPDF();
     doc.setFontSize(22);
     doc.text("ZEVVA TICKETS", 14, 20);
     doc.setFontSize(16);
-    doc.text(ticket?.events?.nome || "Evento", 14, 35);
+    doc.text((ticket.events as any)?.nome_evento || "Evento", 14, 35);
     doc.setFontSize(12);
-    doc.text(`Participante: ${ticket?.profiles?.nome || "Convidado"}`, 14, 45);
-    doc.text(`Data: ${ticket?.events?.data_inicio ? new Date(ticket.events.data_inicio).toLocaleDateString("pt-BR") : "N/A"}`, 14, 55);
-    doc.text(`Local: ${ticket?.events?.localizacao || "N/A"}`, 14, 65);
-    doc.text(`Código: ${ticket?.qr_code || ticket?.id.slice(0, 8)}`, 14, 75);
-    doc.text(`Status: ${ticket?.status === "utilizado" ? "UTILIZADO" : "VÁLIDO"}`, 14, 85);
-    doc.save(`ingresso-${ticket?.id}.pdf`);
+    doc.text(`Participante: ${(ticket.profiles as any)?.nome_completo || "Convidado"}`, 14, 45);
+    doc.text(`Data: ${(ticket.events as any)?.data_inicio ? new Date((ticket.events as any).data_inicio).toLocaleDateString("pt-BR") : "N/A"}`, 14, 55);
+    doc.text(`Local: ${(ticket.events as any)?.localizacao || "N/A"}`, 14, 65);
+    doc.text(`Código: ${ticket.qr_code || ticket.id.slice(0, 8)}`, 14, 75);
+    doc.text(`Status: ${ticket.status === "utilizado" ? "UTILIZADO" : "VÁLIDO"}`, 14, 85);
+    doc.save(`ingresso-${ticket.id}.pdf`);
   };
 
   const shareWhatsApp = () => {
-    const shareText = `Olá! Este é meu ingresso para ${ticket?.events?.title}. Acesse: ${window.location.href}`;
+    const shareText = `Olá! Este é meu ingresso para ${(ticket?.events as any)?.nome_evento}. Acesse: ${window.location.href}`;
     window.open(`https://wa.me/?text=${encodeURIComponent(shareText)}`, "_blank");
   };
 
@@ -69,11 +70,11 @@ function TicketDetail() {
 
   return (
     <div className="max-w-lg mx-auto py-8 px-4 space-y-6">
-      <div id="ticket-to-pdf" className="space-y-6">
+      <div className="space-y-6">
         <AdmitOneTicket 
-        title={ticket.events?.nome || "Evento"}
-        date={ticket.events?.data_inicio ? new Date(ticket.events.data_inicio).toLocaleDateString('pt-BR') : "Data a definir"}
-        location={ticket.events?.localizacao || "Local"}
+          title={(ticket.events as any)?.nome_evento || "Evento"}
+          date={(ticket.events as any)?.data_inicio ? new Date((ticket.events as any).data_inicio).toLocaleDateString('pt-BR') : "Data a definir"}
+          location={(ticket.events as any)?.localizacao || "Local"}
           price={ticket.price ? `R$ ${ticket.price}` : "Confirmado"}
           ticketCode={ticket.qr_code || ticket.id.slice(0, 8)}
           status={ticket.status === 'utilizado' ? 'UTILIZADO' : 'INGRESSO VÁLIDO'}
