@@ -31,6 +31,7 @@ import { tracking } from "@/lib/tracking";
 import { getFeaturedEvents } from "@/lib/events.functions";
 import { useServerFn } from "@tanstack/react-start";
 import { Skeleton } from "@/components/ui/skeleton";
+import { PremiumNewsletter } from "@/components/ui/premium-newsletter";
 
 export const Route = createFileRoute("/")({
   component: HomePage,
@@ -398,6 +399,8 @@ function HomePage() {
             </div>
           </div>
         </section>
+
+        <PremiumNewsletter />
 
         <section className="px-6 py-24">
           <div className="max-w-3xl mx-auto space-y-12">
