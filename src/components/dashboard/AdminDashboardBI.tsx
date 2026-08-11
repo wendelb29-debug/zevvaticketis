@@ -149,6 +149,23 @@ export function AdminDashboardBI() {
       const { data: campaigns } = await supabase.from("campaigns").select("*, ads(*), sales_attribution(count)");
       setCampaignData(campaigns?.map(c => ({
         name: c.name,
+        source: c.utm_source || "Orgânico",
+        clicks: c.ads?.reduce((acc: number, curr: any) => acc + (curr.clicks || 0), 0) || 0,
+        conv: c.sales_attribution ? Math.round((c.sales_attribution.length / (c.ads?.reduce((acc: number, curr: any) => acc + (curr.clicks || 0), 0) || 1)) * 100) : 0,
+        roi: c.spend > 0 ? (c.sales_attribution?.reduce((acc: number, curr: any) => acc + (Number(curr.amount) || 0), 0) / c.spend).toFixed(1) : "0",
+        revenue: c.sales_attribution?.reduce((acc: number, curr: any) => acc + (Number(curr.amount) || 0), 0) || 0
+      })) || []);
+
+      // 5. Funnel Data (Simulated for now based on tracking)
+      setFunnelData([
+        { step: "Visitantes", val: 100 },
+        { step: "Visualizou Evento", val: 65 },
+        { step: "Checkout", val: 25 },
+        { step: "Pagamento", val: 12 },
+        { step: "Conversão", val: 8 }
+      ]);
+
+        name: c.name,
         source: c.utm_source || "Direto",
         clicks: 0, // Mock for now until tracking is populated
         conv: 0,

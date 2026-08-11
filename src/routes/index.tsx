@@ -46,6 +46,8 @@ function HomePage() {
   const t = translations[language].home;
 
   useEffect(() => {
+    tracking.captureUTMs();
+    tracking.logEvent("page_view_home");
     async function fetchEvents() {
       const { data: featured } = await (supabase
         .from("events")
