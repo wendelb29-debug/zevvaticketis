@@ -61,7 +61,7 @@ export function exportToPDF(data: any[], columns: { header: string; key: string 
     body: data.map(row => columns.map(col => String(row[col.key] ?? ""))),
     startY: options.summary ? 62 + (options.summary.length * 6) + 15 : 65,
     theme: 'striped',
-    headStyles: { fillStyle: 'fill', fillColor: [5, 7, 15], textColor: [255, 255, 255] },
+    headStyles: { fillColor: [5, 7, 15], textColor: [255, 255, 255] },
     alternateRowStyles: { fillColor: [245, 245, 245] },
   });
 
