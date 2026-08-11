@@ -65,11 +65,11 @@ export function AccountMenu({ user, onLogout, onNavigate, onOpenAuth }: AccountM
       
       setIsProducer(!!member);
 
-      const { data: isAdminRole } = await supabase.rpc('has_role', { 
+      const { data: isAdminRole, error: roleError } = await supabase.rpc('has_role', { 
         _user_id: user.id, 
         _role: 'admin' 
       });
-      setIsAdminUser(!!isAdminRole);
+      setIsAdminUser(!!isAdminRole && !roleError);
     }
     fetchData();
   }, [user]);

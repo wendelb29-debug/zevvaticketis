@@ -35,26 +35,27 @@ import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/produtor")({
   beforeLoad: async () => {
-    const { data: { session } } = await supabase.auth.getSession();
-    if (!session) {
+    const { data: { user: authUser }, error: authError } = await supabase.auth.getUser();
+    
+    if (authError || !authUser) {
       throw redirect({ to: "/login" });
     }
 
-    const { data: isProdutor } = await supabase.rpc('has_role', {
-      _user_id: session.user.id,
+    const { data: isProdutor, error: roleError } = await supabase.rpc('has_role', {
+      _user_id: authUser.id,
       _role: 'produtor'
     });
 
-    if (!isProdutor) {
-      // Fallback: check if they are in organization_members if we haven't migrated yet
+    if (roleError || !isProdutor) {
+      // Fallback: check if they are in organization_members
       const { data: member } = await supabase
         .from("organization_members")
         .select("organization_id")
-        .eq("user_id", session.user.id)
+        .eq("user_id", authUser.id)
         .maybeSingle();
 
       if (!member) {
-        throw redirect({ to: "/app" });
+        throw redirect({ to: "/unauthorized" });
       }
     }
   },
