@@ -376,7 +376,7 @@ export function AdminDashboardBI() {
                       dataKey="value"
                     >
                       {[0, 1, 2, 3].map((entry, index) => (
-                        <Cell key={`cell-${index}`} fill={["#D9A94D", "#FF7F50", "#05070F", "#64748b"][index]} />
+                        <Cell key={`cell-${index}`} fill={["#D9A94D", "#FF7F50", "#05070F", "#64748b"][index] || "#ccc"} />
                       ))}
                     </Pie>
                     <Tooltip />
