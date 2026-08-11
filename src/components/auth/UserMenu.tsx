@@ -68,11 +68,11 @@ export function UserMenu({ user, onLogout, onNavigate, agentStatus, onStatusChan
       // Check Admin
       const { data: admin } = await supabase
         .from("platform_admins")
-        .select("id, user_id")
+        .select("id")
         .eq("user_id", user.id)
         .maybeSingle();
       
-      if (admin && user.id === admin.user_id) {
+      if (admin) {
         setRole({ label: "Admin", color: "bg-destructive/10 text-destructive border-destructive/20" });
         return;
       }
