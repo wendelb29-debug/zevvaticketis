@@ -49,7 +49,7 @@ function CheckinApp() {
       if (!user) throw new Error("Operador não autenticado");
 
       // 1. Check ticket
-      const { data: ticket, error: ticketError } = await (supabase
+      const { data: ticket, error: ticketError } = await supabase
         .from("tickets")
         .select(`
           *,
