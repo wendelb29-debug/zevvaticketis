@@ -45,7 +45,7 @@ function ScannerPage() {
       const { data } = await supabase
         .from("events")
         .select("*")
-        .eq("id", eventId)
+        .eq("id", eventId!)
         .single();
       
       setEvent(data);

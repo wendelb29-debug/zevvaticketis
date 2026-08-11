@@ -1313,6 +1313,7 @@ export type Database = {
           quantity: number
           sale_end: string | null
           sale_start: string | null
+          share_token: string | null
           status: string | null
           ticket_type_id: string | null
         }
@@ -1331,6 +1332,7 @@ export type Database = {
           quantity?: number
           sale_end?: string | null
           sale_start?: string | null
+          share_token?: string | null
           status?: string | null
           ticket_type_id?: string | null
         }
@@ -1349,6 +1351,7 @@ export type Database = {
           quantity?: number
           sale_end?: string | null
           sale_start?: string | null
+          share_token?: string | null
           status?: string | null
           ticket_type_id?: string | null
         }

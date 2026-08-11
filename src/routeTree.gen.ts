@@ -55,6 +55,7 @@ import { Route as ProdutorMarketingRouteImport } from './routes/produtor/marketi
 import { Route as ProdutorNovoEventoRouteImport } from './routes/produtor/novo-evento'
 import { Route as ProdutorParticipantesRouteImport } from './routes/produtor/participantes'
 import { Route as ProdutorSuporteRouteImport } from './routes/produtor/suporte'
+import { Route as ProdutorTicketsRouteImport } from './routes/produtor/tickets'
 import { Route as TicketsIndexRouteImport } from './routes/tickets/index'
 import { Route as TicketsIdRouteImport } from './routes/tickets/$id'
 import { Route as DotlovableOauthConsentRouteImport } from './routes/[.]lovable.oauth.consent'
@@ -68,6 +69,7 @@ import { Route as AdminMarketingPushRouteImport } from './routes/admin/marketing
 import { Route as ApiPublicUazapiWebhookRouteImport } from './routes/api/public/uazapi-webhook'
 import { Route as EventosIdCheckoutRouteImport } from './routes/eventos/$id.checkout'
 import { Route as OauthGoogleReturnRouteImport } from './routes/oauth/google/return'
+import { Route as ApiPublicTicketsShareTokenRouteImport } from './routes/api/public/tickets/share/$token'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -301,6 +303,11 @@ const ProdutorSuporteRoute = ProdutorSuporteRouteImport.update({
   path: '/suporte',
   getParentRoute: () => ProdutorRoute,
 } as any)
+const ProdutorTicketsRoute = ProdutorTicketsRouteImport.update({
+  id: '/tickets',
+  path: '/tickets',
+  getParentRoute: () => ProdutorRoute,
+} as any)
 const TicketsIndexRoute = TicketsIndexRouteImport.update({
   id: '/tickets/',
   path: '/tickets/',
@@ -368,6 +375,12 @@ const OauthGoogleReturnRoute = OauthGoogleReturnRouteImport.update({
   path: '/oauth/google/return',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicTicketsShareTokenRoute =
+  ApiPublicTicketsShareTokenRouteImport.update({
+    id: '/api/public/tickets/share/$token',
+    path: '/api/public/tickets/share/$token',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -412,6 +425,7 @@ export interface FileRoutesByFullPath {
   '/produtor/novo-evento': typeof ProdutorNovoEventoRoute
   '/produtor/participantes': typeof ProdutorParticipantesRoute
   '/produtor/suporte': typeof ProdutorSuporteRoute
+  '/produtor/tickets': typeof ProdutorTicketsRoute
   '/tickets/$id': typeof TicketsIdRoute
   '/admin/': typeof AdminIndexRoute
   '/app/': typeof AppIndexRoute
@@ -429,6 +443,7 @@ export interface FileRoutesByFullPath {
   '/oauth/google/return': typeof OauthGoogleReturnRoute
   '/admin/checkin/': typeof AdminCheckinIndexRoute
   '/admin/marketing/': typeof AdminMarketingIndexRoute
+  '/api/public/tickets/share/$token': typeof ApiPublicTicketsShareTokenRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -469,6 +484,7 @@ export interface FileRoutesByTo {
   '/produtor/novo-evento': typeof ProdutorNovoEventoRoute
   '/produtor/participantes': typeof ProdutorParticipantesRoute
   '/produtor/suporte': typeof ProdutorSuporteRoute
+  '/produtor/tickets': typeof ProdutorTicketsRoute
   '/tickets/$id': typeof TicketsIdRoute
   '/admin': typeof AdminIndexRoute
   '/app': typeof AppIndexRoute
@@ -486,6 +502,7 @@ export interface FileRoutesByTo {
   '/oauth/google/return': typeof OauthGoogleReturnRoute
   '/admin/checkin': typeof AdminCheckinIndexRoute
   '/admin/marketing': typeof AdminMarketingIndexRoute
+  '/api/public/tickets/share/$token': typeof ApiPublicTicketsShareTokenRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -531,6 +548,7 @@ export interface FileRoutesById {
   '/produtor/novo-evento': typeof ProdutorNovoEventoRoute
   '/produtor/participantes': typeof ProdutorParticipantesRoute
   '/produtor/suporte': typeof ProdutorSuporteRoute
+  '/produtor/tickets': typeof ProdutorTicketsRoute
   '/tickets/$id': typeof TicketsIdRoute
   '/admin/': typeof AdminIndexRoute
   '/app/': typeof AppIndexRoute
@@ -548,6 +566,7 @@ export interface FileRoutesById {
   '/oauth/google/return': typeof OauthGoogleReturnRoute
   '/admin/checkin/': typeof AdminCheckinIndexRoute
   '/admin/marketing/': typeof AdminMarketingIndexRoute
+  '/api/public/tickets/share/$token': typeof ApiPublicTicketsShareTokenRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -594,6 +613,7 @@ export interface FileRouteTypes {
     | '/produtor/novo-evento'
     | '/produtor/participantes'
     | '/produtor/suporte'
+    | '/produtor/tickets'
     | '/tickets/$id'
     | '/admin/'
     | '/app/'
@@ -611,6 +631,7 @@ export interface FileRouteTypes {
     | '/oauth/google/return'
     | '/admin/checkin/'
     | '/admin/marketing/'
+    | '/api/public/tickets/share/$token'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -651,6 +672,7 @@ export interface FileRouteTypes {
     | '/produtor/novo-evento'
     | '/produtor/participantes'
     | '/produtor/suporte'
+    | '/produtor/tickets'
     | '/tickets/$id'
     | '/admin'
     | '/app'
@@ -668,6 +690,7 @@ export interface FileRouteTypes {
     | '/oauth/google/return'
     | '/admin/checkin'
     | '/admin/marketing'
+    | '/api/public/tickets/share/$token'
   id:
     | '__root__'
     | '/'
@@ -712,6 +735,7 @@ export interface FileRouteTypes {
     | '/produtor/novo-evento'
     | '/produtor/participantes'
     | '/produtor/suporte'
+    | '/produtor/tickets'
     | '/tickets/$id'
     | '/admin/'
     | '/app/'
@@ -729,6 +753,7 @@ export interface FileRouteTypes {
     | '/oauth/google/return'
     | '/admin/checkin/'
     | '/admin/marketing/'
+    | '/api/public/tickets/share/$token'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -755,6 +780,7 @@ export interface RootRouteChildren {
   Char91DotmcpChar93InvokeToolToolRoute: typeof Char91DotmcpChar93InvokeToolToolRoute
   ApiPublicUazapiWebhookRoute: typeof ApiPublicUazapiWebhookRoute
   OauthGoogleReturnRoute: typeof OauthGoogleReturnRoute
+  ApiPublicTicketsShareTokenRoute: typeof ApiPublicTicketsShareTokenRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -1081,6 +1107,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProdutorSuporteRouteImport
       parentRoute: typeof ProdutorRoute
     }
+    '/produtor/tickets': {
+      id: '/produtor/tickets'
+      path: '/tickets'
+      fullPath: '/produtor/tickets'
+      preLoaderRoute: typeof ProdutorTicketsRouteImport
+      parentRoute: typeof ProdutorRoute
+    }
     '/tickets/': {
       id: '/tickets/'
       path: '/tickets'
@@ -1170,6 +1203,13 @@ declare module '@tanstack/react-router' {
       path: '/oauth/google/return'
       fullPath: '/oauth/google/return'
       preLoaderRoute: typeof OauthGoogleReturnRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/tickets/share/$token': {
+      id: '/api/public/tickets/share/$token'
+      path: '/api/public/tickets/share/$token'
+      fullPath: '/api/public/tickets/share/$token'
+      preLoaderRoute: typeof ApiPublicTicketsShareTokenRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -1282,6 +1322,7 @@ interface ProdutorRouteChildren {
   ProdutorNovoEventoRoute: typeof ProdutorNovoEventoRoute
   ProdutorParticipantesRoute: typeof ProdutorParticipantesRoute
   ProdutorSuporteRoute: typeof ProdutorSuporteRoute
+  ProdutorTicketsRoute: typeof ProdutorTicketsRoute
   ProdutorIndexRoute: typeof ProdutorIndexRoute
 }
 
@@ -1294,6 +1335,7 @@ const ProdutorRouteChildren: ProdutorRouteChildren = {
   ProdutorNovoEventoRoute: ProdutorNovoEventoRoute,
   ProdutorParticipantesRoute: ProdutorParticipantesRoute,
   ProdutorSuporteRoute: ProdutorSuporteRoute,
+  ProdutorTicketsRoute: ProdutorTicketsRoute,
   ProdutorIndexRoute: ProdutorIndexRoute,
 }
 
@@ -1326,6 +1368,7 @@ const rootRouteChildren: RootRouteChildren = {
   Char91DotmcpChar93InvokeToolToolRoute: Char91DotmcpChar93InvokeToolToolRoute,
   ApiPublicUazapiWebhookRoute: ApiPublicUazapiWebhookRoute,
   OauthGoogleReturnRoute: OauthGoogleReturnRoute,
+  ApiPublicTicketsShareTokenRoute: ApiPublicTicketsShareTokenRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

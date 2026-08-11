@@ -8,13 +8,10 @@ import {
   Plus, 
   Download, 
   FileText,
-  Filter,
-  Eye,
   FileSpreadsheet
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { 
   Table, 
   TableBody, 
@@ -69,7 +66,7 @@ export function ProducerDashboardPanel() {
       setStats({
         activeEvents,
         ticketsSold: ordersData?.length || 0,
-        totalParticipants: ordersData?.length || 0, // Simplified for now
+        totalParticipants: ordersData?.length || 0,
         revenue: revenue - zevvaFees
       });
 
@@ -77,7 +74,7 @@ export function ProducerDashboardPanel() {
 
       setSalesReport(ordersData?.map(order => ({
         event: eventsData?.find(e => e.id === order.event_id)?.title || "Evento",
-        ticket: "Ingresso Geral", // Simplified
+        ticket: "Ingresso Geral",
         quantity: 1,
         value: order.valor_bruto,
         fee: order.taxa_plataforma,
@@ -113,11 +110,18 @@ export function ProducerDashboardPanel() {
           <h1 className="text-3xl font-manrope font-extrabold text-navy">Área do Produtor</h1>
           <p className="text-muted-fg">Gerencie seus eventos e acompanhe suas vendas em tempo real.</p>
         </div>
-        <Button asChild className="bg-coral hover:bg-coral/90 text-white gap-2 px-6 rounded-xl font-bold">
-          <Link to="/produtor/novo-evento">
-            <Plus className="w-5 h-5" /> Criar Evento
-          </Link>
-        </Button>
+        <div className="flex gap-2">
+          <Button asChild variant="outline" className="border-navy text-navy gap-2 px-6 rounded-xl font-bold">
+            <Link to="/produtor/tickets">
+              <Ticket className="w-5 h-5" /> Ver Ingressos
+            </Link>
+          </Button>
+          <Button asChild className="bg-coral hover:bg-coral/90 text-white gap-2 px-6 rounded-xl font-bold">
+            <Link to="/produtor/novo-evento">
+              <Plus className="w-5 h-5" /> Criar Evento
+            </Link>
+          </Button>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
@@ -207,8 +211,4 @@ export function ProducerDashboardPanel() {
       </Card>
     </div>
   );
-}
-
-function cn(...inputs: any[]) {
-  return inputs.filter(Boolean).join(" ");
 }
