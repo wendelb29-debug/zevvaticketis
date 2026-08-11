@@ -22,11 +22,10 @@ function TicketDetail() {
         .select(`
           *,
           events (
-            title,
-            location,
-            city,
-            start_date,
-            imagem_url
+            nome,
+            localizacao,
+            cidade,
+            data_inicio
           ),
           profiles:owner_id (
             full_name
@@ -62,9 +61,9 @@ function TicketDetail() {
     <div className="max-w-lg mx-auto py-8 px-4 space-y-6">
       <div id="ticket-to-pdf" className="space-y-6">
         <AdmitOneTicket 
-          title={ticket.events?.title || "Evento"}
-          date={ticket.events?.start_date ? new Date(ticket.events.start_date).toLocaleDateString('pt-BR') : "Data a definir"}
-          location={ticket.events?.location || "Local"}
+        title={ticket.events?.nome || "Evento"}
+        date={ticket.events?.data_inicio ? new Date(ticket.events.data_inicio).toLocaleDateString('pt-BR') : "Data a definir"}
+        location={ticket.events?.localizacao || "Local"}
           price={ticket.price ? `R$ ${ticket.price}` : "Confirmado"}
           ticketCode={ticket.qr_code || ticket.id.slice(0, 8)}
           status={ticket.status === 'utilizado' ? 'UTILIZADO' : 'INGRESSO VÁLIDO'}

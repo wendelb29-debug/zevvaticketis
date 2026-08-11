@@ -20,10 +20,10 @@ function ProducerTicketsPage() {
         .from("tickets")
         .select(`
           *,
-          events!inner(title, producer_id),
-          profiles:owner_id(full_name, email, telefone)
+          events!inner(nome, produtor_id),
+          profiles:owner_id(nome, email, telefone)
         `)
-        .eq("events.producer_id", user.id);
+        .eq("events.produtor_id", user.id);
       
       return data;
     }
@@ -59,10 +59,10 @@ function ProducerTicketsPage() {
             {tickets?.map(ticket => (
               <TableRow key={ticket.id}>
                 <TableCell>
-                  <p className="font-bold">{ticket.profiles?.full_name}</p>
+                  <p className="font-bold">{ticket.profiles?.nome}</p>
                   <p className="text-xs text-muted">{ticket.profiles?.email}</p>
                 </TableCell>
-                <TableCell className="font-medium">{ticket.events?.title}</TableCell>
+                <TableCell className="font-medium">{ticket.events?.nome}</TableCell>
                 <TableCell>
                   <span className={`px-2 py-1 rounded-full text-[10px] font-black uppercase ${ticket.status === 'utilizado' ? 'bg-blue-100 text-blue-700' : 'bg-green-100 text-green-700'}`}>
                     {ticket.status}
