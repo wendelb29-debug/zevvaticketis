@@ -58,6 +58,11 @@ import {
 
 export function AdminDashboardBI() {
   const [period, setPeriod] = useState("30d");
+  const [filters, setFilters] = useState({
+    eventId: "all",
+    producerId: "all",
+    category: "all"
+  });
   const [loading, setLoading] = useState(true);
   const [stats, setStats] = useState({
     totalEvents: { active: 0, closed: 0, upcoming: 0 },
@@ -69,28 +74,87 @@ export function AdminDashboardBI() {
 
   const [campaignData, setCampaignData] = useState<any[]>([]);
   const [funnelData, setFunnelData] = useState<any[]>([]);
+  const [events, setEvents] = useState<any[]>([]);
+  const [producers, setProducers] = useState<any[]>([]);
 
   useEffect(() => {
     fetchBIData();
-  }, [period]);
+  }, [period, filters]);
+
+  useEffect(() => {
+    fetchFilterOptions();
+  }, []);
+
+  async function fetchFilterOptions() {
+    const [{ data: eventsData }, { data: producersData }] = await Promise.all([
+      supabase.from("events").select("id, title").order("title"),
+      supabase.from("organizations").select("id, nome").order("nome")
+    ]);
+    if (eventsData) setEvents(eventsData);
+    if (producersData) setProducers(producersData);
+  }
 
   async function fetchBIData() {
     setLoading(true);
     try {
-      // Basic mock data following the BI spec for visual testing
+      let startDate = startOfDay(subDays(new Date(), 30));
+      if (period === "today") startDate = startOfDay(new Date());
+      else if (period === "7d") startDate = startOfDay(subDays(new Date(), 7));
+      
+      const endDate = endOfDay(new Date());
+
+      // 1. Events Stats
+      let eventsQuery = supabase.from("events").select("*");
+      if (filters.producerId !== "all") eventsQuery = eventsQuery.eq("organization_id", filters.producerId);
+      if (filters.category !== "all") eventsQuery = eventsQuery.eq("category", filters.category);
+      
+      const { data: eventsData } = await eventsQuery;
+      const active = eventsData?.filter(e => e.status === "publicado").length || 0;
+      const upcoming = eventsData?.filter(e => e.start_date && new Date(e.start_date) > new Date()).length || 0;
+      
+      // 2. Orders & Sales
+      let ordersQuery = supabase.from("orders").select("*").eq("status", "pago");
+      if (filters.eventId !== "all") ordersQuery = ordersQuery.eq("event_id", filters.eventId);
+      if (filters.producerId !== "all") ordersQuery = ordersQuery.eq("organization_id", filters.producerId);
+      ordersQuery = ordersQuery.gte("created_at", startDate.toISOString()).lte("created_at", endDate.toISOString());
+      
+      const { data: ordersData } = await ordersQuery;
+      const quantity = ordersData?.length || 0;
+      const gross = ordersData?.reduce((acc, curr) => acc + (Number(curr.valor_bruto) || 0), 0) || 0;
+      const averageTicket = quantity > 0 ? gross / quantity : 0;
+
+      // 3. Tickets & Checkins
+      let ticketsQuery = supabase.from("tickets").select("*");
+      if (filters.eventId !== "all") ticketsQuery = ticketsQuery.eq("event_id", filters.eventId);
+      const { data: ticketsData } = await ticketsQuery;
+      
+      const sold = ticketsData?.filter(t => t.status === "vendido" || t.status === "utilizado").length || 0;
+      const available = ticketsData?.filter(t => t.status === "disponivel").length || 0;
+      const used = ticketsData?.filter(t => t.status === "utilizado").length || 0;
+
       setStats({
-        totalEvents: { active: 12, closed: 45, upcoming: 8 },
-        totalTickets: { available: 5000, sold: 3450, reserved: 120, used: 2800 },
-        sales: { quantity: 3450, gross: 285400, averageTicket: 82.72 },
-        users: { new: 450, recurring: 120, byCampaign: 380 },
-        checkin: { expected: 3450, performed: 2800, percentage: 81, missing: 650 }
+        totalEvents: { active, closed: (eventsData?.length || 0) - active, upcoming },
+        totalTickets: { available, sold, reserved: 0, used },
+        sales: { quantity, gross, averageTicket },
+        users: { new: 0, recurring: 0, byCampaign: 0 }, // Would need complex query
+        checkin: { 
+          expected: sold, 
+          performed: used, 
+          percentage: sold > 0 ? Math.round((used / sold) * 100) : 0, 
+          missing: sold - used 
+        }
       });
 
-      setCampaignData([
-        { name: "Festival X - Instagram", source: "Instagram", views: 10000, clicks: 500, signups: 200, sales: 80, revenue: 12000, conv: 16, roi: 4.2 },
-        { name: "Congresso Y - Google", source: "Google", views: 25000, clicks: 1200, signups: 400, sales: 150, revenue: 45000, conv: 12.5, roi: 5.8 },
-        { name: "Trip Z - Facebook", source: "Facebook", views: 8000, clicks: 300, signups: 100, sales: 45, revenue: 9000, conv: 15, roi: 3.5 }
-      ]);
+      // 4. Marketing Performance (using new schema)
+      const { data: campaigns } = await supabase.from("campaigns").select("*, ads(*), sales_attribution(count)");
+      setCampaignData(campaigns?.map(c => ({
+        name: c.name,
+        source: c.utm_source || "Direto",
+        clicks: 0, // Mock for now until tracking is populated
+        conv: 0,
+        roi: c.spend > 0 ? (c.budget / c.spend).toFixed(1) : 0,
+        revenue: 0
+      })) || []);
 
       setFunnelData([
         { step: "Visualização", val: 100 },
@@ -102,6 +166,7 @@ export function AdminDashboardBI() {
       ]);
       
     } catch (error) {
+      console.error(error);
       toast.error("Erro ao carregar BI");
     } finally {
       setLoading(false);
@@ -109,14 +174,28 @@ export function AdminDashboardBI() {
   }
 
   const handleExport = (reportType: string) => {
-    toast.promise(
-      new Promise((resolve) => setTimeout(resolve, 1500)),
-      {
-        loading: `Gerando relatório ${reportType}...`,
-        success: `Relatório ${reportType} exportado com sucesso.`,
-        error: 'Erro ao gerar relatório.',
-      }
-    );
+    const columns = [
+      { header: "Métrica", key: "label" },
+      { header: "Valor", key: "value" }
+    ];
+    const data = [
+      { label: "Faturamento Bruto", value: `R$ ${stats.sales.gross.toLocaleString()}` },
+      { label: "Total Ingressos Vendidos", value: stats.totalTickets.sold },
+      { label: "Check-ins Realizados", value: stats.totalTickets.used }
+    ];
+    
+    if (reportType === "financeiro") {
+      exportToPDF(data, columns, { 
+        title: "Relatório Financeiro BI", 
+        fileName: "bi_financeiro",
+        summary: [
+          { label: "Total Bruto", value: `R$ ${stats.sales.gross}` },
+          { label: "Ticket Médio", value: `R$ ${stats.sales.averageTicket.toFixed(2)}` }
+        ]
+      });
+    } else {
+      exportToExcel([{ name: "BI Stats", data }], "bi_export");
+    }
   };
 
   return (
