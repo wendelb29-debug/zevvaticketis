@@ -112,7 +112,7 @@ function ProdutorDashboard() {
         <h2 className="text-xl font-semibold">Meus Eventos</h2>
         <div className="grid gap-4">
           {events?.map((event: any) => (
-            <Link key={event.id} to="/eventos/$id" params={{ id: event.id }}>
+            <Link key={event.id} to="/eventos/$id" params={{ id: event.id }} search={{}}>
               <Card>
                 <CardContent className="flex items-center p-6 gap-6 hover:bg-accent/50 transition-colors">
                 <div className="w-24 h-24 rounded-lg bg-gray-100 flex-shrink-0 overflow-hidden">
@@ -145,7 +145,7 @@ function ProdutorDashboard() {
                     {event.ticket_types?.reduce((acc: number, curr: any) => acc + (curr.quantidade_total - curr.quantidade_disponivel), 0)} / {event.ticket_types?.reduce((acc: number, curr: any) => acc + curr.quantidade_total, 0)} vendidos
                   </div>
                   <Button variant="outline" size="sm" asChild onClick={(e) => e.stopPropagation()}>
-                    <Link to="/eventos/$id" params={{ id: event.id }}>Visualizar</Link>
+                    <Link to="/eventos/$id" params={{ id: event.id }} search={{}}>Visualizar</Link>
                   </Button>
                 </div>
               </CardContent>
