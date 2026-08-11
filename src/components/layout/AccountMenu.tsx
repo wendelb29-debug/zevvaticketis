@@ -69,7 +69,7 @@ export function AccountMenu({ user, onLogout, onNavigate, onOpenAuth }: AccountM
         _user_id: user.id, 
         _role: 'admin' 
       });
-      setIsAdminUser(!!isAdminRole);
+      setIsAdminUser(!!isAdminRole && !roleError);
     }
     fetchData();
   }, [user]);
