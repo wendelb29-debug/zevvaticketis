@@ -27,11 +27,11 @@ function CheckinDashboard() {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) return;
 
-      // Get events where user is staff
-      const { data: staffData } = await supabase
-        .from("event_staff")
+      // Get events where user is staff (cast to any)
+      const { data: staffData } = await (supabase
+        .from("event_staff" as any)
         .select("event_id, events(*)")
-        .eq("user_id", user.id);
+        .eq("user_id", user.id) as any);
 
       // Also get events for organization owners/admins
       const { data: member } = await supabase
@@ -51,7 +51,7 @@ function CheckinDashboard() {
 
       // Merge and deduplicate
       const allEvents = [
-        ...(staffData?.map(s => s.events) || []),
+        ...(staffData?.map((s: any) => s.events) || []),
         ...orgEvents
       ].filter((e, i, self) => e && self.findIndex(t => t?.id === e?.id) === i);
 
