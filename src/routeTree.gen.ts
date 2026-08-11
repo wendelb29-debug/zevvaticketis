@@ -70,6 +70,7 @@ import { Route as ApiPublicUazapiWebhookRouteImport } from './routes/api/public/
 import { Route as CheckinEventIdRouteImport } from './routes/checkin/event.$id'
 import { Route as EventosIdCheckoutRouteImport } from './routes/eventos/$id.checkout'
 import { Route as OauthGoogleReturnRouteImport } from './routes/oauth/google/return'
+import { Route as CheckinEventIdIndexRouteImport } from './routes/checkin/event.$id.index'
 import { Route as ApiPublicTicketsShareTokenRouteImport } from './routes/api/public/tickets/share/$token'
 
 const IndexRoute = IndexRouteImport.update({
@@ -381,6 +382,11 @@ const OauthGoogleReturnRoute = OauthGoogleReturnRouteImport.update({
   path: '/oauth/google/return',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CheckinEventIdIndexRoute = CheckinEventIdIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => CheckinEventIdRoute,
+} as any)
 const ApiPublicTicketsShareTokenRoute =
   ApiPublicTicketsShareTokenRouteImport.update({
     id: '/api/public/tickets/share/$token',
@@ -445,11 +451,12 @@ export interface FileRoutesByFullPath {
   '/admin/marketing/publicidade': typeof AdminMarketingPublicidadeRoute
   '/admin/marketing/push': typeof AdminMarketingPushRoute
   '/api/public/uazapi-webhook': typeof ApiPublicUazapiWebhookRoute
-  '/checkin/event/$id': typeof CheckinEventIdRoute
+  '/checkin/event/$id': typeof CheckinEventIdRouteWithChildren
   '/eventos/$id/checkout': typeof EventosIdCheckoutRoute
   '/oauth/google/return': typeof OauthGoogleReturnRoute
   '/admin/checkin/': typeof AdminCheckinIndexRoute
   '/admin/marketing/': typeof AdminMarketingIndexRoute
+  '/checkin/event/$id/': typeof CheckinEventIdIndexRoute
   '/api/public/tickets/share/$token': typeof ApiPublicTicketsShareTokenRoute
 }
 export interface FileRoutesByTo {
@@ -505,11 +512,11 @@ export interface FileRoutesByTo {
   '/admin/marketing/publicidade': typeof AdminMarketingPublicidadeRoute
   '/admin/marketing/push': typeof AdminMarketingPushRoute
   '/api/public/uazapi-webhook': typeof ApiPublicUazapiWebhookRoute
-  '/checkin/event/$id': typeof CheckinEventIdRoute
   '/eventos/$id/checkout': typeof EventosIdCheckoutRoute
   '/oauth/google/return': typeof OauthGoogleReturnRoute
   '/admin/checkin': typeof AdminCheckinIndexRoute
   '/admin/marketing': typeof AdminMarketingIndexRoute
+  '/checkin/event/$id': typeof CheckinEventIdIndexRoute
   '/api/public/tickets/share/$token': typeof ApiPublicTicketsShareTokenRoute
 }
 export interface FileRoutesById {
@@ -570,11 +577,12 @@ export interface FileRoutesById {
   '/admin/marketing/publicidade': typeof AdminMarketingPublicidadeRoute
   '/admin/marketing/push': typeof AdminMarketingPushRoute
   '/api/public/uazapi-webhook': typeof ApiPublicUazapiWebhookRoute
-  '/checkin/event/$id': typeof CheckinEventIdRoute
+  '/checkin/event/$id': typeof CheckinEventIdRouteWithChildren
   '/eventos/$id/checkout': typeof EventosIdCheckoutRoute
   '/oauth/google/return': typeof OauthGoogleReturnRoute
   '/admin/checkin/': typeof AdminCheckinIndexRoute
   '/admin/marketing/': typeof AdminMarketingIndexRoute
+  '/checkin/event/$id/': typeof CheckinEventIdIndexRoute
   '/api/public/tickets/share/$token': typeof ApiPublicTicketsShareTokenRoute
 }
 export interface FileRouteTypes {
@@ -641,6 +649,7 @@ export interface FileRouteTypes {
     | '/oauth/google/return'
     | '/admin/checkin/'
     | '/admin/marketing/'
+    | '/checkin/event/$id/'
     | '/api/public/tickets/share/$token'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -696,11 +705,11 @@ export interface FileRouteTypes {
     | '/admin/marketing/publicidade'
     | '/admin/marketing/push'
     | '/api/public/uazapi-webhook'
-    | '/checkin/event/$id'
     | '/eventos/$id/checkout'
     | '/oauth/google/return'
     | '/admin/checkin'
     | '/admin/marketing'
+    | '/checkin/event/$id'
     | '/api/public/tickets/share/$token'
   id:
     | '__root__'
@@ -765,6 +774,7 @@ export interface FileRouteTypes {
     | '/oauth/google/return'
     | '/admin/checkin/'
     | '/admin/marketing/'
+    | '/checkin/event/$id/'
     | '/api/public/tickets/share/$token'
   fileRoutesById: FileRoutesById
 }
@@ -1224,6 +1234,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OauthGoogleReturnRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/checkin/event/$id/': {
+      id: '/checkin/event/$id/'
+      path: '/'
+      fullPath: '/checkin/event/$id/'
+      preLoaderRoute: typeof CheckinEventIdIndexRouteImport
+      parentRoute: typeof CheckinEventIdRoute
+    }
     '/api/public/tickets/share/$token': {
       id: '/api/public/tickets/share/$token'
       path: '/api/public/tickets/share/$token'
@@ -1292,12 +1309,24 @@ const AppRouteChildren: AppRouteChildren = {
 
 const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
 
+interface CheckinEventIdRouteChildren {
+  CheckinEventIdIndexRoute: typeof CheckinEventIdIndexRoute
+}
+
+const CheckinEventIdRouteChildren: CheckinEventIdRouteChildren = {
+  CheckinEventIdIndexRoute: CheckinEventIdIndexRoute,
+}
+
+const CheckinEventIdRouteWithChildren = CheckinEventIdRoute._addFileChildren(
+  CheckinEventIdRouteChildren,
+)
+
 interface CheckinRouteChildren {
   CheckinHistoricoRoute: typeof CheckinHistoricoRoute
   CheckinPresencaRoute: typeof CheckinPresencaRoute
   CheckinScannerRoute: typeof CheckinScannerRoute
   CheckinIndexRoute: typeof CheckinIndexRoute
-  CheckinEventIdRoute: typeof CheckinEventIdRoute
+  CheckinEventIdRoute: typeof CheckinEventIdRouteWithChildren
 }
 
 const CheckinRouteChildren: CheckinRouteChildren = {
@@ -1305,7 +1334,7 @@ const CheckinRouteChildren: CheckinRouteChildren = {
   CheckinPresencaRoute: CheckinPresencaRoute,
   CheckinScannerRoute: CheckinScannerRoute,
   CheckinIndexRoute: CheckinIndexRoute,
-  CheckinEventIdRoute: CheckinEventIdRoute,
+  CheckinEventIdRoute: CheckinEventIdRouteWithChildren,
 }
 
 const CheckinRouteWithChildren =
