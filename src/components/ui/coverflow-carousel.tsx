@@ -12,11 +12,13 @@ interface FeaturedEvent {
   data_inicio: string | null;
   min_price?: number;
   produtor_nome?: string;
+  slug?: string | null;
 }
 
 interface CoverflowCarouselProps {
   events: FeaturedEvent[];
 }
+
 
 export function CoverflowCarousel({ events }: CoverflowCarouselProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -70,7 +72,12 @@ export function CoverflowCarousel({ events }: CoverflowCarouselProps) {
                   if (!isActive) setCurrentIndex(index);
                 }}
               >
-                <Link to="/eventos/$id" params={{ id: event.id }}>
+                <Link 
+                  to={event.slug ? "/eventos" : "/eventos/$id"} 
+                  params={event.slug ? {} : { id: event.id }}
+                  search={event.slug ? { slug: event.slug } : { id: event.id }}
+                >
+
                   <div className="w-full h-full rounded-[32px] overflow-hidden relative border-4 border-white shadow-xl">
                     <img
                       src={event.imagem_url || "/placeholder.jpg"}

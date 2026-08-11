@@ -3,17 +3,24 @@ import { z } from "zod";
 import { supabase } from "@/integrations/supabase/client";
 
 export const getEventDetails = createServerFn({ method: "GET" })
-  .inputValidator((data) => z.object({ id: z.string() }).parse(data))
+  .inputValidator((data) => z.object({ id: z.string().optional(), slug: z.string().optional() }).parse(data))
   .handler(async ({ data }) => {
-    // Fetch event with producer info
-    const { data: event, error: eventError } = await supabase
+    let query = supabase
       .from("events")
       .select(`
         *,
         producer:organizations(*)
-      `)
-      .eq("id", data.id)
-      .single();
+      `);
+
+    if (data.id) {
+      query = query.eq("id", data.id);
+    } else if (data.slug) {
+      query = query.eq("slug", data.slug);
+    } else {
+      throw new Error("ID or Slug is required");
+    }
+
+    const { data: event, error: eventError } = await query.single();
 
     if (eventError) throw eventError;
 
@@ -21,16 +28,16 @@ export const getEventDetails = createServerFn({ method: "GET" })
     const { data: ticketTypes } = await supabase
       .from("ticket_types")
       .select("*")
-      .eq("event_id", data.id)
-      .order("ordem", { ascending: true });
+      .eq("event_id", event.id)
+      .order("ordem", { ascending: true } as any);
 
-    // Fetch itinerary days for these ticket types
+    // Fetch itinerary days
     const ticketTypeIds = ticketTypes?.map(t => t.id) || [];
     let itinerary: any[] = [];
     
     if (ticketTypeIds.length > 0) {
       const { data: itineraryData } = await supabase
-        .from("trip_itinerary_days")
+        .from("trip_itinerary_days" as any)
         .select("*")
         .in("ticket_type_id", ticketTypeIds)
         .order("dia_numero", { ascending: true });
@@ -44,3 +51,17 @@ export const getEventDetails = createServerFn({ method: "GET" })
       itinerary
     };
   });
+
+export const getFeaturedEvents = createServerFn({ method: "GET" })
+  .handler(async () => {
+    const { data, error } = await supabase
+      .from("events")
+      .select("*")
+      .eq("status", "publicado")
+      .eq("featured", true)
+      .order("created_at", { ascending: false });
+
+    if (error) throw error;
+    return data || [];
+  });
+
