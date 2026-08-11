@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
+import { Link } from "@tanstack/react-router";
 import { supabase } from "@/integrations/supabase/client";
 import { 
   Users, 
   Calendar, 
+
   DollarSign, 
   TrendingUp,
   Ticket,
@@ -226,15 +228,18 @@ export function AdminDashboardBI() {
           ]}
         />
         {/* CHECK-IN */}
-        <BIStatCard 
-          title="Presença Real" 
-          value={`${stats.checkin.percentage}%`}
-          icon={CheckCircle2}
-          subMetrics={[
-            { label: "Check-ins", val: stats.checkin.performed, color: "text-emerald-600" },
-            { label: "Faltantes", val: stats.checkin.missing, color: "text-coral" }
-          ]}
-        />
+        <Link to="/admin/checkin">
+          <BIStatCard 
+            title="Presença Real" 
+            value={`${stats.checkin.percentage}%`}
+            icon={CheckCircle2}
+            className="cursor-pointer hover:border-primary transition-all shadow-md"
+            subMetrics={[
+              { label: "Check-ins", val: stats.checkin.performed, color: "text-emerald-600" },
+              { label: "Faltantes", val: stats.checkin.missing, color: "text-coral" }
+            ]}
+          />
+        </Link>
       </div>
 
       {/* Performance de Campanhas */}
@@ -390,9 +395,10 @@ export function AdminDashboardBI() {
   );
 }
 
-function BIStatCard({ title, value, icon: Icon, subMetrics }: any) {
+function BIStatCard({ title, value, icon: Icon, subMetrics, className }: any) {
   return (
-    <Card className="border-border bg-card shadow-sm hover:shadow-lg transition-all border-b-4 border-b-primary/20">
+    <Card className={cn("border-border bg-card shadow-sm hover:shadow-lg transition-all border-b-4 border-b-primary/20", className)}>
+
       <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
         <CardTitle className="text-[10px] font-black text-muted-fg uppercase tracking-widest">{title}</CardTitle>
         <div className="w-8 h-8 rounded-lg bg-accent flex items-center justify-center text-primary">
