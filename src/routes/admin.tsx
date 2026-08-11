@@ -39,11 +39,7 @@ export const Route = createFileRoute("/admin")({
       });
     }
 
-    const { data: isAdminRole, error: roleError } = await supabase
-      .from('platform_admins')
-      .select('id')
-      .eq('user_id', authUser.id)
-      .maybeSingle();
+    const { data: isAdminRole, error: roleError } = await supabase.rpc('check_is_platform_admin', { _user_id: authUser.id });
     
     if (roleError || !isAdminRole) {
       console.error("Access denied: Not an admin", roleError);
