@@ -29,6 +29,7 @@ import { toast } from "sonner";
 import { useUI } from "@/hooks/use-ui";
 import { translations } from "@/lib/translations";
 import { cn } from "@/lib/utils";
+import { tracking } from "@/lib/tracking";
 
 export const Route = createFileRoute("/")({
   component: HomePage,
