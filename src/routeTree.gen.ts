@@ -53,6 +53,8 @@ import { Route as ProdutorParticipantesRouteImport } from './routes/produtor/par
 import { Route as ProdutorSuporteRouteImport } from './routes/produtor/suporte'
 import { Route as DotlovableOauthConsentRouteImport } from './routes/[.]lovable.oauth.consent'
 import { Route as Char91DotmcpChar93InvokeToolToolRouteImport } from './routes/[.mcp]/invoke-tool/$tool'
+import { Route as AdminCheckinIndexRouteImport } from './routes/admin/checkin/index'
+import { Route as AdminCheckinScannerRouteImport } from './routes/admin/checkin/scanner'
 import { Route as AdminMarketingIndexRouteImport } from './routes/admin/marketing/index'
 import { Route as AdminMarketingAnunciosRouteImport } from './routes/admin/marketing/anuncios'
 import { Route as AdminMarketingPublicidadeRouteImport } from './routes/admin/marketing/publicidade'
@@ -284,6 +286,16 @@ const Char91DotmcpChar93InvokeToolToolRoute =
     path: '/.mcp/invoke-tool/$tool',
     getParentRoute: () => rootRouteImport,
   } as any)
+const AdminCheckinIndexRoute = AdminCheckinIndexRouteImport.update({
+  id: '/checkin/',
+  path: '/checkin/',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminCheckinScannerRoute = AdminCheckinScannerRouteImport.update({
+  id: '/checkin/scanner',
+  path: '/checkin/scanner',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminMarketingIndexRoute = AdminMarketingIndexRouteImport.update({
   id: '/marketing/',
   path: '/marketing/',
@@ -366,12 +378,14 @@ export interface FileRoutesByFullPath {
   '/produtor/': typeof ProdutorIndexRoute
   '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
+  '/admin/checkin/scanner': typeof AdminCheckinScannerRoute
   '/admin/marketing/anuncios': typeof AdminMarketingAnunciosRoute
   '/admin/marketing/publicidade': typeof AdminMarketingPublicidadeRoute
   '/admin/marketing/push': typeof AdminMarketingPushRoute
   '/api/public/uazapi-webhook': typeof ApiPublicUazapiWebhookRoute
   '/eventos/$id/checkout': typeof EventosIdCheckoutRoute
   '/oauth/google/return': typeof OauthGoogleReturnRoute
+  '/admin/checkin/': typeof AdminCheckinIndexRoute
   '/admin/marketing/': typeof AdminMarketingIndexRoute
 }
 export interface FileRoutesByTo {
@@ -416,12 +430,14 @@ export interface FileRoutesByTo {
   '/produtor': typeof ProdutorIndexRoute
   '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
+  '/admin/checkin/scanner': typeof AdminCheckinScannerRoute
   '/admin/marketing/anuncios': typeof AdminMarketingAnunciosRoute
   '/admin/marketing/publicidade': typeof AdminMarketingPublicidadeRoute
   '/admin/marketing/push': typeof AdminMarketingPushRoute
   '/api/public/uazapi-webhook': typeof ApiPublicUazapiWebhookRoute
   '/eventos/$id/checkout': typeof EventosIdCheckoutRoute
   '/oauth/google/return': typeof OauthGoogleReturnRoute
+  '/admin/checkin': typeof AdminCheckinIndexRoute
   '/admin/marketing': typeof AdminMarketingIndexRoute
 }
 export interface FileRoutesById {
@@ -470,12 +486,14 @@ export interface FileRoutesById {
   '/produtor/': typeof ProdutorIndexRoute
   '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
+  '/admin/checkin/scanner': typeof AdminCheckinScannerRoute
   '/admin/marketing/anuncios': typeof AdminMarketingAnunciosRoute
   '/admin/marketing/publicidade': typeof AdminMarketingPublicidadeRoute
   '/admin/marketing/push': typeof AdminMarketingPushRoute
   '/api/public/uazapi-webhook': typeof ApiPublicUazapiWebhookRoute
   '/eventos/$id/checkout': typeof EventosIdCheckoutRoute
   '/oauth/google/return': typeof OauthGoogleReturnRoute
+  '/admin/checkin/': typeof AdminCheckinIndexRoute
   '/admin/marketing/': typeof AdminMarketingIndexRoute
 }
 export interface FileRouteTypes {
@@ -525,12 +543,14 @@ export interface FileRouteTypes {
     | '/produtor/'
     | '/.lovable/oauth/consent'
     | '/.mcp/invoke-tool/$tool'
+    | '/admin/checkin/scanner'
     | '/admin/marketing/anuncios'
     | '/admin/marketing/publicidade'
     | '/admin/marketing/push'
     | '/api/public/uazapi-webhook'
     | '/eventos/$id/checkout'
     | '/oauth/google/return'
+    | '/admin/checkin/'
     | '/admin/marketing/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -575,12 +595,14 @@ export interface FileRouteTypes {
     | '/produtor'
     | '/.lovable/oauth/consent'
     | '/.mcp/invoke-tool/$tool'
+    | '/admin/checkin/scanner'
     | '/admin/marketing/anuncios'
     | '/admin/marketing/publicidade'
     | '/admin/marketing/push'
     | '/api/public/uazapi-webhook'
     | '/eventos/$id/checkout'
     | '/oauth/google/return'
+    | '/admin/checkin'
     | '/admin/marketing'
   id:
     | '__root__'
@@ -628,12 +650,14 @@ export interface FileRouteTypes {
     | '/produtor/'
     | '/.lovable/oauth/consent'
     | '/.mcp/invoke-tool/$tool'
+    | '/admin/checkin/scanner'
     | '/admin/marketing/anuncios'
     | '/admin/marketing/publicidade'
     | '/admin/marketing/push'
     | '/api/public/uazapi-webhook'
     | '/eventos/$id/checkout'
     | '/oauth/google/return'
+    | '/admin/checkin/'
     | '/admin/marketing/'
   fileRoutesById: FileRoutesById
 }
@@ -971,6 +995,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof Char91DotmcpChar93InvokeToolToolRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/checkin/': {
+      id: '/admin/checkin/'
+      path: '/checkin'
+      fullPath: '/admin/checkin/'
+      preLoaderRoute: typeof AdminCheckinIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/checkin/scanner': {
+      id: '/admin/checkin/scanner'
+      path: '/checkin/scanner'
+      fullPath: '/admin/checkin/scanner'
+      preLoaderRoute: typeof AdminCheckinScannerRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/marketing/': {
       id: '/admin/marketing/'
       path: '/marketing'
@@ -1036,9 +1074,11 @@ interface AdminRouteChildren {
   AdminProdutoresRoute: typeof AdminProdutoresRoute
   AdminUsuariosRoute: typeof AdminUsuariosRoute
   AdminIndexRoute: typeof AdminIndexRoute
+  AdminCheckinScannerRoute: typeof AdminCheckinScannerRoute
   AdminMarketingAnunciosRoute: typeof AdminMarketingAnunciosRoute
   AdminMarketingPublicidadeRoute: typeof AdminMarketingPublicidadeRoute
   AdminMarketingPushRoute: typeof AdminMarketingPushRoute
+  AdminCheckinIndexRoute: typeof AdminCheckinIndexRoute
   AdminMarketingIndexRoute: typeof AdminMarketingIndexRoute
 }
 
@@ -1055,9 +1095,11 @@ const AdminRouteChildren: AdminRouteChildren = {
   AdminProdutoresRoute: AdminProdutoresRoute,
   AdminUsuariosRoute: AdminUsuariosRoute,
   AdminIndexRoute: AdminIndexRoute,
+  AdminCheckinScannerRoute: AdminCheckinScannerRoute,
   AdminMarketingAnunciosRoute: AdminMarketingAnunciosRoute,
   AdminMarketingPublicidadeRoute: AdminMarketingPublicidadeRoute,
   AdminMarketingPushRoute: AdminMarketingPushRoute,
+  AdminCheckinIndexRoute: AdminCheckinIndexRoute,
   AdminMarketingIndexRoute: AdminMarketingIndexRoute,
 }
 
