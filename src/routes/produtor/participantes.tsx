@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Users, Search, Mail, Phone, Download } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { useTenants } from "@/hooks/use-tenants";
+import { cn } from "@/lib/utils";
 
 
 export const Route = createFileRoute("/produtor/participantes")({
