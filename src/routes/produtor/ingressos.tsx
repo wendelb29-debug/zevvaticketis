@@ -19,7 +19,7 @@ function IngressosPage() {
     queryFn: async () => {
       const { data } = await (supabase
         .from("ticket_types" as any)
-        .select("*, events(nome_evento)")
+        .select("*, events(title)")
         .eq("tenant_id", activeTenant?.id)
         .order("created_at", { ascending: false }) as any);
       return data;
@@ -45,7 +45,7 @@ function IngressosPage() {
               </div>
               <div className="flex-grow">
                 <p className="text-[10px] font-black uppercase text-muted tracking-widest mb-1">
-                  {ticket.events?.nome_evento}
+                  {ticket.events?.title}
                 </p>
                 <h3 className="text-lg font-bold text-navy">{ticket.nome}</h3>
                 <div className="flex gap-4 mt-2">

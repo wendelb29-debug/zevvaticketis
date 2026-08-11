@@ -20,7 +20,7 @@ function ParticipantesPage() {
     queryFn: async () => {
       const { data } = await (supabase
         .from("tickets" as any)
-        .select("*, profiles:usuario_id(nome_completo, email, telefone), events(nome_evento), ticket_types(nome)")
+        .select("*, profiles:user_id(nome_completo, email, telefone), events(title), ticket_types(nome)")
         .eq("tenant_id", activeTenant?.id)
         .order("created_at", { ascending: false }) as any);
       return data;
@@ -59,13 +59,13 @@ function ParticipantesPage() {
             {tickets?.map((ticket: any) => (
               <tr key={ticket.id} className="hover:bg-accent/30 transition-colors">
                 <td className="px-6 py-4">
-                  <div className="font-bold text-navy">{ticket.profiles?.nome_completo}</div>
+                  <div className="font-bold text-navy">{ticket.profiles?.nome_completo || 'N/A'}</div>
                   <div className="text-xs text-muted font-medium flex gap-2">
                     <span className="flex items-center gap-1"><Mail className="w-3 h-3" /> {ticket.profiles?.email}</span>
                   </div>
                 </td>
                 <td className="px-6 py-4">
-                  <div className="font-bold text-navy">{ticket.events?.nome_evento}</div>
+                  <div className="font-bold text-navy">{ticket.events?.title}</div>
                   <div className="text-xs text-primary font-bold">{ticket.ticket_types?.nome}</div>
                 </td>
                 <td className="px-6 py-4">
@@ -88,6 +88,3 @@ function ParticipantesPage() {
   );
 }
 
-function cn(...inputs: any[]) {
-  return inputs.filter(Boolean).join(" ");
-}

@@ -4,31 +4,26 @@ import { useQuery } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Copy } from "lucide-react";
 import { toast } from "sonner";
+import { useTenants } from "@/hooks/use-tenants";
 
 export const Route = createFileRoute("/produtor/marketing")({
   component: MarketingPage,
 });
 
 function MarketingPage() {
-
+  const { activeTenant } = useTenants();
   
   const { data: events, isLoading } = useQuery({
-    queryKey: ["marketing-events"],
+    queryKey: ["marketing-events", activeTenant?.id],
+    enabled: !!activeTenant,
     queryFn: async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      const { data: member } = await supabase
-        .from("tenant_members")
-        .select("tenant_id")
-        .eq("user_id", session!.user.id)
-        .single();
-
       const { data } = await supabase
         .from("events")
         .select(`
           id, title,
           event_favorites(count)
         `)
-        .eq("tenant_id", member!.tenant_id);
+        .eq("tenant_id", activeTenant!.id);
       return data;
     }
   });
