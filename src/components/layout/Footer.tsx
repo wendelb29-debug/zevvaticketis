@@ -30,24 +30,36 @@ export function Footer() {
         <div>
           <h4 className="text-xs font-black text-navy uppercase tracking-widest mb-6">Plataforma</h4>
           <ul className="space-y-4">
-            {["Explorar eventos", "Categorias", "Produtores", "Como funciona"].map(link => (
-              <li key={link}>
-                <Link to="/" className="text-sm text-slate-500 font-bold hover:text-coral transition-colors">{link}</Link>
+            {[
+              { label: "Sobre a Zevva", path: "/" },
+              { label: "Explorar Eventos", path: "/eventos" },
+              { label: "Cursos e Imersões", path: "/" },
+              { label: "Caravanas", path: "/" },
+              { label: "Produtores", path: "/" }
+            ].map(link => (
+              <li key={link.label}>
+                <Link to={link.path as any} className="text-sm text-slate-500 font-bold hover:text-coral transition-colors">{link.label}</Link>
               </li>
             ))}
           </ul>
         </div>
 
         <div>
-          <h4 className="text-xs font-black text-navy uppercase tracking-widest mb-6">Legal</h4>
+          <h4 className="text-xs font-black text-navy uppercase tracking-widest mb-6">Suporte e Legal</h4>
           <ul className="space-y-4">
-            {["Termos de Uso", "Privacidade", "LGPD", "Reembolsos"].map(link => (
-              <li key={link}>
-                <Link to="/" className="text-sm text-slate-500 font-bold hover:text-coral transition-colors">{link}</Link>
+            {[
+              { label: "Central de Ajuda", path: "/" },
+              { label: "Termos de Uso", path: "/" },
+              { label: "Privacidade", path: "/" },
+              { label: "Política de Reembolso", path: "/" }
+            ].map(link => (
+              <li key={link.label}>
+                <Link to={link.path as any} className="text-sm text-slate-500 font-bold hover:text-coral transition-colors">{link.label}</Link>
               </li>
             ))}
           </ul>
         </div>
+
 
         {/* Contact */}
         <div className="space-y-6">

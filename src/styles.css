@@ -159,3 +159,10 @@ div[style*="Edit with Lovable"],
   position: absolute !important;
   z-index: -9999 !important;
 }
+
+.hero-premium-bg {
+  background-image: linear-gradient(rgba(5, 7, 15, 0.6), rgba(5, 7, 15, 0.6)), url('https://images.unsplash.com/photo-1517457373958-b7bdd4587205?q=80&w=2069&auto=format&fit=crop');
+  background-size: cover;
+  background-position: center;
+}
+

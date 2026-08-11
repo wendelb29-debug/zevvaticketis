@@ -37,7 +37,7 @@ export const Route = createFileRoute("/eventos")({
   validateSearch: (search: Record<string, unknown>) => {
     return {
       id: (search['id'] as string) || undefined,
-      categoria: (search['categoria'] as string) || "CARAVANAS INTERNACIONAIS",
+      categoria: (search['categoria'] as string) || undefined,
     };
   },
   component: EventPage,
@@ -45,7 +45,7 @@ export const Route = createFileRoute("/eventos")({
 
 function EventPage() {
   const search = useSearch({ from: "/eventos" }) as any;
-  const theme = getThemeByCategory(search.categoria);
+  const theme = getThemeByCategory(search.categoria || "Conferências");
   const getEvent = useServerFn(getEventDetails);
   
   const [data, setData] = useState<any>(null);
