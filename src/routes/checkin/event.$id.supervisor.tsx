@@ -38,8 +38,8 @@ function SupervisorPanel() {
         const { count } = await supabase
           .from("checkin_records")
           .select("id", { count: 'exact', head: true })
-          .eq("event_id", eventId)
-          .eq("operator_id", s.user_id);
+          .eq("event_id" as any, eventId)
+          .eq("operator_id" as any, s.user_id);
         
         return {
           id: s.user_id,
