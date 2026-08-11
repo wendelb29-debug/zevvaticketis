@@ -215,15 +215,44 @@ function ProdutorLayout() {
               <p className="text-xs font-black text-navy truncate">{activeTenant.nome}</p>
               <p className="text-[10px] text-muted font-bold truncate capitalize">{memberRole?.toLowerCase()}</p>
             </div>
-            <Button 
-              variant="ghost" 
-              size="icon" 
-              onClick={() => navigate({ to: "/app" })} 
-              className="h-8 w-8 text-muted hover:text-coral"
-              title="Trocar Ambiente"
-            >
-              <X className="w-4 h-4" />
-            </Button>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button 
+                  variant="ghost" 
+                  size="icon" 
+                  className="h-8 w-8 text-muted hover:text-coral"
+                  title="Trocar Ambiente"
+                >
+                  <ChevronRight className="w-4 h-4 rotate-90" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-56 rounded-xl p-2 border-line shadow-xl font-inter bg-white">
+                <DropdownMenuLabel className="text-[10px] font-black uppercase tracking-widest text-muted px-2 py-1.5">Meus Projetos</DropdownMenuLabel>
+                {tenants.map(t => (
+                  <DropdownMenuItem 
+                    key={t.id} 
+                    onClick={() => switchTenant(t.id)}
+                    className={cn(
+                      "flex items-center gap-2 px-2 py-2 rounded-lg text-xs font-bold cursor-pointer",
+                      activeTenant.id === t.id ? "bg-coral/10 text-coral" : "text-navy hover:bg-surface"
+                    )}
+                  >
+                    <Avatar className="w-5 h-5 rounded-md border border-line">
+                      <AvatarImage src={t.logo || undefined} />
+                      <AvatarFallback className="text-[8px] bg-navy text-white">{t.nome.substring(0, 1)}</AvatarFallback>
+                    </Avatar>
+                    {t.nome}
+                  </DropdownMenuItem>
+                ))}
+                <DropdownMenuSeparator className="bg-line" />
+                <DropdownMenuItem 
+                  onClick={() => navigate({ to: "/app" })}
+                  className="flex items-center gap-2 px-2 py-2 rounded-lg text-xs font-bold text-navy hover:bg-surface cursor-pointer"
+                >
+                  <Plus className="w-4 h-4 text-coral" /> Gerenciar Projetos
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
         )}
       </div>
