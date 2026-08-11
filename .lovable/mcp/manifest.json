@@ -158,6 +158,25 @@
           ]
         },
         "outputSchema": null
+      },
+      {
+        "name": "search_21st",
+        "title": "Search 21st.dev Components",
+        "description": "Search for high-quality React components and UI elements on 21st.dev to use in the project.",
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "query": {
+              "type": "string",
+              "description": "Search term for components (e.g., 'navbar', 'hero', 'card')"
+            }
+          },
+          "required": [
+            "query"
+          ]
+        },
+        "outputSchema": null
       }
     ]
   }

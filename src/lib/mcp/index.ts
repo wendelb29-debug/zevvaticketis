@@ -4,6 +4,7 @@ import getEventTool from "./tools/get-event";
 import listMyTicketsTool from "./tools/list-my-tickets";
 import listMyEventsTool from "./tools/list-my-events";
 import createEventDraftTool from "./tools/create-event-draft";
+import search21stTool from "./tools/search-21st";
 
 const projectRef = import.meta.env['VITE_SUPABASE_PROJECT_ID'] ?? "project-ref-unset";
 
@@ -23,5 +24,6 @@ export default defineMcp({
     listMyTicketsTool,
     listMyEventsTool,
     createEventDraftTool,
+    search21stTool,
   ] as unknown as McpDefinitionInput["tools"],
 });
