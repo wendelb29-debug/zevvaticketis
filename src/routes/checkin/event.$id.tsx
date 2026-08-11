@@ -37,7 +37,7 @@ function EventCheckinLayout() {
         const { data: member } = await supabase
           .from("organization_members")
           .select("role")
-          .eq("organization_id", eventData.organization_id)
+          .eq("organization_id", eventData.organization_id || "")
           .eq("user_id", user.id)
           .maybeSingle();
         
