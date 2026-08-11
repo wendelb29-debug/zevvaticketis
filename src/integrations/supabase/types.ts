@@ -74,6 +74,53 @@ export type Database = {
         }
         Relationships: []
       }
+      ads: {
+        Row: {
+          ad_type: string | null
+          campaign_id: string | null
+          content_url: string | null
+          created_at: string | null
+          id: string
+          name: string
+          status: string | null
+          updated_at: string | null
+          utm_content: string | null
+          utm_term: string | null
+        }
+        Insert: {
+          ad_type?: string | null
+          campaign_id?: string | null
+          content_url?: string | null
+          created_at?: string | null
+          id?: string
+          name: string
+          status?: string | null
+          updated_at?: string | null
+          utm_content?: string | null
+          utm_term?: string | null
+        }
+        Update: {
+          ad_type?: string | null
+          campaign_id?: string | null
+          content_url?: string | null
+          created_at?: string | null
+          id?: string
+          name?: string
+          status?: string | null
+          updated_at?: string | null
+          utm_content?: string | null
+          utm_term?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ads_campaign_id_fkey"
+            columns: ["campaign_id"]
+            isOneToOne: false
+            referencedRelation: "campaigns"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       app_user_connections: {
         Row: {
           account_email: string | null
@@ -148,6 +195,65 @@ export type Database = {
           payload?: Json
         }
         Relationships: []
+      }
+      campaigns: {
+        Row: {
+          budget: number | null
+          created_at: string | null
+          description: string | null
+          end_date: string | null
+          id: string
+          name: string
+          organization_id: string | null
+          spend: number | null
+          start_date: string | null
+          status: string | null
+          updated_at: string | null
+          utm_campaign: string | null
+          utm_medium: string | null
+          utm_source: string | null
+        }
+        Insert: {
+          budget?: number | null
+          created_at?: string | null
+          description?: string | null
+          end_date?: string | null
+          id?: string
+          name: string
+          organization_id?: string | null
+          spend?: number | null
+          start_date?: string | null
+          status?: string | null
+          updated_at?: string | null
+          utm_campaign?: string | null
+          utm_medium?: string | null
+          utm_source?: string | null
+        }
+        Update: {
+          budget?: number | null
+          created_at?: string | null
+          description?: string | null
+          end_date?: string | null
+          id?: string
+          name?: string
+          organization_id?: string | null
+          spend?: number | null
+          start_date?: string | null
+          status?: string | null
+          updated_at?: string | null
+          utm_campaign?: string | null
+          utm_medium?: string | null
+          utm_source?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "campaigns_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       checkin_logs: {
         Row: {
@@ -995,6 +1101,65 @@ export type Database = {
           },
         ]
       }
+      sales_attribution: {
+        Row: {
+          ad_id: string | null
+          attribution_method: string | null
+          campaign_id: string | null
+          created_at: string | null
+          id: string
+          order_id: string | null
+          tracking_id: string | null
+        }
+        Insert: {
+          ad_id?: string | null
+          attribution_method?: string | null
+          campaign_id?: string | null
+          created_at?: string | null
+          id?: string
+          order_id?: string | null
+          tracking_id?: string | null
+        }
+        Update: {
+          ad_id?: string | null
+          attribution_method?: string | null
+          campaign_id?: string | null
+          created_at?: string | null
+          id?: string
+          order_id?: string | null
+          tracking_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "sales_attribution_ad_id_fkey"
+            columns: ["ad_id"]
+            isOneToOne: false
+            referencedRelation: "ads"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "sales_attribution_campaign_id_fkey"
+            columns: ["campaign_id"]
+            isOneToOne: false
+            referencedRelation: "campaigns"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "sales_attribution_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "sales_attribution_tracking_id_fkey"
+            columns: ["tracking_id"]
+            isOneToOne: false
+            referencedRelation: "tracking"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       team_invites: {
         Row: {
           accepted_at: string | null
@@ -1190,6 +1355,54 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      tracking: {
+        Row: {
+          created_at: string | null
+          id: string
+          ip_address: string | null
+          page_url: string
+          referrer: string | null
+          session_id: string
+          user_agent: string | null
+          user_id: string | null
+          utm_campaign: string | null
+          utm_content: string | null
+          utm_medium: string | null
+          utm_source: string | null
+          utm_term: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          ip_address?: string | null
+          page_url: string
+          referrer?: string | null
+          session_id: string
+          user_agent?: string | null
+          user_id?: string | null
+          utm_campaign?: string | null
+          utm_content?: string | null
+          utm_medium?: string | null
+          utm_source?: string | null
+          utm_term?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          ip_address?: string | null
+          page_url?: string
+          referrer?: string | null
+          session_id?: string
+          user_agent?: string | null
+          user_id?: string | null
+          utm_campaign?: string | null
+          utm_content?: string | null
+          utm_medium?: string | null
+          utm_source?: string | null
+          utm_term?: string | null
+        }
+        Relationships: []
       }
       trip_cost_items: {
         Row: {
