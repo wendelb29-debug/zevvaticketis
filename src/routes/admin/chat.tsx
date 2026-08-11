@@ -13,8 +13,9 @@ import {
   Paperclip, Smile, ImageIcon, Play, Volume2, Pencil, X, Home, ChevronRight,
   ArrowUpDown, SortAsc, SortDesc, CalendarDays, Lock, Globe, MessageCircle,
   Music, FileText, Sparkles, Wand2, ArrowUpCircle, AlignLeft, Languages,
-  PanelLeftClose, PanelLeftOpen
+  PanelLeftClose, PanelLeftOpen, ShoppingCart
 } from 'lucide-react';
+import { SalesCardPicker } from "@/components/admin/chat/SalesCardPicker";
 import { cn } from '@/lib/utils';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { toast } from "sonner";
@@ -79,6 +80,8 @@ function AdminChatPage() {
   const [fileType, setFileType] = useState<string | null>(null);
   const [aiAssistantEnabled, setAiAssistantEnabled] = useState(false);
   const { theme, setTheme } = useUI();
+  const [isSalesPickerOpen, setIsSalesPickerOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState<'atendimento' | 'espera'>('atendimento');
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -142,21 +145,21 @@ function AdminChatPage() {
         {/* Header Fixo */}
         <header className="h-16 flex items-center justify-between px-6 border-b border-border bg-card shrink-0 z-10 shadow-sm">
           <div className="flex items-center gap-8">
-          <div className="flex items-center gap-4">
-            <Link 
-              to="/admin" 
-              className="p-2 hover:bg-accent rounded-xl transition-colors text-foreground group"
-              title="Voltar para o Admin"
-            >
-              <Home className="w-5 h-5 group-hover:text-primary transition-colors" />
-            </Link>
-            <span className="font-black text-lg tracking-tighter text-primary italic">
-              zevva.<span className="text-foreground">chat</span>
-            </span>
+            <div className="flex items-center gap-4">
+              <Link 
+                to="/admin" 
+                className="p-2 hover:bg-accent rounded-xl transition-colors text-foreground group"
+                title="Voltar para o Admin"
+              >
+                <Home className="w-5 h-5 group-hover:text-primary transition-colors" />
+              </Link>
+              <span className="font-black text-lg tracking-tighter text-primary italic">
+                zevva.<span className="text-foreground">chat</span>
+              </span>
+            </div>
           </div>
-        </div>
-        
-        <div className="flex items-center gap-6">
+          
+          <div className="flex items-center gap-6">
           <button className="relative p-2 hover:bg-accent rounded-full transition-colors text-muted-fg">
             <Bell className="w-5 h-5" />
             <span className="absolute top-1.5 right-1.5 w-3 h-3 bg-primary rounded-full text-[8px] flex items-center justify-center border-2 border-card text-primary-foreground font-bold">3</span>
@@ -190,7 +193,7 @@ function AdminChatPage() {
         <div 
           style={{ width: `${sidebarWidth}px` }}
           className={cn(
-            "border-r border-border flex flex-col bg-card shrink-0 relative",
+            "border-r border-border flex flex-col bg-card dark:bg-wa-sidebar shrink-0 relative",
             !isResizing && "transition-[width] duration-150 ease-in-out"
           )}
         >
@@ -210,8 +213,24 @@ function AdminChatPage() {
 
           <div className="p-4 space-y-4">
             <div className="flex p-1 bg-card rounded-full border border-border">
-              <button className="flex-1 py-1.5 text-xs font-bold bg-primary text-primary-foreground rounded-full">Em Atendimento</button>
-              <button className="flex-1 py-1.5 text-xs font-bold text-muted-foreground">Em Espera</button>
+              <button 
+                onClick={() => setActiveTab('atendimento')}
+                className={cn(
+                  "flex-1 py-1.5 text-xs font-bold rounded-full transition-all",
+                  activeTab === 'atendimento' ? "bg-primary text-primary-foreground" : "text-muted-foreground"
+                )}
+              >
+                Em Atendimento
+              </button>
+              <button 
+                onClick={() => setActiveTab('espera')}
+                className={cn(
+                  "flex-1 py-1.5 text-xs font-bold rounded-full transition-all",
+                  activeTab === 'espera' ? "bg-primary text-primary-foreground" : "text-muted-foreground"
+                )}
+              >
+                Em Espera
+              </button>
             </div>
             
             <div className="flex gap-2">
@@ -442,7 +461,7 @@ function AdminChatPage() {
         </Dialog>
 
         {/* 4. ÁREA DA CONVERSA */}
-        <div className="flex-1 flex flex-col bg-background shrink-0 relative">
+        <div className="flex-1 flex flex-col bg-background dark:bg-wa-bg shrink-0 relative">
           {selectedContactId ? (
             <>
               {/* Cabeçalho da Conversa */}
@@ -522,7 +541,7 @@ function AdminChatPage() {
                 </div>
               </div>
               
-              <div className="flex-1 overflow-y-auto p-8 space-y-8 relative z-10 custom-scrollbar bg-background chat-container">
+              <div className="flex-1 overflow-y-auto p-8 space-y-8 relative z-10 custom-scrollbar bg-background dark:bg-wa-bg chat-container">
                 <div className="flex justify-center">
                   <span className="px-4 py-1.5 bg-card text-[10px] font-bold text-muted-foreground uppercase tracking-widest rounded-full border border-border shadow-sm">Hoje, 04 de Agosto</span>
                 </div>
@@ -532,8 +551,8 @@ function AdminChatPage() {
                     <div className={cn(
                       "max-w-[70%] p-3 rounded-2xl shadow-sm relative transition-shadow border",
                       msg.sender === 'agent' 
-                        ? "bg-primary text-primary-foreground rounded-tr-none border-primary/10 shadow-[0_4px_12px_rgba(var(--primary),0.15)]" 
-                        : "bg-card text-foreground rounded-tl-none border-border"
+                        ? "bg-primary dark:bg-wa-agent-bubble text-primary-foreground rounded-tr-none border-primary/10 shadow-[0_4px_12px_rgba(var(--primary),0.15)]" 
+                        : "bg-card dark:bg-wa-client-bubble text-foreground rounded-tl-none border-border"
                     )}>
                       <p className="text-[13px] leading-relaxed">{msg.text}</p>
                       <div className={cn(
@@ -591,7 +610,26 @@ function AdminChatPage() {
                       </div>
                   </div>
                 ) : (
-                  <div className="flex gap-3 items-end">
+                  <div className="flex flex-col gap-3">
+                    {/* Botão de Sugestões de IA */}
+                    {aiAssistantEnabled && (
+                      <div className="flex gap-2 px-2 overflow-x-auto pb-2 scrollbar-hide">
+                        {[
+                          "Confirmar reserva?", 
+                          "Enviar link de pagamento",
+                          "Dúvida sobre roteiro"
+                        ].map((suggestion, idx) => (
+                          <button
+                            key={idx}
+                            onClick={() => toast.info("IA Sugeriu: " + suggestion)}
+                            className="whitespace-nowrap px-3 py-1.5 bg-primary/10 hover:bg-primary/20 text-primary text-[10px] font-bold uppercase rounded-full border border-primary/20 transition-all"
+                          >
+                            <Sparkles className="w-3 h-3 inline mr-1" /> {suggestion}
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                    <div className="flex gap-3 items-end">
                     <div className="flex gap-1.5 mb-1 shrink-0">
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild>
@@ -603,6 +641,10 @@ function AdminChatPage() {
                           <DropdownMenuItem onClick={() => { setFileType('image/*'); fileInputRef.current?.click(); }} className="flex items-center gap-3 px-3 py-2.5 cursor-pointer hover:bg-accent rounded-md">
                             <ImageIcon className="w-4 h-4 text-blue-500" />
                             <span className="text-xs font-medium text-foreground">Fotos e Vídeos</span>
+                          </DropdownMenuItem>
+                          <DropdownMenuItem onClick={() => setIsSalesPickerOpen(true)} className="flex items-center gap-3 px-3 py-2.5 cursor-pointer hover:bg-accent rounded-md">
+                            <ShoppingCart className="w-4 h-4 text-primary" />
+                            <span className="text-xs font-medium text-foreground">Enviar Proposta</span>
                           </DropdownMenuItem>
                           <DropdownMenuItem onClick={() => { setFileType('audio/*'); fileInputRef.current?.click(); }} className="flex items-center gap-3 px-3 py-2.5 cursor-pointer hover:bg-accent rounded-md">
                             <Music className="w-4 h-4 text-purple-500" />
@@ -1264,6 +1306,14 @@ function AdminChatPage() {
           </div>
         </DialogContent>
       </Dialog>
+      <SalesCardPicker 
+        isOpen={isSalesPickerOpen}
+        onClose={() => setIsSalesPickerOpen(false)}
+        onSelect={(ticket) => {
+          toast.success(`Proposta para "${ticket.title}" enviada!`);
+          setIsSalesPickerOpen(false);
+        }}
+      />
     </div>
     </TooltipProvider>
   );
