@@ -49,11 +49,15 @@ function CheckinApp() {
       if (!user) throw new Error("Operador não autenticado");
 
       // 1. Check ticket
-      const { data: ticket, error: ticketError } = await (supabase
-        .from("tickets" as any)
-        .select("*, events(nome_evento), ticket_types(nome)")
+      const { data: ticket, error: ticketError } = await supabase
+        .from("tickets")
+        .select(`
+          *,
+          events (title),
+          profiles:owner_id (full_name)
+        `)
         .eq("qr_code", code)
-        .maybeSingle() as any);
+        .maybeSingle();
 
       if (ticketError) throw ticketError;
 
@@ -125,9 +129,9 @@ function CheckinApp() {
             
             {result.ticket && (
               <div className="space-y-1 py-4 border-y border-black/5">
-                <p className="font-bold text-navy">{result.ticket.events?.nome_evento}</p>
-                <p className="text-sm font-medium text-muted-fg">{result.ticket.ticket_types?.nome}</p>
-                <p className="text-xs font-black uppercase tracking-widest text-muted">{result.ticket.codigo_unico}</p>
+                <p className="font-bold text-navy">{result.ticket.events?.title}</p>
+                <p className="text-sm font-medium text-muted-fg">{result.ticket.name}</p>
+                <p className="text-xs font-black uppercase tracking-widest text-muted">{result.ticket.qr_code || result.ticket.id.slice(0, 8)}</p>
               </div>
             )}
 

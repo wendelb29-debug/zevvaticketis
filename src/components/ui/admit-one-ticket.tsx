@@ -114,11 +114,13 @@ interface AdmitOneTicketProps {
   date: string;
   location: string;
   price: string;
+  ticketCode?: string;
+  status?: string;
   className?: string;
 }
 
 export const AdmitOneTicket = forwardRef<HTMLDivElement, AdmitOneTicketProps>(
-  ({ title, date, location, price, className }, ref) => {
+  ({ title, date, location, price, ticketCode, status, className }, ref) => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const containerRef = useRef<HTMLDivElement>(null);
     const [mouse, setMouse] = useState({ x: 0, y: 0 });
@@ -212,8 +214,8 @@ export const AdmitOneTicket = forwardRef<HTMLDivElement, AdmitOneTicketProps>(
         <div className="absolute inset-0 p-6 md:p-8 flex flex-col justify-between text-white pointer-events-none z-10">
           <div className="flex justify-between items-start">
             <div className="space-y-1">
-              <p className="text-[10px] font-black uppercase tracking-widest text-coral">Zevva Ticket</p>
-              <h3 className="text-xl md:text-3xl font-manrope font-black uppercase tracking-tighter leading-none">{title}</h3>
+              <p className="text-[10px] font-black uppercase tracking-[0.3em] text-coral drop-shadow-sm">ZEVVA PREMIUM TICKET</p>
+              <h3 className="text-xl md:text-3xl font-manrope font-black uppercase tracking-tighter leading-none drop-shadow-md">{title}</h3>
             </div>
             <div className="text-right">
               <p className="text-[10px] font-black uppercase tracking-widest opacity-40">Price</p>
@@ -225,9 +227,21 @@ export const AdmitOneTicket = forwardRef<HTMLDivElement, AdmitOneTicketProps>(
             <div className="space-y-1">
               <p className="text-[10px] font-black uppercase tracking-widest opacity-40">Date & Location</p>
               <p className="text-xs font-bold uppercase tracking-wider">{date} — {location}</p>
+              {ticketCode && (
+                <p className="text-[9px] font-mono opacity-60 mt-1 uppercase">#{ticketCode}</p>
+              )}
             </div>
-            <div className="h-12 w-12 bg-white/10 rounded-lg flex items-center justify-center">
-              <div className="w-8 h-8 border-2 border-white/20 rounded-sm" />
+            <div className="flex flex-col items-end gap-2">
+              {status && (
+                <span className="text-[10px] font-black text-good uppercase tracking-widest bg-good/10 px-2 py-0.5 rounded border border-good/20">
+                  {status}
+                </span>
+              )}
+              <div className="h-14 w-14 bg-white p-1 rounded-lg flex items-center justify-center shadow-lg">
+                <div className="w-full h-full border-2 border-navy/20 rounded-sm bg-surface flex items-center justify-center">
+                   <div className="w-8 h-8 bg-navy/10 rounded-xs" />
+                </div>
+              </div>
             </div>
           </div>
         </div>

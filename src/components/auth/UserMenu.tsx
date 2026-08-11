@@ -11,7 +11,8 @@ import {
   Settings as SettingsIcon,
   LogOut,
   Bell,
-  Sliders
+  Sliders,
+  Ticket
 } from "lucide-react";
 import { 
   DropdownMenu, 
@@ -164,6 +165,14 @@ export function UserMenu({ user, onLogout, onNavigate, agentStatus, onStatusChan
               </DropdownMenuPortal>
             </DropdownMenuSub>
           )}
+
+          <DropdownMenuItem 
+            onClick={() => onNavigate("/tickets")}
+            className="flex items-center gap-2 px-3 py-2.5 rounded-lg text-sm font-bold text-foreground cursor-pointer hover:bg-primary/5"
+          >
+            <Ticket className="w-4 h-4 text-muted-foreground" />
+            Meus Ingressos
+          </DropdownMenuItem>
 
           <DropdownMenuItem 
             onClick={() => onNavigate("/app/perfil")}
