@@ -1,5 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { supabase } from "@/integrations/supabase/client";
+import { logResourceAccess } from "@/lib/access-logs.functions";
+
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -68,14 +70,14 @@ export function WhatsAppIntegration() {
 
   const logAccess = useCallback(async (resourceType: string, resourceId?: string) => {
     try {
-      await supabase.rpc('log_resource_access' as any, {
-        _resource_type: resourceType,
-        _resource_id: resourceId || 'global'
+      await logResourceAccess({
+        data: { resourceType, resourceId: resourceId || "global" },
       });
     } catch (err) {
       console.error('Erro ao registrar log de acesso:', err);
     }
   }, []);
+
 
   const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text);
