@@ -114,20 +114,21 @@ function HomePage() {
     <div className={cn("min-h-screen bg-white", language === 'ar' ? "rtl" : "ltr")} dir={language === 'ar' ? "rtl" : "ltr"}>
       <Navbar selectedCity={null} />
 
-      <main className="pt-36 relative">
+      <main className="relative">
+        {/* Premium Hero */}
+        <section className="hero-premium-bg h-[600px] flex items-center justify-center text-center text-white px-6">
+          <div className="max-w-3xl space-y-6 animate-in fade-in zoom-in-95 duration-700">
+            <h1 className="text-4xl md:text-7xl font-manrope font-black tracking-tighter uppercase leading-tight">
+              Viva experiências que conectam pessoas
+            </h1>
+            <p className="text-lg md:text-xl font-medium text-white/90">
+              Eventos, cursos, caravanas e experiências em um só lugar.
+            </p>
+          </div>
+        </section>
+
         <CityTicker />
 
-        <div className="absolute top-48 left-1/2 -translate-x-1/2 w-full max-w-2xl px-6 z-20">
-          <div className="relative group">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-fg h-5 w-5 group-focus-within:text-primary transition-colors" />
-            <Input 
-              placeholder="Buscar por evento, cidade ou categoria..."
-              className="h-16 pl-12 pr-4 text-lg rounded-2xl shadow-xl border-border bg-white focus-visible:ring-primary"
-              value={searchTerm}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchTerm(e.target.value)}
-            />
-          </div>
-        </div>
 
         <section className="px-6 py-8">
           <div className="max-w-7xl mx-auto">
