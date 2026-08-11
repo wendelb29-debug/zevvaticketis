@@ -121,7 +121,15 @@ function AdminLayout() {
   const menuItems = [
     { label: "Chat", icon: MessageSquare, href: "/admin/chat" },
     { label: "Dashboard", icon: LayoutDashboard, href: "/admin", activeOptions: { exact: true } },
-    { label: "Check-in", icon: CheckSquare, href: "/admin/checkin-monitor" },
+    { 
+      label: "Check-in", 
+      icon: CheckSquare, 
+      children: [
+        { label: "Gestão / BI", href: "/admin/checkin" },
+        { label: "Scanner QR", href: "/admin/checkin/scanner" },
+        { label: "Monitor Global", href: "/admin/checkin-monitor" },
+      ]
+    },
 
     { 
       label: "Planos", 
