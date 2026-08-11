@@ -33,7 +33,10 @@ export const Route = createFileRoute("/admin")({
     const { data: { user: authUser }, error: authError } = await supabase.auth.getUser();
     
     if (authError || !authUser) {
-      throw redirect({ to: "/login" });
+      throw redirect({ 
+        to: "/unauthorized", 
+        search: { code: 'auth_missing', reason: 'Sessão expirada ou usuário não autenticado.' } 
+      });
     }
 
     const { data: isAdminRole, error: roleError } = await supabase
@@ -45,6 +48,11 @@ export const Route = createFileRoute("/admin")({
     if (roleError || !isAdminRole) {
       console.error("Access denied: Not an admin", roleError);
       
+      const errorCode = roleError ? 'db_error' : 'invalid_role';
+      const reason = roleError 
+        ? 'Erro ao validar permissões no banco de dados.' 
+        : 'Seu usuário não possui o nível de acesso necessário (Platform Admin).';
+
       // Log attempt
       await supabase
         .from('access_logs' as any)
@@ -55,7 +63,13 @@ export const Route = createFileRoute("/admin")({
           action: '403_forbidden'
         });
 
-      throw redirect({ to: "/unauthorized" });
+      throw redirect({ 
+        to: "/unauthorized", 
+        search: { 
+          code: errorCode, 
+          reason: reason 
+        } 
+      });
     }
   },
   component: AdminLayout,
