@@ -40,7 +40,7 @@ export const getMyProjects = createServerFn({ method: "GET" })
   });
 
 export const switchProject = createServerFn({ method: "POST" })
-  .input(z.object({ projectId: z.string() }))
+  .inputValidator((data) => z.object({ projectId: z.string() }).parse(data))
   .handler(async ({ data }) => {
     // This is primarily a client-side state change in this architecture, 
     // but we can log access or verify permissions here.
