@@ -234,11 +234,11 @@ function AuditoriaTab() {
 
 function SettingsPage({ session }: { session: any }) {
   const search = useSearch({ from: "/admin/configuracoes" }) as any;
-  const [activeTab, setActiveTab] = useState(search?.tab === "team" ? "equipe" : "atendimento");
+  const [activeTab, setActiveTab] = useState(search?.tab === "team" ? "ADMIN" : "atendimento");
 
   useEffect(() => {
     if (search?.tab === "team") {
-      setActiveTab("equipe");
+      setActiveTab("ADMIN");
     }
   }, [search?.tab]);
   const [isDeptModalOpen, setIsDeptModalOpen] = useState(false);
@@ -392,7 +392,7 @@ function SettingsPage({ session }: { session: any }) {
           <TabsTrigger value="atendimento" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground rounded-lg py-2.5 px-6 flex items-center gap-2 text-sm font-bold transition-all">
             <MessageSquare className="w-4 h-4" /> Atendimento
           </TabsTrigger>
-          <TabsTrigger value="equipe" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground rounded-lg py-2.5 px-6 flex items-center gap-2 text-sm font-bold transition-all">
+          <TabsTrigger value="ADMIN" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground rounded-lg py-2.5 px-6 flex items-center gap-2 text-sm font-bold transition-all">
             <Users className="w-4 h-4" /> Equipe e Recursos
           </TabsTrigger>
           <TabsTrigger value="sistema" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground rounded-lg py-2.5 px-6 flex items-center gap-2 text-sm font-bold transition-all">
@@ -705,7 +705,7 @@ function SettingsPage({ session }: { session: any }) {
           </Accordion>
         </TabsContent>
 
-        <TabsContent value="equipe" className="space-y-4 focus-visible:outline-none outline-none">
+        <TabsContent value="ADMIN" className="space-y-4 focus-visible:outline-none outline-none">
           <TeamManagement />
           <Accordion type="single" collapsible className="w-full space-y-4">
 

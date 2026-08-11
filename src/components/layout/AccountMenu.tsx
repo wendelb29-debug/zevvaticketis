@@ -58,7 +58,7 @@ export function AccountMenu({ user, onLogout, onNavigate, onOpenAuth }: AccountM
       }
 
       const { data: member } = await supabase
-        .from("organization_members")
+        .from("tenant_members")
         .select("id")
         .eq("user_id", user.id)
         .maybeSingle();

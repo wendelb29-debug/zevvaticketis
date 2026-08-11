@@ -8,22 +8,28 @@ const inviteSchema = z.object({
   departments: z.array(z.string().trim().min(1).max(80)).max(50).default([]),
   accessHours: z.string().trim().max(80).optional(),
   redirectTo: z.string().trim().max(500).optional(),
+  tenantId: z.string().uuid().optional(), // Explicit tenantId input
 });
 
 export const sendTeamInvite = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((data: unknown) => inviteSchema.parse(data))
   .handler(async ({ data, context }) => {
-    // Organização do usuário logado (RLS aplicada como o próprio usuário)
-    const { data: member } = await context.supabase
-      .from("organization_members")
-      .select("organization_id")
-      .eq("user_id", context.userId)
-      .maybeSingle();
+    let tenantId: string | undefined = data.tenantId;
 
-    let organizationId = member?.organization_id ?? null;
+    if (!tenantId) {
+      // Fallback: check if the user belongs to exactly one tenant
+      const { data: member } = await context.supabase
+        .from("tenant_members")
+        .select("tenant_id")
+        .eq("user_id", context.userId)
+        .maybeSingle();
 
-    if (!organizationId) {
+      tenantId = member?.tenant_id ?? undefined;
+    }
+
+    if (!tenantId) {
+      // Platform admin check: fallback to first tenant if not explicitly scoped
       const { data: adminRow } = await context.supabase
         .from("platform_admins")
         .select("id")
@@ -31,27 +37,27 @@ export const sendTeamInvite = createServerFn({ method: "POST" })
         .maybeSingle();
 
       if (!adminRow) {
-        return { success: false, message: "Você não pertence a nenhuma organização." };
+        return { success: false, message: "Você não pertence a nenhum ambiente." };
       }
 
       const { data: org } = await context.supabase
-        .from("organizations")
+        .from("tenants")
         .select("id")
         .order("created_at", { ascending: true })
         .limit(1)
         .maybeSingle();
 
-      organizationId = org?.id ?? null;
+      tenantId = org?.id ?? undefined;
     }
 
-    if (!organizationId) {
-      return { success: false, message: "Nenhuma organização disponível para o convite." };
+    if (!tenantId) {
+      return { success: false, message: "Nenhum ambiente disponível para o convite." };
     }
 
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
 
     const { error: insertError } = await supabaseAdmin.from("team_invites").insert({
-      organization_id: organizationId,
+      tenant_id: tenantId,
       email: data.email,
       role: data.permission,
       departments: data.departments,

@@ -24,12 +24,12 @@ export const Route = createFileRoute("/produtor/configuracoes")({
     if (!session) throw redirect({ to: "/" });
 
     const { data: member } = await supabase
-      .from("organization_members")
+      .from("tenant_members")
       .select("role")
       .eq("user_id", session.user.id)
       .single();
 
-    if (member?.role !== 'produtor_owner') {
+    if (member?.role !== 'OWNER') {
       throw redirect({ to: "/produtor" });
     }
   },
@@ -50,16 +50,16 @@ function OrgSettings() {
     if (!user) return;
 
     const { data: member } = await supabase
-      .from("organization_members")
-      .select("organization_id")
+      .from("tenant_members")
+      .select("tenant_id")
       .eq("user_id", user.id)
       .single();
 
     if (member) {
       const { data } = await supabase
-        .from("organizations")
+        .from("tenants")
         .select("*")
-        .eq("id", member.organization_id)
+        .eq("id", member.tenant_id)
         .single();
       
       setOrg(data);
@@ -71,7 +71,7 @@ function OrgSettings() {
     setSaving(true);
     try {
       const { error } = await supabase
-        .from("organizations")
+        .from("tenants")
         .update({
           nome: org.nome,
         })

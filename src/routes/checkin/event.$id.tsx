@@ -35,9 +35,9 @@ function EventCheckinLayout() {
       } else {
         // Check if admin/owner
         const { data: member } = await supabase
-          .from("organization_members")
+          .from("tenant_members")
           .select("role")
-          .eq("organization_id", eventData.organization_id || "")
+          .eq("tenant_id", eventData.tenant_id || "")
           .eq("user_id", user.id)
           .maybeSingle();
         

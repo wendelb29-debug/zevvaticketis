@@ -67,7 +67,7 @@ export function AuthModal({ isOpen, onClose, defaultView = 'login' }: AuthModalP
       });
       if (error) throw error;
       // Completes producer signup securely once the user is authenticated
-      const { ensureProducerOrganization } = await import("@/lib/organizations.functions");
+      const { ensureProducerOrganization } = await import("@/lib/tenants.functions");
       await ensureProducerOrganization();
       toast.success('Login realizado com sucesso!');
       
@@ -120,7 +120,7 @@ export function AuthModal({ isOpen, onClose, defaultView = 'login' }: AuthModalP
       if (role === 'produtor') {
         if (authData.session) {
           // Already authenticated: create the organization server-side
-          const { ensureProducerOrganization } = await import("@/lib/organizations.functions");
+          const { ensureProducerOrganization } = await import("@/lib/tenants.functions");
           await ensureProducerOrganization();
           toast.success('Cadastro enviado para aprovação!');
           navigate({ to: '/produtor-pendente' });

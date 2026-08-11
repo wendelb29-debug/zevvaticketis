@@ -88,7 +88,7 @@ export function AdminDashboardBI() {
   async function fetchFilterOptions() {
     const [{ data: eventsData }, { data: producersData }] = await Promise.all([
       supabase.from("events").select("id, title").order("title"),
-      supabase.from("organizations").select("id, nome").order("nome")
+      supabase.from("tenants").select("id, nome").order("nome")
     ]);
     if (eventsData) setEvents(eventsData);
     if (producersData) setProducers(producersData);
@@ -105,7 +105,7 @@ export function AdminDashboardBI() {
 
       // 1. Events Stats
       let eventsQuery = supabase.from("events").select("*");
-      if (filters.producerId !== "all") eventsQuery = eventsQuery.eq("organization_id", filters.producerId);
+      if (filters.producerId !== "all") eventsQuery = eventsQuery.eq("tenant_id", filters.producerId);
       if (filters.category !== "all") eventsQuery = eventsQuery.eq("category", filters.category);
       
       const { data: eventsData } = await eventsQuery;
@@ -115,7 +115,7 @@ export function AdminDashboardBI() {
       // 2. Orders & Sales
       let ordersQuery = supabase.from("orders").select("*").eq("status", "pago");
       if (filters.eventId !== "all") ordersQuery = ordersQuery.eq("event_id", filters.eventId);
-      if (filters.producerId !== "all") ordersQuery = ordersQuery.eq("organization_id", filters.producerId);
+      if (filters.producerId !== "all") ordersQuery = ordersQuery.eq("tenant_id", filters.producerId);
       ordersQuery = ordersQuery.gte("created_at", startDate.toISOString()).lte("created_at", endDate.toISOString());
       
       const { data: ordersData } = await ordersQuery;

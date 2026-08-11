@@ -12,6 +12,8 @@ import { AuthModal } from "@/components/layout/AuthModal";
 import { useUI } from "@/hooks/use-ui";
 import { LocationModal } from "@/components/home/LocationModal";
 import { ZevvaLoadingScreen } from "@/components/layout/ZevvaLoadingScreen";
+import { TenantProvider } from "@/hooks/use-tenants";
+
 
 
 
@@ -204,30 +206,32 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      {isNavigating && (
-        <div className="fixed top-0 left-0 right-0 h-1 z-[9999] bg-coral/20 overflow-hidden">
-          <div className="h-full bg-coral w-1/2 animate-progress" />
-        </div>
-      )}
-      <Outlet />
-      
-      {isNavigating && <ZevvaLoadingScreen />}
-      
-      <AuthModal 
-        isOpen={activeOverlay === 'auth'} 
-        onClose={closeOverlay} 
-        defaultView={authView}
-      />
-      
-      <LocationModal 
-        isOpen={activeOverlay === 'location'}
-        onClose={closeOverlay}
-        onSelect={(city) => {
-          // In a real app we'd dispatch this to a global state or search params
-          console.log("Selected city:", city);
-          closeOverlay();
-        }}
-      />
+      <TenantProvider>
+        {isNavigating && (
+          <div className="fixed top-0 left-0 right-0 h-1 z-[9999] bg-coral/20 overflow-hidden">
+            <div className="h-full bg-coral w-1/2 animate-progress" />
+          </div>
+        )}
+        <Outlet />
+        
+        {isNavigating && <ZevvaLoadingScreen />}
+        
+        <AuthModal 
+          isOpen={activeOverlay === 'auth'} 
+          onClose={closeOverlay} 
+          defaultView={authView}
+        />
+        
+        <LocationModal 
+          isOpen={activeOverlay === 'location'}
+          onClose={closeOverlay}
+          onSelect={(city) => {
+            // In a real app we'd dispatch this to a global state or search params
+            console.log("Selected city:", city);
+            closeOverlay();
+          }}
+        />
+      </TenantProvider>
     </QueryClientProvider>
   );
 }

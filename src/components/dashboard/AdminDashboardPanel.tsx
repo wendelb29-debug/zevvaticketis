@@ -73,7 +73,7 @@ export function AdminDashboardPanel() {
       const { count: pendingCount } = await supabase.from("events").select("*", { count: 'exact', head: true }).eq("status", "aguardando_aprovacao");
       
       const { count: usersCount } = await supabase.from("profiles").select("*", { count: 'exact', head: true });
-      const { count: producersCount } = await supabase.from("organizations").select("*", { count: 'exact', head: true });
+      const { count: producersCount } = await supabase.from("tenants").select("*", { count: 'exact', head: true });
 
       // Financials
       const { data: orders } = await supabase.from("orders").select("*").eq("status", "pago");

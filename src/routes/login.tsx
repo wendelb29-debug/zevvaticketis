@@ -31,7 +31,7 @@ function LoginPage() {
 
         // 2. Check Producer
         const { data: member } = await supabase
-          .from('organization_members')
+          .from('tenant_members')
           .select('id')
           .eq('user_id', userId)
           .maybeSingle();

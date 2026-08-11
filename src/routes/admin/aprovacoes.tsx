@@ -12,11 +12,11 @@ export const Route = createFileRoute("/admin/aprovacoes")({
 function AprovacoesPage() {
   const queryClient = useQueryClient();
   
-  const { data: organizations, isLoading } = useQuery({
+  const { data: tenants, isLoading } = useQuery({
     queryKey: ["pending-orgs"],
     queryFn: async () => {
       const { data } = await supabase
-        .from("organizations")
+        .from("tenants")
         .select(`
           id, nome, documento, status, created_at,
           countries ( nome )
@@ -30,7 +30,7 @@ function AprovacoesPage() {
   const updateStatus = useMutation({
     mutationFn: async ({ id, status }: { id: string, status: string }) => {
       const { error } = await supabase
-        .from("organizations")
+        .from("tenants")
         .update({ status })
         .eq("id", id);
       if (error) throw error;
@@ -62,7 +62,7 @@ function AprovacoesPage() {
             </tr>
           </thead>
           <tbody className="divide-y divide-border">
-            {organizations?.map((org: any) => (
+            {tenants?.map((org: any) => (
               <tr key={org.id} className="hover:bg-accent transition-colors">
                 <td className="px-6 py-4">
                   <div className="flex items-center gap-3">
@@ -98,7 +98,7 @@ function AprovacoesPage() {
                 </td>
               </tr>
             ))}
-            {organizations?.length === 0 && (
+            {tenants?.length === 0 && (
               <tr>
                 <td colSpan={5} className="px-6 py-12 text-center text-muted italic">
                   Nenhuma organização pendente de aprovação.

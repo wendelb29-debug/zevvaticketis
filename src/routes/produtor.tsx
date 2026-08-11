@@ -33,6 +33,9 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
+import { useTenants } from "@/hooks/use-tenants";
+
+
 
 export const Route = createFileRoute("/produtor")({
   beforeLoad: async () => {
@@ -48,10 +51,10 @@ export const Route = createFileRoute("/produtor")({
     });
 
     if (roleError || !isProdutor) {
-      // Fallback: check if they are in organization_members
+      // Fallback: check if they are in tenant_members
       const { data: member } = await supabase
-        .from("organization_members")
-        .select("organization_id")
+        .from("tenant_members")
+        .select("tenant_id")
         .eq("user_id", authUser.id)
         .maybeSingle();
 
@@ -64,6 +67,7 @@ export const Route = createFileRoute("/produtor")({
 });
 
 function ProdutorLayout() {
+  const { activeTenant, loading: tenantsLoading } = useTenants();
   const [status, setStatus] = useState<string | null>(null);
   const [memberRole, setMemberRole] = useState<string | null>(null);
   const [permissions, setPermissions] = useState<string[]>([]);
@@ -73,36 +77,45 @@ function ProdutorLayout() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    if (!tenantsLoading && !activeTenant) {
+      navigate({ to: "/app" });
+      return;
+    }
+
     async function getUserData() {
       const { data: { user } } = await supabase.auth.getUser();
-      if (!user) {
+      if (!user || !activeTenant) {
         setLoading(false);
         return;
       }
       setUser(user);
 
       const { data: memberData } = await supabase
-        .from("organization_members")
-        .select("organization_id, role, permissions")
+        .from("tenant_members")
+        .select("tenant_id, role, permissions")
         .eq("user_id", user.id)
+        .eq("tenant_id", activeTenant.id)
         .single();
 
       if (memberData) {
         setMemberRole(memberData.role);
         setPermissions(memberData.permissions as string[] || []);
         
-        const { data: orgData } = await supabase
-          .from("organizations")
+        const { data: tenantData } = await supabase
+          .from("tenants")
           .select("status")
-          .eq("id", memberData.organization_id)
+          .eq("id", activeTenant.id)
           .single();
         
-        setStatus(orgData?.status || null);
+        setStatus(tenantData?.status || null);
       }
       setLoading(false);
     }
-    getUserData();
-  }, []);
+    
+    if (!tenantsLoading && activeTenant) {
+      getUserData();
+    }
+  }, [activeTenant, tenantsLoading]);
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
@@ -184,7 +197,31 @@ function ProdutorLayout() {
         <Link to="/" className="text-2xl font-manrope font-extrabold text-coral tracking-tighter">
           ZEVVA <span className="text-navy">TICKETS</span>
         </Link>
+        {activeTenant && (
+          <div className="mt-6 flex items-center gap-3 p-3 bg-slate-50 rounded-2xl border border-line">
+            <Avatar className="w-10 h-10 rounded-xl border border-line">
+              <AvatarImage src={activeTenant.logo || undefined} />
+              <AvatarFallback className="bg-navy text-white text-xs font-black">
+                {activeTenant.nome.substring(0, 2).toUpperCase()}
+              </AvatarFallback>
+            </Avatar>
+            <div className="flex-1 min-w-0">
+              <p className="text-xs font-black text-navy truncate">{activeTenant.nome}</p>
+              <p className="text-[10px] text-muted font-bold truncate capitalize">{memberRole?.toLowerCase()}</p>
+            </div>
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              onClick={() => navigate({ to: "/app" })} 
+              className="h-8 w-8 text-muted hover:text-coral"
+              title="Trocar Ambiente"
+            >
+              <X className="w-4 h-4" />
+            </Button>
+          </div>
+        )}
       </div>
+
       
       <nav className="flex-1 space-y-1 px-4">
         {filteredMenuItems.map((item) => {

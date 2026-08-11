@@ -17,8 +17,8 @@ function MarketingPage() {
     queryFn: async () => {
       const { data: { session } } = await supabase.auth.getSession();
       const { data: member } = await supabase
-        .from("organization_members")
-        .select("organization_id")
+        .from("tenant_members")
+        .select("tenant_id")
         .eq("user_id", session!.user.id)
         .single();
 
@@ -28,7 +28,7 @@ function MarketingPage() {
           id, title,
           event_favorites(count)
         `)
-        .eq("organization_id", member!.organization_id);
+        .eq("tenant_id", member!.tenant_id);
       return data;
     }
   });

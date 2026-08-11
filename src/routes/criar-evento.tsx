@@ -47,8 +47,8 @@ export const Route = createFileRoute("/criar-evento")({
     
     // Check if user is a producer (has organization membership)
     const { data: member } = await supabase
-      .from("organization_members")
-      .select("organization_id")
+      .from("tenant_members")
+      .select("tenant_id")
       .eq("user_id", session.user.id)
       .single();
       
@@ -675,8 +675,8 @@ function CriarEventoWizard() {
                       setLoading(true);
                       try {
                         const { data: member } = await supabase
-                          .from("organization_members")
-                          .select("organization_id")
+                          .from("tenant_members")
+                          .select("tenant_id")
                           .eq("user_id", user.id)
                           .single();
 
@@ -685,7 +685,7 @@ function CriarEventoWizard() {
                         const { data: event, error: eventError } = await supabase
                           .from("events")
                           .insert({
-                            producer_id: member.organization_id,
+                            producer_id: member.tenant_id,
                             title: formData.title,
                             description: formData.description,
                             category: formData.category,

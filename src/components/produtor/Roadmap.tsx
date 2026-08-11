@@ -22,7 +22,7 @@ const waves = [
     title: "Wave 2 — Cadastro de eventos",
     status: "Em Progresso",
     items: [
-      "Tabela events com organization_id",
+      "Tabela events com tenant_id",
       "Wizard multi-step de criação",
       "Upload de imagens (Supabase Storage)",
       "Página Meus Eventos",

@@ -27,8 +27,8 @@ function CheckinDashboard() {
 
       // Get events for organization owners/admins
       const { data: member } = await supabase
-        .from("organization_members")
-        .select("organization_id")
+        .from("tenant_members")
+        .select("tenant_id")
         .eq("user_id", user.id)
         .maybeSingle();
 
@@ -37,7 +37,7 @@ function CheckinDashboard() {
         const { data } = await supabase
           .from("events")
           .select("*")
-          .eq("organization_id", member.organization_id);
+          .eq("tenant_id", member.tenant_id);
         orgEvents = data || [];
       }
 
