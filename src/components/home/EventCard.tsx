@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Calendar, MapPin, Heart, ArrowRight } from "lucide-react";
+import { Calendar, MapPin, Heart, ArrowRight, Building2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
@@ -63,20 +63,35 @@ export function EventCard({ event, onToggleFavorite }: EventCardProps) {
           </div>
         </div>
 
-        <div className="pt-4 border-t border-line flex items-center justify-between">
-          <div className="space-y-0.5">
-            <p className="text-[9px] font-extrabold uppercase tracking-widest text-muted">A partir de</p>
-            <p className="text-lg font-manrope font-black text-navy">
-              US$ {event.min_price || 0}
-            </p>
+        <div className="pt-4 border-t border-line">
+          <div className="flex items-center justify-between mb-3">
+            <div className="space-y-0.5">
+              <p className="text-[9px] font-extrabold uppercase tracking-widest text-muted">A partir de</p>
+              <p className="text-lg font-manrope font-black text-navy">
+                US$ {event.min_price || 0}
+              </p>
+            </div>
+            <Link 
+              to="/eventos" 
+              search={{ id: event.id, categoria: event.category || "CARAVANAS INTERNACIONAIS" }}
+              className="w-10 h-10 rounded-full bg-muted border border-border flex items-center justify-center text-foreground group-hover:bg-primary group-hover:border-primary group-hover:text-white transition-all shadow-sm"
+            >
+              <ArrowRight className="w-5 h-5" />
+            </Link>
           </div>
-          <Link 
-            to="/eventos" 
-            search={{ id: event.id, categoria: event.category || "CARAVANAS INTERNACIONAIS" }}
-            className="w-10 h-10 rounded-full bg-muted border border-border flex items-center justify-center text-foreground group-hover:bg-primary group-hover:border-primary group-hover:text-white transition-all shadow-sm"
-          >
-            <ArrowRight className="w-5 h-5" />
-          </Link>
+          
+          <div className="flex items-center gap-2 pt-3 border-t border-line/50">
+            <div className="w-5 h-5 bg-navy rounded-full flex items-center justify-center text-[8px] text-white font-black overflow-hidden border border-white shadow-sm">
+              {event.tenants?.logo ? (
+                <img src={event.tenants.logo} className="w-full h-full object-cover" />
+              ) : (
+                event.tenants?.nome?.substring(0, 2).toUpperCase() || "ZT"
+              )}
+            </div>
+            <span className="text-[9px] font-bold text-muted-fg uppercase tracking-tight">
+              Org: <span className="text-navy">{event.tenants?.nome || "Zevva Tickets"}</span>
+            </span>
+          </div>
         </div>
       </div>
     </div>

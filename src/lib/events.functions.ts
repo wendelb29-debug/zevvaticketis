@@ -56,7 +56,7 @@ export const getFeaturedEvents = createServerFn({ method: "GET" })
   .handler(async () => {
     const { data, error } = await supabase
       .from("events")
-      .select("*")
+      .select("*, tenants(nome, logo), ticket_types(preco)")
       .eq("status", "publicado")
       .eq("featured", true)
       .order("created_at", { ascending: false });
@@ -64,4 +64,3 @@ export const getFeaturedEvents = createServerFn({ method: "GET" })
     if (error) throw error;
     return data || [];
   });
-
