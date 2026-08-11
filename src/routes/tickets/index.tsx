@@ -132,9 +132,9 @@ function MyTickets() {
 
                 <div className="flex flex-col gap-2 pt-4 border-t border-line/50">
                   <Button asChild className="w-full bg-navy text-white rounded-xl font-bold h-11">
-                    <Link to={`/tickets/${ticket.id}`}>
+                    <a href={`/tickets/${ticket.id}`} className="flex items-center justify-center">
                         <ExternalLink className="w-4 h-4 mr-2" /> Ver Ingresso
-                    </Link>
+                    </a>
                   </Button>
                   <div className="flex gap-2">
                     <Button variant="outline" className="flex-1 rounded-xl font-bold h-10 border-2 text-navy hover:bg-surface border-line px-2">
