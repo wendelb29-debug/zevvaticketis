@@ -33,8 +33,8 @@ function ParticipantesPage() {
     <div className="container mx-auto py-8 space-y-8 font-inter">
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-manrope font-extrabold text-navy">Participantes</h1>
-          <p className="text-muted font-medium">Lista de pessoas que compraram ingressos para seus eventos.</p>
+          <h1 className="text-3xl font-manrope font-extrabold text-navy">Participantes do Projeto</h1>
+          <p className="text-muted font-medium">Lista de pessoas vinculadas aos eventos deste ambiente.</p>
         </div>
         <Button variant="outline" className="rounded-xl border-line">
           <Download className="mr-2 h-4 w-4" /> Exportar CSV

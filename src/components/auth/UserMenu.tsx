@@ -257,7 +257,7 @@ export function UserMenu({ user, onLogout, onNavigate, agentStatus, onStatusChan
             className="flex items-center gap-2 px-3 py-2.5 rounded-lg text-sm font-bold text-foreground cursor-pointer hover:bg-primary/5"
           >
             <Briefcase className="w-4 h-4 text-primary" />
-            Meus Produtores
+            Meus Projetos
           </DropdownMenuItem>
         )}
 
