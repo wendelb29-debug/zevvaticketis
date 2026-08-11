@@ -1,41 +1,51 @@
-# Plano de Implementação: Inteligência de Dados Zevva BI
+# Zevva BI Overhaul Plan
 
-Transformar o dashboard administrativo e de produtores em uma central de inteligência funcional, com filtros dinâmicos, dados reais e exportação profissional.
+Transform the Zevva BI dashboard into a dynamic, data-driven intelligence layer for platform admins and producers, enabling real-time performance tracking and professional reporting.
 
-## Alterações de Banco de Dados
+## User Review Required
 
-### Tabelas Utilizadas (Existentes e Revisitadas)
-- `events`: Filtros por título, categoria e localização (cidade).
-- `orders`: Base para faturamento, quantidade de vendas e funil.
-- `tickets`: Detalhamento de ingressos vendidos vs. disponíveis.
-- `checkin_logs`: Cruzamento de presença real.
-- `profiles`: Contagem de usuários e novos cadastros.
-- `campaigns` & `ads`: Métricas de marketing (atribuição via metadados nos tickets/pedidos).
+> [!IMPORTANT]
+> - The ROI calculation will be based on `orders` (revenue) vs. `campaigns` (cost, which we'll add to the schema).
+> - Marketing attribution depends on UTMS parameters being captured during checkout, which is partially implemented in the tracking table.
 
-## Componentes Frontend
+## Proposed Changes
 
-### `AdminDashboardBI.tsx` (Núcleo)
-- **Estado Global de Filtros**: Implementar `filterState` (data inicial/final, evento, produtor, categoria, canal, status).
-- **Filtro de Período**: Conectar botões "7d", "30d" e o "Personalizado" (usando `Popover` + `Calendar`).
-- **Painel Lateral de Filtros Avançados**: Criar `Sheet` lateral com todos os seletores solicitados (Evento, Produtor, Categoria, Localização, etc.).
-- **Integração Real**: Substituir mocks por queries Supabase com filtros `.eq()`, `.gte()`, `.lte()` baseados no estado.
-- **Feedback Visual**: Implementar "Filtros Ativos" (tags) e botão "Limpar Filtros".
+### Database & Schema Updates
+- Add `budget` and `spend` columns to `campaigns` table to enable ROI calculations.
+- Ensure `sales_attribution` table is correctly populated during the checkout process.
+- Verify RLS policies allow BI queries while maintaining data privacy.
 
-### Relatórios e Exportação (`src/lib/export/index.ts`)
-- **PDF Profissional**: Atualizar `exportToPDF` para incluir cabeçalho Zevva, resumo executivo, tabelas filtradas e layout A4.
-- **Excel Multi-Aba**: Atualizar `exportToExcel` para gerar XLSX com abas: Resumo, Eventos, Vendas, Usuários, Campanhas, Check-ins.
+### Dashboard Core (AdminDashboardBI.tsx)
+- **Global Filter State**: Implement `dateRange`, `eventId`, `producerId`, and `category` filters.
+- **Dynamic Data Fetching**: Replace mock data with real-time Supabase queries using the filters.
+- **Advanced Filters Sidebar**: Add a `Sheet` based sidebar for granular filtering of large datasets.
+- **Alert Panel Engine**: Connect the alerts (low sales, expiring events) to real database triggers.
 
-## Lógica de Negócio e BI
-- **Atribuição de Marketing**: Implementar cálculo de ROI cruzando `investment` (se disponível) com `revenue` gerado por tickets marcados com `campaign_id`.
-- **Métricas de Check-in**: Cruzar `tickets` (vendidos) com `checkin_logs` para gerar taxa de presença e no-show por segmento.
+### Business Intelligence Modules
+- **Conversion Funnel**: Calculate real conversion rates: Views -> Clicks -> Signups -> Sales -> Check-in.
+- **Marketing ROI**: Rank campaigns by ROI and volume.
+- **Financial Analytics**: Segment gross vs. net revenue (Zevva fee vs. Producer payout).
+- **Presence BI**: Cross-reference check-in data with sales to identify "no-show" patterns by event type.
 
-## Testes de Validação
-- Seleção de período (7 dias) atualizando métricas de faturamento.
-- Filtro por evento único isolando dados no funil e nos cards.
-- Exportação de PDF validando se os dados no arquivo correspondem aos filtros aplicados na tela.
-- Resiliência: Loading states durante as queries e tratamento de erros de conexão.
+### Professional Reporting (src/lib/export/index.ts)
+- Already overhauled to support A4 PDF branding and executive summaries.
+- Will integrate these calls into the dashboard's "Gerar Relatório" menu.
 
-## Aspectos Técnicos
-- Uso de `date-fns` para manipulação de períodos.
-- Queries otimizadas no Supabase para evitar overfetching.
-- Cache local para filtros aplicados.
+## Technical Details
+
+### Filter Logic
+Use a `useEffect` that triggers a combined data fetch when the global filter state changes.
+```typescript
+const [filters, setFilters] = useState({
+  start: subDays(new Date(), 30),
+  end: new Date(),
+  producerId: 'all',
+  eventId: 'all'
+});
+```
+
+### ROI Formula
+`ROI = (Total Revenue from Attribution - Campaign Spend) / Campaign Spend` (expressed as a multiple, e.g., 5.0x).
+
+### Data Aggregation
+Heavy use of Supabase `.select()` with counts and `.sum()` where possible, or client-side aggregation for complex funnel steps.

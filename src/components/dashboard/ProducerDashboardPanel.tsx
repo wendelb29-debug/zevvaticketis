@@ -94,10 +94,14 @@ export function ProducerDashboardPanel() {
 
   const handleExportPDF = () => {
     exportToPDF(
-      "Relatório de Vendas - Produtor",
       salesReport,
-      ["event", "value", "fee", "net"],
-      "vendas_produtor"
+      [
+        { header: "Evento", key: "event" },
+        { header: "Valor Bruto", key: "value" },
+        { header: "Taxa", key: "fee" },
+        { header: "Líquido", key: "net" }
+      ],
+      { title: "Relatório de Vendas - Produtor", fileName: "vendas_produtor" }
     );
     toast.success("PDF gerado");
   };
@@ -164,7 +168,7 @@ export function ProducerDashboardPanel() {
             <Button variant="outline" size="sm" className="gap-2 border-primary text-primary" onClick={handleExportPDF}>
               <FileText className="w-4 h-4" /> PDF
             </Button>
-            <Button variant="outline" size="sm" className="gap-2 border-primary text-primary" onClick={() => exportToExcel(salesReport, "vendas_produtor", "Vendas")}>
+            <Button variant="outline" size="sm" className="gap-2 border-primary text-primary" onClick={() => exportToExcel([{ name: "Vendas", data: salesReport }], "vendas_produtor")}>
               <FileSpreadsheet className="w-4 h-4" /> Excel
             </Button>
           </div>
