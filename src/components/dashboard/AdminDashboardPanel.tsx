@@ -142,7 +142,7 @@ export function AdminDashboardPanel() {
       { Categoria: "Vendas Totais", Valor: stats.ticketsSold },
       { Categoria: "Receita Zevva", Valor: `R$ ${stats.zevvaRevenue}` }
     ];
-    exportToPDF("Relatório Executivo Zevva", data, ["Categoria", "Valor"], "relatorio_executivo");
+    exportToPDF(data, [{ header: "Categoria", key: "Categoria" }, { header: "Valor", key: "Valor" }], { title: "Relatório Executivo Zevva", fileName: "relatorio_executivo" });
     toast.success("PDF gerado com sucesso");
   };
 
