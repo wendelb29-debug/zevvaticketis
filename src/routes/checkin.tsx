@@ -10,10 +10,14 @@ import {
   ChevronRight,
   ShieldCheck,
   CheckCircle2,
-  Users
+  Users,
+  Building2,
+  X
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import { useTenants } from "@/hooks/use-tenants";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 export const Route = createFileRoute("/checkin")({
   beforeLoad: async () => {
@@ -47,9 +51,18 @@ export const Route = createFileRoute("/checkin")({
 });
 
 function CheckinLayout() {
+  const { activeTenant, loading: tenantsLoading, userRole } = useTenants();
   const [user, setUser] = useState<any>(null);
   const navigate = useNavigate();
   const location = useLocation();
+
+  useEffect(() => {
+    if (!tenantsLoading && !activeTenant) {
+      // If user is just an operator, they should be redirected to workspace selection
+      navigate({ to: "/app" });
+      return;
+    }
+  }, [activeTenant, tenantsLoading]);
 
   useEffect(() => {
     async function loadUser() {
@@ -77,6 +90,29 @@ function CheckinLayout() {
         <Link to="/" className="text-xl font-manrope font-black text-white tracking-tighter">
           ZEVVA <span className="text-coral">STAFF</span>
         </Link>
+        {activeTenant && (
+          <div className="mt-6 flex items-center gap-3 p-3 bg-white/5 rounded-2xl border border-white/10">
+            <Avatar className="w-10 h-10 rounded-xl border border-white/10">
+              <AvatarImage src={activeTenant.logo || undefined} />
+              <AvatarFallback className="bg-white/10 text-white text-xs font-black">
+                {activeTenant.nome.substring(0, 2).toUpperCase()}
+              </AvatarFallback>
+            </Avatar>
+            <div className="flex-1 min-w-0 text-left">
+              <p className="text-xs font-black text-white truncate">{activeTenant.nome}</p>
+              <p className="text-[10px] text-coral font-bold truncate capitalize">{userRole?.toLowerCase() || 'Operador'}</p>
+            </div>
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              onClick={() => navigate({ to: "/app" })} 
+              className="h-8 w-8 text-white/40 hover:text-coral"
+              title="Trocar Ambiente"
+            >
+              <X className="w-4 h-4" />
+            </Button>
+          </div>
+        )}
       </div>
       
       <nav className="flex-1 space-y-1 px-4">
