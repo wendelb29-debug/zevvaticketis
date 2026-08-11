@@ -64,6 +64,8 @@ function TicketDetail() {
         date={ticket.events?.start_date ? new Date(ticket.events.start_date).toLocaleDateString('pt-BR') : "Data a definir"}
         location={ticket.events?.location || "Local"}
         price={ticket.price ? `R$ ${ticket.price}` : "Confirmado"}
+        ticketCode={ticket.qr_code || ticket.id.slice(0, 8)}
+        status={ticket.status || "VÁLIDO"}
         className="w-full max-w-lg mx-auto"
       />
       

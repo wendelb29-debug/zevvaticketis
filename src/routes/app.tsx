@@ -51,8 +51,8 @@ function AppLayout() {
 
             <nav className="hidden md:flex items-center gap-1">
               <Link 
-                to="/app" 
-                activeOptions={{ exact: true }}
+                to="/tickets" 
+                activeOptions={{ exact: false }}
                 className="px-4 py-2 rounded-full text-sm font-bold transition-all"
                 activeProps={{ className: "bg-coral/10 text-coral" }}
                 inactiveProps={{ className: "text-muted hover:text-navy" }}
