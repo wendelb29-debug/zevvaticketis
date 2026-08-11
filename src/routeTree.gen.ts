@@ -71,6 +71,7 @@ import { Route as CheckinEventIdRouteImport } from './routes/checkin/event.$id'
 import { Route as EventosIdCheckoutRouteImport } from './routes/eventos/$id.checkout'
 import { Route as OauthGoogleReturnRouteImport } from './routes/oauth/google/return'
 import { Route as CheckinEventIdIndexRouteImport } from './routes/checkin/event.$id.index'
+import { Route as CheckinEventIdScannerRouteImport } from './routes/checkin/event.$id.scanner'
 import { Route as ApiPublicTicketsShareTokenRouteImport } from './routes/api/public/tickets/share/$token'
 
 const IndexRoute = IndexRouteImport.update({
@@ -387,6 +388,11 @@ const CheckinEventIdIndexRoute = CheckinEventIdIndexRouteImport.update({
   path: '/',
   getParentRoute: () => CheckinEventIdRoute,
 } as any)
+const CheckinEventIdScannerRoute = CheckinEventIdScannerRouteImport.update({
+  id: '/scanner',
+  path: '/scanner',
+  getParentRoute: () => CheckinEventIdRoute,
+} as any)
 const ApiPublicTicketsShareTokenRoute =
   ApiPublicTicketsShareTokenRouteImport.update({
     id: '/api/public/tickets/share/$token',
@@ -456,6 +462,7 @@ export interface FileRoutesByFullPath {
   '/oauth/google/return': typeof OauthGoogleReturnRoute
   '/admin/checkin/': typeof AdminCheckinIndexRoute
   '/admin/marketing/': typeof AdminMarketingIndexRoute
+  '/checkin/event/$id/scanner': typeof CheckinEventIdScannerRoute
   '/checkin/event/$id/': typeof CheckinEventIdIndexRoute
   '/api/public/tickets/share/$token': typeof ApiPublicTicketsShareTokenRoute
 }
@@ -516,6 +523,7 @@ export interface FileRoutesByTo {
   '/oauth/google/return': typeof OauthGoogleReturnRoute
   '/admin/checkin': typeof AdminCheckinIndexRoute
   '/admin/marketing': typeof AdminMarketingIndexRoute
+  '/checkin/event/$id/scanner': typeof CheckinEventIdScannerRoute
   '/checkin/event/$id': typeof CheckinEventIdIndexRoute
   '/api/public/tickets/share/$token': typeof ApiPublicTicketsShareTokenRoute
 }
@@ -582,6 +590,7 @@ export interface FileRoutesById {
   '/oauth/google/return': typeof OauthGoogleReturnRoute
   '/admin/checkin/': typeof AdminCheckinIndexRoute
   '/admin/marketing/': typeof AdminMarketingIndexRoute
+  '/checkin/event/$id/scanner': typeof CheckinEventIdScannerRoute
   '/checkin/event/$id/': typeof CheckinEventIdIndexRoute
   '/api/public/tickets/share/$token': typeof ApiPublicTicketsShareTokenRoute
 }
@@ -649,6 +658,7 @@ export interface FileRouteTypes {
     | '/oauth/google/return'
     | '/admin/checkin/'
     | '/admin/marketing/'
+    | '/checkin/event/$id/scanner'
     | '/checkin/event/$id/'
     | '/api/public/tickets/share/$token'
   fileRoutesByTo: FileRoutesByTo
@@ -709,6 +719,7 @@ export interface FileRouteTypes {
     | '/oauth/google/return'
     | '/admin/checkin'
     | '/admin/marketing'
+    | '/checkin/event/$id/scanner'
     | '/checkin/event/$id'
     | '/api/public/tickets/share/$token'
   id:
@@ -774,6 +785,7 @@ export interface FileRouteTypes {
     | '/oauth/google/return'
     | '/admin/checkin/'
     | '/admin/marketing/'
+    | '/checkin/event/$id/scanner'
     | '/checkin/event/$id/'
     | '/api/public/tickets/share/$token'
   fileRoutesById: FileRoutesById
@@ -1241,6 +1253,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CheckinEventIdIndexRouteImport
       parentRoute: typeof CheckinEventIdRoute
     }
+    '/checkin/event/$id/scanner': {
+      id: '/checkin/event/$id/scanner'
+      path: '/scanner'
+      fullPath: '/checkin/event/$id/scanner'
+      preLoaderRoute: typeof CheckinEventIdScannerRouteImport
+      parentRoute: typeof CheckinEventIdRoute
+    }
     '/api/public/tickets/share/$token': {
       id: '/api/public/tickets/share/$token'
       path: '/api/public/tickets/share/$token'
@@ -1310,10 +1329,12 @@ const AppRouteChildren: AppRouteChildren = {
 const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
 
 interface CheckinEventIdRouteChildren {
+  CheckinEventIdScannerRoute: typeof CheckinEventIdScannerRoute
   CheckinEventIdIndexRoute: typeof CheckinEventIdIndexRoute
 }
 
 const CheckinEventIdRouteChildren: CheckinEventIdRouteChildren = {
+  CheckinEventIdScannerRoute: CheckinEventIdScannerRoute,
   CheckinEventIdIndexRoute: CheckinEventIdIndexRoute,
 }
 
