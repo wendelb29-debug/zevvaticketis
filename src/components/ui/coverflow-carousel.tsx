@@ -73,10 +73,10 @@ export function CoverflowCarousel({ events }: CoverflowCarouselProps) {
                 }}
               >
                 <Link 
-                  to={event.slug ? "/eventos" : "/eventos/$id"} 
-                  params={event.slug ? {} : { id: event.id }}
+                  to="/eventos" 
                   search={event.slug ? { slug: event.slug } : { id: event.id }}
                 >
+
 
                   <div className="w-full h-full rounded-[32px] overflow-hidden relative border-4 border-white shadow-xl">
                     <img
