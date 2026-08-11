@@ -55,6 +55,7 @@ import { Route as ProdutorMarketingRouteImport } from './routes/produtor/marketi
 import { Route as ProdutorNovoEventoRouteImport } from './routes/produtor/novo-evento'
 import { Route as ProdutorParticipantesRouteImport } from './routes/produtor/participantes'
 import { Route as ProdutorSuporteRouteImport } from './routes/produtor/suporte'
+import { Route as ProdutorTicketsRouteImport } from './routes/produtor/tickets'
 import { Route as TicketsIndexRouteImport } from './routes/tickets/index'
 import { Route as TicketsIdRouteImport } from './routes/tickets/$id'
 import { Route as DotlovableOauthConsentRouteImport } from './routes/[.]lovable.oauth.consent'
@@ -301,6 +302,11 @@ const ProdutorSuporteRoute = ProdutorSuporteRouteImport.update({
   path: '/suporte',
   getParentRoute: () => ProdutorRoute,
 } as any)
+const ProdutorTicketsRoute = ProdutorTicketsRouteImport.update({
+  id: '/tickets',
+  path: '/tickets',
+  getParentRoute: () => ProdutorRoute,
+} as any)
 const TicketsIndexRoute = TicketsIndexRouteImport.update({
   id: '/tickets/',
   path: '/tickets/',
@@ -412,6 +418,7 @@ export interface FileRoutesByFullPath {
   '/produtor/novo-evento': typeof ProdutorNovoEventoRoute
   '/produtor/participantes': typeof ProdutorParticipantesRoute
   '/produtor/suporte': typeof ProdutorSuporteRoute
+  '/produtor/tickets': typeof ProdutorTicketsRoute
   '/tickets/$id': typeof TicketsIdRoute
   '/admin/': typeof AdminIndexRoute
   '/app/': typeof AppIndexRoute
@@ -469,6 +476,7 @@ export interface FileRoutesByTo {
   '/produtor/novo-evento': typeof ProdutorNovoEventoRoute
   '/produtor/participantes': typeof ProdutorParticipantesRoute
   '/produtor/suporte': typeof ProdutorSuporteRoute
+  '/produtor/tickets': typeof ProdutorTicketsRoute
   '/tickets/$id': typeof TicketsIdRoute
   '/admin': typeof AdminIndexRoute
   '/app': typeof AppIndexRoute
@@ -531,6 +539,7 @@ export interface FileRoutesById {
   '/produtor/novo-evento': typeof ProdutorNovoEventoRoute
   '/produtor/participantes': typeof ProdutorParticipantesRoute
   '/produtor/suporte': typeof ProdutorSuporteRoute
+  '/produtor/tickets': typeof ProdutorTicketsRoute
   '/tickets/$id': typeof TicketsIdRoute
   '/admin/': typeof AdminIndexRoute
   '/app/': typeof AppIndexRoute
@@ -594,6 +603,7 @@ export interface FileRouteTypes {
     | '/produtor/novo-evento'
     | '/produtor/participantes'
     | '/produtor/suporte'
+    | '/produtor/tickets'
     | '/tickets/$id'
     | '/admin/'
     | '/app/'
@@ -651,6 +661,7 @@ export interface FileRouteTypes {
     | '/produtor/novo-evento'
     | '/produtor/participantes'
     | '/produtor/suporte'
+    | '/produtor/tickets'
     | '/tickets/$id'
     | '/admin'
     | '/app'
@@ -712,6 +723,7 @@ export interface FileRouteTypes {
     | '/produtor/novo-evento'
     | '/produtor/participantes'
     | '/produtor/suporte'
+    | '/produtor/tickets'
     | '/tickets/$id'
     | '/admin/'
     | '/app/'
@@ -1081,6 +1093,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProdutorSuporteRouteImport
       parentRoute: typeof ProdutorRoute
     }
+    '/produtor/tickets': {
+      id: '/produtor/tickets'
+      path: '/tickets'
+      fullPath: '/produtor/tickets'
+      preLoaderRoute: typeof ProdutorTicketsRouteImport
+      parentRoute: typeof ProdutorRoute
+    }
     '/tickets/': {
       id: '/tickets/'
       path: '/tickets'
@@ -1282,6 +1301,7 @@ interface ProdutorRouteChildren {
   ProdutorNovoEventoRoute: typeof ProdutorNovoEventoRoute
   ProdutorParticipantesRoute: typeof ProdutorParticipantesRoute
   ProdutorSuporteRoute: typeof ProdutorSuporteRoute
+  ProdutorTicketsRoute: typeof ProdutorTicketsRoute
   ProdutorIndexRoute: typeof ProdutorIndexRoute
 }
 
@@ -1294,6 +1314,7 @@ const ProdutorRouteChildren: ProdutorRouteChildren = {
   ProdutorNovoEventoRoute: ProdutorNovoEventoRoute,
   ProdutorParticipantesRoute: ProdutorParticipantesRoute,
   ProdutorSuporteRoute: ProdutorSuporteRoute,
+  ProdutorTicketsRoute: ProdutorTicketsRoute,
   ProdutorIndexRoute: ProdutorIndexRoute,
 }
 

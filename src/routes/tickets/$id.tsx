@@ -1,27 +1,22 @@
-import { createFileRoute, redirect } from "@tanstack/react-router";
+import { createFileRoute, useParams } from "@tanstack/react-router";
+import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { AdmitOneTicket } from "@/components/ui/admit-one-ticket";
-import { Loader2, ArrowLeft } from "lucide-react";
-import { useState, useEffect } from "react";
+import { Loader2, ArrowLeft, Download, Share2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
+import html2pdf from "html2pdf.js";
 
 export const Route = createFileRoute("/tickets/$id")({
-  beforeLoad: async () => {
-    const { data: { session } } = await supabase.auth.getSession();
-    if (!session) {
-      throw redirect({ to: "/login" });
-    }
-  },
   component: TicketDetail,
 });
 
 function TicketDetail() {
-  const { id } = Route.useParams();
-  const [ticket, setTicket] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    async function fetchTicket() {
+  const { id } = useParams({ from: "/tickets/$id" });
+  
+  const { data: ticket, isLoading } = useQuery({
+    queryKey: ["ticket", id],
+    queryFn: async () => {
       const { data, error } = await supabase
         .from("tickets")
         .select(`
@@ -30,7 +25,8 @@ function TicketDetail() {
             title,
             location,
             city,
-            start_date
+            start_date,
+            imagem_url
           ),
           profiles:owner_id (
             full_name
@@ -38,57 +34,51 @@ function TicketDetail() {
         `)
         .eq("id", id)
         .single();
-
-      if (data) setTicket(data);
-      setLoading(false);
+      
+      if (error) throw error;
+      return data;
     }
-    fetchTicket();
-  }, [id]);
+  });
 
-  if (loading) return (
-    <div className="flex flex-col items-center justify-center py-20 gap-4">
+  const downloadPDF = () => {
+    const element = document.getElementById("ticket-to-pdf");
+    html2pdf().from(element).save(`ingresso-${ticket?.id}.pdf`);
+  };
+
+  const shareWhatsApp = () => {
+    const shareText = `Olá! Este é meu ingresso para ${ticket?.events?.title}. Acesse: ${window.location.href}`;
+    window.open(`https://wa.me/?text=${encodeURIComponent(shareText)}`, "_blank");
+  };
+
+  if (isLoading) return (
+    <div className="flex flex-col items-center justify-center py-20">
       <Loader2 className="w-8 h-8 animate-spin text-coral" />
     </div>
   );
 
-  if (!ticket) return <div>Ticket não encontrado.</div>;
+  if (!ticket) return <div className="text-center py-20">Ticket não encontrado.</div>;
 
   return (
-    <div className="max-w-2xl mx-auto py-8 px-4 space-y-6">
-      <Button variant="ghost" onClick={() => window.history.back()} className="mb-4">
-        <ArrowLeft className="w-4 h-4 mr-2" /> Voltar
-      </Button>
-      
-      <AdmitOneTicket 
-        title={ticket.events?.title || "Evento"}
-        date={ticket.events?.start_date ? new Date(ticket.events.start_date).toLocaleDateString('pt-BR') : "Data a definir"}
-        location={ticket.events?.location || "Local"}
-        price={ticket.price ? `R$ ${ticket.price}` : "Confirmado"}
-        ticketCode={ticket.qr_code || ticket.id.slice(0, 8)}
-        status={ticket.status || "VÁLIDO"}
-        className="w-full max-w-lg mx-auto"
-      />
-      
-      <div className="bg-white rounded-2xl p-6 shadow-sm border border-line">
-         <h2 className="text-lg font-bold text-navy mb-4">Detalhes do Ingresso</h2>
-         <div className="grid grid-cols-2 gap-4 text-sm">
-             <div>
-                 <p className="text-muted text-[10px] uppercase font-bold">Participante</p>
-                 <p className="font-semibold text-navy">{ticket.profiles?.full_name || "Convidado"}</p>
-             </div>
-             <div>
-                 <p className="text-muted text-[10px] uppercase font-bold">Tipo</p>
-                 <p className="font-semibold text-navy uppercase">{ticket.name || "Padrão"}</p>
-             </div>
-             <div>
-                 <p className="text-muted text-[10px] uppercase font-bold">Status</p>
-                 <p className="font-semibold text-good uppercase">{ticket.status || "Confirmado"}</p>
-             </div>
-             <div>
-                 <p className="text-muted text-[10px] uppercase font-bold">Código</p>
-                 <p className="font-semibold text-navy font-mono">{ticket.qr_code || ticket.id.slice(0, 8)}</p>
-             </div>
-         </div>
+    <div className="max-w-lg mx-auto py-8 px-4 space-y-6">
+      <div id="ticket-to-pdf" className="space-y-6">
+        <AdmitOneTicket 
+          title={ticket.events?.title || "Evento"}
+          date={ticket.events?.start_date ? new Date(ticket.events.start_date).toLocaleDateString('pt-BR') : "Data a definir"}
+          location={ticket.events?.location || "Local"}
+          price={ticket.price ? `R$ ${ticket.price}` : "Confirmado"}
+          ticketCode={ticket.qr_code || ticket.id.slice(0, 8)}
+          status={ticket.status === 'utilizado' ? 'UTILIZADO' : 'INGRESSO VÁLIDO'}
+          className="w-full"
+        />
+      </div>
+
+      <div className="grid grid-cols-2 gap-4">
+        <Button onClick={downloadPDF} variant="outline" className="w-full gap-2">
+          <Download className="w-4 h-4" /> Baixar PDF
+        </Button>
+        <Button onClick={shareWhatsApp} className="w-full gap-2 bg-green-600 hover:bg-green-700">
+          <Share2 className="w-4 h-4" /> WhatsApp
+        </Button>
       </div>
     </div>
   );
