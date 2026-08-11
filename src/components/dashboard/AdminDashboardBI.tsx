@@ -152,7 +152,7 @@ export function AdminDashboardBI() {
         source: c.utm_source || "Orgânico",
         clicks: c.ads?.reduce((acc: number, curr: any) => acc + (curr.clicks || 0), 0) || 0,
         conv: c.sales_attribution ? Math.round((c.sales_attribution.length / (c.ads?.reduce((acc: number, curr: any) => acc + (curr.clicks || 0), 0) || 1)) * 100) : 0,
-        roi: c.spend > 0 ? (c.sales_attribution?.reduce((acc: number, curr: any) => acc + (Number(curr.amount) || 0), 0) / c.spend).toFixed(1) : "0",
+        roi: (c.spend ?? 0) > 0 ? (c.sales_attribution?.reduce((acc: number, curr: any) => acc + (Number(curr.amount) || 0), 0) / (c.spend ?? 1)).toFixed(1) : "0",
         revenue: c.sales_attribution?.reduce((acc: number, curr: any) => acc + (Number(curr.amount) || 0), 0) || 0
       })) || []);
 
