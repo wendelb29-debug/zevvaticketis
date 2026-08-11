@@ -45,7 +45,7 @@ export const Route = createFileRoute("/eventos")({
 
 function EventPage() {
   const search = useSearch({ from: "/eventos" }) as any;
-  const theme = getThemeByCategory(search.categoria);
+  const theme = getThemeByCategory(search.categoria || "Conferências");
   const getEvent = useServerFn(getEventDetails);
   
   const [data, setData] = useState<any>(null);
