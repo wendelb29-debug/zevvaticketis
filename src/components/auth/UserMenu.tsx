@@ -66,13 +66,9 @@ export function UserMenu({ user, onLogout, onNavigate, agentStatus, onStatusChan
       if (!user) return;
 
       // Check Admin
-      const { data: admin } = await supabase
-        .from("platform_admins")
-        .select("id")
-        .eq("user_id", user.id)
-        .maybeSingle();
+      const { data: isAdminRole } = await supabase.rpc('check_is_platform_admin', { _user_id: user.id });
       
-      if (admin) {
+      if (isAdminRole) {
         setRole({ label: "Admin", color: "bg-destructive/10 text-destructive border-destructive/20" });
         return;
       }

@@ -14,6 +14,39 @@ export type Database = {
   }
   public: {
     Tables: {
+      access_logs: {
+        Row: {
+          action: string
+          admin_id: string | null
+          created_at: string | null
+          id: string
+          ip_address: string | null
+          resource_id: string | null
+          resource_type: string
+          user_agent: string | null
+        }
+        Insert: {
+          action?: string
+          admin_id?: string | null
+          created_at?: string | null
+          id?: string
+          ip_address?: string | null
+          resource_id?: string | null
+          resource_type: string
+          user_agent?: string | null
+        }
+        Update: {
+          action?: string
+          admin_id?: string | null
+          created_at?: string | null
+          id?: string
+          ip_address?: string | null
+          resource_id?: string | null
+          resource_type?: string
+          user_agent?: string | null
+        }
+        Relationships: []
+      }
       active_sessions: {
         Row: {
           created_at: string | null
@@ -900,6 +933,68 @@ export type Database = {
           },
         ]
       }
+      push_automations: {
+        Row: {
+          action_url: string | null
+          audience: string
+          button_text: string | null
+          created_at: string | null
+          delay_time: string | null
+          description: string | null
+          id: string
+          image_url: string | null
+          message_template: string | null
+          name: string
+          project_id: string | null
+          status: string
+          title_template: string | null
+          trigger_type: string
+          updated_at: string | null
+        }
+        Insert: {
+          action_url?: string | null
+          audience?: string
+          button_text?: string | null
+          created_at?: string | null
+          delay_time?: string | null
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          message_template?: string | null
+          name: string
+          project_id?: string | null
+          status?: string
+          title_template?: string | null
+          trigger_type: string
+          updated_at?: string | null
+        }
+        Update: {
+          action_url?: string | null
+          audience?: string
+          button_text?: string | null
+          created_at?: string | null
+          delay_time?: string | null
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          message_template?: string | null
+          name?: string
+          project_id?: string | null
+          status?: string
+          title_template?: string | null
+          trigger_type?: string
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "push_automations_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       team_invites: {
         Row: {
           accepted_at: string | null
@@ -1462,6 +1557,7 @@ export type Database = {
     }
     Functions: {
       check_admin_internal: { Args: { _user_id: string }; Returns: boolean }
+      check_is_platform_admin: { Args: { _user_id: string }; Returns: boolean }
       ensure_producer_organization_admin: {
         Args: { _uid: string }
         Returns: Json
