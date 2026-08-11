@@ -37,7 +37,7 @@ export const Route = createFileRoute("/eventos")({
   validateSearch: (search: Record<string, unknown>) => {
     return {
       id: (search['id'] as string) || undefined,
-      categoria: (search['categoria'] as string) || "CARAVANAS INTERNACIONAIS",
+      categoria: (search['categoria'] as string) || undefined,
     };
   },
   component: EventPage,
