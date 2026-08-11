@@ -71,6 +71,7 @@ import { Route as CheckinEventIdRouteImport } from './routes/checkin/event.$id'
 import { Route as EventosIdCheckoutRouteImport } from './routes/eventos/$id.checkout'
 import { Route as OauthGoogleReturnRouteImport } from './routes/oauth/google/return'
 import { Route as CheckinEventIdIndexRouteImport } from './routes/checkin/event.$id.index'
+import { Route as CheckinEventIdRelatoriosRouteImport } from './routes/checkin/event.$id.relatorios'
 import { Route as CheckinEventIdScannerRouteImport } from './routes/checkin/event.$id.scanner'
 import { Route as CheckinEventIdSupervisorRouteImport } from './routes/checkin/event.$id.supervisor'
 import { Route as ApiPublicTicketsShareTokenRouteImport } from './routes/api/public/tickets/share/$token'
@@ -389,6 +390,12 @@ const CheckinEventIdIndexRoute = CheckinEventIdIndexRouteImport.update({
   path: '/',
   getParentRoute: () => CheckinEventIdRoute,
 } as any)
+const CheckinEventIdRelatoriosRoute =
+  CheckinEventIdRelatoriosRouteImport.update({
+    id: '/relatorios',
+    path: '/relatorios',
+    getParentRoute: () => CheckinEventIdRoute,
+  } as any)
 const CheckinEventIdScannerRoute = CheckinEventIdScannerRouteImport.update({
   id: '/scanner',
   path: '/scanner',
@@ -469,6 +476,7 @@ export interface FileRoutesByFullPath {
   '/oauth/google/return': typeof OauthGoogleReturnRoute
   '/admin/checkin/': typeof AdminCheckinIndexRoute
   '/admin/marketing/': typeof AdminMarketingIndexRoute
+  '/checkin/event/$id/relatorios': typeof CheckinEventIdRelatoriosRoute
   '/checkin/event/$id/scanner': typeof CheckinEventIdScannerRoute
   '/checkin/event/$id/supervisor': typeof CheckinEventIdSupervisorRoute
   '/checkin/event/$id/': typeof CheckinEventIdIndexRoute
@@ -531,6 +539,7 @@ export interface FileRoutesByTo {
   '/oauth/google/return': typeof OauthGoogleReturnRoute
   '/admin/checkin': typeof AdminCheckinIndexRoute
   '/admin/marketing': typeof AdminMarketingIndexRoute
+  '/checkin/event/$id/relatorios': typeof CheckinEventIdRelatoriosRoute
   '/checkin/event/$id/scanner': typeof CheckinEventIdScannerRoute
   '/checkin/event/$id/supervisor': typeof CheckinEventIdSupervisorRoute
   '/checkin/event/$id': typeof CheckinEventIdIndexRoute
@@ -599,6 +608,7 @@ export interface FileRoutesById {
   '/oauth/google/return': typeof OauthGoogleReturnRoute
   '/admin/checkin/': typeof AdminCheckinIndexRoute
   '/admin/marketing/': typeof AdminMarketingIndexRoute
+  '/checkin/event/$id/relatorios': typeof CheckinEventIdRelatoriosRoute
   '/checkin/event/$id/scanner': typeof CheckinEventIdScannerRoute
   '/checkin/event/$id/supervisor': typeof CheckinEventIdSupervisorRoute
   '/checkin/event/$id/': typeof CheckinEventIdIndexRoute
@@ -668,6 +678,7 @@ export interface FileRouteTypes {
     | '/oauth/google/return'
     | '/admin/checkin/'
     | '/admin/marketing/'
+    | '/checkin/event/$id/relatorios'
     | '/checkin/event/$id/scanner'
     | '/checkin/event/$id/supervisor'
     | '/checkin/event/$id/'
@@ -730,6 +741,7 @@ export interface FileRouteTypes {
     | '/oauth/google/return'
     | '/admin/checkin'
     | '/admin/marketing'
+    | '/checkin/event/$id/relatorios'
     | '/checkin/event/$id/scanner'
     | '/checkin/event/$id/supervisor'
     | '/checkin/event/$id'
@@ -797,6 +809,7 @@ export interface FileRouteTypes {
     | '/oauth/google/return'
     | '/admin/checkin/'
     | '/admin/marketing/'
+    | '/checkin/event/$id/relatorios'
     | '/checkin/event/$id/scanner'
     | '/checkin/event/$id/supervisor'
     | '/checkin/event/$id/'
@@ -1266,6 +1279,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CheckinEventIdIndexRouteImport
       parentRoute: typeof CheckinEventIdRoute
     }
+    '/checkin/event/$id/relatorios': {
+      id: '/checkin/event/$id/relatorios'
+      path: '/relatorios'
+      fullPath: '/checkin/event/$id/relatorios'
+      preLoaderRoute: typeof CheckinEventIdRelatoriosRouteImport
+      parentRoute: typeof CheckinEventIdRoute
+    }
     '/checkin/event/$id/scanner': {
       id: '/checkin/event/$id/scanner'
       path: '/scanner'
@@ -1349,12 +1369,14 @@ const AppRouteChildren: AppRouteChildren = {
 const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
 
 interface CheckinEventIdRouteChildren {
+  CheckinEventIdRelatoriosRoute: typeof CheckinEventIdRelatoriosRoute
   CheckinEventIdScannerRoute: typeof CheckinEventIdScannerRoute
   CheckinEventIdSupervisorRoute: typeof CheckinEventIdSupervisorRoute
   CheckinEventIdIndexRoute: typeof CheckinEventIdIndexRoute
 }
 
 const CheckinEventIdRouteChildren: CheckinEventIdRouteChildren = {
+  CheckinEventIdRelatoriosRoute: CheckinEventIdRelatoriosRoute,
   CheckinEventIdScannerRoute: CheckinEventIdScannerRoute,
   CheckinEventIdSupervisorRoute: CheckinEventIdSupervisorRoute,
   CheckinEventIdIndexRoute: CheckinEventIdIndexRoute,
