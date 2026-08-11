@@ -74,7 +74,7 @@ function ScannerPage() {
       await supabase.from("checkin_records").insert({
         event_id: eventId,
         ticket_id: ticket.id,
-        operator_id: user?.id,
+        operator_id: user?.id || null,
         status: 'presente'
       });
 
