@@ -41,6 +41,7 @@ import { Route as AppIndexRouteImport } from './routes/app/index'
 import { Route as AppHistoricoRouteImport } from './routes/app/historico'
 import { Route as AppPerfilRouteImport } from './routes/app/perfil'
 import { Route as AuthCallbackRouteImport } from './routes/auth/callback'
+import { Route as CheckinIndexRouteImport } from './routes/checkin/index'
 import { Route as EventosIdRouteImport } from './routes/eventos/$id'
 import { Route as ProdutorIndexRouteImport } from './routes/produtor/index'
 import { Route as ProdutorConfiguracoesRouteImport } from './routes/produtor/configuracoes'
@@ -227,6 +228,11 @@ const AuthCallbackRoute = AuthCallbackRouteImport.update({
   path: '/auth/callback',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CheckinIndexRoute = CheckinIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => CheckinRoute,
+} as any)
 const EventosIdRoute = EventosIdRouteImport.update({
   id: '/$id',
   path: '/$id',
@@ -350,7 +356,7 @@ export interface FileRoutesByFullPath {
   '/admin': typeof AdminRouteWithChildren
   '/app': typeof AppRouteWithChildren
   '/cadastro': typeof CadastroRoute
-  '/checkin': typeof CheckinRoute
+  '/checkin': typeof CheckinRouteWithChildren
   '/criar-evento': typeof CriarEventoRoute
   '/eventos': typeof EventosRouteWithChildren
   '/login': typeof LoginRoute
@@ -388,6 +394,7 @@ export interface FileRoutesByFullPath {
   '/tickets/$id': typeof TicketsIdRoute
   '/admin/': typeof AdminIndexRoute
   '/app/': typeof AppIndexRoute
+  '/checkin/': typeof CheckinIndexRoute
   '/produtor/': typeof ProdutorIndexRoute
   '/tickets/': typeof TicketsIndexRoute
   '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
@@ -405,7 +412,6 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/cadastro': typeof CadastroRoute
-  '/checkin': typeof CheckinRoute
   '/criar-evento': typeof CriarEventoRoute
   '/eventos': typeof EventosRouteWithChildren
   '/login': typeof LoginRoute
@@ -442,6 +448,7 @@ export interface FileRoutesByTo {
   '/tickets/$id': typeof TicketsIdRoute
   '/admin': typeof AdminIndexRoute
   '/app': typeof AppIndexRoute
+  '/checkin': typeof CheckinIndexRoute
   '/produtor': typeof ProdutorIndexRoute
   '/tickets': typeof TicketsIndexRoute
   '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
@@ -462,7 +469,7 @@ export interface FileRoutesById {
   '/admin': typeof AdminRouteWithChildren
   '/app': typeof AppRouteWithChildren
   '/cadastro': typeof CadastroRoute
-  '/checkin': typeof CheckinRoute
+  '/checkin': typeof CheckinRouteWithChildren
   '/criar-evento': typeof CriarEventoRoute
   '/eventos': typeof EventosRouteWithChildren
   '/login': typeof LoginRoute
@@ -500,6 +507,7 @@ export interface FileRoutesById {
   '/tickets/$id': typeof TicketsIdRoute
   '/admin/': typeof AdminIndexRoute
   '/app/': typeof AppIndexRoute
+  '/checkin/': typeof CheckinIndexRoute
   '/produtor/': typeof ProdutorIndexRoute
   '/tickets/': typeof TicketsIndexRoute
   '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
@@ -559,6 +567,7 @@ export interface FileRouteTypes {
     | '/tickets/$id'
     | '/admin/'
     | '/app/'
+    | '/checkin/'
     | '/produtor/'
     | '/tickets/'
     | '/.lovable/oauth/consent'
@@ -576,7 +585,6 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/cadastro'
-    | '/checkin'
     | '/criar-evento'
     | '/eventos'
     | '/login'
@@ -613,6 +621,7 @@ export interface FileRouteTypes {
     | '/tickets/$id'
     | '/admin'
     | '/app'
+    | '/checkin'
     | '/produtor'
     | '/tickets'
     | '/.lovable/oauth/consent'
@@ -670,6 +679,7 @@ export interface FileRouteTypes {
     | '/tickets/$id'
     | '/admin/'
     | '/app/'
+    | '/checkin/'
     | '/produtor/'
     | '/tickets/'
     | '/.lovable/oauth/consent'
@@ -690,7 +700,7 @@ export interface RootRouteChildren {
   AdminRoute: typeof AdminRouteWithChildren
   AppRoute: typeof AppRouteWithChildren
   CadastroRoute: typeof CadastroRoute
-  CheckinRoute: typeof CheckinRoute
+  CheckinRoute: typeof CheckinRouteWithChildren
   CriarEventoRoute: typeof CriarEventoRoute
   EventosRoute: typeof EventosRouteWithChildren
   LoginRoute: typeof LoginRoute
@@ -937,6 +947,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthCallbackRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/checkin/': {
+      id: '/checkin/'
+      path: '/'
+      fullPath: '/checkin/'
+      preLoaderRoute: typeof CheckinIndexRouteImport
+      parentRoute: typeof CheckinRoute
+    }
     '/eventos/$id': {
       id: '/eventos/$id'
       path: '/$id'
@@ -1159,6 +1176,17 @@ const AppRouteChildren: AppRouteChildren = {
 
 const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
 
+interface CheckinRouteChildren {
+  CheckinIndexRoute: typeof CheckinIndexRoute
+}
+
+const CheckinRouteChildren: CheckinRouteChildren = {
+  CheckinIndexRoute: CheckinIndexRoute,
+}
+
+const CheckinRouteWithChildren =
+  CheckinRoute._addFileChildren(CheckinRouteChildren)
+
 interface EventosIdRouteChildren {
   EventosIdCheckoutRoute: typeof EventosIdCheckoutRoute
 }
@@ -1215,7 +1243,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdminRoute: AdminRouteWithChildren,
   AppRoute: AppRouteWithChildren,
   CadastroRoute: CadastroRoute,
-  CheckinRoute: CheckinRoute,
+  CheckinRoute: CheckinRouteWithChildren,
   CriarEventoRoute: CriarEventoRoute,
   EventosRoute: EventosRouteWithChildren,
   LoginRoute: LoginRoute,
