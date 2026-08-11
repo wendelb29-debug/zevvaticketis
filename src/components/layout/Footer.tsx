@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Mail, Phone, Instagram, Facebook, Globe } from "lucide-react";
+import { Mail, Phone, Globe } from "lucide-react";
 import logoAsset from "@/assets/logo-zevva.png.asset.json";
 
 export function Footer() {
