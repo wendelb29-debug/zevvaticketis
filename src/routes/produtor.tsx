@@ -257,12 +257,14 @@ function ProdutorLayout() {
                   </DropdownMenuItem>
                 ))}
                 <DropdownMenuSeparator className="bg-line" />
-                <DropdownMenuItem 
-                  onClick={() => navigate({ to: "/app" })}
-                  className="flex items-center gap-2 px-2 py-2 rounded-lg text-xs font-bold text-navy hover:bg-surface cursor-pointer"
-                >
-                  <Plus className="w-4 h-4 text-coral" /> Gerenciar Projetos
-                </DropdownMenuItem>
+                  {isAdmin && (
+                    <DropdownMenuItem 
+                      onClick={() => navigate({ to: "/app" })}
+                      className="flex items-center gap-2 px-2 py-2 rounded-lg text-xs font-bold text-navy hover:bg-surface cursor-pointer"
+                    >
+                      <Plus className="w-4 h-4 text-coral" /> Gerenciar Projetos
+                    </DropdownMenuItem>
+                  )}
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
