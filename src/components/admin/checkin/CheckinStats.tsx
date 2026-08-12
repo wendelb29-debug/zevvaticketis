@@ -194,25 +194,44 @@ export function CheckinStats() {
         />
       </div>
       
-      {/* Módulo de Gestão de Link */}
-      <Card className="border-line shadow-xl rounded-[40px] overflow-hidden bg-navy text-white">
-        <CardContent className="p-8 sm:p-12 flex flex-col md:flex-row items-center justify-between gap-8">
-          <div className="space-y-4 text-center md:text-left">
-            <div className="inline-flex items-center gap-2 px-3 py-1 bg-coral/20 text-coral rounded-full border border-coral/20 text-[10px] font-black uppercase tracking-widest">
-              Ambiente Operacional
+      {/* Módulo de Gestão de Link e Relatórios */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <Card className="border-line shadow-xl rounded-[40px] overflow-hidden bg-navy text-white h-full">
+          <CardContent className="p-8 flex flex-col items-start justify-between gap-6 h-full">
+            <div className="space-y-4">
+              <div className="inline-flex items-center gap-2 px-3 py-1 bg-coral/20 text-coral rounded-full border border-coral/20 text-[10px] font-black uppercase tracking-widest">
+                Ambiente Operacional
+              </div>
+              <h2 className="text-2xl font-manrope font-black tracking-tighter uppercase">Link de Check-in</h2>
+              <p className="text-white/60 text-sm font-medium">
+                Gerencie as URLs de acesso e configure os coletores mobile da sua equipe de recepção.
+              </p>
             </div>
-            <h2 className="text-3xl sm:text-4xl font-manrope font-black tracking-tighter uppercase">Link de Check-in Ativo</h2>
-            <p className="text-white/60 font-medium max-w-xl">
-              Cada projeto possui um ambiente de recepção isolado. Gerencie as URLs de acesso e configure os coletores mobile da sua equipe.
-            </p>
-          </div>
-          <Link to={"/produtor/checkin-url" as any}>
-            <Button className="h-16 px-10 bg-coral hover:bg-coral-dark text-white rounded-2xl font-black uppercase tracking-widest text-sm shadow-xl shadow-coral/20 group">
-              Gerenciar Links <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
+            <Link to={"/produtor/checkin-url" as any} className="w-full">
+              <Button className="w-full h-14 bg-coral hover:bg-coral-dark text-white rounded-2xl font-black uppercase tracking-widest text-xs shadow-xl shadow-coral/20 group">
+                Configurar Links <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+              </Button>
+            </Link>
+          </CardContent>
+        </Card>
+
+        <Card className="border-line shadow-xl rounded-[40px] overflow-hidden bg-white border border-line h-full">
+          <CardContent className="p-8 flex flex-col items-start justify-between gap-6 h-full text-navy">
+            <div className="space-y-4">
+              <div className="inline-flex items-center gap-2 px-3 py-1 bg-navy/5 text-navy/60 rounded-full border border-line text-[10px] font-black uppercase tracking-widest">
+                Business Intelligence
+              </div>
+              <h2 className="text-2xl font-manrope font-black tracking-tighter uppercase">Relatórios Avançados</h2>
+              <p className="text-muted text-sm font-medium">
+                Analise conversão de campanhas, no-show e dados demográficos dos participantes presentes.
+              </p>
+            </div>
+            <Button variant="outline" className="w-full h-14 border-line text-navy hover:bg-surface rounded-2xl font-black uppercase tracking-widest text-xs group">
+              Exportar BI <BarChart3 className="w-4 h-4 ml-2 group-hover:scale-110 transition-transform text-coral" />
             </Button>
-          </Link>
-        </CardContent>
-      </Card>
+          </CardContent>
+        </Card>
+      </div>
     </div>
   );
 }
