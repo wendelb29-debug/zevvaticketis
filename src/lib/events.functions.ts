@@ -56,7 +56,7 @@ export const getFeaturedEvents = createServerFn({ method: "GET" })
   .handler(async () => {
     const { data, error } = await supabase
       .from("events")
-      .select("*, tenants(nome, logo), ticket_types(preco)")
+      .select("*, tenants(nome, logo), ticket_types(valor)")
       .eq("status", "publicado")
       .eq("featured", true)
       .order("created_at", { ascending: false });

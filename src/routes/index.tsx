@@ -64,7 +64,7 @@ function HomePage() {
         
         const { data: all } = await (supabase
           .from("events")
-          .select("*, tenants(nome, logo), ticket_types(preco)")
+          .select("*, tenants(nome, logo), ticket_types(valor)")
           .eq("status", "publicado")
           .order('created_at', { ascending: false })
           .limit(8) as any);
@@ -205,7 +205,7 @@ function HomePage() {
                 imagem_url: e.imagem_capa || e.imagem_url,
                 data_inicio: e.data_inicio || e.start_date,
                 slug: e.slug,
-                min_price: e.price_from || (e.ticket_types?.[0]?.preco),
+                min_price: e.price_from || (e.ticket_types?.[0]?.valor),
                 producer_name: e.tenants?.nome
               }))} 
             />
