@@ -206,7 +206,7 @@ export function CheckinStats() {
               Cada projeto possui um ambiente de recepção isolado. Gerencie as URLs de acesso e configure os coletores mobile da sua equipe.
             </p>
           </div>
-          <Link to="/produtor/checkin-url">
+          <Link to={"/produtor/checkin-url" as any}>
             <Button className="h-16 px-10 bg-coral hover:bg-coral-dark text-white rounded-2xl font-black uppercase tracking-widest text-sm shadow-xl shadow-coral/20 group">
               Gerenciar Links <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
             </Button>
