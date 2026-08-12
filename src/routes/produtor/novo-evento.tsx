@@ -8,8 +8,10 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
-import { Plus, Save, ArrowLeft, Image as ImageIcon } from "lucide-react";
+import { Plus, Save, ArrowLeft, Image as ImageIcon, Loader2 } from "lucide-react";
 import { useTenants } from "@/hooks/use-tenants";
+import { useServerFn } from "@tanstack/react-start";
+import { createEventFull } from "@/lib/events-creation.functions";
 
 
 export const Route = createFileRoute("/produtor/novo-evento")({
