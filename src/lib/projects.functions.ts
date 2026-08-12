@@ -39,10 +39,45 @@ export const getMyProjects = createServerFn({ method: "GET" })
     })) || [];
   });
 
+export const createProject = createServerFn({ method: "POST" })
+  .inputValidator((data) => z.object({ nome: z.string().min(3) }).parse(data))
+  .handler(async ({ data }) => {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) throw new Error("Unauthorized");
+
+    const slug = data.nome.toLowerCase().replace(/[^a-z0-9]/g, "-").replace(/-+/g, "-");
+
+    // Create the tenant
+    const { data: tenant, error: tenantError } = await supabase
+      .from("tenants")
+      .insert({
+        nome: data.nome,
+        slug,
+        plan: "free",
+        status: "active"
+      })
+      .select()
+      .single();
+
+    if (tenantError) throw tenantError;
+
+    // Add user as OWNER of the new tenant
+    const { error: memberError } = await supabase
+      .from("tenant_members")
+      .insert({
+        tenant_id: tenant.id,
+        user_id: user.id,
+        role: "owner",
+        status: "active"
+      });
+
+    if (memberError) throw memberError;
+
+    return { success: true, tenant };
+  });
+
 export const switchProject = createServerFn({ method: "POST" })
   .inputValidator((data) => z.object({ projectId: z.string() }).parse(data))
   .handler(async ({ data }) => {
-    // This is primarily a client-side state change in this architecture, 
-    // but we can log access or verify permissions here.
     return { success: true, projectId: data.projectId };
   });

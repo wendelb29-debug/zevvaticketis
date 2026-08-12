@@ -1,12 +1,17 @@
-import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useTenants } from "@/hooks/use-tenants";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { LogOut, Plus, Building2, ShieldCheck } from "lucide-react";
+import { LogOut, Plus, Building2, ShieldCheck, Loader2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogDescription } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { createProject } from "@/lib/projects.functions";
+import { useServerFn } from "@tanstack/react-start";
 
 export const Route = createFileRoute("/app/")({
   component: ProjectsPage,
@@ -16,6 +21,10 @@ function ProjectsPage() {
   const { tenants, loading, switchTenant } = useTenants();
   const navigate = useNavigate();
   const [userName, setUserName] = useState("");
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [newProjectName, setNewProjectName] = useState("");
+  const [isCreating, setIsCreating] = useState(false);
+  const createProjectFn = useServerFn(createProject);
 
   useEffect(() => {
     supabase.auth.getUser().then(({ data }) => {
@@ -31,6 +40,26 @@ function ProjectsPage() {
   const handleLogout = async () => {
     await supabase.auth.signOut();
     navigate({ to: "/login" });
+  };
+
+  const handleCreateProject = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newProjectName.trim()) return;
+
+    setIsCreating(true);
+    try {
+      await createProjectFn({ data: { nome: newProjectName } });
+      toast.success("Projeto criado com sucesso!");
+      setIsDialogOpen(false);
+      setNewProjectName("");
+      // Force a refresh of tenants
+      window.location.reload();
+    } catch (error) {
+      console.error("Erro ao criar projeto:", error);
+      toast.error("Erro ao criar projeto. Tente novamente.");
+    } finally {
+      setIsCreating(false);
+    }
   };
 
   if (loading) {
@@ -103,19 +132,13 @@ function ProjectsPage() {
           ))}
 
           <Card 
-            className="flex flex-col items-center justify-center p-8 border-dashed border-2 hover:border-coral transition-colors cursor-pointer group rounded-[24px] min-h-[280px]"
-            onClick={() => {
-              const name = prompt("Nome do novo projeto:");
-              if (name) {
-                // In a real implementation, this would call a server function to create the tenant
-                toast.info("Funcionalidade de criação em desenvolvimento");
-              }
-            }}
+            className="flex flex-col items-center justify-center p-8 border-dashed border-2 border-slate-300 hover:border-coral transition-all cursor-pointer group rounded-[24px] min-h-[280px] hover:bg-white bg-slate-50/50"
+            onClick={() => setIsDialogOpen(true)}
           >
-            <div className="w-16 h-16 bg-slate-100 group-hover:bg-coral/10 rounded-full flex items-center justify-center mb-4 transition-colors">
+            <div className="w-16 h-16 bg-white group-hover:bg-coral/10 rounded-full flex items-center justify-center mb-4 transition-colors shadow-sm border border-slate-100 group-hover:border-coral/20">
               <Plus className="w-8 h-8 text-slate-400 group-hover:text-coral transition-colors" />
             </div>
-            <CardTitle className="text-lg font-manrope font-black text-navy">Novo Projeto</CardTitle>
+            <CardTitle className="text-lg font-manrope font-black text-navy group-hover:text-coral transition-colors">Novo Projeto</CardTitle>
             <CardDescription className="text-center font-medium px-4 mt-2">
               Crie um novo ambiente para gerenciar seus eventos.
             </CardDescription>
@@ -123,6 +146,63 @@ function ProjectsPage() {
 
         </div>
       </div>
+
+      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+        <DialogContent className="sm:max-w-[425px] rounded-[32px] border-none shadow-2xl p-0 overflow-hidden">
+          <div className="bg-navy p-8 text-white relative">
+            <div className="absolute top-0 right-0 p-8 opacity-10">
+              <Building2 size={120} />
+            </div>
+            <DialogHeader className="relative z-10">
+              <DialogTitle className="text-2xl font-manrope font-black tracking-tight text-white">Novo Projeto</DialogTitle>
+              <DialogDescription className="text-white/60 font-medium">
+                Dê um nome ao seu novo ambiente de trabalho.
+              </DialogDescription>
+            </DialogHeader>
+          </div>
+          
+          <form onSubmit={handleCreateProject} className="p-8 space-y-6 bg-white">
+            <div className="space-y-2">
+              <Label htmlFor="name" className="text-navy font-black uppercase text-[10px] tracking-widest ml-1">
+                Nome do Projeto
+              </Label>
+              <Input
+                id="name"
+                value={newProjectName}
+                onChange={(e) => setNewProjectName(e.target.value)}
+                placeholder="Ex: Minha Agência de Eventos"
+                className="rounded-xl border-slate-200 focus:ring-coral focus:border-coral py-6 text-base"
+                required
+                autoFocus
+              />
+            </div>
+            <DialogFooter className="pt-2">
+              <Button 
+                type="button" 
+                variant="outline" 
+                onClick={() => setIsDialogOpen(false)}
+                className="rounded-xl font-bold border-slate-200 text-slate-500 hover:bg-slate-50"
+              >
+                Cancelar
+              </Button>
+              <Button 
+                type="submit" 
+                disabled={isCreating || !newProjectName.trim()}
+                className="bg-coral hover:bg-navy text-white font-black uppercase tracking-widest text-xs px-8 rounded-xl py-6 h-auto shadow-lg shadow-coral/20 flex gap-2"
+              >
+                {isCreating ? (
+                  <>
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                    Criando...
+                  </>
+                ) : (
+                  "Criar Projeto"
+                )}
+              </Button>
+            </DialogFooter>
+          </form>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
