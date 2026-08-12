@@ -20,6 +20,7 @@ import { cn } from "@/lib/utils";
 
 export function CheckinUrlManager() {
   const { activeTenant } = useTenants();
+  const navigate = useNavigate();
   const [isRefreshing, setIsRefreshing] = useState(false);
   
   const checkinUrl = activeTenant 
