@@ -1,4 +1,4 @@
-import { createFileRoute, useParams } from "@tanstack/react-router";
+import { createFileRoute, useParams, Link } from "@tanstack/react-router";
 import { supabase } from "@/integrations/supabase/client";
 import { useEffect, useState } from "react";
 import { Users, Search, Filter, CheckCircle2, Clock, XCircle, MoreVertical } from "lucide-react";
@@ -80,9 +80,15 @@ function PresencaPage() {
 
       <div className="grid gap-3">
         {filteredTickets.length === 0 ? (
-          <Card className="rounded-[32px] border-dashed border-2 p-20 text-center bg-white/50">
+          <Card className="rounded-[32px] border-dashed border-2 p-12 text-center bg-white/50 flex flex-col items-center justify-center">
             <Users className="w-12 h-12 text-slate-300 mx-auto mb-4" />
-            <p className="text-slate-500 font-bold uppercase tracking-widest">Nenhum participante encontrado</p>
+            <p className="text-slate-500 font-bold uppercase tracking-widest mb-6">Nenhum participante encontrado</p>
+            <Link 
+              to="/checkin"
+              className="inline-flex items-center justify-center px-6 py-3 bg-navy text-white rounded-xl font-black text-xs uppercase tracking-widest hover:bg-navy/90 transition-all shadow-lg"
+            >
+              Selecionar outro projeto
+            </Link>
           </Card>
         ) : filteredTickets.map((ticket) => (
           <Card key={ticket.id} className="rounded-2xl border-slate-200 overflow-hidden hover:shadow-md transition-all group bg-white">
