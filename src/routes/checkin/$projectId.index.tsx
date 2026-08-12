@@ -37,7 +37,8 @@ function CheckinDashboard() {
       const { data: orgEvents } = await supabase
         .from("events")
         .select("*")
-        .eq("tenant_id", tenantId);
+        .eq("tenant_id", tenantId)
+        .order('start_date', { ascending: true });
 
       const allEvents = orgEvents || [];
 

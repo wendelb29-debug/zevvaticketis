@@ -1,6 +1,6 @@
 import { createFileRoute, Outlet, redirect, useNavigate, Link, useLocation, useParams } from "@tanstack/react-router";
 import { supabase } from "@/integrations/supabase/client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { UserMenu } from "@/components/auth/UserMenu";
 import { 
   QrCode, 
@@ -12,7 +12,8 @@ import {
   CheckCircle2,
   Users,
   Building2,
-  X
+  X,
+  Home
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -26,13 +27,6 @@ export const Route = createFileRoute("/checkin")({
     if (authError || !authUser) {
       throw redirect({ to: "/login" });
     }
-
-    // Check if user is staff for ANY event (cast to any for event_staff)
-    const { data: staffAssignments } = await (supabase
-      .from("event_staff" as any)
-      .select("id")
-      .eq("user_id", authUser.id)
-      .limit(1) as any);
 
     const { data: isAdmin } = await supabase.rpc('check_is_platform_admin', { _user_id: authUser.id });
     
@@ -57,8 +51,9 @@ function CheckinLayout() {
 
 
 
-  const { activeTenant, loading: tenantsLoading, userRole } = useTenants();
+  const { activeTenant, loading: tenantsLoading, userRole, logout } = useTenants();
   const [user, setUser] = useState<any>(null);
+  const [isPlatformAdmin, setIsPlatformAdmin] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -74,12 +69,16 @@ function CheckinLayout() {
     async function loadUser() {
       const { data: { user: authUser } } = await supabase.auth.getUser();
       setUser(authUser);
+      if (authUser) {
+        const { data: isAdmin } = await supabase.rpc('check_is_platform_admin', { _user_id: authUser.id });
+        setIsPlatformAdmin(!!isAdmin);
+      }
     }
     loadUser();
   }, []);
 
   const handleLogout = async () => {
-    await supabase.auth.signOut();
+    await logout();
     navigate({ to: "/" });
   };
 
@@ -93,10 +92,16 @@ function CheckinLayout() {
 
   const SidebarContent = () => (
     <div className="flex flex-col h-full bg-navy text-white py-8 font-inter">
-      <div className="px-6 mb-12">
-        <Link to="/" className="text-xl font-manrope font-black text-white tracking-tighter">
+      <div className={cn("px-6 mb-12 flex items-center gap-3", !isPlatformAdmin && "justify-center")}>
+        {isPlatformAdmin && (
+          <Link to="/app" className="p-2.5 hover:bg-white/10 rounded-2xl transition-all text-white/60 hover:text-coral outline-none border border-white/10 bg-white/5 shadow-sm flex-shrink-0" title="Voltar para o Workspace">
+            <Home className="w-5 h-5" />
+          </Link>
+        )}
+        <Link to="/" className={cn("text-xl font-manrope font-black text-white tracking-tighter", !isPlatformAdmin && "text-center")}>
           ZEVVA <span className="text-coral">STAFF</span>
         </Link>
+      </div>
         {activeTenant && (
           <div className="mt-6 flex items-center gap-3 p-3 bg-white/5 rounded-2xl border border-white/10">
             <Avatar className="w-10 h-10 rounded-xl border border-white/10">
