@@ -71,9 +71,24 @@ export const getWhatsAppContacts = createServerFn({ method: "GET" })
   .handler(async () => {
     const { data, error } = await supabase
       .from('whatsapp_contacts')
-      .select('*, whatsapp_messages(content, created_at)')
-      .order('last_interaction_at', { ascending: false, nullsFirst: false });
+      .select('*, whatsapp_messages(content, created_at, direction, status)')
+      .order('last_interaction_at', { ascending: false, referencedTable: 'whatsapp_contacts' });
 
     if (error) throw error;
     return data;
+  });
+
+export const getWhatsAppMessages = createServerFn({ method: "GET" })
+  .inputValidator((data) => z.object({
+    contactId: z.string().uuid()
+  }).parse(data))
+  .handler(async ({ data }) => {
+    const { data: messages, error } = await supabase
+      .from('whatsapp_messages')
+      .select('*')
+      .eq('contact_id', data.contactId)
+      .order('created_at', { ascending: true });
+
+    if (error) throw error;
+    return messages;
   });
