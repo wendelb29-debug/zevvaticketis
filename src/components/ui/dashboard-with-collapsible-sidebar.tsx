@@ -23,7 +23,7 @@ import {
 } from "lucide-react";
 
 export const DashboardWithSidebar = () => {
-  const [isDark, setIsDark] = useState(false);
+  
 
   // Removed internal dark mode logic to respect global UI context
   return (
