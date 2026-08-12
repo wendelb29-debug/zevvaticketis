@@ -54,7 +54,7 @@ export const createProject = createServerFn({ method: "POST" })
         nome: data.nome,
         slug,
         plan: "free",
-        status: "active"
+        status: "ACTIVE"
       })
       .select()
       .single();
@@ -67,8 +67,8 @@ export const createProject = createServerFn({ method: "POST" })
       .insert({
         tenant_id: tenant.id,
         user_id: user.id,
-        role: "owner",
-        status: "active"
+        role: "OWNER",
+        status: "ACTIVE"
       });
 
     if (memberError) throw memberError;
