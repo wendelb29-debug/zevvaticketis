@@ -1,4 +1,4 @@
-import { createFileRoute, useParams } from "@tanstack/react-router";
+import { createFileRoute, useParams, Link } from "@tanstack/react-router";
 import { supabase } from "@/integrations/supabase/client";
 import { useEffect, useState, useMemo } from "react";
 import { History, Search, Download, Calendar, Ticket, User, MapPin, Filter, FileText } from "lucide-react";
@@ -203,7 +203,13 @@ function HistoricoPage() {
                 <tr>
                   <td colSpan={5} className="px-6 py-20 text-center">
                     <History className="w-10 h-10 text-slate-200 mx-auto mb-4" />
-                    <p className="text-slate-400 font-bold uppercase text-xs tracking-widest">Nenhum registro encontrado para estes filtros</p>
+                    <p className="text-slate-400 font-bold uppercase text-xs tracking-widest mb-4">Nenhum registro encontrado para estes filtros</p>
+                    <Link 
+                      to="/checkin"
+                      className="inline-flex items-center justify-center px-4 py-2 bg-navy/5 text-navy border border-navy/10 rounded-lg font-black text-[10px] uppercase tracking-widest hover:bg-navy/10 transition-all"
+                    >
+                      Selecionar outro projeto
+                    </Link>
                   </td>
                 </tr>
               ) : filteredLogs.map((log) => (
