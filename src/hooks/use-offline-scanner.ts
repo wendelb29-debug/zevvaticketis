@@ -81,10 +81,10 @@ export function useOfflineScanner() {
             ticket_id: ticket.id,
             operator_id: scan.operatorId,
             status: 'sucesso',
-            checkin_date: scan.timestamp.split('T')[0],
+            checkin_date: scan.timestamp.split('T')[0] || new Date().toISOString().split('T')[0],
             checkin_time: scan.timestamp.split('T')[1]?.split('.')[0] || '00:00:00',
             tenant_id: scan.tenantId
-          });
+          } as any);
         } else {
             // Log as failure if ticket invalid or already used
             await supabase.from("checkin_records").insert({
@@ -92,10 +92,10 @@ export function useOfflineScanner() {
                 ticket_id: ticket?.id ?? undefined,
                 operator_id: scan.operatorId,
                 status: 'falha',
-                checkin_date: scan.timestamp.split('T')[0],
+                checkin_date: scan.timestamp.split('T')[0] || new Date().toISOString().split('T')[0],
                 checkin_time: scan.timestamp.split('T')[1]?.split('.')[0] || '00:00:00',
                 tenant_id: scan.tenantId
-            });
+            } as any);
         }
       } catch (err) {
         console.error("Failed to sync scan", scan.id, err);
