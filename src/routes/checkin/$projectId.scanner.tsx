@@ -6,11 +6,10 @@ import {
   CheckCircle2, 
   XCircle, 
   ChevronLeft,
-  Camera,
-  User,
-  Ticket,
-  AlertTriangle,
-  Zap
+  Zap,
+  Users,
+  ShieldCheck,
+  ZapOff
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -34,6 +33,7 @@ function ScannerPage() {
   const [loading, setLoading] = useState(true);
   const [scannedResult, setScannedResult] = useState<any>(null);
   const [isScanning, setIsScanning] = useState(false);
+  const [stats, setStats] = useState({ total: 0, checkedIn: 0 });
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
@@ -50,12 +50,18 @@ function ScannerPage() {
         .single();
       
       setEvent(data);
+      
+      // Load initial stats
+      const { count: total } = await supabase.from("tickets").select("id", { count: 'exact', head: true }).eq("event_id", eventId!);
+      const { count: checkedIn } = await supabase.from("tickets").select("id", { count: 'exact', head: true }).eq("event_id", eventId!).eq("status", "utilizado");
+      setStats({ total: total || 0, checkedIn: checkedIn || 0 });
+
       setLoading(false);
     }
     loadEvent();
   }, [eventId, navigate]);
 
-  const handleManualCheckin = async (code: string) => {
+  const processCheckin = async (code: string) => {
     if (!eventId) return;
 
     try {
@@ -78,17 +84,32 @@ function ScannerPage() {
         return;
       }
 
-      // Update status
+      // Create record in checkin_records for audit trail
+      const { data: { user: operator } } = await supabase.auth.getUser();
+      const now = new Date();
+      
+      await supabase.from("checkin_records").insert({
+        event_id: eventId,
+        ticket_id: ticket.id,
+        operator_id: operator?.id,
+        status: 'sucesso',
+        checkin_date: now.toISOString().split('T')[0],
+        checkin_time: now.toLocaleTimeString('pt-BR', { hour12: false }),
+        tenant_id: ticket.tenant_id
+      });
+
+      // Update ticket status
       const { error: updateError } = await supabase
         .from("tickets")
         .update({ 
             status: 'utilizado',
-            checked_in_at: new Date().toISOString()
+            checked_in_at: now.toISOString()
         } as any)
         .eq("id", ticket.id);
 
       if (updateError) throw updateError;
 
+      setStats(prev => ({ ...prev, checkedIn: prev.checkedIn + 1 }));
       setScannedResult({ success: true, message: "ENTRADA LIBERADA", ticket });
       toast.success("Check-in realizado com sucesso!");
       
@@ -167,7 +188,7 @@ function ScannerPage() {
                     className="flex-1 h-12 rounded-xl border border-slate-200 px-4 font-bold text-navy focus:outline-none focus:ring-2 focus:ring-coral/20 focus:border-coral transition-all"
                     onKeyDown={(e) => {
                         if (e.key === 'Enter') {
-                            handleManualCheckin((e.target as HTMLInputElement).value);
+                            processCheckin((e.target as HTMLInputElement).value);
                             (e.target as HTMLInputElement).value = '';
                         }
                     }}
@@ -214,19 +235,20 @@ function ScannerPage() {
             </Card>
         )}
 
-        {/* Stats Summary */}
         <div className="bg-white rounded-[32px] p-6 border border-slate-200 shadow-sm grid grid-cols-2 gap-6">
             <div className="space-y-1">
                 <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Realizados</p>
                 <div className="flex items-baseline gap-1">
-                    <p className="text-2xl font-black text-navy leading-none">--</p>
-                    <span className="text-[10px] font-bold text-slate-400">Pessoas</span>
+                    <p className="text-2xl font-black text-navy leading-none">{stats.checkedIn}</p>
+                    <span className="text-[10px] font-bold text-slate-400">/{stats.total}</span>
                 </div>
             </div>
             <div className="space-y-1">
                 <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Taxa</p>
                 <div className="flex items-baseline gap-1">
-                    <p className="text-2xl font-black text-good leading-none">--%</p>
+                    <p className="text-2xl font-black text-emerald-600 leading-none">
+                      {stats.total > 0 ? Math.round((stats.checkedIn / stats.total) * 100) : 0}%
+                    </p>
                     <span className="text-[10px] font-bold text-slate-400">Presença</span>
                 </div>
             </div>
