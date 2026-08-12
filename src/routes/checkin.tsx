@@ -1,4 +1,4 @@
-import { createFileRoute, Outlet, redirect, useNavigate, Link, useLocation } from "@tanstack/react-router";
+import { createFileRoute, Outlet, redirect, useNavigate, Link, useLocation, useParams } from "@tanstack/react-router";
 import { supabase } from "@/integrations/supabase/client";
 import { useEffect, useState } from "react";
 import { UserMenu } from "@/components/auth/UserMenu";
@@ -51,6 +51,12 @@ export const Route = createFileRoute("/checkin")({
 });
 
 function CheckinLayout() {
+  const { projectId } = useParams({ from: "/checkin/$projectId/" });
+
+
+
+
+
   const { activeTenant, loading: tenantsLoading, userRole } = useTenants();
   const [user, setUser] = useState<any>(null);
   const navigate = useNavigate();
@@ -78,10 +84,10 @@ function CheckinLayout() {
   };
 
   const menuItems = [
-    { label: "Operação", icon: QrCode, href: "/checkin", activeOptions: { exact: true } },
-    { label: "Scanner", icon: QrCode, href: "/checkin/scanner" },
-    { label: "Presença", icon: Users, href: "/checkin/presenca" },
-    { label: "Histórico", icon: History, href: "/checkin/historico" },
+    { label: "Operação", icon: QrCode, href: `/checkin/${projectId}`, activeOptions: { exact: true } },
+    { label: "Scanner", icon: QrCode, href: `/checkin/${projectId}/scanner` },
+    { label: "Presença", icon: Users, href: `/checkin/${projectId}/presenca` },
+    { label: "Histórico", icon: History, href: `/checkin/${projectId}/historico` },
   ];
 
   const SidebarContent = () => (

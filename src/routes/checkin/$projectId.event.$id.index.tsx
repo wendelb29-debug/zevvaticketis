@@ -4,12 +4,12 @@ import { useEffect, useState } from "react";
 import { CheckCircle2, Users, Clock, TrendingUp } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 
-export const Route = createFileRoute("/checkin/event/$id/")({
+export const Route = createFileRoute("/checkin/$projectId/event/$id/")({
   component: EventOperationalDashboard,
 });
 
 function EventOperationalDashboard() {
-  const { id } = useParams({ from: "/checkin/event/$id/" });
+  const { id } = useParams({ from: "/checkin/$projectId/event/$id/" });
   const [stats, setStats] = useState({
     total: 0,
     checkedIn: 0,

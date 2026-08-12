@@ -1,4 +1,4 @@
-import { createFileRoute, useSearch, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, useSearch, useNavigate, useParams } from "@tanstack/react-router";
 import { supabase } from "@/integrations/supabase/client";
 import { useEffect, useState, useRef } from "react";
 import { 
@@ -17,7 +17,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 
-export const Route = createFileRoute("/checkin/scanner")({
+export const Route = createFileRoute("/checkin/$projectId/scanner")({
   component: ScannerPage,
   validateSearch: (search: Record<string, unknown>) => {
     return {
@@ -27,7 +27,8 @@ export const Route = createFileRoute("/checkin/scanner")({
 });
 
 function ScannerPage() {
-  const { eventId } = useSearch({ from: "/checkin/scanner" });
+  const { projectId } = useParams({ from: "/checkin/$projectId/scanner" });
+  const { eventId } = useSearch({ from: "/checkin/$projectId/scanner" });
   const navigate = useNavigate();
   const [event, setEvent] = useState<any>(null);
   const [loading, setLoading] = useState(true);
@@ -37,7 +38,7 @@ function ScannerPage() {
 
   useEffect(() => {
     if (!eventId) {
-      navigate({ to: "/checkin" });
+      navigate({ to: "/checkin/$projectId", params: { projectId } as any });
       return;
     }
 
@@ -105,7 +106,7 @@ function ScannerPage() {
         <Button 
           variant="ghost" 
           size="sm" 
-          onClick={() => navigate({ to: "/checkin" })}
+          onClick={() => navigate({ to: "/checkin/$projectId", params: { projectId } as any })}
           className="text-navy font-bold hover:bg-navy/5 -ml-2"
         >
           <ChevronLeft className="w-4 h-4 mr-1" /> Voltar

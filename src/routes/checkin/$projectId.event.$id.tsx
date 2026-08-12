@@ -4,12 +4,12 @@ import { useEffect, useState } from "react";
 import { LayoutDashboard, QrCode, ShieldCheck, Users, BarChart3, ChevronLeft } from "lucide-react";
 import { Link, useNavigate } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/checkin/event/$id")({
+export const Route = createFileRoute("/checkin/$projectId/event/$id")({
   component: EventCheckinLayout,
 });
 
 function EventCheckinLayout() {
-  const { id } = useParams({ from: "/checkin/event/$id" });
+  const { projectId, id } = useParams({ from: "/checkin/$projectId/event/$id" });
   const [event, setEvent] = useState<any>(null);
   const [role, setRole] = useState<string>('scanner_only');
   const navigate = useNavigate();
@@ -48,20 +48,20 @@ function EventCheckinLayout() {
   }, [id]);
 
   const menuItems = [
-    { label: "Painel", icon: LayoutDashboard, href: `/checkin/event/${id}` },
-    { label: "Scanner", icon: QrCode, href: `/checkin/event/${id}/scanner` },
-    { label: "Relatórios", icon: BarChart3, href: `/checkin/event/${id}/relatorios` },
+    { label: "Painel", icon: LayoutDashboard, href: `/checkin/${projectId}/event/${id}` },
+    { label: "Scanner", icon: QrCode, href: `/checkin/${projectId}/event/${id}/scanner` },
+    { label: "Relatórios", icon: BarChart3, href: `/checkin/${projectId}/event/${id}/relatorios` },
   ];
 
   if (role === 'supervisor') {
-    menuItems.push({ label: "Supervisor", icon: ShieldCheck, href: `/checkin/event/${id}/supervisor` });
+    menuItems.push({ label: "Supervisor", icon: ShieldCheck, href: `/checkin/${projectId}/event/${id}/supervisor` });
   }
 
   return (
     <div className="min-h-screen bg-slate-50 flex font-inter">
       <aside className="w-64 h-screen bg-navy text-white sticky top-0 hidden lg:flex flex-col py-8">
         <div className="px-6 mb-8 flex flex-col gap-2">
-          <Link to="/checkin" className="flex items-center gap-2 text-white/60 hover:text-white transition-colors text-xs font-bold uppercase">
+          <Link to={"/checkin/$projectId"} params={{ projectId }} className="flex items-center gap-2 text-white/60 hover:text-white transition-colors text-xs font-bold uppercase">
             <ChevronLeft className="w-4 h-4" /> Voltar
           </Link>
           <span className="text-xl font-manrope font-black text-white tracking-tighter">
