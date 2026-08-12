@@ -80,7 +80,7 @@ function CheckinLayout() {
 
 
 
-  const { activeTenant, loading: tenantsLoading, userRole, logout } = useTenants();
+  const { activeTenant, tenants, switchTenant, loading: tenantsLoading, userRole, logout } = useTenants();
   const [user, setUser] = useState<any>(null);
   const [isPlatformAdmin, setIsPlatformAdmin] = useState(false);
   const navigate = useNavigate();
