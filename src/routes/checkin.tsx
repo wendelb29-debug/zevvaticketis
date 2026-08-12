@@ -51,7 +51,7 @@ export const Route = createFileRoute("/checkin")({
 });
 
 function CheckinLayout() {
-  const { projectId } = useParams({ from: "/checkin" });
+
 
 
 
