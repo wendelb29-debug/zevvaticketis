@@ -6,265 +6,202 @@ import { useUI } from '@/hooks/use-ui';
 import { Button } from "@/components/ui/button";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { getWhatsAppContacts, getWhatsAppMessages, sendWhatsAppMessage } from "@/lib/whatsapp/whatsapp.functions";
-import { 
-  Search, Send, User, Check, CheckCheck, Phone, Plus, Bell, ChevronDown, 
-  MoreVertical, CheckCircle, Shuffle, Users as PeopleIcon, Folder, Clock, 
-  History as HistoryIcon, Calendar, Zap, Copy, Printer, Eye, Tag, AlertCircle, 
-  LayoutList, MessageSquare, Filter, SlidersHorizontal, ListFilter,
-  Settings as SettingsIcon, Sun, Moon,
-  Paperclip, Smile, ImageIcon, Play, Volume2, Pencil, X, Home, ChevronRight,
-  ArrowUpDown, SortAsc, SortDesc, CalendarDays, Lock, Globe, MessageCircle,
-  Music, FileText, Sparkles, Wand2, ArrowUpCircle, AlignLeft, Languages,
-  PanelLeftClose, PanelLeftOpen, ShoppingCart
-} from 'lucide-react';
+import { Search, Send, User, CheckCheck, Phone, Plus, Bell, MoreVertical, CheckCircle, Shuffle, Users as PeopleIcon, Folder, History as HistoryIcon, Calendar, Zap, Copy, Printer, Tag, AlertCircle, LayoutList, MessageSquare, Filter, ListFilter, Settings as SettingsIcon, Paperclip, Smile, ImageIcon, Play, Volume2, Pencil, X, Home, ChevronRight, ArrowUpDown, SortAsc, SortDesc, CalendarDays, Globe, MessageCircle, Music, FileText, Sparkles, Wand2, ArrowUpCircle, AlignLeft, Languages, ShoppingCart } from 'lucide-react';
 import { SalesCardPicker } from "@/components/admin/chat/SalesCardPicker";
 import { cn } from '@/lib/utils';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { TooltipProvider } from "@/components/ui/tooltip";
 import { toast } from "sonner";
 import { useTenants } from "@/hooks/use-tenants";
 import { DateTime } from "luxon";
-
 const READ_RECEIPT_BLUE = "READ_RECEIPT_BLUE";
 const ONLINE_STATUS_GREEN = "ONLINE_STATUS_GREEN";
 const ATTENDANCE_GOLD = "ATTENDANCE_GOLD"; // Keep as gold if requested to evaluate, or swap to coral if it's the brand color. User suggested evaluating. I will use a constant.
 import { Badge } from '@/components/ui/badge';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger, } from "@/components/ui/dropdown-menu";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, } from "@/components/ui/dialog";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue, } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
-
 export const Route = createFileRoute('/admin/chat')({
-  component: AdminChatPage,
+    component: AdminChatPage,
 });
-
 function AdminChatPage() {
-  const queryClient = useQueryClient();
-  const { activeTenant } = useTenants();
-  const [selectedContactId, setSelectedContactId] = useState<string | null>(null);
-  const [agentStatus, setAgentStatus] = useState<'online' | 'busy' | 'offline'>('offline');
-  const [user, setUser] = useState<any>(null);
-  const [isFilterDialogOpen, setIsFilterDialogOpen] = useState(false);
-  const [isHistoryDialogOpen, setIsHistoryDialogOpen] = useState(false);
-  const [isActiveTicketDialogOpen, setIsActiveTicketDialogOpen] = useState(false);
-  const [isFinishDialogOpen, setIsFinishDialogOpen] = useState(false);
-  const [isTransferDialogOpen, setIsTransferDialogOpen] = useState(false);
-  const [isChatSettingsOpen, setIsChatSettingsOpen] = useState(false);
-  const [sortBy, setSortBy] = useState('recent-top');
-  const [sidebarWidth, setSidebarWidth] = useState(() => {
-    if (typeof window !== "undefined") {
-      const saved = localStorage.getItem("chat-sidebar-width");
-      return saved ? parseInt(saved, 10) : 540;
-    }
-    return 540;
-  });
-  const [isResizing, setIsResizing] = useState(false);
-  const [previewContactId, setPreviewContactId] = useState<string | null>(null);
-  const [messageText, setMessageText] = useState("");
-  const navigate = useNavigate();
-  const fileInputRef = useRef<HTMLInputElement>(null);
-  const chatEndRef = useRef<HTMLDivElement>(null);
-  const [fileType, setFileType] = useState<string | null>(null);
-  const [aiAssistantEnabled, setAiAssistantEnabled] = useState(false);
-  const { theme, setTheme } = useUI();
-  const [isSalesPickerOpen, setIsSalesPickerOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState<'atendimento' | 'espera'>('atendimento');
-
-  const { data: contactsData, isLoading: isLoadingContacts } = useQuery({
-    queryKey: ['whatsapp-contacts'],
-    queryFn: () => getWhatsAppContacts()
-  });
-
-  const { data: messagesData, isLoading: isLoadingMessages } = useQuery({
-    queryKey: ['whatsapp-messages', selectedContactId],
-    queryFn: () => getWhatsAppMessages({ data: { contactId: selectedContactId! } }),
-    enabled: !!selectedContactId
-  });
-
-  const sendMutation = useMutation({
-    mutationFn: (data: { contactId: string, phone: string, text: string }) => 
-      sendWhatsAppMessage({ data }),
-    onSuccess: () => {
-      setMessageText("");
-      queryClient.invalidateQueries({ queryKey: ['whatsapp-messages', selectedContactId] });
-    },
-    onError: (err: any) => {
-      toast.error("Erro ao enviar mensagem: " + err.message);
-    }
-  });
-
-  useEffect(() => {
-    if (!selectedContactId) return;
-
-    const channel = supabase
-      .channel(`chat-${selectedContactId}`)
-      .on(
-        'postgres_changes',
-        {
-          event: 'INSERT',
-          schema: 'public',
-          table: 'whatsapp_messages',
-          filter: `contact_id=eq.${selectedContactId}`
-        },
-        (payload) => {
-          queryClient.setQueryData(['whatsapp-messages', selectedContactId], (old: any) => {
-            if (!old) return [payload.new];
-            return [...old, payload.new];
-          });
-          scrollToBottom();
+    const queryClient = useQueryClient();
+    const { activeTenant } = useTenants();
+    const [selectedContactId, setSelectedContactId] = useState(null);
+    const [agentStatus, setAgentStatus] = useState('offline');
+    const [user, setUser] = useState(null);
+    const [isFilterDialogOpen, setIsFilterDialogOpen] = useState(false);
+    const [isHistoryDialogOpen, setIsHistoryDialogOpen] = useState(false);
+    const [isActiveTicketDialogOpen, setIsActiveTicketDialogOpen] = useState(false);
+    const [isFinishDialogOpen, setIsFinishDialogOpen] = useState(false);
+    const [isTransferDialogOpen, setIsTransferDialogOpen] = useState(false);
+    const [isChatSettingsOpen, setIsChatSettingsOpen] = useState(false);
+    const [sortBy, setSortBy] = useState('recent-top');
+    const [sidebarWidth, setSidebarWidth] = useState(() => {
+        if (typeof window !== "undefined") {
+            const saved = localStorage.getItem("chat-sidebar-width");
+            return saved ? parseInt(saved, 10) : 540;
         }
-      )
-      .subscribe();
-
-    return () => {
-      supabase.removeChannel(channel);
-    };
-  }, [selectedContactId]);
-
-  const scrollToBottom = () => {
-    chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  };
-
-  useEffect(() => {
-    scrollToBottom();
-  }, [messagesData]);
-
-  const selectedContact = useMemo(() => 
-    contactsData?.find(c => c.id === selectedContactId),
-    [contactsData, selectedContactId]
-  );
-
-  const contacts = useMemo(() => {
-    if (!contactsData) return [];
-    
-    let sorted = [...contactsData].map(c => {
-      const msgs = (c.whatsapp_messages as any[]) || [];
-      const lastMsg = msgs[msgs.length - 1];
-      
-      return {
-        id: c.id,
-        name: c.name || c.phone,
-        phone: c.phone,
-        lastMsg: lastMsg?.content || "Sem mensagens",
-        time: lastMsg?.created_at ? DateTime.fromISO(lastMsg.created_at).toRelative({ locale: 'pt-BR' }) : "Nunca",
-        status: lastMsg?.status || "read",
-        channel: "wa",
-        direction: lastMsg?.direction || 'inbound',
-        created_at: c.created_at,
-        last_interaction_at: c.last_interaction_at
-      };
+        return 540;
     });
-
-    if (sortBy === 'recent-top') {
-      sorted.sort((a, b) => {
-        const timeA = a.last_interaction_at || a.created_at || '';
-        const timeB = b.last_interaction_at || b.created_at || '';
-        return timeB.localeCompare(timeA);
-      });
-    }
-
-    return sorted;
-  }, [contactsData, sortBy]);
-
-  const messages = useMemo(() => {
-    if (!messagesData) return [];
-    return messagesData.map((m: any) => ({
-      id: m.id,
-      text: m.content,
-      sender: m.direction === 'outbound' ? 'agent' : 'client',
-      time: DateTime.fromISO(m.created_at).toFormat('HH:mm'),
-      status: m.status
-    }));
-  }, [messagesData]);
-
-  const handleSendMessage = () => {
-    if (!messageText.trim() || !selectedContactId || !selectedContact) return;
-    sendMutation.mutate({
-      contactId: selectedContactId,
-      phone: selectedContact.phone,
-      text: messageText
+    const [isResizing, setIsResizing] = useState(false);
+    const [previewContactId, setPreviewContactId] = useState(null);
+    const [messageText, setMessageText] = useState("");
+    const navigate = useNavigate();
+    const fileInputRef = useRef(null);
+    const chatEndRef = useRef(null);
+    const [fileType, setFileType] = useState(null);
+    const [aiAssistantEnabled, setAiAssistantEnabled] = useState(false);
+    const { theme, setTheme } = useUI();
+    const [isSalesPickerOpen, setIsSalesPickerOpen] = useState(false);
+    const [activeTab, setActiveTab] = useState('atendimento');
+    const { data: contactsData, isLoading: isLoadingContacts } = useQuery({
+        queryKey: ['whatsapp-contacts'],
+        queryFn: () => getWhatsAppContacts()
     });
-  };
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      if (!isResizing) return;
-      const newWidth = Math.min(Math.max(300, e.clientX), 800);
-      setSidebarWidth(newWidth);
+    const { data: messagesData, isLoading: isLoadingMessages } = useQuery({
+        queryKey: ['whatsapp-messages', selectedContactId],
+        queryFn: () => getWhatsAppMessages({ data: { contactId: selectedContactId } }),
+        enabled: !!selectedContactId
+    });
+    const sendMutation = useMutation({
+        mutationFn: (data) => sendWhatsAppMessage({ data }),
+        onSuccess: () => {
+            setMessageText("");
+            queryClient.invalidateQueries({ queryKey: ['whatsapp-messages', selectedContactId] });
+        },
+        onError: (err) => {
+            toast.error("Erro ao enviar mensagem: " + err.message);
+        }
+    });
+    useEffect(() => {
+        if (!selectedContactId)
+            return;
+        const channel = supabase
+            .channel(`chat-${selectedContactId}`)
+            .on('postgres_changes', {
+            event: 'INSERT',
+            schema: 'public',
+            table: 'whatsapp_messages',
+            filter: `contact_id=eq.${selectedContactId}`
+        }, (payload) => {
+            queryClient.setQueryData(['whatsapp-messages', selectedContactId], (old) => {
+                if (!old)
+                    return [payload.new];
+                return [...old, payload.new];
+            });
+            scrollToBottom();
+        })
+            .subscribe();
+        return () => {
+            supabase.removeChannel(channel);
+        };
+    }, [selectedContactId]);
+    const scrollToBottom = () => {
+        chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
     };
-
-    const handleMouseUp = (e: MouseEvent) => {
-      if (!isResizing) return;
-      setIsResizing(false);
-      const finalWidth = Math.min(Math.max(300, e.clientX), 800);
-      localStorage.setItem("chat-sidebar-width", String(finalWidth));
-      document.body.style.cursor = 'default';
+    useEffect(() => {
+        scrollToBottom();
+    }, [messagesData]);
+    const selectedContact = useMemo(() => contactsData?.find(c => c.id === selectedContactId), [contactsData, selectedContactId]);
+    const contacts = useMemo(() => {
+        if (!contactsData)
+            return [];
+        let sorted = [...contactsData].map(c => {
+            const msgs = c.whatsapp_messages || [];
+            const lastMsg = msgs[msgs.length - 1];
+            return {
+                id: c.id,
+                name: c.name || c.phone,
+                phone: c.phone,
+                lastMsg: lastMsg?.content || "Sem mensagens",
+                time: lastMsg?.created_at ? DateTime.fromISO(lastMsg.created_at).toRelative({ locale: 'pt-BR' }) : "Nunca",
+                status: lastMsg?.status || "read",
+                channel: "wa",
+                direction: lastMsg?.direction || 'inbound',
+                created_at: c.created_at,
+                last_interaction_at: c.last_interaction_at
+            };
+        });
+        if (sortBy === 'recent-top') {
+            sorted.sort((a, b) => {
+                const timeA = a.last_interaction_at || a.created_at || '';
+                const timeB = b.last_interaction_at || b.created_at || '';
+                return timeB.localeCompare(timeA);
+            });
+        }
+        return sorted;
+    }, [contactsData, sortBy]);
+    const messages = useMemo(() => {
+        if (!messagesData)
+            return [];
+        return messagesData.map((m) => ({
+            id: m.id,
+            text: m.content,
+            sender: m.direction === 'outbound' ? 'agent' : 'client',
+            time: DateTime.fromISO(m.created_at).toFormat('HH:mm'),
+            status: m.status
+        }));
+    }, [messagesData]);
+    const handleSendMessage = () => {
+        if (!messageText.trim() || !selectedContactId || !selectedContact)
+            return;
+        sendMutation.mutate({
+            contactId: selectedContactId,
+            phone: selectedContact.phone,
+            text: messageText
+        });
     };
-
-    if (isResizing) {
-      document.addEventListener('mousemove', handleMouseMove);
-      document.addEventListener('mouseup', handleMouseUp);
-      document.body.style.cursor = 'col-resize';
-    }
-
-    return () => {
-      document.removeEventListener('mousemove', handleMouseMove);
-      document.removeEventListener('mouseup', handleMouseUp);
+    useEffect(() => {
+        const handleMouseMove = (e) => {
+            if (!isResizing)
+                return;
+            const newWidth = Math.min(Math.max(300, e.clientX), 800);
+            setSidebarWidth(newWidth);
+        };
+        const handleMouseUp = (e) => {
+            if (!isResizing)
+                return;
+            setIsResizing(false);
+            const finalWidth = Math.min(Math.max(300, e.clientX), 800);
+            localStorage.setItem("chat-sidebar-width", String(finalWidth));
+            document.body.style.cursor = 'default';
+        };
+        if (isResizing) {
+            document.addEventListener('mousemove', handleMouseMove);
+            document.addEventListener('mouseup', handleMouseUp);
+            document.body.style.cursor = 'col-resize';
+        }
+        return () => {
+            document.removeEventListener('mousemove', handleMouseMove);
+            document.removeEventListener('mouseup', handleMouseUp);
+        };
+    }, [isResizing]);
+    useEffect(() => {
+        async function getUser() {
+            const { data: { user } } = await supabase.auth.getUser();
+            setUser(user);
+        }
+        getUser();
+    }, []);
+    const handleLogout = async () => {
+        await supabase.auth.signOut();
+        navigate({ to: "/" });
     };
-  }, [isResizing]);
-
-  useEffect(() => {
-    async function getUser() {
-      const { data: { user } } = await supabase.auth.getUser();
-      setUser(user);
-    }
-    getUser();
-  }, []);
-
-  const handleLogout = async () => {
-    await supabase.auth.signOut();
-    navigate({ to: "/" });
-  };
-
-  const handleTransfer = () => {
-    toast.info("Transferindo atendimento...");
-    setIsTransferDialogOpen(false);
-  };
-
-  return (
-    <TooltipProvider>
+    const handleTransfer = () => {
+        toast.info("Transferindo atendimento...");
+        setIsTransferDialogOpen(false);
+    };
+    return (<TooltipProvider>
       <div className="flex flex-col h-screen bg-background text-foreground overflow-hidden font-inter transition-colors duration-300">
         {/* Header Fixo */}
         <header className="h-16 flex items-center justify-between px-6 border-b border-border bg-card shrink-0 z-10 shadow-sm">
           <div className="flex items-center gap-8">
             <div className="flex items-center gap-4">
-              <Link 
-                to="/admin" 
-                className="p-2 hover:bg-accent rounded-xl transition-colors text-foreground group"
-                title="Voltar para o Admin"
-              >
-                <Home className="w-5 h-5 group-hover:text-primary transition-colors" />
+              <Link to="/admin" className="p-2 hover:bg-accent rounded-xl transition-colors text-foreground group" title="Voltar para o Admin">
+                <Home className="w-5 h-5 group-hover:text-primary transition-colors"/>
               </Link>
               <span className="font-black text-lg tracking-tighter text-primary italic">
                 zevva.<span className="text-foreground">chat</span>
@@ -274,158 +211,97 @@ function AdminChatPage() {
           
           <div className="flex items-center gap-6">
           <button className="relative p-2 hover:bg-accent rounded-full transition-colors text-muted-fg">
-            <Bell className="w-5 h-5" />
+            <Bell className="w-5 h-5"/>
             <span className="absolute top-1.5 right-1.5 w-3 h-3 bg-primary rounded-full text-[8px] flex items-center justify-center border-2 border-card text-primary-foreground font-bold">3</span>
           </button>
           
           <div className="flex items-center gap-3 pl-4 border-l border-border">
             <div className="text-right hidden sm:block">
               <div className="text-[10px] font-black text-foreground uppercase leading-tight">Admin Zevva</div>
-              <div className={cn(
-                "text-[9px] font-black uppercase tracking-widest leading-tight",
-                agentStatus === 'online' ? "text-green-500" : agentStatus === 'busy' ? "text-amber-500" : "text-muted-fg"
-              )}>{agentStatus}</div>
+              <div className={cn("text-[9px] font-black uppercase tracking-widest leading-tight", agentStatus === 'online' ? "text-green-500" : agentStatus === 'busy' ? "text-amber-500" : "text-muted-fg")}>{agentStatus}</div>
             </div>
             
-            {user && (
-              <UserMenu 
-                user={user}
-                onLogout={handleLogout}
-                onNavigate={(path) => navigate({ to: path as any })}
-                agentStatus={agentStatus}
-                onStatusChange={setAgentStatus}
-                onOpenSettings={() => setIsChatSettingsOpen(true)}
-              />
-            )}
+            {user && (<UserMenu user={user} onLogout={handleLogout} onNavigate={(path) => navigate({ to: path })} agentStatus={agentStatus} onStatusChange={setAgentStatus} onOpenSettings={() => setIsChatSettingsOpen(true)}/>)}
           </div>
         </div>
       </header>
 
       <div className="flex flex-1 overflow-hidden">
         {/* Coluna 1: Lista de Conversas */}
-        <div 
-          style={{ width: `${sidebarWidth}px` }}
-          className={cn(
-            "border-r border-border flex flex-col bg-card dark:bg-wa-sidebar shrink-0 relative",
-            !isResizing && "transition-[width] duration-150 ease-in-out"
-          )}
-        >
+        <div style={{ width: `${sidebarWidth}px` }} className={cn("border-r border-border flex flex-col bg-card dark:bg-wa-sidebar shrink-0 relative", !isResizing && "transition-[width] duration-150 ease-in-out")}>
           {/* Resize Handle */}
-          <div 
-            onMouseDown={(e) => {
-              e.preventDefault();
-              setIsResizing(true);
-            }}
-            className={cn(
-              "absolute top-0 right-[-4px] w-2 h-full z-50 cursor-col-resize group transition-colors",
-              isResizing ? "bg-coral/40" : "hover:bg-coral/20"
-            )}
-          >
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[2px] h-8 bg-border group-hover:bg-coral transition-colors rounded-full" />
+          <div onMouseDown={(e) => {
+            e.preventDefault();
+            setIsResizing(true);
+        }} className={cn("absolute top-0 right-[-4px] w-2 h-full z-50 cursor-col-resize group transition-colors", isResizing ? "bg-coral/40" : "hover:bg-coral/20")}>
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[2px] h-8 bg-border group-hover:bg-coral transition-colors rounded-full"/>
           </div>
 
           <div className="p-4 space-y-4">
             <div className="flex p-1 bg-card rounded-full border border-border">
-              <button 
-                onClick={() => setActiveTab('atendimento')}
-                className={cn(
-                  "flex-1 py-1.5 text-xs font-bold rounded-full transition-all",
-                  activeTab === 'atendimento' ? "bg-primary text-primary-foreground" : "text-muted-foreground"
-                )}
-              >
+              <button onClick={() => setActiveTab('atendimento')} className={cn("flex-1 py-1.5 text-xs font-bold rounded-full transition-all", activeTab === 'atendimento' ? "bg-primary text-primary-foreground" : "text-muted-foreground")}>
                 Em Atendimento
               </button>
-              <button 
-                onClick={() => setActiveTab('espera')}
-                className={cn(
-                  "flex-1 py-1.5 text-xs font-bold rounded-full transition-all",
-                  activeTab === 'espera' ? "bg-primary text-primary-foreground" : "text-muted-foreground"
-                )}
-              >
+              <button onClick={() => setActiveTab('espera')} className={cn("flex-1 py-1.5 text-xs font-bold rounded-full transition-all", activeTab === 'espera' ? "bg-primary text-primary-foreground" : "text-muted-foreground")}>
                 Em Espera
               </button>
             </div>
             
             <div className="flex gap-2">
               <div className="relative flex-1">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                <input 
-                  className="w-full pl-9 pr-4 py-2 bg-card rounded-lg text-xs border border-border text-foreground focus:ring-1 focus:ring-primary/50 outline-none" 
-                  placeholder="Buscar atendimentos..." 
-                />
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground"/>
+                <input className="w-full pl-9 pr-4 py-2 bg-card rounded-lg text-xs border border-border text-foreground focus:ring-1 focus:ring-primary/50 outline-none" placeholder="Buscar atendimentos..."/>
               </div>
               <div className="flex gap-1">
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <button className="p-2 bg-card rounded-lg text-muted-foreground hover:text-foreground border border-border">
-                      <ArrowUpDown className="w-4 h-4" />
+                      <ArrowUpDown className="w-4 h-4"/>
                     </button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end" className="w-[300px] bg-popover border border-border text-popover-foreground p-2">
                     <DropdownMenuLabel className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest px-2 py-2">Tipos de Ordenação</DropdownMenuLabel>
-                    <DropdownMenuItem 
-                      onClick={() => setSortBy('recent-top')}
-                      className={cn("flex items-center justify-between px-3 py-2.5 rounded-lg cursor-pointer", sortBy === 'recent-top' ? "bg-primary/20 text-primary" : "hover:bg-accent")}
-                    >
+                    <DropdownMenuItem onClick={() => setSortBy('recent-top')} className={cn("flex items-center justify-between px-3 py-2.5 rounded-lg cursor-pointer", sortBy === 'recent-top' ? "bg-primary/20 text-primary" : "hover:bg-accent")}>
                       <div className="flex items-center gap-3">
-                        <MessageSquare className="w-4 h-4" />
+                        <MessageSquare className="w-4 h-4"/>
                         <span className="text-xs">Mensagem mais recente no topo (Padrão)</span>
                       </div>
-                      <SortDesc className="w-3.5 h-3.5" />
+                      <SortDesc className="w-3.5 h-3.5"/>
                     </DropdownMenuItem>
-                    <DropdownMenuItem 
-                      onClick={() => setSortBy('oldest-top')}
-                      className={cn("flex items-center justify-between px-3 py-2.5 rounded-lg cursor-pointer", sortBy === 'oldest-top' ? "bg-primary/20 text-primary" : "hover:bg-accent")}
-                    >
+                    <DropdownMenuItem onClick={() => setSortBy('oldest-top')} className={cn("flex items-center justify-between px-3 py-2.5 rounded-lg cursor-pointer", sortBy === 'oldest-top' ? "bg-primary/20 text-primary" : "hover:bg-accent")}>
                       <div className="flex items-center gap-3">
-                        <MessageSquare className="w-4 h-4" />
+                        <MessageSquare className="w-4 h-4"/>
                         <span className="text-xs">Mensagem mais antiga no topo</span>
                       </div>
-                      <SortAsc className="w-3.5 h-3.5" />
+                      <SortAsc className="w-3.5 h-3.5"/>
                     </DropdownMenuItem>
-                    <DropdownMenuItem 
-                      onClick={() => setSortBy('created-recent')}
-                      className={cn("flex items-center justify-between px-3 py-2.5 rounded-lg cursor-pointer", sortBy === 'created-recent' ? "bg-primary/20 text-primary" : "hover:bg-accent")}
-                    >
+                    <DropdownMenuItem onClick={() => setSortBy('created-recent')} className={cn("flex items-center justify-between px-3 py-2.5 rounded-lg cursor-pointer", sortBy === 'created-recent' ? "bg-primary/20 text-primary" : "hover:bg-accent")}>
                       <div className="flex items-center gap-3">
-                        <CalendarDays className="w-4 h-4" />
+                        <CalendarDays className="w-4 h-4"/>
                         <span className="text-xs">Data de criação mais recente no topo</span>
                       </div>
-                      <SortDesc className="w-3.5 h-3.5" />
+                      <SortDesc className="w-3.5 h-3.5"/>
                     </DropdownMenuItem>
-                    <DropdownMenuItem 
-                      onClick={() => setSortBy('created-oldest')}
-                      className={cn("flex items-center justify-between px-3 py-2.5 rounded-lg cursor-pointer", sortBy === 'created-oldest' ? "bg-primary/20 text-primary" : "hover:bg-accent")}
-                    >
+                    <DropdownMenuItem onClick={() => setSortBy('created-oldest')} className={cn("flex items-center justify-between px-3 py-2.5 rounded-lg cursor-pointer", sortBy === 'created-oldest' ? "bg-primary/20 text-primary" : "hover:bg-accent")}>
                       <div className="flex items-center gap-3">
-                        <CalendarDays className="w-4 h-4" />
+                        <CalendarDays className="w-4 h-4"/>
                         <span className="text-xs">Data de criação mais antiga no topo</span>
                       </div>
-                      <SortAsc className="w-3.5 h-3.5" />
+                      <SortAsc className="w-3.5 h-3.5"/>
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
 
-                <button 
-                  onClick={() => setIsFilterDialogOpen(true)}
-                  className="p-2 bg-card rounded-lg text-muted-foreground hover:text-foreground border border-border"
-                >
-                  <Filter className="w-4 h-4" />
+                <button onClick={() => setIsFilterDialogOpen(true)} className="p-2 bg-card rounded-lg text-muted-foreground hover:text-foreground border border-border">
+                  <Filter className="w-4 h-4"/>
                 </button>
                 
-                <button 
-                  onClick={() => setIsHistoryDialogOpen(true)}
-                  className="p-2 bg-card rounded-lg text-muted-foreground hover:text-foreground border border-border"
-                >
-                  <HistoryIcon className="w-4 h-4" />
+                <button onClick={() => setIsHistoryDialogOpen(true)} className="p-2 bg-card rounded-lg text-muted-foreground hover:text-foreground border border-border">
+                  <HistoryIcon className="w-4 h-4"/>
                 </button>
 
-                <button 
-                  onClick={() => setIsActiveTicketDialogOpen(true)}
-                  className="p-2 bg-primary rounded-lg text-primary-foreground"
-                  title="Iniciar atendimento ativo"
-                >
-                  <Plus className="w-4 h-4" />
+                <button onClick={() => setIsActiveTicketDialogOpen(true)} className="p-2 bg-primary rounded-lg text-primary-foreground" title="Iniciar atendimento ativo">
+                  <Plus className="w-4 h-4"/>
                 </button>
               </div>
             </div>
@@ -433,26 +309,16 @@ function AdminChatPage() {
           </div>
 
           <div className="flex-1 overflow-y-auto visible-scrollbar px-2">
-            {isLoadingContacts ? (
-              <div className="flex items-center justify-center p-8 text-muted-foreground text-xs font-bold uppercase tracking-widest">
+            {isLoadingContacts ? (<div className="flex items-center justify-center p-8 text-muted-foreground text-xs font-bold uppercase tracking-widest">
                 Carregando contatos...
-              </div>
-            ) : contacts.map((contact) => (
-              <div 
-                key={contact.id}
-                onClick={() => setSelectedContactId(contact.id)}
-                className={cn(
-                  "p-3 rounded-2xl mb-1 cursor-pointer transition-all border border-transparent",
-                  selectedContactId === contact.id ? "bg-primary/10 border-primary/20" : "hover:bg-accent"
-                )}
-              >
+              </div>) : contacts.map((contact) => (<div key={contact.id} onClick={() => setSelectedContactId(contact.id)} className={cn("p-3 rounded-2xl mb-1 cursor-pointer transition-all border border-transparent", selectedContactId === contact.id ? "bg-primary/10 border-primary/20" : "hover:bg-accent")}>
                 <div className="flex gap-3">
                   <div className="relative shrink-0">
                     <div className="w-11 h-11 rounded-full bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center text-primary-foreground font-black text-sm">
                       {contact.name?.substring(0, 2).toUpperCase() || "WA"}
                     </div>
                     <div className="absolute -bottom-1 -right-1 bg-green-500 rounded-full p-0.5 border-2 border-card">
-                      <MessageCircle className="w-2.5 h-2.5 text-white fill-current" />
+                      <MessageCircle className="w-2.5 h-2.5 text-white fill-current"/>
                     </div>
                   </div>
                   <div className="flex-1 min-w-0">
@@ -462,15 +328,14 @@ function AdminChatPage() {
                     </div>
                     <div className="flex items-center justify-between">
                       <p className={cn("text-[11px] truncate", contact.status === 'unread' ? "text-foreground font-bold" : "text-muted-foreground")}>
-                        {contact.direction === 'outbound' && <CheckCheck className="inline w-3 h-3 mr-1 text-primary" />}
+                        {contact.direction === 'outbound' && <CheckCheck className="inline w-3 h-3 mr-1 text-primary"/>}
                         {contact.lastMsg}
                       </p>
-                      {contact.status === 'unread' && <div className="w-2 h-2 rounded-full bg-primary" />}
+                      {contact.status === 'unread' && <div className="w-2 h-2 rounded-full bg-primary"/>}
                     </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              </div>))}
           </div>
         </div>
 
@@ -511,7 +376,7 @@ function AdminChatPage() {
                     <p className="text-xs">Olá! No que podemos ajudar hoje?</p>
                     <div className="flex justify-end items-center gap-1 mt-1">
                       <span className="text-[9px] text-primary-foreground/70">10:07</span>
-                      <CheckCheck className="w-3 h-3 text-primary-foreground/70" />
+                      <CheckCheck className="w-3 h-3 text-primary-foreground/70"/>
                     </div>
                   </div>
                 </div>
@@ -521,10 +386,10 @@ function AdminChatPage() {
                   <div className="bg-popover text-popover-foreground p-3 rounded-2xl rounded-tl-none shadow-md border border-border w-[280px]">
                     <div className="flex items-center gap-3">
                       <button className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center text-primary">
-                        <Play className="w-4 h-4 fill-current" />
+                        <Play className="w-4 h-4 fill-current"/>
                       </button>
                       <div className="flex-1 h-1 bg-card rounded-full relative">
-                        <div className="absolute inset-0 w-1/3 bg-primary rounded-full" />
+                        <div className="absolute inset-0 w-1/3 bg-primary rounded-full"/>
                       </div>
                       <span className="text-[10px] text-muted-foreground">0:44</span>
                     </div>
@@ -560,8 +425,7 @@ function AdminChatPage() {
 
         {/* 4. ÁREA DA CONVERSA */}
         <div className="flex-1 flex flex-col bg-background dark:bg-wa-bg shrink-0 relative">
-          {selectedContactId ? (
-            <>
+          {selectedContactId ? (<>
               {/* Cabeçalho da Conversa */}
               <div className="h-[72px] border-b border-border bg-card px-8 flex items-center justify-between z-10">
                 <div className="flex items-center gap-4">
@@ -574,42 +438,37 @@ function AdminChatPage() {
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                           <button className="p-1 hover:bg-primary/10 rounded-md transition-colors group">
-                            <Tag className="w-3.5 h-3.5 text-primary group-hover:scale-110 transition-transform" />
+                            <Tag className="w-3.5 h-3.5 text-primary group-hover:scale-110 transition-transform"/>
                           </button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="start" className="w-[280px] bg-popover border border-border p-2 shadow-2xl">
                           <DropdownMenuLabel className="text-[10px] font-black text-muted-foreground uppercase tracking-widest px-2 py-2">Gerenciar Tags</DropdownMenuLabel>
                           <div className="px-2 pb-2">
                             <div className="relative">
-                              <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-muted-foreground" />
-                              <Input 
-                                placeholder="Buscar ou criar tag..." 
-                                className="h-9 pl-8 text-xs bg-card border-none"
-                              />
+                              <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-muted-foreground"/>
+                              <Input placeholder="Buscar ou criar tag..." className="h-9 pl-8 text-xs bg-card border-none"/>
                             </div>
                           </div>
-                          <DropdownMenuSeparator className="bg-border" />
+                          <DropdownMenuSeparator className="bg-border"/>
                           <div className="max-h-[200px] overflow-y-auto py-1">
                             {[
-                              { label: 'Analisar', color: 'bg-red-500' },
-                              { label: 'Cotação', color: 'bg-cyan-400' },
-                              { label: 'Em Negociação', color: 'bg-amber-500' },
-                              { label: 'Insatisfeito', color: 'bg-orange-500' },
-                              { label: 'Resgate', color: 'bg-blue-500' },
-                              { label: 'Venda', color: 'bg-green-500' },
-                            ].map((tag) => (
-                              <DropdownMenuItem key={tag.label} className="flex items-center justify-between px-2 py-2 cursor-pointer hover:bg-accent rounded-md group">
+                { label: 'Analisar', color: 'bg-red-500' },
+                { label: 'Cotação', color: 'bg-cyan-400' },
+                { label: 'Em Negociação', color: 'bg-amber-500' },
+                { label: 'Insatisfeito', color: 'bg-orange-500' },
+                { label: 'Resgate', color: 'bg-blue-500' },
+                { label: 'Venda', color: 'bg-green-500' },
+            ].map((tag) => (<DropdownMenuItem key={tag.label} className="flex items-center justify-between px-2 py-2 cursor-pointer hover:bg-accent rounded-md group">
                                 <div className="flex items-center gap-3">
-                                  <div className={cn("w-2 h-2 rounded-full", tag.color)} />
+                                  <div className={cn("w-2 h-2 rounded-full", tag.color)}/>
                                   <span className="text-xs font-medium text-foreground">{tag.label}</span>
                                 </div>
-                                <div className="w-4 h-4 border border-border rounded group-hover:border-primary transition-colors" />
-                              </DropdownMenuItem>
-                            ))}
+                                <div className="w-4 h-4 border border-border rounded group-hover:border-primary transition-colors"/>
+                              </DropdownMenuItem>))}
                           </div>
-                          <DropdownMenuSeparator className="bg-border" />
+                          <DropdownMenuSeparator className="bg-border"/>
                           <button className="w-full flex items-center gap-2 px-2 py-2 text-[11px] font-bold text-primary hover:bg-primary/5 rounded-md transition-colors mt-1">
-                            <Plus className="w-3.5 h-3.5" />
+                            <Plus className="w-3.5 h-3.5"/>
                             CRIAR NOVA TAG
                           </button>
                         </DropdownMenuContent>
@@ -628,13 +487,13 @@ function AdminChatPage() {
                 </div>
                 <div className="flex items-center gap-2">
                    <button className="p-2 hover:bg-primary/5 text-muted-foreground rounded-lg transition-colors border border-transparent hover:border-border">
-                    <Search className="w-[18px] h-[18px]" />
+                    <Search className="w-[18px] h-[18px]"/>
                   </button>
                   <button className="p-2 hover:bg-primary/5 text-muted-foreground rounded-lg transition-colors border border-transparent hover:border-border">
-                    <Phone className="w-[18px] h-[18px]" />
+                    <Phone className="w-[18px] h-[18px]"/>
                   </button>
                   <button className="p-2 hover:bg-primary/5 text-muted-foreground rounded-lg transition-colors border border-transparent hover:border-border">
-                    <MoreVertical className="w-[18px] h-[18px]" />
+                    <MoreVertical className="w-[18px] h-[18px]"/>
                   </button>
                 </div>
               </div>
@@ -644,30 +503,22 @@ function AdminChatPage() {
                   <span className="px-4 py-1.5 bg-card text-[10px] font-bold text-muted-foreground uppercase tracking-widest rounded-full border border-border shadow-sm">Hoje, 04 de Agosto</span>
                 </div>
 
-                {messages.map((msg) => (
-                  <div key={msg.id} className={cn("flex w-full group", msg.sender === 'agent' ? "justify-end" : "justify-start")}>
-                    <div className={cn(
-                      "max-w-[70%] p-3 rounded-2xl shadow-sm relative transition-shadow border",
-                      msg.sender === 'agent' 
-                        ? "bg-primary dark:bg-wa-agent-bubble text-primary-foreground rounded-tr-none border-primary/10 shadow-[0_4px_12px_rgba(var(--primary),0.15)]" 
-                        : "bg-card dark:bg-wa-client-bubble text-foreground rounded-tl-none border-border"
-                    )}>
+                {messages.map((msg) => (<div key={msg.id} className={cn("flex w-full group", msg.sender === 'agent' ? "justify-end" : "justify-start")}>
+                    <div className={cn("max-w-[70%] p-3 rounded-2xl shadow-sm relative transition-shadow border", msg.sender === 'agent'
+                    ? "bg-primary dark:bg-wa-agent-bubble text-primary-foreground rounded-tr-none border-primary/10 shadow-[0_4px_12px_rgba(var(--primary),0.15)]"
+                    : "bg-card dark:bg-wa-client-bubble text-foreground rounded-tl-none border-border")}>
                       <p className="text-[13px] leading-relaxed">{msg.text}</p>
-                      <div className={cn(
-                        "flex items-center justify-end gap-1.5 mt-1.5",
-                        msg.sender === 'agent' ? "text-primary-foreground/60" : "text-muted-foreground/40"
-                      )}>
+                      <div className={cn("flex items-center justify-end gap-1.5 mt-1.5", msg.sender === 'agent' ? "text-primary-foreground/60" : "text-muted-foreground/40")}>
                         <span className="text-[9px] font-bold">{msg.time}</span>
-                        {msg.sender === 'agent' && <CheckCheck className="w-3.5 h-3.5" />}
+                        {msg.sender === 'agent' && <CheckCheck className="w-3.5 h-3.5"/>}
                       </div>
                     </div>
-                  </div>
-                ))}
+                  </div>))}
                 
-                <div ref={chatEndRef} />
+                <div ref={chatEndRef}/>
                 <div className="flex justify-start">
                   <div className="bg-card text-foreground rounded-2xl p-5 shadow-xl shadow-foreground/5 max-w-[320px] overflow-hidden border border-border relative group hover:-translate-y-0.5 transition-transform">
-                    <div className="absolute top-0 left-0 w-1.5 h-full bg-primary" />
+                    <div className="absolute top-0 left-0 w-1.5 h-full bg-primary"/>
                     <div className="flex justify-between items-start mb-3">
                       <div className="text-[10px] font-bold uppercase text-foreground tracking-widest bg-primary/10 px-2.5 py-1 rounded-md border border-primary/5">Negociação de Valor</div>
                     </div>
@@ -678,7 +529,7 @@ function AdminChatPage() {
                         <span className="text-[9px] font-bold text-muted-foreground uppercase tracking-widest">Mensalidade</span>
                         <span className="text-sm text-destructive font-bold line-through">R$ 341,28</span>
                       </div>
-                      <div className="w-px h-8 bg-border" />
+                      <div className="w-px h-8 bg-border"/>
                       <div className="flex flex-col">
                         <span className="text-[9px] font-bold text-[ONLINE_STATUS_GREEN] uppercase tracking-widest">Oferta</span>
                         <span className="text-xl font-bold text-[ONLINE_STATUS_GREEN] tracking-tighter">R$ 273,02</span>
@@ -693,10 +544,9 @@ function AdminChatPage() {
 
               {/* 6. CAMPO DE DIGITAÇÃO */}
               <div className="p-4 bg-card border-t border-border z-10">
-                {agentStatus === 'offline' ? (
-                  <div className="flex flex-col items-center justify-center p-8 text-center space-y-4">
+                {agentStatus === 'offline' ? (<div className="flex flex-col items-center justify-center p-8 text-center space-y-4">
                      <div className="w-16 h-16 rounded-full bg-card border border-border flex items-center justify-center">
-                        <User className="w-8 h-8 text-muted-foreground" />
+                        <User className="w-8 h-8 text-muted-foreground"/>
                       </div>
                       <div className="space-y-1">
                          <h3 className="font-bold text-[18px] text-foreground">Você está Offline</h3>
@@ -706,56 +556,46 @@ function AdminChatPage() {
                          <button onClick={() => setAgentStatus('busy')} className="px-6 py-2.5 border border-border text-muted-foreground text-[13px] font-semibold rounded-lg hover:bg-accent transition-colors">Ficar Ocupado</button>
                          <button onClick={() => setAgentStatus('online')} className="px-6 py-2.5 bg-primary text-primary-foreground text-[13px] font-bold rounded-lg hover:bg-primary/90 transition-colors">Ficar Online</button>
                       </div>
-                  </div>
-                ) : (
-                  <div className="flex flex-col gap-3">
+                  </div>) : (<div className="flex flex-col gap-3">
                     {/* Botão de Sugestões de IA */}
-                    {aiAssistantEnabled && (
-                      <div className="flex gap-2 px-2 overflow-x-auto pb-2 scrollbar-hide">
+                    {aiAssistantEnabled && (<div className="flex gap-2 px-2 overflow-x-auto pb-2 scrollbar-hide">
                         {[
-                          "Confirmar reserva?", 
-                          "Enviar link de pagamento",
-                          "Dúvida sobre roteiro"
-                        ].map((suggestion, idx) => (
-                          <button
-                            key={idx}
-                            onClick={() => toast.info("IA Sugeriu: " + suggestion)}
-                            className="whitespace-nowrap px-3 py-1.5 bg-primary/10 hover:bg-primary/20 text-primary text-[10px] font-bold uppercase rounded-full border border-primary/20 transition-all"
-                          >
-                            <Sparkles className="w-3 h-3 inline mr-1" /> {suggestion}
-                          </button>
-                        ))}
-                      </div>
-                    )}
+                        "Confirmar reserva?",
+                        "Enviar link de pagamento",
+                        "Dúvida sobre roteiro"
+                    ].map((suggestion, idx) => (<button key={idx} onClick={() => toast.info("IA Sugeriu: " + suggestion)} className="whitespace-nowrap px-3 py-1.5 bg-primary/10 hover:bg-primary/20 text-primary text-[10px] font-bold uppercase rounded-full border border-primary/20 transition-all">
+                            <Sparkles className="w-3 h-3 inline mr-1"/> {suggestion}
+                          </button>))}
+                      </div>)}
                     <div className="flex gap-3 items-end">
                     <div className="flex gap-1.5 mb-1 shrink-0">
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                           <button className="p-2 hover:bg-primary/5 text-muted-foreground rounded-lg transition-all border border-transparent hover:border-border">
-                            <Plus className="w-5 h-5" />
+                            <Plus className="w-5 h-5"/>
                           </button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="start" side="top" className="w-[220px] bg-popover border border-border p-1 shadow-2xl">
                           <DropdownMenuItem onClick={() => { setFileType('image/*'); fileInputRef.current?.click(); }} className="flex items-center gap-3 px-3 py-2.5 cursor-pointer hover:bg-accent rounded-md">
-                            <ImageIcon className="w-4 h-4 text-blue-500" />
+                            <ImageIcon className="w-4 h-4 text-blue-500"/>
                             <span className="text-xs font-medium text-foreground">Fotos e Vídeos</span>
                           </DropdownMenuItem>
                           <DropdownMenuItem onClick={() => setIsSalesPickerOpen(true)} className="flex items-center gap-3 px-3 py-2.5 cursor-pointer hover:bg-accent rounded-md">
-                            <ShoppingCart className="w-4 h-4 text-primary" />
+                            <ShoppingCart className="w-4 h-4 text-primary"/>
                             <span className="text-xs font-medium text-foreground">Enviar Proposta</span>
                           </DropdownMenuItem>
                           <DropdownMenuItem onClick={() => { setFileType('audio/*'); fileInputRef.current?.click(); }} className="flex items-center gap-3 px-3 py-2.5 cursor-pointer hover:bg-accent rounded-md">
-                            <Music className="w-4 h-4 text-purple-500" />
+                            <Music className="w-4 h-4 text-purple-500"/>
                             <span className="text-xs font-medium text-foreground">Áudio</span>
                           </DropdownMenuItem>
                           <DropdownMenuItem onClick={() => { setFileType('.pdf,.doc,.docx,.xls,.xlsx'); fileInputRef.current?.click(); }} className="flex items-center gap-3 px-3 py-2.5 cursor-pointer hover:bg-accent rounded-md">
-                            <FileText className="w-4 h-4 text-blue-400" />
+                            <FileText className="w-4 h-4 text-blue-400"/>
                             <span className="text-xs font-medium text-foreground">Documento</span>
                           </DropdownMenuItem>
-                          <DropdownMenuSeparator className="bg-border" />
+                          <DropdownMenuSeparator className="bg-border"/>
                           <DropdownMenuItem className="flex items-center justify-between px-3 py-2.5 cursor-pointer hover:bg-accent rounded-md">
                             <div className="flex items-center gap-3">
-                              <AlertCircle className="w-4 h-4 text-amber-500" />
+                              <AlertCircle className="w-4 h-4 text-amber-500"/>
                               <span className="text-xs font-medium text-foreground">Mensagem interna</span>
                             </div>
                             <div className="w-4 h-4 rounded-full border border-border flex items-center justify-center">
@@ -766,67 +606,65 @@ function AdminChatPage() {
                       </DropdownMenu>
 
                       <button className="p-2 hover:bg-primary/5 text-muted-foreground rounded-lg transition-all border border-transparent hover:border-border">
-                        <Smile className="w-5 h-5" />
+                        <Smile className="w-5 h-5"/>
                       </button>
 
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                           <button className="p-2 hover:bg-primary/5 text-muted-foreground rounded-lg transition-all border border-transparent hover:border-border">
-                            <Sparkles className="w-5 h-5" />
+                            <Sparkles className="w-5 h-5"/>
                           </button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="start" side="top" className="w-[280px] bg-popover border border-border p-1 shadow-2xl overflow-y-auto max-h-[450px]">
                           <DropdownMenuLabel className="text-[10px] font-black text-muted-foreground uppercase tracking-widest px-3 py-2 flex items-center gap-2">
-                            <Sparkles className="w-3 h-3 text-primary" /> Assistente de IA
+                            <Sparkles className="w-3 h-3 text-primary"/> Assistente de IA
                           </DropdownMenuLabel>
                           
                           <div className="px-3 py-2">
                              <div className="flex flex-col gap-1.5 p-2 bg-card rounded-lg border border-border">
                                <div className="flex items-center gap-2 text-[10px] font-bold text-muted-foreground uppercase">
-                                 <Pencil className="w-3 h-3" /> Criar texto
+                                 <Pencil className="w-3 h-3"/> Criar texto
                                </div>
                                <p className="text-[9px] text-muted-foreground italic">Descreva em pelo menos 20 caracteres</p>
                              </div>
                           </div>
 
                           <DropdownMenuItem className="flex items-center gap-3 px-3 py-2.5 cursor-pointer hover:bg-accent rounded-md">
-                            <Wand2 className="w-4 h-4 text-amber-500" />
+                            <Wand2 className="w-4 h-4 text-amber-500"/>
                             <span className="text-xs font-medium text-foreground">Melhorar texto</span>
                           </DropdownMenuItem>
                           
                            <DropdownMenuItem className="flex items-center gap-3 px-3 py-2.5 cursor-pointer hover:bg-accent rounded-md">
-                             <ArrowUpCircle className="w-4 h-4 text-green-500" />
+                             <ArrowUpCircle className="w-4 h-4 text-green-500"/>
                              <span className="text-xs font-medium text-foreground">Aumentar o texto</span>
                            </DropdownMenuItem>
 
                            <DropdownMenuItem className="flex items-center gap-3 px-3 py-2.5 cursor-pointer hover:bg-accent rounded-md">
-                             <AlignLeft className="w-4 h-4 text-blue-500" />
+                             <AlignLeft className="w-4 h-4 text-blue-500"/>
                              <span className="text-xs font-medium text-foreground">Resumir</span>
                            </DropdownMenuItem>
 
                            <DropdownMenuItem className="flex items-center gap-3 px-3 py-2.5 cursor-pointer hover:bg-accent rounded-md">
-                             <Smile className="w-4 h-4 text-cyan-400" />
+                             <Smile className="w-4 h-4 text-cyan-400"/>
                              <span className="text-xs font-medium text-foreground">Adicionar emojis</span>
                            </DropdownMenuItem>
 
-                           <DropdownMenuSeparator className="bg-border" />
+                           <DropdownMenuSeparator className="bg-border"/>
 
                            <DropdownMenu>
                              <DropdownMenuTrigger asChild>
                                <div className="flex items-center justify-between px-3 py-2.5 cursor-pointer hover:bg-accent rounded-md">
                                  <div className="flex items-center gap-3">
-                                   <Volume2 className="w-4 h-4 text-amber-600" />
+                                   <Volume2 className="w-4 h-4 text-amber-600"/>
                                    <span className="text-xs font-medium text-foreground">Alterar o tom</span>
                                  </div>
-                                 <ChevronRight className="w-3 h-3 text-muted-foreground" />
+                                 <ChevronRight className="w-3 h-3 text-muted-foreground"/>
                                </div>
                              </DropdownMenuTrigger>
                              <DropdownMenuContent side="right" className="bg-popover border border-border p-1 shadow-xl">
-                              {['Comunicativo', 'Bem-humorado', 'Entusiasmado', 'Informativo', 'Profissional', 'Inteligente', 'Confiável'].map(tone => (
-                                 <DropdownMenuItem key={tone} className="text-xs px-3 py-2 hover:bg-accent cursor-pointer rounded-md text-foreground">
+                              {['Comunicativo', 'Bem-humorado', 'Entusiasmado', 'Informativo', 'Profissional', 'Inteligente', 'Confiável'].map(tone => (<DropdownMenuItem key={tone} className="text-xs px-3 py-2 hover:bg-accent cursor-pointer rounded-md text-foreground">
                                    {tone}
-                                 </DropdownMenuItem>
-                              ))}
+                                 </DropdownMenuItem>))}
                             </DropdownMenuContent>
                           </DropdownMenu>
 
@@ -834,18 +672,16 @@ function AdminChatPage() {
                             <DropdownMenuTrigger asChild>
                                <div className="flex items-center justify-between px-3 py-2.5 cursor-pointer hover:bg-accent rounded-md">
                                  <div className="flex items-center gap-3">
-                                   <LayoutList className="w-4 h-4 text-red-500" />
+                                   <LayoutList className="w-4 h-4 text-red-500"/>
                                    <span className="text-xs font-medium text-foreground">Alterar o sotaque</span>
                                  </div>
-                                 <ChevronRight className="w-3 h-3 text-muted-foreground" />
+                                 <ChevronRight className="w-3 h-3 text-muted-foreground"/>
                                </div>
                              </DropdownMenuTrigger>
                              <DropdownMenuContent side="right" className="bg-popover border border-border p-1 shadow-xl max-h-[300px] overflow-y-auto">
-                              {['Gaúcho', 'Carioca', 'Paulista', 'Mineiro', 'Nordestino', 'Baiano', 'Nortista', 'Sertanejo', 'Catarinense', 'Paranaense'].map(accent => (
-                                 <DropdownMenuItem key={accent} className="text-xs px-3 py-2 hover:bg-accent cursor-pointer rounded-md text-foreground">
+                              {['Gaúcho', 'Carioca', 'Paulista', 'Mineiro', 'Nordestino', 'Baiano', 'Nortista', 'Sertanejo', 'Catarinense', 'Paranaense'].map(accent => (<DropdownMenuItem key={accent} className="text-xs px-3 py-2 hover:bg-accent cursor-pointer rounded-md text-foreground">
                                    {accent}
-                                 </DropdownMenuItem>
-                              ))}
+                                 </DropdownMenuItem>))}
                             </DropdownMenuContent>
                           </DropdownMenu>
 
@@ -853,34 +689,28 @@ function AdminChatPage() {
                             <DropdownMenuTrigger asChild>
                                <div className="flex items-center justify-between px-3 py-2.5 cursor-pointer hover:bg-accent rounded-md">
                                  <div className="flex items-center gap-3">
-                                   <Globe className="w-4 h-4 text-blue-400" />
+                                   <Globe className="w-4 h-4 text-blue-400"/>
                                    <span className="text-xs font-medium text-foreground">Traduzir</span>
                                  </div>
-                                 <ChevronRight className="w-3 h-3 text-muted-foreground" />
+                                 <ChevronRight className="w-3 h-3 text-muted-foreground"/>
                                </div>
                              </DropdownMenuTrigger>
                              <DropdownMenuContent side="right" className="bg-popover border border-border p-1 shadow-xl">
                               {[
-                                { label: 'Para Inglês', flag: '🇺🇸' },
-                                { label: 'Para Português', flag: '🇧🇷' },
-                                { label: 'Para Espanhol', flag: '🇪🇸' }
-                              ].map(lang => (
-                                 <DropdownMenuItem key={lang.label} className="flex items-center gap-2 text-xs px-3 py-2 hover:bg-accent cursor-pointer rounded-md text-foreground">
+                    { label: 'Para Inglês', flag: '🇺🇸' },
+                    { label: 'Para Português', flag: '🇧🇷' },
+                    { label: 'Para Espanhol', flag: '🇪🇸' }
+                ].map(lang => (<DropdownMenuItem key={lang.label} className="flex items-center gap-2 text-xs px-3 py-2 hover:bg-accent cursor-pointer rounded-md text-foreground">
                                    <span>{lang.flag}</span> {lang.label}
-                                 </DropdownMenuItem>
-                              ))}
+                                 </DropdownMenuItem>))}
                             </DropdownMenuContent>
                           </DropdownMenu>
 
-                          <DropdownMenuSeparator className="bg-border" />
+                          <DropdownMenuSeparator className="bg-border"/>
 
                           <div className="px-3 py-2 flex items-center justify-between">
                              <div className="flex items-center gap-2">
-                               <Switch 
-                                 checked={aiAssistantEnabled} 
-                                 onCheckedChange={setAiAssistantEnabled}
-                                 className="scale-75 data-[state=checked]:bg-primary" 
-                               />
+                               <Switch checked={aiAssistantEnabled} onCheckedChange={setAiAssistantEnabled} className="scale-75 data-[state=checked]:bg-primary"/>
                                <span className="text-[10px] font-bold text-muted-foreground">Assistente automático</span>
                              </div>
                              <div className="w-4 h-4 rounded-full border border-border flex items-center justify-center cursor-help">
@@ -891,51 +721,32 @@ function AdminChatPage() {
                       </DropdownMenu>
 
                       <button className="p-2 hover:bg-primary/5 text-muted-foreground rounded-lg transition-all border border-transparent hover:border-border">
-                        <Volume2 className="w-5 h-5" />
+                        <Volume2 className="w-5 h-5"/>
                       </button>
 
-                      <input 
-                        type="file" 
-                        ref={fileInputRef} 
-                        accept={fileType || undefined} 
-                        className="hidden" 
-                        onChange={(e) => {
-                          if (e.target.files?.[0]) {
-                            toast.success(`Arquivo ${e.target.files[0].name} selecionado`);
-                          }
-                        }}
-                      />
+                      <input type="file" ref={fileInputRef} accept={fileType || undefined} className="hidden" onChange={(e) => {
+                    if (e.target.files?.[0]) {
+                        toast.success(`Arquivo ${e.target.files[0].name} selecionado`);
+                    }
+                }}/>
                     </div>
                     <div className="flex-1 relative">
-                      <textarea 
-                        rows={1}
-                        value={messageText}
-                        onChange={(e) => setMessageText(e.target.value)}
-                        onKeyDown={(e) => {
-                          if (e.key === 'Enter' && !e.shiftKey) {
-                            e.preventDefault();
-                            handleSendMessage();
-                          }
-                        }}
-                        className="w-full bg-card border border-border p-3.5 pr-14 rounded-xl text-[13px] text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-1 focus:ring-primary/50 transition-all resize-none" 
-                        placeholder="Digite uma mensagem — use ‘/’ para atalhos" 
-                      />
-                      <button 
-                        onClick={handleSendMessage}
-                        disabled={!messageText.trim() || sendMutation.isPending}
-                        className="absolute right-2 top-2 w-9 h-9 bg-primary text-primary-foreground rounded-lg flex items-center justify-center hover:bg-primary/90 transition-all disabled:opacity-50"
-                      >
-                        <Send className="w-4 h-4" />
+                      <textarea rows={1} value={messageText} onChange={(e) => setMessageText(e.target.value)} onKeyDown={(e) => {
+                    if (e.key === 'Enter' && !e.shiftKey) {
+                        e.preventDefault();
+                        handleSendMessage();
+                    }
+                }} className="w-full bg-card border border-border p-3.5 pr-14 rounded-xl text-[13px] text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-1 focus:ring-primary/50 transition-all resize-none" placeholder="Digite uma mensagem — use ‘/’ para atalhos"/>
+                      <button onClick={handleSendMessage} disabled={!messageText.trim() || sendMutation.isPending} className="absolute right-2 top-2 w-9 h-9 bg-primary text-primary-foreground rounded-lg flex items-center justify-center hover:bg-primary/90 transition-all disabled:opacity-50">
+                        <Send className="w-4 h-4"/>
                       </button>
                     </div>
                   </div>
-                  </div>
-                )}
+                  </div>)}
               </div>
-            </>
-          ) : (
-            /* 3. ESTADO ONLINE SEM CONVERSA SELECIONADA */
-            <div className="flex-1 flex flex-col items-center justify-center p-12 text-center space-y-6">
+            </>) : (
+        /* 3. ESTADO ONLINE SEM CONVERSA SELECIONADA */
+        <div className="flex-1 flex flex-col items-center justify-center p-12 text-center space-y-6">
                <div className="relative">
                  <div className="w-24 h-24 rounded-full bg-[ONLINE_STATUS_GREEN]/5 flex items-center justify-center animate-pulse">
                      <div className="w-12 h-12 rounded-full bg-green-500 border-4 border-background shadow-lg"></div>
@@ -947,14 +758,10 @@ function AdminChatPage() {
                      Escolha uma conversa em andamento ou inicie uma nova conversa agora mesmo. Enquanto estiver online, você receberá novos atendimentos normalmente.
                    </p>
                </div>
-               <button 
-                onClick={() => setIsActiveTicketDialogOpen(true)}
-                className="px-8 py-3 bg-primary text-primary-foreground text-[14px] font-bold rounded-xl hover:bg-primary/90 transition-colors shadow-sm"
-              >
+               <button onClick={() => setIsActiveTicketDialogOpen(true)} className="px-8 py-3 bg-primary text-primary-foreground text-[14px] font-bold rounded-xl hover:bg-primary/90 transition-colors shadow-sm">
                  Iniciar nova conversa
                </button>
-            </div>
-          )}
+            </div>)}
         </div>
 
         {/* 9. BARRA VERTICAL DE AÇÕES (52px) */}
@@ -968,24 +775,16 @@ function AdminChatPage() {
             { icon: Calendar, label: "Agendar" },
             { icon: Zap, label: "Gatilhos" },
             { icon: Copy, label: "Copiar", onClick: () => {
-              const text = messages.map(m => `${m.time} - ${m.sender === 'agent' ? 'Atendente' : 'Cliente'}: ${m.text}`).join('\n');
-              navigator.clipboard.writeText(text);
-              toast.success("Conversa copiada para a área de transferência");
-            }},
+                    const text = messages.map(m => `${m.time} - ${m.sender === 'agent' ? 'Atendente' : 'Cliente'}: ${m.text}`).join('\n');
+                    navigator.clipboard.writeText(text);
+                    toast.success("Conversa copiada para a área de transferência");
+                } },
             { icon: Printer, label: "Imprimir", onClick: () => window.print() },
-          ].map((action, i) => (
-            <button 
-              key={i} 
-              onClick={action.onClick}
-              className={cn(
-                "p-2.5 rounded-lg transition-all group relative border border-transparent",
-                i === 0 ? "bg-primary text-primary-foreground shadow-lg" : "text-muted-foreground hover:bg-primary/5 hover:text-primary"
-            )} title={action.label}>
-              <action.icon className="w-5 h-5" />
+        ].map((action, i) => (<button key={i} onClick={action.onClick} className={cn("p-2.5 rounded-lg transition-all group relative border border-transparent", i === 0 ? "bg-primary text-primary-foreground shadow-lg" : "text-muted-foreground hover:bg-primary/5 hover:text-primary")} title={action.label}>
+              <action.icon className="w-5 h-5"/>
               {i === 0 && <span className="absolute left-[-80px] top-1/2 -translate-y-1/2 bg-popover text-popover-foreground border border-border text-[10px] font-bold px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">Finalizar</span>}
               {i === 1 && <span className="absolute left-[-80px] top-1/2 -translate-y-1/2 bg-popover text-popover-foreground border border-border text-[10px] font-bold px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none text-primary">Transferir</span>}
-            </button>
-          ))}
+            </button>))}
         </div>
       </div>
 
@@ -1001,7 +800,7 @@ function AdminChatPage() {
               <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Projeto</Label>
               <Select defaultValue="all">
                 <SelectTrigger className="bg-card border-none text-xs h-10">
-                  <SelectValue placeholder="Selecione uma opção" />
+                  <SelectValue placeholder="Selecione uma opção"/>
                 </SelectTrigger>
                 <SelectContent className="bg-popover border-border text-foreground">
                   <SelectItem value="all">Todos os Projetos</SelectItem>
@@ -1013,7 +812,7 @@ function AdminChatPage() {
               <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Tipo de canal</Label>
               <Select>
                 <SelectTrigger className="bg-card border-none text-xs h-10">
-                  <SelectValue placeholder="Selecione uma opção" />
+                  <SelectValue placeholder="Selecione uma opção"/>
                 </SelectTrigger>
                 <SelectContent className="bg-popover border-border text-foreground">
                   <SelectItem value="wa">WhatsApp</SelectItem>
@@ -1025,7 +824,7 @@ function AdminChatPage() {
               <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Tipo de atendimento</Label>
               <Select defaultValue="receptivo">
                 <SelectTrigger className="bg-card border-none text-xs h-10">
-                  <SelectValue placeholder="Ativo e receptivo" />
+                  <SelectValue placeholder="Ativo e receptivo"/>
                 </SelectTrigger>
                 <SelectContent className="bg-popover border-border text-foreground">
                   <SelectItem value="receptivo">Ativo e receptivo</SelectItem>
@@ -1038,18 +837,18 @@ function AdminChatPage() {
             <div className="space-y-2">
               <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Departamentos</Label>
               <div className="relative">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-muted-foreground" />
-                <Input placeholder="Buscar..." className="bg-card border-none pl-9 h-10 text-xs" />
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-muted-foreground"/>
+                <Input placeholder="Buscar..." className="bg-card border-none pl-9 h-10 text-xs"/>
               </div>
             </div>
             <div className="space-y-2">
               <div className="flex items-center gap-1">
                 <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Tags</Label>
-                <AlertCircle className="w-3 h-3 text-primary" />
+                <AlertCircle className="w-3 h-3 text-primary"/>
               </div>
               <div className="relative">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-muted-foreground" />
-                <Input placeholder="Buscar..." className="bg-card border-none pl-9 h-10 text-xs" />
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-muted-foreground"/>
+                <Input placeholder="Buscar..." className="bg-card border-none pl-9 h-10 text-xs"/>
               </div>
             </div>
           </div>
@@ -1075,7 +874,7 @@ function AdminChatPage() {
             <button onClick={() => setIsFilterDialogOpen(false)} className="text-sm font-bold hover:underline">Cancelar</button>
             <div className="flex gap-4">
               <button className="flex items-center gap-2 text-xs font-bold text-muted-foreground hover:text-foreground">
-                <ListFilter className="w-4 h-4" /> Limpar filtros
+                <ListFilter className="w-4 h-4"/> Limpar filtros
               </button>
               <button onClick={() => { toast.success("Filtros aplicados"); setIsFilterDialogOpen(false); }} className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-2.5 rounded-lg text-xs font-black uppercase tracking-widest">Aplicar</button>
             </div>
@@ -1104,7 +903,7 @@ function AdminChatPage() {
             <div className="space-y-2">
               <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Pesquisar por protocolo, nome ou telefone <span className="text-primary">*</span></Label>
               <div className="relative">
-                <Input placeholder="Buscar por protocolo, nome ou telefone" className="bg-card border-none h-11 text-xs pr-12" />
+                <Input placeholder="Buscar por protocolo, nome ou telefone" className="bg-card border-none h-11 text-xs pr-12"/>
                 <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] text-muted-foreground font-bold">0 / 255</span>
               </div>
             </div>
@@ -1113,7 +912,7 @@ function AdminChatPage() {
                  <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Tipo de canal</Label>
                  <Select>
                    <SelectTrigger className="bg-card border-none text-xs h-10">
-                     <SelectValue placeholder="Selecione os tipos de canais" />
+                     <SelectValue placeholder="Selecione os tipos de canais"/>
                    </SelectTrigger>
                    <SelectContent className="bg-popover border-border text-foreground">
                     <SelectItem value="wa">WhatsApp</SelectItem>
@@ -1124,7 +923,7 @@ function AdminChatPage() {
                  <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Canais</Label>
                  <Select>
                    <SelectTrigger className="bg-card border-none text-xs h-10">
-                     <SelectValue placeholder="Selecione um ou mais canais" />
+                     <SelectValue placeholder="Selecione um ou mais canais"/>
                    </SelectTrigger>
                    <SelectContent className="bg-popover border-border text-foreground">
                     <SelectItem value="c1">Canal 1</SelectItem>
@@ -1153,7 +952,7 @@ function AdminChatPage() {
               <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Organização</Label>
               <Select defaultValue="zevva">
                 <SelectTrigger className="bg-card border-none text-xs h-11">
-                  <SelectValue placeholder="Zevva" />
+                  <SelectValue placeholder="Zevva"/>
                 </SelectTrigger>
                 <SelectContent className="bg-popover border-border text-foreground">
                   <SelectItem value="zevva">Zevva</SelectItem>
@@ -1164,7 +963,7 @@ function AdminChatPage() {
               <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Projeto</Label>
               <Select defaultValue="zevva-br">
                 <SelectTrigger className="bg-card border-none text-xs h-11">
-                  <SelectValue placeholder="Zevva Tickets" />
+                  <SelectValue placeholder="Zevva Tickets"/>
                 </SelectTrigger>
                 <SelectContent className="bg-popover border-border text-foreground">
                   <SelectItem value="zevva-br">Zevva Tickets</SelectItem>
@@ -1175,7 +974,7 @@ function AdminChatPage() {
               <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Canal</Label>
               <Select>
                 <SelectTrigger className="bg-card border-none text-xs h-11 text-muted-foreground">
-                  <SelectValue placeholder="Selecione um canal" />
+                  <SelectValue placeholder="Selecione um canal"/>
                 </SelectTrigger>
                 <SelectContent className="bg-popover border-border text-foreground">
                   <SelectItem value="wa">WhatsApp Suporte</SelectItem>
@@ -1186,7 +985,7 @@ function AdminChatPage() {
               <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Departamento</Label>
               <Select>
                 <SelectTrigger className="bg-card border-none text-xs h-11 text-muted-foreground">
-                  <SelectValue placeholder="Selecione um departamento" />
+                  <SelectValue placeholder="Selecione um departamento"/>
                 </SelectTrigger>
                 <SelectContent className="bg-popover border-border text-foreground">
                   <SelectItem value="vendas">Vendas</SelectItem>
@@ -1218,7 +1017,7 @@ function AdminChatPage() {
           
           <div className="p-6 space-y-6 bg-card">
             <div className="bg-primary/5 border border-primary/20 rounded-xl p-4 flex items-center gap-3 text-xs text-primary font-bold">
-              <AlertCircle className="w-5 h-5 shrink-0" />
+              <AlertCircle className="w-5 h-5 shrink-0"/>
               <span>Certifique-se de preencher as observações antes de concluir o atendimento.</span>
             </div>
             
@@ -1227,24 +1026,21 @@ function AdminChatPage() {
               <div className="bg-background rounded-xl border border-border overflow-hidden focus-within:border-primary/50 transition-colors shadow-sm">
                 <div className="flex items-center gap-4 px-4 py-3 bg-accent/30 border-b border-border">
                   <div className="flex gap-4 text-muted-fg">
-                     <button type="button" className="hover:text-primary transition-colors"><AlignLeft className="w-4 h-4" /></button>
-                     <button type="button" className="hover:text-primary transition-colors"><Languages className="w-4 h-4" /></button>
+                     <button type="button" className="hover:text-primary transition-colors"><AlignLeft className="w-4 h-4"/></button>
+                     <button type="button" className="hover:text-primary transition-colors"><Languages className="w-4 h-4"/></button>
                   </div>
-                  <div className="flex-1" />
+                  <div className="flex-1"/>
                   <div className="flex gap-4 text-muted-fg">
-                    <button type="button" className="hover:text-primary transition-colors"><Smile className="w-4 h-4" /></button>
-                    <button type="button" className="hover:text-primary transition-colors"><Paperclip className="w-4 h-4" /></button>
+                    <button type="button" className="hover:text-primary transition-colors"><Smile className="w-4 h-4"/></button>
+                    <button type="button" className="hover:text-primary transition-colors"><Paperclip className="w-4 h-4"/></button>
                   </div>
                 </div>
-                <textarea 
-                  className="w-full bg-transparent p-6 min-h-[160px] outline-none text-sm resize-none text-foreground font-inter leading-relaxed"
-                  placeholder="Descreva o que foi resolvido ou pendências importantes..."
-                />
+                <textarea className="w-full bg-transparent p-6 min-h-[160px] outline-none text-sm resize-none text-foreground font-inter leading-relaxed" placeholder="Descreva o que foi resolvido ou pendências importantes..."/>
                 <div className="flex items-center justify-between px-4 py-3 bg-accent/10 border-t border-border">
-                   <Zap className="w-4 h-4 text-primary animate-pulse" />
+                   <Zap className="w-4 h-4 text-primary animate-pulse"/>
                    <div className="flex items-center gap-3">
                      <span className="text-[10px] font-bold text-muted-fg uppercase tracking-widest">0 / 1024</span>
-                     <MoreVertical className="w-4 h-4 text-muted-fg" />
+                     <MoreVertical className="w-4 h-4 text-muted-fg"/>
                    </div>
                 </div>
               </div>
@@ -1253,10 +1049,7 @@ function AdminChatPage() {
           
           <DialogFooter className="p-6 bg-accent/10 border-t border-border flex flex-col sm:flex-row gap-3 items-center">
             <Button variant="ghost" onClick={() => setIsFinishDialogOpen(false)} className="w-full sm:w-auto font-bold order-2 sm:order-1">Cancelar</Button>
-            <Button 
-              onClick={() => { toast.success("Atendimento finalizado com sucesso!"); setIsFinishDialogOpen(false); }} 
-              className="w-full sm:flex-1 bg-primary hover:bg-primary/90 text-primary-foreground font-bold order-1 sm:order-2 h-12 text-sm uppercase tracking-wider"
-            >
+            <Button onClick={() => { toast.success("Atendimento finalizado com sucesso!"); setIsFinishDialogOpen(false); }} className="w-full sm:flex-1 bg-primary hover:bg-primary/90 text-primary-foreground font-bold order-1 sm:order-2 h-12 text-sm uppercase tracking-wider">
               Concluir Atendimento
             </Button>
           </DialogFooter>
@@ -1291,7 +1084,7 @@ function AdminChatPage() {
                 <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Destinatário</Label>
                 <Select>
                   <SelectTrigger className="bg-card border-none text-xs h-11">
-                    <SelectValue placeholder="Selecione um agente" />
+                    <SelectValue placeholder="Selecione um agente"/>
                   </SelectTrigger>
                   <SelectContent className="bg-popover border-border text-foreground">
                     <SelectItem value="a1">Carlos Aguiar</SelectItem>
@@ -1302,10 +1095,7 @@ function AdminChatPage() {
             </div>
             <div className="space-y-2">
               <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Motivo da transferência</Label>
-              <textarea 
-                className="w-full bg-card border-none p-4 rounded-xl text-xs text-foreground placeholder:text-muted-foreground outline-none min-h-[100px] resize-none"
-                placeholder="Explique o motivo da transferência..."
-              />
+              <textarea className="w-full bg-card border-none p-4 rounded-xl text-xs text-foreground placeholder:text-muted-foreground outline-none min-h-[100px] resize-none" placeholder="Explique o motivo da transferência..."/>
             </div>
           </div>
           <DialogFooter className="mt-4 flex justify-between sm:justify-between items-center w-full">
@@ -1366,7 +1156,7 @@ function AdminChatPage() {
           <div className="p-4 border-b border-border flex items-center justify-between bg-card">
             <div className="flex items-center gap-3">
               <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
-                <SettingsIcon className="w-4 h-4 text-primary" />
+                <SettingsIcon className="w-4 h-4 text-primary"/>
               </div>
               <div>
                 <DialogTitle className="text-sm font-bold">Preferências</DialogTitle>
@@ -1374,57 +1164,50 @@ function AdminChatPage() {
               </div>
             </div>
             <button onClick={() => setIsChatSettingsOpen(false)} className="text-muted-foreground hover:text-foreground transition-colors">
-              <X className="w-4 h-4" />
+              <X className="w-4 h-4"/>
             </button>
           </div>
           
           <div className="p-6 space-y-8">
             <div className="space-y-4">
               <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-muted-foreground mb-2">
-                <Bell className="w-3 h-3" /> NOTIFICAÇÕES
+                <Bell className="w-3 h-3"/> NOTIFICAÇÕES
               </div>
               <div className="space-y-1 bg-card rounded-xl border border-border overflow-hidden">
                 {[
-                  { label: "Notificações de novos chats", icon: true },
-                  { label: "Alertas sonoros para novos tickets", sound: true },
-                  { label: "Alertas sonoros para novas mensagens", sound: true },
-                  { label: "Alertas sonoros para tickets transferidos", sound: true },
-                ].map((pref, i) => (
-                  <div key={i} className={cn("flex items-center justify-between p-4", i !== 3 && "border-b border-border")}>
+            { label: "Notificações de novos chats", icon: true },
+            { label: "Alertas sonoros para novos tickets", sound: true },
+            { label: "Alertas sonoros para novas mensagens", sound: true },
+            { label: "Alertas sonoros para tickets transferidos", sound: true },
+        ].map((pref, i) => (<div key={i} className={cn("flex items-center justify-between p-4", i !== 3 && "border-b border-border")}>
                     <div className="flex items-center gap-2">
                       <span className="text-xs text-foreground font-medium">{pref.label}</span>
-                      <AlertCircle className="w-3 h-3 text-muted-foreground" />
+                      <AlertCircle className="w-3 h-3 text-muted-foreground"/>
                     </div>
                     <div className="flex items-center gap-3">
-                      {pref.sound && <Volume2 className="w-3.5 h-3.5 text-muted-foreground" />}
-                      <Switch defaultChecked={pref.label !== "Notificações de novos chats"} className="data-[state=checked]:bg-primary" />
+                      {pref.sound && <Volume2 className="w-3.5 h-3.5 text-muted-foreground"/>}
+                      <Switch defaultChecked={pref.label !== "Notificações de novos chats"} className="data-[state=checked]:bg-primary"/>
                     </div>
-                  </div>
-                ))}
+                  </div>))}
               </div>
             </div>
 
             <div className="space-y-4">
               <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-muted-foreground mb-2">
-                <MessageSquare className="w-3 h-3" /> CHAT
+                <MessageSquare className="w-3 h-3"/> CHAT
               </div>
               <div className="bg-card rounded-xl border border-border p-4 flex items-center justify-between">
                 <span className="text-xs text-foreground font-medium">Enviar mensagem ao pressionar ENTER</span>
-                <Switch defaultChecked className="data-[state=checked]:bg-primary" />
+                <Switch defaultChecked className="data-[state=checked]:bg-primary"/>
               </div>
             </div>
           </div>
         </DialogContent>
       </Dialog>
-      <SalesCardPicker 
-        isOpen={isSalesPickerOpen}
-        onClose={() => setIsSalesPickerOpen(false)}
-        onSelect={(ticket) => {
-          toast.success(`Proposta para "${ticket.title}" enviada!`);
-          setIsSalesPickerOpen(false);
-        }}
-      />
+      <SalesCardPicker isOpen={isSalesPickerOpen} onClose={() => setIsSalesPickerOpen(false)} onSelect={(ticket) => {
+            toast.success(`Proposta para "${ticket.title}" enviada!`);
+            setIsSalesPickerOpen(false);
+        }}/>
     </div>
-    </TooltipProvider>
-  );
+    </TooltipProvider>);
 }
