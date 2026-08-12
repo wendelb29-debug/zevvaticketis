@@ -137,7 +137,7 @@ function HistoricoPage() {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <h2 className="text-3xl font-manrope font-black text-navy uppercase tracking-tighter">Histórico de Operação</h2>
-          <p className="text-sm font-bold text-slate-500 uppercase tracking-widest mt-1">Audit trail do projeto: {projectId}</p>
+          <p className="text-xs font-black text-coral uppercase tracking-widest mt-1 opacity-80">Projeto: {projectId}</p>
         </div>
         <div className="flex gap-2">
           <Button 

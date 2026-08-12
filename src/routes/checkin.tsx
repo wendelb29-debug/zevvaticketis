@@ -80,19 +80,24 @@ function CheckinLayout() {
 
 
 
-  const { activeTenant, loading: tenantsLoading, userRole, logout } = useTenants();
+  const { activeTenant, tenants, switchTenant, loading: tenantsLoading, userRole, logout } = useTenants();
   const [user, setUser] = useState<any>(null);
   const [isPlatformAdmin, setIsPlatformAdmin] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
 
   useEffect(() => {
+    // Sync active tenant with URL projectId
+    if (projectId && tenants.length > 0 && (!activeTenant || activeTenant.id !== projectId)) {
+      switchTenant(projectId);
+    }
+
     // We only need to redirect if we are NOT at the selection screen (/checkin)
     // and we don't have an active tenant.
     if (!tenantsLoading && !activeTenant && location.pathname !== "/checkin" && location.pathname !== "/checkin/") {
       navigate({ to: "/checkin" });
     }
-  }, [activeTenant, tenantsLoading, location.pathname]);
+  }, [activeTenant, tenantsLoading, location.pathname, projectId, tenants]);
 
   useEffect(() => {
     async function loadUser() {
