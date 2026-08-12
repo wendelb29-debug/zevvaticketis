@@ -18,6 +18,7 @@ import {
   PanelLeftClose, PanelLeftOpen, ShoppingCart
 } from 'lucide-react';
 import { SalesCardPicker } from "@/components/admin/chat/SalesCardPicker";
+import { ChatInput } from "@/components/admin/chat/ChatInput";
 import { cn } from '@/lib/utils';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { toast } from "sonner";
