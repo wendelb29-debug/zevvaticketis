@@ -24,7 +24,7 @@ export function CheckinUrlManager() {
   const [isRefreshing, setIsRefreshing] = useState(false);
   
   const checkinUrl = activeTenant 
-    ? `${window.location.origin}/checkin` 
+    ? `${window.location.origin}/checkin/${activeTenant.slug || activeTenant.id}` 
     : "Selecione um projeto para gerar o link";
 
   const copyToClipboard = () => {
