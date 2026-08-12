@@ -10,7 +10,7 @@ export const Route = createFileRoute("/checkin/$projectId/")({
 });
 
 function CheckinDashboard() {
-  const { projectId } = useParams({ from: "/checkin/$projectId" });
+  const { projectId } = useParams({ from: "/checkin/$projectId/" });
   const [events, setEvents] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();

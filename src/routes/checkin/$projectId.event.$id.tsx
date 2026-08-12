@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { LayoutDashboard, QrCode, ShieldCheck, Users, BarChart3, ChevronLeft } from "lucide-react";
 import { Link, useNavigate } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/checkin/event/$id")({
+export const Route = createFileRoute("/checkin/$projectId/event/$id")({
   component: EventCheckinLayout,
 });
 

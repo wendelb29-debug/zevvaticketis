@@ -7,7 +7,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 
-export const Route = createFileRoute("/checkin/event/$id/scanner")({
+export const Route = createFileRoute("/checkin/$projectId/event/$id/scanner")({
   component: ScannerPage,
 });
 

@@ -15,7 +15,7 @@ import {
   Line
 } from "recharts";
 
-export const Route = createFileRoute("/checkin/event/$id/supervisor")({
+export const Route = createFileRoute("/checkin/$projectId/event/$id/supervisor")({
   component: SupervisorPanel,
 });
 

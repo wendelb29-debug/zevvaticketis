@@ -75,17 +75,17 @@ import { Route as CheckinProjectIdIndexRouteImport } from './routes/checkin/$pro
 import { Route as CheckinProjectIdHistoricoRouteImport } from './routes/checkin/$projectId.historico'
 import { Route as CheckinProjectIdPresencaRouteImport } from './routes/checkin/$projectId.presenca'
 import { Route as CheckinProjectIdScannerRouteImport } from './routes/checkin/$projectId.scanner'
-import { Route as CheckinEventIdRouteImport } from './routes/checkin/event.$id'
 import { Route as EventosIdCheckoutRouteImport } from './routes/eventos/$id.checkout'
 import { Route as OauthGoogleReturnRouteImport } from './routes/oauth/google/return'
 import { Route as ProdutorIdDashboardRouteImport } from './routes/produtor/$id.dashboard'
-import { Route as CheckinEventIdIndexRouteImport } from './routes/checkin/event.$id.index'
-import { Route as CheckinEventIdRelatoriosRouteImport } from './routes/checkin/event.$id.relatorios'
-import { Route as CheckinEventIdScannerRouteImport } from './routes/checkin/event.$id.scanner'
-import { Route as CheckinEventIdSupervisorRouteImport } from './routes/checkin/event.$id.supervisor'
+import { Route as CheckinProjectIdEventIdRouteImport } from './routes/checkin/$projectId.event.$id'
 import { Route as LovableEmailAuthPreviewRouteImport } from './routes/lovable/email/auth/preview'
 import { Route as LovableEmailAuthWebhookRouteImport } from './routes/lovable/email/auth/webhook'
 import { Route as ApiPublicTicketsShareTokenRouteImport } from './routes/api/public/tickets/share/$token'
+import { Route as CheckinProjectIdEventIdIndexRouteImport } from './routes/checkin/$projectId.event.$id.index'
+import { Route as CheckinProjectIdEventIdRelatoriosRouteImport } from './routes/checkin/$projectId.event.$id.relatorios'
+import { Route as CheckinProjectIdEventIdScannerRouteImport } from './routes/checkin/$projectId.event.$id.scanner'
+import { Route as CheckinProjectIdEventIdSupervisorRouteImport } from './routes/checkin/$projectId.event.$id.supervisor'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -424,11 +424,6 @@ const CheckinProjectIdScannerRoute = CheckinProjectIdScannerRouteImport.update({
   path: '/$projectId/scanner',
   getParentRoute: () => CheckinRoute,
 } as any)
-const CheckinEventIdRoute = CheckinEventIdRouteImport.update({
-  id: '/event/$id',
-  path: '/event/$id',
-  getParentRoute: () => CheckinRoute,
-} as any)
 const EventosIdCheckoutRoute = EventosIdCheckoutRouteImport.update({
   id: '/checkout',
   path: '/checkout',
@@ -444,28 +439,11 @@ const ProdutorIdDashboardRoute = ProdutorIdDashboardRouteImport.update({
   path: '/$id/dashboard',
   getParentRoute: () => ProdutorRoute,
 } as any)
-const CheckinEventIdIndexRoute = CheckinEventIdIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => CheckinEventIdRoute,
+const CheckinProjectIdEventIdRoute = CheckinProjectIdEventIdRouteImport.update({
+  id: '/$projectId/event/$id',
+  path: '/$projectId/event/$id',
+  getParentRoute: () => CheckinRoute,
 } as any)
-const CheckinEventIdRelatoriosRoute =
-  CheckinEventIdRelatoriosRouteImport.update({
-    id: '/relatorios',
-    path: '/relatorios',
-    getParentRoute: () => CheckinEventIdRoute,
-  } as any)
-const CheckinEventIdScannerRoute = CheckinEventIdScannerRouteImport.update({
-  id: '/scanner',
-  path: '/scanner',
-  getParentRoute: () => CheckinEventIdRoute,
-} as any)
-const CheckinEventIdSupervisorRoute =
-  CheckinEventIdSupervisorRouteImport.update({
-    id: '/supervisor',
-    path: '/supervisor',
-    getParentRoute: () => CheckinEventIdRoute,
-  } as any)
 const LovableEmailAuthPreviewRoute = LovableEmailAuthPreviewRouteImport.update({
   id: '/lovable/email/auth/preview',
   path: '/lovable/email/auth/preview',
@@ -481,6 +459,30 @@ const ApiPublicTicketsShareTokenRoute =
     id: '/api/public/tickets/share/$token',
     path: '/api/public/tickets/share/$token',
     getParentRoute: () => rootRouteImport,
+  } as any)
+const CheckinProjectIdEventIdIndexRoute =
+  CheckinProjectIdEventIdIndexRouteImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => CheckinProjectIdEventIdRoute,
+  } as any)
+const CheckinProjectIdEventIdRelatoriosRoute =
+  CheckinProjectIdEventIdRelatoriosRouteImport.update({
+    id: '/relatorios',
+    path: '/relatorios',
+    getParentRoute: () => CheckinProjectIdEventIdRoute,
+  } as any)
+const CheckinProjectIdEventIdScannerRoute =
+  CheckinProjectIdEventIdScannerRouteImport.update({
+    id: '/scanner',
+    path: '/scanner',
+    getParentRoute: () => CheckinProjectIdEventIdRoute,
+  } as any)
+const CheckinProjectIdEventIdSupervisorRoute =
+  CheckinProjectIdEventIdSupervisorRouteImport.update({
+    id: '/supervisor',
+    path: '/supervisor',
+    getParentRoute: () => CheckinProjectIdEventIdRoute,
   } as any)
 
 export interface FileRoutesByFullPath {
@@ -546,7 +548,6 @@ export interface FileRoutesByFullPath {
   '/checkin/$projectId/historico': typeof CheckinProjectIdHistoricoRoute
   '/checkin/$projectId/presenca': typeof CheckinProjectIdPresencaRoute
   '/checkin/$projectId/scanner': typeof CheckinProjectIdScannerRoute
-  '/checkin/event/$id': typeof CheckinEventIdRouteWithChildren
   '/eventos/$id/checkout': typeof EventosIdCheckoutRoute
   '/oauth/google/return': typeof OauthGoogleReturnRoute
   '/produtor/$id/dashboard': typeof ProdutorIdDashboardRoute
@@ -554,13 +555,14 @@ export interface FileRoutesByFullPath {
   '/admin/email-management/': typeof AdminEmailManagementIndexRoute
   '/admin/marketing/': typeof AdminMarketingIndexRoute
   '/checkin/$projectId/': typeof CheckinProjectIdIndexRoute
-  '/checkin/event/$id/relatorios': typeof CheckinEventIdRelatoriosRoute
-  '/checkin/event/$id/scanner': typeof CheckinEventIdScannerRoute
-  '/checkin/event/$id/supervisor': typeof CheckinEventIdSupervisorRoute
+  '/checkin/$projectId/event/$id': typeof CheckinProjectIdEventIdRouteWithChildren
   '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
   '/lovable/email/auth/webhook': typeof LovableEmailAuthWebhookRoute
-  '/checkin/event/$id/': typeof CheckinEventIdIndexRoute
   '/api/public/tickets/share/$token': typeof ApiPublicTicketsShareTokenRoute
+  '/checkin/$projectId/event/$id/relatorios': typeof CheckinProjectIdEventIdRelatoriosRoute
+  '/checkin/$projectId/event/$id/scanner': typeof CheckinProjectIdEventIdScannerRoute
+  '/checkin/$projectId/event/$id/supervisor': typeof CheckinProjectIdEventIdSupervisorRoute
+  '/checkin/$projectId/event/$id/': typeof CheckinProjectIdEventIdIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -629,13 +631,13 @@ export interface FileRoutesByTo {
   '/admin/email-management': typeof AdminEmailManagementIndexRoute
   '/admin/marketing': typeof AdminMarketingIndexRoute
   '/checkin/$projectId': typeof CheckinProjectIdIndexRoute
-  '/checkin/event/$id/relatorios': typeof CheckinEventIdRelatoriosRoute
-  '/checkin/event/$id/scanner': typeof CheckinEventIdScannerRoute
-  '/checkin/event/$id/supervisor': typeof CheckinEventIdSupervisorRoute
   '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
   '/lovable/email/auth/webhook': typeof LovableEmailAuthWebhookRoute
-  '/checkin/event/$id': typeof CheckinEventIdIndexRoute
   '/api/public/tickets/share/$token': typeof ApiPublicTicketsShareTokenRoute
+  '/checkin/$projectId/event/$id/relatorios': typeof CheckinProjectIdEventIdRelatoriosRoute
+  '/checkin/$projectId/event/$id/scanner': typeof CheckinProjectIdEventIdScannerRoute
+  '/checkin/$projectId/event/$id/supervisor': typeof CheckinProjectIdEventIdSupervisorRoute
+  '/checkin/$projectId/event/$id': typeof CheckinProjectIdEventIdIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -701,7 +703,6 @@ export interface FileRoutesById {
   '/checkin/$projectId/historico': typeof CheckinProjectIdHistoricoRoute
   '/checkin/$projectId/presenca': typeof CheckinProjectIdPresencaRoute
   '/checkin/$projectId/scanner': typeof CheckinProjectIdScannerRoute
-  '/checkin/event/$id': typeof CheckinEventIdRouteWithChildren
   '/eventos/$id/checkout': typeof EventosIdCheckoutRoute
   '/oauth/google/return': typeof OauthGoogleReturnRoute
   '/produtor/$id/dashboard': typeof ProdutorIdDashboardRoute
@@ -709,13 +710,14 @@ export interface FileRoutesById {
   '/admin/email-management/': typeof AdminEmailManagementIndexRoute
   '/admin/marketing/': typeof AdminMarketingIndexRoute
   '/checkin/$projectId/': typeof CheckinProjectIdIndexRoute
-  '/checkin/event/$id/relatorios': typeof CheckinEventIdRelatoriosRoute
-  '/checkin/event/$id/scanner': typeof CheckinEventIdScannerRoute
-  '/checkin/event/$id/supervisor': typeof CheckinEventIdSupervisorRoute
+  '/checkin/$projectId/event/$id': typeof CheckinProjectIdEventIdRouteWithChildren
   '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
   '/lovable/email/auth/webhook': typeof LovableEmailAuthWebhookRoute
-  '/checkin/event/$id/': typeof CheckinEventIdIndexRoute
   '/api/public/tickets/share/$token': typeof ApiPublicTicketsShareTokenRoute
+  '/checkin/$projectId/event/$id/relatorios': typeof CheckinProjectIdEventIdRelatoriosRoute
+  '/checkin/$projectId/event/$id/scanner': typeof CheckinProjectIdEventIdScannerRoute
+  '/checkin/$projectId/event/$id/supervisor': typeof CheckinProjectIdEventIdSupervisorRoute
+  '/checkin/$projectId/event/$id/': typeof CheckinProjectIdEventIdIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -782,7 +784,6 @@ export interface FileRouteTypes {
     | '/checkin/$projectId/historico'
     | '/checkin/$projectId/presenca'
     | '/checkin/$projectId/scanner'
-    | '/checkin/event/$id'
     | '/eventos/$id/checkout'
     | '/oauth/google/return'
     | '/produtor/$id/dashboard'
@@ -790,13 +791,14 @@ export interface FileRouteTypes {
     | '/admin/email-management/'
     | '/admin/marketing/'
     | '/checkin/$projectId/'
-    | '/checkin/event/$id/relatorios'
-    | '/checkin/event/$id/scanner'
-    | '/checkin/event/$id/supervisor'
+    | '/checkin/$projectId/event/$id'
     | '/lovable/email/auth/preview'
     | '/lovable/email/auth/webhook'
-    | '/checkin/event/$id/'
     | '/api/public/tickets/share/$token'
+    | '/checkin/$projectId/event/$id/relatorios'
+    | '/checkin/$projectId/event/$id/scanner'
+    | '/checkin/$projectId/event/$id/supervisor'
+    | '/checkin/$projectId/event/$id/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -865,13 +867,13 @@ export interface FileRouteTypes {
     | '/admin/email-management'
     | '/admin/marketing'
     | '/checkin/$projectId'
-    | '/checkin/event/$id/relatorios'
-    | '/checkin/event/$id/scanner'
-    | '/checkin/event/$id/supervisor'
     | '/lovable/email/auth/preview'
     | '/lovable/email/auth/webhook'
-    | '/checkin/event/$id'
     | '/api/public/tickets/share/$token'
+    | '/checkin/$projectId/event/$id/relatorios'
+    | '/checkin/$projectId/event/$id/scanner'
+    | '/checkin/$projectId/event/$id/supervisor'
+    | '/checkin/$projectId/event/$id'
   id:
     | '__root__'
     | '/'
@@ -936,7 +938,6 @@ export interface FileRouteTypes {
     | '/checkin/$projectId/historico'
     | '/checkin/$projectId/presenca'
     | '/checkin/$projectId/scanner'
-    | '/checkin/event/$id'
     | '/eventos/$id/checkout'
     | '/oauth/google/return'
     | '/produtor/$id/dashboard'
@@ -944,13 +945,14 @@ export interface FileRouteTypes {
     | '/admin/email-management/'
     | '/admin/marketing/'
     | '/checkin/$projectId/'
-    | '/checkin/event/$id/relatorios'
-    | '/checkin/event/$id/scanner'
-    | '/checkin/event/$id/supervisor'
+    | '/checkin/$projectId/event/$id'
     | '/lovable/email/auth/preview'
     | '/lovable/email/auth/webhook'
-    | '/checkin/event/$id/'
     | '/api/public/tickets/share/$token'
+    | '/checkin/$projectId/event/$id/relatorios'
+    | '/checkin/$projectId/event/$id/scanner'
+    | '/checkin/$projectId/event/$id/supervisor'
+    | '/checkin/$projectId/event/$id/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -1447,13 +1449,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CheckinProjectIdScannerRouteImport
       parentRoute: typeof CheckinRoute
     }
-    '/checkin/event/$id': {
-      id: '/checkin/event/$id'
-      path: '/event/$id'
-      fullPath: '/checkin/event/$id'
-      preLoaderRoute: typeof CheckinEventIdRouteImport
-      parentRoute: typeof CheckinRoute
-    }
     '/eventos/$id/checkout': {
       id: '/eventos/$id/checkout'
       path: '/checkout'
@@ -1475,33 +1470,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProdutorIdDashboardRouteImport
       parentRoute: typeof ProdutorRoute
     }
-    '/checkin/event/$id/': {
-      id: '/checkin/event/$id/'
-      path: '/'
-      fullPath: '/checkin/event/$id/'
-      preLoaderRoute: typeof CheckinEventIdIndexRouteImport
-      parentRoute: typeof CheckinEventIdRoute
-    }
-    '/checkin/event/$id/relatorios': {
-      id: '/checkin/event/$id/relatorios'
-      path: '/relatorios'
-      fullPath: '/checkin/event/$id/relatorios'
-      preLoaderRoute: typeof CheckinEventIdRelatoriosRouteImport
-      parentRoute: typeof CheckinEventIdRoute
-    }
-    '/checkin/event/$id/scanner': {
-      id: '/checkin/event/$id/scanner'
-      path: '/scanner'
-      fullPath: '/checkin/event/$id/scanner'
-      preLoaderRoute: typeof CheckinEventIdScannerRouteImport
-      parentRoute: typeof CheckinEventIdRoute
-    }
-    '/checkin/event/$id/supervisor': {
-      id: '/checkin/event/$id/supervisor'
-      path: '/supervisor'
-      fullPath: '/checkin/event/$id/supervisor'
-      preLoaderRoute: typeof CheckinEventIdSupervisorRouteImport
-      parentRoute: typeof CheckinEventIdRoute
+    '/checkin/$projectId/event/$id': {
+      id: '/checkin/$projectId/event/$id'
+      path: '/$projectId/event/$id'
+      fullPath: '/checkin/$projectId/event/$id'
+      preLoaderRoute: typeof CheckinProjectIdEventIdRouteImport
+      parentRoute: typeof CheckinRoute
     }
     '/lovable/email/auth/preview': {
       id: '/lovable/email/auth/preview'
@@ -1523,6 +1497,34 @@ declare module '@tanstack/react-router' {
       fullPath: '/api/public/tickets/share/$token'
       preLoaderRoute: typeof ApiPublicTicketsShareTokenRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/checkin/$projectId/event/$id/': {
+      id: '/checkin/$projectId/event/$id/'
+      path: '/'
+      fullPath: '/checkin/$projectId/event/$id/'
+      preLoaderRoute: typeof CheckinProjectIdEventIdIndexRouteImport
+      parentRoute: typeof CheckinProjectIdEventIdRoute
+    }
+    '/checkin/$projectId/event/$id/relatorios': {
+      id: '/checkin/$projectId/event/$id/relatorios'
+      path: '/relatorios'
+      fullPath: '/checkin/$projectId/event/$id/relatorios'
+      preLoaderRoute: typeof CheckinProjectIdEventIdRelatoriosRouteImport
+      parentRoute: typeof CheckinProjectIdEventIdRoute
+    }
+    '/checkin/$projectId/event/$id/scanner': {
+      id: '/checkin/$projectId/event/$id/scanner'
+      path: '/scanner'
+      fullPath: '/checkin/$projectId/event/$id/scanner'
+      preLoaderRoute: typeof CheckinProjectIdEventIdScannerRouteImport
+      parentRoute: typeof CheckinProjectIdEventIdRoute
+    }
+    '/checkin/$projectId/event/$id/supervisor': {
+      id: '/checkin/$projectId/event/$id/supervisor'
+      path: '/supervisor'
+      fullPath: '/checkin/$projectId/event/$id/supervisor'
+      preLoaderRoute: typeof CheckinProjectIdEventIdSupervisorRouteImport
+      parentRoute: typeof CheckinProjectIdEventIdRoute
     }
   }
 }
@@ -1591,38 +1593,42 @@ const AppRouteChildren: AppRouteChildren = {
 
 const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
 
-interface CheckinEventIdRouteChildren {
-  CheckinEventIdRelatoriosRoute: typeof CheckinEventIdRelatoriosRoute
-  CheckinEventIdScannerRoute: typeof CheckinEventIdScannerRoute
-  CheckinEventIdSupervisorRoute: typeof CheckinEventIdSupervisorRoute
-  CheckinEventIdIndexRoute: typeof CheckinEventIdIndexRoute
+interface CheckinProjectIdEventIdRouteChildren {
+  CheckinProjectIdEventIdRelatoriosRoute: typeof CheckinProjectIdEventIdRelatoriosRoute
+  CheckinProjectIdEventIdScannerRoute: typeof CheckinProjectIdEventIdScannerRoute
+  CheckinProjectIdEventIdSupervisorRoute: typeof CheckinProjectIdEventIdSupervisorRoute
+  CheckinProjectIdEventIdIndexRoute: typeof CheckinProjectIdEventIdIndexRoute
 }
 
-const CheckinEventIdRouteChildren: CheckinEventIdRouteChildren = {
-  CheckinEventIdRelatoriosRoute: CheckinEventIdRelatoriosRoute,
-  CheckinEventIdScannerRoute: CheckinEventIdScannerRoute,
-  CheckinEventIdSupervisorRoute: CheckinEventIdSupervisorRoute,
-  CheckinEventIdIndexRoute: CheckinEventIdIndexRoute,
-}
+const CheckinProjectIdEventIdRouteChildren: CheckinProjectIdEventIdRouteChildren =
+  {
+    CheckinProjectIdEventIdRelatoriosRoute:
+      CheckinProjectIdEventIdRelatoriosRoute,
+    CheckinProjectIdEventIdScannerRoute: CheckinProjectIdEventIdScannerRoute,
+    CheckinProjectIdEventIdSupervisorRoute:
+      CheckinProjectIdEventIdSupervisorRoute,
+    CheckinProjectIdEventIdIndexRoute: CheckinProjectIdEventIdIndexRoute,
+  }
 
-const CheckinEventIdRouteWithChildren = CheckinEventIdRoute._addFileChildren(
-  CheckinEventIdRouteChildren,
-)
+const CheckinProjectIdEventIdRouteWithChildren =
+  CheckinProjectIdEventIdRoute._addFileChildren(
+    CheckinProjectIdEventIdRouteChildren,
+  )
 
 interface CheckinRouteChildren {
   CheckinProjectIdHistoricoRoute: typeof CheckinProjectIdHistoricoRoute
   CheckinProjectIdPresencaRoute: typeof CheckinProjectIdPresencaRoute
   CheckinProjectIdScannerRoute: typeof CheckinProjectIdScannerRoute
-  CheckinEventIdRoute: typeof CheckinEventIdRouteWithChildren
   CheckinProjectIdIndexRoute: typeof CheckinProjectIdIndexRoute
+  CheckinProjectIdEventIdRoute: typeof CheckinProjectIdEventIdRouteWithChildren
 }
 
 const CheckinRouteChildren: CheckinRouteChildren = {
   CheckinProjectIdHistoricoRoute: CheckinProjectIdHistoricoRoute,
   CheckinProjectIdPresencaRoute: CheckinProjectIdPresencaRoute,
   CheckinProjectIdScannerRoute: CheckinProjectIdScannerRoute,
-  CheckinEventIdRoute: CheckinEventIdRouteWithChildren,
   CheckinProjectIdIndexRoute: CheckinProjectIdIndexRoute,
+  CheckinProjectIdEventIdRoute: CheckinProjectIdEventIdRouteWithChildren,
 }
 
 const CheckinRouteWithChildren =

@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { jsPDF } from "jspdf";
 import "jspdf-autotable";
 
-export const Route = createFileRoute("/checkin/event/$id/relatorios")({
+export const Route = createFileRoute("/checkin/$projectId/event/$id/relatorios")({
   component: ReportsPage,
 });
 
