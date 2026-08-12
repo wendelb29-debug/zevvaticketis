@@ -110,6 +110,10 @@ function ProdutorLayout() {
           .single();
         
         setStatus(tenantData?.status || null);
+
+        // Check if user is platform admin to allow returning to /app
+        const { data: isAdminRole } = await supabase.rpc('check_is_platform_admin', { _user_id: user.id });
+        setIsAdmin(!!isAdminRole);
       }
       setLoading(false);
     }
