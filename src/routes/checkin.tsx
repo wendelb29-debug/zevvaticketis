@@ -102,32 +102,32 @@ function CheckinLayout() {
           ZEVVA <span className="text-coral">STAFF</span>
         </Link>
       </div>
-        {activeTenant && (
-          <div className="mt-6 flex items-center gap-3 p-3 bg-white/5 rounded-2xl border border-white/10">
-            <Avatar className="w-10 h-10 rounded-xl border border-white/10">
-              <AvatarImage src={activeTenant.logo || undefined} />
-              <AvatarFallback className="bg-white/10 text-white text-xs font-black">
-                {activeTenant.nome.substring(0, 2).toUpperCase()}
-              </AvatarFallback>
-            </Avatar>
-            <div className="flex-1 min-w-0 text-left">
-              <p className="text-xs font-black text-white truncate">{activeTenant.nome}</p>
-              <p className="text-[10px] text-coral font-bold truncate capitalize">{userRole?.toLowerCase() || 'Operador'}</p>
-            </div>
-            <Button 
-              variant="ghost" 
-              size="icon" 
-              onClick={() => navigate({ to: "/checkin" })} 
-              className="h-8 w-8 text-white/40 hover:text-coral"
-              title="Trocar Projeto"
-            >
-              <X className="w-4 h-4" />
-            </Button>
-          </div>
-        )}
-      </div>
       
-      <nav className="flex-1 space-y-1 px-4">
+      {activeTenant && (
+        <div className="mt-6 mx-6 flex items-center gap-3 p-3 bg-white/5 rounded-2xl border border-white/10">
+          <Avatar className="w-10 h-10 rounded-xl border border-white/10">
+            <AvatarImage src={activeTenant.logo || undefined} />
+            <AvatarFallback className="bg-white/10 text-white text-xs font-black">
+              {activeTenant.nome.substring(0, 2).toUpperCase()}
+            </AvatarFallback>
+          </Avatar>
+          <div className="flex-1 min-w-0 text-left">
+            <p className="text-xs font-black text-white truncate">{activeTenant.nome}</p>
+            <p className="text-[10px] text-coral font-bold truncate capitalize">{userRole?.toLowerCase() || 'Operador'}</p>
+          </div>
+          <Button 
+            variant="ghost" 
+            size="icon" 
+            onClick={() => navigate({ to: "/checkin" })} 
+            className="h-8 w-8 text-white/40 hover:text-coral"
+            title="Trocar Projeto"
+          >
+            <X className="w-4 h-4" />
+          </Button>
+        </div>
+      )}
+      
+      <nav className="flex-1 space-y-1 px-4 mt-6">
         {menuItems.map((item) => (
           <Link
             key={item.label}
