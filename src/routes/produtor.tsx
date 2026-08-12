@@ -207,13 +207,13 @@ function ProdutorLayout() {
 
   const SidebarContent = () => (
     <div className="flex flex-col h-full bg-white border-r border-line py-8 font-inter">
-      <div className="px-6 mb-12 flex items-center gap-3">
+      <div className={cn("px-6 mb-12 flex items-center gap-3", !isAdmin && "justify-center")}>
         {isAdmin && (
-          <Link to="/app" className="p-2.5 hover:bg-slate-50 rounded-2xl transition-all text-muted hover:text-coral outline-none border border-line bg-white shadow-sm flex-shrink-0" title="Ver todos os projetos">
+          <Link to="/app" className="p-2.5 hover:bg-slate-50 rounded-2xl transition-all text-muted hover:text-coral outline-none border border-line bg-white shadow-sm flex-shrink-0" title="Voltar para o Workspace">
             <Home className="w-5 h-5" />
           </Link>
         )}
-        <Link to="/" className="text-2xl font-manrope font-extrabold text-coral tracking-tighter truncate">
+        <Link to="/" className={cn("text-2xl font-manrope font-extrabold text-coral tracking-tighter truncate", !isAdmin && "text-center")}>
           ZEVVA <span className="text-navy">TICKETS</span>
         </Link>
       </div>
