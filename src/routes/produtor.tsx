@@ -208,6 +208,7 @@ function ProdutorLayout() {
           ZEVVA <span className="text-navy">TICKETS</span>
         </Link>
       </div>
+      <div className="flex-1 overflow-y-auto">
         {activeTenant && (
           <div className="mt-6 flex items-center gap-3 p-3 bg-slate-50 rounded-2xl border border-line">
             <Avatar className="w-10 h-10 rounded-xl border border-line">
