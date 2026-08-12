@@ -28,12 +28,20 @@ export function CheckinUrlManager() {
     : "Selecione um projeto para gerar o link";
 
   const copyToClipboard = () => {
+    if (!activeTenant) {
+      toast.error("Selecione um projeto primeiro");
+      return;
+    }
     navigator.clipboard.writeText(checkinUrl);
     toast.success("Link copiado para a área de transferência!");
   };
 
   const openUrl = () => {
-    window.open(checkinUrl, '_blank');
+    if (!activeTenant) {
+      toast.error("Selecione um projeto primeiro");
+      return;
+    }
+    navigate({ to: `/checkin/${activeTenant.slug || activeTenant.id}` });
   };
 
   const refreshUrl = () => {
