@@ -37,7 +37,7 @@ export const Route = createFileRoute("/checkin")({
       .eq("user_id", authUser.id)
       .maybeSingle();
 
-    if (!isAdmin && !member && (!staffAssignments || staffAssignments.length === 0)) {
+    if (!isAdmin && !member) {
       throw redirect({ to: "/unauthorized" });
     }
   },
