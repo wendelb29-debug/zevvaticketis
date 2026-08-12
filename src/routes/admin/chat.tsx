@@ -108,6 +108,7 @@ function AdminChatPage() {
     onSuccess: () => {
       setMessageText("");
       queryClient.invalidateQueries({ queryKey: ['whatsapp-messages', selectedContactId] });
+      queryClient.invalidateQueries({ queryKey: ['whatsapp-contacts'] });
     },
     onError: (err: any) => {
       toast.error("Erro ao enviar mensagem: " + err.message);
