@@ -35,6 +35,7 @@ import {
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 import { useTenants } from "@/hooks/use-tenants";
+import { toast } from "sonner";
 
 
 
@@ -80,8 +81,8 @@ function ProdutorLayout() {
 
   useEffect(() => {
     if (!tenantsLoading && !activeTenant) {
-      navigate({ to: "/app" });
-      return;
+      console.log("No active tenant found, redirecting to workspace...");
+      throw redirect({ to: "/app" });
     }
 
     async function getUserData() {

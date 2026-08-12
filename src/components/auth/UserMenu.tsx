@@ -251,7 +251,7 @@ export function UserMenu({ user, onLogout, onNavigate, agentStatus, onStatusChan
           </DropdownMenuItem>
         )}
 
-        {role?.label === "Produtor" && (
+        {(role?.label === "Produtor" || role?.label === "Admin") && (
           <DropdownMenuItem 
             onClick={() => onNavigate("/app")}
             className="flex items-center gap-2 px-3 py-2.5 rounded-lg text-sm font-bold text-foreground cursor-pointer hover:bg-primary/5"
