@@ -32,8 +32,8 @@ function ProjectsPage() {
     });
   }, []);
 
-  const handleSelect = (tenantId: string) => {
-    switchTenant(tenantId);
+  const handleSelect = async (tenantId: string) => {
+    await switchTenant(tenantId);
     navigate({ to: "/produtor" });
   };
 
