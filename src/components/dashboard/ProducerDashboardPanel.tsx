@@ -91,6 +91,7 @@ export function ProducerDashboardPanel() {
 
       setSalesReport(ordersData?.map(order => ({
         event: eventsData?.find(e => e.id === order.event_id)?.title || "Evento",
+
         ticket: "Ingresso Geral",
         quantity: 1,
         value: order.valor_bruto,
