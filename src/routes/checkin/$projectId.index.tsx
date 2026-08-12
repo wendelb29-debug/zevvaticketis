@@ -57,7 +57,7 @@ function CheckinDashboard() {
 
   return (
     <div className="space-y-8">
-      <h2 className="text-3xl font-manrope font-black text-navy uppercase tracking-tighter">Eventos do Projeto</h2>
+      <h2 className="text-3xl font-manrope font-black text-navy uppercase tracking-tighter">Eventos Disponíveis</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {events.length === 0 ? (
           <div className="col-span-full p-12 text-center bg-white rounded-3xl border border-line">
