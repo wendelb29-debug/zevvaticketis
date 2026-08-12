@@ -51,7 +51,8 @@ export const Route = createFileRoute("/checkin")({
 });
 
 function CheckinLayout() {
-  const { projectId } = useParams({ from: "/checkin/$projectId" });
+  const { projectId } = useParams({ from: "/checkin" });
+
 
 
   const { activeTenant, loading: tenantsLoading, userRole } = useTenants();
