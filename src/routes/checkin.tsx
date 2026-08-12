@@ -84,6 +84,7 @@ function CheckinLayout() {
   };
 
   const menuItems = [
+    { label: "Projetos", icon: Building2, href: `/checkin`, activeOptions: { exact: true } },
     { label: "Operação", icon: QrCode, href: `/checkin/${projectId}`, activeOptions: { exact: true } },
     { label: "Scanner", icon: QrCode, href: `/checkin/${projectId}/scanner` },
     { label: "Presença", icon: Users, href: `/checkin/${projectId}/presenca` },
@@ -111,9 +112,9 @@ function CheckinLayout() {
             <Button 
               variant="ghost" 
               size="icon" 
-              onClick={() => navigate({ to: "/app" })} 
+              onClick={() => navigate({ to: "/checkin" })} 
               className="h-8 w-8 text-white/40 hover:text-coral"
-              title="Trocar Ambiente"
+              title="Trocar Projeto"
             >
               <X className="w-4 h-4" />
             </Button>
