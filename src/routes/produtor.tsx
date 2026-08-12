@@ -182,13 +182,12 @@ function ProdutorLayout() {
 
   const allMenuItems = [
     { label: "Dashboard", icon: LayoutDashboard, href: "/produtor", activeOptions: { exact: true }, permission: "DASHBOARD" },
-    { label: "Meus Eventos", icon: FileText, href: "/produtor/eventos", permission: "EVENTOS" },
-    { label: "Criar Evento", icon: Plus, href: "/produtor/novo-evento", permission: "EVENTOS" },
-    { label: "Ingressos", icon: Ticket, href: "/produtor/ingressos", permission: "INGRESSOS" },
-    { label: "Comunicação", icon: Mail, href: "/produtor/email-management", permission: "COMUNICACAO" },
+    { label: "Eventos", icon: FileText, href: "/produtor/eventos", permission: "EVENTOS" },
+    { label: "Marketing", icon: Globe, href: "/produtor/marketing", permission: "MARKETING" },
     { label: "Participantes", icon: Users, href: "/produtor/participantes", permission: "PARTICIPANTES" },
+    { label: "Check-in", icon: ShieldCheck, href: "/checkin", permission: "CHECKIN" },
     { label: "Financeiro", icon: BarChart3, href: "/produtor/financeiro", permission: "FINANCEIRO" },
-    { label: "Equipe", icon: Users, href: "/produtor/equipe", permission: "EQUIPE" },
+    { label: "Equipe", icon: UserPlus, href: "/produtor/equipe", permission: "EQUIPE" },
     { label: "Configurações", icon: SettingsIcon, href: "/produtor/configuracoes", permission: "CONFIGURACOES" },
   ];
 

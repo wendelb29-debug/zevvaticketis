@@ -6,6 +6,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { LogOut, Plus, Building2, ShieldCheck } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useEffect, useState } from "react";
+import { toast } from "sonner";
 
 export const Route = createFileRoute("/app/")({
   component: ProjectsPage,
@@ -101,7 +102,16 @@ function ProjectsPage() {
             </Card>
           ))}
 
-          <Card className="flex flex-col items-center justify-center p-8 border-dashed border-2 hover:border-coral transition-colors cursor-pointer group rounded-[24px] min-h-[280px]">
+          <Card 
+            className="flex flex-col items-center justify-center p-8 border-dashed border-2 hover:border-coral transition-colors cursor-pointer group rounded-[24px] min-h-[280px]"
+            onClick={() => {
+              const name = prompt("Nome do novo projeto:");
+              if (name) {
+                // In a real implementation, this would call a server function to create the tenant
+                toast.info("Funcionalidade de criação em desenvolvimento");
+              }
+            }}
+          >
             <div className="w-16 h-16 bg-slate-100 group-hover:bg-coral/10 rounded-full flex items-center justify-center mb-4 transition-colors">
               <Plus className="w-8 h-8 text-slate-400 group-hover:text-coral transition-colors" />
             </div>
