@@ -53,8 +53,18 @@ export function ProducerDashboardPanel() {
 
       const { data: eventsData } = await supabase
         .from("events")
-        .select("*, ticket_types(*)")
+        .select(`
+          *,
+          ticket_types (
+            id,
+            nome,
+            valor,
+            quantidade,
+            quantidade_vendida
+          )
+        `)
         .eq("tenant_id", activeTenant.id);
+
 
 
       const activeEvents = eventsData?.filter(e => e.status === "publicado").length || 0;
