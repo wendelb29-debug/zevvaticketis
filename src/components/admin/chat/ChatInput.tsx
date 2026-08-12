@@ -20,7 +20,7 @@ interface ChatInputProps {
   isPending: boolean;
   aiAssistantEnabled: boolean;
   setAiAssistantEnabled: (enabled: boolean) => void;
-  fileInputRef: React.RefObject<HTMLInputElement>;
+  fileInputRef: React.RefObject<HTMLInputElement | null>;
   setFileType: (type: string) => void;
   setIsSalesPickerOpen: (open: boolean) => void;
 }
