@@ -17,12 +17,15 @@ function IngressosPage() {
     queryKey: ["producer-ticket-types", activeTenant?.id],
     enabled: !!activeTenant,
     queryFn: async () => {
-      const { data } = await (supabase
-        .from("ticket_types" as any)
+      const { data, error } = await supabase
+        .from("ticket_types")
         .select("*, events(title)")
-        .eq("tenant_id", activeTenant?.id)
-        .order("created_at", { ascending: false }) as any);
+        .eq("tenant_id", activeTenant?.id || "")
+        .order("created_at", { ascending: false });
+      
+      if (error) throw error;
       return data;
+
     }
   });
 
