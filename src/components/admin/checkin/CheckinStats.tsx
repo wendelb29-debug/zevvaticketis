@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Link } from "@tanstack/react-router";
 import { supabase } from "@/integrations/supabase/client";
 import { 
   Ticket, 
@@ -192,6 +193,26 @@ export function CheckinStats() {
           type="noshow"
         />
       </div>
+      
+      {/* Módulo de Gestão de Link */}
+      <Card className="border-line shadow-xl rounded-[40px] overflow-hidden bg-navy text-white">
+        <CardContent className="p-8 sm:p-12 flex flex-col md:flex-row items-center justify-between gap-8">
+          <div className="space-y-4 text-center md:text-left">
+            <div className="inline-flex items-center gap-2 px-3 py-1 bg-coral/20 text-coral rounded-full border border-coral/20 text-[10px] font-black uppercase tracking-widest">
+              Ambiente Operacional
+            </div>
+            <h2 className="text-3xl sm:text-4xl font-manrope font-black tracking-tighter uppercase">Link de Check-in Ativo</h2>
+            <p className="text-white/60 font-medium max-w-xl">
+              Cada projeto possui um ambiente de recepção isolado. Gerencie as URLs de acesso e configure os coletores mobile da sua equipe.
+            </p>
+          </div>
+          <Link to={"/produtor/checkin-url" as any}>
+            <Button className="h-16 px-10 bg-coral hover:bg-coral-dark text-white rounded-2xl font-black uppercase tracking-widest text-sm shadow-xl shadow-coral/20 group">
+              Gerenciar Links <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
+            </Button>
+          </Link>
+        </CardContent>
+      </Card>
     </div>
   );
 }
