@@ -71,6 +71,7 @@ function ProdutorLayout() {
   const { activeTenant, tenants, switchTenant, loading: tenantsLoading } = useTenants();
   const [status, setStatus] = useState<string | null>(null);
   const [memberRole, setMemberRole] = useState<string | null>(null);
+  const [isAdmin, setIsAdmin] = useState<boolean>(false);
   const [permissions, setPermissions] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState<any>(null);
