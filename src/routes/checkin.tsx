@@ -53,6 +53,7 @@ export const Route = createFileRoute("/checkin")({
 function CheckinLayout() {
   const { projectId } = useParams({ from: "/checkin/$projectId" });
 
+
   const { activeTenant, loading: tenantsLoading, userRole } = useTenants();
   const [user, setUser] = useState<any>(null);
   const navigate = useNavigate();
