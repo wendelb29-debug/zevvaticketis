@@ -55,8 +55,8 @@ function ProjectsPage() {
         setNewProjectName("");
         // Refresh tenants list and auto-select new project
         await refreshTenants();
-        if (result.tenantId) {
-          handleSelect(result.tenantId);
+        if (result.tenant?.id) {
+          handleSelect(result.tenant.id);
         }
       }
     } catch (error) {
