@@ -79,6 +79,8 @@ import { Route as CheckinEventIdIndexRouteImport } from './routes/checkin/event.
 import { Route as CheckinEventIdRelatoriosRouteImport } from './routes/checkin/event.$id.relatorios'
 import { Route as CheckinEventIdScannerRouteImport } from './routes/checkin/event.$id.scanner'
 import { Route as CheckinEventIdSupervisorRouteImport } from './routes/checkin/event.$id.supervisor'
+import { Route as LovableEmailAuthPreviewRouteImport } from './routes/lovable/email/auth/preview'
+import { Route as LovableEmailAuthWebhookRouteImport } from './routes/lovable/email/auth/webhook'
 import { Route as ApiPublicTicketsShareTokenRouteImport } from './routes/api/public/tickets/share/$token'
 
 const IndexRoute = IndexRouteImport.update({
@@ -438,6 +440,16 @@ const CheckinEventIdSupervisorRoute =
     path: '/supervisor',
     getParentRoute: () => CheckinEventIdRoute,
   } as any)
+const LovableEmailAuthPreviewRoute = LovableEmailAuthPreviewRouteImport.update({
+  id: '/lovable/email/auth/preview',
+  path: '/lovable/email/auth/preview',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LovableEmailAuthWebhookRoute = LovableEmailAuthWebhookRouteImport.update({
+  id: '/lovable/email/auth/webhook',
+  path: '/lovable/email/auth/webhook',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiPublicTicketsShareTokenRoute =
   ApiPublicTicketsShareTokenRouteImport.update({
     id: '/api/public/tickets/share/$token',
@@ -515,6 +527,8 @@ export interface FileRoutesByFullPath {
   '/checkin/event/$id/relatorios': typeof CheckinEventIdRelatoriosRoute
   '/checkin/event/$id/scanner': typeof CheckinEventIdScannerRoute
   '/checkin/event/$id/supervisor': typeof CheckinEventIdSupervisorRoute
+  '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
+  '/lovable/email/auth/webhook': typeof LovableEmailAuthWebhookRoute
   '/checkin/event/$id/': typeof CheckinEventIdIndexRoute
   '/api/public/tickets/share/$token': typeof ApiPublicTicketsShareTokenRoute
 }
@@ -583,6 +597,8 @@ export interface FileRoutesByTo {
   '/checkin/event/$id/relatorios': typeof CheckinEventIdRelatoriosRoute
   '/checkin/event/$id/scanner': typeof CheckinEventIdScannerRoute
   '/checkin/event/$id/supervisor': typeof CheckinEventIdSupervisorRoute
+  '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
+  '/lovable/email/auth/webhook': typeof LovableEmailAuthWebhookRoute
   '/checkin/event/$id': typeof CheckinEventIdIndexRoute
   '/api/public/tickets/share/$token': typeof ApiPublicTicketsShareTokenRoute
 }
@@ -657,6 +673,8 @@ export interface FileRoutesById {
   '/checkin/event/$id/relatorios': typeof CheckinEventIdRelatoriosRoute
   '/checkin/event/$id/scanner': typeof CheckinEventIdScannerRoute
   '/checkin/event/$id/supervisor': typeof CheckinEventIdSupervisorRoute
+  '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
+  '/lovable/email/auth/webhook': typeof LovableEmailAuthWebhookRoute
   '/checkin/event/$id/': typeof CheckinEventIdIndexRoute
   '/api/public/tickets/share/$token': typeof ApiPublicTicketsShareTokenRoute
 }
@@ -732,6 +750,8 @@ export interface FileRouteTypes {
     | '/checkin/event/$id/relatorios'
     | '/checkin/event/$id/scanner'
     | '/checkin/event/$id/supervisor'
+    | '/lovable/email/auth/preview'
+    | '/lovable/email/auth/webhook'
     | '/checkin/event/$id/'
     | '/api/public/tickets/share/$token'
   fileRoutesByTo: FileRoutesByTo
@@ -800,6 +820,8 @@ export interface FileRouteTypes {
     | '/checkin/event/$id/relatorios'
     | '/checkin/event/$id/scanner'
     | '/checkin/event/$id/supervisor'
+    | '/lovable/email/auth/preview'
+    | '/lovable/email/auth/webhook'
     | '/checkin/event/$id'
     | '/api/public/tickets/share/$token'
   id:
@@ -873,6 +895,8 @@ export interface FileRouteTypes {
     | '/checkin/event/$id/relatorios'
     | '/checkin/event/$id/scanner'
     | '/checkin/event/$id/supervisor'
+    | '/lovable/email/auth/preview'
+    | '/lovable/email/auth/webhook'
     | '/checkin/event/$id/'
     | '/api/public/tickets/share/$token'
   fileRoutesById: FileRoutesById
@@ -901,6 +925,8 @@ export interface RootRouteChildren {
   Char91DotmcpChar93InvokeToolToolRoute: typeof Char91DotmcpChar93InvokeToolToolRoute
   ApiPublicUazapiWebhookRoute: typeof ApiPublicUazapiWebhookRoute
   OauthGoogleReturnRoute: typeof OauthGoogleReturnRoute
+  LovableEmailAuthPreviewRoute: typeof LovableEmailAuthPreviewRoute
+  LovableEmailAuthWebhookRoute: typeof LovableEmailAuthWebhookRoute
   ApiPublicTicketsShareTokenRoute: typeof ApiPublicTicketsShareTokenRoute
 }
 
@@ -1396,6 +1422,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CheckinEventIdSupervisorRouteImport
       parentRoute: typeof CheckinEventIdRoute
     }
+    '/lovable/email/auth/preview': {
+      id: '/lovable/email/auth/preview'
+      path: '/lovable/email/auth/preview'
+      fullPath: '/lovable/email/auth/preview'
+      preLoaderRoute: typeof LovableEmailAuthPreviewRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/lovable/email/auth/webhook': {
+      id: '/lovable/email/auth/webhook'
+      path: '/lovable/email/auth/webhook'
+      fullPath: '/lovable/email/auth/webhook'
+      preLoaderRoute: typeof LovableEmailAuthWebhookRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/tickets/share/$token': {
       id: '/api/public/tickets/share/$token'
       path: '/api/public/tickets/share/$token'
@@ -1589,6 +1629,8 @@ const rootRouteChildren: RootRouteChildren = {
   Char91DotmcpChar93InvokeToolToolRoute: Char91DotmcpChar93InvokeToolToolRoute,
   ApiPublicUazapiWebhookRoute: ApiPublicUazapiWebhookRoute,
   OauthGoogleReturnRoute: OauthGoogleReturnRoute,
+  LovableEmailAuthPreviewRoute: LovableEmailAuthPreviewRoute,
+  LovableEmailAuthWebhookRoute: LovableEmailAuthWebhookRoute,
   ApiPublicTicketsShareTokenRoute: ApiPublicTicketsShareTokenRoute,
 }
 export const routeTree = rootRouteImport
