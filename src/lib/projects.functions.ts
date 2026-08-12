@@ -1,6 +1,9 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { supabase } from "@/integrations/supabase/client";
+import { Database } from "@/integrations/supabase/types";
+
+type TenantRole = Database["public"]["Enums"]["tenant_role"];
 
 /**
  * Zevva SaaS Multi-Tenant Engine
@@ -17,7 +20,6 @@ export const getMyProjects = createServerFn({ method: "GET" })
       .select(`
         tenant_id,
         role,
-        status,
         tenants (
           id,
           nome,
@@ -26,7 +28,7 @@ export const getMyProjects = createServerFn({ method: "GET" })
           slug,
           plan,
           status,
-          description,
+          telefones: telefone,
           created_at
         )
       `)
@@ -34,8 +36,7 @@ export const getMyProjects = createServerFn({ method: "GET" })
 
     return memberData?.map((m: any) => ({
       ...m.tenants,
-      role: m.role,
-      membership_status: m.status
+      role: m.role
     })) || [];
   });
 
@@ -67,8 +68,7 @@ export const createProject = createServerFn({ method: "POST" })
       .insert({
         tenant_id: tenant.id,
         user_id: user.id,
-        role: "OWNER",
-        status: "ACTIVE"
+        role: "OWNER" as TenantRole
       });
 
     if (memberError) throw memberError;

@@ -48,12 +48,14 @@ function ProjectsPage() {
 
     setIsCreating(true);
     try {
-      await createProjectFn({ data: { nome: newProjectName } });
-      toast.success("Projeto criado com sucesso!");
-      setIsDialogOpen(false);
-      setNewProjectName("");
-      // Force a refresh of tenants
-      window.location.reload();
+      const result = await createProjectFn({ data: { nome: newProjectName } });
+      if (result.success) {
+        toast.success("Projeto criado com sucesso!");
+        setIsDialogOpen(false);
+        setNewProjectName("");
+        // Reload page to refresh project list from hook
+        window.location.reload();
+      }
     } catch (error) {
       console.error("Erro ao criar projeto:", error);
       toast.error("Erro ao criar projeto. Tente novamente.");
