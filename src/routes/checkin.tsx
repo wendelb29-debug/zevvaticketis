@@ -1,4 +1,4 @@
-import { createFileRoute, Outlet, redirect, useNavigate, Link, useLocation, useParams, useMatch } from "@tanstack/react-router";
+import { createFileRoute, Outlet, redirect, useNavigate, Link, useLocation, useParams, useMatches } from "@tanstack/react-router";
 import { supabase } from "@/integrations/supabase/client";
 import { useEffect, useState, useMemo } from "react";
 import { UserMenu } from "@/components/auth/UserMenu";
@@ -45,8 +45,9 @@ export const Route = createFileRoute("/checkin")({
 });
 
 function CheckinLayout() {
-  const match = useMatch({ from: "/checkin/$projectId/", shouldThrow: false });
-  const { projectId } = match?.params || { projectId: "" };
+  const matches = useMatches();
+  const projectIdMatch = matches.find((m) => m.routeId.includes("$projectId"));
+  const projectId = (projectIdMatch?.params as any)?.projectId || "";
 
 
 
