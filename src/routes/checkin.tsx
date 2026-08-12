@@ -86,10 +86,10 @@ function CheckinLayout() {
 
   const menuItems = [
     { label: "Projetos", icon: Building2, href: `/checkin`, activeOptions: { exact: true } },
-    { label: "Operação", icon: LayoutDashboard, href: `/checkin/${projectId}`, activeOptions: { exact: true } },
-    { label: "Scanner", icon: QrCode, href: `/checkin/${projectId}/scanner`, activeOptions: { includeSearch: false } },
-    { label: "Presença", icon: Users, href: `/checkin/${projectId}/presenca` },
-    { label: "Histórico", icon: History, href: `/checkin/${projectId}/historico` },
+    { label: "Operação", icon: LayoutDashboard, href: projectId ? `/checkin/${projectId}` : `/checkin`, activeOptions: { exact: true } },
+    { label: "Scanner", icon: QrCode, href: projectId ? `/checkin/${projectId}/scanner` : `/checkin`, activeOptions: { includeSearch: false } },
+    { label: "Presença", icon: Users, href: projectId ? `/checkin/${projectId}/presenca` : `/checkin` },
+    { label: "Histórico", icon: History, href: projectId ? `/checkin/${projectId}/historico` : `/checkin` },
   ];
 
   const SidebarContent = () => (
