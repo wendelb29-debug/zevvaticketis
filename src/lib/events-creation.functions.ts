@@ -28,7 +28,14 @@ export const createEventFull = createServerFn({ method: "POST" })
     const { data: event, error: eventError } = await supabaseAdmin
       .from("events")
       .insert({
-        ...data.event,
+        title: data.event.title,
+        description: data.event.description ?? null,
+        category: data.event.category ?? null,
+        city: data.event.city ?? null,
+        location: data.event.location ?? null,
+        start_date: data.event.start_date,
+        cover_image: data.event.cover_image ?? null,
+        tenant_id: data.event.tenant_id,
         producer_id: context.userId,
         status: "aguardando_aprovacao"
       })
