@@ -87,14 +87,16 @@ function ScannerPage() {
       // Create record in checkin_records for audit trail
       const { data: { user: operator } } = await supabase.auth.getUser();
       const now = new Date();
+      const checkinDate = now.toISOString().split('T')[0];
+      const checkinTime = now.toLocaleTimeString('pt-BR', { hour12: false });
       
       await supabase.from("checkin_records").insert({
         event_id: eventId,
         ticket_id: ticket.id,
-        operator_id: operator?.id,
+        operator_id: operator?.id ?? null,
         status: 'sucesso',
-        checkin_date: now.toISOString().split('T')[0],
-        checkin_time: now.toLocaleTimeString('pt-BR', { hour12: false }),
+        checkin_date: checkinDate,
+        checkin_time: checkinTime,
         tenant_id: ticket.tenant_id
       });
 
