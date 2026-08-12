@@ -61,7 +61,7 @@ function EventCheckinLayout() {
     <div className="min-h-screen bg-slate-50 flex font-inter">
       <aside className="w-64 h-screen bg-navy text-white sticky top-0 hidden lg:flex flex-col py-8">
         <div className="px-6 mb-8 flex flex-col gap-2">
-          <Link to={`/checkin/${projectId}`} className="flex items-center gap-2 text-white/60 hover:text-white transition-colors text-xs font-bold uppercase">
+          <Link to={"/checkin/$projectId"} params={{ projectId }} className="flex items-center gap-2 text-white/60 hover:text-white transition-colors text-xs font-bold uppercase">
             <ChevronLeft className="w-4 h-4" /> Voltar
           </Link>
           <span className="text-xl font-manrope font-black text-white tracking-tighter">
