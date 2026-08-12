@@ -18,7 +18,7 @@ export const Route = createFileRoute("/app/")({
 });
 
 function ProjectsPage() {
-  const { tenants, loading, switchTenant } = useTenants();
+  const { tenants, loading, switchTenant, refreshTenants } = useTenants();
   const navigate = useNavigate();
   const [userName, setUserName] = useState("");
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -53,8 +53,11 @@ function ProjectsPage() {
         toast.success("Projeto criado com sucesso!");
         setIsDialogOpen(false);
         setNewProjectName("");
-        // Reload page to refresh project list from hook
-        window.location.reload();
+        // Refresh tenants list and auto-select new project
+        await refreshTenants();
+        if (result.tenantId) {
+          handleSelect(result.tenantId);
+        }
       }
     } catch (error) {
       console.error("Erro ao criar projeto:", error);
@@ -91,50 +94,9 @@ function ProjectsPage() {
           </Button>
         </header>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {tenants.map((tenant) => (
-            <Card 
-              key={tenant.id} 
-              className="group cursor-pointer hover:shadow-xl hover:border-coral/30 transition-all duration-300 border-slate-200 overflow-hidden rounded-[24px]"
-              onClick={() => handleSelect(tenant.id)}
-            >
-              <CardHeader className="pb-4">
-                <div className="flex justify-between items-start">
-                  <Avatar className="w-14 h-14 rounded-2xl border-2 border-slate-100">
-                    <AvatarImage src={tenant.logo || undefined} />
-                    <AvatarFallback className="bg-navy text-white font-black text-xl">
-                      {tenant.nome.substring(0, 2).toUpperCase()}
-                    </AvatarFallback>
-                  </Avatar>
-                  <span className="text-[10px] font-black uppercase tracking-widest text-coral bg-coral/10 px-3 py-1 rounded-full border border-coral/20">
-                    {tenant.plan}
-                  </span>
-                </div>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div>
-                  <CardTitle className="text-lg font-manrope font-black text-navy group-hover:text-coral transition-colors">
-                    {tenant.nome}
-                  </CardTitle>
-                  <CardDescription className="text-slate-500 font-medium truncate">
-                    /{tenant.slug}
-                  </CardDescription>
-                </div>
-                
-                <div className="flex items-center gap-2 pt-2 border-t border-slate-100">
-                  <ShieldCheck className="w-4 h-4 text-emerald-500" />
-                  <span className="text-xs font-black uppercase text-slate-400">Ambiente de Produção</span>
-                </div>
-
-                <Button className="w-full bg-navy hover:bg-coral text-white font-black uppercase tracking-widest text-[10px] py-6 rounded-xl group-hover:shadow-lg group-hover:shadow-coral/30 transition-all duration-300">
-                  Entrar no ambiente
-                </Button>
-              </CardContent>
-            </Card>
-          ))}
-
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           <Card 
-            className="flex flex-col items-center justify-center p-8 border-dashed border-2 border-slate-300 hover:border-coral transition-all cursor-pointer group rounded-[24px] min-h-[280px] hover:bg-white bg-slate-50/50"
+            className="flex flex-col items-center justify-center p-8 border-dashed border-2 border-slate-300 hover:border-coral transition-all cursor-pointer group rounded-[24px] min-h-[320px] hover:bg-white bg-slate-50/50"
             onClick={() => setIsDialogOpen(true)}
           >
             <div className="w-16 h-16 bg-white group-hover:bg-coral/10 rounded-full flex items-center justify-center mb-4 transition-colors shadow-sm border border-slate-100 group-hover:border-coral/20">
@@ -146,6 +108,56 @@ function ProjectsPage() {
             </CardDescription>
           </Card>
 
+          {tenants.map((tenant) => (
+            <Card 
+              key={tenant.id} 
+              className="group cursor-pointer hover:shadow-xl hover:border-coral/30 transition-all duration-300 border-slate-200 overflow-hidden rounded-[24px] min-h-[320px] flex flex-col"
+              onClick={() => handleSelect(tenant.id)}
+            >
+              <CardHeader className="pb-4">
+                <div className="flex justify-between items-start">
+                  <Avatar className="w-14 h-14 rounded-2xl border-2 border-slate-100">
+                    <AvatarImage src={tenant.logo || undefined} />
+                    <AvatarFallback className="bg-navy text-white font-black text-xl">
+                      {tenant.nome.substring(0, 2).toUpperCase()}
+                    </AvatarFallback>
+                  </Avatar>
+                  <div className="flex flex-col items-end gap-1">
+                    <span className="text-[9px] font-black uppercase tracking-widest text-coral bg-coral/10 px-3 py-1 rounded-full border border-coral/20">
+                      {tenant.plan}
+                    </span>
+                    {tenant.status === 'ACTIVE' && (
+                      <span className="text-[8px] font-bold uppercase text-emerald-500 flex items-center gap-1">
+                        <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse" />
+                        Ativo
+                      </span>
+                    )}
+                  </div>
+                </div>
+              </CardHeader>
+              <CardContent className="space-y-4 flex-grow flex flex-col justify-between">
+                <div>
+                  <CardTitle className="text-lg font-manrope font-black text-navy group-hover:text-coral transition-colors line-clamp-2 leading-tight">
+                    {tenant.nome}
+                  </CardTitle>
+                  <CardDescription className="text-slate-500 font-medium truncate mt-1">
+                    Workspace: {tenant.slug}
+                  </CardDescription>
+                </div>
+                
+                <div className="space-y-4">
+                  <div className="flex items-center gap-2 pt-2 border-t border-slate-100">
+                    <ShieldCheck className="w-4 h-4 text-emerald-500" />
+                    <span className="text-[10px] font-black uppercase text-slate-400 tracking-tight">Ambiente Isolado</span>
+                  </div>
+
+                  <Button className="w-full bg-navy hover:bg-navy/90 text-white font-black uppercase tracking-widest text-[10px] py-6 rounded-xl group-hover:bg-coral group-hover:shadow-lg group-hover:shadow-coral/30 transition-all duration-300">
+                    Gerenciar Workspace
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          ))}
         </div>
       </div>
 
