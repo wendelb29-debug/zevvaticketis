@@ -45,7 +45,7 @@ export const Route = createFileRoute("/checkin")({
 });
 
 function CheckinLayout() {
-  const match = useMatch({ from: "/checkin/$projectId", shouldThrow: false });
+  const match = useMatch({ from: "/checkin/$projectId/", shouldThrow: false });
   const { projectId } = match?.params || { projectId: "" };
 
 
