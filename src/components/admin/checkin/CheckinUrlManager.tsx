@@ -172,14 +172,14 @@ export function CheckinUrlManager() {
         <div className="p-8 bg-navy rounded-[40px] text-white space-y-6 relative overflow-hidden group">
           <div className="absolute top-0 right-0 w-64 h-64 bg-coral/10 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl group-hover:bg-coral/20 transition-all duration-700" />
           <div className="space-y-2 relative z-10">
-            <h3 className="font-manrope font-black text-2xl">Módulo de Leitura</h3>
-            <p className="text-white/60 text-sm font-medium">O ambiente de leitura está pronto. Você pode acessar diretamente pelo link gerado ou usar o scanner manual aqui no painel.</p>
+            <h3 className="font-manrope font-black text-2xl">Zevva Staff</h3>
+            <p className="text-white/60 text-sm font-medium">O ambiente operacional de check-in (Zevva Staff) está configurado. Acesse agora para gerenciar a entrada dos participantes.</p>
           </div>
           <Button 
-            onClick={() => navigate({ to: '/checkin' })}
+            onClick={() => navigate({ to: activeTenant ? `/checkin/${activeTenant.slug || activeTenant.id}` : '/checkin' })}
             className="w-full h-14 bg-coral hover:bg-coral-dark text-white rounded-2xl font-black uppercase tracking-widest text-sm shadow-xl shadow-coral/20 relative z-10"
           >
-            Acessar Scanner Manual
+            Acessar Zevva Staff
           </Button>
         </div>
       </div>
