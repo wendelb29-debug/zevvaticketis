@@ -50,22 +50,26 @@ export const createProject = createServerFn({ method: "POST" })
 
     const slug = data.nome.toLowerCase().replace(/[^a-z0-9]/g, "-").replace(/-+/g, "-");
 
-    // Create the tenant using admin client to bypass RLS for creation
-    const { data: tenant, error: tenantError } = await supabaseAdmin
+    // Use regular supabase client for the current user to ensure session context is correct
+    // The migration added policies to allow authenticated users to insert.
+    const { data: tenant, error: tenantError } = await supabase
       .from("tenants")
       .insert({
         nome: data.nome,
         slug,
         plan: "free",
-        status: "aprovado" // Changed from ACTIVE to match check constraint
+        status: "aprovado"
       })
       .select()
       .single();
 
-    if (tenantError) throw tenantError;
+    if (tenantError) {
+      console.error("Tenant error:", tenantError);
+      throw tenantError;
+    }
 
-    // Add user as OWNER of the new tenant using admin client
-    const { error: memberError } = await supabaseAdmin
+    // Add user as OWNER
+    const { error: memberError } = await supabase
       .from("tenant_members")
       .insert({
         tenant_id: tenant.id,
