@@ -57,7 +57,7 @@ function CheckinDashboard() {
 
   return (
     <div className="space-y-8">
-      <h2 className="text-3xl font-manrope font-black text-navy uppercase tracking-tighter">Eventos do Projeto</h2>
+      <h2 className="text-3xl font-manrope font-black text-navy uppercase tracking-tighter">Eventos Disponíveis</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {events.length === 0 ? (
           <div className="col-span-full p-12 text-center bg-white rounded-3xl border border-line">
@@ -87,13 +87,14 @@ function CheckinDashboard() {
               </div>
             </div>
             <Button 
-              className="w-full bg-navy hover:bg-navy/90 text-white font-black uppercase tracking-widest text-xs h-12 rounded-xl"
+              className="w-full bg-navy hover:bg-navy/90 text-white font-black uppercase tracking-widest text-[11px] h-14 rounded-2xl group-hover:bg-coral transition-colors"
               onClick={() => navigate({ 
-                to: "/checkin/$projectId/event/$id", 
-                params: { projectId: projectId, id: e.id } as any 
+                to: "/checkin/$projectId/scanner", 
+                params: { projectId: projectId } as any,
+                search: { eventId: e.id }
               })}
             >
-              Entrar no Check-in <ArrowRight className="w-4 h-4 ml-2" />
+              Iniciar Scanner <ArrowRight className="w-4 h-4 ml-2" />
             </Button>
           </Card>
         ))}

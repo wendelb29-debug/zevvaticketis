@@ -63,12 +63,12 @@ function CheckinLayout() {
   const location = useLocation();
 
   useEffect(() => {
-    if (!tenantsLoading && !activeTenant) {
-      // If user is just an operator, they should be redirected to workspace selection
-      navigate({ to: "/app" });
-      return;
+    // We only need to redirect if we are NOT at the selection screen (/checkin)
+    // and we don't have an active tenant.
+    if (!tenantsLoading && !activeTenant && location.pathname !== "/checkin" && location.pathname !== "/checkin/") {
+      navigate({ to: "/checkin" });
     }
-  }, [activeTenant, tenantsLoading]);
+  }, [activeTenant, tenantsLoading, location.pathname]);
 
   useEffect(() => {
     async function loadUser() {
@@ -84,6 +84,7 @@ function CheckinLayout() {
   };
 
   const menuItems = [
+    { label: "Projetos", icon: Building2, href: `/checkin`, activeOptions: { exact: true } },
     { label: "Operação", icon: QrCode, href: `/checkin/${projectId}`, activeOptions: { exact: true } },
     { label: "Scanner", icon: QrCode, href: `/checkin/${projectId}/scanner` },
     { label: "Presença", icon: Users, href: `/checkin/${projectId}/presenca` },
@@ -111,9 +112,9 @@ function CheckinLayout() {
             <Button 
               variant="ghost" 
               size="icon" 
-              onClick={() => navigate({ to: "/app" })} 
+              onClick={() => navigate({ to: "/checkin" })} 
               className="h-8 w-8 text-white/40 hover:text-coral"
-              title="Trocar Ambiente"
+              title="Trocar Projeto"
             >
               <X className="w-4 h-4" />
             </Button>
@@ -151,10 +152,12 @@ function CheckinLayout() {
 
   return (
     <div className="min-h-screen bg-slate-50 flex font-inter">
-      {/* Sidebar */}
-      <aside className="hidden lg:block w-64 h-screen sticky top-0 shadow-2xl">
-        <SidebarContent />
-      </aside>
+      {/* Sidebar - Only show if a project is selected */}
+      {projectId && (
+        <aside className="hidden lg:block w-64 h-screen sticky top-0 shadow-2xl">
+          <SidebarContent />
+        </aside>
+      )}
 
       <div className="flex-1 flex flex-col min-h-screen">
         <header className="h-16 bg-white border-b border-slate-200 sticky top-0 z-40 px-6 flex items-center justify-between">

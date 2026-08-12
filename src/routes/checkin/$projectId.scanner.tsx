@@ -112,8 +112,8 @@ function ScannerPage() {
           <ChevronLeft className="w-4 h-4 mr-1" /> Voltar
         </Button>
         <div className="text-right">
-          <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Recepção Ativa</p>
-          <p className="text-sm font-black text-navy uppercase truncate max-w-[200px]">{event?.title}</p>
+          <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Scanner Ativo</p>
+          <p className="text-sm font-black text-coral uppercase truncate max-w-[200px]">{event?.title}</p>
         </div>
       </div>
 
