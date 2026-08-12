@@ -43,6 +43,7 @@ import { Route as AppIndexRouteImport } from './routes/app/index'
 import { Route as AppHistoricoRouteImport } from './routes/app/historico'
 import { Route as AppPerfilRouteImport } from './routes/app/perfil'
 import { Route as AuthCallbackRouteImport } from './routes/auth/callback'
+import { Route as CheckinIndexRouteImport } from './routes/checkin/index'
 import { Route as EventosIdRouteImport } from './routes/eventos/$id'
 import { Route as LovableDemoDashboardRouteImport } from './routes/lovable/demo-dashboard'
 import { Route as ProdutorIndexRouteImport } from './routes/produtor/index'
@@ -258,6 +259,11 @@ const AuthCallbackRoute = AuthCallbackRouteImport.update({
   id: '/auth/callback',
   path: '/auth/callback',
   getParentRoute: () => rootRouteImport,
+} as any)
+const CheckinIndexRoute = CheckinIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => CheckinRoute,
 } as any)
 const EventosIdRoute = EventosIdRouteImport.update({
   id: '/$id',
@@ -536,6 +542,7 @@ export interface FileRoutesByFullPath {
   '/tickets/$id': typeof TicketsIdRoute
   '/admin/': typeof AdminIndexRoute
   '/app/': typeof AppIndexRoute
+  '/checkin/': typeof CheckinIndexRoute
   '/produtor/': typeof ProdutorIndexRoute
   '/tickets/': typeof TicketsIndexRoute
   '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
@@ -567,7 +574,6 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/cadastro': typeof CadastroRoute
-  '/checkin': typeof CheckinRouteWithChildren
   '/criar-evento': typeof CriarEventoRoute
   '/eventos': typeof EventosRouteWithChildren
   '/login': typeof LoginRoute
@@ -612,6 +618,7 @@ export interface FileRoutesByTo {
   '/tickets/$id': typeof TicketsIdRoute
   '/admin': typeof AdminIndexRoute
   '/app': typeof AppIndexRoute
+  '/checkin': typeof CheckinIndexRoute
   '/produtor': typeof ProdutorIndexRoute
   '/tickets': typeof TicketsIndexRoute
   '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
@@ -691,6 +698,7 @@ export interface FileRoutesById {
   '/tickets/$id': typeof TicketsIdRoute
   '/admin/': typeof AdminIndexRoute
   '/app/': typeof AppIndexRoute
+  '/checkin/': typeof CheckinIndexRoute
   '/produtor/': typeof ProdutorIndexRoute
   '/tickets/': typeof TicketsIndexRoute
   '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
@@ -772,6 +780,7 @@ export interface FileRouteTypes {
     | '/tickets/$id'
     | '/admin/'
     | '/app/'
+    | '/checkin/'
     | '/produtor/'
     | '/tickets/'
     | '/.lovable/oauth/consent'
@@ -803,7 +812,6 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/cadastro'
-    | '/checkin'
     | '/criar-evento'
     | '/eventos'
     | '/login'
@@ -848,6 +856,7 @@ export interface FileRouteTypes {
     | '/tickets/$id'
     | '/admin'
     | '/app'
+    | '/checkin'
     | '/produtor'
     | '/tickets'
     | '/.lovable/oauth/consent'
@@ -926,6 +935,7 @@ export interface FileRouteTypes {
     | '/tickets/$id'
     | '/admin/'
     | '/app/'
+    | '/checkin/'
     | '/produtor/'
     | '/tickets/'
     | '/.lovable/oauth/consent'
@@ -1224,6 +1234,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/auth/callback'
       preLoaderRoute: typeof AuthCallbackRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/checkin/': {
+      id: '/checkin/'
+      path: '/'
+      fullPath: '/checkin/'
+      preLoaderRoute: typeof CheckinIndexRouteImport
+      parentRoute: typeof CheckinRoute
     }
     '/eventos/$id': {
       id: '/eventos/$id'
@@ -1616,6 +1633,7 @@ const CheckinProjectIdEventIdRouteWithChildren =
   )
 
 interface CheckinRouteChildren {
+  CheckinIndexRoute: typeof CheckinIndexRoute
   CheckinProjectIdHistoricoRoute: typeof CheckinProjectIdHistoricoRoute
   CheckinProjectIdPresencaRoute: typeof CheckinProjectIdPresencaRoute
   CheckinProjectIdScannerRoute: typeof CheckinProjectIdScannerRoute
@@ -1624,6 +1642,7 @@ interface CheckinRouteChildren {
 }
 
 const CheckinRouteChildren: CheckinRouteChildren = {
+  CheckinIndexRoute: CheckinIndexRoute,
   CheckinProjectIdHistoricoRoute: CheckinProjectIdHistoricoRoute,
   CheckinProjectIdPresencaRoute: CheckinProjectIdPresencaRoute,
   CheckinProjectIdScannerRoute: CheckinProjectIdScannerRoute,
