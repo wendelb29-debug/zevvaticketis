@@ -84,10 +84,10 @@ function CheckinLayout() {
   };
 
   const menuItems = [
-    { label: "Operação", icon: QrCode, href: `/checkin/${projectId}`, activeOptions: { exact: true } },
-    { label: "Scanner", icon: QrCode, href: `/checkin/${projectId}/scanner` },
-    { label: "Presença", icon: Users, href: `/checkin/${projectId}/presenca` },
-    { label: "Histórico", icon: History, href: `/checkin/${projectId}/historico` },
+    { label: "Operação", icon: QrCode, href: `/checkin/${activeTenant?.slug || activeTenant?.id || ''}`, activeOptions: { exact: true } },
+    { label: "Scanner", icon: QrCode, href: `/checkin/${activeTenant?.slug || activeTenant?.id || ''}/scanner` },
+    { label: "Presença", icon: Users, href: `/checkin/${activeTenant?.slug || activeTenant?.id || ''}/presenca` },
+    { label: "Histórico", icon: History, href: `/checkin/${activeTenant?.slug || activeTenant?.id || ''}/historico` },
   ];
 
   const SidebarContent = () => (
