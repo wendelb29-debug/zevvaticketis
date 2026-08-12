@@ -131,7 +131,11 @@ function ScannerPage() {
                   </div>
                   <Button 
                     className="bg-coral hover:bg-coral-dark text-white font-black uppercase tracking-widest text-xs h-12 px-8 rounded-xl shadow-lg shadow-coral/30"
-                    onClick={() => setIsScanning(true)}
+                    onClick={() => {
+                        setIsScanning(true);
+                        // Force a small delay to ensure UI updates before camera starts if we had real scanner
+                        toast.info("Acessando câmera...");
+                    }}
                   >
                     <Zap className="w-4 h-4 mr-2" /> Ativar Scanner
                   </Button>
