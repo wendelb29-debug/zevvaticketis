@@ -19,12 +19,20 @@ function ParticipantesPage() {
     queryKey: ["producer-participants", activeTenant?.id],
     enabled: !!activeTenant,
     queryFn: async () => {
-      const { data } = await (supabase
-        .from("tickets" as any)
-        .select("*, profiles:user_id(nome_completo, email, telefone), events(title), ticket_types(nome)")
-        .eq("tenant_id", activeTenant?.id)
-        .order("created_at", { ascending: false }) as any);
+      const { data, error } = await supabase
+        .from("tickets")
+        .select(`
+          *,
+          profiles:owner_id(nome_completo, email, telefone),
+          events(title),
+          ticket_types(nome)
+        `)
+        .eq("tenant_id", activeTenant?.id || "")
+        .order("created_at", { ascending: false });
+      
+      if (error) throw error;
       return data;
+
     }
   });
 
