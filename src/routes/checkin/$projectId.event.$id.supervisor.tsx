@@ -20,7 +20,7 @@ export const Route = createFileRoute("/checkin/$projectId/event/$id/supervisor")
 });
 
 function SupervisorPanel() {
-  const { id: eventId } = useParams({ from: "/checkin/event/$id/supervisor" });
+  const { projectId, id: eventId } = useParams({ from: "/checkin/$projectId/event/$id/supervisor" });
   const [operators, setOperators] = useState<any[]>([]);
   const [hourlyData, setHourlyData] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
