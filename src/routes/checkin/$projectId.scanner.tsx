@@ -77,7 +77,9 @@ function ScannerPage() {
           .eq("tenant_id", tenantId)
           .maybeSingle();
 
-        const isManager = member?.role === 'owner' || member?.role === 'admin';
+        // Check against defined roles (case insensitive to be safe)
+        const role = member?.role?.toUpperCase();
+        const isManager = role === 'OWNER' || role === 'ADMIN';
         setCanActivate(!!isPlatformAdmin || isManager);
       }
 
