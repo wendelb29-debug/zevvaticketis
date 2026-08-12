@@ -8,8 +8,10 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
-import { Plus, Save, ArrowLeft, Image as ImageIcon } from "lucide-react";
+import { Plus, Save, ArrowLeft, Image as ImageIcon, Loader2 } from "lucide-react";
 import { useTenants } from "@/hooks/use-tenants";
+import { useServerFn } from "@tanstack/react-start";
+import { createEventFull } from "@/lib/events-creation.functions";
 
 
 export const Route = createFileRoute("/produtor/novo-evento")({
@@ -22,6 +24,8 @@ function NovoEventoPage() {
   const { activeTenant } = useTenants();
 
   const [loading, setLoading] = useState(false);
+
+  const createEventFullFn = useServerFn(createEventFull);
 
   const [formData, setFormData] = useState({
     nome: "",
@@ -39,49 +43,35 @@ function NovoEventoPage() {
 
   const createEventMutation = useMutation({
     mutationFn: async () => {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user || !activeTenant) throw new Error("Não autenticado ou ambiente não selecionado");
+      if (!activeTenant) throw new Error("Ambiente não selecionado");
 
-
-      // 1. Create Event
-      const { data: event, error: eventError } = await (supabase
-        .from("events" as any)
-        .insert({
-          ...formData,
-          producer_id: user.id,
-          tenant_id: activeTenant.id,
-          status: "aguardando_aprovacao"
-
-        })
-        .select()
-        .single() as any);
-
-      if (eventError) throw eventError;
-
-      // 2. Create Ticket Types
-      const ticketsToInsert = ticketTypes.map(t => ({
-        ...t,
-        evento_id: event.id,
-        tenant_id: activeTenant.id,
-        quantidade_disponivel: t.quantidade_total
-
-      }));
-
-      const { error: ticketsError } = await supabase
-        .from("ticket_types" as any)
-        .insert(ticketsToInsert);
-
-      if (ticketsError) throw ticketsError;
-
-      return event;
+      return await createEventFullFn({
+        data: {
+          event: {
+            title: formData.nome,
+            description: formData.descricao,
+            category: formData.categoria,
+            city: formData.cidade,
+            location: formData.localizacao,
+            start_date: formData.data_inicio,
+            cover_image: formData.imagem_url,
+            tenant_id: activeTenant.id,
+          },
+          ticketTypes: ticketTypes.map(t => ({
+            nome: t.nome,
+            valor: Number(t.preco),
+            quantidade: Number(t.quantidade_total),
+          }))
+        }
+      });
     },
     onSuccess: () => {
       toast.success("Evento criado e enviado para aprovação!");
       queryClient.invalidateQueries({ queryKey: ["producer-events"] });
-      navigate({ to: "/produtor" });
+      navigate({ to: "/produtor/eventos" });
     },
     onError: (error: any) => {
-      toast.error("Erro ao criar evento: " + error.message);
+      toast.error("Erro ao criar evento: " + (error.message || "Erro desconhecido"));
     }
   });
 
@@ -245,7 +235,12 @@ function NovoEventoPage() {
             Cancelar
           </Button>
           <Button type="submit" disabled={createEventMutation.isPending} className="bg-coral hover:bg-coral/90">
-            {createEventMutation.isPending ? "Criando..." : "Criar Evento e Enviar para Aprovação"}
+            {createEventMutation.isPending ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Criando...
+              </>
+            ) : "Criar Evento e Enviar para Aprovação"}
           </Button>
         </div>
       </form>
