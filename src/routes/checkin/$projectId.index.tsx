@@ -91,7 +91,7 @@ function CheckinDashboard() {
               className="w-full bg-navy hover:bg-navy/90 text-white font-black uppercase tracking-widest text-[11px] h-14 rounded-2xl group-hover:bg-coral transition-colors"
               onClick={() => navigate({ 
                 to: "/checkin/$projectId/scanner", 
-                params: { projectId: projectId } as any,
+                params: { projectId: projectId },
                 search: { eventId: e.id }
               })}
             >
