@@ -184,9 +184,12 @@ function CheckinLayout() {
     </div>
   );
 
+  if (!projectId && location.pathname !== "/checkin" && location.pathname !== "/checkin/") {
+    return <CheckinErrorComponent />;
+  }
+
   return (
     <div className="min-h-screen bg-slate-50 flex font-inter">
-
       {/* Sidebar - Only show if a project is selected */}
       {projectId && (
         <aside className="hidden lg:block w-64 h-screen sticky top-0 shadow-2xl">
