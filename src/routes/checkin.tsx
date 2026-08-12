@@ -151,10 +151,12 @@ function CheckinLayout() {
 
   return (
     <div className="min-h-screen bg-slate-50 flex font-inter">
-      {/* Sidebar */}
-      <aside className="hidden lg:block w-64 h-screen sticky top-0 shadow-2xl">
-        <SidebarContent />
-      </aside>
+      {/* Sidebar - Only show if a project is selected */}
+      {projectId && (
+        <aside className="hidden lg:block w-64 h-screen sticky top-0 shadow-2xl">
+          <SidebarContent />
+        </aside>
+      )}
 
       <div className="flex-1 flex flex-col min-h-screen">
         <header className="h-16 bg-white border-b border-slate-200 sticky top-0 z-40 px-6 flex items-center justify-between">
