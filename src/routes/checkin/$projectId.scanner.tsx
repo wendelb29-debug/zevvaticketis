@@ -15,7 +15,10 @@ import {
   AlertTriangle,
   History as HistoryIcon,
   User as UserIcon,
-  Calendar
+  Calendar,
+  Wifi,
+  WifiOff,
+  Database
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -23,6 +26,7 @@ import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import { Html5Qrcode } from "html5-qrcode";
 import { DateTime } from "luxon";
+import { useOfflineScanner } from "@/hooks/use-offline-scanner";
 
 export const Route = createFileRoute("/checkin/$projectId/scanner")({
   component: ScannerPage,
@@ -48,6 +52,7 @@ function ScannerPage() {
   const [stats, setStats] = useState({ total: 0, checkedIn: 0 });
   const [scanHistory, setScanHistory] = useState<any[]>([]);
   const [canActivate, setCanActivate] = useState(false);
+  const { isOnline, offlineQueue, addToQueue } = useOfflineScanner();
   
   const html5QrCodeRef = useRef<Html5Qrcode | null>(null);
   const scannerContainerId = "qr-reader";
@@ -170,6 +175,29 @@ function ScannerPage() {
   const processCheckin = async (code: string) => {
     if (!eventId) return;
 
+    const { data: { user: operator } } = await supabase.auth.getUser();
+    const now = DateTime.now();
+
+    // OFFLINE MODE
+    if (!isOnline) {
+      addToQueue({
+        code,
+        eventId,
+        operatorId: operator?.id || '',
+        timestamp: now.toISO(),
+        tenantId: event?.tenant_id || projectId
+      });
+      
+      setScannedResult({ 
+        success: true, 
+        message: "ENFILEIRADO (OFFLINE)", 
+        offline: true,
+        ticket: { qr_code: code } 
+      });
+      setStatus('success');
+      return;
+    }
+
     try {
       const { data: ticket, error: ticketError } = await supabase
         .from("tickets")
@@ -179,9 +207,6 @@ function ScannerPage() {
         .maybeSingle();
 
       if (ticketError) throw ticketError;
-
-      const { data: { user: operator } } = await supabase.auth.getUser();
-      const now = DateTime.now();
       
       if (!ticket) {
         setScannedResult({ success: false, message: "INGRESSO INVÁLIDO" });
@@ -215,8 +240,21 @@ function ScannerPage() {
       
     } catch (err) {
       console.error(err);
-      setErrorMessage("Erro de processamento. Tente novamente.");
-      setStatus('error');
+      // Fallback to offline queue if server error (network issue)
+      addToQueue({
+        code,
+        eventId,
+        operatorId: operator?.id || '',
+        timestamp: now.toISO(),
+        tenantId: event?.tenant_id || projectId
+      });
+      setScannedResult({ 
+        success: true, 
+        message: "ENFILEIRADO (ERRO SYNC)", 
+        offline: true,
+        ticket: { qr_code: code } 
+      });
+      setStatus('success');
     }
   };
 
@@ -266,6 +304,31 @@ function ScannerPage() {
           <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Scanner Profissional</p>
           <p className="text-sm font-black text-coral uppercase truncate max-w-[200px]">{event?.title}</p>
         </div>
+      </div>
+
+      {/* Connection and Queue Status */}
+      <div className="flex gap-2">
+        <div className={cn(
+          "flex-1 flex items-center justify-center gap-2 py-2 px-4 rounded-2xl border shadow-sm",
+          isOnline ? "bg-emerald-50 border-emerald-100" : "bg-amber-50 border-amber-100"
+        )}>
+          {isOnline ? <Wifi className="w-3 h-3 text-emerald-500" /> : <WifiOff className="w-3 h-3 text-amber-500" />}
+          <span className={cn(
+            "text-[9px] font-black uppercase tracking-widest",
+            isOnline ? "text-emerald-600" : "text-amber-600"
+          )}>
+            {isOnline ? "Conectado" : "Modo Offline"}
+          </span>
+        </div>
+        
+        {offlineQueue.length > 0 && (
+          <div className="flex-1 flex items-center justify-center gap-2 py-2 px-4 bg-blue-50 border border-blue-100 rounded-2xl shadow-sm animate-pulse">
+            <Database className="w-3 h-3 text-blue-500" />
+            <span className="text-[9px] font-black text-blue-600 uppercase tracking-widest">
+              {offlineQueue.length} na fila
+            </span>
+          </div>
+        )}
       </div>
 
       <div className="max-w-md mx-auto space-y-6">
@@ -360,25 +423,34 @@ function ScannerPage() {
            {/* Result Overlay */}
            {scannedResult && (
               <div className="absolute inset-0 bg-black/80 backdrop-blur-md flex items-center justify-center p-6 z-50 animate-in fade-in duration-200">
-                <Card className={cn(
-                    "w-full rounded-[32px] border-4 overflow-hidden shadow-2xl",
-                    scannedResult.success ? "border-emerald-500 bg-emerald-500/5" : "border-red-500 bg-red-500/5"
-                )}>
-                    <CardContent className="p-8 text-center space-y-6">
-                        <div className={cn(
-                            "w-20 h-20 rounded-full mx-auto flex items-center justify-center",
-                            scannedResult.success ? "bg-emerald-500 text-white" : "bg-red-500 text-white"
-                        )}>
-                            {scannedResult.success ? <CheckCircle2 className="w-10 h-10" /> : <XCircle className="w-10 h-10" />}
-                        </div>
+                 <Card className={cn(
+                     "w-full rounded-[32px] border-4 overflow-hidden shadow-2xl",
+                     scannedResult.success 
+                        ? (scannedResult.offline ? "border-amber-500 bg-amber-500/5" : "border-emerald-500 bg-emerald-500/5") 
+                        : "border-red-500 bg-red-500/5"
+                 )}>
+                     <CardContent className="p-8 text-center space-y-6">
+                         <div className={cn(
+                             "w-20 h-20 rounded-full mx-auto flex items-center justify-center",
+                             scannedResult.success 
+                                ? (scannedResult.offline ? "bg-amber-500 text-white" : "bg-emerald-500 text-white") 
+                                : "bg-red-500 text-white"
+                         )}>
+                             {scannedResult.success ? <CheckCircle2 className="w-10 h-10" /> : <XCircle className="w-10 h-10" />}
+                         </div>
 
-                        <div className="space-y-2">
-                            <h3 className={cn(
-                                "text-2xl font-manrope font-black uppercase tracking-tight",
-                                scannedResult.success ? "text-emerald-500" : "text-red-500"
-                            )}>
-                                {scannedResult.message}
-                            </h3>
+                         <div className="space-y-2">
+                             <h3 className={cn(
+                                 "text-2xl font-manrope font-black uppercase tracking-tight",
+                                 scannedResult.success 
+                                    ? (scannedResult.offline ? "text-amber-600" : "text-emerald-500") 
+                                    : "text-red-500"
+                             )}>
+                                 {scannedResult.message}
+                             </h3>
+                             {scannedResult.offline && (
+                               <p className="text-[10px] font-bold text-amber-600 uppercase tracking-tighter bg-amber-100/50 py-1 px-3 rounded-full inline-block">Sincronização pendente</p>
+                             )}
                             {scannedResult.ticket && (
                                 <div className="space-y-1">
                                     <p className="text-navy font-black text-lg uppercase leading-none">{scannedResult.ticket.profiles?.full_name || 'Participante'}</p>
