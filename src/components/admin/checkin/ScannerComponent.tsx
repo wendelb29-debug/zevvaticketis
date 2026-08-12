@@ -34,8 +34,7 @@ export function ScannerComponent() {
     setIsValidating(true);
     
     try {
-      // Find the ticket by ID or share_token
-      const { data: ticket, error: ticketError } = await supabase
+      const { data: ticket, error: ticketError } = await (supabase
         .from("tickets")
         .select(`
           *,
@@ -45,7 +44,7 @@ export function ScannerComponent() {
         `)
         .or(`id.eq.${code},share_token.eq.${code}`)
         .eq("tenant_id", activeTenant?.id || "")
-        .maybeSingle();
+        .maybeSingle() as any);
 
       if (ticketError) throw ticketError;
 
@@ -59,7 +58,6 @@ export function ScannerComponent() {
         return;
       }
 
-      // Check if already checked in
       if (ticket.checked_in_at) {
         setScannedResult({
           success: false,
@@ -70,7 +68,6 @@ export function ScannerComponent() {
         return;
       }
 
-      // Perform check-in
       const { error: checkinError } = await supabase
         .from("tickets")
         .update({
@@ -81,22 +78,22 @@ export function ScannerComponent() {
 
       if (checkinError) throw checkinError;
 
-      // Log the check-in
       await supabase.from("checkin_records").insert({
         ticket_id: ticket.id,
         event_id: ticket.event_id,
-        tenant_id: activeTenant?.id,
+        tenant_id: activeTenant?.id || null,
         status: 'success'
       });
 
       const result = {
         success: true,
-        participantName: ticket.profiles?.nome_completo || "Participante",
-        eventTitle: ticket.events?.title || "Evento",
-        ticketType: ticket.ticket_types?.nome || "Ingresso",
+        participantName: (ticket as any).profiles?.nome_completo || "Participante",
+        eventTitle: (ticket as any).events?.title || "Evento",
+        ticketType: (ticket as any).ticket_types?.nome || "Ingresso",
         ticketNumber: ticket.id.slice(0, 8).toUpperCase(),
         checkinTime: new Date().toLocaleTimeString()
       };
+
       
       setScannedResult(result);
       setLastCheckins(prev => [result, ...prev].slice(0, 5));
