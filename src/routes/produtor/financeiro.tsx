@@ -25,16 +25,18 @@ function FinanceiroPage() {
     queryKey: ["producer-financial-stats", activeTenant?.id],
     enabled: !!activeTenant,
     queryFn: async () => {
-      const { data: orders } = await (supabase
-        .from("orders" as any)
-        .select("valor_total, taxa_plataforma, valor_produtos, created_at, status")
-        .eq("tenant_id", activeTenant?.id)
-        .eq("status", "pago") as any);
+      const { data: orders } = await supabase
+        .from("orders")
+        .select("valor_bruto, taxa_plataforma, valor_liquido_produtor, created_at, status")
+        .eq("tenant_id", activeTenant?.id || "")
+        .eq("status", "pago");
 
 
-      const faturamentoBruto = orders?.reduce((acc: number, curr: any) => acc + Number(curr.valor_total), 0) || 0;
-      const taxas = orders?.reduce((acc: number, curr: any) => acc + Number(curr.taxa_plataforma), 0) || 0;
-      const faturamentoLiquido = orders?.reduce((acc: number, curr: any) => acc + Number(curr.valor_produtos), 0) || 0;
+
+      const faturamentoBruto = orders?.reduce((acc: number, curr: any) => acc + Number(curr.valor_bruto || 0), 0) || 0;
+      const taxas = orders?.reduce((acc: number, curr: any) => acc + Number(curr.taxa_plataforma || 0), 0) || 0;
+      const faturamentoLiquido = orders?.reduce((acc: number, curr: any) => acc + Number(curr.valor_liquido_produtor || 0), 0) || 0;
+
 
       return {
         bruto: faturamentoBruto,
@@ -128,14 +130,15 @@ function FinanceiroPage() {
                       </span>
                     </td>
                     <td className="px-6 py-4 font-medium text-muted-fg">
-                      R$ {Number(venda.valor_total).toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
+                      R$ {Number(venda.valor_bruto || 0).toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
                     </td>
                     <td className="px-6 py-4 font-medium text-coral">
-                      - R$ {Number(venda.taxa_plataforma).toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
+                      - R$ {Number(venda.taxa_plataforma || 0).toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
                     </td>
                     <td className="px-6 py-4 text-right font-black text-navy">
-                      R$ {Number(venda.valor_produtos).toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
+                      R$ {Number(venda.valor_liquido_produtor || 0).toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
                     </td>
+
                   </tr>
                 ))}
                 {stats?.vendas.length === 0 && (

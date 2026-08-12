@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { 
   Camera, 
@@ -10,48 +10,106 @@ import {
   History, 
   RefreshCw,
   Search,
-  Maximize2
+  Maximize2,
+  Loader2
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
+import { useTenants } from "@/hooks/use-tenants";
 
 export function ScannerComponent() {
+  const { activeTenant } = useTenants();
   const [scannedResult, setScannedResult] = useState<any>(null);
   const [isScanning, setIsScanning] = useState(false);
   const [lastCheckins, setLastCheckins] = useState<any[]>([]);
   const [manualCode, setManualCode] = useState("");
+  const [isValidating, setIsValidating] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
 
-  // Mock function to simulate QR code reading
   const handleScan = async (code: string) => {
+    if (!code) return;
     setIsScanning(false);
-    toast.info("Validando ingresso...");
+    setIsValidating(true);
     
-    // Simulate API call
-    setTimeout(() => {
-      if (code === "INVÁLIDO") {
+    try {
+      const { data: ticket, error: ticketError } = await (supabase
+        .from("tickets")
+        .select(`
+          *,
+          events(title),
+          ticket_types(nome),
+          profiles:owner_id(nome_completo)
+        `)
+        .or(`id.eq.${code},share_token.eq.${code}`)
+        .eq("tenant_id", activeTenant?.id || "")
+        .maybeSingle() as any);
+
+      if (ticketError) throw ticketError;
+
+      if (!ticket) {
         setScannedResult({
           success: false,
-          error: "Ingresso inválido ou já utilizado",
-          reason: "QR inexistente ou cancelado"
+          error: "Ingresso não encontrado",
+          reason: "O código informado não pertence a nenhum ingresso válido deste projeto."
         });
-        toast.error("Ingresso inválido");
-      } else {
-        const result = {
-          success: true,
-          participantName: "Wendel Bonfim",
-          eventTitle: "Festival Internacional 2026",
-          ticketType: "VIP Gold",
-          ticketNumber: code || "ZEV-8829-X",
-          checkinTime: new Date().toLocaleTimeString()
-        };
-        setScannedResult(result);
-        setLastCheckins(prev => [result, ...prev].slice(0, 5));
-        toast.success("Entrada liberada!");
+        toast.error("Ingresso não encontrado");
+        return;
       }
-    }, 1000);
+
+      if (ticket.checked_in_at) {
+        setScannedResult({
+          success: false,
+          error: "Ingresso já utilizado",
+          reason: `Este ingresso foi validado em ${new Date(ticket.checked_in_at).toLocaleString('pt-BR')}.`
+        });
+        toast.error("Ingresso já utilizado");
+        return;
+      }
+
+      const { error: checkinError } = await supabase
+        .from("tickets")
+        .update({
+          checked_in_at: new Date().toISOString(),
+          status: 'utilizado'
+        })
+        .eq("id", ticket.id);
+
+      if (checkinError) throw checkinError;
+
+      await supabase.from("checkin_records").insert({
+        ticket_id: ticket.id,
+        event_id: ticket.event_id,
+        tenant_id: activeTenant?.id || null,
+        status: 'success'
+      });
+
+      const result = {
+        success: true,
+        participantName: (ticket as any).profiles?.nome_completo || "Participante",
+        eventTitle: (ticket as any).events?.title || "Evento",
+        ticketType: (ticket as any).ticket_types?.nome || "Ingresso",
+        ticketNumber: ticket.id.slice(0, 8).toUpperCase(),
+        checkinTime: new Date().toLocaleTimeString()
+      };
+
+      
+      setScannedResult(result);
+      setLastCheckins(prev => [result, ...prev].slice(0, 5));
+      toast.success("Entrada liberada!");
+
+    } catch (error: any) {
+      console.error("Check-in error:", error);
+      setScannedResult({
+        success: false,
+        error: "Erro na validação",
+        reason: error.message || "Ocorreu um erro ao tentar validar o ingresso."
+      });
+      toast.error("Erro na validação");
+    } finally {
+      setIsValidating(false);
+    }
   };
 
   const toggleScanner = () => {
@@ -60,6 +118,7 @@ export function ScannerComponent() {
       toast.info("Câmera inicializada. Aponte para o QR Code.");
     }
   };
+
 
   return (
     <div className="max-w-4xl mx-auto space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500 font-inter">
