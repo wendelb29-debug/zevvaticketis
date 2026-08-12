@@ -205,7 +205,8 @@ function HistoricoPage() {
                     <History className="w-10 h-10 text-slate-200 mx-auto mb-4" />
                     <p className="text-slate-400 font-bold uppercase text-xs tracking-widest mb-4">Nenhum registro encontrado para estes filtros</p>
                     <Link 
-                      to={`/checkin/${projectId}`}
+                      to="/checkin/$projectId"
+                      params={{ projectId }}
                       className="inline-flex items-center justify-center px-4 py-2 bg-navy/5 text-navy border border-navy/10 rounded-lg font-black text-[10px] uppercase tracking-widest hover:bg-navy/10 transition-all"
                     >
                       Selecionar outro evento

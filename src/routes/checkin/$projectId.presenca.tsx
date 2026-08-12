@@ -85,7 +85,8 @@ function PresencaPage() {
             <Users className="w-12 h-12 text-slate-300 mx-auto mb-4" />
             <p className="text-slate-500 font-bold uppercase tracking-widest mb-6">Nenhum participante encontrado</p>
             <Link 
-              to={`/checkin/${projectId}`}
+              to="/checkin/$projectId"
+              params={{ projectId }}
               className="inline-flex items-center justify-center px-6 py-3 bg-navy text-white rounded-xl font-black text-xs uppercase tracking-widest hover:bg-navy/90 transition-all shadow-lg"
             >
               Selecionar outro evento
