@@ -85,7 +85,7 @@ function CheckinLayout() {
   const menuItems = [
     { label: "Projetos", icon: Building2, href: `/checkin`, activeOptions: { exact: true } },
     { label: "Operação", icon: LayoutDashboard, href: `/checkin/${projectId}`, activeOptions: { exact: true } },
-    { label: "Scanner", icon: QrCode, href: `/checkin/${projectId}/scanner` },
+    { label: "Scanner", icon: QrCode, href: `/checkin/${projectId}/scanner`, activeOptions: { includeSearch: false } },
     { label: "Presença", icon: Users, href: `/checkin/${projectId}/presenca` },
     { label: "Histórico", icon: History, href: `/checkin/${projectId}/historico` },
   ];
