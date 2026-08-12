@@ -53,8 +53,9 @@ function ProjectsPage() {
         toast.success("Projeto criado com sucesso!");
         setIsDialogOpen(false);
         setNewProjectName("");
-        // Refresh tenants list and auto-select new project
+        // Refresh tenants list
         await refreshTenants();
+        // The project is now in the list, we can select it
         if (result.tenant?.id) {
           handleSelect(result.tenant.id);
         }
