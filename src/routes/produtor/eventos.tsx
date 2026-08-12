@@ -79,7 +79,7 @@ function ProducerEventsPage() {
           onClick={() => navigate({ to: "/produtor/novo-evento" })}
           className="bg-coral hover:bg-coral/90 text-white gap-2 font-black px-8 h-12 shadow-lg shadow-coral/20 rounded-xl uppercase tracking-widest text-xs w-full sm:w-auto"
         >
-          <Plus className="w-5 h-5" /> Novo Evento (V2)
+          <Plus className="w-5 h-5" /> Novo Evento
         </Button>
       </div>
 
