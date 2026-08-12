@@ -1,5 +1,6 @@
 "use client"
 import React, { useState, useEffect } from "react";
+import { useUI } from "@/hooks/use-ui";
 import {
   Home,
   DollarSign,
@@ -24,19 +25,12 @@ import {
 export const DashboardWithSidebar = () => {
   const [isDark, setIsDark] = useState(false);
 
-  useEffect(() => {
-    if (isDark) {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-  }, [isDark]);
-
+  // Removed internal dark mode logic to respect global UI context
   return (
-    <div className={`flex min-h-screen w-full ${isDark ? 'dark' : ''}`}>
+    <div className="flex min-h-screen w-full">
       <div className="flex w-full bg-gray-50 dark:bg-gray-950 text-gray-900 dark:text-gray-100">
         <Sidebar />
-        <ExampleContent isDark={isDark} setIsDark={setIsDark} />
+        <ExampleContent />
       </div>
     </div>
   );
@@ -258,7 +252,10 @@ const ToggleClose = ({ open, setOpen }: { open: boolean; setOpen: (open: boolean
   );
 };
 
-const ExampleContent = ({ isDark, setIsDark }: { isDark: boolean; setIsDark: (dark: boolean) => void }) => {
+const ExampleContent = () => {
+  const { theme, setTheme } = useUI();
+  const isDark = theme === 'dark';
+
   return (
     <div className="flex-1 bg-gray-50 dark:bg-gray-950 p-6 overflow-auto">
       {/* Header */}
@@ -273,7 +270,7 @@ const ExampleContent = ({ isDark, setIsDark }: { isDark: boolean; setIsDark: (da
             <span className="absolute -top-1 -right-1 h-3 w-3 bg-red-500 rounded-full"></span>
           </button>
           <button
-            onClick={() => setIsDark(!isDark)}
+            onClick={() => setTheme(isDark ? 'light' : 'dark')}
             className="flex h-10 w-10 items-center justify-center rounded-lg border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-100 transition-colors"
           >
             {isDark ? (
