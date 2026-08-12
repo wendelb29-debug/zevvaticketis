@@ -185,7 +185,7 @@ function ProdutorLayout() {
     { label: "Eventos", icon: FileText, href: "/produtor/eventos", permission: "EVENTOS" },
     { label: "Marketing", icon: Globe, href: "/produtor/marketing", permission: "MARKETING" },
     { label: "Participantes", icon: Users, href: "/produtor/participantes", permission: "PARTICIPANTES" },
-    { label: "Check-in", icon: ShieldCheck, href: "/produtor/checkin", permission: "CHECKIN" },
+    { label: "Check-in", icon: ShieldCheck, href: "/produtor/checkin-url", permission: "CHECKIN" },
     { label: "Financeiro", icon: BarChart3, href: "/produtor/financeiro", permission: "FINANCEIRO" },
     { label: "Equipe", icon: UserPlus, href: "/produtor/equipe", permission: "EQUIPE" },
     { label: "Configurações", icon: SettingsIcon, href: "/produtor/configuracoes", permission: "CONFIGURACOES" },
