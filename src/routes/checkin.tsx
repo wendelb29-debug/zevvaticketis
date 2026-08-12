@@ -1,4 +1,4 @@
-import { createFileRoute, Outlet, redirect, useNavigate, Link, useLocation, useParams, useMatches } from "@tanstack/react-router";
+import { createFileRoute, Outlet, redirect, useNavigate, Link, useLocation, useParams, useMatches, useRouter } from "@tanstack/react-router";
 import { supabase } from "@/integrations/supabase/client";
 import { useEffect, useState, useMemo } from "react";
 import { UserMenu } from "@/components/auth/UserMenu";
@@ -42,7 +42,34 @@ export const Route = createFileRoute("/checkin")({
     }
   },
   component: CheckinLayout,
+  errorComponent: CheckinErrorComponent,
+  notFoundComponent: CheckinErrorComponent,
 });
+
+function CheckinErrorComponent() {
+  const navigate = useNavigate();
+  return (
+    <div className="flex min-h-screen items-center justify-center bg-slate-50 p-6">
+      <div className="max-w-md w-full bg-white rounded-3xl p-8 shadow-xl border border-slate-200 text-center space-y-6">
+        <div className="w-20 h-20 bg-coral/10 rounded-full flex items-center justify-center mx-auto">
+          <Building2 className="w-10 h-10 text-coral" />
+        </div>
+        <div className="space-y-2">
+          <h2 className="text-2xl font-black text-navy uppercase tracking-tight">Ops! Algo deu errado</h2>
+          <p className="text-slate-600 font-medium">
+            Não conseguimos encontrar as informações deste projeto ou ocorreu um erro na navegação.
+          </p>
+        </div>
+        <Button 
+          onClick={() => navigate({ to: "/checkin" })}
+          className="w-full bg-navy hover:bg-navy/90 text-white font-black h-12 rounded-xl transition-all shadow-lg hover:shadow-coral/20"
+        >
+          SELEÇÃO DE PROJETO
+        </Button>
+      </div>
+    </div>
+  );
+}
 
 function CheckinLayout() {
   const matches = useMatches();
@@ -156,6 +183,10 @@ function CheckinLayout() {
       </div>
     </div>
   );
+
+  if (!projectId && location.pathname !== "/checkin" && location.pathname !== "/checkin/") {
+    return <CheckinErrorComponent />;
+  }
 
   return (
     <div className="min-h-screen bg-slate-50 flex font-inter">
