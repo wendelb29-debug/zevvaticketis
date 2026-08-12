@@ -9,7 +9,7 @@ export const Route = createFileRoute("/checkin/$projectId/event/$id/")({
 });
 
 function EventOperationalDashboard() {
-  const { id } = useParams({ from: "/checkin/event/$id/" });
+  const { id } = useParams({ from: "/checkin/$projectId/event/$id/" });
   const [stats, setStats] = useState({
     total: 0,
     checkedIn: 0,
