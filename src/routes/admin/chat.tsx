@@ -131,8 +131,11 @@ function AdminChatPage() {
         (payload) => {
           queryClient.setQueryData(['whatsapp-messages', selectedContactId], (old: any) => {
             if (!old) return [payload.new];
+            // Prevent duplicates if already added by mutation
+            if (old.some((m: any) => m.id === payload.new.id)) return old;
             return [...old, payload.new];
           });
+          queryClient.invalidateQueries({ queryKey: ['whatsapp-contacts'] });
           scrollToBottom();
         }
       )
