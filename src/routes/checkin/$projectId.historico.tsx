@@ -9,6 +9,7 @@ import { toast } from "sonner";
 import { jsPDF } from "jspdf";
 import "jspdf-autotable";
 import { DateTime } from "luxon";
+import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/checkin/$projectId/historico")({
   component: HistoricoPage,
@@ -65,7 +66,10 @@ function HistoricoPage() {
   }, [logs, searchTerm, dateFilter, userFilter]);
 
   const exportCSV = () => {
-    if (filteredLogs.length === 0) return toast.error("Nenhum dado para exportar");
+    if (filteredLogs.length === 0) {
+      toast.error("Nenhum dado para exportar");
+      return;
+    }
     
     const headers = ["Data", "Hora", "Participante", "QR Code", "Evento", "Operador", "Status"];
     const rows = filteredLogs.map(log => [
@@ -92,7 +96,10 @@ function HistoricoPage() {
   };
 
   const exportPDF = () => {
-    if (filteredLogs.length === 0) return toast.error("Nenhum dado para exportar");
+    if (filteredLogs.length === 0) {
+      toast.error("Nenhum dado para exportar");
+      return;
+    }
     
     const doc = new jsPDF() as any;
     doc.setFontSize(18);
