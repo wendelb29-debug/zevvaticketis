@@ -261,38 +261,37 @@ function ProdutorLayout() {
             </DropdownMenu>
           </div>
         )}
+
+        <nav className="space-y-1 px-4 mt-6">
+          {filteredMenuItems.map((item) => {
+            const isExternal = (item as any).external;
+            const LinkComponent = isExternal ? 'a' : Link;
+            const linkProps = isExternal 
+              ? { href: item.href, target: "_blank", rel: "noopener noreferrer" }
+              : { to: item.href, ...(item.activeOptions ? { activeOptions: item.activeOptions } : {}) };
+
+            return (
+              <LinkComponent
+                key={item.label}
+                {...(linkProps as any)}
+                className={cn(
+                  "flex items-center gap-3 px-4 py-3.5 rounded-xl text-sm font-extrabold transition-all duration-200",
+                  !isExternal && "" 
+                )}
+                {...(!isExternal ? {
+                  activeProps: { className: "bg-coral text-white shadow-lg shadow-coral/30" },
+                  inactiveProps: { className: "text-navy hover:bg-surface-2 hover:text-navy" }
+                } : {
+                  className: "flex items-center gap-3 px-4 py-3.5 rounded-xl text-sm font-extrabold text-navy hover:bg-surface-2 transition-all duration-200"
+                })}
+              >
+                <item.icon className="w-5 h-5" />
+                {item.label}
+              </LinkComponent>
+            );
+          })}
+        </nav>
       </div>
-
-      
-      <nav className="flex-1 space-y-1 px-4">
-        {filteredMenuItems.map((item) => {
-          const isExternal = (item as any).external;
-          const LinkComponent = isExternal ? 'a' : Link;
-          const linkProps = isExternal 
-            ? { href: item.href, target: "_blank", rel: "noopener noreferrer" }
-            : { to: item.href, ...(item.activeOptions ? { activeOptions: item.activeOptions } : {}) };
-
-          return (
-            <LinkComponent
-              key={item.label}
-              {...(linkProps as any)}
-              className={cn(
-                "flex items-center gap-3 px-4 py-3.5 rounded-xl text-sm font-extrabold transition-all duration-200",
-                !isExternal && "inactive-class" // Placeholder for actual logic below
-              )}
-              {...(!isExternal ? {
-                activeProps: { className: "bg-coral text-white shadow-lg shadow-coral/30" },
-                inactiveProps: { className: "text-navy hover:bg-surface-2 hover:text-navy" }
-              } : {
-                className: "flex items-center gap-3 px-4 py-3.5 rounded-xl text-sm font-extrabold text-navy hover:bg-surface-2 transition-all duration-200"
-              })}
-            >
-              <item.icon className="w-5 h-5" />
-              {item.label}
-            </LinkComponent>
-          );
-        })}
-      </nav>
 
       <div className="px-4 mt-auto">
         <button 
