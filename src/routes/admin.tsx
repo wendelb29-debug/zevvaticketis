@@ -1,4 +1,5 @@
 import { createFileRoute, Outlet, redirect, useNavigate, Link, useLocation } from "@tanstack/react-router";
+import { useTenants } from "@/hooks/use-tenants";
 import { supabase } from "@/integrations/supabase/client";
 import { useEffect, useState } from "react";
 import { UserMenu } from "@/components/auth/UserMenu";
@@ -80,6 +81,7 @@ function AdminLayout() {
   const navigate = useNavigate();
   const location = useLocation();
   const { theme, setTheme } = useUI();
+  const { logout } = useTenants();
   const [openGroup, setOpenGroup] = useState<string | null>(null);
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(() => {
     if (typeof window !== "undefined") {
@@ -112,7 +114,7 @@ function AdminLayout() {
   }, [location.pathname]);
 
   const handleLogout = async () => {
-    await supabase.auth.signOut();
+    await logout();
     navigate({ to: "/" });
   };
 

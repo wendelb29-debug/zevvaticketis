@@ -20,6 +20,7 @@ type TenantContextType = {
   loading: boolean;
   userRole: string | null;
   switchTenant: (tenantId: string) => void;
+  logout: () => Promise<void>;
   refreshTenants: () => Promise<void>;
   hasPermission: (permission: string) => boolean;
 };
@@ -112,6 +113,14 @@ export function TenantProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
+  const logout = async () => {
+    localStorage.removeItem("zevva_active_tenant_id");
+    await supabase.auth.signOut();
+    setActiveTenant(null);
+    setTenants([]);
+    setUserRole(null);
+  };
+
   const hasPermission = (permission: string) => {
     if (!userRole) return false;
     const role = userRole.toUpperCase();
@@ -132,7 +141,7 @@ export function TenantProvider({ children }: { children: React.ReactNode }) {
   };
 
   return (
-    <TenantContext.Provider value={{ activeTenant, tenants, loading, userRole, switchTenant, refreshTenants, hasPermission }}>
+    <TenantContext.Provider value={{ activeTenant, tenants, loading, userRole, switchTenant, refreshTenants, hasPermission, logout }}>
       {children}
     </TenantContext.Provider>
   );
