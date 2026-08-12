@@ -25,6 +25,7 @@ import {
   PanelLeftClose,
   PanelLeftOpen,
   Building2,
+  Home,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
@@ -203,9 +204,26 @@ function AdminLayout() {
         "flex flex-col h-full bg-card border-r border-border py-8 font-inter transition-all duration-300 ease-in-out",
         isSidebarCollapsed ? "w-20" : "w-72"
       )}>
-      <div className={cn("px-6 mb-12 flex items-center justify-between", isSidebarCollapsed && "px-4 justify-center")}>
+      <div className={cn("px-6 mb-12 flex items-center justify-between gap-2", isSidebarCollapsed && "px-4 justify-center flex-col gap-4")}>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Link 
+              to="/app" 
+              className={cn(
+                "p-2 hover:bg-accent rounded-lg transition-all text-muted hover:text-primary outline-none active:scale-95 border border-border bg-card",
+                isSidebarCollapsed ? "w-10 h-10 flex items-center justify-center" : ""
+              )}
+            >
+              <Home className="w-5 h-5" />
+            </Link>
+          </TooltipTrigger>
+          <TooltipContent side="right">
+            <p className="font-black uppercase tracking-widest text-[10px]">Meus Projetos (Workspace)</p>
+          </TooltipContent>
+        </Tooltip>
+
         {!isSidebarCollapsed && (
-          <Link to="/" className="text-xl font-manrope font-extrabold text-primary tracking-tighter">
+          <Link to="/" className="text-xl font-manrope font-extrabold text-primary tracking-tighter flex-1 truncate">
             ZEVVA <span className="text-foreground">ADMIN</span>
           </Link>
         )}
