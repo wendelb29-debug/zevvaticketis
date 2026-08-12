@@ -124,10 +124,9 @@ function AdminChatPage() {
       .on(
         'postgres_changes',
         {
-          event: 'INSERT',
+          event: '*',
           schema: 'public',
-          table: 'whatsapp_messages',
-          filter: `contact_id=eq.${selectedContactId}`
+          table: 'whatsapp_messages'
         },
         (payload) => {
           queryClient.setQueryData(['whatsapp-messages', selectedContactId], (old: any) => {
