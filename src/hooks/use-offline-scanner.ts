@@ -82,21 +82,19 @@ export function useOfflineScanner() {
             operator_id: scan.operatorId,
             status: 'sucesso',
             checkin_date: scan.timestamp.split('T')[0],
-            checkin_time: scan.timestamp.split('T')[1].split('.')[0],
-            tenant_id: scan.tenantId,
-            notes: 'Sincronizado via modo offline'
+            checkin_time: scan.timestamp.split('T')[1]?.split('.')[0] || '00:00:00',
+            tenant_id: scan.tenantId
           });
         } else {
             // Log as failure if ticket invalid or already used
             await supabase.from("checkin_records").insert({
                 event_id: scan.eventId,
-                ticket_id: ticket?.id || null,
+                ticket_id: ticket?.id ?? undefined,
                 operator_id: scan.operatorId,
                 status: 'falha',
                 checkin_date: scan.timestamp.split('T')[0],
-                checkin_time: scan.timestamp.split('T')[1].split('.')[0],
-                tenant_id: scan.tenantId,
-                notes: ticket ? 'JÁ UTILIZADO (Offline Sync)' : 'INVÁLIDO (Offline Sync)'
+                checkin_time: scan.timestamp.split('T')[1]?.split('.')[0] || '00:00:00',
+                tenant_id: scan.tenantId
             });
         }
       } catch (err) {
