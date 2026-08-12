@@ -18,7 +18,7 @@ export const Route = createFileRoute("/app/")({
 });
 
 function ProjectsPage() {
-  const { tenants, loading, switchTenant, refreshTenants } = useTenants();
+  const { tenants, loading, switchTenant, refreshTenants, logout } = useTenants();
   const navigate = useNavigate();
   const [userName, setUserName] = useState("");
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -38,7 +38,7 @@ function ProjectsPage() {
   };
 
   const handleLogout = async () => {
-    await supabase.auth.signOut();
+    await logout();
     navigate({ to: "/login" });
   };
 
