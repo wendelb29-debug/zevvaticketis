@@ -1,6 +1,9 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { supabase } from "@/integrations/supabase/client";
+import { Database } from "@/integrations/supabase/types";
+
+type TenantRole = Database["public"]["Enums"]["tenant_role"];
 
 /**
  * Zevva SaaS Multi-Tenant Engine
@@ -17,7 +20,6 @@ export const getMyProjects = createServerFn({ method: "GET" })
       .select(`
         tenant_id,
         role,
-        status,
         tenants (
           id,
           nome,
@@ -26,7 +28,7 @@ export const getMyProjects = createServerFn({ method: "GET" })
           slug,
           plan,
           status,
-          description,
+          telefones: telefone,
           created_at
         )
       `)
@@ -34,15 +36,48 @@ export const getMyProjects = createServerFn({ method: "GET" })
 
     return memberData?.map((m: any) => ({
       ...m.tenants,
-      role: m.role,
-      membership_status: m.status
+      role: m.role
     })) || [];
+  });
+
+export const createProject = createServerFn({ method: "POST" })
+  .inputValidator((data) => z.object({ nome: z.string().min(3) }).parse(data))
+  .handler(async ({ data }) => {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) throw new Error("Unauthorized");
+
+    const slug = data.nome.toLowerCase().replace(/[^a-z0-9]/g, "-").replace(/-+/g, "-");
+
+    // Create the tenant
+    const { data: tenant, error: tenantError } = await supabase
+      .from("tenants")
+      .insert({
+        nome: data.nome,
+        slug,
+        plan: "free",
+        status: "ACTIVE"
+      })
+      .select()
+      .single();
+
+    if (tenantError) throw tenantError;
+
+    // Add user as OWNER of the new tenant
+    const { error: memberError } = await supabase
+      .from("tenant_members")
+      .insert({
+        tenant_id: tenant.id,
+        user_id: user.id,
+        role: "OWNER" as TenantRole
+      });
+
+    if (memberError) throw memberError;
+
+    return { success: true, tenant };
   });
 
 export const switchProject = createServerFn({ method: "POST" })
   .inputValidator((data) => z.object({ projectId: z.string() }).parse(data))
   .handler(async ({ data }) => {
-    // This is primarily a client-side state change in this architecture, 
-    // but we can log access or verify permissions here.
     return { success: true, projectId: data.projectId };
   });
