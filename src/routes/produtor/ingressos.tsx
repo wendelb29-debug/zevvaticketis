@@ -17,14 +17,24 @@ function IngressosPage() {
     queryKey: ["producer-ticket-types", activeTenant?.id],
     enabled: !!activeTenant,
     queryFn: async () => {
+      const { data: events } = await supabase
+        .from("events")
+        .select("id")
+        .eq("tenant_id", activeTenant?.id || "");
+      
+      const eventIds = events?.map(e => e.id) || [];
+      
+      if (eventIds.length === 0) return [];
+
       const { data, error } = await supabase
         .from("ticket_types")
         .select("*, events(title)")
-        .eq("tenant_id", activeTenant?.id || "")
+        .in("event_id", eventIds)
         .order("created_at", { ascending: false });
       
       if (error) throw error;
       return data;
+
 
     }
   });
