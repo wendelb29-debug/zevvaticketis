@@ -50,6 +50,7 @@ import { Route as CheckinScannerRouteImport } from './routes/checkin/scanner'
 import { Route as EventosIdRouteImport } from './routes/eventos/$id'
 import { Route as LovableDemoDashboardRouteImport } from './routes/lovable/demo-dashboard'
 import { Route as ProdutorIndexRouteImport } from './routes/produtor/index'
+import { Route as ProdutorCheckinRouteImport } from './routes/produtor/checkin'
 import { Route as ProdutorConfiguracoesRouteImport } from './routes/produtor/configuracoes'
 import { Route as ProdutorEmailManagementRouteImport } from './routes/produtor/email-management'
 import { Route as ProdutorEquipeRouteImport } from './routes/produtor/equipe'
@@ -291,6 +292,11 @@ const ProdutorIndexRoute = ProdutorIndexRouteImport.update({
   path: '/',
   getParentRoute: () => ProdutorRoute,
 } as any)
+const ProdutorCheckinRoute = ProdutorCheckinRouteImport.update({
+  id: '/checkin',
+  path: '/checkin',
+  getParentRoute: () => ProdutorRoute,
+} as any)
 const ProdutorConfiguracoesRoute = ProdutorConfiguracoesRouteImport.update({
   id: '/configuracoes',
   path: '/configuracoes',
@@ -501,6 +507,7 @@ export interface FileRoutesByFullPath {
   '/checkin/scanner': typeof CheckinScannerRoute
   '/eventos/$id': typeof EventosIdRouteWithChildren
   '/lovable/demo-dashboard': typeof LovableDemoDashboardRoute
+  '/produtor/checkin': typeof ProdutorCheckinRoute
   '/produtor/configuracoes': typeof ProdutorConfiguracoesRoute
   '/produtor/email-management': typeof ProdutorEmailManagementRoute
   '/produtor/equipe': typeof ProdutorEquipeRoute
@@ -573,6 +580,7 @@ export interface FileRoutesByTo {
   '/checkin/scanner': typeof CheckinScannerRoute
   '/eventos/$id': typeof EventosIdRouteWithChildren
   '/lovable/demo-dashboard': typeof LovableDemoDashboardRoute
+  '/produtor/checkin': typeof ProdutorCheckinRoute
   '/produtor/configuracoes': typeof ProdutorConfiguracoesRoute
   '/produtor/email-management': typeof ProdutorEmailManagementRoute
   '/produtor/equipe': typeof ProdutorEquipeRoute
@@ -649,6 +657,7 @@ export interface FileRoutesById {
   '/checkin/scanner': typeof CheckinScannerRoute
   '/eventos/$id': typeof EventosIdRouteWithChildren
   '/lovable/demo-dashboard': typeof LovableDemoDashboardRoute
+  '/produtor/checkin': typeof ProdutorCheckinRoute
   '/produtor/configuracoes': typeof ProdutorConfiguracoesRoute
   '/produtor/email-management': typeof ProdutorEmailManagementRoute
   '/produtor/equipe': typeof ProdutorEquipeRoute
@@ -727,6 +736,7 @@ export interface FileRouteTypes {
     | '/checkin/scanner'
     | '/eventos/$id'
     | '/lovable/demo-dashboard'
+    | '/produtor/checkin'
     | '/produtor/configuracoes'
     | '/produtor/email-management'
     | '/produtor/equipe'
@@ -799,6 +809,7 @@ export interface FileRouteTypes {
     | '/checkin/scanner'
     | '/eventos/$id'
     | '/lovable/demo-dashboard'
+    | '/produtor/checkin'
     | '/produtor/configuracoes'
     | '/produtor/email-management'
     | '/produtor/equipe'
@@ -874,6 +885,7 @@ export interface FileRouteTypes {
     | '/checkin/scanner'
     | '/eventos/$id'
     | '/lovable/demo-dashboard'
+    | '/produtor/checkin'
     | '/produtor/configuracoes'
     | '/produtor/email-management'
     | '/produtor/equipe'
@@ -1230,6 +1242,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/produtor/'
       preLoaderRoute: typeof ProdutorIndexRouteImport
+      parentRoute: typeof ProdutorRoute
+    }
+    '/produtor/checkin': {
+      id: '/produtor/checkin'
+      path: '/checkin'
+      fullPath: '/produtor/checkin'
+      preLoaderRoute: typeof ProdutorCheckinRouteImport
       parentRoute: typeof ProdutorRoute
     }
     '/produtor/configuracoes': {
@@ -1591,6 +1610,7 @@ const EventosRouteWithChildren =
   EventosRoute._addFileChildren(EventosRouteChildren)
 
 interface ProdutorRouteChildren {
+  ProdutorCheckinRoute: typeof ProdutorCheckinRoute
   ProdutorConfiguracoesRoute: typeof ProdutorConfiguracoesRoute
   ProdutorEmailManagementRoute: typeof ProdutorEmailManagementRoute
   ProdutorEquipeRoute: typeof ProdutorEquipeRoute
@@ -1606,6 +1626,7 @@ interface ProdutorRouteChildren {
 }
 
 const ProdutorRouteChildren: ProdutorRouteChildren = {
+  ProdutorCheckinRoute: ProdutorCheckinRoute,
   ProdutorConfiguracoesRoute: ProdutorConfiguracoesRoute,
   ProdutorEmailManagementRoute: ProdutorEmailManagementRoute,
   ProdutorEquipeRoute: ProdutorEquipeRoute,
