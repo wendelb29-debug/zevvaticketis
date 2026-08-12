@@ -63,12 +63,12 @@ function CheckinLayout() {
   const location = useLocation();
 
   useEffect(() => {
-    if (!tenantsLoading && !activeTenant) {
-      // If user is just an operator, they should be redirected to workspace selection
-      navigate({ to: "/app" });
-      return;
+    // We only need to redirect if we are NOT at the selection screen (/checkin)
+    // and we don't have an active tenant.
+    if (!tenantsLoading && !activeTenant && location.pathname !== "/checkin" && location.pathname !== "/checkin/") {
+      navigate({ to: "/checkin" });
     }
-  }, [activeTenant, tenantsLoading]);
+  }, [activeTenant, tenantsLoading, location.pathname]);
 
   useEffect(() => {
     async function loadUser() {
