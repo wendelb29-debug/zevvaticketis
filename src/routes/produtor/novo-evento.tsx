@@ -235,7 +235,12 @@ function NovoEventoPage() {
             Cancelar
           </Button>
           <Button type="submit" disabled={createEventMutation.isPending} className="bg-coral hover:bg-coral/90">
-            {createEventMutation.isPending ? "Criando..." : "Criar Evento e Enviar para Aprovação"}
+            {createEventMutation.isPending ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Criando...
+              </>
+            ) : "Criar Evento e Enviar para Aprovação"}
           </Button>
         </div>
       </form>
