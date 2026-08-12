@@ -72,7 +72,7 @@ export const getWhatsAppContacts = createServerFn({ method: "GET" })
     const { data, error } = await supabase
       .from('whatsapp_contacts')
       .select('*, whatsapp_messages(content, created_at, direction, status)')
-      .order('last_interaction_at', { ascending: false, referencedTable: 'whatsapp_contacts' });
+      .order('last_interaction_at', { ascending: false });
 
     if (error) throw error;
     return data;
