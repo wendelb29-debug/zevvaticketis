@@ -12,7 +12,7 @@ export const Route = createFileRoute("/checkin/$projectId/event/$id/scanner")({
 });
 
 function ScannerPage() {
-  const { id: eventId } = useParams({ from: "/checkin/event/$id/scanner" });
+  const { projectId, id: eventId } = useParams({ from: "/checkin/$projectId/event/$id/scanner" });
   const navigate = useNavigate();
   const [event, setEvent] = useState<any>(null);
   const [loading, setLoading] = useState(true);
