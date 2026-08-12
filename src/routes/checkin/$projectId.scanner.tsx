@@ -90,7 +90,7 @@ function ScannerPage() {
       const checkinDate = now.toISOString().split('T')[0];
       const checkinTime = now.toLocaleTimeString('pt-BR', { hour12: false });
       
-      await supabase.from("checkin_records").insert({
+      await (supabase.from("checkin_records") as any).insert({
         event_id: eventId,
         ticket_id: ticket.id,
         operator_id: operator?.id ?? null,
