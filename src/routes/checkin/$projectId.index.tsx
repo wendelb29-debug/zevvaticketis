@@ -1,4 +1,4 @@
-import { createFileRoute, useParams } from "@tanstack/react-router";
+import { createFileRoute, useNavigate, useParams } from "@tanstack/react-router";
 import { supabase } from "@/integrations/supabase/client";
 import { useEffect, useState } from "react";
 import { QrCode, ArrowRight, Users, CheckCircle2, Clock } from "lucide-react";
@@ -101,5 +101,3 @@ function CheckinDashboard() {
     </div>
   );
 }
-
-import { useNavigate } from "@tanstack/react-router";
