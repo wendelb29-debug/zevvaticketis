@@ -47,11 +47,16 @@ function NovoEventoPage() {
       const { data: event, error: eventError } = await (supabase
         .from("events" as any)
         .insert({
-          ...formData,
+          title: formData.nome,
+          description: formData.descricao,
+          category: formData.categoria,
+          city: formData.cidade,
+          location: formData.localizacao,
+          start_date: formData.data_inicio,
+          cover_image: formData.imagem_url,
           producer_id: user.id,
           tenant_id: activeTenant.id,
           status: "aguardando_aprovacao"
-
         })
         .select()
         .single() as any);
@@ -60,11 +65,12 @@ function NovoEventoPage() {
 
       // 2. Create Ticket Types
       const ticketsToInsert = ticketTypes.map(t => ({
-        ...t,
+        nome: t.nome,
+        valor: t.preco,
+        quantidade: t.quantidade_total,
         evento_id: event.id,
         tenant_id: activeTenant.id,
         quantidade_disponivel: t.quantidade_total
-
       }));
 
       const { error: ticketsError } = await supabase
