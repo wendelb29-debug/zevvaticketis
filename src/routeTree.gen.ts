@@ -48,6 +48,7 @@ import { Route as CheckinHistoricoRouteImport } from './routes/checkin/historico
 import { Route as CheckinPresencaRouteImport } from './routes/checkin/presenca'
 import { Route as CheckinScannerRouteImport } from './routes/checkin/scanner'
 import { Route as EventosIdRouteImport } from './routes/eventos/$id'
+import { Route as LovableDemoDashboardRouteImport } from './routes/lovable/demo-dashboard'
 import { Route as ProdutorIndexRouteImport } from './routes/produtor/index'
 import { Route as ProdutorConfiguracoesRouteImport } from './routes/produtor/configuracoes'
 import { Route as ProdutorEmailManagementRouteImport } from './routes/produtor/email-management'
@@ -280,6 +281,11 @@ const EventosIdRoute = EventosIdRouteImport.update({
   path: '/$id',
   getParentRoute: () => EventosRoute,
 } as any)
+const LovableDemoDashboardRoute = LovableDemoDashboardRouteImport.update({
+  id: '/lovable/demo-dashboard',
+  path: '/lovable/demo-dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ProdutorIndexRoute = ProdutorIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -494,6 +500,7 @@ export interface FileRoutesByFullPath {
   '/checkin/presenca': typeof CheckinPresencaRoute
   '/checkin/scanner': typeof CheckinScannerRoute
   '/eventos/$id': typeof EventosIdRouteWithChildren
+  '/lovable/demo-dashboard': typeof LovableDemoDashboardRoute
   '/produtor/configuracoes': typeof ProdutorConfiguracoesRoute
   '/produtor/email-management': typeof ProdutorEmailManagementRoute
   '/produtor/equipe': typeof ProdutorEquipeRoute
@@ -565,6 +572,7 @@ export interface FileRoutesByTo {
   '/checkin/presenca': typeof CheckinPresencaRoute
   '/checkin/scanner': typeof CheckinScannerRoute
   '/eventos/$id': typeof EventosIdRouteWithChildren
+  '/lovable/demo-dashboard': typeof LovableDemoDashboardRoute
   '/produtor/configuracoes': typeof ProdutorConfiguracoesRoute
   '/produtor/email-management': typeof ProdutorEmailManagementRoute
   '/produtor/equipe': typeof ProdutorEquipeRoute
@@ -640,6 +648,7 @@ export interface FileRoutesById {
   '/checkin/presenca': typeof CheckinPresencaRoute
   '/checkin/scanner': typeof CheckinScannerRoute
   '/eventos/$id': typeof EventosIdRouteWithChildren
+  '/lovable/demo-dashboard': typeof LovableDemoDashboardRoute
   '/produtor/configuracoes': typeof ProdutorConfiguracoesRoute
   '/produtor/email-management': typeof ProdutorEmailManagementRoute
   '/produtor/equipe': typeof ProdutorEquipeRoute
@@ -717,6 +726,7 @@ export interface FileRouteTypes {
     | '/checkin/presenca'
     | '/checkin/scanner'
     | '/eventos/$id'
+    | '/lovable/demo-dashboard'
     | '/produtor/configuracoes'
     | '/produtor/email-management'
     | '/produtor/equipe'
@@ -788,6 +798,7 @@ export interface FileRouteTypes {
     | '/checkin/presenca'
     | '/checkin/scanner'
     | '/eventos/$id'
+    | '/lovable/demo-dashboard'
     | '/produtor/configuracoes'
     | '/produtor/email-management'
     | '/produtor/equipe'
@@ -862,6 +873,7 @@ export interface FileRouteTypes {
     | '/checkin/presenca'
     | '/checkin/scanner'
     | '/eventos/$id'
+    | '/lovable/demo-dashboard'
     | '/produtor/configuracoes'
     | '/produtor/email-management'
     | '/produtor/equipe'
@@ -919,6 +931,7 @@ export interface RootRouteChildren {
   Char91DotmcpChar93ListToolsRoute: typeof Char91DotmcpChar93ListToolsRoute
   Char91DotwellKnownChar93OauthProtectedResourceRoute: typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   AuthCallbackRoute: typeof AuthCallbackRoute
+  LovableDemoDashboardRoute: typeof LovableDemoDashboardRoute
   TicketsIdRoute: typeof TicketsIdRoute
   TicketsIndexRoute: typeof TicketsIndexRoute
   DotlovableOauthConsentRoute: typeof DotlovableOauthConsentRoute
@@ -1204,6 +1217,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/eventos/$id'
       preLoaderRoute: typeof EventosIdRouteImport
       parentRoute: typeof EventosRoute
+    }
+    '/lovable/demo-dashboard': {
+      id: '/lovable/demo-dashboard'
+      path: '/lovable/demo-dashboard'
+      fullPath: '/lovable/demo-dashboard'
+      preLoaderRoute: typeof LovableDemoDashboardRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/produtor/': {
       id: '/produtor/'
@@ -1623,6 +1643,7 @@ const rootRouteChildren: RootRouteChildren = {
   Char91DotwellKnownChar93OauthProtectedResourceRoute:
     Char91DotwellKnownChar93OauthProtectedResourceRoute,
   AuthCallbackRoute: AuthCallbackRoute,
+  LovableDemoDashboardRoute: LovableDemoDashboardRoute,
   TicketsIdRoute: TicketsIdRoute,
   TicketsIndexRoute: TicketsIndexRoute,
   DotlovableOauthConsentRoute: DotlovableOauthConsentRoute,
