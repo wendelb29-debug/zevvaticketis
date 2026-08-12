@@ -1,4 +1,4 @@
-import { createFileRoute, Outlet, redirect, useNavigate, Link, useLocation, useParams } from "@tanstack/react-router";
+import { createFileRoute, Outlet, redirect, useNavigate, Link, useLocation, useParams, useMatches } from "@tanstack/react-router";
 import { supabase } from "@/integrations/supabase/client";
 import { useEffect, useState, useMemo } from "react";
 import { UserMenu } from "@/components/auth/UserMenu";
@@ -45,7 +45,9 @@ export const Route = createFileRoute("/checkin")({
 });
 
 function CheckinLayout() {
-  const { projectId } = useParams({ from: "/checkin/$projectId/" });
+  const matches = useMatches();
+  const projectIdMatch = matches.find((m) => m.routeId.includes("$projectId"));
+  const projectId = (projectIdMatch?.params as any)?.projectId || "";
 
 
 
@@ -85,7 +87,7 @@ function CheckinLayout() {
   const menuItems = [
     { label: "Projetos", icon: Building2, href: `/checkin`, activeOptions: { exact: true } },
     { label: "Operação", icon: LayoutDashboard, href: `/checkin/${projectId}`, activeOptions: { exact: true } },
-    { label: "Scanner", icon: QrCode, href: `/checkin/${projectId}/scanner` },
+    { label: "Scanner", icon: QrCode, href: `/checkin/${projectId}/scanner`, activeOptions: { includeSearch: false } },
     { label: "Presença", icon: Users, href: `/checkin/${projectId}/presenca` },
     { label: "Histórico", icon: History, href: `/checkin/${projectId}/historico` },
   ];

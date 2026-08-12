@@ -58,8 +58,11 @@ function ScannerPage() {
   const scannerContainerId = "qr-reader";
 
   useEffect(() => {
+    // If no eventId is provided, we can't scan, but we shouldn't "error" out the whole page
+    // if the user just clicked the "Scanner" tab. We might want to show a message 
+    // or the event selector.
     if (!eventId) {
-      navigate({ to: "/checkin/$projectId", params: { projectId } as any });
+      // toast.info("Selecione um evento na aba Operação para iniciar o scanner.");
       return;
     }
 
@@ -288,6 +291,26 @@ function ScannerPage() {
   };
 
   if (loading) return null;
+
+  if (!eventId) {
+    return (
+      <div className="flex flex-col items-center justify-center py-20 text-center space-y-6 animate-in fade-in duration-500">
+        <div className="w-20 h-20 bg-slate-100 rounded-full flex items-center justify-center">
+          <QrCode className="w-10 h-10 text-slate-300" />
+        </div>
+        <div className="max-w-xs space-y-2">
+          <h3 className="text-xl font-manrope font-black text-navy uppercase">Nenhum Evento Selecionado</h3>
+          <p className="text-slate-500 text-sm font-medium">Selecione um evento na aba <b>Operação</b> para habilitar a câmera e iniciar as validações.</p>
+        </div>
+        <Button 
+          onClick={() => navigate({ to: "/checkin/$projectId", params: { projectId } as any })}
+          className="bg-navy hover:bg-navy/90 text-white font-black uppercase tracking-widest text-xs h-12 px-8 rounded-xl"
+        >
+          Ir para Operação
+        </Button>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6 animate-in fade-in duration-500">
