@@ -1,0 +1,1 @@
+REVOKE ALL ON FUNCTION public.prevent_tenant_billing_change() FROM PUBLIC, anon, authenticated;
