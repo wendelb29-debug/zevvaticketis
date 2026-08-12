@@ -43,10 +43,6 @@ import { Route as AppIndexRouteImport } from './routes/app/index'
 import { Route as AppHistoricoRouteImport } from './routes/app/historico'
 import { Route as AppPerfilRouteImport } from './routes/app/perfil'
 import { Route as AuthCallbackRouteImport } from './routes/auth/callback'
-import { Route as CheckinIndexRouteImport } from './routes/checkin/index'
-import { Route as CheckinHistoricoRouteImport } from './routes/checkin/historico'
-import { Route as CheckinPresencaRouteImport } from './routes/checkin/presenca'
-import { Route as CheckinScannerRouteImport } from './routes/checkin/scanner'
 import { Route as EventosIdRouteImport } from './routes/eventos/$id'
 import { Route as LovableDemoDashboardRouteImport } from './routes/lovable/demo-dashboard'
 import { Route as ProdutorIndexRouteImport } from './routes/produtor/index'
@@ -75,6 +71,10 @@ import { Route as AdminMarketingAnunciosRouteImport } from './routes/admin/marke
 import { Route as AdminMarketingPublicidadeRouteImport } from './routes/admin/marketing/publicidade'
 import { Route as AdminMarketingPushRouteImport } from './routes/admin/marketing/push'
 import { Route as ApiPublicUazapiWebhookRouteImport } from './routes/api/public/uazapi-webhook'
+import { Route as CheckinProjectIdIndexRouteImport } from './routes/checkin/$projectId.index'
+import { Route as CheckinProjectIdHistoricoRouteImport } from './routes/checkin/$projectId.historico'
+import { Route as CheckinProjectIdPresencaRouteImport } from './routes/checkin/$projectId.presenca'
+import { Route as CheckinProjectIdScannerRouteImport } from './routes/checkin/$projectId.scanner'
 import { Route as CheckinEventIdRouteImport } from './routes/checkin/event.$id'
 import { Route as EventosIdCheckoutRouteImport } from './routes/eventos/$id.checkout'
 import { Route as OauthGoogleReturnRouteImport } from './routes/oauth/google/return'
@@ -259,26 +259,6 @@ const AuthCallbackRoute = AuthCallbackRouteImport.update({
   path: '/auth/callback',
   getParentRoute: () => rootRouteImport,
 } as any)
-const CheckinIndexRoute = CheckinIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => CheckinRoute,
-} as any)
-const CheckinHistoricoRoute = CheckinHistoricoRouteImport.update({
-  id: '/historico',
-  path: '/historico',
-  getParentRoute: () => CheckinRoute,
-} as any)
-const CheckinPresencaRoute = CheckinPresencaRouteImport.update({
-  id: '/presenca',
-  path: '/presenca',
-  getParentRoute: () => CheckinRoute,
-} as any)
-const CheckinScannerRoute = CheckinScannerRouteImport.update({
-  id: '/scanner',
-  path: '/scanner',
-  getParentRoute: () => CheckinRoute,
-} as any)
 const EventosIdRoute = EventosIdRouteImport.update({
   id: '/$id',
   path: '/$id',
@@ -422,6 +402,28 @@ const ApiPublicUazapiWebhookRoute = ApiPublicUazapiWebhookRouteImport.update({
   path: '/api/public/uazapi-webhook',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CheckinProjectIdIndexRoute = CheckinProjectIdIndexRouteImport.update({
+  id: '/$projectId/',
+  path: '/$projectId/',
+  getParentRoute: () => CheckinRoute,
+} as any)
+const CheckinProjectIdHistoricoRoute =
+  CheckinProjectIdHistoricoRouteImport.update({
+    id: '/$projectId/historico',
+    path: '/$projectId/historico',
+    getParentRoute: () => CheckinRoute,
+  } as any)
+const CheckinProjectIdPresencaRoute =
+  CheckinProjectIdPresencaRouteImport.update({
+    id: '/$projectId/presenca',
+    path: '/$projectId/presenca',
+    getParentRoute: () => CheckinRoute,
+  } as any)
+const CheckinProjectIdScannerRoute = CheckinProjectIdScannerRouteImport.update({
+  id: '/$projectId/scanner',
+  path: '/$projectId/scanner',
+  getParentRoute: () => CheckinRoute,
+} as any)
 const CheckinEventIdRoute = CheckinEventIdRouteImport.update({
   id: '/event/$id',
   path: '/event/$id',
@@ -514,9 +516,6 @@ export interface FileRoutesByFullPath {
   '/app/historico': typeof AppHistoricoRoute
   '/app/perfil': typeof AppPerfilRoute
   '/auth/callback': typeof AuthCallbackRoute
-  '/checkin/historico': typeof CheckinHistoricoRoute
-  '/checkin/presenca': typeof CheckinPresencaRoute
-  '/checkin/scanner': typeof CheckinScannerRoute
   '/eventos/$id': typeof EventosIdRouteWithChildren
   '/lovable/demo-dashboard': typeof LovableDemoDashboardRoute
   '/produtor/checkin': typeof ProdutorCheckinRoute
@@ -535,7 +534,6 @@ export interface FileRoutesByFullPath {
   '/tickets/$id': typeof TicketsIdRoute
   '/admin/': typeof AdminIndexRoute
   '/app/': typeof AppIndexRoute
-  '/checkin/': typeof CheckinIndexRoute
   '/produtor/': typeof ProdutorIndexRoute
   '/tickets/': typeof TicketsIndexRoute
   '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
@@ -545,6 +543,9 @@ export interface FileRoutesByFullPath {
   '/admin/marketing/publicidade': typeof AdminMarketingPublicidadeRoute
   '/admin/marketing/push': typeof AdminMarketingPushRoute
   '/api/public/uazapi-webhook': typeof ApiPublicUazapiWebhookRoute
+  '/checkin/$projectId/historico': typeof CheckinProjectIdHistoricoRoute
+  '/checkin/$projectId/presenca': typeof CheckinProjectIdPresencaRoute
+  '/checkin/$projectId/scanner': typeof CheckinProjectIdScannerRoute
   '/checkin/event/$id': typeof CheckinEventIdRouteWithChildren
   '/eventos/$id/checkout': typeof EventosIdCheckoutRoute
   '/oauth/google/return': typeof OauthGoogleReturnRoute
@@ -552,6 +553,7 @@ export interface FileRoutesByFullPath {
   '/admin/checkin/': typeof AdminCheckinIndexRoute
   '/admin/email-management/': typeof AdminEmailManagementIndexRoute
   '/admin/marketing/': typeof AdminMarketingIndexRoute
+  '/checkin/$projectId/': typeof CheckinProjectIdIndexRoute
   '/checkin/event/$id/relatorios': typeof CheckinEventIdRelatoriosRoute
   '/checkin/event/$id/scanner': typeof CheckinEventIdScannerRoute
   '/checkin/event/$id/supervisor': typeof CheckinEventIdSupervisorRoute
@@ -563,6 +565,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/cadastro': typeof CadastroRoute
+  '/checkin': typeof CheckinRouteWithChildren
   '/criar-evento': typeof CriarEventoRoute
   '/eventos': typeof EventosRouteWithChildren
   '/login': typeof LoginRoute
@@ -589,9 +592,6 @@ export interface FileRoutesByTo {
   '/app/historico': typeof AppHistoricoRoute
   '/app/perfil': typeof AppPerfilRoute
   '/auth/callback': typeof AuthCallbackRoute
-  '/checkin/historico': typeof CheckinHistoricoRoute
-  '/checkin/presenca': typeof CheckinPresencaRoute
-  '/checkin/scanner': typeof CheckinScannerRoute
   '/eventos/$id': typeof EventosIdRouteWithChildren
   '/lovable/demo-dashboard': typeof LovableDemoDashboardRoute
   '/produtor/checkin': typeof ProdutorCheckinRoute
@@ -610,7 +610,6 @@ export interface FileRoutesByTo {
   '/tickets/$id': typeof TicketsIdRoute
   '/admin': typeof AdminIndexRoute
   '/app': typeof AppIndexRoute
-  '/checkin': typeof CheckinIndexRoute
   '/produtor': typeof ProdutorIndexRoute
   '/tickets': typeof TicketsIndexRoute
   '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
@@ -620,12 +619,16 @@ export interface FileRoutesByTo {
   '/admin/marketing/publicidade': typeof AdminMarketingPublicidadeRoute
   '/admin/marketing/push': typeof AdminMarketingPushRoute
   '/api/public/uazapi-webhook': typeof ApiPublicUazapiWebhookRoute
+  '/checkin/$projectId/historico': typeof CheckinProjectIdHistoricoRoute
+  '/checkin/$projectId/presenca': typeof CheckinProjectIdPresencaRoute
+  '/checkin/$projectId/scanner': typeof CheckinProjectIdScannerRoute
   '/eventos/$id/checkout': typeof EventosIdCheckoutRoute
   '/oauth/google/return': typeof OauthGoogleReturnRoute
   '/produtor/$id/dashboard': typeof ProdutorIdDashboardRoute
   '/admin/checkin': typeof AdminCheckinIndexRoute
   '/admin/email-management': typeof AdminEmailManagementIndexRoute
   '/admin/marketing': typeof AdminMarketingIndexRoute
+  '/checkin/$projectId': typeof CheckinProjectIdIndexRoute
   '/checkin/event/$id/relatorios': typeof CheckinEventIdRelatoriosRoute
   '/checkin/event/$id/scanner': typeof CheckinEventIdScannerRoute
   '/checkin/event/$id/supervisor': typeof CheckinEventIdSupervisorRoute
@@ -668,9 +671,6 @@ export interface FileRoutesById {
   '/app/historico': typeof AppHistoricoRoute
   '/app/perfil': typeof AppPerfilRoute
   '/auth/callback': typeof AuthCallbackRoute
-  '/checkin/historico': typeof CheckinHistoricoRoute
-  '/checkin/presenca': typeof CheckinPresencaRoute
-  '/checkin/scanner': typeof CheckinScannerRoute
   '/eventos/$id': typeof EventosIdRouteWithChildren
   '/lovable/demo-dashboard': typeof LovableDemoDashboardRoute
   '/produtor/checkin': typeof ProdutorCheckinRoute
@@ -689,7 +689,6 @@ export interface FileRoutesById {
   '/tickets/$id': typeof TicketsIdRoute
   '/admin/': typeof AdminIndexRoute
   '/app/': typeof AppIndexRoute
-  '/checkin/': typeof CheckinIndexRoute
   '/produtor/': typeof ProdutorIndexRoute
   '/tickets/': typeof TicketsIndexRoute
   '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
@@ -699,6 +698,9 @@ export interface FileRoutesById {
   '/admin/marketing/publicidade': typeof AdminMarketingPublicidadeRoute
   '/admin/marketing/push': typeof AdminMarketingPushRoute
   '/api/public/uazapi-webhook': typeof ApiPublicUazapiWebhookRoute
+  '/checkin/$projectId/historico': typeof CheckinProjectIdHistoricoRoute
+  '/checkin/$projectId/presenca': typeof CheckinProjectIdPresencaRoute
+  '/checkin/$projectId/scanner': typeof CheckinProjectIdScannerRoute
   '/checkin/event/$id': typeof CheckinEventIdRouteWithChildren
   '/eventos/$id/checkout': typeof EventosIdCheckoutRoute
   '/oauth/google/return': typeof OauthGoogleReturnRoute
@@ -706,6 +708,7 @@ export interface FileRoutesById {
   '/admin/checkin/': typeof AdminCheckinIndexRoute
   '/admin/email-management/': typeof AdminEmailManagementIndexRoute
   '/admin/marketing/': typeof AdminMarketingIndexRoute
+  '/checkin/$projectId/': typeof CheckinProjectIdIndexRoute
   '/checkin/event/$id/relatorios': typeof CheckinEventIdRelatoriosRoute
   '/checkin/event/$id/scanner': typeof CheckinEventIdScannerRoute
   '/checkin/event/$id/supervisor': typeof CheckinEventIdSupervisorRoute
@@ -749,9 +752,6 @@ export interface FileRouteTypes {
     | '/app/historico'
     | '/app/perfil'
     | '/auth/callback'
-    | '/checkin/historico'
-    | '/checkin/presenca'
-    | '/checkin/scanner'
     | '/eventos/$id'
     | '/lovable/demo-dashboard'
     | '/produtor/checkin'
@@ -770,7 +770,6 @@ export interface FileRouteTypes {
     | '/tickets/$id'
     | '/admin/'
     | '/app/'
-    | '/checkin/'
     | '/produtor/'
     | '/tickets/'
     | '/.lovable/oauth/consent'
@@ -780,6 +779,9 @@ export interface FileRouteTypes {
     | '/admin/marketing/publicidade'
     | '/admin/marketing/push'
     | '/api/public/uazapi-webhook'
+    | '/checkin/$projectId/historico'
+    | '/checkin/$projectId/presenca'
+    | '/checkin/$projectId/scanner'
     | '/checkin/event/$id'
     | '/eventos/$id/checkout'
     | '/oauth/google/return'
@@ -787,6 +789,7 @@ export interface FileRouteTypes {
     | '/admin/checkin/'
     | '/admin/email-management/'
     | '/admin/marketing/'
+    | '/checkin/$projectId/'
     | '/checkin/event/$id/relatorios'
     | '/checkin/event/$id/scanner'
     | '/checkin/event/$id/supervisor'
@@ -798,6 +801,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/cadastro'
+    | '/checkin'
     | '/criar-evento'
     | '/eventos'
     | '/login'
@@ -824,9 +828,6 @@ export interface FileRouteTypes {
     | '/app/historico'
     | '/app/perfil'
     | '/auth/callback'
-    | '/checkin/historico'
-    | '/checkin/presenca'
-    | '/checkin/scanner'
     | '/eventos/$id'
     | '/lovable/demo-dashboard'
     | '/produtor/checkin'
@@ -845,7 +846,6 @@ export interface FileRouteTypes {
     | '/tickets/$id'
     | '/admin'
     | '/app'
-    | '/checkin'
     | '/produtor'
     | '/tickets'
     | '/.lovable/oauth/consent'
@@ -855,12 +855,16 @@ export interface FileRouteTypes {
     | '/admin/marketing/publicidade'
     | '/admin/marketing/push'
     | '/api/public/uazapi-webhook'
+    | '/checkin/$projectId/historico'
+    | '/checkin/$projectId/presenca'
+    | '/checkin/$projectId/scanner'
     | '/eventos/$id/checkout'
     | '/oauth/google/return'
     | '/produtor/$id/dashboard'
     | '/admin/checkin'
     | '/admin/email-management'
     | '/admin/marketing'
+    | '/checkin/$projectId'
     | '/checkin/event/$id/relatorios'
     | '/checkin/event/$id/scanner'
     | '/checkin/event/$id/supervisor'
@@ -902,9 +906,6 @@ export interface FileRouteTypes {
     | '/app/historico'
     | '/app/perfil'
     | '/auth/callback'
-    | '/checkin/historico'
-    | '/checkin/presenca'
-    | '/checkin/scanner'
     | '/eventos/$id'
     | '/lovable/demo-dashboard'
     | '/produtor/checkin'
@@ -923,7 +924,6 @@ export interface FileRouteTypes {
     | '/tickets/$id'
     | '/admin/'
     | '/app/'
-    | '/checkin/'
     | '/produtor/'
     | '/tickets/'
     | '/.lovable/oauth/consent'
@@ -933,6 +933,9 @@ export interface FileRouteTypes {
     | '/admin/marketing/publicidade'
     | '/admin/marketing/push'
     | '/api/public/uazapi-webhook'
+    | '/checkin/$projectId/historico'
+    | '/checkin/$projectId/presenca'
+    | '/checkin/$projectId/scanner'
     | '/checkin/event/$id'
     | '/eventos/$id/checkout'
     | '/oauth/google/return'
@@ -940,6 +943,7 @@ export interface FileRouteTypes {
     | '/admin/checkin/'
     | '/admin/email-management/'
     | '/admin/marketing/'
+    | '/checkin/$projectId/'
     | '/checkin/event/$id/relatorios'
     | '/checkin/event/$id/scanner'
     | '/checkin/event/$id/supervisor'
@@ -1219,34 +1223,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthCallbackRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/checkin/': {
-      id: '/checkin/'
-      path: '/'
-      fullPath: '/checkin/'
-      preLoaderRoute: typeof CheckinIndexRouteImport
-      parentRoute: typeof CheckinRoute
-    }
-    '/checkin/historico': {
-      id: '/checkin/historico'
-      path: '/historico'
-      fullPath: '/checkin/historico'
-      preLoaderRoute: typeof CheckinHistoricoRouteImport
-      parentRoute: typeof CheckinRoute
-    }
-    '/checkin/presenca': {
-      id: '/checkin/presenca'
-      path: '/presenca'
-      fullPath: '/checkin/presenca'
-      preLoaderRoute: typeof CheckinPresencaRouteImport
-      parentRoute: typeof CheckinRoute
-    }
-    '/checkin/scanner': {
-      id: '/checkin/scanner'
-      path: '/scanner'
-      fullPath: '/checkin/scanner'
-      preLoaderRoute: typeof CheckinScannerRouteImport
-      parentRoute: typeof CheckinRoute
-    }
     '/eventos/$id': {
       id: '/eventos/$id'
       path: '/$id'
@@ -1443,6 +1419,34 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicUazapiWebhookRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/checkin/$projectId/': {
+      id: '/checkin/$projectId/'
+      path: '/$projectId'
+      fullPath: '/checkin/$projectId/'
+      preLoaderRoute: typeof CheckinProjectIdIndexRouteImport
+      parentRoute: typeof CheckinRoute
+    }
+    '/checkin/$projectId/historico': {
+      id: '/checkin/$projectId/historico'
+      path: '/$projectId/historico'
+      fullPath: '/checkin/$projectId/historico'
+      preLoaderRoute: typeof CheckinProjectIdHistoricoRouteImport
+      parentRoute: typeof CheckinRoute
+    }
+    '/checkin/$projectId/presenca': {
+      id: '/checkin/$projectId/presenca'
+      path: '/$projectId/presenca'
+      fullPath: '/checkin/$projectId/presenca'
+      preLoaderRoute: typeof CheckinProjectIdPresencaRouteImport
+      parentRoute: typeof CheckinRoute
+    }
+    '/checkin/$projectId/scanner': {
+      id: '/checkin/$projectId/scanner'
+      path: '/$projectId/scanner'
+      fullPath: '/checkin/$projectId/scanner'
+      preLoaderRoute: typeof CheckinProjectIdScannerRouteImport
+      parentRoute: typeof CheckinRoute
+    }
     '/checkin/event/$id': {
       id: '/checkin/event/$id'
       path: '/event/$id'
@@ -1606,19 +1610,19 @@ const CheckinEventIdRouteWithChildren = CheckinEventIdRoute._addFileChildren(
 )
 
 interface CheckinRouteChildren {
-  CheckinHistoricoRoute: typeof CheckinHistoricoRoute
-  CheckinPresencaRoute: typeof CheckinPresencaRoute
-  CheckinScannerRoute: typeof CheckinScannerRoute
-  CheckinIndexRoute: typeof CheckinIndexRoute
+  CheckinProjectIdHistoricoRoute: typeof CheckinProjectIdHistoricoRoute
+  CheckinProjectIdPresencaRoute: typeof CheckinProjectIdPresencaRoute
+  CheckinProjectIdScannerRoute: typeof CheckinProjectIdScannerRoute
   CheckinEventIdRoute: typeof CheckinEventIdRouteWithChildren
+  CheckinProjectIdIndexRoute: typeof CheckinProjectIdIndexRoute
 }
 
 const CheckinRouteChildren: CheckinRouteChildren = {
-  CheckinHistoricoRoute: CheckinHistoricoRoute,
-  CheckinPresencaRoute: CheckinPresencaRoute,
-  CheckinScannerRoute: CheckinScannerRoute,
-  CheckinIndexRoute: CheckinIndexRoute,
+  CheckinProjectIdHistoricoRoute: CheckinProjectIdHistoricoRoute,
+  CheckinProjectIdPresencaRoute: CheckinProjectIdPresencaRoute,
+  CheckinProjectIdScannerRoute: CheckinProjectIdScannerRoute,
   CheckinEventIdRoute: CheckinEventIdRouteWithChildren,
+  CheckinProjectIdIndexRoute: CheckinProjectIdIndexRoute,
 }
 
 const CheckinRouteWithChildren =

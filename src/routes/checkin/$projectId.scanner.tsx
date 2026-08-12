@@ -17,7 +17,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 
-export const Route = createFileRoute("/checkin/scanner")({
+export const Route = createFileRoute("/checkin/$projectId/scanner")({
   component: ScannerPage,
   validateSearch: (search: Record<string, unknown>) => {
     return {
