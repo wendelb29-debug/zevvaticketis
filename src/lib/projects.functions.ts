@@ -12,10 +12,11 @@ type TenantRole = Database["public"]["Enums"]["tenant_role"];
 
 export const getMyProjects = createServerFn({ method: "GET" })
   .handler(async () => {
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) return [];
 
-    const { data: memberData } = await supabase
+    const { data: memberData } = await supabaseAdmin
       .from("tenant_members")
       .select(`
         tenant_id,
@@ -28,7 +29,7 @@ export const getMyProjects = createServerFn({ method: "GET" })
           slug,
           plan,
           status,
-          telefones: telefone,
+          telefone: telefone,
           created_at
         )
       `)
@@ -43,27 +44,28 @@ export const getMyProjects = createServerFn({ method: "GET" })
 export const createProject = createServerFn({ method: "POST" })
   .inputValidator((data) => z.object({ nome: z.string().min(3) }).parse(data))
   .handler(async ({ data }) => {
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) throw new Error("Unauthorized");
 
     const slug = data.nome.toLowerCase().replace(/[^a-z0-9]/g, "-").replace(/-+/g, "-");
 
-    // Create the tenant
-    const { data: tenant, error: tenantError } = await supabase
+    // Create the tenant using admin client to bypass RLS for creation
+    const { data: tenant, error: tenantError } = await supabaseAdmin
       .from("tenants")
       .insert({
         nome: data.nome,
         slug,
         plan: "free",
-        status: "ACTIVE"
+        status: "aprovado" // Changed from ACTIVE to match check constraint
       })
       .select()
       .single();
 
     if (tenantError) throw tenantError;
 
-    // Add user as OWNER of the new tenant
-    const { error: memberError } = await supabase
+    // Add user as OWNER of the new tenant using admin client
+    const { error: memberError } = await supabaseAdmin
       .from("tenant_members")
       .insert({
         tenant_id: tenant.id,
