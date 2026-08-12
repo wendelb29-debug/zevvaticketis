@@ -159,6 +159,7 @@ function CheckinLayout() {
 
   return (
     <div className="min-h-screen bg-slate-50 flex font-inter">
+
       {/* Sidebar - Only show if a project is selected */}
       {projectId && (
         <aside className="hidden lg:block w-64 h-screen sticky top-0 shadow-2xl">
