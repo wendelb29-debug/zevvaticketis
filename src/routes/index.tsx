@@ -82,10 +82,12 @@ function HomePage() {
     fetchInitialData();
   }, [fetchFeatured]);
 
-  const filteredEvents = events.filter((event: any) => 
-    event.nome.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    (event.cidade && event.cidade.toLowerCase().includes(searchTerm.toLowerCase()))
-  );
+  const filteredEvents = events.filter((event: any) => {
+    const q = searchTerm.toLowerCase();
+    const name = (event.title ?? event.nome ?? "").toLowerCase();
+    const city = (event.city ?? event.cidade ?? "").toLowerCase();
+    return name.includes(q) || city.includes(q);
+  });
 
   const handleToggleFavorite = async (eventId: string) => {
     const { data: { session } } = await supabase.auth.getSession();
