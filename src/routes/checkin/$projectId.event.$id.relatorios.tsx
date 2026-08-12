@@ -12,7 +12,7 @@ export const Route = createFileRoute("/checkin/$projectId/event/$id/relatorios")
 });
 
 function ReportsPage() {
-  const { id: eventId } = useParams({ from: "/checkin/event/$id/relatorios" });
+  const { id: eventId } = useParams({ from: "/checkin/$projectId/event/$id/relatorios" });
   const [tickets, setTickets] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [filterStatus, setFilterStatus] = useState<string>("todos");
