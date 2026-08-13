@@ -2761,10 +2761,6 @@ export type Database = {
         Returns: Json
       }
       get_user_tenants: { Args: never; Returns: string[] }
-      has_permission: {
-        Args: { p_permission_key: string; p_tenant_id: string }
-        Returns: boolean
-      }
       has_role:
         | {
             Args: {
