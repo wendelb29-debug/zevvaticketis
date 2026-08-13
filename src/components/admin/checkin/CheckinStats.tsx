@@ -163,8 +163,8 @@ export function CheckinStats() {
               <tbody className="divide-y divide-line font-inter">
                 {adData.map((ad, i) => (
                   <tr key={i} className="hover:bg-accent/10 transition-colors">
-                    <td className="px-6 py-4 font-extrabold text-navy">{ad.name}</td>
-                    <td className="px-4 py-4 text-xs font-bold text-muted uppercase">{ad.campaign}</td>
+                    <td className="px-6 py-4 font-extrabold text-foreground">{ad.name}</td>
+                    <td className="px-4 py-4 text-xs font-bold text-muted-foreground uppercase">{ad.campaign}</td>
                     <td className="px-4 py-4 text-center font-bold">{ad.sold}</td>
                     <td className="px-4 py-4 text-center font-bold text-emerald-600">{ad.checkins}</td>
                     <td className="px-6 py-4 text-right">
