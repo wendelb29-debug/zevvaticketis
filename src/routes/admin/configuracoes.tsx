@@ -1239,6 +1239,10 @@ function SettingsPage({ session }: { session: any }) {
           </DialogFooter>
         </DialogContent>
       </Dialog>
+      
+      <TabsContent value="permissoes" className="space-y-4 focus-visible:outline-none outline-none">
+        {activeTenantId && <PermissionsRolesManager tenantId={activeTenantId} />}
+      </TabsContent>
 
 
     </div>
