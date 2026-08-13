@@ -44,6 +44,7 @@ import { Route as AppHistoricoRouteImport } from './routes/app/historico'
 import { Route as AppPerfilRouteImport } from './routes/app/perfil'
 import { Route as AuthCallbackRouteImport } from './routes/auth/callback'
 import { Route as CheckinIndexRouteImport } from './routes/checkin/index'
+import { Route as CursosIndexRouteImport } from './routes/cursos.index'
 import { Route as EventosIndexRouteImport } from './routes/eventos/index'
 import { Route as EventosIdRouteImport } from './routes/eventos/$id'
 import { Route as LovableDemoDashboardRouteImport } from './routes/lovable/demo-dashboard'
@@ -78,6 +79,7 @@ import { Route as CheckinProjectIdHistoricoRouteImport } from './routes/checkin/
 import { Route as CheckinProjectIdPresencaRouteImport } from './routes/checkin/$projectId.presenca'
 import { Route as CheckinProjectIdScannerRouteImport } from './routes/checkin/$projectId.scanner'
 import { Route as EventosIdCheckoutRouteImport } from './routes/eventos/$id.checkout'
+import { Route as EventosCategoriaSlugRouteImport } from './routes/eventos.categoria.$slug'
 import { Route as OauthGoogleReturnRouteImport } from './routes/oauth/google/return'
 import { Route as ProdutorIdDashboardRouteImport } from './routes/produtor/$id.dashboard'
 import { Route as CheckinProjectIdEventIdRouteImport } from './routes/checkin/$projectId.event.$id'
@@ -266,6 +268,11 @@ const CheckinIndexRoute = CheckinIndexRouteImport.update({
   path: '/',
   getParentRoute: () => CheckinRoute,
 } as any)
+const CursosIndexRoute = CursosIndexRouteImport.update({
+  id: '/cursos/',
+  path: '/cursos/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const EventosIndexRoute = EventosIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -441,6 +448,11 @@ const EventosIdCheckoutRoute = EventosIdCheckoutRouteImport.update({
   path: '/checkout',
   getParentRoute: () => EventosIdRoute,
 } as any)
+const EventosCategoriaSlugRoute = EventosCategoriaSlugRouteImport.update({
+  id: '/categoria/$slug',
+  path: '/categoria/$slug',
+  getParentRoute: () => EventosRoute,
+} as any)
 const OauthGoogleReturnRoute = OauthGoogleReturnRouteImport.update({
   id: '/oauth/google/return',
   path: '/oauth/google/return',
@@ -549,6 +561,7 @@ export interface FileRoutesByFullPath {
   '/admin/': typeof AdminIndexRoute
   '/app/': typeof AppIndexRoute
   '/checkin/': typeof CheckinIndexRoute
+  '/cursos/': typeof CursosIndexRoute
   '/eventos/': typeof EventosIndexRoute
   '/produtor/': typeof ProdutorIndexRoute
   '/tickets/': typeof TicketsIndexRoute
@@ -563,6 +576,7 @@ export interface FileRoutesByFullPath {
   '/checkin/$projectId/presenca': typeof CheckinProjectIdPresencaRoute
   '/checkin/$projectId/scanner': typeof CheckinProjectIdScannerRoute
   '/eventos/$id/checkout': typeof EventosIdCheckoutRoute
+  '/eventos/categoria/$slug': typeof EventosCategoriaSlugRoute
   '/oauth/google/return': typeof OauthGoogleReturnRoute
   '/produtor/$id/dashboard': typeof ProdutorIdDashboardRoute
   '/admin/checkin/': typeof AdminCheckinIndexRoute
@@ -625,6 +639,7 @@ export interface FileRoutesByTo {
   '/admin': typeof AdminIndexRoute
   '/app': typeof AppIndexRoute
   '/checkin': typeof CheckinIndexRoute
+  '/cursos': typeof CursosIndexRoute
   '/eventos': typeof EventosIndexRoute
   '/produtor': typeof ProdutorIndexRoute
   '/tickets': typeof TicketsIndexRoute
@@ -639,6 +654,7 @@ export interface FileRoutesByTo {
   '/checkin/$projectId/presenca': typeof CheckinProjectIdPresencaRoute
   '/checkin/$projectId/scanner': typeof CheckinProjectIdScannerRoute
   '/eventos/$id/checkout': typeof EventosIdCheckoutRoute
+  '/eventos/categoria/$slug': typeof EventosCategoriaSlugRoute
   '/oauth/google/return': typeof OauthGoogleReturnRoute
   '/produtor/$id/dashboard': typeof ProdutorIdDashboardRoute
   '/admin/checkin': typeof AdminCheckinIndexRoute
@@ -706,6 +722,7 @@ export interface FileRoutesById {
   '/admin/': typeof AdminIndexRoute
   '/app/': typeof AppIndexRoute
   '/checkin/': typeof CheckinIndexRoute
+  '/cursos/': typeof CursosIndexRoute
   '/eventos/': typeof EventosIndexRoute
   '/produtor/': typeof ProdutorIndexRoute
   '/tickets/': typeof TicketsIndexRoute
@@ -720,6 +737,7 @@ export interface FileRoutesById {
   '/checkin/$projectId/presenca': typeof CheckinProjectIdPresencaRoute
   '/checkin/$projectId/scanner': typeof CheckinProjectIdScannerRoute
   '/eventos/$id/checkout': typeof EventosIdCheckoutRoute
+  '/eventos/categoria/$slug': typeof EventosCategoriaSlugRoute
   '/oauth/google/return': typeof OauthGoogleReturnRoute
   '/produtor/$id/dashboard': typeof ProdutorIdDashboardRoute
   '/admin/checkin/': typeof AdminCheckinIndexRoute
@@ -789,6 +807,7 @@ export interface FileRouteTypes {
     | '/admin/'
     | '/app/'
     | '/checkin/'
+    | '/cursos/'
     | '/eventos/'
     | '/produtor/'
     | '/tickets/'
@@ -803,6 +822,7 @@ export interface FileRouteTypes {
     | '/checkin/$projectId/presenca'
     | '/checkin/$projectId/scanner'
     | '/eventos/$id/checkout'
+    | '/eventos/categoria/$slug'
     | '/oauth/google/return'
     | '/produtor/$id/dashboard'
     | '/admin/checkin/'
@@ -865,6 +885,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/app'
     | '/checkin'
+    | '/cursos'
     | '/eventos'
     | '/produtor'
     | '/tickets'
@@ -879,6 +900,7 @@ export interface FileRouteTypes {
     | '/checkin/$projectId/presenca'
     | '/checkin/$projectId/scanner'
     | '/eventos/$id/checkout'
+    | '/eventos/categoria/$slug'
     | '/oauth/google/return'
     | '/produtor/$id/dashboard'
     | '/admin/checkin'
@@ -945,6 +967,7 @@ export interface FileRouteTypes {
     | '/admin/'
     | '/app/'
     | '/checkin/'
+    | '/cursos/'
     | '/eventos/'
     | '/produtor/'
     | '/tickets/'
@@ -959,6 +982,7 @@ export interface FileRouteTypes {
     | '/checkin/$projectId/presenca'
     | '/checkin/$projectId/scanner'
     | '/eventos/$id/checkout'
+    | '/eventos/categoria/$slug'
     | '/oauth/google/return'
     | '/produtor/$id/dashboard'
     | '/admin/checkin/'
@@ -995,6 +1019,7 @@ export interface RootRouteChildren {
   AuthCallbackRoute: typeof AuthCallbackRoute
   LovableDemoDashboardRoute: typeof LovableDemoDashboardRoute
   TicketsIdRoute: typeof TicketsIdRoute
+  CursosIndexRoute: typeof CursosIndexRoute
   TicketsIndexRoute: typeof TicketsIndexRoute
   DotlovableOauthConsentRoute: typeof DotlovableOauthConsentRoute
   Char91DotmcpChar93InvokeToolToolRoute: typeof Char91DotmcpChar93InvokeToolToolRoute
@@ -1252,6 +1277,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CheckinIndexRouteImport
       parentRoute: typeof CheckinRoute
     }
+    '/cursos/': {
+      id: '/cursos/'
+      path: '/cursos'
+      fullPath: '/cursos/'
+      preLoaderRoute: typeof CursosIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/eventos/': {
       id: '/eventos/'
       path: '/'
@@ -1490,6 +1522,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EventosIdCheckoutRouteImport
       parentRoute: typeof EventosIdRoute
     }
+    '/eventos/categoria/$slug': {
+      id: '/eventos/categoria/$slug'
+      path: '/categoria/$slug'
+      fullPath: '/eventos/categoria/$slug'
+      preLoaderRoute: typeof EventosCategoriaSlugRouteImport
+      parentRoute: typeof EventosRoute
+    }
     '/oauth/google/return': {
       id: '/oauth/google/return'
       path: '/oauth/google/return'
@@ -1685,11 +1724,13 @@ const EventosIdRouteWithChildren = EventosIdRoute._addFileChildren(
 interface EventosRouteChildren {
   EventosIdRoute: typeof EventosIdRouteWithChildren
   EventosIndexRoute: typeof EventosIndexRoute
+  EventosCategoriaSlugRoute: typeof EventosCategoriaSlugRoute
 }
 
 const EventosRouteChildren: EventosRouteChildren = {
   EventosIdRoute: EventosIdRouteWithChildren,
   EventosIndexRoute: EventosIndexRoute,
+  EventosCategoriaSlugRoute: EventosCategoriaSlugRoute,
 }
 
 const EventosRouteWithChildren =
@@ -1756,6 +1797,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthCallbackRoute: AuthCallbackRoute,
   LovableDemoDashboardRoute: LovableDemoDashboardRoute,
   TicketsIdRoute: TicketsIdRoute,
+  CursosIndexRoute: CursosIndexRoute,
   TicketsIndexRoute: TicketsIndexRoute,
   DotlovableOauthConsentRoute: DotlovableOauthConsentRoute,
   Char91DotmcpChar93InvokeToolToolRoute: Char91DotmcpChar93InvokeToolToolRoute,
