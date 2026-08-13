@@ -80,8 +80,8 @@ export const upsertProjectRole = createServerFn({ method: "POST" })
         .from("project_roles")
         .update({
           name,
-          description,
-          color,
+          description: description || null,
+          color: color || null,
           is_active: isActive,
           updated_at: new Date().toISOString()
         })
@@ -102,8 +102,8 @@ export const upsertProjectRole = createServerFn({ method: "POST" })
         .insert({
           tenant_id: tenantId,
           name,
-          description,
-          color,
+          description: description || null,
+          color: color || null,
           is_active: isActive,
           created_by: context.userId
         })
@@ -131,7 +131,8 @@ export const upsertProjectRole = createServerFn({ method: "POST" })
     return { success: true, roleId };
   });
 
-export const deleteProjectRole = createServerFn({ method: "DELETE" })
+export const deleteProjectRole = createServerFn({ method: "POST" })
+
   .middleware([requireSupabaseAuth])
   .inputValidator((data) => z.object({
     id: z.string().uuid(),
