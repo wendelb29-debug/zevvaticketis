@@ -5,7 +5,16 @@ import { validateUserTenantAccess } from "./security";
 
 const inviteSchema = z.object({
   email: z.string().trim().toLowerCase().email().max(255),
-  permission: z.enum(['owner', 'admin', 'moderator', 'user']),
+  permission: z.enum([
+    'OWNER',
+    'ADMIN',
+    'MANAGER',
+    'CHECKIN_SUPERVISOR',
+    'CHECKIN_OPERATOR',
+    'FINANCEIRO',
+    'MARKETING',
+    'CHECKIN_MANAGER'
+  ]),
   departments: z.array(z.string().trim().min(1).max(80)).max(50).default([]),
   accessHours: z.string().trim().max(80).optional(),
   redirectTo: z.string().trim().url().max(500).optional()
@@ -14,6 +23,7 @@ const inviteSchema = z.object({
     }),
   tenantId: z.string().uuid(),
 });
+
 
 export const sendTeamInvite = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
@@ -26,12 +36,13 @@ export const sendTeamInvite = createServerFn({ method: "POST" })
       context.supabase,
       context.userId,
       tenantId,
-      ['owner', 'admin'] // Only owners/admins can invite
+      'convidar_equipe'
     );
 
     if (!validation.authorized) {
       return { success: false, message: validation.message || "Acesso negado." };
     }
+
 
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
 

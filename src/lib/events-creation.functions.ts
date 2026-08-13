@@ -30,12 +30,13 @@ export const createEventFull = createServerFn({ method: "POST" })
       context.supabase,
       context.userId,
       data.event.tenant_id,
-      ['owner', 'admin', 'moderator'] // Producers/Moderators can create events
+      'criar_evento'
     );
 
     if (!validation.authorized) {
       throw new Error(validation.message || "Acesso negado para criação de eventos.");
     }
+
 
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
     const { data: event, error: eventError } = await supabaseAdmin
