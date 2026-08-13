@@ -2105,6 +2105,7 @@ export type Database = {
           id: string
           nome: string
           status: string | null
+          tenant_id: string | null
           uazapi_token: string
         }
         Insert: {
@@ -2112,6 +2113,7 @@ export type Database = {
           id?: string
           nome: string
           status?: string | null
+          tenant_id?: string | null
           uazapi_token: string
         }
         Update: {
@@ -2119,9 +2121,18 @@ export type Database = {
           id?: string
           nome?: string
           status?: string | null
+          tenant_id?: string | null
           uazapi_token?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "whatsapp_instances_tenant_id_fkey"
+            columns: ["tenant_id"]
+            isOneToOne: false
+            referencedRelation: "tenants"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       whatsapp_integrations: {
         Row: {
