@@ -832,31 +832,48 @@ function AdminChatPage() {
         {/* 9. BARRA VERTICAL DE AÇÕES (52px) */}
         <div className="w-[52px] border-l border-border flex flex-col items-center py-6 gap-4 bg-card shrink-0 z-10">
           {[
-            { icon: CheckCircle, label: "Finalizar", onClick: () => setIsFinishDialogOpen(true) },
-            { icon: Shuffle, label: "Transferir", onClick: () => setIsTransferDialogOpen(true) },
-            { icon: PeopleIcon, label: "Dados" },
-            { icon: Folder, label: "Arquivos" },
-            { icon: HistoryIcon, label: "Histórico", onClick: () => setIsHistoryDialogOpen(true) },
-            { icon: Calendar, label: "Agendar" },
-            { icon: Zap, label: "Gatilhos" },
-            { icon: Copy, label: "Copiar", onClick: () => {
+            { icon: CheckCircle, label: "Finalizar atendimento", onClick: () => setIsFinishDialogOpen(true), active: isFinishDialogOpen },
+            { icon: Shuffle, label: "Transferir atendimento", onClick: () => setIsTransferDialogOpen(true), active: isTransferDialogOpen },
+            { icon: PeopleIcon, label: "Grupos do cliente", disabled: true },
+            { icon: Folder, label: "Arquivos", disabled: true },
+            { icon: HistoryIcon, label: "Histórico", onClick: () => setIsHistoryDialogOpen(true), active: isHistoryDialogOpen },
+            { icon: Calendar, label: "Agendar", disabled: true },
+            { icon: Zap, label: "Automação", disabled: true },
+            { icon: Copy, label: "Copiar conversa", onClick: () => {
               const text = messages.map(m => `${m.time} - ${m.sender === 'agent' ? 'Atendente' : 'Cliente'}: ${m.text}`).join('\n');
               navigator.clipboard.writeText(text);
               toast.success("Conversa copiada para a área de transferência");
             }},
             { icon: Printer, label: "Imprimir", onClick: () => window.print() },
           ].map((action, i) => (
-            <button 
-              key={i} 
-              onClick={action.onClick}
-              className={cn(
-                "p-2.5 rounded-lg transition-all group relative border border-transparent",
-                i === 0 ? "bg-primary text-primary-foreground shadow-lg" : "text-muted-foreground hover:bg-primary/5 hover:text-primary"
-            )} title={action.label}>
-              <action.icon className="w-5 h-5" />
-              {i === 0 && <span className="absolute left-[-80px] top-1/2 -translate-y-1/2 bg-popover text-popover-foreground border border-border text-[10px] font-bold px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">Finalizar</span>}
-              {i === 1 && <span className="absolute left-[-80px] top-1/2 -translate-y-1/2 bg-popover text-popover-foreground border border-border text-[10px] font-bold px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none text-primary">Transferir</span>}
-            </button>
+            <Tooltip key={i} delayDuration={200}>
+              <TooltipTrigger asChild>
+                <div className="relative">
+                  <button 
+                    onClick={action.onClick}
+                    disabled={action.disabled}
+                    aria-label={action.label}
+                    className={cn(
+                      "p-2.5 rounded-lg transition-all group relative border border-transparent outline-none ring-offset-background focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+                      action.active 
+                        ? "bg-primary text-primary-foreground shadow-[0_0_15px_rgba(217,75,82,0.3)] border-primary" 
+                        : action.disabled
+                          ? "opacity-40 cursor-not-allowed text-muted-foreground"
+                          : "text-muted-foreground hover:bg-muted hover:text-foreground active:scale-95"
+                    )}
+                  >
+                    <action.icon className="w-5 h-5" />
+                  </button>
+                </div>
+              </TooltipTrigger>
+              <TooltipContent 
+                side="left" 
+                sideOffset={10}
+                className="bg-popover text-popover-foreground border-border text-[12px] font-semibold px-3 py-1.5 rounded-md shadow-md animate-in fade-in zoom-in-95 duration-200"
+              >
+                {action.label}{action.disabled && " — em breve"}
+              </TooltipContent>
+            </Tooltip>
           ))}
         </div>
       </div>
