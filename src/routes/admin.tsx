@@ -27,9 +27,19 @@ import {
   PanelLeftOpen,
   Building2,
   Home,
+  Globe,
+  Languages,
+  Check
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { 
+  DropdownMenu, 
+  DropdownMenuContent, 
+  DropdownMenuItem, 
+  DropdownMenuTrigger 
+} from "@/components/ui/dropdown-menu";
+import { type SupportedLocale } from "@/hooks/use-ui";
 
 export const Route = createFileRoute("/admin")({
   beforeLoad: async () => {
@@ -80,7 +90,7 @@ function AdminLayout() {
   const [isTransitioning, setIsTransitioning] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
-  const { theme, setTheme } = useUI();
+  const { theme, setTheme, language, setLanguage, isSaving } = useUI();
   const { logout } = useTenants();
   const [openGroup, setOpenGroup] = useState<string | null>(null);
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(() => {
@@ -340,7 +350,71 @@ function AdminLayout() {
         })}
       </nav>
 
-      <div className="px-4 mt-auto mb-6">
+      <div className="px-4 mt-auto mb-2">
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <button
+              className={cn(
+                "w-full flex items-center gap-3 py-3.5 px-4 rounded-xl text-sm font-extrabold transition-all duration-300 border-2 border-border bg-card text-foreground hover:bg-accent outline-none focus:ring-2 focus:ring-primary focus:border-primary active:scale-[0.98]",
+                isSidebarCollapsed && "px-0 justify-center"
+              )}
+            >
+              {isSidebarCollapsed ? (
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <div className="flex items-center justify-center w-full h-full">
+                      <Globe className="w-5 h-5 shrink-0" />
+                    </div>
+                  </TooltipTrigger>
+                  <TooltipContent side="right">
+                    <p className="font-black uppercase tracking-widest text-[10px]">
+                      {language === 'pt-BR' ? 'Português' : language === 'en-US' ? 'English' : 'Español'}
+                    </p>
+                  </TooltipContent>
+                </Tooltip>
+              ) : (
+                <>
+                  <Globe className="w-5 h-5 shrink-0 text-muted-foreground" />
+                  <span className="truncate flex-1 text-left">Idioma</span>
+                  <span className="text-[10px] bg-accent px-1.5 py-0.5 rounded-md font-bold uppercase tracking-tighter">
+                    {language.split('-')[0]}
+                  </span>
+                </>
+              )}
+            </button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent side={isSidebarCollapsed ? "right" : "top"} align={isSidebarCollapsed ? "start" : "center"} className="w-48 p-1.5 rounded-xl border-border shadow-2xl font-inter bg-popover/95 backdrop-blur-md">
+            <DropdownMenuItem 
+              onClick={() => setLanguage('pt-BR')}
+              className={cn("flex items-center justify-between gap-2 px-3 py-2 rounded-lg text-xs font-bold cursor-pointer", language === 'pt-BR' ? "bg-primary text-primary-foreground" : "text-foreground hover:bg-primary/5")}
+            >
+              Português (Brasil)
+              {language === 'pt-BR' && <Check className="w-3.5 h-3.5" />}
+            </DropdownMenuItem>
+            <DropdownMenuItem 
+              onClick={() => setLanguage('en-US')}
+              className={cn("flex items-center justify-between gap-2 px-3 py-2 rounded-lg text-xs font-bold cursor-pointer", language === 'en-US' ? "bg-primary text-primary-foreground" : "text-foreground hover:bg-primary/5")}
+            >
+              English
+              {language === 'en-US' && <Check className="w-3.5 h-3.5" />}
+            </DropdownMenuItem>
+            <DropdownMenuItem 
+              onClick={() => setLanguage('es-ES')}
+              className={cn("flex items-center justify-between gap-2 px-3 py-2 rounded-lg text-xs font-bold cursor-pointer", language === 'es-ES' ? "bg-primary text-primary-foreground" : "text-foreground hover:bg-primary/5")}
+            >
+              Español
+              {language === 'es-ES' && <Check className="w-3.5 h-3.5" />}
+            </DropdownMenuItem>
+            {isSaving && (
+              <div className="absolute inset-0 bg-background/50 flex items-center justify-center rounded-xl backdrop-blur-[1px]">
+                <div className="w-4 h-4 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+              </div>
+            )}
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </div>
+
+      <div className="px-4 mb-6">
         <Link
           to="/admin/configuracoes"
           className={cn(
