@@ -1160,6 +1160,42 @@ export type Database = {
           },
         ]
       }
+      permission_definitions: {
+        Row: {
+          created_at: string | null
+          description: string | null
+          id: string
+          is_active: boolean | null
+          key: string
+          module: string
+          name: string
+          risk_level: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          is_active?: boolean | null
+          key: string
+          module: string
+          name: string
+          risk_level?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          is_active?: boolean | null
+          key?: string
+          module?: string
+          name?: string
+          risk_level?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       plans: {
         Row: {
           created_at: string | null
@@ -1300,6 +1336,98 @@ export type Database = {
           },
         ]
       }
+      project_member_roles: {
+        Row: {
+          assigned_at: string | null
+          assigned_by: string | null
+          id: string
+          role_id: string
+          tenant_id: string
+          user_id: string
+        }
+        Insert: {
+          assigned_at?: string | null
+          assigned_by?: string | null
+          id?: string
+          role_id: string
+          tenant_id: string
+          user_id: string
+        }
+        Update: {
+          assigned_at?: string | null
+          assigned_by?: string | null
+          id?: string
+          role_id?: string
+          tenant_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "project_member_roles_role_id_fkey"
+            columns: ["role_id"]
+            isOneToOne: false
+            referencedRelation: "project_roles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "project_member_roles_tenant_id_fkey"
+            columns: ["tenant_id"]
+            isOneToOne: false
+            referencedRelation: "tenants"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      project_roles: {
+        Row: {
+          color: string | null
+          created_at: string | null
+          created_by: string | null
+          description: string | null
+          id: string
+          is_active: boolean | null
+          is_protected: boolean | null
+          is_system: boolean | null
+          name: string
+          tenant_id: string
+          updated_at: string | null
+        }
+        Insert: {
+          color?: string | null
+          created_at?: string | null
+          created_by?: string | null
+          description?: string | null
+          id?: string
+          is_active?: boolean | null
+          is_protected?: boolean | null
+          is_system?: boolean | null
+          name: string
+          tenant_id: string
+          updated_at?: string | null
+        }
+        Update: {
+          color?: string | null
+          created_at?: string | null
+          created_by?: string | null
+          description?: string | null
+          id?: string
+          is_active?: boolean | null
+          is_protected?: boolean | null
+          is_system?: boolean | null
+          name?: string
+          tenant_id?: string
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "project_roles_tenant_id_fkey"
+            columns: ["tenant_id"]
+            isOneToOne: false
+            referencedRelation: "tenants"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       push_automations: {
         Row: {
           action_url: string | null
@@ -1365,6 +1493,52 @@ export type Database = {
           },
           {
             foreignKeyName: "push_automations_tenant_id_fkey"
+            columns: ["tenant_id"]
+            isOneToOne: false
+            referencedRelation: "tenants"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      role_permissions: {
+        Row: {
+          created_at: string | null
+          id: string
+          permission_id: string
+          role_id: string
+          tenant_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          permission_id: string
+          role_id: string
+          tenant_id: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          permission_id?: string
+          role_id?: string
+          tenant_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "role_permissions_permission_id_fkey"
+            columns: ["permission_id"]
+            isOneToOne: false
+            referencedRelation: "permission_definitions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "role_permissions_role_id_fkey"
+            columns: ["role_id"]
+            isOneToOne: false
+            referencedRelation: "project_roles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "role_permissions_tenant_id_fkey"
             columns: ["tenant_id"]
             isOneToOne: false
             referencedRelation: "tenants"
@@ -2515,6 +2689,10 @@ export type Database = {
         Returns: Json
       }
       get_user_tenants: { Args: never; Returns: string[] }
+      has_permission: {
+        Args: { p_permission_key: string; p_tenant_id: string }
+        Returns: boolean
+      }
       has_role:
         | {
             Args: {
@@ -2542,6 +2720,7 @@ export type Database = {
         Args: { target_email: string }
         Returns: Json
       }
+      sync_legacy_roles: { Args: never; Returns: undefined }
       transfer_attendance: {
         Args: {
           p_actor_id?: string
