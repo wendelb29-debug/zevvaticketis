@@ -140,7 +140,6 @@ function AdminChatPage() {
         }
       )
       .subscribe();
-      .subscribe();
 
     return () => {
       supabase.removeChannel(channel);
