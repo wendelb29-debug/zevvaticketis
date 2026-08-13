@@ -18,12 +18,12 @@ export function EventCard({ event, onToggleFavorite }: EventCardProps) {
   };
 
   return (
-    <div className="group bg-surface-base border border-border overflow-hidden rounded-sm transition-all duration-700 hover:border-accent hover:shadow-2xl hover:shadow-accent/5">
+    <div className="group bg-surface border border-border overflow-hidden rounded-lg transition-all duration-300 hover:border-primary/30 hover:shadow-xl">
       <div className="relative aspect-[16/10] overflow-hidden bg-background">
         <img 
-          src={event.cover_image || `https://source.unsplash.com/featured/?${event.category || 'church'}`} 
+          src={event.cover_image || `https://source.unsplash.com/featured/?${event.category || 'event'}`} 
           alt={event.title}
-          className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-1000"
+          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
         />
         
         <button 
@@ -31,45 +31,44 @@ export function EventCard({ event, onToggleFavorite }: EventCardProps) {
             e.preventDefault();
             onToggleFavorite?.(event.id);
           }}
-          className="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/10 backdrop-blur-xl border border-white/20 flex items-center justify-center text-white hover:bg-white hover:text-danger transition-all z-10"
+          className="absolute top-3 right-3 w-9 h-9 rounded-full bg-white/90 backdrop-blur-md border border-border flex items-center justify-center text-foreground hover:bg-primary hover:text-white transition-all z-10"
         >
           <Heart className="w-4 h-4" />
         </button>
 
-        <div className="absolute bottom-4 left-4 inline-flex items-center gap-2 px-3 py-1 bg-primary/90 backdrop-blur-xl border border-white/10 rounded-sm text-white">
-          <Icon className="w-3 h-3" />
-          <span className="text-[10px] font-bold uppercase tracking-[0.2em]">{event.category || "Evento"}</span>
+        <div className="absolute top-3 left-3 px-3 py-1 bg-white/90 backdrop-blur-md border border-border rounded-md text-[10px] font-bold text-foreground-muted uppercase tracking-wider">
+          {event.category || "Evento"}
         </div>
       </div>
 
-      <div className="p-8 space-y-6">
-        <div className="space-y-4">
-          <div className="flex items-center gap-2 text-accent font-bold text-[10px] uppercase tracking-[0.3em]">
+      <div className="p-5 space-y-4">
+        <div className="space-y-2">
+          <div className="flex items-center gap-2 text-primary font-bold text-xs">
             {formatDate(event.start_date)}
           </div>
-          <h3 className="text-2xl font-serif text-foreground line-clamp-2 leading-tight group-hover:text-primary transition-colors">
+          <h3 className="text-lg font-bold text-foreground line-clamp-2 leading-tight group-hover:text-primary transition-colors">
             {event.title}
           </h3>
-          <div className="flex items-center gap-1.5 text-foreground-muted font-medium text-xs">
-            <MapPin className="w-3.5 h-3.5 opacity-40" />
+          <div className="flex items-center gap-1.5 text-foreground-muted text-xs">
+            <MapPin className="w-3.5 h-3.5" />
             <span className="truncate">{event.location || "A definir"}</span>
           </div>
         </div>
 
-        <div className="pt-6 flex items-center justify-between border-t border-border">
+        <div className="pt-4 flex items-center justify-between border-t border-border">
           <div className="flex flex-col">
-            <span className="text-[9px] font-bold uppercase tracking-[0.2em] text-foreground-muted mb-1">A partir de</span>
-            <span className="text-xl font-serif italic text-primary">
-              US$ {event.min_price || 0}
+            <span className="text-[10px] font-medium text-foreground-muted">A partir de</span>
+            <span className="text-lg font-extrabold text-foreground">
+              R$ {event.min_price || 0}
             </span>
           </div>
           
           <Link 
             to="/eventos" 
-            search={{ id: event.id, categoria: event.category || "CARAVANAS INTERNACIONAIS" }}
-            className="w-10 h-10 border border-border flex items-center justify-center rounded-full group/link hover:bg-primary hover:border-primary transition-all duration-500"
+            search={{ id: event.id, categoria: event.category || "CARAVANAS INTERNACIONAIS" } as any}
+            className="h-10 px-5 bg-background border border-border flex items-center justify-center rounded-md text-xs font-bold text-foreground hover:bg-primary hover:text-white hover:border-primary transition-all"
           >
-            <ArrowRight className="w-4 h-4 text-foreground-muted group-hover/link:text-white transition-colors" />
+            Ver Detalhes
           </Link>
         </div>
       </div>

@@ -154,7 +154,7 @@ function HomePage() {
               </p>
               <div className="flex flex-wrap gap-4 pt-4">
                 <button 
-                  onClick={() => navigate({ to: '/eventos' })}
+                  onClick={() => navigate({ to: '/eventos', search: { id: undefined, categoria: undefined } as any })}
                   className="h-14 px-10 bg-primary text-white font-bold rounded-md hover:bg-primary-hover transition-all shadow-xl shadow-primary/20 flex items-center gap-3"
                 >
                   Explorar eventos
