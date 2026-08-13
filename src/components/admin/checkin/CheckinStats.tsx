@@ -88,17 +88,17 @@ export function CheckinStats() {
       </div>
 
       {/* Filters */}
-      <Card className="border-line shadow-sm">
+      <Card className="border-border shadow-sm">
         <CardContent className="p-4 flex flex-wrap items-center gap-4">
-          <div className="flex items-center gap-2 px-3 py-2 bg-surface rounded-xl border border-line">
-            <Filter className="w-4 h-4 text-foreground/40" />
+          <div className="flex items-center gap-2 px-3 py-2 bg-secondary rounded-xl border border-border">
+            <Filter className="w-4 h-4 text-muted-foreground" />
             <span className="text-xs font-bold text-foreground/60 uppercase">Filtros:</span>
           </div>
           <SelectFilter placeholder="Evento" options={["Todos os Eventos", "Festival 2026", "Congresso Zevva"]} />
           <SelectFilter placeholder="Produtor" options={["Todos", "Zevva Org", "Producer X"]} />
           <SelectFilter placeholder="Cidade" options={["Todas", "São Paulo", "Rio de Janeiro", "Lisboa"]} />
           <SelectFilter placeholder="Campanha" options={["Todas", "Instagram Festival", "Facebook Ads"]} />
-          <Button variant="outline" className="ml-auto rounded-xl border-line text-foreground font-bold flex items-center gap-2">
+          <Button variant="outline" className="ml-auto rounded-xl border-border text-foreground font-bold flex items-center gap-2 bg-card hover:bg-muted">
             <Download className="w-4 h-4" /> Exportar Relatório
           </Button>
         </CardContent>
@@ -106,16 +106,16 @@ export function CheckinStats() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Check-in por Campanha */}
-        <Card className="border-line shadow-sm overflow-hidden">
-          <CardHeader className="bg-surface border-b border-line">
+        <Card className="border-border shadow-sm overflow-hidden">
+          <CardHeader className="bg-secondary/60 border-b border-border">
             <CardTitle className="text-lg font-manrope font-black text-foreground flex items-center justify-between">
               Check-in por Campanha
-              <Tag className="w-5 h-5 text-coral" />
+              <Tag className="w-5 h-5 text-primary" />
             </CardTitle>
           </CardHeader>
           <CardContent className="p-0">
             <table className="w-full text-left text-sm">
-              <thead className="bg-surface/50 text-[10px] font-black text-foreground/40 uppercase tracking-widest border-b border-line">
+              <thead className="bg-secondary/40 text-[10px] font-black text-muted-foreground uppercase tracking-widest border-b border-border">
                 <tr>
                   <th className="px-6 py-4">Campanha</th>
                   <th className="px-4 py-4 text-center">Vendidos</th>
@@ -124,13 +124,13 @@ export function CheckinStats() {
                   <th className="px-6 py-4 text-right">Presença</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-line font-inter">
+              <tbody className="divide-y divide-border font-inter">
                 {campaignData.map((c, i) => (
-                  <tr key={i} className="hover:bg-surface/30 transition-colors">
+                  <tr key={i} className="bg-card hover:bg-muted/50 transition-colors">
                     <td className="px-6 py-4 font-extrabold text-foreground">{c.name}</td>
                     <td className="px-4 py-4 text-center font-bold text-foreground/70">{c.sold}</td>
-                    <td className="px-4 py-4 text-center font-bold text-emerald-600">{c.checkins}</td>
-                    <td className="px-4 py-4 text-center font-bold text-coral">{c.missing}</td>
+                    <td className="px-4 py-4 text-center font-bold text-success">{c.checkins}</td>
+                    <td className="px-4 py-4 text-center font-bold text-destructive">{c.missing}</td>
                     <td className="px-6 py-4 text-right">
                       <span className="px-2 py-1 bg-primary/10 text-primary rounded-lg font-black text-xs">{c.rate}%</span>
                     </td>
@@ -142,16 +142,16 @@ export function CheckinStats() {
         </Card>
 
         {/* Check-in por Anúncio */}
-        <Card className="border-line shadow-sm overflow-hidden">
-          <CardHeader className="bg-navy text-white">
-            <CardTitle className="text-lg font-manrope font-bold flex items-center justify-between">
+        <Card className="border-border shadow-sm overflow-hidden">
+          <CardHeader className="bg-card border-b border-border">
+            <CardTitle className="text-lg font-manrope font-bold text-foreground flex items-center justify-between">
               Check-in por Anúncio
-              <BarChart3 className="w-5 h-5 text-coral" />
+              <BarChart3 className="w-5 h-5 text-primary" />
             </CardTitle>
           </CardHeader>
           <CardContent className="p-0">
             <table className="w-full text-left text-sm">
-              <thead className="bg-navy/5 text-[10px] font-black text-foreground/40 uppercase tracking-widest border-b border-line">
+              <thead className="bg-secondary/40 text-[10px] font-black text-muted-foreground uppercase tracking-widest border-b border-border">
                 <tr>
                   <th className="px-6 py-4">Anúncio</th>
                   <th className="px-4 py-4">Campanha</th>
@@ -160,13 +160,13 @@ export function CheckinStats() {
                   <th className="px-6 py-4 text-right">Conversão</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-line font-inter">
+              <tbody className="divide-y divide-border font-inter">
                 {adData.map((ad, i) => (
-                  <tr key={i} className="hover:bg-accent/10 transition-colors">
+                  <tr key={i} className="bg-card hover:bg-muted/50 transition-colors">
                     <td className="px-6 py-4 font-extrabold text-foreground">{ad.name}</td>
                     <td className="px-4 py-4 text-xs font-bold text-muted-foreground uppercase">{ad.campaign}</td>
-                    <td className="px-4 py-4 text-center font-bold">{ad.sold}</td>
-                    <td className="px-4 py-4 text-center font-bold text-emerald-600">{ad.checkins}</td>
+                    <td className="px-4 py-4 text-center font-bold text-foreground/70">{ad.sold}</td>
+                    <td className="px-4 py-4 text-center font-bold text-success">{ad.checkins}</td>
                     <td className="px-6 py-4 text-right">
                       <span className="font-black text-foreground">{ad.conv}%</span>
                     </td>
@@ -196,29 +196,29 @@ export function CheckinStats() {
       
       {/* Módulo de Gestão de Link e Relatórios */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <Card className="border-line shadow-xl rounded-[40px] overflow-hidden bg-navy text-white h-full">
+        <Card className="border-border shadow-xl rounded-[40px] overflow-hidden bg-sidebar text-foreground h-full border">
           <CardContent className="p-8 flex flex-col items-start justify-between gap-6 h-full">
             <div className="space-y-4">
-              <div className="inline-flex items-center gap-2 px-3 py-1 bg-coral/20 text-coral rounded-full border border-coral/20 text-[10px] font-black uppercase tracking-widest">
+              <div className="inline-flex items-center gap-2 px-3 py-1 bg-primary/10 text-primary rounded-full border border-primary/20 text-[10px] font-black uppercase tracking-widest">
                 Ambiente Operacional
               </div>
               <h2 className="text-2xl font-manrope font-black tracking-tighter uppercase">Link de Check-in</h2>
-              <p className="text-white/60 text-sm font-medium">
+              <p className="text-muted-foreground text-sm font-medium">
                 Gerencie as URLs de acesso e configure os coletores mobile da sua equipe de recepção.
               </p>
             </div>
             <Link to={"/produtor/checkin-url" as any} className="w-full">
-              <Button className="w-full h-14 bg-coral hover:bg-coral-dark text-white rounded-2xl font-black uppercase tracking-widest text-xs shadow-xl shadow-coral/20 group">
+              <Button className="w-full h-14 bg-primary hover:bg-primary-hover text-white rounded-2xl font-black uppercase tracking-widest text-xs shadow-xl shadow-primary/20 group">
                 Configurar Links <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
               </Button>
             </Link>
           </CardContent>
         </Card>
 
-        <Card className="border-line shadow-xl rounded-[40px] overflow-hidden bg-white border border-line h-full">
+        <Card className="border-border shadow-xl rounded-[40px] overflow-hidden bg-card border h-full">
           <CardContent className="p-8 flex flex-col items-start justify-between gap-6 h-full text-foreground">
             <div className="space-y-4">
-              <div className="inline-flex items-center gap-2 px-3 py-1 bg-navy/5 text-foreground/60 rounded-full border border-line text-[10px] font-black uppercase tracking-widest">
+              <div className="inline-flex items-center gap-2 px-3 py-1 bg-secondary text-muted-foreground rounded-full border border-border text-[10px] font-black uppercase tracking-widest">
                 Business Intelligence
               </div>
               <h2 className="text-2xl font-manrope font-black tracking-tighter uppercase">Relatórios Avançados</h2>
@@ -226,8 +226,8 @@ export function CheckinStats() {
                 Analise conversão de campanhas, no-show e dados demográficos dos participantes presentes.
               </p>
             </div>
-            <Button variant="outline" className="w-full h-14 border-line text-foreground hover:bg-surface rounded-2xl font-black uppercase tracking-widest text-xs group">
-              Exportar BI <BarChart3 className="w-4 h-4 ml-2 group-hover:scale-110 transition-transform text-coral" />
+            <Button variant="outline" className="w-full h-14 border-border text-foreground hover:bg-muted rounded-2xl font-black uppercase tracking-widest text-xs group bg-card">
+              Exportar BI <BarChart3 className="w-4 h-4 ml-2 group-hover:scale-110 transition-transform text-primary" />
             </Button>
           </CardContent>
         </Card>
@@ -263,7 +263,7 @@ function KPIItem({ title, value, icon: Icon, color }: { title: string, value: st
   const style = KPI_STYLES[color];
 
   return (
-    <Card className="border-line bg-white shadow-sm overflow-hidden relative group">
+    <Card className="border-border bg-card shadow-sm overflow-hidden relative group">
       <div className={cn("absolute top-0 left-0 w-1 h-full", style.bar)} />
       <CardContent className="p-4">
         <div className="flex items-center justify-between mb-2">
@@ -281,7 +281,7 @@ function KPIItem({ title, value, icon: Icon, color }: { title: string, value: st
 function SelectFilter({ placeholder, options }: any) {
   return (
     <Select>
-      <SelectTrigger className="w-40 h-10 bg-white border-line rounded-xl text-xs font-bold text-foreground/70">
+      <SelectTrigger className="w-40 h-10 bg-secondary border-border rounded-xl text-xs font-bold text-foreground/70">
         <SelectValue placeholder={placeholder} />
       </SelectTrigger>
       <SelectContent>
@@ -295,12 +295,12 @@ function SelectFilter({ placeholder, options }: any) {
 
 function ReportSummaryCard({ title, subtitle, buttonText, type }: any) {
   return (
-    <Card className="border-line shadow-sm hover:shadow-md transition-shadow group cursor-pointer">
+    <Card className="border-border bg-card shadow-sm hover:shadow-md transition-shadow group cursor-pointer">
       <CardContent className="p-6 flex items-center justify-between">
         <div className="flex gap-4 items-center">
           <div className={cn(
             "w-12 h-12 rounded-2xl flex items-center justify-center transition-transform group-hover:scale-110",
-            type === 'presence' ? "bg-emerald-500/10 text-emerald-600" : "bg-coral/10 text-coral"
+            type === 'presence' ? "bg-success/10 text-success" : "bg-primary/10 text-primary"
           )}>
             {type === 'presence' ? <Users className="w-6 h-6" /> : <UserX className="w-6 h-6" />}
           </div>

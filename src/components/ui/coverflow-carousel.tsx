@@ -135,7 +135,7 @@ export function CoverflowCarousel({ events }: CoverflowCarouselProps) {
 
                     {/* Desktop Hover Info */}
                     <div className="absolute inset-0 bg-navy/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none">
-                      <button className="px-6 py-3 bg-white text-foreground font-black rounded-xl shadow-lg transform -translate-y-4 group-hover:translate-y-0 transition-transform">
+                      <button className="px-6 py-3 bg-card text-foreground font-black rounded-xl shadow-lg transform -translate-y-4 group-hover:translate-y-0 transition-transform">
                         VER DETALHES
                       </button>
                     </div>
@@ -151,7 +151,7 @@ export function CoverflowCarousel({ events }: CoverflowCarouselProps) {
           <div className="flex items-center gap-4">
             <button
               onClick={prev}
-              className="w-12 h-12 rounded-full border border-border bg-white flex items-center justify-center text-foreground hover:bg-accent transition-colors shadow-sm"
+              className="w-12 h-12 rounded-full border border-border bg-card flex items-center justify-center text-foreground hover:bg-accent transition-colors shadow-sm"
             >
               <ChevronLeft className="w-6 h-6" />
             </button>
@@ -165,7 +165,7 @@ export function CoverflowCarousel({ events }: CoverflowCarouselProps) {
 
             <button
               onClick={next}
-              className="w-12 h-12 rounded-full border border-border bg-white flex items-center justify-center text-foreground hover:bg-accent transition-colors shadow-sm"
+              className="w-12 h-12 rounded-full border border-border bg-card flex items-center justify-center text-foreground hover:bg-accent transition-colors shadow-sm"
             >
               <ChevronRight className="w-6 h-6" />
             </button>

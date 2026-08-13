@@ -12,7 +12,8 @@ import {
   LogOut,
   Bell,
   Sliders,
-  Ticket
+  Ticket,
+  Check
 } from "lucide-react";
 import { 
   DropdownMenu, 
@@ -189,9 +190,15 @@ export function UserMenu({ user, onLogout, onNavigate, agentStatus, onStatusChan
             </DropdownMenuSubTrigger>
             <DropdownMenuPortal>
               <DropdownMenuSubContent className="w-40 rounded-xl p-1.5 border-border shadow-xl font-inter bg-popover/95 backdrop-blur-md">
-                <DropdownMenuItem onClick={() => setTheme('light')} className={cn("text-xs font-bold text-foreground cursor-pointer", theme === 'light' && "bg-white")}>Claro</DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setTheme('dark')} className={cn("text-xs font-bold text-foreground cursor-pointer", theme === 'dark' && "bg-white")}>Escuro</DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setTheme('system')} className={cn("text-xs font-bold text-foreground cursor-pointer", theme === 'system' && "bg-white")}>Sistema</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setTheme('light')} className={cn("text-xs font-bold text-foreground cursor-pointer flex items-center justify-between", theme === 'light' && "bg-primary text-primary-foreground")}>
+                  Claro {theme === 'light' && <Check className="w-3.5 h-3.5" />}
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setTheme('dark')} className={cn("text-xs font-bold text-foreground cursor-pointer flex items-center justify-between", theme === 'dark' && "bg-primary text-primary-foreground")}>
+                  Escuro {theme === 'dark' && <Check className="w-3.5 h-3.5" />}
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setTheme('system')} className={cn("text-xs font-bold text-foreground cursor-pointer flex items-center justify-between", theme === 'system' && "bg-primary text-primary-foreground")}>
+                  Sistema {theme === 'system' && <Check className="w-3.5 h-3.5" />}
+                </DropdownMenuItem>
               </DropdownMenuSubContent>
             </DropdownMenuPortal>
           </DropdownMenuSub>

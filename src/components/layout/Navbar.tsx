@@ -49,7 +49,7 @@ export function Navbar({ selectedCity }: { selectedCity?: string | null }) {
   return (
     <header
       className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-white/95 backdrop-blur-md border-b border-border",
+        "fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-card/95 backdrop-blur-md border-b border-border",
         isScrolled ? "h-16 shadow-md" : "h-20",
       )}
       data-scrolled={isScrolled}

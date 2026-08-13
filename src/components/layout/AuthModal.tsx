@@ -170,7 +170,7 @@ export function AuthModal({ isOpen, onClose, defaultView = 'login' }: AuthModalP
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
-      <DialogContent className="sm:max-w-[440px] p-0 rounded-[24px] bg-white border-0 shadow-2xl overflow-hidden">
+      <DialogContent className="sm:max-w-[440px] p-0 rounded-[24px] bg-card border-0 shadow-2xl overflow-hidden">
         <div className="p-8 space-y-6 max-h-[90vh] overflow-y-auto">
           <div className="flex justify-center">
             <img src={logoAsset.url} alt="Zevva" className="h-16 w-auto" />
@@ -212,16 +212,16 @@ export function AuthModal({ isOpen, onClose, defaultView = 'login' }: AuthModalP
                     placeholder="Seu e-mail" 
                     value={formData.email} 
                     onChange={(e) => setFormData({...formData, email: e.target.value})} 
-                    className="h-12 rounded-[14px] border-line focus:ring-coral"
+                    className="h-12 rounded-[14px] border-border focus:ring-primary"
                   />
                   <Input 
                     type="password" 
                     placeholder="Sua senha" 
                     value={formData.senha} 
                     onChange={(e) => setFormData({...formData, senha: e.target.value})} 
-                    className="h-12 rounded-[14px] border-line focus:ring-coral"
+                    className="h-12 rounded-[14px] border-border focus:ring-primary"
                   />
-                  <Button disabled={loading} className="w-full h-14 rounded-[16px] bg-coral hover:bg-coral-dark font-extrabold text-white shadow-lg shadow-coral/20">
+                  <Button disabled={loading} className="w-full h-14 rounded-[16px] bg-primary hover:bg-primary-hover font-extrabold text-white shadow-lg shadow-primary/20">
                     {loading ? "Entrando..." : "Entrar"}
                   </Button>
                   <div className="flex flex-col gap-2 pt-1">
@@ -308,7 +308,7 @@ export function AuthModal({ isOpen, onClose, defaultView = 'login' }: AuthModalP
                   </div>
                   <Input placeholder="Nome da Organização" value={formData.orgNome} onChange={(e) => setFormData({...formData, orgNome: e.target.value})} className="h-11 rounded-[12px] border-line" required />
                   <div className="grid grid-cols-2 gap-3">
-                    <select value={formData.paisId} onChange={(e) => setFormData({...formData, paisId: e.target.value})} className="h-11 rounded-[12px] border-line bg-white border px-3 text-sm" required>
+                    <select value={formData.paisId} onChange={(e) => setFormData({...formData, paisId: e.target.value})} className="h-11 rounded-[12px] border-border bg-secondary border px-3 text-sm text-foreground" required>
                       <option value="">País...</option>
                       {countries.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
                     </select>
