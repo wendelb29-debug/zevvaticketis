@@ -123,6 +123,14 @@ function AdminLayout() {
     { label: "Chat", icon: MessageSquare, href: "/admin/chat" },
     { label: "Dashboard", icon: LayoutDashboard, href: "/admin", activeOptions: { exact: true } },
     { 
+      label: "Contatos", 
+      icon: Users, 
+      children: [
+        { label: "Todos os Contatos", href: "/admin/contatos" },
+        { label: "Grupos de Clientes", href: "/admin/grupos" },
+      ]
+    },
+    { 
       label: "Check-in", 
       icon: CheckSquare, 
       children: [
@@ -167,16 +175,16 @@ function AdminLayout() {
       ]
     },
     { 
-      label: "Usuários", 
+      label: "Configurações", 
       icon: UserCog, 
       children: [
         { label: "Aprovações", href: "/admin/aprovacoes" },
-        { label: "Todos os Usuários", href: "/admin/configuracoes", query: { tab: "team" } },
+        { label: "Equipe e Recursos", href: "/admin/configuracoes", query: { tab: "team" } },
         { label: "Produtores", href: "/admin/produtores" },
         { label: "Eventos Pendentes", href: "/admin/aprovacoes", query: { tab: "events" } },
+        { label: "SLA e Filas", href: "/admin/configuracoes", query: { tab: "system" } },
       ]
     },
-    
   ];
 
   useEffect(() => {

@@ -68,7 +68,9 @@ import { Route as DotlovableOauthConsentRouteImport } from './routes/[.]lovable.
 import { Route as Char91DotmcpChar93InvokeToolToolRouteImport } from './routes/[.mcp]/invoke-tool/$tool'
 import { Route as AdminCheckinIndexRouteImport } from './routes/admin/checkin/index'
 import { Route as AdminCheckinScannerRouteImport } from './routes/admin/checkin/scanner'
+import { Route as AdminContatosIndexRouteImport } from './routes/admin/contatos/index'
 import { Route as AdminEmailManagementIndexRouteImport } from './routes/admin/email-management/index'
+import { Route as AdminGruposIndexRouteImport } from './routes/admin/grupos/index'
 import { Route as AdminMarketingIndexRouteImport } from './routes/admin/marketing/index'
 import { Route as AdminMarketingAnunciosRouteImport } from './routes/admin/marketing/anuncios'
 import { Route as AdminMarketingPublicidadeRouteImport } from './routes/admin/marketing/publicidade'
@@ -82,6 +84,7 @@ import { Route as EventosIdCheckoutRouteImport } from './routes/eventos/$id.chec
 import { Route as EventosCategoriaSlugRouteImport } from './routes/eventos/categoria/$slug'
 import { Route as OauthGoogleReturnRouteImport } from './routes/oauth/google/return'
 import { Route as ProdutorIdDashboardRouteImport } from './routes/produtor/$id.dashboard'
+import { Route as AdminContatosIdIndexRouteImport } from './routes/admin/contatos/$id/index'
 import { Route as CheckinProjectIdEventIdRouteImport } from './routes/checkin/$projectId.event.$id'
 import { Route as LovableEmailAuthPreviewRouteImport } from './routes/lovable/email/auth/preview'
 import { Route as LovableEmailAuthWebhookRouteImport } from './routes/lovable/email/auth/webhook'
@@ -389,12 +392,22 @@ const AdminCheckinScannerRoute = AdminCheckinScannerRouteImport.update({
   path: '/checkin/scanner',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminContatosIndexRoute = AdminContatosIndexRouteImport.update({
+  id: '/contatos/',
+  path: '/contatos/',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminEmailManagementIndexRoute =
   AdminEmailManagementIndexRouteImport.update({
     id: '/email-management/',
     path: '/email-management/',
     getParentRoute: () => AdminRoute,
   } as any)
+const AdminGruposIndexRoute = AdminGruposIndexRouteImport.update({
+  id: '/grupos/',
+  path: '/grupos/',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminMarketingIndexRoute = AdminMarketingIndexRouteImport.update({
   id: '/marketing/',
   path: '/marketing/',
@@ -462,6 +475,11 @@ const ProdutorIdDashboardRoute = ProdutorIdDashboardRouteImport.update({
   id: '/$id/dashboard',
   path: '/$id/dashboard',
   getParentRoute: () => ProdutorRoute,
+} as any)
+const AdminContatosIdIndexRoute = AdminContatosIdIndexRouteImport.update({
+  id: '/contatos/$id/',
+  path: '/contatos/$id/',
+  getParentRoute: () => AdminRoute,
 } as any)
 const CheckinProjectIdEventIdRoute = CheckinProjectIdEventIdRouteImport.update({
   id: '/$projectId/event/$id',
@@ -580,12 +598,15 @@ export interface FileRoutesByFullPath {
   '/oauth/google/return': typeof OauthGoogleReturnRoute
   '/produtor/$id/dashboard': typeof ProdutorIdDashboardRoute
   '/admin/checkin/': typeof AdminCheckinIndexRoute
+  '/admin/contatos/': typeof AdminContatosIndexRoute
   '/admin/email-management/': typeof AdminEmailManagementIndexRoute
+  '/admin/grupos/': typeof AdminGruposIndexRoute
   '/admin/marketing/': typeof AdminMarketingIndexRoute
   '/checkin/$projectId/': typeof CheckinProjectIdIndexRoute
   '/checkin/$projectId/event/$id': typeof CheckinProjectIdEventIdRouteWithChildren
   '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
   '/lovable/email/auth/webhook': typeof LovableEmailAuthWebhookRoute
+  '/admin/contatos/$id/': typeof AdminContatosIdIndexRoute
   '/api/public/tickets/share/$token': typeof ApiPublicTicketsShareTokenRoute
   '/checkin/$projectId/event/$id/relatorios': typeof CheckinProjectIdEventIdRelatoriosRoute
   '/checkin/$projectId/event/$id/scanner': typeof CheckinProjectIdEventIdScannerRoute
@@ -658,11 +679,14 @@ export interface FileRoutesByTo {
   '/oauth/google/return': typeof OauthGoogleReturnRoute
   '/produtor/$id/dashboard': typeof ProdutorIdDashboardRoute
   '/admin/checkin': typeof AdminCheckinIndexRoute
+  '/admin/contatos': typeof AdminContatosIndexRoute
   '/admin/email-management': typeof AdminEmailManagementIndexRoute
+  '/admin/grupos': typeof AdminGruposIndexRoute
   '/admin/marketing': typeof AdminMarketingIndexRoute
   '/checkin/$projectId': typeof CheckinProjectIdIndexRoute
   '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
   '/lovable/email/auth/webhook': typeof LovableEmailAuthWebhookRoute
+  '/admin/contatos/$id': typeof AdminContatosIdIndexRoute
   '/api/public/tickets/share/$token': typeof ApiPublicTicketsShareTokenRoute
   '/checkin/$projectId/event/$id/relatorios': typeof CheckinProjectIdEventIdRelatoriosRoute
   '/checkin/$projectId/event/$id/scanner': typeof CheckinProjectIdEventIdScannerRoute
@@ -741,12 +765,15 @@ export interface FileRoutesById {
   '/oauth/google/return': typeof OauthGoogleReturnRoute
   '/produtor/$id/dashboard': typeof ProdutorIdDashboardRoute
   '/admin/checkin/': typeof AdminCheckinIndexRoute
+  '/admin/contatos/': typeof AdminContatosIndexRoute
   '/admin/email-management/': typeof AdminEmailManagementIndexRoute
+  '/admin/grupos/': typeof AdminGruposIndexRoute
   '/admin/marketing/': typeof AdminMarketingIndexRoute
   '/checkin/$projectId/': typeof CheckinProjectIdIndexRoute
   '/checkin/$projectId/event/$id': typeof CheckinProjectIdEventIdRouteWithChildren
   '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
   '/lovable/email/auth/webhook': typeof LovableEmailAuthWebhookRoute
+  '/admin/contatos/$id/': typeof AdminContatosIdIndexRoute
   '/api/public/tickets/share/$token': typeof ApiPublicTicketsShareTokenRoute
   '/checkin/$projectId/event/$id/relatorios': typeof CheckinProjectIdEventIdRelatoriosRoute
   '/checkin/$projectId/event/$id/scanner': typeof CheckinProjectIdEventIdScannerRoute
@@ -826,12 +853,15 @@ export interface FileRouteTypes {
     | '/oauth/google/return'
     | '/produtor/$id/dashboard'
     | '/admin/checkin/'
+    | '/admin/contatos/'
     | '/admin/email-management/'
+    | '/admin/grupos/'
     | '/admin/marketing/'
     | '/checkin/$projectId/'
     | '/checkin/$projectId/event/$id'
     | '/lovable/email/auth/preview'
     | '/lovable/email/auth/webhook'
+    | '/admin/contatos/$id/'
     | '/api/public/tickets/share/$token'
     | '/checkin/$projectId/event/$id/relatorios'
     | '/checkin/$projectId/event/$id/scanner'
@@ -904,11 +934,14 @@ export interface FileRouteTypes {
     | '/oauth/google/return'
     | '/produtor/$id/dashboard'
     | '/admin/checkin'
+    | '/admin/contatos'
     | '/admin/email-management'
+    | '/admin/grupos'
     | '/admin/marketing'
     | '/checkin/$projectId'
     | '/lovable/email/auth/preview'
     | '/lovable/email/auth/webhook'
+    | '/admin/contatos/$id'
     | '/api/public/tickets/share/$token'
     | '/checkin/$projectId/event/$id/relatorios'
     | '/checkin/$projectId/event/$id/scanner'
@@ -986,12 +1019,15 @@ export interface FileRouteTypes {
     | '/oauth/google/return'
     | '/produtor/$id/dashboard'
     | '/admin/checkin/'
+    | '/admin/contatos/'
     | '/admin/email-management/'
+    | '/admin/grupos/'
     | '/admin/marketing/'
     | '/checkin/$projectId/'
     | '/checkin/$projectId/event/$id'
     | '/lovable/email/auth/preview'
     | '/lovable/email/auth/webhook'
+    | '/admin/contatos/$id/'
     | '/api/public/tickets/share/$token'
     | '/checkin/$projectId/event/$id/relatorios'
     | '/checkin/$projectId/event/$id/scanner'
@@ -1445,11 +1481,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminCheckinScannerRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/contatos/': {
+      id: '/admin/contatos/'
+      path: '/contatos'
+      fullPath: '/admin/contatos/'
+      preLoaderRoute: typeof AdminContatosIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/email-management/': {
       id: '/admin/email-management/'
       path: '/email-management'
       fullPath: '/admin/email-management/'
       preLoaderRoute: typeof AdminEmailManagementIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/grupos/': {
+      id: '/admin/grupos/'
+      path: '/grupos'
+      fullPath: '/admin/grupos/'
+      preLoaderRoute: typeof AdminGruposIndexRouteImport
       parentRoute: typeof AdminRoute
     }
     '/admin/marketing/': {
@@ -1543,6 +1593,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProdutorIdDashboardRouteImport
       parentRoute: typeof ProdutorRoute
     }
+    '/admin/contatos/$id/': {
+      id: '/admin/contatos/$id/'
+      path: '/contatos/$id'
+      fullPath: '/admin/contatos/$id/'
+      preLoaderRoute: typeof AdminContatosIdIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/checkin/$projectId/event/$id': {
       id: '/checkin/$projectId/event/$id'
       path: '/$projectId/event/$id'
@@ -1622,8 +1679,11 @@ interface AdminRouteChildren {
   AdminMarketingPublicidadeRoute: typeof AdminMarketingPublicidadeRoute
   AdminMarketingPushRoute: typeof AdminMarketingPushRoute
   AdminCheckinIndexRoute: typeof AdminCheckinIndexRoute
+  AdminContatosIndexRoute: typeof AdminContatosIndexRoute
   AdminEmailManagementIndexRoute: typeof AdminEmailManagementIndexRoute
+  AdminGruposIndexRoute: typeof AdminGruposIndexRoute
   AdminMarketingIndexRoute: typeof AdminMarketingIndexRoute
+  AdminContatosIdIndexRoute: typeof AdminContatosIdIndexRoute
 }
 
 const AdminRouteChildren: AdminRouteChildren = {
@@ -1646,8 +1706,11 @@ const AdminRouteChildren: AdminRouteChildren = {
   AdminMarketingPublicidadeRoute: AdminMarketingPublicidadeRoute,
   AdminMarketingPushRoute: AdminMarketingPushRoute,
   AdminCheckinIndexRoute: AdminCheckinIndexRoute,
+  AdminContatosIndexRoute: AdminContatosIndexRoute,
   AdminEmailManagementIndexRoute: AdminEmailManagementIndexRoute,
+  AdminGruposIndexRoute: AdminGruposIndexRoute,
   AdminMarketingIndexRoute: AdminMarketingIndexRoute,
+  AdminContatosIdIndexRoute: AdminContatosIdIndexRoute,
 }
 
 const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)

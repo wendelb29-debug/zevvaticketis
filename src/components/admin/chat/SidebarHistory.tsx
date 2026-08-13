@@ -75,7 +75,7 @@ export function SidebarHistory({ isOpen, onClose, contactId }: SidebarHistoryPro
                             <div className="flex flex-col items-end">
                               <span className="text-[9px] font-black text-muted-foreground uppercase tracking-widest">Finalizado em</span>
                               <span className="text-[11px] font-bold text-foreground">
-                                {attendance.closed_at ? DateTime.fromISO(attendance.closed_at).toFormat('dd/MM/yy HH:mm') : 'N/A'}
+                                {attendance.finalized_at ? DateTime.fromISO(attendance.finalized_at).toFormat('dd/MM/yy HH:mm') : 'N/A'}
                               </span>
                             </div>
                             <div className="w-8 h-8 rounded-lg bg-green-500/10 flex items-center justify-center text-green-500">
@@ -90,11 +90,11 @@ export function SidebarHistory({ isOpen, onClose, contactId }: SidebarHistoryPro
                               <p className="text-[9px] font-black text-muted-foreground uppercase tracking-widest mb-1.5">Atendente</p>
                               <div className="flex items-center gap-2 bg-card p-2 rounded-xl border border-border w-fit min-w-[160px]">
                                 <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold text-xs uppercase">
-                                  {attendance.agent_id?.substring(0, 2) || "U"}
+                                  {attendance.assigned_user_id?.substring(0, 2) || "U"}
                                 </div>
                                 <div>
                                   <p className="text-xs font-bold text-foreground truncate">Agente Zevva</p>
-                                  <p className="text-[10px] text-muted-foreground">ID: {attendance.agent_id?.slice(0, 8)}</p>
+                                  <p className="text-[10px] text-muted-foreground">ID: {attendance.assigned_user_id?.slice(0, 8)}</p>
                                 </div>
                               </div>
                             </div>
@@ -104,7 +104,7 @@ export function SidebarHistory({ isOpen, onClose, contactId }: SidebarHistoryPro
                             <p className="text-[9px] font-black text-muted-foreground uppercase tracking-widest mb-1.5">Motivo / Resumo</p>
                             <div className="bg-card p-3 rounded-xl border border-border h-full min-h-[60px]">
                               <p className="text-xs text-foreground/80 leading-relaxed italic">
-                                {attendance.closure_reason || "Sem observações registradas."}
+                                {attendance.finalization_reason || "Sem observações registradas."}
                               </p>
                             </div>
                           </div>

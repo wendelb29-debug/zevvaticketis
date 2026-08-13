@@ -1,65 +1,40 @@
-# Plano de Implementação CRM Zevva
+# Plano de Implementação — Módulo CRM Zevva
 
-Este plano descreve a implementação do módulo de CRM de Contatos, Grupos e Histórico de Atendimentos, conforme solicitado.
+Este plano detalha a execução das fases de modernização da base de contatos, gerenciamento de grupos e histórico de atendimentos, garantindo isolamento multi-tenant e integridade dos dados.
 
-## Fase 1: Base de Dados e Normalização
+## Fases Concluídas
 
-### Objetivos
-- Auditar e expandir tabelas existentes sem perda de dados.
-- Implementar normalização de telefones e deduplicação.
-- Garantir isolamento por tenant via RLS.
+### Fase 1: Base de Dados e Normalização
+- Auditoria da estrutura existente e normalização das tabelas de WhatsApp.
+- Implementação da função `normalize_phone` para garantir unicidade de contatos.
+- Expansão da tabela `whatsapp_contacts` com campos de CRM (email, documento, status, notas).
+- Criação da tabela `attendance_events` para auditoria operacional.
+- Configuração de políticas RLS rigorosas para isolamento total entre tenants.
+- Atualização do webhook `uazapi-webhook.ts` para realizar o upsert automático de contatos e gerenciar ciclos de atendimento.
 
-### Alterações no Banco de Dados (Migration)
-1.  **whatsapp_contacts**:
-    *   Adicionar: `normalized_phone`, `email`, `document`, `avatar_url`, `channel`, `external_contact_id`, `notes`, `status`, `first_contact_at`, `updated_at`, `created_by`.
-    *   Constraint Unique: `(tenant_id, normalized_phone)`.
-    *   Índices: `name`, `normalized_phone`, `email`.
-2.  **whatsapp_contact_groups**:
-    *   Adicionar: `status`, `updated_at`, `created_by`.
-    *   Constraint Unique: `(tenant_id, name)` (já existe).
-3.  **whatsapp_contact_group_memberships**:
-    *   Adicionar: `tenant_id`, `added_by`.
-4.  **whatsapp_attendances**:
-    *   Adicionar: `protocol`, `channel`, `department_id`, `assigned_user_id`, `subject`, `summary`, `started_at`, `first_response_at`, `finalized_at`, `finalized_by`, `finalization_reason`, `internal_notes`.
-    *   Atualizar Status: `waiting`, `active`, `transferred`, `finalized`, `cancelled`.
-5.  **attendance_events**: (Nova tabela)
-    *   Registrar linha do tempo de cada atendimento.
+### Fase 2: Gerenciamento de Grupos
+- Implementação de CRUD de grupos com suporte a cores e metadados.
+- Criação da tabela de relacionamento `whatsapp_contact_group_memberships`.
+- Integração do modal de grupos no Chat para atribuição em tempo real.
 
-### Lógica de Backend
-- Função SQL para normalização de telefone.
-- Upsert de contato no webhook do WhatsApp para evitar duplicidade.
+### Fase 3: Área Administrativa de Contatos
+- Criação da rota `/admin/contatos` com listagem, busca e indicadores.
+- Criação da rota de detalhes `/admin/contatos/$id` com abas de Visão Geral, Histórico e Observações.
+- Atualização da navegação lateral (Sidebar) para incluir o novo módulo de Contatos.
 
-## Fase 2: Gestão de Grupos e Integração Chat
+## Próximas Fases
 
-### Objetivos
-- Interface para CRUD de grupos no painel Admin.
-- Gerenciamento de membros de grupos.
-- Modal de grupos integrado à barra lateral do Chat.
+### Fase 4: Histórico e Finalização
+- [ ] Implementar visualização em modo somente leitura de mensagens antigas no histórico.
+- [ ] Adicionar funcionalidade de "Imprimir Atendimento" e "Copiar Histórico".
+- [ ] Criar dashboard de métricas de produtividade por atendente (SLA, Tempo Médio de Resposta).
 
-### Componentes UI
-- `SidebarGroups.tsx` (Atualização para persistência real).
-- Novas rotas: `/admin/grupos`.
-
-## Fase 3: Área de Contatos no Admin
-
-### Objetivos
-- Listagem global de contatos com filtros e busca.
-- Detalhes do contato com abas (Visão Geral, Grupos, Histórico, Notas).
-
-### Componentes UI
-- `/admin/contatos/index.tsx`.
-- `/admin/contatos/$id.tsx`.
-- Aba de Histórico com visualização de mensagens antigas.
+### Fase 5: Validação e Refinamento
+- [ ] Testes de carga na ingestão de mensagens com milhares de contatos.
+- [ ] Refinamento da interface mobile para as telas de listagem.
+- [ ] Implementação de ação administrativa para "Mesclar Contatos" duplicados.
 
 ## Detalhes Técnicos
-
-- **Framework**: TanStack Start v1.
-- **Banco de Dados**: Supabase (Lovable Cloud).
-- **Estilo**: Tailwind 4 (Tokens semânticos, Graphite Dark Mode).
-- **Segurança**: RLS em todas as tabelas, funções SECURITY INVOKER com search_path.
-- **I18n**: Support para PT-BR/EN.
-
-## Próximos Passos
-1. Executar migration da Fase 1.
-2. Atualizar funções de servidor para usar os novos campos.
-3. Implementar interface de Grupos.
+- **Deduplicação:** Realizada via `normalized_phone` no nível de banco de dados (`ON CONFLICT (tenant_id, normalized_phone) DO UPDATE`).
+- **Ciclo de Atendimento:** O status `finalized` agora é o padrão para tickets concluídos, preservando o histórico completo.
+- **Segurança:** Todas as consultas utilizam `tenant_id` filtrado por RLS, impedindo vazamento de dados entre projetos.

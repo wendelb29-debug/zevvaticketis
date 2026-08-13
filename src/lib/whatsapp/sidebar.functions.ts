@@ -151,7 +151,7 @@ export const getAttendanceHistory = createServerFn({ method: "GET" })
       .from('whatsapp_attendances')
       .select('*')
       .eq('contact_id', data.contactId)
-      .eq('status', 'closed')
+      .eq('status', 'finalized')
       .order('created_at', { ascending: false });
 
     if (error) throw error;
@@ -191,19 +191,31 @@ export const closeAttendance = createServerFn({ method: "POST" })
     reason: z.string().min(1),
     notes: z.string().optional()
   }).parse(data))
-  .handler(async ({ data }) => {
+  .handler(async ({ data, context }) => {
     const { data: attendance, error } = await supabase
       .from('whatsapp_attendances')
       .update({
-        status: 'closed',
-        closure_reason: data.reason,
+        status: 'finalized',
+        finalization_reason: data.reason,
         internal_notes: data.notes ?? null,
-        closed_at: new Date().toISOString()
-      })
+        finalized_at: new Date().toISOString(),
+        finalized_by: context.userId
+      } as any)
       .eq('id', data.attendanceId)
       .select()
       .single();
 
     if (error) throw error;
+
+    // Record event
+    await supabase.from('attendance_events').insert({
+      tenant_id: (attendance as any).tenant_id,
+      attendance_id: data.attendanceId,
+      event_type: 'finalized',
+      new_value: 'finalized',
+      description: `Atendimento finalizado por motivo: ${data.reason}`,
+      created_by: context.userId
+    });
+
     return attendance;
   });

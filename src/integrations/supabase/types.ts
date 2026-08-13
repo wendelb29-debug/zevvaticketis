@@ -167,6 +167,57 @@ export type Database = {
         }
         Relationships: []
       }
+      attendance_events: {
+        Row: {
+          attendance_id: string
+          created_at: string | null
+          created_by: string | null
+          description: string | null
+          event_type: string
+          id: string
+          new_value: string | null
+          previous_value: string | null
+          tenant_id: string
+        }
+        Insert: {
+          attendance_id: string
+          created_at?: string | null
+          created_by?: string | null
+          description?: string | null
+          event_type: string
+          id?: string
+          new_value?: string | null
+          previous_value?: string | null
+          tenant_id: string
+        }
+        Update: {
+          attendance_id?: string
+          created_at?: string | null
+          created_by?: string | null
+          description?: string | null
+          event_type?: string
+          id?: string
+          new_value?: string | null
+          previous_value?: string | null
+          tenant_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "attendance_events_attendance_id_fkey"
+            columns: ["attendance_id"]
+            isOneToOne: false
+            referencedRelation: "whatsapp_attendances"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "attendance_events_tenant_id_fkey"
+            columns: ["tenant_id"]
+            isOneToOne: false
+            referencedRelation: "tenants"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       audit_logs: {
         Row: {
           acao: string
@@ -1791,45 +1842,81 @@ export type Database = {
       whatsapp_attendances: {
         Row: {
           agent_id: string | null
+          assigned_user_id: string | null
+          channel: string | null
           closed_at: string | null
           closure_reason: string | null
           contact_id: string
           created_at: string
+          department_id: string | null
           feedback: string | null
+          finalization_reason: string | null
+          finalized_at: string | null
+          finalized_by: string | null
+          first_response_at: string | null
           id: string
           internal_notes: string | null
           metadata: Json | null
+          protocol: string | null
           rating: number | null
+          started_at: string | null
           status: string
+          subject: string | null
+          summary: string | null
           tenant_id: string
+          updated_at: string | null
         }
         Insert: {
           agent_id?: string | null
+          assigned_user_id?: string | null
+          channel?: string | null
           closed_at?: string | null
           closure_reason?: string | null
           contact_id: string
           created_at?: string
+          department_id?: string | null
           feedback?: string | null
+          finalization_reason?: string | null
+          finalized_at?: string | null
+          finalized_by?: string | null
+          first_response_at?: string | null
           id?: string
           internal_notes?: string | null
           metadata?: Json | null
+          protocol?: string | null
           rating?: number | null
+          started_at?: string | null
           status: string
+          subject?: string | null
+          summary?: string | null
           tenant_id: string
+          updated_at?: string | null
         }
         Update: {
           agent_id?: string | null
+          assigned_user_id?: string | null
+          channel?: string | null
           closed_at?: string | null
           closure_reason?: string | null
           contact_id?: string
           created_at?: string
+          department_id?: string | null
           feedback?: string | null
+          finalization_reason?: string | null
+          finalized_at?: string | null
+          finalized_by?: string | null
+          first_response_at?: string | null
           id?: string
           internal_notes?: string | null
           metadata?: Json | null
+          protocol?: string | null
           rating?: number | null
+          started_at?: string | null
           status?: string
+          subject?: string | null
+          summary?: string | null
           tenant_id?: string
+          updated_at?: string | null
         }
         Relationships: [
           {
@@ -1850,22 +1937,28 @@ export type Database = {
       }
       whatsapp_contact_group_memberships: {
         Row: {
+          added_by: string | null
           contact_id: string
           created_at: string
           group_id: string
           id: string
+          tenant_id: string | null
         }
         Insert: {
+          added_by?: string | null
           contact_id: string
           created_at?: string
           group_id: string
           id?: string
+          tenant_id?: string | null
         }
         Update: {
+          added_by?: string | null
           contact_id?: string
           created_at?: string
           group_id?: string
           id?: string
+          tenant_id?: string | null
         }
         Relationships: [
           {
@@ -1882,32 +1975,48 @@ export type Database = {
             referencedRelation: "whatsapp_contact_groups"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "whatsapp_contact_group_memberships_tenant_id_fkey"
+            columns: ["tenant_id"]
+            isOneToOne: false
+            referencedRelation: "tenants"
+            referencedColumns: ["id"]
+          },
         ]
       }
       whatsapp_contact_groups: {
         Row: {
           color: string | null
           created_at: string
+          created_by: string | null
           description: string | null
           id: string
           name: string
+          status: string | null
           tenant_id: string
+          updated_at: string | null
         }
         Insert: {
           color?: string | null
           created_at?: string
+          created_by?: string | null
           description?: string | null
           id?: string
           name: string
+          status?: string | null
           tenant_id: string
+          updated_at?: string | null
         }
         Update: {
           color?: string | null
           created_at?: string
+          created_by?: string | null
           description?: string | null
           id?: string
           name?: string
+          status?: string | null
           tenant_id?: string
+          updated_at?: string | null
         }
         Relationships: [
           {
@@ -1921,31 +2030,64 @@ export type Database = {
       }
       whatsapp_contacts: {
         Row: {
+          avatar_url: string | null
+          channel: string | null
           created_at: string | null
+          created_by: string | null
+          document: string | null
+          email: string | null
+          external_contact_id: string | null
+          first_contact_at: string | null
           id: string
           last_interaction_at: string | null
           name: string | null
           name_manually_edited: boolean | null
+          normalized_phone: string | null
+          notes: string | null
           phone: string
+          status: string | null
           tenant_id: string | null
+          updated_at: string | null
         }
         Insert: {
+          avatar_url?: string | null
+          channel?: string | null
           created_at?: string | null
+          created_by?: string | null
+          document?: string | null
+          email?: string | null
+          external_contact_id?: string | null
+          first_contact_at?: string | null
           id?: string
           last_interaction_at?: string | null
           name?: string | null
           name_manually_edited?: boolean | null
+          normalized_phone?: string | null
+          notes?: string | null
           phone: string
+          status?: string | null
           tenant_id?: string | null
+          updated_at?: string | null
         }
         Update: {
+          avatar_url?: string | null
+          channel?: string | null
           created_at?: string | null
+          created_by?: string | null
+          document?: string | null
+          email?: string | null
+          external_contact_id?: string | null
+          first_contact_at?: string | null
           id?: string
           last_interaction_at?: string | null
           name?: string | null
           name_manually_edited?: boolean | null
+          normalized_phone?: string | null
+          notes?: string | null
           phone?: string
+          status?: string | null
           tenant_id?: string | null
+          updated_at?: string | null
         }
         Relationships: [
           {
@@ -1963,6 +2105,7 @@ export type Database = {
           id: string
           nome: string
           status: string | null
+          tenant_id: string | null
           uazapi_token: string
         }
         Insert: {
@@ -1970,6 +2113,7 @@ export type Database = {
           id?: string
           nome: string
           status?: string | null
+          tenant_id?: string | null
           uazapi_token: string
         }
         Update: {
@@ -1977,9 +2121,18 @@ export type Database = {
           id?: string
           nome?: string
           status?: string | null
+          tenant_id?: string | null
           uazapi_token?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "whatsapp_instances_tenant_id_fkey"
+            columns: ["tenant_id"]
+            isOneToOne: false
+            referencedRelation: "tenants"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       whatsapp_integrations: {
         Row: {
@@ -2243,6 +2396,7 @@ export type Database = {
         }
         Returns: undefined
       }
+      normalize_phone: { Args: { p_phone: string }; Returns: string }
       promote_to_platform_admin: {
         Args: { target_email: string }
         Returns: Json
