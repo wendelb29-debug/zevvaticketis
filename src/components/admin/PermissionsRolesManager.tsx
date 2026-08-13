@@ -348,8 +348,8 @@ export function PermissionsRolesManager({ tenantId }: PermissionsRolesManagerPro
                 <div className="flex items-center justify-between">
                   <Label className="text-sm font-bold">Matriz de Permissões</Label>
                   <div className="flex gap-2">
-                    <Button variant="outline" size="xs" onClick={() => setSelectedPermissions([])} className="text-[10px] font-bold">LIMPAR TODAS</Button>
-                    <Button variant="outline" size="xs" onClick={() => setSelectedPermissions(permissionDefs.map(d => d.id))} className="text-[10px] font-bold">MARCAR TODAS</Button>
+                    <Button variant="outline" size="sm" onClick={() => setSelectedPermissions([])} className="text-[10px] font-bold h-7">LIMPAR TODAS</Button>
+                    <Button variant="outline" size="sm" onClick={() => setSelectedPermissions(permissionDefs.map(d => d.id))} className="text-[10px] font-bold h-7">MARCAR TODAS</Button>
                   </div>
                 </div>
 
