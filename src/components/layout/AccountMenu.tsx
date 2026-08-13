@@ -34,6 +34,8 @@ export function AccountMenu({ user, onLogout, onNavigate, onOpenAuth }: AccountM
     enabled: !!user,
   });
 
+  const avatarUrl = useAvatarUrl(profile?.avatar_url);
+
   if (!user) {
     return (
       <button
