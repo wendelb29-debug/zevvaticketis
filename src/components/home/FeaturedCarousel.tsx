@@ -109,7 +109,7 @@ export function FeaturedCarousel({ events }: FeaturedCarouselProps) {
                   {currentEvent?.title}
                 </h2>
 
-                <div className="flex flex-wrap gap-6 text-primary-foreground/80">
+                <div className="flex flex-wrap gap-6 text-white/85">
                   <div className="flex items-center gap-2 text-sm font-medium">
                     <MapPin className="w-4 h-4 text-primary" />
                     {currentEvent?.city || "Destino internacional"}
@@ -135,7 +135,7 @@ export function FeaturedCarousel({ events }: FeaturedCarouselProps) {
                     <ArrowRight className="w-4 h-4" />
                   </button>
                   <div className="flex flex-col">
-                    <span className="text-[10px] font-bold text-white/60 uppercase tracking-widest flex items-center gap-1.5">
+                    <span className="text-[10px] font-bold text-white/65 uppercase tracking-widest flex items-center gap-1.5">
                       <Ticket className="w-3 h-3 text-primary" />
                       {currentEvent?.min_price === 0 ? "Aproveite" : "A partir de"}
                     </span>
