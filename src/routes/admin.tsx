@@ -119,8 +119,8 @@ function AdminLayout() {
   };
 
   const menuItems = [
-    { label: "Master Console", icon: Building2, href: "/admin/master" },
     { label: "Chat", icon: MessageSquare, href: "/admin/chat" },
+    { label: "Master Console", icon: Building2, href: "/admin/master" },
     { label: "Dashboard", icon: LayoutDashboard, href: "/admin", activeOptions: { exact: true } },
     { 
       label: "Contatos", 
