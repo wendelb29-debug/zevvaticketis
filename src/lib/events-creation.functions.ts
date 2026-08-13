@@ -1,30 +1,43 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
+import { validateUserTenantAccess } from "./security";
+
+const createEventSchema = z.object({
+  event: z.object({
+    title: z.string().min(3).max(100),
+    description: z.string().max(2000).optional(),
+    category: z.string().max(50).optional(),
+    city: z.string().max(100).optional(),
+    location: z.string().max(200).optional(),
+    start_date: z.string().datetime(),
+    cover_image: z.string().url().max(500).optional(),
+    tenant_id: z.string().uuid(),
+  }),
+  ticketTypes: z.array(z.object({
+    nome: z.string().min(2).max(50),
+    valor: z.number().min(0).max(1000000),
+    quantidade: z.number().int().positive().max(100000),
+  })).min(1).max(10)
+});
 
 export const createEventFull = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((data) => z.object({
-    event: z.object({
-      title: z.string(),
-      description: z.string().optional(),
-      category: z.string().optional(),
-      city: z.string().optional(),
-      location: z.string().optional(),
-      start_date: z.string(),
-      cover_image: z.string().optional(),
-      tenant_id: z.string(),
-    }),
-    ticketTypes: z.array(z.object({
-      nome: z.string(),
-      valor: z.number(),
-      quantidade: z.number(),
-    }))
-  }).parse(data))
+  .inputValidator((data) => createEventSchema.parse(data))
   .handler(async ({ data, context }) => {
-    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    // SECURITY: Validate tenant access before administrative operation
+    const validation = await validateUserTenantAccess(
+      context.supabase,
+      context.userId,
+      data.event.tenant_id,
+      ['owner', 'admin', 'moderator'] // Producers/Moderators can create events
+    );
 
-    // 1. Create Event with Admin privileges to bypass RLS and ensure correct fields
+    if (!validation.authorized) {
+      throw new Error(validation.message || "Acesso negado para criação de eventos.");
+    }
+
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
     const { data: event, error: eventError } = await supabaseAdmin
       .from("events")
       .insert({

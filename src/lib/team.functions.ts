@@ -1,57 +1,36 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
+import { validateUserTenantAccess } from "./security";
 
 const inviteSchema = z.object({
   email: z.string().trim().toLowerCase().email().max(255),
-  permission: z.string().trim().min(1).max(60),
+  permission: z.enum(['owner', 'admin', 'moderator', 'user']),
   departments: z.array(z.string().trim().min(1).max(80)).max(50).default([]),
   accessHours: z.string().trim().max(80).optional(),
-  redirectTo: z.string().trim().max(500).optional(),
-  tenantId: z.string().uuid().optional(), // Explicit tenantId input
+  redirectTo: z.string().trim().url().max(500).optional()
+    .refine(url => !url || url.startsWith(process.env.VITE_APP_URL || 'http://localhost:8080'), {
+      message: "Redirecionamento permitido apenas para domínios do sistema."
+    }),
+  tenantId: z.string().uuid(),
 });
 
 export const sendTeamInvite = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((data: unknown) => inviteSchema.parse(data))
   .handler(async ({ data, context }) => {
-    let tenantId: string | undefined = data.tenantId;
+    const { tenantId } = data;
 
-    if (!tenantId) {
-      // Fallback: check if the user belongs to exactly one tenant
-      const { data: member } = await context.supabase
-        .from("tenant_members")
-        .select("tenant_id")
-        .eq("user_id", context.userId)
-        .maybeSingle();
+    // MANDATORY SECURITY CHECK: Validate user access to the tenant before using supabaseAdmin
+    const validation = await validateUserTenantAccess(
+      context.supabase,
+      context.userId,
+      tenantId,
+      ['owner', 'admin'] // Only owners/admins can invite
+    );
 
-      tenantId = member?.tenant_id ?? undefined;
-    }
-
-    if (!tenantId) {
-      // Platform admin check: fallback to first tenant if not explicitly scoped
-      const { data: adminRow } = await context.supabase
-        .from("platform_admins")
-        .select("id")
-        .eq("user_id", context.userId)
-        .maybeSingle();
-
-      if (!adminRow) {
-        return { success: false, message: "Você não pertence a nenhum ambiente." };
-      }
-
-      const { data: org } = await context.supabase
-        .from("tenants")
-        .select("id")
-        .order("created_at", { ascending: true })
-        .limit(1)
-        .maybeSingle();
-
-      tenantId = org?.id ?? undefined;
-    }
-
-    if (!tenantId) {
-      return { success: false, message: "Nenhum ambiente disponível para o convite." };
+    if (!validation.authorized) {
+      return { success: false, message: validation.message || "Acesso negado." };
     }
 
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
