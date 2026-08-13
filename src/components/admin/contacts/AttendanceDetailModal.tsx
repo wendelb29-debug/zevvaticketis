@@ -12,7 +12,7 @@ interface AttendanceDetailModalProps {
   isOpen: boolean;
   onClose: () => void;
   attendanceId: string | null;
-  protocol?: string;
+  protocol?: string | null;
 }
 
 export function AttendanceDetailModal({ isOpen, onClose, attendanceId, protocol }: AttendanceDetailModalProps) {
