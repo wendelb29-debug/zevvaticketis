@@ -236,18 +236,43 @@ export function CheckinStats() {
   );
 }
 
-function KPIItem({ title, value, icon: Icon, color }: any) {
+function KPIItem({ title, value, icon: Icon, color }: { title: string, value: string, icon: any, color: 'navy' | 'success' | 'primary' | 'neutral' }) {
+  const KPI_STYLES = {
+    navy: {
+      bar: "bg-foreground",
+      iconBackground: "bg-foreground/10",
+      icon: "text-foreground",
+    },
+    success: {
+      bar: "bg-success",
+      iconBackground: "bg-success/10",
+      icon: "text-success",
+    },
+    primary: {
+      bar: "bg-primary",
+      iconBackground: "bg-primary/10",
+      icon: "text-primary",
+    },
+    neutral: {
+      bar: "bg-muted-foreground",
+      iconBackground: "bg-muted",
+      icon: "text-muted-foreground",
+    },
+  };
+
+  const style = KPI_STYLES[color];
+
   return (
-    <Card className="border-line bg-white shadow-sm overflow-hidden relative group">
-      <div className={cn("absolute top-0 left-0 w-1 h-full", color)} />
+    <Card className="border-line bg-card shadow-sm overflow-hidden relative group">
+      <div className={cn("absolute top-0 left-0 w-1 h-full", style.bar)} />
       <CardContent className="p-4">
         <div className="flex items-center justify-between mb-2">
-          <p className="text-[10px] font-black text-muted uppercase tracking-widest">{title}</p>
-          <div className={cn("p-2 rounded-lg bg-opacity-10", color.replace('bg-', 'bg-').replace('bg-', 'text-'))}>
-            <Icon className={cn("w-4 h-4", color.replace('bg-', 'text-'))} />
+          <p className="text-[10px] font-black text-muted-foreground uppercase tracking-widest">{title}</p>
+          <div className={cn("p-2 rounded-lg", style.iconBackground)}>
+            <Icon className={cn("w-4 h-4", style.icon)} />
           </div>
         </div>
-        <p className="text-2xl font-manrope font-black text-navy">{value}</p>
+        <p className="text-2xl font-manrope font-black text-foreground">{value}</p>
       </CardContent>
     </Card>
   );
