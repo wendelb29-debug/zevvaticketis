@@ -10,19 +10,19 @@ export function CityTicker() {
   const tickerItems = [...cities, ...cities, ...cities];
 
   return (
-    <div className="bg-surface border-y border-line py-3 overflow-hidden relative">
+    <div className="bg-surface-base border-y border-border py-6 overflow-hidden relative">
       <div className="flex animate-marquee whitespace-nowrap">
         {tickerItems.map((city, index) => (
-          <div key={index} className="flex items-center mx-8">
-            <span className="text-[10px] font-black text-navy uppercase tracking-widest">{city}</span>
-            <div className="w-1 h-1 rounded-full bg-coral mx-8" />
+          <div key={index} className="flex items-center mx-12">
+            <span className="text-[10px] font-bold text-foreground-muted uppercase tracking-[0.3em]">{city}</span>
+            <div className="w-px h-4 bg-border mx-12 rotate-12" />
           </div>
         ))}
       </div>
       
       {/* Gradients for fade effect */}
-      <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-surface to-transparent z-10" />
-      <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-surface to-transparent z-10" />
+      <div className="absolute inset-y-0 left-0 w-48 bg-gradient-to-r from-surface-base to-transparent z-10" />
+      <div className="absolute inset-y-0 right-0 w-48 bg-gradient-to-l from-surface-base to-transparent z-10" />
     </div>
   );
 }
