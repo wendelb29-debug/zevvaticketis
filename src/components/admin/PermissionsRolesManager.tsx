@@ -83,7 +83,8 @@ export function PermissionsRolesManager({ tenantId }: PermissionsRolesManagerPro
 
   const groupedPermissions = useMemo(() => {
     const groups: Record<string, any[]> = {};
-    permissionDefs.forEach(def => {
+    const definitions = permissionDefs || [];
+    definitions.forEach(def => {
       if (!groups[def.module]) groups[def.module] = [];
       groups[def.module].push(def);
     });
