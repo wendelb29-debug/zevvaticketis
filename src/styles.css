@@ -20,25 +20,65 @@
   --font-inter: "Inter", sans-serif;
   --font-manrope: "Manrope", sans-serif;
 
-  /* Zevva Premium Tokens */
-  --color-background: #F6F7F8;
-  --color-surface: #FFFFFF;
-  --color-foreground: #17191C;
-  --color-foreground-muted: #62666D;
-  --color-primary: #D94B52;
-  --color-primary-hover: #BE3941;
-  --color-accent: #D94B52;
-  --color-border: #E3E5E8;
+  /* Mapeamento de Tokens Semânticos para a Identidade Zevva */
+  --background: #F6F7F8;
+  --foreground: #17191C;
+  
+  --card: #FFFFFF;
+  --card-foreground: #17191C;
+  
+  --popover: #FFFFFF;
+  --popover-foreground: #17191C;
+  
+  --primary: #D94B52;
+  --primary-foreground: #FFFFFF;
+  --primary-hover: #BE3941;
+  
+  --secondary: #F0F1F3;
+  --secondary-foreground: #17191C;
+  
+  --muted: #F0F1F3;
+  --muted-foreground: #62666D;
+  
+  --accent: #D94B52;
+  --accent-foreground: #FFFFFF;
+  
+  --destructive: #C53D45;
+  --destructive-foreground: #FFFFFF;
+  
+  --border: #E3E5E8;
+  --input: #E3E5E8;
+  --ring: #D94B52;
+
+  /* WhatsApp Chat Tokens */
+  --wa-bg: #F0F2F5;
+  --wa-sidebar: #FFFFFF;
+  --wa-agent-bubble: #FFFFFF;
+  --wa-client-bubble: #D9FDD3;
+  --wa-input-bg: #FFFFFF;
+  --wa-header-bg: #F0F2F5;
+
+  /* Status Colors */
   --color-success: #23865E;
   --color-warning: #B7791F;
   --color-danger: #C53D45;
   --color-dark-surface: #202228;
+
+  /* Legacy aliases for backward compatibility */
+  --color-background: var(--background);
+  --color-surface: var(--card);
+  --color-foreground: var(--foreground);
+  --color-foreground-muted: var(--muted-foreground);
+  --color-primary: var(--primary);
+  --color-primary-hover: #BE3941;
+  --color-border: var(--border);
 
   /* Radius Tokens */
   --radius-sm: 4px;
   --radius-md: 6px;
   --radius-lg: 8px;
 }
+
 
 @layer base {
   * {
