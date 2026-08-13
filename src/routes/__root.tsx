@@ -14,6 +14,7 @@ import { useUI } from "@/hooks/use-ui";
 import { LocationModal } from "@/components/home/LocationModal";
 import { ZevvaLoadingScreen } from "@/components/layout/ZevvaLoadingScreen";
 import { TenantProvider } from "@/hooks/use-tenants";
+import { supabase } from "@/integrations/supabase/client";
 
 
 
