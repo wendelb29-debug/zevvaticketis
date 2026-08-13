@@ -136,55 +136,55 @@ function AdminLayout() {
     { label: t.navigation?.masterConsole || "Master Console", icon: Building2, href: "/admin/master" },
     { label: t.navigation?.dashboard || "Dashboard", icon: LayoutDashboard, href: "/admin", activeOptions: { exact: true } },
     { 
-      label: "Contatos", 
+      label: t.navigation?.contacts || "Contatos", 
       icon: Users, 
       children: [
-        { label: "Todos os Contatos", href: "/admin/contatos" },
-        { label: "Grupos de Clientes", href: "/admin/grupos" },
+        { label: t.navigation?.allContacts || "Todos os Contatos", href: "/admin/contatos" },
+        { label: t.navigation?.customerGroups || "Grupos de Clientes", href: "/admin/grupos" },
       ]
     },
     { 
-      label: "Check-in", 
+      label: t.navigation?.checkin || "Check-in", 
       icon: CheckSquare, 
       children: [
-        { label: "Painel Geral", href: "/admin/checkin" },
-        { label: "Relatórios", href: "/admin/checkin", query: { tab: "reports" } },
-        { label: "Monitor Global", href: "/admin/checkin-monitor" },
+        { label: t.navigation?.generalPanel || "Painel Geral", href: "/admin/checkin" },
+        { label: t.navigation?.reports || "Relatórios", href: "/admin/checkin", query: { tab: "reports" } },
+        { label: t.navigation?.globalMonitor || "Monitor Global", href: "/admin/checkin-monitor" },
       ]
     },
 
     { 
-      label: "Planos", 
+      label: t.navigation?.plans || "Planos", 
       icon: CreditCard, 
       children: [
-        { label: "Planos", href: "/admin/planos" },
-        { label: "Países e Moedas", href: "/admin/paises-moedas" },
+        { label: t.navigation?.plans || "Planos", href: "/admin/planos" },
+        { label: t.navigation?.countriesAndCurrencies || "Países e Moedas", href: "/admin/paises-moedas" },
       ]
     },
     { 
-      label: "Marketing", 
+      label: t.navigation?.marketing || "Marketing", 
       icon: Megaphone, 
       children: [
-        { label: "Anúncios", href: "/admin/marketing/anuncios" },
-        { label: "Publicidade", href: "/admin/marketing/publicidade" },
-        { label: "Push Notifications", href: "/admin/marketing/push" },
+        { label: t.navigation?.ads || "Anúncios", href: "/admin/marketing/anuncios" },
+        { label: t.navigation?.advertising || "Publicidade", href: "/admin/marketing/publicidade" },
+        { label: t.navigation?.pushNotifications || "Push Notifications", href: "/admin/marketing/push" },
       ]
     },
     { 
-      label: "Envios Massivos", 
+      label: t.navigation?.massOutreach || "Envios Massivos", 
       icon: Rocket, 
       children: [
-        { label: "Criar novo", href: "/admin/envios-massivos", query: { wizard: "true" } },
-        { label: "Envios", href: "/admin/envios-massivos" },
+        { label: t.navigation?.createNew || "Criar novo", href: "/admin/envios-massivos", query: { wizard: "true" } },
+        { label: t.navigation?.outreach || "Envios", href: "/admin/envios-massivos" },
       ]
     },
     { 
-      label: "E-mails", 
+      label: t.navigation?.emails || "E-mails", 
       icon: Mail, 
       children: [
-        { label: "Dashboard", href: "/admin/email-management" },
-        { label: "Templates", href: "/admin/email-templates" },
-        { label: "Gmail Inbox", href: "/admin/emails" },
+        { label: t.navigation?.dashboard || "Dashboard", href: "/admin/email-management" },
+        { label: t.navigation?.templates || "Templates", href: "/admin/email-templates" },
+        { label: t.navigation?.gmailInbox || "Gmail Inbox", href: "/admin/emails" },
       ]
     },
   ];
@@ -378,7 +378,7 @@ function AdminLayout() {
               ) : (
                 <>
                   <Globe className="w-5 h-5 shrink-0 text-muted-foreground" />
-                  <span className="truncate flex-1 text-left">Idioma</span>
+                  <span className="truncate flex-1 text-left">{t.navigation?.language || "Idioma"}</span>
                   <span className="text-[10px] bg-accent px-1.5 py-0.5 rounded-md font-bold uppercase tracking-tighter">
                     {language.split('-')[0]}
                   </span>
@@ -430,7 +430,7 @@ function AdminLayout() {
               <TooltipTrigger asChild>
                 <button 
                   className="flex items-center justify-center w-full h-full outline-none focus:ring-2 focus:ring-primary rounded-lg transition-all"
-                  aria-label="Configurações"
+                  aria-label={t.navigation?.settings || "Configurações"}
                   onClick={(e) => {
                     e.preventDefault();
                     navigate({ to: "/admin/configuracoes" as any });
