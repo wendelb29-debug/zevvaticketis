@@ -94,6 +94,49 @@ export const getWhatsAppContacts = createServerFn({ method: "GET" })
     return contacts;
   });
 
+export const getWhatsAppIntegrationStatus = createServerFn({ method: "GET" })
+  .inputValidator((data) => z.object({
+    tenantId: z.string().uuid().optional()
+  }).parse(data))
+  .handler(async ({ data }) => {
+    if (!data.tenantId) return { status: 'offline', details: 'No tenant selected' };
+
+    // Check whatsapp_integrations (Meta API)
+    const { data: integration, error: integrationError } = await supabase
+      .from('whatsapp_integrations')
+      .select('status, updated_at')
+      .eq('project_id', data.tenantId)
+      .maybeSingle();
+
+    if (integrationError) throw integrationError;
+
+    // Check UAZAPI instances if no Meta API or if status is not active
+    // This is a simplified check for connection "health"
+    if (integration?.status === 'active') {
+      return { 
+        status: 'online', 
+        type: 'meta',
+        last_sync: integration.updated_at 
+      };
+    }
+
+    // Fallback or check UAZAPI (mocked logic for now as instances aren't linked to tenants yet in schema)
+    const { data: instance, error: instanceError } = await supabase
+      .from('whatsapp_instances')
+      .select('status')
+      .eq('status', 'active')
+      .limit(1)
+      .maybeSingle();
+
+    if (instanceError) throw instanceError;
+
+    if (instance) {
+      return { status: 'online', type: 'uazapi' };
+    }
+
+    return { status: 'offline' };
+  });
+
 export const getWhatsAppMessages = createServerFn({ method: "GET" })
   .inputValidator((data) => z.object({
     contactId: z.string().uuid()
