@@ -91,6 +91,7 @@ function AdminChatPage() {
   const { theme, setTheme } = useUI();
   const [isSalesPickerOpen, setIsSalesPickerOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<'atendimento' | 'espera'>('atendimento');
+  const [activeTool, setActiveTool] = useState<'finish' | 'transfer' | 'groups' | 'files' | 'history' | 'schedule' | 'automations' | null>(null);
 
   const { data: integrationStatus } = useQuery({
     queryKey: ['whatsapp-integration-status', activeTenant?.id],
