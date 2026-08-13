@@ -183,7 +183,7 @@ function RootComponent() {
 
       root.classList.remove("light", "dark");
       root.classList.add(resolvedTheme);
-      root.dataset.theme = resolvedTheme;
+      root.setAttribute('data-theme', resolvedTheme);
       root.style.colorScheme = resolvedTheme;
     };
 
