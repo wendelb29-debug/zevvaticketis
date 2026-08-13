@@ -107,7 +107,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 });
 
 function RootShell({ children }: { children: ReactNode }) {
-  const { language, activeOverlay, closeOverlay } = useUI();
+  const { language, activeOverlay, closeOverlay, theme } = useUI() as any;
 
   useEffect(() => {
     const handleOutsideClick = (event: MouseEvent) => {
