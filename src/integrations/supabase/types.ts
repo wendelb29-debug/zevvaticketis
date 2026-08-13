@@ -218,6 +218,80 @@ export type Database = {
           },
         ]
       }
+      attendance_transfers: {
+        Row: {
+          attendance_id: string
+          client_message_status: string | null
+          created_at: string | null
+          id: string
+          message_sent_to_client: boolean | null
+          new_agent_id: string | null
+          new_department_id: string
+          previous_agent_id: string | null
+          previous_department_id: string | null
+          reason: string
+          tenant_id: string
+          transferred_by: string
+        }
+        Insert: {
+          attendance_id: string
+          client_message_status?: string | null
+          created_at?: string | null
+          id?: string
+          message_sent_to_client?: boolean | null
+          new_agent_id?: string | null
+          new_department_id: string
+          previous_agent_id?: string | null
+          previous_department_id?: string | null
+          reason: string
+          tenant_id: string
+          transferred_by: string
+        }
+        Update: {
+          attendance_id?: string
+          client_message_status?: string | null
+          created_at?: string | null
+          id?: string
+          message_sent_to_client?: boolean | null
+          new_agent_id?: string | null
+          new_department_id?: string
+          previous_agent_id?: string | null
+          previous_department_id?: string | null
+          reason?: string
+          tenant_id?: string
+          transferred_by?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "attendance_transfers_attendance_id_fkey"
+            columns: ["attendance_id"]
+            isOneToOne: false
+            referencedRelation: "whatsapp_attendances"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "attendance_transfers_new_department_id_fkey"
+            columns: ["new_department_id"]
+            isOneToOne: false
+            referencedRelation: "whatsapp_departments"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "attendance_transfers_previous_department_id_fkey"
+            columns: ["previous_department_id"]
+            isOneToOne: false
+            referencedRelation: "whatsapp_departments"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "attendance_transfers_tenant_id_fkey"
+            columns: ["tenant_id"]
+            isOneToOne: false
+            referencedRelation: "tenants"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       audit_logs: {
         Row: {
           acao: string
@@ -2099,6 +2173,73 @@ export type Database = {
           },
         ]
       }
+      whatsapp_department_members: {
+        Row: {
+          created_at: string | null
+          department_id: string
+          id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          department_id: string
+          id?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          department_id?: string
+          id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "whatsapp_department_members_department_id_fkey"
+            columns: ["department_id"]
+            isOneToOne: false
+            referencedRelation: "whatsapp_departments"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      whatsapp_departments: {
+        Row: {
+          created_at: string | null
+          description: string | null
+          id: string
+          name: string
+          status: string | null
+          tenant_id: string
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          name: string
+          status?: string | null
+          tenant_id: string
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          name?: string
+          status?: string | null
+          tenant_id?: string
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "whatsapp_departments_tenant_id_fkey"
+            columns: ["tenant_id"]
+            isOneToOne: false
+            referencedRelation: "tenants"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       whatsapp_instances: {
         Row: {
           created_at: string | null
@@ -2399,6 +2540,16 @@ export type Database = {
       normalize_phone: { Args: { p_phone: string }; Returns: string }
       promote_to_platform_admin: {
         Args: { target_email: string }
+        Returns: Json
+      }
+      transfer_attendance: {
+        Args: {
+          p_attendance_id: string
+          p_client_message?: string
+          p_new_agent_id?: string
+          p_new_department_id: string
+          p_reason?: string
+        }
         Returns: Json
       }
       user_has_producer_role: {
