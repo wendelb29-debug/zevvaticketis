@@ -84,6 +84,7 @@ import { Route as EventosIdCheckoutRouteImport } from './routes/eventos/$id.chec
 import { Route as EventosCategoriaSlugRouteImport } from './routes/eventos/categoria/$slug'
 import { Route as OauthGoogleReturnRouteImport } from './routes/oauth/google/return'
 import { Route as ProdutorIdDashboardRouteImport } from './routes/produtor/$id.dashboard'
+import { Route as AdminContatosIdIndexRouteImport } from './routes/admin/contatos/$id/index'
 import { Route as CheckinProjectIdEventIdRouteImport } from './routes/checkin/$projectId.event.$id'
 import { Route as LovableEmailAuthPreviewRouteImport } from './routes/lovable/email/auth/preview'
 import { Route as LovableEmailAuthWebhookRouteImport } from './routes/lovable/email/auth/webhook'
@@ -475,6 +476,11 @@ const ProdutorIdDashboardRoute = ProdutorIdDashboardRouteImport.update({
   path: '/$id/dashboard',
   getParentRoute: () => ProdutorRoute,
 } as any)
+const AdminContatosIdIndexRoute = AdminContatosIdIndexRouteImport.update({
+  id: '/contatos/$id/',
+  path: '/contatos/$id/',
+  getParentRoute: () => AdminRoute,
+} as any)
 const CheckinProjectIdEventIdRoute = CheckinProjectIdEventIdRouteImport.update({
   id: '/$projectId/event/$id',
   path: '/$projectId/event/$id',
@@ -600,6 +606,7 @@ export interface FileRoutesByFullPath {
   '/checkin/$projectId/event/$id': typeof CheckinProjectIdEventIdRouteWithChildren
   '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
   '/lovable/email/auth/webhook': typeof LovableEmailAuthWebhookRoute
+  '/admin/contatos/$id/': typeof AdminContatosIdIndexRoute
   '/api/public/tickets/share/$token': typeof ApiPublicTicketsShareTokenRoute
   '/checkin/$projectId/event/$id/relatorios': typeof CheckinProjectIdEventIdRelatoriosRoute
   '/checkin/$projectId/event/$id/scanner': typeof CheckinProjectIdEventIdScannerRoute
@@ -679,6 +686,7 @@ export interface FileRoutesByTo {
   '/checkin/$projectId': typeof CheckinProjectIdIndexRoute
   '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
   '/lovable/email/auth/webhook': typeof LovableEmailAuthWebhookRoute
+  '/admin/contatos/$id': typeof AdminContatosIdIndexRoute
   '/api/public/tickets/share/$token': typeof ApiPublicTicketsShareTokenRoute
   '/checkin/$projectId/event/$id/relatorios': typeof CheckinProjectIdEventIdRelatoriosRoute
   '/checkin/$projectId/event/$id/scanner': typeof CheckinProjectIdEventIdScannerRoute
@@ -765,6 +773,7 @@ export interface FileRoutesById {
   '/checkin/$projectId/event/$id': typeof CheckinProjectIdEventIdRouteWithChildren
   '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
   '/lovable/email/auth/webhook': typeof LovableEmailAuthWebhookRoute
+  '/admin/contatos/$id/': typeof AdminContatosIdIndexRoute
   '/api/public/tickets/share/$token': typeof ApiPublicTicketsShareTokenRoute
   '/checkin/$projectId/event/$id/relatorios': typeof CheckinProjectIdEventIdRelatoriosRoute
   '/checkin/$projectId/event/$id/scanner': typeof CheckinProjectIdEventIdScannerRoute
@@ -852,6 +861,7 @@ export interface FileRouteTypes {
     | '/checkin/$projectId/event/$id'
     | '/lovable/email/auth/preview'
     | '/lovable/email/auth/webhook'
+    | '/admin/contatos/$id/'
     | '/api/public/tickets/share/$token'
     | '/checkin/$projectId/event/$id/relatorios'
     | '/checkin/$projectId/event/$id/scanner'
@@ -931,6 +941,7 @@ export interface FileRouteTypes {
     | '/checkin/$projectId'
     | '/lovable/email/auth/preview'
     | '/lovable/email/auth/webhook'
+    | '/admin/contatos/$id'
     | '/api/public/tickets/share/$token'
     | '/checkin/$projectId/event/$id/relatorios'
     | '/checkin/$projectId/event/$id/scanner'
@@ -1016,6 +1027,7 @@ export interface FileRouteTypes {
     | '/checkin/$projectId/event/$id'
     | '/lovable/email/auth/preview'
     | '/lovable/email/auth/webhook'
+    | '/admin/contatos/$id/'
     | '/api/public/tickets/share/$token'
     | '/checkin/$projectId/event/$id/relatorios'
     | '/checkin/$projectId/event/$id/scanner'
@@ -1581,6 +1593,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProdutorIdDashboardRouteImport
       parentRoute: typeof ProdutorRoute
     }
+    '/admin/contatos/$id/': {
+      id: '/admin/contatos/$id/'
+      path: '/contatos/$id'
+      fullPath: '/admin/contatos/$id/'
+      preLoaderRoute: typeof AdminContatosIdIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/checkin/$projectId/event/$id': {
       id: '/checkin/$projectId/event/$id'
       path: '/$projectId/event/$id'
@@ -1664,6 +1683,7 @@ interface AdminRouteChildren {
   AdminEmailManagementIndexRoute: typeof AdminEmailManagementIndexRoute
   AdminGruposIndexRoute: typeof AdminGruposIndexRoute
   AdminMarketingIndexRoute: typeof AdminMarketingIndexRoute
+  AdminContatosIdIndexRoute: typeof AdminContatosIdIndexRoute
 }
 
 const AdminRouteChildren: AdminRouteChildren = {
@@ -1690,6 +1710,7 @@ const AdminRouteChildren: AdminRouteChildren = {
   AdminEmailManagementIndexRoute: AdminEmailManagementIndexRoute,
   AdminGruposIndexRoute: AdminGruposIndexRoute,
   AdminMarketingIndexRoute: AdminMarketingIndexRoute,
+  AdminContatosIdIndexRoute: AdminContatosIdIndexRoute,
 }
 
 const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
