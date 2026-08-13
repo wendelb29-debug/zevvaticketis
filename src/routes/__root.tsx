@@ -201,7 +201,6 @@ function RootComponent() {
     const applyTheme = () => {
       let effectiveTheme = theme;
       
-      // Force light theme on home page for visitors
       if (!isPrivateArea && !isUserLoggedIn) {
         effectiveTheme = 'light';
       } else if (!isPrivateArea && isUserLoggedIn) {
@@ -227,8 +226,12 @@ function RootComponent() {
 
     if (theme === "system") {
       media.addEventListener("change", applyTheme);
-      return () => media.removeEventListener("change", applyTheme);
+      return () => {
+        media.removeEventListener("change", applyTheme);
+      };
     }
+    
+    return undefined;
   }, [theme, location.pathname, session]);
 
   useEffect(() => {
