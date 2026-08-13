@@ -79,12 +79,12 @@ export function CheckinStats() {
     <div className="space-y-8 animate-in fade-in duration-500">
       {/* KPI Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-4">
-        <KPIItem title="Ingressos Vendidos" value={stats.totalSold.toLocaleString()} icon={Ticket} color="bg-navy" />
-        <KPIItem title="Check-ins Realizados" value={stats.totalCheckins.toLocaleString()} icon={CheckCircle2} color="bg-emerald-500" />
-        <KPIItem title="Total Presentes" value={stats.totalPresent.toLocaleString()} icon={Users} color="bg-emerald-600" />
-        <KPIItem title="Total Faltantes" value={stats.totalMissing.toLocaleString()} icon={UserX} color="bg-coral" />
-        <KPIItem title="Presença" value={`${stats.presenceRate}%`} icon={TrendingUp} color="bg-primary" />
-        <KPIItem title="Ausência" value={`${stats.absenceRate}%`} icon={BarChart3} color="bg-slate-400" />
+        <KPIItem title="Ingressos Vendidos" value={stats.totalSold.toLocaleString()} icon={Ticket} color="navy" />
+        <KPIItem title="Check-ins Realizados" value={stats.totalCheckins.toLocaleString()} icon={CheckCircle2} color="success" />
+        <KPIItem title="Total Presentes" value={stats.totalPresent.toLocaleString()} icon={Users} color="success" />
+        <KPIItem title="Total Faltantes" value={stats.totalMissing.toLocaleString()} icon={UserX} color="primary" />
+        <KPIItem title="Presença" value={`${stats.presenceRate}%`} icon={TrendingUp} color="primary" />
+        <KPIItem title="Ausência" value={`${stats.absenceRate}%`} icon={BarChart3} color="neutral" />
       </div>
 
       {/* Filters */}
