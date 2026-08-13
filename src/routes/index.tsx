@@ -171,7 +171,7 @@ function HomePage() {
           </div>
         </section>
 
-        <CityTicker />
+        {/* City Ticker removed for clean modern look */}
 
 
         {/* Minimalist Search */}
