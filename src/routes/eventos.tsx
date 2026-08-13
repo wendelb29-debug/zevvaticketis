@@ -141,8 +141,10 @@ function ExplorarEventosPage() {
                       </h2>
                     </div>
                     <Link
-                      to={group.id === "CURSOS" ? "/cursos/" : "/eventos/categoria/$slug"}
+                      to={group.id === "CURSOS" ? "/cursos" : "/eventos/categoria/$slug"}
                       params={group.id === "CURSOS" ? ({} as any) : { slug: group.slug }}
+                      search={group.id === "CURSOS" ? ({} as any) : { busca: undefined }}
+
 
                       className="text-sm font-bold text-primary hover:text-primary-hover transition-colors"
                     >

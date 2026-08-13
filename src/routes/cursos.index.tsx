@@ -1,9 +1,8 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { CATEGORIES } from "@/lib/event-categories";
 import { Link } from "@tanstack/react-router";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
-import { BookOpen, GraduationCap, ArrowRight } from "lucide-react";
+import { BookOpen } from "lucide-react";
 
 export const Route = createFileRoute("/cursos/")({
   component: CursosPage,

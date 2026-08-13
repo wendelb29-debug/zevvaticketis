@@ -84,12 +84,14 @@ export function Navbar({ selectedCity }: { selectedCity?: string | null }) {
             <Link
               to="/eventos/categoria/$slug"
               params={{ slug: "caravanas" }}
+              search={{ busca: undefined }}
               className="text-sm font-bold text-foreground-muted hover:text-primary transition-colors"
             >
               Caravanas
             </Link>
             <Link
-              to="/cursos/"
+              to="/cursos"
+
 
               className="text-sm font-bold text-foreground-muted hover:text-primary transition-colors"
             >
