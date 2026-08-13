@@ -208,14 +208,14 @@ export function AdminDashboardBI() {
         </div>
         
         <div className="flex flex-wrap items-center gap-3">
-          <div className="flex bg-accent/50 p-1 rounded-xl border border-border">
+          <div className="flex bg-secondary p-1 rounded-xl border border-border">
             {["today", "7d", "30d", "custom"].map((p) => (
               <button
                 key={p}
                 onClick={() => setPeriod(p)}
                 className={cn(
                   "px-4 py-2 text-xs font-bold rounded-lg transition-all capitalize",
-                  period === p ? "bg-white text-foreground shadow-sm" : "text-muted-foreground-fg hover:text-foreground"
+                  period === p ? "bg-card text-foreground shadow-sm" : "text-muted-foreground-fg hover:text-foreground"
                 )}
               >
                 {p === "today" ? "Hoje" : p === "7d" ? "7 Dias" : p === "30d" ? "30 Dias" : "Personalizado"}
@@ -225,14 +225,14 @@ export function AdminDashboardBI() {
 
           <Sheet>
             <SheetTrigger asChild>
-              <Button variant="outline" className="h-11 rounded-xl border-border bg-white text-foreground font-bold gap-2 shadow-sm">
+              <Button variant="outline" className="h-11 rounded-xl border-border bg-card text-foreground font-bold gap-2 shadow-sm">
                 <Filter className="w-4 h-4 text-primary" /> Filtros Avançados
               </Button>
             </SheetTrigger>
             <SheetContent className="w-full sm:max-w-md">
               <SheetHeader className="border-b pb-4 mb-6">
                 <SheetTitle className="text-xl font-manrope font-black text-foreground flex items-center gap-2">
-                  <Filter className="w-5 h-5 text-coral" /> Filtros Avançados
+                  <Filter className="w-5 h-5 text-primary" /> Filtros Avançados
                 </SheetTitle>
               </SheetHeader>
               
@@ -240,7 +240,7 @@ export function AdminDashboardBI() {
                 <div className="space-y-2">
                   <label className="text-[10px] font-black text-muted-foreground-fg uppercase tracking-widest">Produtor / Organização</label>
                   <Select value={filters.producerId} onValueChange={(val) => setFilters({...filters, producerId: val})}>
-                    <SelectTrigger className="w-full h-11 rounded-xl bg-accent/30 border-border">
+                    <SelectTrigger className="w-full h-11 rounded-xl bg-secondary border-border">
                       <SelectValue placeholder="Todos os Produtores" />
                     </SelectTrigger>
                     <SelectContent>
@@ -255,7 +255,7 @@ export function AdminDashboardBI() {
                 <div className="space-y-2">
                   <label className="text-[10px] font-black text-muted-foreground-fg uppercase tracking-widest">Evento Específico</label>
                   <Select value={filters.eventId} onValueChange={(val) => setFilters({...filters, eventId: val})}>
-                    <SelectTrigger className="w-full h-11 rounded-xl bg-accent/30 border-border">
+                    <SelectTrigger className="w-full h-11 rounded-xl bg-secondary border-border">
                       <SelectValue placeholder="Todos os Eventos" />
                     </SelectTrigger>
                     <SelectContent>
@@ -270,7 +270,7 @@ export function AdminDashboardBI() {
                 <div className="space-y-2">
                   <label className="text-[10px] font-black text-muted-foreground-fg uppercase tracking-widest">Categoria</label>
                   <Select value={filters.category} onValueChange={(val) => setFilters({...filters, category: val})}>
-                    <SelectTrigger className="w-full h-11 rounded-xl bg-accent/30 border-border">
+                    <SelectTrigger className="w-full h-11 rounded-xl bg-secondary border-border">
                       <SelectValue placeholder="Todas as Categorias" />
                     </SelectTrigger>
                     <SelectContent>
@@ -307,7 +307,7 @@ export function AdminDashboardBI() {
           </Sheet>
           
           <Select onValueChange={handleExport}>
-            <SelectTrigger className="w-48 bg-white border-primary/20 text-foreground font-bold rounded-xl h-11 shadow-sm">
+            <SelectTrigger className="w-48 bg-card border-primary/20 text-foreground font-bold rounded-xl h-11 shadow-sm">
               <Download className="w-4 h-4 mr-2 text-primary" />
               <SelectValue placeholder="Gerar Relatório" />
             </SelectTrigger>
@@ -322,12 +322,12 @@ export function AdminDashboardBI() {
       </div>
 
       {/* Alert Panel */}
-      <Card className="bg-coral/5 border-coral/20 shadow-none overflow-hidden relative">
+      <Card className="bg-primary/5 border-primary/20 shadow-none overflow-hidden relative">
         <div className="absolute top-0 right-0 p-4 opacity-10">
-          <AlertTriangle className="w-24 h-24 text-coral" />
+          <AlertTriangle className="w-24 h-24 text-primary" />
         </div>
         <CardHeader className="pb-2">
-          <CardTitle className="text-sm font-black text-coral uppercase tracking-widest flex items-center gap-2">
+          <CardTitle className="text-sm font-black text-primary uppercase tracking-widest flex items-center gap-2">
             <AlertTriangle className="w-4 h-4" /> Alertas Críticos da Plataforma
           </CardTitle>
         </CardHeader>
@@ -339,12 +339,12 @@ export function AdminDashboardBI() {
               { label: "Esgotando (>90%)", val: `${events.length > 0 ? "Monitorando" : "Nenhum"}`, icon: Ticket },
               { label: "Aprovação Pendente", val: "0 Produtores", icon: Users }
             ].map((alert, i) => (
-              <div key={i} className="flex items-center gap-3 p-3 bg-white/50 rounded-xl border border-coral/10">
-                <div className="w-8 h-8 rounded-lg bg-coral/10 flex items-center justify-center text-coral">
+              <div key={i} className="flex items-center gap-3 p-3 bg-card rounded-xl border border-primary/10">
+                <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
                   <alert.icon className="w-4 h-4" />
                 </div>
                 <div>
-                  <p className="text-[10px] font-bold text-coral/60 uppercase">{alert.label}</p>
+                  <p className="text-[10px] font-bold text-primary/60 uppercase">{alert.label}</p>
                   <p className="text-sm font-black text-foreground">{alert.val}</p>
                 </div>
               </div>
@@ -404,7 +404,7 @@ export function AdminDashboardBI() {
             className="cursor-pointer hover:border-primary transition-all shadow-md"
             subMetrics={[
               { label: "Check-ins", val: stats.checkin.performed, color: "text-emerald-600" },
-              { label: "Faltantes", val: stats.checkin.missing, color: "text-coral" }
+              { label: "Faltantes", val: stats.checkin.missing, color: "text-destructive" }
             ]}
           />
         </Link>
