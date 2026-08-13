@@ -51,6 +51,7 @@ export function Navbar({ selectedCity }: { selectedCity?: string | null }) {
         "fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-surface/90 backdrop-blur-md border-b border-border",
         isScrolled ? "h-16 shadow-sm" : "h-20",
       )}
+      data-scrolled={isScrolled}
     >
       <div className="max-w-7xl mx-auto px-6 h-full flex items-center justify-between">
         <div className="flex items-center gap-12">
