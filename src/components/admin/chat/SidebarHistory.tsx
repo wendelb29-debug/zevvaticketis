@@ -4,7 +4,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } f
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Badge } from "@/components/ui/badge";
 import { DateTime } from "luxon";
-import { Clock, CheckCircle2, Loader2, MessageSquare, History } from "lucide-react";
+import { Clock, CheckCircle2, Loader2, MessageSquare, History, Share2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface SidebarHistoryProps {
@@ -100,12 +100,29 @@ export function SidebarHistory({ isOpen, onClose, contactId }: SidebarHistoryPro
                             </div>
                           </div>
                           
-                          <div>
-                            <p className="text-[9px] font-black text-muted-foreground uppercase tracking-widest mb-1.5">Motivo / Resumo</p>
-                            <div className="bg-card p-3 rounded-xl border border-border h-full min-h-[60px]">
-                              <p className="text-xs text-foreground/80 leading-relaxed italic">
-                                {attendance.finalization_reason || "Sem observações registradas."}
-                              </p>
+                          <div className="md:col-span-2">
+                            <p className="text-[9px] font-black text-muted-foreground uppercase tracking-widest mb-1.5">Linha do Tempo / Eventos</p>
+                            <div className="bg-card p-4 rounded-xl border border-border space-y-3">
+                              {attendance.attendance_transfers?.map((transfer: any) => (
+                                <div key={transfer.id} className="flex gap-3 text-xs border-l-2 border-primary pl-3 py-1 bg-primary/5 rounded-r-lg">
+                                  <Share2 className="w-3.5 h-3.5 text-primary shrink-0 mt-0.5" />
+                                  <div>
+                                    <p className="font-bold text-foreground">Transferência realizada</p>
+                                    <p className="text-muted-foreground mt-0.5">Motivo: {transfer.reason}</p>
+                                    <p className="text-[10px] text-muted-foreground mt-1 uppercase font-black">
+                                      {DateTime.fromISO(transfer.created_at).toFormat('dd/MM/yy HH:mm')}
+                                    </p>
+                                  </div>
+                                </div>
+                              ))}
+                              
+                              <div className="flex gap-3 text-xs border-l-2 border-green-500 pl-3 py-1 bg-green-500/5 rounded-r-lg">
+                                <CheckCircle2 className="w-3.5 h-3.5 text-green-500 shrink-0 mt-0.5" />
+                                <div>
+                                  <p className="font-bold text-foreground">Atendimento Finalizado</p>
+                                  <p className="text-muted-foreground mt-0.5">{attendance.finalization_reason || "Concluído sem observações."}</p>
+                                </div>
+                              </div>
                             </div>
                           </div>
                         </div>

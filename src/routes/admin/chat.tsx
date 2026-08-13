@@ -31,6 +31,7 @@ import { SidebarFiles } from "@/components/admin/chat/SidebarFiles";
 import { SidebarHistory } from "@/components/admin/chat/SidebarHistory";
 import { SidebarSchedule } from "@/components/admin/chat/SidebarSchedule";
 import { SidebarFinish } from "@/components/admin/chat/SidebarFinish";
+import { SidebarTransfer } from "@/components/admin/chat/SidebarTransfer";
 
 const READ_RECEIPT_BLUE = "READ_RECEIPT_BLUE";
 const ONLINE_STATUS_GREEN = "ONLINE_STATUS_GREEN";
@@ -186,6 +187,12 @@ function AdminChatPage() {
     contactsData?.find(c => c.id === selectedContactId),
     [contactsData, selectedContactId]
   );
+
+  const selectedAttendanceId = useMemo(() => {
+    if (!selectedContact) return null;
+    const openAttendance = (selectedContact as any).whatsapp_attendances?.find((a: any) => a.status === 'open');
+    return openAttendance?.id || null;
+  }, [selectedContact]);
 
   const contacts = useMemo(() => {
     if (!contactsData) return [];
@@ -841,7 +848,7 @@ function AdminChatPage() {
         <div className="w-[52px] border-l border-border bg-card flex flex-col items-center py-4 gap-4 z-20 shadow-[-4px_0_12px_rgba(0,0,0,0.05)]">
           {[
             { id: 'finish', icon: CheckCircle2, label: 'Finalizar', color: 'text-green-500' },
-            { id: 'transfer', icon: Share2, label: 'Transferir', disabled: true },
+            { id: 'transfer', icon: Share2, label: 'Transferir', disabled: !selectedContactId || selectedContact?.status === 'finalized' },
             { id: 'groups', icon: Users, label: 'Grupos' },
             { id: 'files', icon: Paperclip, label: 'Arquivos' },
             { id: 'history', icon: History, label: 'Histórico' },
@@ -852,7 +859,12 @@ function AdminChatPage() {
           ].map((tool) => (
             <div key={tool.id} className="relative group flex flex-col items-center">
               <button 
-                onClick={() => !tool.disabled && setActiveTool(activeTool === tool.id ? null as any : tool.id as any)}
+                onClick={() => {
+                  if (tool.disabled) return;
+                  if (tool.id === 'finish') setIsFinishDialogOpen(true);
+                  else if (tool.id === 'transfer') setIsTransferDialogOpen(true);
+                  else setActiveTool(activeTool === tool.id ? null as any : tool.id as any);
+                }}
                 disabled={tool.disabled}
                 className={cn(
                   "p-2.5 rounded-xl transition-all duration-300 relative overflow-hidden",
@@ -1184,57 +1196,45 @@ function AdminChatPage() {
         </DialogContent>
       </Dialog>
 
-      {/* Dialog: Transferir Atendimento */}
-      <Dialog open={isTransferDialogOpen} onOpenChange={setIsTransferDialogOpen}>
-        <DialogContent className="max-w-2xl bg-card border-border text-foreground">
-          <DialogHeader>
-            <div className="flex items-center gap-3">
-              <DialogTitle className="text-xl font-bold">Transferir atendimento</DialogTitle>
-              <Badge variant="outline" className="bg-card border-none text-muted-foreground text-[10px] px-2 py-0">20240804-001</Badge>
-            </div>
-            <DialogDescription className="text-muted-foreground">Escolha o destinatário para transferir este atendimento.</DialogDescription>
-          </DialogHeader>
-          <div className="py-6 space-y-6">
-            <div className="grid grid-cols-2 gap-6">
-              <div className="space-y-2">
-                <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Tipo de transferência</Label>
-                <Select defaultValue="agent">
-                  <SelectTrigger className="bg-muted border-border text-xs h-11">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent className="bg-popover border-border text-foreground">
-                    <SelectItem value="agent">Para Agente</SelectItem>
-                    <SelectItem value="dept">Para Departamento</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              <div className="space-y-2">
-                <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Destinatário</Label>
-                <Select>
-                  <SelectTrigger className="bg-muted border-border text-xs h-11">
-                    <SelectValue placeholder="Selecione um agente" />
-                  </SelectTrigger>
-                  <SelectContent className="bg-popover border-border text-foreground">
-                    <SelectItem value="a1">Carlos Aguiar</SelectItem>
-                    <SelectItem value="a2">Ana Pereira</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
-            <div className="space-y-2">
-              <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Motivo da transferência</Label>
-              <textarea 
-                className="w-full bg-muted border border-border p-4 rounded-xl text-xs text-foreground placeholder:text-muted-foreground outline-none min-h-[100px] resize-none"
-                placeholder="Explique o motivo da transferência..."
-              />
-            </div>
-          </div>
-          <DialogFooter className="mt-4 flex justify-between sm:justify-between items-center w-full">
-            <button onClick={() => setIsTransferDialogOpen(false)} className="text-sm font-bold hover:underline">Cancelar</button>
-            <button onClick={handleTransfer} className="flex-1 max-w-[400px] py-3 bg-primary hover:bg-primary/90 text-primary-foreground text-[11px] font-black uppercase tracking-widest rounded-lg">Transferir agora</button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+      {/* Sidebar Tools Components */}
+      <SidebarGroups 
+        isOpen={activeTool === 'groups'} 
+        onClose={() => setActiveTool(null)}
+        contactId={selectedContactId || ''}
+        tenantId={activeTenant?.id || ''}
+      />
+      
+      <SidebarFiles 
+        isOpen={activeTool === 'files'} 
+        onClose={() => setActiveTool(null)}
+        contactId={selectedContactId || ''}
+      />
+
+      <SidebarHistory 
+        isOpen={activeTool === 'history'} 
+        onClose={() => setActiveTool(null)}
+        contactId={selectedContactId || ''}
+      />
+
+      <SidebarSchedule 
+        isOpen={activeTool === 'schedule'} 
+        onClose={() => setActiveTool(null)}
+        contactId={selectedContactId || ''}
+        tenantId={activeTenant?.id || ''}
+      />
+
+      <SidebarFinish 
+        isOpen={isFinishDialogOpen} 
+        onClose={() => setIsFinishDialogOpen(false)}
+        contactId={selectedContactId || ''}
+      />
+
+      <SidebarTransfer 
+        isOpen={isTransferDialogOpen} 
+        onClose={() => setIsTransferDialogOpen(false)}
+        contactId={selectedAttendanceId || selectedContactId || ''}
+        tenantId={activeTenant?.id || ''}
+      />
 
       <style>{`
         .chat-container {
