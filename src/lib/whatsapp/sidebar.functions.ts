@@ -151,7 +151,7 @@ export const getAttendanceHistory = createServerFn({ method: "GET" })
       .from('whatsapp_attendances')
       .select('*')
       .eq('contact_id', data.contactId)
-      .eq('status', 'closed')
+      .eq('status', 'finalized')
       .order('created_at', { ascending: false });
 
     if (error) throw error;
