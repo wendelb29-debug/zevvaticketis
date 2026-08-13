@@ -845,46 +845,54 @@ function AdminChatPage() {
         </div>
 
         {/* 9. BARRA VERTICAL DE AÇÕES (52px) */}
-        <div className="w-[52px] border-l border-border bg-card flex flex-col items-center py-4 gap-4 z-20 shadow-[-4px_0_12px_rgba(0,0,0,0.05)]">
+        <div className="w-[52px] border-l border-border bg-card flex flex-col items-center py-4 gap-4 z-20 shadow-[-4px_0_12px_rgba(0,0,0,0.05)] md:flex tablet:w-auto tablet:flex-row tablet:h-auto tablet:bottom-0 tablet:left-0 tablet:right-0 tablet:border-t tablet:border-l-0 tablet:justify-around tablet:py-2 tablet:px-4 mobile:flex-row mobile:justify-around">
           {[
-            { id: 'finish', icon: CheckCircle2, label: 'Finalizar', color: 'text-green-500' },
-            { id: 'transfer', icon: Share2, label: 'Transferir', disabled: !selectedContactId || selectedContact?.status === 'finalized' },
-            { id: 'groups', icon: Users, label: 'Grupos' },
+            { id: 'finish', icon: CheckCircle2, label: 'Finalizar atendimento', color: 'text-green-500' },
+            { id: 'transfer', icon: Share2, label: 'Transferir atendimento', disabled: !selectedContactId || selectedContact?.status === 'finalized' },
+            { id: 'groups', icon: Users, label: 'Grupos do cliente' },
             { id: 'files', icon: Paperclip, label: 'Arquivos' },
             { id: 'history', icon: History, label: 'Histórico' },
             { id: 'schedule', icon: Calendar, label: 'Agendar' },
             { id: 'automations', icon: Zap, label: 'Automação', disabled: true },
-            { id: 'copy', icon: Copy, label: 'Copiar', disabled: true },
+            { id: 'copy', icon: Copy, label: 'Copiar conversa', disabled: true },
             { id: 'print', icon: Printer, label: 'Imprimir', disabled: true },
           ].map((tool) => (
-            <div key={tool.id} className="relative group flex flex-col items-center">
-              <button 
-                onClick={() => {
-                  if (tool.disabled) return;
-                  if (tool.id === 'finish') setIsFinishDialogOpen(true);
-                  else if (tool.id === 'transfer') setIsTransferDialogOpen(true);
-                  else setActiveTool(activeTool === tool.id ? null as any : tool.id as any);
-                }}
-                disabled={tool.disabled}
-                className={cn(
-                  "p-2.5 rounded-xl transition-all duration-300 relative overflow-hidden",
-                  activeTool === tool.id 
-                    ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20 scale-110" 
-                    : tool.disabled 
-                      ? "text-muted-foreground/30 cursor-not-allowed" 
-                      : "text-muted-foreground hover:text-primary hover:bg-primary/5 hover:scale-105"
-                )}
+            <Tooltip key={tool.id} delayDuration={200}>
+              <TooltipTrigger asChild>
+                <div className="relative flex flex-col items-center">
+                  <button 
+                    type="button"
+                    aria-label={tool.label + (tool.disabled ? " — em breve" : "")}
+                    onClick={() => {
+                      if (tool.disabled) return;
+                      if (tool.id === 'finish') setIsFinishDialogOpen(true);
+                      else if (tool.id === 'transfer') setIsTransferDialogOpen(true);
+                      else setActiveTool(activeTool === tool.id ? null as any : tool.id as any);
+                    }}
+                    disabled={tool.disabled}
+                    className={cn(
+                      "p-2.5 rounded-xl transition-all duration-300 relative overflow-hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2",
+                      activeTool === tool.id 
+                        ? "bg-primary text-primary-foreground shadow-[0_0_15px_rgba(217,75,82,0.4)] scale-110 border border-primary" 
+                        : tool.disabled 
+                          ? "text-muted-foreground/30 cursor-not-allowed opacity-50" 
+                          : "text-muted-foreground hover:text-foreground hover:bg-muted hover:scale-105"
+                    )}
+                  >
+                    <tool.icon className={cn("w-[18px] h-[18px]", activeTool !== tool.id && tool.color)} />
+                  </button>
+                </div>
+              </TooltipTrigger>
+              <TooltipContent 
+                side="left" 
+                sideOffset={10} 
+                className="bg-popover text-popover-foreground border border-border shadow-discrete font-semibold text-[12px] px-3 py-1.5 rounded-lg z-[100]"
+                role="tooltip"
               >
-                <tool.icon className={cn("w-[18px] h-[18px]", tool.color)} />
-              </button>
-              
-              {/* Tooltip */}
-              <div className="absolute left-full ml-3 px-2.5 py-1.5 bg-foreground text-background text-[10px] font-bold uppercase tracking-widest rounded-md opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-50 shadow-xl border border-border/10">
                 {tool.label}
-                {tool.disabled && <span className="ml-2 opacity-50 text-[8px]">(em breve)</span>}
-                <div className="absolute top-1/2 -left-1 -translate-y-1/2 w-2 h-2 bg-foreground rotate-45" />
-              </div>
-            </div>
+                {tool.disabled && <span className="ml-1.5 opacity-60 text-[10px]">— em breve</span>}
+              </TooltipContent>
+            </Tooltip>
           ))}
         </div>
 
