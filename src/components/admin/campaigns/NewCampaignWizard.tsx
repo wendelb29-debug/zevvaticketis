@@ -126,7 +126,7 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
                 >
                   <div className={cn(
                     "w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold transition-all border-2",
-                    step === s.number ? "bg-primary text-white border-primary shadow-sm" : 
+                    step === s.number ? "bg-primary text-primary-foreground border-primary shadow-sm" : 
                     step > s.number ? "bg-card text-primary border-primary" : "bg-card text-foreground border-[#E5E7EB]"
                   )}>
                     {step > s.number ? <Check className="w-4 h-4" /> : s.number}
@@ -198,7 +198,7 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
                       >
                         <div className={cn(
                           "w-12 h-12 rounded-xl flex items-center justify-center transition-colors",
-                          channelType === "gupshup" ? "bg-primary text-white" : "bg-muted text-muted-foreground group-hover:bg-primary/10 group-hover:text-primary"
+                          channelType === "gupshup" ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground group-hover:bg-primary/10 group-hover:text-primary"
                         )}>
                           <MessageSquare className="w-6 h-6" />
                         </div>
@@ -219,7 +219,7 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
                       >
                         <div className={cn(
                           "w-12 h-12 rounded-xl flex items-center justify-center transition-colors",
-                          channelType === "email" ? "bg-primary text-white" : "bg-muted text-muted-foreground group-hover:bg-primary/10 group-hover:text-primary"
+                          channelType === "email" ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground group-hover:bg-primary/10 group-hover:text-primary"
                         )}>
                           <Mail className="w-6 h-6" />
                         </div>
@@ -250,7 +250,7 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
                 <div className="max-w-md w-full text-center space-y-8">
                   <div className="flex justify-center">
                     <div className="bg-primary/10 p-5 rounded-[2rem]">
-                      <div className="bg-primary text-white p-4 rounded-2xl shadow-xl shadow-[#F06452]/20">
+                      <div className="bg-primary text-primary-foreground p-4 rounded-2xl shadow-xl shadow-[#F06452]/20">
                         {channelType === "email" ? <Mail className="w-10 h-10" /> : <MessageSquare className="w-10 h-10" />}
                       </div>
                     </div>
@@ -313,7 +313,7 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
                         >
                           <div className={cn(
                             "w-12 h-12 rounded-xl flex items-center justify-center transition-colors",
-                            publicType === item.id ? "bg-primary text-white" : "bg-muted text-muted-foreground group-hover:bg-primary/10 group-hover:text-primary"
+                            publicType === item.id ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground group-hover:bg-primary/10 group-hover:text-primary"
                           )}>
                             <item.icon className="w-6 h-6" />
                           </div>
@@ -651,14 +651,14 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
                       >
                         <div className={cn(
                           "w-12 h-12 rounded-xl flex items-center justify-center transition-colors",
-                          contentType === item.id ? "bg-primary text-white" : "bg-muted text-muted-foreground group-hover:bg-primary/10 group-hover:text-primary"
+                          contentType === item.id ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground group-hover:bg-primary/10 group-hover:text-primary"
                         )}>
                           <item.icon className="w-6 h-6" />
                         </div>
                         <div className="flex-1">
                           <div className="flex items-center gap-2">
                             <p className={cn("text-sm font-bold", contentType === item.id ? "text-primary" : "text-foreground")}>{item.label}</p>
-                            {item.badge && <span className="bg-primary text-white text-[8px] px-1.5 py-0.5 rounded-md font-black">{item.badge}</span>}
+                            {item.badge && <span className="bg-primary text-primary-foreground text-[8px] px-1.5 py-0.5 rounded-md font-black">{item.badge}</span>}
                           </div>
                           <p className="text-[11px] text-muted-foreground font-medium leading-tight mt-0.5">{item.desc}</p>
                         </div>
@@ -917,7 +917,7 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
                           "text-[9px] px-2 py-0.5 rounded-md font-black uppercase tracking-tight",
                           item.id === "rapido" ? "bg-amber-100 text-amber-600" : "bg-green-100 text-green-600"
                         )}>{item.risk}</span>
-                        {item.recommended && <span className="bg-primary text-white text-[9px] px-2 py-0.5 rounded-md font-black uppercase tracking-tight">Recomendado</span>}
+                        {item.recommended && <span className="bg-primary text-primary-foreground text-[9px] px-2 py-0.5 rounded-md font-black uppercase tracking-tight">Recomendado</span>}
                       </div>
                     </div>
                   ))}

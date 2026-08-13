@@ -58,7 +58,7 @@ function CheckinSelectionPage() {
                 <div className="flex justify-between items-start">
                   <Avatar className="w-20 h-20 rounded-3xl border-4 border-slate-50 shadow-inner group-hover:scale-110 transition-transform duration-500">
                     <AvatarImage src={tenant.logo || undefined} className="object-cover" />
-                    <AvatarFallback className="bg-navy text-white font-black text-2xl">
+                    <AvatarFallback className="bg-navy text-primary-foreground font-black text-2xl">
                       {tenant.nome.substring(0, 2).toUpperCase()}
                     </AvatarFallback>
                   </Avatar>
@@ -78,7 +78,7 @@ function CheckinSelectionPage() {
                   </div>
                 </div>
                 
-                <Button className="w-full bg-muted hover:bg-coral text-foreground hover:text-white font-black uppercase tracking-widest text-[11px] py-7 rounded-2xl shadow-none hover:shadow-xl hover:shadow-coral/30 transition-all duration-300 border border-border hover:border-coral">
+                <Button className="w-full bg-muted hover:bg-coral text-foreground hover:text-primary-foreground font-black uppercase tracking-widest text-[11px] py-7 rounded-2xl shadow-none hover:shadow-xl hover:shadow-coral/30 transition-all duration-300 border border-border hover:border-coral">
                   Acessar Operação
                 </Button>
               </CardContent>

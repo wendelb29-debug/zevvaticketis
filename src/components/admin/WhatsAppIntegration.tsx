@@ -437,7 +437,7 @@ export function WhatsAppIntegration() {
                 </div>
               </div>
             </div>
-            <Button className="mt-6 bg-navy text-white hover:bg-navy/90 font-bold">
+            <Button className="mt-6 bg-navy text-primary-foreground hover:bg-navy/90 font-bold">
               Salvar preferências de disparo
             </Button>
           </CardContent>
@@ -527,7 +527,7 @@ export function WhatsAppIntegration() {
                       <CardTitle className="text-sm">Criar Novo Template</CardTitle>
                       <CardDescription className="text-xs">Crie templates para serem aprovados pela Meta.</CardDescription>
                     </div>
-                    <Button size="sm" className="bg-primary text-white font-bold h-8">
+                    <Button size="sm" className="bg-primary text-primary-foreground font-bold h-8">
                       <Plus className="w-3.5 h-3.5 mr-1" /> Novo Template
                     </Button>
                   </div>
@@ -611,7 +611,7 @@ export function WhatsAppIntegration() {
                       <CardTitle className="text-sm">Vincular Templates a Eventos</CardTitle>
                       <CardDescription className="text-xs">Gerencie quais templates estão ativos para cada evento específico.</CardDescription>
                     </div>
-                    <Button size="sm" className="bg-primary text-white font-bold h-8">
+                    <Button size="sm" className="bg-primary text-primary-foreground font-bold h-8">
                       <Link className="w-3.5 h-3.5 mr-1" /> Novo Vínculo
                     </Button>
                   </div>

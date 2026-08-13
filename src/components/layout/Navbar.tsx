@@ -141,7 +141,7 @@ export function Navbar({ selectedCity }: { selectedCity?: string | null }) {
                   openOverlay("auth", "register");
                 }
               }}
-              className="hidden sm:flex h-11 px-6 items-center justify-center bg-primary text-white text-sm font-bold hover:bg-primary-hover transition-all rounded-md shadow-lg shadow-primary/10"
+              className="hidden sm:flex h-11 px-6 items-center justify-center bg-primary text-primary-foreground text-sm font-bold hover:bg-primary-hover transition-all rounded-md shadow-lg shadow-primary/10"
             >
               Organizar Evento
             </Link>

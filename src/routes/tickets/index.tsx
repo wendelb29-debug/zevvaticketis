@@ -131,7 +131,7 @@ function MyTickets() {
                 </div>
 
                 <div className="flex flex-col gap-2 pt-4 border-t border-line/50">
-                  <Button asChild className="w-full bg-navy text-white rounded-xl font-bold h-11">
+                  <Button asChild className="w-full bg-navy text-primary-foreground rounded-xl font-bold h-11">
                     <a href={`/tickets/${ticket.id}`} className="flex items-center justify-center">
                         <ExternalLink className="w-4 h-4 mr-2" /> Ver Ingresso
                     </a>

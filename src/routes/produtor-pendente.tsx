@@ -59,7 +59,7 @@ function ProducerPendingPage() {
         <div className="space-y-4">
           <Button 
             variant="outline"
-            className="w-full h-12 rounded-xl font-bold border-navy text-foreground hover:bg-navy hover:text-white transition-all flex items-center justify-center gap-2"
+            className="w-full h-12 rounded-xl font-bold border-navy text-foreground hover:bg-navy hover:text-primary-foreground transition-all flex items-center justify-center gap-2"
             onClick={() => window.location.reload()}
           >
             Verificar status novamente

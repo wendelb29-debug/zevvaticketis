@@ -90,14 +90,14 @@ function MasterAdminPage() {
           <Button variant="outline" className="rounded-xl font-bold border-border">
             <Filter className="w-4 h-4 mr-2" /> Filtros
           </Button>
-          <Button className="bg-navy hover:bg-coral text-white rounded-xl font-bold px-6">
+          <Button className="bg-navy hover:bg-primary text-primary-foreground rounded-xl font-bold px-6">
             Configurações Globais
           </Button>
         </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <Card className="border-none shadow-sm bg-navy text-white rounded-[24px] overflow-hidden relative group">
+        <Card className="border-none shadow-sm bg-navy text-primary-foreground rounded-[24px] overflow-hidden relative group">
           <div className="absolute right-[-20px] top-[-20px] opacity-10 group-hover:scale-110 transition-transform duration-500">
             <Building2 size={120} />
           </div>
@@ -131,7 +131,7 @@ function MasterAdminPage() {
           </CardContent>
         </Card>
 
-        <Card className="border-none shadow-sm bg-coral text-white rounded-[24px] overflow-hidden relative group">
+        <Card className="border-none shadow-sm bg-primary text-primary-foreground rounded-[24px] overflow-hidden relative group">
           <div className="absolute right-[-20px] top-[-20px] opacity-10 group-hover:scale-110 transition-transform duration-500">
             <Ticket size={120} />
           </div>
@@ -232,7 +232,7 @@ function MasterAdminPage() {
                       <Button 
                         variant="ghost" 
                         size="sm" 
-                        className="rounded-xl hover:bg-navy hover:text-white font-bold group"
+                        className="rounded-xl hover:bg-navy hover:text-primary-foreground font-bold group"
                         onClick={() => navigate({ to: `/admin/tenants/${tenant.id}` as any })}
                       >
                         Gerenciar <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />

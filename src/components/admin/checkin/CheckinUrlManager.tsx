@@ -61,7 +61,7 @@ export function CheckinUrlManager() {
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <Card className="md:col-span-2 border-line shadow-xl rounded-[32px] overflow-hidden">
-          <CardHeader className="bg-navy text-white pb-8">
+          <CardHeader className="bg-navy text-primary-foreground pb-8">
             <div className="flex items-center justify-between">
               <CardTitle className="text-xl font-manrope font-black flex items-center gap-3">
                 <LinkIcon className="w-6 h-6 text-coral" /> Link Operacional
@@ -92,7 +92,7 @@ export function CheckinUrlManager() {
                 </Button>
                 <Button 
                   onClick={openUrl}
-                  className="h-14 w-14 rounded-2xl bg-coral text-white hover:bg-coral-dark shadow-lg shadow-coral/20"
+                  className="h-14 w-14 rounded-2xl bg-primary text-primary-foreground hover:bg-coral-dark shadow-lg shadow-coral/20"
                   title="Abrir Link"
                 >
                   <ExternalLink className="w-5 h-5" />

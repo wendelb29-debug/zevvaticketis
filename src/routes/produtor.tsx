@@ -222,7 +222,7 @@ function ProdutorLayout() {
           <div className="mt-6 flex items-center gap-3 p-3 bg-muted rounded-2xl border border-line">
             <Avatar className="w-10 h-10 rounded-xl border border-line">
               <AvatarImage src={activeTenant.logo || undefined} />
-              <AvatarFallback className="bg-navy text-white text-xs font-black">
+              <AvatarFallback className="bg-navy text-primary-foreground text-xs font-black">
                 {activeTenant.nome.substring(0, 2).toUpperCase()}
               </AvatarFallback>
             </Avatar>
@@ -254,7 +254,7 @@ function ProdutorLayout() {
                   >
                     <Avatar className="w-5 h-5 rounded-md border border-line">
                       <AvatarImage src={t.logo || undefined} />
-                      <AvatarFallback className="text-[8px] bg-navy text-white">{t.nome.substring(0, 1)}</AvatarFallback>
+                      <AvatarFallback className="text-[8px] bg-navy text-primary-foreground">{t.nome.substring(0, 1)}</AvatarFallback>
                     </Avatar>
                     {t.nome}
                   </DropdownMenuItem>
@@ -293,7 +293,7 @@ function ProdutorLayout() {
                   !isExternal && "" 
                 )}
                 {...(!isExternal ? {
-                  activeProps: { className: "bg-coral text-white shadow-lg shadow-coral/30" },
+                  activeProps: { className: "bg-primary text-primary-foreground shadow-lg shadow-coral/30" },
                   inactiveProps: { className: "text-foreground hover:bg-surface-2 hover:text-foreground" }
                 } : {
                   className: "flex items-center gap-3 px-4 py-3.5 rounded-xl text-sm font-extrabold text-foreground hover:bg-surface-2 transition-all duration-200"

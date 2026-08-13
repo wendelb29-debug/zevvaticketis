@@ -126,11 +126,11 @@ function CheckoutPage() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <div className="lg:col-span-2 space-y-6">
             <div className="flex items-center gap-4 mb-8">
-              <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold ${step >= 1 ? 'bg-primary text-white' : 'bg-muted text-muted-foreground-fg'}`}>1</div>
+              <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold ${step >= 1 ? 'bg-primary text-primary-foreground' : 'bg-muted text-muted-foreground-fg'}`}>1</div>
               <div className="h-px bg-muted flex-1"></div>
-              <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold ${step >= 2 ? 'bg-primary text-white' : 'bg-muted text-muted-foreground-fg'}`}>2</div>
+              <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold ${step >= 2 ? 'bg-primary text-primary-foreground' : 'bg-muted text-muted-foreground-fg'}`}>2</div>
               <div className="h-px bg-muted flex-1"></div>
-              <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold ${step >= 3 ? 'bg-primary text-white' : 'bg-muted text-muted-foreground-fg'}`}>3</div>
+              <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold ${step >= 3 ? 'bg-primary text-primary-foreground' : 'bg-muted text-muted-foreground-fg'}`}>3</div>
             </div>
 
             {step === 1 && (
@@ -222,7 +222,7 @@ function CheckoutPage() {
           </div>
 
           <div className="space-y-6">
-            <Card className="bg-navy text-white overflow-hidden">
+            <Card className="bg-navy text-primary-foreground overflow-hidden">
               <div className="h-2 bg-coral w-full"></div>
               <CardHeader>
                 <CardTitle className="text-lg">Resumo da Compra</CardTitle>

@@ -40,7 +40,7 @@ export function AccountMenu({ user, onLogout, onNavigate, onOpenAuth }: AccountM
     return (
       <button
         onClick={onOpenAuth}
-        className="h-10 px-6 bg-primary text-white text-[10px] font-bold uppercase tracking-widest hover:bg-primary-hover transition-all rounded-sm shadow-lg shadow-primary/10"
+        className="h-10 px-6 bg-primary text-primary-foreground text-[10px] font-bold uppercase tracking-widest hover:bg-primary-hover transition-all rounded-sm shadow-lg shadow-primary/10"
       >
         Entrar
       </button>

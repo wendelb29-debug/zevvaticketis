@@ -44,7 +44,7 @@ export function SalesCardPicker({ isOpen, onClose, onSelect }: SalesCardPickerPr
                 className="w-full flex items-center justify-between p-4 rounded-2xl bg-card hover:bg-primary/5 border border-border hover:border-primary/30 transition-all group"
               >
                 <div className="flex items-center gap-3 text-left">
-                  <div className="w-10 h-10 rounded-xl bg-card flex items-center justify-center text-primary border border-border group-hover:bg-primary group-hover:text-white transition-colors">
+                  <div className="w-10 h-10 rounded-xl bg-card flex items-center justify-center text-primary border border-border group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
                     <Ticket className="w-5 h-5" />
                   </div>
                   <div>

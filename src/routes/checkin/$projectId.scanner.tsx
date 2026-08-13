@@ -435,7 +435,7 @@ function ScannerPage() {
                 </div>
                 <Button 
                     variant="ghost" 
-                    className="absolute bottom-6 left-1/2 -translate-x-1/2 text-white/60 hover:text-white bg-black/20 backdrop-blur-sm rounded-xl px-6"
+                    className="absolute bottom-6 left-1/2 -translate-x-1/2 text-white/60 hover:text-primary-foreground bg-black/20 backdrop-blur-sm rounded-xl px-6"
                     onClick={stopScanner}
                 >
                     Interromper
@@ -483,7 +483,7 @@ function ScannerPage() {
                         </div>
 
                         <Button 
-                            className="w-full h-14 rounded-2xl font-black uppercase tracking-widest text-sm bg-navy text-white hover:bg-navy/90"
+                            className="w-full h-14 rounded-2xl font-black uppercase tracking-widest text-sm bg-navy text-primary-foreground hover:bg-navy/90"
                             onClick={resumeScanning}
                         >
                             Próxima Leitura

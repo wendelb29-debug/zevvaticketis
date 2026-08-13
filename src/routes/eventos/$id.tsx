@@ -83,7 +83,7 @@ function EventDetailsPage() {
           </Button>
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
             <div className="space-y-4">
-              <Badge className="bg-coral text-white border-none">{event.category}</Badge>
+              <Badge className="bg-primary text-primary-foreground border-none">{event.category}</Badge>
               <h1 className="text-4xl md:text-5xl font-manrope font-extrabold text-white">
                 {event.nome_evento}
               </h1>

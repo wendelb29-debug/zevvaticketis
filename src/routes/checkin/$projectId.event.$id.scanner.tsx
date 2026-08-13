@@ -286,7 +286,7 @@ function ScannerPage() {
             </div>
 
             <Button 
-              className="w-full h-14 rounded-2xl font-black uppercase tracking-widest text-sm bg-navy text-white hover:bg-navy/90"
+              className="w-full h-14 rounded-2xl font-black uppercase tracking-widest text-sm bg-navy text-primary-foreground hover:bg-navy/90"
               onClick={() => setScannedResult(null)}
             >
               Próxima Leitura

@@ -88,7 +88,7 @@ function SupervisorPanel() {
               {operators.map((op) => (
                 <div key={op.id} className="flex items-center justify-between p-4 bg-muted rounded-2xl border border-border">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-full bg-navy text-white flex items-center justify-center font-black">
+                    <div className="w-10 h-10 rounded-full bg-navy text-primary-foreground flex items-center justify-center font-black">
                       {op.name.charAt(0)}
                     </div>
                     <div>

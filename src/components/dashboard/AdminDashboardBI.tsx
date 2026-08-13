@@ -496,7 +496,7 @@ export function AdminDashboardBI() {
       {/* Tabela de Anúncios e KPIs Extras */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
          <Card className="border-border shadow-sm overflow-hidden">
-            <CardHeader className="bg-navy text-white">
+            <CardHeader className="bg-navy text-primary-foreground">
               <CardTitle className="text-lg font-manrope font-bold flex items-center gap-2">
                 <BarChart3 className="w-5 h-5 text-coral" /> Melhores Anúncios (ROI)
               </CardTitle>

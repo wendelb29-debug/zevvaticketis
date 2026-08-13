@@ -91,7 +91,7 @@ export function FeaturedCarousel({ events }: FeaturedCarouselProps) {
                 transition={{ delay: 0.3, duration: 0.5 }}
                 className="space-y-6"
               >
-                <div className="inline-flex items-center gap-2 px-3 py-1 bg-primary text-white text-[10px] font-bold uppercase tracking-wider rounded-md shadow-lg shadow-primary/20">
+                <div className="inline-flex items-center gap-2 px-3 py-1 bg-primary text-primary-foreground text-[10px] font-bold uppercase tracking-wider rounded-md shadow-lg shadow-primary/20">
                   Evento em destaque
                 </div>
 

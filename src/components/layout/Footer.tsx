@@ -20,7 +20,7 @@ export function Footer() {
             A plataforma brasileira de eventos e ingressos. Facilitamos descoberta, compra, gestão e check-in.
           </p>
           <div className="flex items-center gap-4">
-            <a href="#" className="w-10 h-10 bg-white/5 border border-white/10 flex items-center justify-center text-white/50 hover:text-white hover:border-white/30 transition-all rounded-md">
+            <a href="#" className="w-10 h-10 bg-white/5 border border-white/10 flex items-center justify-center text-white/50 hover:text-primary-foreground hover:border-white/30 transition-all rounded-md">
               <Globe className="w-5 h-5" />
             </a>
           </div>

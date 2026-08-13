@@ -125,7 +125,7 @@ function CheckinLayout() {
   ];
 
   const SidebarContent = () => (
-    <div className="flex flex-col h-full bg-navy text-white py-8 font-inter">
+    <div className="flex flex-col h-full bg-navy text-primary-foreground py-8 font-inter">
       <div className={cn("px-6 mb-12 flex items-center gap-3", !isPlatformAdmin && "justify-center")}>
         {isPlatformAdmin && (
           <Link to="/app" className="p-2.5 hover:bg-card/10 rounded-2xl transition-all text-white/60 hover:text-coral outline-none border border-white/10 bg-card/5 shadow-sm flex-shrink-0" title="Voltar para o Workspace">
@@ -169,7 +169,7 @@ function CheckinLayout() {
             {...(item.activeOptions ? { activeOptions: item.activeOptions } : {})}
             className="flex items-center gap-3 px-4 py-3.5 rounded-xl text-sm font-bold transition-all duration-200"
             activeProps={{ className: "bg-card/10 text-coral shadow-sm border border-white/5" }}
-            inactiveProps={{ className: "text-white/60 hover:text-white hover:bg-card/5" }}
+            inactiveProps={{ className: "text-white/60 hover:text-primary-foreground hover:bg-card/5" }}
           >
             <item.icon className="w-5 h-5" />
             {item.label}

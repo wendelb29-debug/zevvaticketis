@@ -119,7 +119,7 @@ function ProjectsPage() {
                 <div className="flex justify-between items-start">
                   <Avatar className="w-14 h-14 rounded-2xl border-2 border-border">
                     <AvatarImage src={tenant.logo || undefined} />
-                    <AvatarFallback className="bg-navy text-white font-black text-xl">
+                    <AvatarFallback className="bg-navy text-primary-foreground font-black text-xl">
                       {tenant.nome.substring(0, 2).toUpperCase()}
                     </AvatarFallback>
                   </Avatar>
@@ -203,7 +203,7 @@ function ProjectsPage() {
               <Button 
                 type="submit" 
                 disabled={isCreating || !newProjectName.trim()}
-                className="bg-coral hover:bg-navy text-white font-black uppercase tracking-widest text-xs px-8 rounded-xl py-6 h-auto shadow-lg shadow-coral/20 flex gap-2"
+                className="bg-coral hover:bg-navy text-primary-foreground font-black uppercase tracking-widest text-xs px-8 rounded-xl py-6 h-auto shadow-lg shadow-coral/20 flex gap-2"
               >
                 {isCreating ? (
                   <>

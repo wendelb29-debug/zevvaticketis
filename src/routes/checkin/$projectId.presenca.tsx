@@ -87,7 +87,7 @@ function PresencaPage() {
             <Link 
               to="/checkin/$projectId"
               params={{ projectId }}
-              className="inline-flex items-center justify-center px-6 py-3 bg-navy text-white rounded-xl font-black text-xs uppercase tracking-widest hover:bg-navy/90 transition-all shadow-lg"
+              className="inline-flex items-center justify-center px-6 py-3 bg-navy text-primary-foreground rounded-xl font-black text-xs uppercase tracking-widest hover:bg-navy/90 transition-all shadow-lg"
             >
               Selecionar outro evento
             </Link>

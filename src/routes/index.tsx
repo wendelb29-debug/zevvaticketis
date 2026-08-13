@@ -181,7 +181,7 @@ function HomePage() {
                       } as any,
                     })
                   }
-                  className="h-14 px-10 bg-primary text-white font-bold rounded-md hover:bg-primary-hover transition-all shadow-xl shadow-primary/20 flex items-center gap-3"
+                  className="h-14 px-10 bg-primary text-primary-foreground font-bold rounded-md hover:bg-primary-hover transition-all shadow-xl shadow-primary/20 flex items-center gap-3"
                 >
                   Explorar eventos
                   <ArrowRight className="w-5 h-5" />
@@ -249,7 +249,7 @@ function HomePage() {
                     } as any,
                   })
                 }
-                className="w-full md:w-auto h-14 px-10 bg-primary text-white font-bold rounded-xl hover:bg-primary-hover transition-all shadow-lg shadow-primary/10"
+                className="w-full md:w-auto h-14 px-10 bg-primary text-primary-foreground font-bold rounded-xl hover:bg-primary-hover transition-all shadow-lg shadow-primary/10"
               >
                 Buscar agora
               </button>
@@ -422,7 +422,7 @@ function HomePage() {
                     <span className="text-xs font-bold text-foreground/60">
                       {course.hours} • {course.mode}
                     </span>
-                    <button className="w-10 h-10 rounded-full bg-surface border border-border flex items-center justify-center group-hover:bg-primary group-hover:text-white group-hover:border-primary transition-all">
+                    <button className="w-10 h-10 rounded-full bg-surface border border-border flex items-center justify-center group-hover:bg-primary group-hover:text-primary-foreground group-hover:border-primary transition-all">
                       <ArrowRight className="w-4 h-4" />
                     </button>
                   </div>
@@ -503,7 +503,7 @@ function HomePage() {
                     </div>
                     <div className="flex items-center justify-between pt-4 border-t border-border">
                       <span className="text-2xl font-black text-primary">{caravan.price}</span>
-                      <button className="h-12 px-8 bg-primary text-white text-sm font-bold hover:bg-primary-hover transition-all rounded-md shadow-lg shadow-primary/10">
+                      <button className="h-12 px-8 bg-primary text-primary-foreground text-sm font-bold hover:bg-primary-hover transition-all rounded-md shadow-lg shadow-primary/10">
                         Saber mais
                       </button>
                     </div>

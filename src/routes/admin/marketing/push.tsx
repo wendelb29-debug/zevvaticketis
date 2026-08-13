@@ -226,7 +226,7 @@ function PushNotificationsPage() {
                       className="w-full bg-primary/20 group-hover:bg-primary/50 transition-all rounded-t-sm" 
                       style={{ height: `${h * 2}px` }}
                     />
-                    <div className="absolute -top-8 left-1/2 -translate-x-1/2 bg-navy text-white text-[9px] font-bold py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-10">
+                    <div className="absolute -top-8 left-1/2 -translate-x-1/2 bg-navy text-primary-foreground text-[9px] font-bold py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-10">
                       {h * 10} envios
                     </div>
                   </div>
@@ -476,7 +476,7 @@ function PushNotificationsPage() {
                     }
                     setIsConfirming(true);
                   }}
-                  className="flex-1 bg-primary text-white font-black uppercase tracking-widest text-xs h-14 rounded-2xl shadow-xl shadow-primary/30"
+                  className="flex-1 bg-primary text-primary-foreground font-black uppercase tracking-widest text-xs h-14 rounded-2xl shadow-xl shadow-primary/30"
                 >
                   {isScheduling ? <Calendar className="w-5 h-5 mr-2" /> : <Zap className="w-5 h-5 mr-2" />}
                   {isScheduling ? "Agendar Disparo" : "Enviar Agora"}
@@ -486,7 +486,7 @@ function PushNotificationsPage() {
                   onClick={() => setIsScheduling(!isScheduling)}
                   className={cn(
                     "flex-1 border-line font-black uppercase tracking-widest text-xs h-14 rounded-2xl transition-all",
-                    isScheduling ? "bg-navy text-white hover:bg-navy/90" : "bg-card text-foreground hover:bg-surface"
+                    isScheduling ? "bg-navy text-primary-foreground hover:bg-navy/90" : "bg-card text-foreground hover:bg-surface"
                   )}
                 >
                   <CalendarClock className="w-5 h-5 mr-2" /> {isScheduling ? "Cancelar Agendamento" : "Programar Envio"}
@@ -708,7 +708,7 @@ function PushNotificationsPage() {
                 </Button>
                 <Button 
                   onClick={handleSaveAutomation}
-                  className="flex-1 h-12 rounded-xl font-black uppercase tracking-widest text-xs bg-primary text-white shadow-lg shadow-primary/20"
+                  className="flex-1 h-12 rounded-xl font-black uppercase tracking-widest text-xs bg-primary text-primary-foreground shadow-lg shadow-primary/20"
                 >
                   <Save className="w-4 h-4 mr-2" /> Salvar Automação
                 </Button>
@@ -777,7 +777,7 @@ function PushNotificationsPage() {
                       setIsConfirming(false);
                       setActiveTab(isScheduling ? "agendados" : "historico");
                     }}
-                    className="flex-1 h-12 rounded-2xl font-black uppercase tracking-widest text-xs bg-primary text-white shadow-lg shadow-primary/20"
+                    className="flex-1 h-12 rounded-2xl font-black uppercase tracking-widest text-xs bg-primary text-primary-foreground shadow-lg shadow-primary/20"
                   >
                     Confirmar
                   </Button>

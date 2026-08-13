@@ -125,7 +125,7 @@ export function ScannerComponent() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Scanner Control */}
         <Card className="border-line shadow-xl overflow-hidden rounded-[32px]">
-          <CardHeader className="bg-navy text-white pb-8">
+          <CardHeader className="bg-navy text-primary-foreground pb-8">
             <CardTitle className="text-xl font-manrope font-black flex items-center gap-3">
               <Camera className="w-6 h-6 text-coral" /> Scanner de Ingresso
             </CardTitle>

@@ -47,7 +47,7 @@ export function CoverflowCarousel({ events }: CoverflowCarouselProps) {
             } as any
           }
         >
-          <button className="px-8 py-4 bg-navy text-white font-black rounded-2xl hover:bg-navy/90 transition-all">
+          <button className="px-8 py-4 bg-navy text-primary-foreground font-black rounded-2xl hover:bg-navy/90 transition-all">
             Conheça a Zevva
           </button>
         </Link>

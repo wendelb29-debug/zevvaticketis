@@ -143,7 +143,7 @@ function CriarEventoWizard() {
             key={item.label}
             to={item.href}
             className="flex items-center gap-3 px-4 py-3.5 rounded-xl text-sm font-extrabold transition-all duration-200"
-            activeProps={{ className: "bg-coral text-white shadow-lg shadow-coral/30" }}
+            activeProps={{ className: "bg-primary text-primary-foreground shadow-lg shadow-coral/30" }}
             inactiveProps={{ className: "text-foreground hover:bg-surface-2 hover:text-foreground" }}
           >
             <item.icon className="w-5 h-5" />
@@ -372,7 +372,7 @@ function CriarEventoWizard() {
               <h3 className="text-xl font-bold text-foreground">Gerenciamento de Ingressos</h3>
               <Button 
                 onClick={() => setTickets([...tickets, { id: Date.now(), name: "Novo Lote", description: "", price: 0, quantity: 100, sale_start: "", sale_end: "", limit_per_buyer: 5 }])}
-                className="bg-navy text-white font-bold"
+                className="bg-navy text-primary-foreground font-bold"
               >
                 <Plus className="w-4 h-4 mr-2" /> Adicionar ingresso
               </Button>
@@ -594,7 +594,7 @@ function CriarEventoWizard() {
             </button>
             <Avatar className="w-10 h-10 border-2 border-surface shadow-sm">
               <AvatarImage src={user?.user_metadata?.avatar_url} />
-              <AvatarFallback className="bg-coral text-white font-bold">U</AvatarFallback>
+              <AvatarFallback className="bg-primary text-primary-foreground font-bold">U</AvatarFallback>
             </Avatar>
           </div>
         </header>
@@ -622,7 +622,7 @@ function CriarEventoWizard() {
                     <span className={cn(
                       "w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold border",
                       step === s.id ? "bg-card text-foreground border-white" : 
-                      step > s.id ? "bg-coral text-white border-coral" : "bg-surface text-muted-foreground border-line"
+                      step > s.id ? "bg-primary text-primary-foreground border-coral" : "bg-surface text-muted-foreground border-line"
                     )}>
                       {step > s.id ? "✓" : s.id}
                     </span>
@@ -663,14 +663,14 @@ function CriarEventoWizard() {
                 
                 {step < 5 ? (
                   <Button 
-                    className="h-14 px-10 rounded-xl bg-navy text-white font-bold shadow-lg shadow-navy/20 hover:scale-[1.02] active:scale-[0.98] transition-all"
+                    className="h-14 px-10 rounded-xl bg-navy text-primary-foreground font-bold shadow-lg shadow-navy/20 hover:scale-[1.02] active:scale-[0.98] transition-all"
                     onClick={() => setStep(step + 1)}
                   >
                     Próxima etapa <ChevronRight className="w-5 h-5 ml-2" />
                   </Button>
                 ) : (
                   <Button 
-                    className="h-14 px-10 rounded-xl bg-coral text-white font-bold shadow-lg shadow-coral/20 hover:scale-[1.02] active:scale-[0.98] transition-all"
+                    className="h-14 px-10 rounded-xl bg-primary text-primary-foreground font-bold shadow-lg shadow-coral/20 hover:scale-[1.02] active:scale-[0.98] transition-all"
                     onClick={async () => {
                       setLoading(true);
                       try {

@@ -60,7 +60,7 @@ function FinanceiroPage() {
           <Button variant="outline" className="rounded-xl border-line">
             <Calendar className="mr-2 h-4 w-4" /> Últimos 30 dias
           </Button>
-          <Button className="bg-navy text-white hover:bg-navy/90 rounded-xl">
+          <Button className="bg-navy text-primary-foreground hover:bg-navy/90 rounded-xl">
             <Download className="mr-2 h-4 w-4" /> Exportar Relatório
           </Button>
         </div>
@@ -91,7 +91,7 @@ function FinanceiroPage() {
           </CardContent>
         </Card>
 
-        <Card className="bg-primary text-white border-none overflow-hidden relative">
+        <Card className="bg-primary text-primary-foreground border-none overflow-hidden relative">
           <div className="absolute top-0 right-0 w-32 h-32 bg-card/10 rounded-full -mr-16 -mt-16 blur-3xl"></div>
           <CardHeader className="flex flex-row items-center justify-between pb-2">
             <CardTitle className="text-xs font-black uppercase tracking-widest text-white/60">Saldo a Receber</CardTitle>

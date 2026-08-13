@@ -201,7 +201,7 @@ function TeamManagement() {
               <Button 
                 onClick={handleSendInvite}
                 disabled={sendingInvite || !inviteEmail}
-                className="w-full h-14 bg-navy text-white font-extrabold rounded-2xl shadow-xl"
+                className="w-full h-14 bg-navy text-primary-foreground font-extrabold rounded-2xl shadow-xl"
               >
                 {sendingInvite ? <Loader2 className="w-5 h-5 animate-spin" /> : "Enviar Convite"}
               </Button>

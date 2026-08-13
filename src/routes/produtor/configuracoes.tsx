@@ -159,7 +159,7 @@ function OrgSettings() {
                   Desconectado
                 </Badge>
               </div>
-              <Button className="w-full bg-navy text-white font-black h-12 rounded-xl uppercase tracking-widest text-[10px]">
+              <Button className="w-full bg-navy text-primary-foreground font-black h-12 rounded-xl uppercase tracking-widest text-[10px]">
                 Configurar Stripe Connect
               </Button>
             </div>
@@ -179,7 +179,7 @@ function OrgSettings() {
             <div className="pt-4 border-t border-white/10 space-y-4">
               <div className="flex justify-between items-center">
                 <span className="text-xs font-medium text-white/60">Plano Atual</span>
-                <Badge className="bg-coral text-white border-none font-black text-[9px] uppercase">Zevva Pro</Badge>
+                <Badge className="bg-primary text-primary-foreground border-none font-black text-[9px] uppercase">Zevva Pro</Badge>
               </div>
               <div className="flex justify-between items-center">
                 <span className="text-xs font-medium text-white/60">Membros</span>
