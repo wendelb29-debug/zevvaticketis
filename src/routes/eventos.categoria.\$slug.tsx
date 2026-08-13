@@ -29,7 +29,11 @@ function CategoryPage() {
 
   useEffect(() => {
     if (!category) {
-      navigate({ to: "/eventos", search: { busca: undefined, categoria: undefined, cidade: undefined, data: undefined } as any, replace: true });
+      navigate({ 
+        to: "/eventos", 
+        search: { busca: undefined, categoria: undefined, cidade: undefined, data: undefined } as any, 
+        replace: true 
+      });
       return;
     }
 
@@ -47,7 +51,7 @@ function CategoryPage() {
         if (data) {
           const filtered = data.filter((e: any) => {
             const normalized = normalizeCategory(e.category);
-            const matchesCategory = normalized === category.id;
+            const matchesCategory = normalized === (category as any).id;
             
             if (!matchesCategory) return false;
             
