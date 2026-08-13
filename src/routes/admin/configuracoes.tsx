@@ -22,6 +22,7 @@ import { TeamManagement } from "@/components/admin/TeamManagement";
 import { AuditoriaPanel } from "@/components/admin/AuditoriaPanel";
 import { WhatsAppIntegration } from "@/components/admin/WhatsAppIntegration";
 import { useQuery } from "@tanstack/react-query";
+import { PermissionsRolesManager } from "@/components/admin/PermissionsRolesManager";
 
 
 export const Route = createFileRoute("/admin/configuracoes")({
@@ -31,14 +32,31 @@ export const Route = createFileRoute("/admin/configuracoes")({
 function AuthGuard() {
   const [session, setSession] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const [activeTenantId, setActiveTenantId] = useState<string | null>(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
+    async function init() {
+      const { data: { session } } = await supabase.auth.getSession();
       setSession(session);
+      
+      if (session) {
+        const { data: member } = await supabase
+          .from("tenant_members")
+          .select("tenant_id")
+          .eq("user_id", session.user.id)
+          .limit(1)
+          .maybeSingle();
+        
+        if (member) setActiveTenantId(member.tenant_id);
+      }
+      
       setLoading(false);
       if (!session) navigate({ to: "/" });
-    });
+    }
+    
+    init();
+
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_, session) => {
       setSession(session);
       if (!session) navigate({ to: "/" });
@@ -48,7 +66,7 @@ function AuthGuard() {
 
   if (loading) return null;
   if (!session) return null;
-  return <SettingsPage session={session} />;
+  return <SettingsPage session={session} activeTenantId={activeTenantId} />;
 }
 
 type Dept = { id: string; name: string; members: number; status: "ativo" | "inativo"; department_id: string };
@@ -232,7 +250,7 @@ function AuditoriaTab() {
 }
 
 
-function SettingsPage({ session }: { session: any }) {
+function SettingsPage({ session, activeTenantId }: { session: any, activeTenantId: string | null }) {
   const search = useSearch({ from: "/admin/configuracoes" }) as any;
   const [activeTab, setActiveTab] = useState(search?.tab === "team" ? "ADMIN" : "atendimento");
 
@@ -394,6 +412,9 @@ function SettingsPage({ session }: { session: any }) {
           </TabsTrigger>
           <TabsTrigger value="ADMIN" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground rounded-lg py-2.5 px-6 flex items-center gap-2 text-sm font-bold transition-all">
             <Users className="w-4 h-4" /> Equipe e Recursos
+          </TabsTrigger>
+          <TabsTrigger value="permissoes" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground rounded-lg py-2.5 px-6 flex items-center gap-2 text-sm font-bold transition-all">
+            <Lock className="w-4 h-4" /> Permissões e Cargos
           </TabsTrigger>
           <TabsTrigger value="sistema" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground rounded-lg py-2.5 px-6 flex items-center gap-2 text-sm font-bold transition-all">
             <Settings className="w-4 h-4" /> Sistema
@@ -706,7 +727,7 @@ function SettingsPage({ session }: { session: any }) {
         </TabsContent>
 
         <TabsContent value="ADMIN" className="space-y-4 focus-visible:outline-none outline-none">
-          <TeamManagement />
+          <TeamManagement tenantId={activeTenantId || undefined} />
           <Accordion type="single" collapsible className="w-full space-y-4">
 
             <AccordionItem value="permissoes" className="border-border bg-card rounded-xl border overflow-hidden shadow-sm">
@@ -1235,6 +1256,10 @@ function SettingsPage({ session }: { session: any }) {
           </DialogFooter>
         </DialogContent>
       </Dialog>
+      
+      <TabsContent value="permissoes" className="space-y-4 focus-visible:outline-none outline-none">
+        {activeTenantId && <PermissionsRolesManager tenantId={activeTenantId} />}
+      </TabsContent>
 
 
     </div>
