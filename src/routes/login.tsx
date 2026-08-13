@@ -78,7 +78,7 @@ function LoginPage() {
         
         <div className="space-y-2">
           <h1 className="text-3xl font-manrope font-extrabold text-foreground">Acesso Restrito</h1>
-          <p className="text-muted-foreground font-medium">
+          <p className="text-muted-foreground-foreground font-medium">
             Você precisa estar logado para acessar esta área.
           </p>
         </div>
@@ -92,7 +92,7 @@ function LoginPage() {
           </Button>
           
           <Link to="/">
-            <Button variant="ghost" className="w-full h-12 text-muted-foreground font-bold flex items-center justify-center gap-2">
+            <Button variant="ghost" className="w-full h-12 text-muted-foreground-foreground font-bold flex items-center justify-center gap-2">
               <ArrowLeft className="w-4 h-4" />
               Voltar para a Home
             </Button>

@@ -36,7 +36,7 @@ export function FAQAccordion() {
           <AccordionTrigger className="text-left font-bold text-lg md:text-xl hover:no-underline hover:text-primary transition-colors py-6 text-foreground">
             {faq.question}
           </AccordionTrigger>
-          <AccordionContent className="text-muted-foreground font-medium text-base leading-relaxed pb-6 max-w-2xl">
+          <AccordionContent className="text-muted-foreground-foreground font-medium text-base leading-relaxed pb-6 max-w-2xl">
             {faq.answer}
           </AccordionContent>
         </AccordionItem>

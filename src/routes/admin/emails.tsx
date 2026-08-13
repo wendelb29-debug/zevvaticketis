@@ -141,7 +141,7 @@ function AdminEmailsPage() {
             <Mail className="h-8 w-8 text-primary" />
           </div>
           <h1 className="text-2xl font-bold text-foreground">Conecte seu Gmail</h1>
-          <p className="mt-3 text-sm text-muted-foreground">
+          <p className="mt-3 text-sm text-muted-foreground-foreground">
             Cada usuário conecta a própria conta Google. Suas mensagens são privadas — nenhum
             outro usuário do Zevva tem acesso à sua caixa de entrada.
           </p>
@@ -149,7 +149,7 @@ function AdminEmailsPage() {
             {connecting ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Mail className="mr-2 h-4 w-4" />}
             Conectar com o Google
           </Button>
-          <p className="mt-4 flex items-center justify-center gap-2 text-xs text-muted-foreground">
+          <p className="mt-4 flex items-center justify-center gap-2 text-xs text-muted-foreground-foreground">
             <ShieldCheck className="h-3.5 w-3.5" /> Autorização OAuth 2.0 segura — você pode desconectar quando quiser.
           </p>
         </div>
@@ -176,7 +176,7 @@ function AdminEmailsPage() {
                 'flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors',
                 folder === f.id
                   ? 'border border-primary/40 font-semibold text-foreground'
-                  : 'text-muted-foreground hover:bg-primary/5',
+                  : 'text-muted-foreground-foreground hover:bg-primary/5',
               )}
             >
               <f.icon className="h-4 w-4" /> {f.label}
@@ -201,7 +201,7 @@ function AdminEmailsPage() {
       <section className="flex w-[26rem] shrink-0 flex-col rounded-xl border border-border bg-card">
         <div className="flex items-center gap-2 border-b border-border p-3">
           <div className="relative flex-1">
-            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground-foreground" />
             <Input
               value={search}
               onChange={(e) => setSearch(e.target.value)}
@@ -224,7 +224,7 @@ function AdminEmailsPage() {
             </div>
           )}
           {!messagesQuery.isLoading && messages.length === 0 && (
-            <p className="p-6 text-center text-sm text-muted-foreground">Nenhuma mensagem aqui.</p>
+            <p className="p-6 text-center text-sm text-muted-foreground-foreground">Nenhuma mensagem aqui.</p>
           )}
           {messages.map((m) => (
             <button
@@ -239,12 +239,12 @@ function AdminEmailsPage() {
                 <span className={cn('truncate text-sm', m.unread ? 'font-bold text-foreground' : 'text-foreground')}>
                   {m.from}
                 </span>
-                <span className="shrink-0 text-[11px] text-muted-foreground">
+                <span className="shrink-0 text-[11px] text-muted-foreground-foreground">
                   {m.date ? new Date(m.date).toLocaleDateString('pt-BR') : ''}
                 </span>
               </div>
               <p className="truncate text-sm text-foreground">{m.subject}</p>
-              <p className="truncate text-xs text-muted-foreground">{m.snippet}</p>
+              <p className="truncate text-xs text-muted-foreground-foreground">{m.snippet}</p>
             </button>
           ))}
         </div>
@@ -255,7 +255,7 @@ function AdminEmailsPage() {
         {selected ? (
           <div className="space-y-4">
             <h2 className="text-xl font-bold text-foreground">{selected.subject}</h2>
-            <div className="text-sm text-muted-foreground">
+            <div className="text-sm text-muted-foreground-foreground">
               <p><span className="font-medium text-foreground">De:</span> {selected.from}</p>
               <p><span className="font-medium text-foreground">Para:</span> {selected.to}</p>
               <p>{selected.date}</p>
@@ -265,7 +265,7 @@ function AdminEmailsPage() {
             </p>
           </div>
         ) : (
-          <div className="flex h-full flex-col items-center justify-center text-muted-foreground">
+          <div className="flex h-full flex-col items-center justify-center text-muted-foreground-foreground">
             <Mail className="mb-3 h-10 w-10 opacity-40" />
             <p className="text-sm">Selecione um e-mail para ler</p>
           </div>

@@ -70,40 +70,40 @@ function ProjectsPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-slate-50">
+      <div className="min-h-screen flex items-center justify-center bg-muted">
         <div className="w-8 h-8 border-4 border-coral border-t-transparent rounded-full animate-spin"></div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-slate-50 py-12 px-6 font-inter">
+    <div className="min-h-screen bg-muted py-12 px-6 font-inter">
       <div className="max-w-4xl mx-auto space-y-12">
-        <header className="flex justify-between items-center bg-white p-6 rounded-[24px] border border-slate-200 shadow-sm">
+        <header className="flex justify-between items-center bg-card p-6 rounded-[24px] border border-border shadow-sm">
           <div className="flex items-center gap-4">
             <div className="w-12 h-12 bg-coral/10 rounded-2xl flex items-center justify-center">
               <Building2 className="w-6 h-6 text-coral" />
             </div>
             <div>
-              <h1 className="text-2xl font-manrope font-black text-navy tracking-tight">Meus Projetos</h1>
-              <p className="text-slate-500 font-medium">Olá, {userName}. Escolha o ambiente que deseja gerenciar.</p>
+              <h1 className="text-2xl font-manrope font-black text-foreground tracking-tight">Meus Projetos</h1>
+              <p className="text-muted-foreground font-medium">Olá, {userName}. Escolha o ambiente que deseja gerenciar.</p>
             </div>
           </div>
 
-          <Button variant="ghost" onClick={handleLogout} className="text-navy hover:text-coral font-bold gap-2">
+          <Button variant="ghost" onClick={handleLogout} className="text-foreground hover:text-coral font-bold gap-2">
             <LogOut className="w-4 h-4" /> Sair
           </Button>
         </header>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           <Card 
-            className="flex flex-col items-center justify-center p-8 border-dashed border-2 border-slate-300 hover:border-coral transition-all cursor-pointer group rounded-[24px] min-h-[320px] hover:bg-white bg-slate-50/50"
+            className="flex flex-col items-center justify-center p-8 border-dashed border-2 border-slate-300 hover:border-coral transition-all cursor-pointer group rounded-[24px] min-h-[320px] hover:bg-card bg-muted/50"
             onClick={() => setIsDialogOpen(true)}
           >
-            <div className="w-16 h-16 bg-white group-hover:bg-coral/10 rounded-full flex items-center justify-center mb-4 transition-colors shadow-sm border border-slate-100 group-hover:border-coral/20">
+            <div className="w-16 h-16 bg-card group-hover:bg-coral/10 rounded-full flex items-center justify-center mb-4 transition-colors shadow-sm border border-border group-hover:border-coral/20">
               <Plus className="w-8 h-8 text-slate-400 group-hover:text-coral transition-colors" />
             </div>
-            <CardTitle className="text-lg font-manrope font-black text-navy group-hover:text-coral transition-colors">Novo Projeto</CardTitle>
+            <CardTitle className="text-lg font-manrope font-black text-foreground group-hover:text-coral transition-colors">Novo Projeto</CardTitle>
             <CardDescription className="text-center font-medium px-4 mt-2">
               Crie um novo ambiente para gerenciar seus eventos.
             </CardDescription>
@@ -112,12 +112,12 @@ function ProjectsPage() {
           {tenants.map((tenant) => (
             <Card 
               key={tenant.id} 
-              className="group cursor-pointer hover:shadow-xl hover:border-coral/30 transition-all duration-300 border-slate-200 overflow-hidden rounded-[24px] min-h-[320px] flex flex-col"
+              className="group cursor-pointer hover:shadow-xl hover:border-coral/30 transition-all duration-300 border-border overflow-hidden rounded-[24px] min-h-[320px] flex flex-col"
               onClick={() => handleSelect(tenant.id)}
             >
               <CardHeader className="pb-4">
                 <div className="flex justify-between items-start">
-                  <Avatar className="w-14 h-14 rounded-2xl border-2 border-slate-100">
+                  <Avatar className="w-14 h-14 rounded-2xl border-2 border-border">
                     <AvatarImage src={tenant.logo || undefined} />
                     <AvatarFallback className="bg-navy text-white font-black text-xl">
                       {tenant.nome.substring(0, 2).toUpperCase()}
@@ -138,16 +138,16 @@ function ProjectsPage() {
               </CardHeader>
               <CardContent className="space-y-4 flex-grow flex flex-col justify-between">
                 <div>
-                  <CardTitle className="text-lg font-manrope font-black text-navy group-hover:text-coral transition-colors line-clamp-2 leading-tight">
+                  <CardTitle className="text-lg font-manrope font-black text-foreground group-hover:text-coral transition-colors line-clamp-2 leading-tight">
                     {tenant.nome}
                   </CardTitle>
-                  <CardDescription className="text-slate-500 font-medium truncate mt-1">
+                  <CardDescription className="text-muted-foreground font-medium truncate mt-1">
                     Workspace: {tenant.slug}
                   </CardDescription>
                 </div>
                 
                 <div className="space-y-4">
-                  <div className="flex items-center gap-2 pt-2 border-t border-slate-100">
+                  <div className="flex items-center gap-2 pt-2 border-t border-border">
                     <ShieldCheck className="w-4 h-4 text-emerald-500" />
                     <span className="text-[10px] font-black uppercase text-slate-400 tracking-tight">Ambiente Isolado</span>
                   </div>
@@ -176,9 +176,9 @@ function ProjectsPage() {
             </DialogHeader>
           </div>
           
-          <form onSubmit={handleCreateProject} className="p-8 space-y-6 bg-white">
+          <form onSubmit={handleCreateProject} className="p-8 space-y-6 bg-card">
             <div className="space-y-2">
-              <Label htmlFor="name" className="text-navy font-black uppercase text-[10px] tracking-widest ml-1">
+              <Label htmlFor="name" className="text-foreground font-black uppercase text-[10px] tracking-widest ml-1">
                 Nome do Projeto
               </Label>
               <Input
@@ -186,7 +186,7 @@ function ProjectsPage() {
                 value={newProjectName}
                 onChange={(e) => setNewProjectName(e.target.value)}
                 placeholder="Ex: Minha Agência de Eventos"
-                className="rounded-xl border-slate-200 focus:ring-coral focus:border-coral py-6 text-base"
+                className="rounded-xl border-border focus:ring-coral focus:border-coral py-6 text-base"
                 required
                 autoFocus
               />
@@ -196,7 +196,7 @@ function ProjectsPage() {
                 type="button" 
                 variant="outline" 
                 onClick={() => setIsDialogOpen(false)}
-                className="rounded-xl font-bold border-slate-200 text-slate-500 hover:bg-slate-50"
+                className="rounded-xl font-bold border-border text-muted-foreground hover:bg-muted"
               >
                 Cancelar
               </Button>

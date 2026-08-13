@@ -175,7 +175,7 @@ export function AuthModal({ isOpen, onClose, defaultView = 'login' }: AuthModalP
           <div className="flex justify-center">
             <img src={logoAsset.url} alt="Zevva" className="h-16 w-auto" />
           </div>
-          <DialogTitle className="text-2xl font-manrope font-extrabold text-navy text-center">
+          <DialogTitle className="text-2xl font-manrope font-extrabold text-foreground text-center">
             {view === 'login' ? "Que bom ter você aqui!" : (step === 1 ? "Como quer usar a Zevva?" : "Crie sua conta")}
           </DialogTitle>
 
@@ -190,7 +190,7 @@ export function AuthModal({ isOpen, onClose, defaultView = 'login' }: AuthModalP
                 <Button 
                   variant="outline" 
                   onClick={() => handleSocialLogin('google')}
-                  className="w-full justify-start gap-3 h-14 rounded-[16px] border-line font-extrabold text-navy hover:bg-surface transition-all group"
+                  className="w-full justify-start gap-3 h-14 rounded-[16px] border-line font-extrabold text-foreground hover:bg-surface transition-all group"
                 >
                   <img src="https://www.google.com/favicon.ico" alt="Google" className="w-5 h-5" />
                   Google
@@ -199,9 +199,9 @@ export function AuthModal({ isOpen, onClose, defaultView = 'login' }: AuthModalP
                 <Button 
                   variant="outline" 
                   onClick={() => setShowEmailFields(true)}
-                  className="w-full justify-start gap-3 h-14 rounded-[16px] border-line font-extrabold text-navy hover:bg-surface transition-all"
+                  className="w-full justify-start gap-3 h-14 rounded-[16px] border-line font-extrabold text-foreground hover:bg-surface transition-all"
                 >
-                  <Mail className="w-5 h-5 text-muted" />
+                  <Mail className="w-5 h-5 text-muted-foreground" />
                   E-mail
                 </Button>
               </div>
@@ -225,7 +225,7 @@ export function AuthModal({ isOpen, onClose, defaultView = 'login' }: AuthModalP
                     {loading ? "Entrando..." : "Entrar"}
                   </Button>
                   <div className="flex flex-col gap-2 pt-1">
-                    <button type="button" onClick={() => setShowEmailFields(false)} className="w-full text-center text-[10px] font-bold text-muted hover:text-navy">
+                    <button type="button" onClick={() => setShowEmailFields(false)} className="w-full text-center text-[10px] font-bold text-muted-foreground hover:text-foreground">
                       Voltar para opções sociais
                     </button>
                     <button 
@@ -257,30 +257,30 @@ export function AuthModal({ isOpen, onClose, defaultView = 'login' }: AuthModalP
                   onClick={() => setRole('participante')}
                   className={cn(
                     "flex flex-col items-center p-6 rounded-[20px] border-2 transition-all space-y-4 text-center",
-                    role === 'participante' ? "border-coral bg-coral/5" : "border-slate-100 hover:border-slate-200"
+                    role === 'participante' ? "border-coral bg-coral/5" : "border-border hover:border-border"
                   )}
                 >
-                  <div className={cn("w-12 h-12 rounded-xl flex items-center justify-center", role === 'participante' ? "bg-coral text-white" : "bg-slate-50 text-slate-400")}>
+                  <div className={cn("w-12 h-12 rounded-xl flex items-center justify-center", role === 'participante' ? "bg-coral text-white" : "bg-muted text-slate-400")}>
                     <Ticket className="w-6 h-6" />
                   </div>
                   <div>
-                    <h3 className="font-bold text-navy text-sm">Participante</h3>
-                    <p className="text-[10px] text-slate-500">Quero comprar</p>
+                    <h3 className="font-bold text-foreground text-sm">Participante</h3>
+                    <p className="text-[10px] text-muted-foreground">Quero comprar</p>
                   </div>
                 </button>
                 <button 
                   onClick={() => setRole('produtor')}
                   className={cn(
                     "flex flex-col items-center p-6 rounded-[20px] border-2 transition-all space-y-4 text-center",
-                    role === 'produtor' ? "border-coral bg-coral/5" : "border-slate-100 hover:border-slate-200"
+                    role === 'produtor' ? "border-coral bg-coral/5" : "border-border hover:border-border"
                   )}
                 >
-                  <div className={cn("w-12 h-12 rounded-xl flex items-center justify-center", role === 'produtor' ? "bg-navy text-white" : "bg-slate-50 text-slate-400")}>
+                  <div className={cn("w-12 h-12 rounded-xl flex items-center justify-center", role === 'produtor' ? "bg-navy text-white" : "bg-muted text-slate-400")}>
                     <Store className="w-6 h-6" />
                   </div>
                   <div>
-                    <h3 className="font-bold text-navy text-sm">Produtor</h3>
-                    <p className="text-[10px] text-slate-500">Quero vender</p>
+                    <h3 className="font-bold text-foreground text-sm">Produtor</h3>
+                    <p className="text-[10px] text-muted-foreground">Quero vender</p>
                   </div>
                 </button>
               </div>
@@ -319,7 +319,7 @@ export function AuthModal({ isOpen, onClose, defaultView = 'login' }: AuthModalP
 
               <div className="flex items-start space-x-2 pt-2">
                 <Checkbox id="terms" checked={formData.aceiteTermos} onCheckedChange={(c) => setFormData({...formData, aceiteTermos: c as boolean})} className="mt-1" />
-                <label htmlFor="terms" className="text-[10px] text-muted leading-tight">
+                <label htmlFor="terms" className="text-[10px] text-muted-foreground leading-tight">
                   Concordo com os Termos e Privacidade.
                 </label>
               </div>
@@ -330,13 +330,13 @@ export function AuthModal({ isOpen, onClose, defaultView = 'login' }: AuthModalP
             </form>
           )}
 
-          <p className="text-[11px] text-center text-muted font-medium leading-relaxed">
-            Ao entrar, concordo com os <a href="#" className="underline hover:text-navy">Termos de Uso</a> e <a href="#" className="underline hover:text-navy">Política de Privacidade</a>.
+          <p className="text-[11px] text-center text-muted-foreground font-medium leading-relaxed">
+            Ao entrar, concordo com os <a href="#" className="underline hover:text-foreground">Termos de Uso</a> e <a href="#" className="underline hover:text-foreground">Política de Privacidade</a>.
           </p>
         </div>
 
         <div className="bg-surface/50 p-6 border-t border-line text-center">
-          <p className="text-sm font-bold text-navy">
+          <p className="text-sm font-bold text-foreground">
             {view === 'login' ? "Não tem conta? " : "Já tem conta? "}
             <button 
               onClick={() => {

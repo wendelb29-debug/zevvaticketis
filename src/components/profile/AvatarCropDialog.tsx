@@ -99,7 +99,7 @@ export function AvatarCropDialog({ open, imageSrc, saving, onClose, onConfirm }:
         </div>
 
         <div className="flex items-center gap-3 px-1">
-          <ZoomIn className="w-4 h-4 text-muted-fg shrink-0" />
+          <ZoomIn className="w-4 h-4 text-muted-foreground-fg shrink-0" />
           <Slider
             value={[zoom]}
             min={1}
@@ -109,7 +109,7 @@ export function AvatarCropDialog({ open, imageSrc, saving, onClose, onConfirm }:
           />
         </div>
 
-        <p className="text-xs text-muted-fg text-center">
+        <p className="text-xs text-muted-foreground-fg text-center">
           Arraste para posicionar e use o zoom para enquadrar a foto no círculo.
         </p>
 

@@ -184,8 +184,8 @@ export function WhatsAppIntegration() {
     <div className="space-y-6 animate-in fade-in duration-500">
       {/* Header Info */}
       <div className="flex flex-col gap-1">
-        <h3 className="text-xl font-manrope font-extrabold text-navy">Gerenciamento da API do WhatsApp</h3>
-        <p className="text-sm text-muted-fg">Essa área permite conectar, configurar e monitorar integrações WhatsApp do Zevva.</p>
+        <h3 className="text-xl font-manrope font-extrabold text-foreground">Gerenciamento da API do WhatsApp</h3>
+        <p className="text-sm text-muted-foreground-fg">Essa área permite conectar, configurar e monitorar integrações WhatsApp do Zevva.</p>
       </div>
 
       {/* Main Connection Status */}
@@ -196,7 +196,7 @@ export function WhatsAppIntegration() {
               <Smartphone className="w-6 h-6" />
             </div>
             <div>
-              <CardTitle className="text-lg text-navy">WhatsApp API</CardTitle>
+              <CardTitle className="text-lg text-foreground">WhatsApp API</CardTitle>
               <CardDescription>Conecte o Zevva ao WhatsApp para receber mensagens e enviar campanhas.</CardDescription>
             </div>
           </div>
@@ -232,7 +232,7 @@ export function WhatsAppIntegration() {
           <CardContent className="space-y-4">
             <div className="grid gap-4">
               <div className="space-y-2">
-                <Label className="text-xs font-bold uppercase tracking-wider text-navy/70">Business Account ID</Label>
+                <Label className="text-xs font-bold uppercase tracking-wider text-foreground/70">Business Account ID</Label>
                 <Input 
                   placeholder="Ex: 1092837465" 
                   value={cloudApi.businessAccountId}
@@ -240,7 +240,7 @@ export function WhatsAppIntegration() {
                 />
               </div>
               <div className="space-y-2">
-                <Label className="text-xs font-bold uppercase tracking-wider text-navy/70">Phone Number ID</Label>
+                <Label className="text-xs font-bold uppercase tracking-wider text-foreground/70">Phone Number ID</Label>
                 <Input 
                   placeholder="Ex: 1029384756" 
                   value={cloudApi.phoneNumberId}
@@ -248,7 +248,7 @@ export function WhatsAppIntegration() {
                 />
               </div>
               <div className="space-y-2">
-                <Label className="text-xs font-bold uppercase tracking-wider text-navy/70">WhatsApp Business Account ID</Label>
+                <Label className="text-xs font-bold uppercase tracking-wider text-foreground/70">WhatsApp Business Account ID</Label>
                 <Input 
                   placeholder="Ex: 5647382910" 
                   value={cloudApi.wabaId}
@@ -256,7 +256,7 @@ export function WhatsAppIntegration() {
                 />
               </div>
               <div className="space-y-2">
-                <Label className="text-xs font-bold uppercase tracking-wider text-navy/70">Access Token</Label>
+                <Label className="text-xs font-bold uppercase tracking-wider text-foreground/70">Access Token</Label>
                 <Input 
                   type="password"
                   placeholder="EAAB..." 
@@ -265,7 +265,7 @@ export function WhatsAppIntegration() {
                 />
               </div>
               <div className="space-y-2">
-                <Label className="text-xs font-bold uppercase tracking-wider text-navy/70">API Version</Label>
+                <Label className="text-xs font-bold uppercase tracking-wider text-foreground/70">API Version</Label>
                 <Input 
                   value={cloudApi.apiVersion}
                   onChange={(e) => setCloudApi(prev => ({ ...prev, apiVersion: e.target.value }))}
@@ -288,7 +288,7 @@ export function WhatsAppIntegration() {
           </CardHeader>
           <CardContent className="space-y-6">
             <div className="space-y-2">
-              <Label className="text-xs font-bold uppercase tracking-wider text-navy/70">URL do webhook Zevva</Label>
+              <Label className="text-xs font-bold uppercase tracking-wider text-foreground/70">URL do webhook Zevva</Label>
               <div className="flex gap-2">
                 <Input readOnly value={webhookUrl} className="bg-accent/30" />
                 <Button variant="outline" size="icon" onClick={() => copyToClipboard(webhookUrl)}>
@@ -297,7 +297,7 @@ export function WhatsAppIntegration() {
               </div>
             </div>
             <div className="space-y-2">
-              <Label className="text-xs font-bold uppercase tracking-wider text-navy/70">Token de verificação</Label>
+              <Label className="text-xs font-bold uppercase tracking-wider text-foreground/70">Token de verificação</Label>
               <Input 
                 placeholder="Insira o token de verificação" 
                 value={verifyToken}
@@ -306,7 +306,7 @@ export function WhatsAppIntegration() {
             </div>
 
             <div className="space-y-3 pt-2">
-              <Label className="text-xs font-bold uppercase tracking-wider text-navy/70">Quais eventos deseja receber?</Label>
+              <Label className="text-xs font-bold uppercase tracking-wider text-foreground/70">Quais eventos deseja receber?</Label>
               <div className="grid grid-cols-2 gap-3">
                 <div className="flex items-center space-x-2">
                   <Checkbox id="received" checked={events.received} onCheckedChange={(v) => setEvents(p => ({...p, received: !!v}))} />
@@ -383,8 +383,8 @@ export function WhatsAppIntegration() {
                 </Badge>
               </div>
               <div className="pt-2 border-t border-border mt-2">
-                <p className="text-[10px] uppercase text-muted-fg font-bold tracking-widest">Última sincronização</p>
-                <p className="text-sm font-bold text-navy">{lastSync}</p>
+                <p className="text-[10px] uppercase text-muted-foreground-fg font-bold tracking-widest">Última sincronização</p>
+                <p className="text-sm font-bold text-foreground">{lastSync}</p>
               </div>
             </div>
             <Button 
@@ -411,25 +411,25 @@ export function WhatsAppIntegration() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-4">
                 <div className="space-y-2">
-                  <Label className="text-xs font-bold uppercase tracking-wider text-navy/70">Limite de mensagens/dia</Label>
+                  <Label className="text-xs font-bold uppercase tracking-wider text-foreground/70">Limite de mensagens/dia</Label>
                   <Input type="number" defaultValue="5000" />
                 </div>
                 <div className="space-y-2">
-                  <Label className="text-xs font-bold uppercase tracking-wider text-navy/70">Intervalo entre mensagens (s)</Label>
+                  <Label className="text-xs font-bold uppercase tracking-wider text-foreground/70">Intervalo entre mensagens (s)</Label>
                   <Input type="number" defaultValue="5" />
                 </div>
               </div>
               <div className="space-y-4">
                 <div className="space-y-2">
-                  <Label className="text-xs font-bold uppercase tracking-wider text-navy/70">Horário permitido</Label>
+                  <Label className="text-xs font-bold uppercase tracking-wider text-foreground/70">Horário permitido</Label>
                   <div className="flex items-center gap-2">
                     <Input type="time" defaultValue="08:00" className="w-full" />
-                    <span className="text-muted-fg">às</span>
+                    <span className="text-muted-foreground-fg">às</span>
                     <Input type="time" defaultValue="20:00" className="w-full" />
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <Label className="text-xs font-bold uppercase tracking-wider text-navy/70">Fila de envio</Label>
+                  <Label className="text-xs font-bold uppercase tracking-wider text-foreground/70">Fila de envio</Label>
                   <div className="p-3 bg-accent/20 rounded-lg flex items-center justify-between">
                     <span className="text-sm font-bold">Tickets em espera</span>
                     <span className="text-sm font-black text-primary">0</span>
@@ -446,7 +446,7 @@ export function WhatsAppIntegration() {
 
       {/* Numbers and Templates */}
       <Tabs defaultValue="numbers" className="w-full">
-        <TabsList className="bg-card border border-border p-1 h-auto w-full justify-start rounded-xl shadow-sm mb-4">
+        <TabsList className="bg-white border border-border p-1 h-auto w-full justify-start rounded-xl shadow-sm mb-4">
           <TabsTrigger value="numbers" className="data-[state=active]:bg-primary data-[state=active]:text-white rounded-lg py-2 px-4 text-xs font-bold">
             <Smartphone className="w-3.5 h-3.5 mr-2" /> Números Conectados
           </TabsTrigger>
@@ -460,28 +460,28 @@ export function WhatsAppIntegration() {
             <Table>
               <TableHeader>
                 <TableRow className="hover:bg-transparent">
-                  <TableHead className="text-xs font-black uppercase text-navy/60">Número</TableHead>
-                  <TableHead className="text-xs font-black uppercase text-navy/60">Nome</TableHead>
-                  <TableHead className="text-xs font-black uppercase text-navy/60">Status</TableHead>
-                  <TableHead className="text-xs font-black uppercase text-navy/60">Última Atividade</TableHead>
-                  <TableHead className="text-xs font-black uppercase text-navy/60 text-right">Ações</TableHead>
+                  <TableHead className="text-xs font-black uppercase text-foreground/60">Número</TableHead>
+                  <TableHead className="text-xs font-black uppercase text-foreground/60">Nome</TableHead>
+                  <TableHead className="text-xs font-black uppercase text-foreground/60">Status</TableHead>
+                  <TableHead className="text-xs font-black uppercase text-foreground/60">Última Atividade</TableHead>
+                  <TableHead className="text-xs font-black uppercase text-foreground/60 text-right">Ações</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {numbers.map((n) => (
                   <TableRow key={n.id}>
                     <TableCell className="font-bold">{n.number}</TableCell>
-                    <TableCell className="text-navy/80">{n.name}</TableCell>
+                    <TableCell className="text-foreground/80">{n.name}</TableCell>
                     <TableCell>
                       <Badge className="bg-green-500 text-white border-0 gap-1.5">
                         <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" /> Online
                       </Badge>
                     </TableCell>
-                    <TableCell className="text-muted-fg text-xs">{n.lastActivity}</TableCell>
+                    <TableCell className="text-muted-foreground-fg text-xs">{n.lastActivity}</TableCell>
                     <TableCell className="text-right">
                       <div className="flex justify-end gap-1">
-                        <Button variant="ghost" size="icon" className="h-8 w-8 text-navy/60 hover:text-primary"><Edit2 className="w-4 h-4" /></Button>
-                        <Button variant="ghost" size="icon" className="h-8 w-8 text-navy/60 hover:text-red-500"><Trash2 className="w-4 h-4" /></Button>
+                        <Button variant="ghost" size="icon" className="h-8 w-8 text-foreground/60 hover:text-primary"><Edit2 className="w-4 h-4" /></Button>
+                        <Button variant="ghost" size="icon" className="h-8 w-8 text-foreground/60 hover:text-red-500"><Trash2 className="w-4 h-4" /></Button>
                       </div>
                     </TableCell>
                   </TableRow>
@@ -534,9 +534,9 @@ export function WhatsAppIntegration() {
                 </CardHeader>
                 <CardContent>
                   <div className="bg-accent/10 rounded-lg p-8 border border-dashed border-border flex flex-col items-center justify-center text-center">
-                    <FileText className="w-10 h-10 text-muted-fg/40 mb-3" />
-                    <p className="text-sm font-medium text-navy/70">Interface de criação de templates em desenvolvimento.</p>
-                    <p className="text-xs text-muted-fg mt-1">Aqui você poderá definir nome, categoria e conteúdo com variáveis.</p>
+                    <FileText className="w-10 h-10 text-muted-foreground-fg/40 mb-3" />
+                    <p className="text-sm font-medium text-foreground/70">Interface de criação de templates em desenvolvimento.</p>
+                    <p className="text-xs text-muted-foreground-fg mt-1">Aqui você poderá definir nome, categoria e conteúdo com variáveis.</p>
                   </div>
                 </CardContent>
               </Card>
@@ -547,11 +547,11 @@ export function WhatsAppIntegration() {
                 <Table>
                   <TableHeader>
                     <TableRow className="hover:bg-transparent">
-                      <TableHead className="text-xs font-black uppercase text-navy/60">Nome</TableHead>
-                      <TableHead className="text-xs font-black uppercase text-navy/60">Status</TableHead>
-                      <TableHead className="text-xs font-black uppercase text-navy/60">Aprovação</TableHead>
-                      <TableHead className="text-xs font-black uppercase text-navy/60">Conteúdo</TableHead>
-                      <TableHead className="text-xs font-black uppercase text-navy/60 text-right">Ações</TableHead>
+                      <TableHead className="text-xs font-black uppercase text-foreground/60">Nome</TableHead>
+                      <TableHead className="text-xs font-black uppercase text-foreground/60">Status</TableHead>
+                      <TableHead className="text-xs font-black uppercase text-foreground/60">Aprovação</TableHead>
+                      <TableHead className="text-xs font-black uppercase text-foreground/60">Conteúdo</TableHead>
+                      <TableHead className="text-xs font-black uppercase text-foreground/60 text-right">Ações</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -572,15 +572,15 @@ export function WhatsAppIntegration() {
                               <span className="text-xs font-bold flex items-center gap-1">
                                 <UserCheck className="w-3 h-3 text-primary" /> {t.approvedBy}
                               </span>
-                              <span className="text-[10px] text-muted-fg flex items-center gap-1">
+                              <span className="text-[10px] text-muted-foreground-fg flex items-center gap-1">
                                 <Clock className="w-2.5 h-2.5" /> {t.approvedAt}
                               </span>
                             </div>
                           ) : (
-                            <span className="text-xs text-muted-fg italic">Aguardando...</span>
+                            <span className="text-xs text-muted-foreground-fg italic">Aguardando...</span>
                           )}
                         </TableCell>
-                        <TableCell className="text-xs text-muted-fg truncate max-w-[200px]">{t.content}</TableCell>
+                        <TableCell className="text-xs text-muted-foreground-fg truncate max-w-[200px]">{t.content}</TableCell>
                         <TableCell className="text-right">
                           <div className="flex justify-end gap-1">
                             {t.status !== "APPROVED" && (
@@ -593,7 +593,7 @@ export function WhatsAppIntegration() {
                                 </Button>
                               </>
                             )}
-                            <Button variant="ghost" size="icon" className="h-8 w-8 text-navy/60 hover:text-primary"><Eye className="w-4 h-4" /></Button>
+                            <Button variant="ghost" size="icon" className="h-8 w-8 text-foreground/60 hover:text-primary"><Eye className="w-4 h-4" /></Button>
                           </div>
                         </TableCell>
                       </TableRow>
@@ -619,17 +619,17 @@ export function WhatsAppIntegration() {
                 <Table>
                   <TableHeader>
                     <TableRow className="hover:bg-transparent">
-                      <TableHead className="text-xs font-black uppercase text-navy/60">Template</TableHead>
-                      <TableHead className="text-xs font-black uppercase text-navy/60">Evento Vinculado</TableHead>
-                      <TableHead className="text-xs font-black uppercase text-navy/60">Status</TableHead>
-                      <TableHead className="text-xs font-black uppercase text-navy/60 text-right">Ações</TableHead>
+                      <TableHead className="text-xs font-black uppercase text-foreground/60">Template</TableHead>
+                      <TableHead className="text-xs font-black uppercase text-foreground/60">Evento Vinculado</TableHead>
+                      <TableHead className="text-xs font-black uppercase text-foreground/60">Status</TableHead>
+                      <TableHead className="text-xs font-black uppercase text-foreground/60 text-right">Ações</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
                     {templates.filter(t => t.linkedEvent).map((t) => (
                       <TableRow key={t.id}>
                         <TableCell className="font-bold">{t.name}</TableCell>
-                        <TableCell className="text-sm text-navy/80">{t.linkedEvent}</TableCell>
+                        <TableCell className="text-sm text-foreground/80">{t.linkedEvent}</TableCell>
                         <TableCell><Badge className="bg-primary/10 text-primary border-0 font-bold">Ativo</Badge></TableCell>
                         <TableCell className="text-right">
                           <Button variant="ghost" size="icon" className="h-8 w-8 text-red-500 hover:text-red-600 hover:bg-red-50" title="Remover Vínculo">
@@ -640,7 +640,7 @@ export function WhatsAppIntegration() {
                     ))}
                     {templates.every(t => !t.linkedEvent) && (
                       <TableRow>
-                        <TableCell colSpan={4} className="h-24 text-center text-muted-fg text-sm italic">
+                        <TableCell colSpan={4} className="h-24 text-center text-muted-foreground-fg text-sm italic">
                           Nenhum template vinculado a eventos no momento.
                         </TableCell>
                       </TableRow>
@@ -655,10 +655,10 @@ export function WhatsAppIntegration() {
                 <Table>
                   <TableHeader>
                     <TableRow className="hover:bg-transparent">
-                      <TableHead className="text-xs font-black uppercase text-navy/60">Data/Hora</TableHead>
-                      <TableHead className="text-xs font-black uppercase text-navy/60">Evento</TableHead>
-                      <TableHead className="text-xs font-black uppercase text-navy/60">Status</TableHead>
-                      <TableHead className="text-xs font-black uppercase text-navy/60">Resposta</TableHead>
+                      <TableHead className="text-xs font-black uppercase text-foreground/60">Data/Hora</TableHead>
+                      <TableHead className="text-xs font-black uppercase text-foreground/60">Evento</TableHead>
+                      <TableHead className="text-xs font-black uppercase text-foreground/60">Status</TableHead>
+                      <TableHead className="text-xs font-black uppercase text-foreground/60">Resposta</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -672,7 +672,7 @@ export function WhatsAppIntegration() {
                         <TableCell>
                           <Badge variant="outline" className="border-green-200 text-green-600 bg-green-50 font-bold">{log.status}</Badge>
                         </TableCell>
-                        <TableCell className="font-mono text-[10px] text-muted-fg bg-accent/10 rounded px-2 py-1">{log.response}</TableCell>
+                        <TableCell className="font-mono text-[10px] text-muted-foreground-fg bg-accent/10 rounded px-2 py-1">{log.response}</TableCell>
                       </TableRow>
                     ))}
                   </TableBody>

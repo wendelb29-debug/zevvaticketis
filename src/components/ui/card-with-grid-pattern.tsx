@@ -18,7 +18,7 @@ export function GridPatternCard({
     <motion.div
       className={cn(
         "border w-full rounded-[32px] overflow-hidden relative",
-        "bg-white",
+        "bg-card",
         "border-line",
         className
       )}

@@ -54,27 +54,27 @@ function CheckinDashboard() {
     loadProjectEvents();
   }, [projectId]);
 
-  if (loading) return <div className="p-10 text-center font-inter text-muted">Carregando eventos do projeto...</div>;
+  if (loading) return <div className="p-10 text-center font-inter text-muted-foreground">Carregando eventos do projeto...</div>;
 
   return (
     <div className="space-y-8">
-      <h2 className="text-3xl font-manrope font-black text-navy uppercase tracking-tighter">Eventos Disponíveis</h2>
+      <h2 className="text-3xl font-manrope font-black text-foreground uppercase tracking-tighter">Eventos Disponíveis</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {events.length === 0 ? (
-          <div className="col-span-full p-12 text-center bg-white rounded-3xl border border-line">
-            <p className="text-muted font-bold">Nenhum evento encontrado para este projeto.</p>
+          <div className="col-span-full p-12 text-center bg-card rounded-3xl border border-line">
+            <p className="text-muted-foreground font-bold">Nenhum evento encontrado para este projeto.</p>
           </div>
         ) : events.map((e) => (
-          <Card key={e.id} className="rounded-[24px] p-6 shadow-sm border border-slate-200">
+          <Card key={e.id} className="rounded-[24px] p-6 shadow-sm border border-border">
             <div className="flex justify-between items-start mb-6">
               <div>
-                <h3 className="text-xl font-black text-navy">{e.title}</h3>
-                <p className="text-xs font-bold text-slate-500 uppercase">{e.location} - {new Date(e.start_date).toLocaleDateString('pt-BR')}</p>
+                <h3 className="text-xl font-black text-foreground">{e.title}</h3>
+                <p className="text-xs font-bold text-muted-foreground uppercase">{e.location} - {new Date(e.start_date).toLocaleDateString('pt-BR')}</p>
               </div>
               <QrCode className="text-coral w-6 h-6" />
             </div>
             <div className="grid grid-cols-3 gap-2 mb-6">
-              <div className="bg-slate-50 p-3 rounded-lg text-center">
+              <div className="bg-muted p-3 rounded-lg text-center">
                 <p className="text-[9px] font-black text-slate-400 uppercase">Total</p>
                 <p className="text-lg font-black">{e.total}</p>
               </div>

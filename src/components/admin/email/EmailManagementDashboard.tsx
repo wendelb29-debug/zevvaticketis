@@ -78,8 +78,8 @@ export function EmailManagementDashboard() {
     <div className="space-y-8 animate-in fade-in duration-500">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
-          <h1 className="text-3xl font-manrope font-extrabold text-navy dark:text-creme">Gestão de Comunicação</h1>
-          <p className="text-muted-foreground">Monitore e gerencie todos os envios de ingressos.</p>
+          <h1 className="text-3xl font-manrope font-extrabold text-foreground dark:text-creme">Gestão de Comunicação</h1>
+          <p className="text-muted-foreground-foreground">Monitore e gerencie todos os envios de ingressos.</p>
         </div>
         <div className="flex gap-2">
           <Button variant="outline" onClick={() => toast.info("Exportação em breve")}>
@@ -128,7 +128,7 @@ export function EmailManagementDashboard() {
         <CardHeader>
           <div className="flex flex-col md:flex-row justify-between gap-4">
             <div className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground-foreground" />
               <Input 
                 placeholder="Buscar por e-mail ou assunto..." 
                 className="pl-10"
@@ -198,11 +198,11 @@ function StatCard({ title, value, icon: Icon, description, color }: any) {
     <Card className="border-none shadow-md">
       <CardContent className="pt-6">
         <div className="flex justify-between items-start mb-2">
-          <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">{title}</p>
-          <Icon className={cn("w-4 h-4", color || "text-muted-foreground")} />
+          <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground-foreground">{title}</p>
+          <Icon className={cn("w-4 h-4", color || "text-muted-foreground-foreground")} />
         </div>
         <p className={cn("text-2xl font-black", color)}>{value}</p>
-        <p className="text-[10px] text-muted-foreground mt-1">{description}</p>
+        <p className="text-[10px] text-muted-foreground-foreground mt-1">{description}</p>
       </CardContent>
     </Card>
   );

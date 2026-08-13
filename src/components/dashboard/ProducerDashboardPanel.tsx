@@ -125,12 +125,12 @@ export function ProducerDashboardPanel() {
     <div className="space-y-8 pb-10">
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-manrope font-black text-navy tracking-tighter uppercase">📊 Dashboard do Projeto</h1>
-          <p className="text-sm text-muted font-medium">Gestão integrada de vendas e operações em tempo real.</p>
+          <h1 className="text-3xl font-manrope font-black text-foreground tracking-tighter uppercase">📊 Dashboard do Projeto</h1>
+          <p className="text-sm text-muted-foreground font-medium">Gestão integrada de vendas e operações em tempo real.</p>
         </div>
         <div className="flex gap-2">
 
-          <Button asChild variant="outline" className="border-navy text-navy gap-2 px-6 rounded-xl font-bold">
+          <Button asChild variant="outline" className="border-navy text-foreground gap-2 px-6 rounded-xl font-bold">
             <Link to="/produtor/tickets">
               <Ticket className="w-5 h-5" /> Ver Ingressos
             </Link>
@@ -146,38 +146,38 @@ export function ProducerDashboardPanel() {
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
         <Card className="border-border shadow-sm">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-bold text-muted-fg">Eventos Ativos</CardTitle>
+            <CardTitle className="text-sm font-bold text-muted-foreground-fg">Eventos Ativos</CardTitle>
             <Calendar className="w-4 h-4 text-primary" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-manrope font-extrabold text-navy">{stats.activeEvents}</div>
+            <div className="text-2xl font-manrope font-extrabold text-foreground">{stats.activeEvents}</div>
           </CardContent>
         </Card>
         <Card className="border-border shadow-sm">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-bold text-muted-fg">Ingressos Vendidos</CardTitle>
+            <CardTitle className="text-sm font-bold text-muted-foreground-fg">Ingressos Vendidos</CardTitle>
             <Ticket className="w-4 h-4 text-primary" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-manrope font-extrabold text-navy">{stats.ticketsSold}</div>
+            <div className="text-2xl font-manrope font-extrabold text-foreground">{stats.ticketsSold}</div>
           </CardContent>
         </Card>
         <Card className="border-border shadow-sm">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-bold text-muted-fg">Participantes</CardTitle>
+            <CardTitle className="text-sm font-bold text-muted-foreground-fg">Participantes</CardTitle>
             <Users className="w-4 h-4 text-primary" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-manrope font-extrabold text-navy">{stats.totalParticipants}</div>
+            <div className="text-2xl font-manrope font-extrabold text-foreground">{stats.totalParticipants}</div>
           </CardContent>
         </Card>
         <Card className="border-border shadow-sm">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-bold text-muted-fg">Receita Líquida</CardTitle>
+            <CardTitle className="text-sm font-bold text-muted-foreground-fg">Receita Líquida</CardTitle>
             <DollarSign className="w-4 h-4 text-emerald-500" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-manrope font-extrabold text-navy">
+            <div className="text-2xl font-manrope font-extrabold text-foreground">
               R$ {stats.revenue.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
             </div>
           </CardContent>
@@ -221,7 +221,7 @@ export function ProducerDashboardPanel() {
               ))}
               {salesReport.length === 0 && (
                 <TableRow>
-                  <TableCell colSpan={6} className="text-center py-10 text-muted-fg">Nenhuma venda registrada.</TableCell>
+                  <TableCell colSpan={6} className="text-center py-10 text-muted-foreground-fg">Nenhuma venda registrada.</TableCell>
                 </TableRow>
               )}
             </TableBody>

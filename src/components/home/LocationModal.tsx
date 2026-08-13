@@ -68,19 +68,19 @@ export function LocationModal({ isOpen, onClose, onSelect }: LocationModalProps)
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
-      <DialogContent className="sm:max-w-[480px] p-0 rounded-[16px] bg-white border-0 shadow-2xl overflow-hidden gap-0">
+      <DialogContent className="sm:max-w-[480px] p-0 rounded-[16px] bg-card border-0 shadow-2xl overflow-hidden gap-0">
         <DialogHeader className="p-6 pb-2">
           <div className="flex items-center justify-between">
-            <DialogTitle className="text-2xl font-manrope font-extrabold text-navy">Localização</DialogTitle>
+            <DialogTitle className="text-2xl font-manrope font-extrabold text-foreground">Localização</DialogTitle>
           </div>
         </DialogHeader>
 
         <div className="px-6 pb-4">
           <div className="relative">
-            <Search className="absolute left-4 top-3.5 w-4 h-4 text-muted" />
+            <Search className="absolute left-4 top-3.5 w-4 h-4 text-muted-foreground" />
             <Input 
               placeholder="Onde?" 
-              className="h-12 pl-11 rounded-xl border-line bg-surface/50 focus:bg-white focus:ring-coral transition-all"
+              className="h-12 pl-11 rounded-xl border-line bg-surface/50 focus:bg-card focus:ring-coral transition-all"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
             />
@@ -96,8 +96,8 @@ export function LocationModal({ isOpen, onClose, onSelect }: LocationModalProps)
               <Target className={cn("w-5 h-5", locating && "animate-spin")} />
             </div>
             <div>
-              <p className="font-bold text-navy text-sm">Usar minha localização atual</p>
-              <p className="text-xs text-muted font-medium">Encontre eventos perto de você</p>
+              <p className="font-bold text-foreground text-sm">Usar minha localização atual</p>
+              <p className="text-xs text-muted-foreground font-medium">Encontre eventos perto de você</p>
             </div>
           </button>
 
@@ -107,23 +107,23 @@ export function LocationModal({ isOpen, onClose, onSelect }: LocationModalProps)
             onClick={() => onSelect(null)}
             className="w-full flex items-center gap-4 px-6 py-4 hover:bg-surface transition-colors text-left group"
           >
-            <div className="w-10 h-10 rounded-full bg-surface-2 flex items-center justify-center text-muted group-hover:text-coral transition-all">
+            <div className="w-10 h-10 rounded-full bg-surface-2 flex items-center justify-center text-muted-foreground group-hover:text-coral transition-all">
               <MapPin className="w-5 h-5" />
             </div>
-            <p className="font-bold text-navy text-sm">Qualquer lugar</p>
+            <p className="font-bold text-foreground text-sm">Qualquer lugar</p>
           </button>
 
           {filteredRegions.map((region) => (
             <div key={region.name} className="mt-4">
-              <p className="px-6 text-[10px] font-extrabold text-muted uppercase tracking-widest mb-2">{region.name}</p>
+              <p className="px-6 text-[10px] font-extrabold text-muted-foreground uppercase tracking-widest mb-2">{region.name}</p>
               {region.cities.map((city) => (
                 <button 
                   key={city}
                   onClick={() => onSelect(city)}
                   className="w-full flex items-center gap-4 px-6 py-3 hover:bg-surface transition-colors text-left group"
                 >
-                  <MapPin className="w-4 h-4 text-muted group-hover:text-coral transition-all" />
-                  <p className="font-bold text-navy text-sm">{city}</p>
+                  <MapPin className="w-4 h-4 text-muted-foreground group-hover:text-coral transition-all" />
+                  <p className="font-bold text-foreground text-sm">{city}</p>
                 </button>
               ))}
             </div>
@@ -131,8 +131,8 @@ export function LocationModal({ isOpen, onClose, onSelect }: LocationModalProps)
 
           {search && filteredRegions.length === 0 && (
             <div className="px-6 py-12 text-center space-y-2">
-              <p className="text-navy font-bold">Nenhuma cidade encontrada</p>
-              <p className="text-sm text-muted">Tente buscar por outro termo</p>
+              <p className="text-foreground font-bold">Nenhuma cidade encontrada</p>
+              <p className="text-sm text-muted-foreground">Tente buscar por outro termo</p>
             </div>
           )}
         </div>

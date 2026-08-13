@@ -162,13 +162,13 @@ export function AdminDashboardPanel() {
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-manrope font-extrabold text-navy">Dashboard Administrativo</h1>
-          <p className="text-muted-fg">Visão estratégica da plataforma Zevva Tickets.</p>
+          <h1 className="text-3xl font-manrope font-extrabold text-foreground">Dashboard Administrativo</h1>
+          <p className="text-muted-foreground-fg">Visão estratégica da plataforma Zevva Tickets.</p>
         </div>
         
         <div className="flex items-center gap-3">
           <Select value={period} onValueChange={setPeriod}>
-            <SelectTrigger className="w-[180px] bg-card border-border">
+            <SelectTrigger className="w-[180px] bg-white border-border">
               <Calendar className="w-4 h-4 mr-2" />
               <SelectValue placeholder="Período" />
             </SelectTrigger>
@@ -191,76 +191,76 @@ export function AdminDashboardPanel() {
 
       {/* Main Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <Card className="border-border bg-card shadow-sm hover:shadow-md transition-shadow">
+        <Card className="border-border bg-white shadow-sm hover:shadow-md transition-shadow">
           <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
-            <CardTitle className="text-sm font-bold text-muted-fg">TOTAL DE EVENTOS</CardTitle>
+            <CardTitle className="text-sm font-bold text-muted-foreground-fg">TOTAL DE EVENTOS</CardTitle>
             <Calendar className="w-4 h-4 text-primary" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-manrope font-extrabold text-navy">{stats.totalEvents}</div>
+            <div className="text-2xl font-manrope font-extrabold text-foreground">{stats.totalEvents}</div>
             <div className="mt-2 space-y-1">
               <div className="flex justify-between text-[11px]">
-                <span className="text-muted-fg">Ativos</span>
+                <span className="text-muted-foreground-fg">Ativos</span>
                 <span className="font-bold text-emerald-500">{stats.activeEvents}</span>
               </div>
               <div className="flex justify-between text-[11px]">
-                <span className="text-muted-fg">Pendentes</span>
+                <span className="text-muted-foreground-fg">Pendentes</span>
                 <span className="font-bold text-amber-500">{stats.pendingEvents}</span>
               </div>
             </div>
           </CardContent>
         </Card>
 
-        <Card className="border-border bg-card shadow-sm hover:shadow-md transition-shadow">
+        <Card className="border-border bg-white shadow-sm hover:shadow-md transition-shadow">
           <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
-            <CardTitle className="text-sm font-bold text-muted-fg">TOTAL DE USUÁRIOS</CardTitle>
+            <CardTitle className="text-sm font-bold text-muted-foreground-fg">TOTAL DE USUÁRIOS</CardTitle>
             <Users className="w-4 h-4 text-primary" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-manrope font-extrabold text-navy">{stats.totalUsers}</div>
+            <div className="text-2xl font-manrope font-extrabold text-foreground">{stats.totalUsers}</div>
             <div className="mt-2 space-y-1">
               <div className="flex justify-between text-[11px]">
-                <span className="text-muted-fg">Participantes</span>
+                <span className="text-muted-foreground-fg">Participantes</span>
                 <span className="font-bold">{stats.participants}</span>
               </div>
               <div className="flex justify-between text-[11px]">
-                <span className="text-muted-fg">Produtores</span>
+                <span className="text-muted-foreground-fg">Produtores</span>
                 <span className="font-bold">{stats.producers}</span>
               </div>
             </div>
           </CardContent>
         </Card>
 
-        <Card className="border-border bg-card shadow-sm hover:shadow-md transition-shadow">
+        <Card className="border-border bg-white shadow-sm hover:shadow-md transition-shadow">
           <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
-            <CardTitle className="text-sm font-bold text-muted-fg">VENDAS TOTAIS</CardTitle>
+            <CardTitle className="text-sm font-bold text-muted-foreground-fg">VENDAS TOTAIS</CardTitle>
             <Ticket className="w-4 h-4 text-primary" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-manrope font-extrabold text-navy">{stats.ticketsSold}</div>
+            <div className="text-2xl font-manrope font-extrabold text-foreground">{stats.ticketsSold}</div>
             <div className="mt-1 text-xs font-bold text-emerald-500">
               R$ {stats.grossValue.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
             </div>
-            <p className="text-[10px] text-muted-fg mt-1">Ingressos vendidos</p>
+            <p className="text-[10px] text-muted-foreground-fg mt-1">Ingressos vendidos</p>
           </CardContent>
         </Card>
 
-        <Card className="border-border bg-card shadow-sm hover:shadow-md transition-shadow">
+        <Card className="border-border bg-white shadow-sm hover:shadow-md transition-shadow">
           <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
-            <CardTitle className="text-sm font-bold text-muted-fg">RECEITA ZEVVA</CardTitle>
+            <CardTitle className="text-sm font-bold text-muted-foreground-fg">RECEITA ZEVVA</CardTitle>
             <TrendingUp className="w-4 h-4 text-emerald-500" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-manrope font-extrabold text-navy">
+            <div className="text-2xl font-manrope font-extrabold text-foreground">
               R$ {stats.zevvaRevenue.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
             </div>
             <div className="mt-2 space-y-1">
               <div className="flex justify-between text-[11px]">
-                <span className="text-muted-fg">Comissão Zevva</span>
+                <span className="text-muted-foreground-fg">Comissão Zevva</span>
                 <span className="font-bold text-emerald-500">R$ {stats.zevvaRevenue}</span>
               </div>
               <div className="flex justify-between text-[11px]">
-                <span className="text-muted-fg">Taxa Conv.</span>
+                <span className="text-muted-foreground-fg">Taxa Conv.</span>
                 <span className="font-bold text-primary">{stats.conversionRate}%</span>
               </div>
             </div>
@@ -272,7 +272,7 @@ export function AdminDashboardPanel() {
       <Card className="bg-navy text-white border-none shadow-xl">
         <CardContent className="p-6 flex flex-col md:flex-row items-center justify-between gap-6">
           <div>
-            <p className="text-navy-lighter/60 text-xs font-bold uppercase tracking-widest">Valor total repassado a produtores</p>
+            <p className="text-foreground-lighter/60 text-xs font-bold uppercase tracking-widest">Valor total repassado a produtores</p>
             <h2 className="text-4xl font-manrope font-black mt-1">
               R$ {stats.producerPayout.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
             </h2>
@@ -291,7 +291,7 @@ export function AdminDashboardPanel() {
 
       {/* Charts Row 1 */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <Card className="border-border bg-card shadow-sm">
+        <Card className="border-border bg-white shadow-sm">
           <CardHeader>
             <CardTitle className="text-lg font-manrope font-bold">Vendas por Período</CardTitle>
           </CardHeader>
@@ -326,7 +326,7 @@ export function AdminDashboardPanel() {
           </CardContent>
         </Card>
 
-        <Card className="border-border bg-card shadow-sm">
+        <Card className="border-border bg-white shadow-sm">
           <CardHeader>
             <CardTitle className="text-lg font-manrope font-bold">Receita da Plataforma</CardTitle>
           </CardHeader>
@@ -358,7 +358,7 @@ export function AdminDashboardPanel() {
 
       {/* Rankings Row */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <Card className="border-border bg-card shadow-sm">
+        <Card className="border-border bg-white shadow-sm">
           <CardHeader className="flex flex-row items-center justify-between">
             <CardTitle className="text-lg font-manrope font-bold">Eventos Mais Vendidos</CardTitle>
             <Button variant="ghost" size="sm" className="text-primary text-xs font-bold">Ver Ranking Completo</Button>
@@ -371,19 +371,19 @@ export function AdminDashboardPanel() {
                     <div className={cn(
                       "w-8 h-8 rounded-full flex items-center justify-center text-xs font-black",
                       i === 0 ? "bg-amber-100 text-amber-600" :
-                      i === 1 ? "bg-slate-100 text-slate-600" :
+                      i === 1 ? "bg-slate-100 text-muted-foreground" :
                       i === 2 ? "bg-orange-100 text-orange-600" :
-                      "bg-accent text-muted-fg"
+                      "bg-accent text-muted-foreground-fg"
                     )}>
                       {event.rank}º
                     </div>
                     <div>
-                      <p className="text-sm font-bold text-navy">{event.title}</p>
-                      <p className="text-[10px] text-muted-fg uppercase font-bold">{event.quantity} Ingressos vendidos</p>
+                      <p className="text-sm font-bold text-foreground">{event.title}</p>
+                      <p className="text-[10px] text-muted-foreground-fg uppercase font-bold">{event.quantity} Ingressos vendidos</p>
                     </div>
                   </div>
                   <div className="text-right">
-                    <p className="text-sm font-black text-navy">R$ {event.revenue.toLocaleString()}</p>
+                    <p className="text-sm font-black text-foreground">R$ {event.revenue.toLocaleString()}</p>
                     <p className="text-[10px] text-emerald-500 font-bold">Faturamento</p>
                   </div>
                 </div>
@@ -392,7 +392,7 @@ export function AdminDashboardPanel() {
           </CardContent>
         </Card>
 
-        <Card className="border-border bg-card shadow-sm">
+        <Card className="border-border bg-white shadow-sm">
           <CardHeader>
             <CardTitle className="text-lg font-manrope font-bold">Categorias Mais Rentáveis</CardTitle>
           </CardHeader>
@@ -406,7 +406,7 @@ export function AdminDashboardPanel() {
               ].map((cat, i) => (
                 <div key={i} className="space-y-2">
                   <div className="flex justify-between text-sm font-bold">
-                    <span className="text-navy">{cat.label}</span>
+                    <span className="text-foreground">{cat.label}</span>
                     <span className="text-primary">{cat.value}%</span>
                   </div>
                   <div className="h-2 w-full bg-accent rounded-full overflow-hidden">

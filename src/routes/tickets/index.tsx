@@ -59,7 +59,7 @@ function MyTickets() {
       case 'confirmado':
         return <Badge className="bg-good/10 text-good border-good/20 font-bold uppercase tracking-wider text-[10px]">Válido</Badge>;
       case 'presente':
-        return <Badge className="bg-navy/10 text-navy border-navy/20 font-bold uppercase tracking-wider text-[10px]">Presente</Badge>;
+        return <Badge className="bg-navy/10 text-foreground border-navy/20 font-bold uppercase tracking-wider text-[10px]">Presente</Badge>;
       case 'falta':
         return <Badge className="bg-destructive/10 text-destructive border-destructive/20 font-bold uppercase tracking-wider text-[10px]">Falta</Badge>;
       default:
@@ -70,7 +70,7 @@ function MyTickets() {
   if (loading) return (
     <div className="flex flex-col items-center justify-center py-20 gap-4">
       <Loader2 className="w-8 h-8 animate-spin text-coral" />
-      <p className="text-muted font-bold uppercase tracking-widest text-[10px]">Carregando seus ingressos...</p>
+      <p className="text-muted-foreground font-bold uppercase tracking-widest text-[10px]">Carregando seus ingressos...</p>
     </div>
   );
 
@@ -78,18 +78,18 @@ function MyTickets() {
     <div className="max-w-7xl mx-auto px-6 py-8 space-y-8 font-inter">
       <GlobalBreadcrumb className="py-4" />
       <div className="flex flex-col gap-2">
-        <h1 className="text-3xl font-manrope font-extrabold text-navy">Meus Ingressos</h1>
-        <p className="text-muted font-medium">Gerencie suas reservas e acesse seus QR codes.</p>
+        <h1 className="text-3xl font-manrope font-extrabold text-foreground">Meus Ingressos</h1>
+        <p className="text-muted-foreground font-medium">Gerencie suas reservas e acesse seus QR codes.</p>
       </div>
 
       {tickets.length === 0 ? (
-        <div className="bg-white border border-line rounded-[32px] p-20 text-center space-y-4 shadow-sm">
-          <div className="w-20 h-20 bg-surface rounded-full flex items-center justify-center text-muted mx-auto">
+        <div className="bg-card border border-line rounded-[32px] p-20 text-center space-y-4 shadow-sm">
+          <div className="w-20 h-20 bg-surface rounded-full flex items-center justify-center text-muted-foreground mx-auto">
             <Ticket className="w-10 h-10" />
           </div>
           <div className="space-y-2">
-            <h3 className="text-xl font-bold text-navy">Nenhum ingresso encontrado</h3>
-            <p className="text-muted font-medium max-w-sm mx-auto">Você ainda não possui ingressos para eventos. Explore o marketplace para encontrar sua próxima experiência!</p>
+            <h3 className="text-xl font-bold text-foreground">Nenhum ingresso encontrado</h3>
+            <p className="text-muted-foreground font-medium max-w-sm mx-auto">Você ainda não possui ingressos para eventos. Explore o marketplace para encontrar sua próxima experiência!</p>
           </div>
           <Button 
             asChild
@@ -101,7 +101,7 @@ function MyTickets() {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {tickets.map((ticket) => (
-            <div key={ticket.id} className="bg-white border border-line rounded-[24px] overflow-hidden flex flex-col shadow-sm hover-lift transition-all group">
+            <div key={ticket.id} className="bg-card border border-line rounded-[24px] overflow-hidden flex flex-col shadow-sm hover-lift transition-all group">
               {/* Event Cover Image Placeholder */}
               <div className="h-40 bg-navy relative">
                  <div className="absolute top-4 left-4 z-10">
@@ -115,15 +115,15 @@ function MyTickets() {
               {/* Info Section */}
               <div className="flex-1 p-6 flex flex-col justify-between gap-4">
                 <div className="space-y-2">
-                  <span className="text-[10px] font-extrabold text-muted uppercase tracking-widest">{ticket.name}</span>
-                  <h3 className="text-xl font-extrabold text-navy leading-tight group-hover:text-coral transition-colors">{ticket.events?.title}</h3>
+                  <span className="text-[10px] font-extrabold text-muted-foreground uppercase tracking-widest">{ticket.name}</span>
+                  <h3 className="text-xl font-extrabold text-foreground leading-tight group-hover:text-coral transition-colors">{ticket.events?.title}</h3>
                   
                   <div className="space-y-1">
-                    <div className="flex items-center gap-2 text-sm text-muted font-medium">
+                    <div className="flex items-center gap-2 text-sm text-muted-foreground font-medium">
                       <MapPin className="w-4 h-4 text-coral" />
                       {ticket.events?.location || `${ticket.events?.city}`}
                     </div>
-                    <div className="flex items-center gap-2 text-sm text-muted font-medium">
+                    <div className="flex items-center gap-2 text-sm text-muted-foreground font-medium">
                       <Calendar className="w-4 h-4 text-coral" />
                       {ticket.events?.start_date ? new Date(ticket.events.start_date).toLocaleDateString('pt-BR') : 'Data a definir'}
                     </div>
@@ -137,10 +137,10 @@ function MyTickets() {
                     </a>
                   </Button>
                   <div className="flex gap-2">
-                    <Button variant="outline" className="flex-1 rounded-xl font-bold h-10 border-2 text-navy hover:bg-surface border-line px-2">
+                    <Button variant="outline" className="flex-1 rounded-xl font-bold h-10 border-2 text-foreground hover:bg-surface border-line px-2">
                         <Download className="w-4 h-4 mr-1 md:mr-2" /> <span className="text-[10px] md:text-sm">PDF</span>
                     </Button>
-                    <Button variant="outline" className="flex-1 rounded-xl font-bold h-10 border-2 text-navy hover:bg-surface border-line px-2">
+                    <Button variant="outline" className="flex-1 rounded-xl font-bold h-10 border-2 text-foreground hover:bg-surface border-line px-2">
                         <Send className="w-4 h-4 mr-1 md:mr-2" /> <span className="text-[10px] md:text-sm">Enviar</span>
                     </Button>
                   </div>

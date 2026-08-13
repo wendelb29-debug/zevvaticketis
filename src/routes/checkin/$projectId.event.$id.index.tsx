@@ -57,8 +57,8 @@ function EventOperationalDashboard() {
   return (
     <div className="space-y-8">
       <div>
-        <h2 className="text-3xl font-manrope font-black text-navy uppercase tracking-tighter">Painel Operacional</h2>
-        <p className="text-slate-500 font-medium">Monitoramento em tempo real do acesso.</p>
+        <h2 className="text-3xl font-manrope font-black text-foreground uppercase tracking-tighter">Painel Operacional</h2>
+        <p className="text-muted-foreground font-medium">Monitoramento em tempo real do acesso.</p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -88,8 +88,8 @@ function EventOperationalDashboard() {
         />
       </div>
 
-      <div className="bg-white rounded-[32px] p-8 border border-slate-200 shadow-sm">
-        <h3 className="text-xl font-black text-navy uppercase mb-6">Status da Lotação</h3>
+      <div className="bg-card rounded-[32px] p-8 border border-border shadow-sm">
+        <h3 className="text-xl font-black text-foreground uppercase mb-6">Status da Lotação</h3>
         <div className="w-full h-4 bg-slate-100 rounded-full overflow-hidden">
           <div 
             className="h-full bg-coral transition-all duration-500" 
@@ -108,12 +108,12 @@ function EventOperationalDashboard() {
 
 function StatCard({ label, value, icon: Icon, color }: any) {
   return (
-    <Card className="rounded-[24px] overflow-hidden border-slate-200">
+    <Card className="rounded-[24px] overflow-hidden border-border">
       <CardContent className="p-6">
         <div className="flex justify-between items-center">
           <div>
             <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">{label}</p>
-            <p className="text-3xl font-black text-navy">{value}</p>
+            <p className="text-3xl font-black text-foreground">{value}</p>
           </div>
           <div className={`${color} p-3 rounded-xl text-white`}>
             <Icon className="w-6 h-6" />

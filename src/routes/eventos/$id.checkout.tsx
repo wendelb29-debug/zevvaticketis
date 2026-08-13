@@ -126,11 +126,11 @@ function CheckoutPage() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <div className="lg:col-span-2 space-y-6">
             <div className="flex items-center gap-4 mb-8">
-              <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold ${step >= 1 ? 'bg-primary text-white' : 'bg-muted text-muted-fg'}`}>1</div>
+              <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold ${step >= 1 ? 'bg-primary text-white' : 'bg-muted text-muted-foreground-fg'}`}>1</div>
               <div className="h-px bg-muted flex-1"></div>
-              <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold ${step >= 2 ? 'bg-primary text-white' : 'bg-muted text-muted-fg'}`}>2</div>
+              <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold ${step >= 2 ? 'bg-primary text-white' : 'bg-muted text-muted-foreground-fg'}`}>2</div>
               <div className="h-px bg-muted flex-1"></div>
-              <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold ${step >= 3 ? 'bg-primary text-white' : 'bg-muted text-muted-fg'}`}>3</div>
+              <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold ${step >= 3 ? 'bg-primary text-white' : 'bg-muted text-muted-foreground-fg'}`}>3</div>
             </div>
 
             {step === 1 && (
@@ -146,7 +146,7 @@ function CheckoutPage() {
                       <div className="flex justify-between items-center">
                         <div>
                           <p className="font-bold text-lg">{t.nome}</p>
-                          <p className="text-sm text-muted-fg">{t.descricao}</p>
+                          <p className="text-sm text-muted-foreground-fg">{t.descricao}</p>
                         </div>
                         <p className="text-xl font-black text-primary">R$ {Number(t.valor).toLocaleString("pt-BR")}</p>
                       </div>
@@ -194,7 +194,7 @@ function CheckoutPage() {
                 <CardHeader><CardTitle>Pagamento</CardTitle></CardHeader>
                 <CardContent className="space-y-6">
                   <div className="p-4 bg-muted/30 rounded-xl border border-dashed border-muted-fg/20">
-                    <p className="text-sm text-muted-fg text-center italic">
+                    <p className="text-sm text-muted-foreground-fg text-center italic">
                       Ambiente de teste: Selecione "Simular Sucesso" para gerar seu ingresso.
                     </p>
                   </div>
@@ -229,7 +229,7 @@ function CheckoutPage() {
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="flex gap-4">
-                  <div className="w-16 h-16 rounded-lg overflow-hidden bg-white/10 shrink-0">
+                  <div className="w-16 h-16 rounded-lg overflow-hidden bg-card/10 shrink-0">
                     {event.imagem_capa && <img src={event.imagem_capa} className="w-full h-full object-cover" />}
                   </div>
                   <div>
@@ -260,11 +260,11 @@ function CheckoutPage() {
               </CardContent>
             </Card>
 
-            <div className="p-4 rounded-xl bg-white border border-line flex items-center gap-3">
+            <div className="p-4 rounded-xl bg-card border border-line flex items-center gap-3">
               <ShieldCheck className="text-green-500 w-8 h-8" />
               <div>
-                <p className="text-xs font-bold text-navy uppercase">Compra Garantida</p>
-                <p className="text-[10px] text-muted leading-tight">Seus dados estão protegidos por criptografia de ponta a ponta.</p>
+                <p className="text-xs font-bold text-foreground uppercase">Compra Garantida</p>
+                <p className="text-[10px] text-muted-foreground leading-tight">Seus dados estão protegidos por criptografia de ponta a ponta.</p>
               </div>
             </div>
           </div>

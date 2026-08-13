@@ -188,7 +188,7 @@ function NovoEventoPage() {
           </CardHeader>
           <CardContent className="space-y-4">
             {ticketTypes.map((ticket, index) => (
-              <div key={index} className="grid grid-cols-1 md:grid-cols-3 gap-4 p-4 border rounded-lg bg-gray-50/50">
+              <div key={index} className="grid grid-cols-1 md:grid-cols-3 gap-4 p-4 border rounded-lg bg-muted/50">
                 <div className="space-y-2">
                   <Label>Nome</Label>
                   <Input 

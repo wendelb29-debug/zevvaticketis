@@ -140,7 +140,7 @@ function TeamManagement() {
   if (loading) return (
     <div className="flex flex-col items-center justify-center py-20 gap-4">
       <Loader2 className="w-8 h-8 animate-spin text-coral" />
-      <p className="text-muted font-bold uppercase tracking-widest text-[10px]">Carregando equipe...</p>
+      <p className="text-muted-foreground font-bold uppercase tracking-widest text-[10px]">Carregando equipe...</p>
     </div>
   );
 
@@ -148,8 +148,8 @@ function TeamManagement() {
     <div className="space-y-8 font-inter max-w-6xl mx-auto">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div className="space-y-1">
-          <h1 className="text-3xl font-manrope font-extrabold text-navy">Equipe do Projeto</h1>
-          <p className="text-muted font-medium">Gerencie membros e permissões deste ambiente.</p>
+          <h1 className="text-3xl font-manrope font-extrabold text-foreground">Equipe do Projeto</h1>
+          <p className="text-muted-foreground font-medium">Gerencie membros e permissões deste ambiente.</p>
         </div>
 
         <Dialog open={isInviteOpen} onOpenChange={setIsInviteOpen}>
@@ -160,15 +160,15 @@ function TeamManagement() {
           </DialogTrigger>
           <DialogContent className="rounded-[32px] sm:max-w-md p-8">
             <DialogHeader>
-              <DialogTitle className="text-2xl font-manrope font-extrabold text-navy">Convidar para Equipe</DialogTitle>
-              <p className="text-muted font-medium pt-2">
+              <DialogTitle className="text-2xl font-manrope font-extrabold text-foreground">Convidar para Equipe</DialogTitle>
+              <p className="text-muted-foreground font-medium pt-2">
                 Envie um convite por e-mail e defina as permissões de acesso.
               </p>
             </DialogHeader>
             
             <div className="space-y-6 py-6">
               <div className="space-y-2">
-                <label className="text-[10px] font-extrabold uppercase tracking-widest text-muted">E-mail do convidado</label>
+                <label className="text-[10px] font-extrabold uppercase tracking-widest text-muted-foreground">E-mail do convidado</label>
         <Input 
           placeholder="exemplo@email.com" 
           value={inviteEmail}
@@ -178,7 +178,7 @@ function TeamManagement() {
               </div>
 
               <div className="space-y-4">
-                <label className="text-[10px] font-extrabold uppercase tracking-widest text-muted">Permissões</label>
+                <label className="text-[10px] font-extrabold uppercase tracking-widest text-muted-foreground">Permissões</label>
                 <div className="grid grid-cols-2 gap-4">
                   {PERMISSIONS.map((perm) => (
                     <div key={perm.id} className="flex items-center space-x-3 bg-surface p-3 rounded-xl border border-line/50">
@@ -190,7 +190,7 @@ function TeamManagement() {
                           else setSelectedPermissions(selectedPermissions.filter(p => p !== perm.id));
                         }}
                       />
-                      <label htmlFor={perm.id} className="text-xs font-bold text-navy cursor-pointer">{perm.label}</label>
+                      <label htmlFor={perm.id} className="text-xs font-bold text-foreground cursor-pointer">{perm.label}</label>
                     </div>
                   ))}
                 </div>
@@ -212,9 +212,9 @@ function TeamManagement() {
 
       <div className="grid gap-8">
         {/* Active Members */}
-        <div className="bg-white rounded-[32px] border border-line shadow-sm overflow-hidden">
+        <div className="bg-card rounded-[32px] border border-line shadow-sm overflow-hidden">
           <div className="px-8 py-6 border-b border-line bg-surface/30">
-            <h3 className="text-sm font-extrabold uppercase tracking-widest text-navy">Membros Ativos</h3>
+            <h3 className="text-sm font-extrabold uppercase tracking-widest text-foreground">Membros Ativos</h3>
           </div>
           <div className="divide-y divide-line">
             {members.map((member) => (
@@ -228,8 +228,8 @@ function TeamManagement() {
                     )}
                   </div>
                   <div className="space-y-1">
-                    <p className="font-bold text-navy">{member.profiles?.nome || "Usuário sem nome"}</p>
-                    <p className="text-xs text-muted font-medium">{member.profiles?.email}</p>
+                    <p className="font-bold text-foreground">{member.profiles?.nome || "Usuário sem nome"}</p>
+                    <p className="text-xs text-muted-foreground font-medium">{member.profiles?.email}</p>
                   </div>
                 </div>
 
@@ -238,14 +238,14 @@ function TeamManagement() {
                     {member.role === 'OWNER' ? 'Dono' : 'Equipe'}
                   </Badge>
                   {(member.permissions as string[] || []).map(perm => (
-                    <Badge key={perm} className="bg-navy/5 text-navy border-navy/10 font-extrabold text-[10px] uppercase px-3">
+                    <Badge key={perm} className="bg-navy/5 text-foreground border-navy/10 font-extrabold text-[10px] uppercase px-3">
                       {perm}
                     </Badge>
                   ))}
                 </div>
 
                 {member.role !== 'OWNER' && (
-                   <Button variant="ghost" size="icon" className="text-muted hover:text-destructive">
+                   <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-destructive">
                      <Trash2 className="w-5 h-5" />
                    </Button>
                 )}
@@ -256,7 +256,7 @@ function TeamManagement() {
 
         {/* Pending Invites */}
         {invites.length > 0 && (
-          <div className="bg-white rounded-[32px] border border-line shadow-sm overflow-hidden">
+          <div className="bg-card rounded-[32px] border border-line shadow-sm overflow-hidden">
             <div className="px-8 py-6 border-b border-line bg-surface/30">
               <h3 className="text-sm font-extrabold uppercase tracking-widest text-coral flex items-center gap-2">
                 <Clock className="w-4 h-4" /> Convites Pendentes
@@ -266,12 +266,12 @@ function TeamManagement() {
               {invites.map((invite) => (
                 <div key={invite.id} className="px-8 py-6 flex flex-col sm:flex-row sm:items-center justify-between gap-6">
                   <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 rounded-xl bg-surface flex items-center justify-center text-muted">
+                    <div className="w-10 h-10 rounded-xl bg-surface flex items-center justify-center text-muted-foreground">
                       <Mail className="w-5 h-5" />
                     </div>
                     <div className="space-y-1">
-                      <p className="font-bold text-navy">{invite.email}</p>
-                      <p className="text-[10px] text-muted font-medium uppercase tracking-widest">
+                      <p className="font-bold text-foreground">{invite.email}</p>
+                      <p className="text-[10px] text-muted-foreground font-medium uppercase tracking-widest">
                         Enviado em {new Date(invite.created_at).toLocaleDateString()}
                       </p>
                     </div>
@@ -279,7 +279,7 @@ function TeamManagement() {
 
                   <div className="flex flex-wrap gap-2">
                     {(invite.permissions as string[] || []).map(perm => (
-                      <Badge key={perm} variant="outline" className="border-line text-muted font-extrabold text-[10px] uppercase px-3">
+                      <Badge key={perm} variant="outline" className="border-line text-muted-foreground font-extrabold text-[10px] uppercase px-3">
                         {perm}
                       </Badge>
                     ))}

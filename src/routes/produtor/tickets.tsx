@@ -38,12 +38,12 @@ function ProducerTicketsPage() {
 
   return (
     <div className="container mx-auto py-8 space-y-6">
-      <h1 className="text-3xl font-manrope font-extrabold text-navy">Gestão de Ingressos</h1>
+      <h1 className="text-3xl font-manrope font-extrabold text-foreground">Gestão de Ingressos</h1>
       
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <Card><CardContent className="pt-6"><p className="text-muted text-sm font-bold">TOTAL EMITIDO</p><p className="text-3xl font-black">{total}</p></CardContent></Card>
-        <Card><CardContent className="pt-6"><p className="text-muted text-sm font-bold">UTILIZADOS (CHECK-IN)</p><p className="text-3xl font-black text-blue-600">{utilized}</p></CardContent></Card>
-        <Card><CardContent className="pt-6"><p className="text-muted text-sm font-bold">VÁLIDOS</p><p className="text-3xl font-black text-green-600">{valid}</p></CardContent></Card>
+        <Card><CardContent className="pt-6"><p className="text-muted-foreground text-sm font-bold">TOTAL EMITIDO</p><p className="text-3xl font-black">{total}</p></CardContent></Card>
+        <Card><CardContent className="pt-6"><p className="text-muted-foreground text-sm font-bold">UTILIZADOS (CHECK-IN)</p><p className="text-3xl font-black text-blue-600">{utilized}</p></CardContent></Card>
+        <Card><CardContent className="pt-6"><p className="text-muted-foreground text-sm font-bold">VÁLIDOS</p><p className="text-3xl font-black text-green-600">{valid}</p></CardContent></Card>
       </div>
 
       <Card>
@@ -61,7 +61,7 @@ function ProducerTicketsPage() {
               <TableRow key={ticket.id}>
                 <TableCell>
                   <p className="font-bold">{(ticket.profiles as any)?.nome_completo || "N/A"}</p>
-                  <p className="text-xs text-muted">{(ticket.profiles as any)?.email || "N/A"}</p>
+                  <p className="text-xs text-muted-foreground">{(ticket.profiles as any)?.email || "N/A"}</p>
                 </TableCell>
                 <TableCell className="font-medium">{(ticket.events as any)?.title}</TableCell>
                 <TableCell>

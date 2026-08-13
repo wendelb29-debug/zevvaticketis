@@ -49,7 +49,7 @@ export function Navbar({ selectedCity }: { selectedCity?: string | null }) {
   return (
     <header
       className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-card/95 backdrop-blur-md border-b border-border",
+        "fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-white/95 backdrop-blur-md border-b border-border",
         isScrolled ? "h-16 shadow-md" : "h-20",
       )}
       data-scrolled={isScrolled}
@@ -77,7 +77,7 @@ export function Navbar({ selectedCity }: { selectedCity?: string | null }) {
                   data: undefined,
                 } as any
               }
-              className="text-sm font-bold text-muted-foreground hover:text-primary transition-colors"
+              className="text-sm font-bold text-muted-foreground-foreground hover:text-primary transition-colors"
             >
               Explorar
             </Link>
@@ -85,7 +85,7 @@ export function Navbar({ selectedCity }: { selectedCity?: string | null }) {
               to="/eventos/categoria/$slug"
               params={{ slug: "caravanas" }}
               search={{ busca: undefined, categoria: undefined, cidade: undefined, data: undefined } as any}
-              className="text-sm font-bold text-muted-foreground hover:text-primary transition-colors"
+              className="text-sm font-bold text-muted-foreground-foreground hover:text-primary transition-colors"
             >
               Caravanas
             </Link>
@@ -93,7 +93,7 @@ export function Navbar({ selectedCity }: { selectedCity?: string | null }) {
               to="/cursos"
 
 
-              className="text-sm font-bold text-muted-foreground hover:text-primary transition-colors"
+              className="text-sm font-bold text-muted-foreground-foreground hover:text-primary transition-colors"
             >
               Cursos
             </Link>
@@ -127,7 +127,7 @@ export function Navbar({ selectedCity }: { selectedCity?: string | null }) {
                   }}
                   className="w-full bg-background h-10 pl-10 pr-4 rounded-sm text-xs border border-border focus:border-border-strong outline-none text-foreground font-medium transition-all"
                 />
-                <Search className="absolute left-3.5 top-3 w-3.5 h-3.5 text-muted-foreground" />
+                <Search className="absolute left-3.5 top-3 w-3.5 h-3.5 text-muted-foreground-foreground" />
               </div>
             </div>
           )}
@@ -150,7 +150,7 @@ export function Navbar({ selectedCity }: { selectedCity?: string | null }) {
               onClick={() => openOverlay("language")}
               className="w-10 h-10 flex items-center justify-center rounded-sm border border-border bg-transparent hover:bg-background transition-colors cursor-pointer group relative language-dropdown-container"
             >
-              <Globe className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors" />
+              <Globe className="w-4 h-4 text-muted-foreground-foreground group-hover:text-primary transition-colors" />
               {activeOverlay === "language" && (
                 <div className="absolute top-full right-0 mt-4 w-48 bg-surface-elevated border border-border rounded-lg shadow-2xl p-2 z-[60] animate-in fade-in zoom-in-95 duration-300">
                   {[
@@ -168,7 +168,7 @@ export function Navbar({ selectedCity }: { selectedCity?: string | null }) {
                         "w-full text-left px-3 py-2 rounded-md text-xs font-bold transition-all",
                         language === lang.id
                           ? "bg-primary/5 text-primary"
-                          : "text-muted-foreground hover:bg-background",
+                          : "text-muted-foreground-foreground hover:bg-background",
                       )}
                     >
                       {lang.label}

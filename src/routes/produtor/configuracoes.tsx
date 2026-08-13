@@ -71,7 +71,7 @@ function OrgSettings() {
   if (loading) return (
     <div className="flex flex-col items-center justify-center py-20 min-h-[400px]">
       <Loader2 className="w-8 h-8 animate-spin text-coral" />
-      <p className="mt-4 text-[10px] font-black uppercase tracking-widest text-muted">Carregando configurações...</p>
+      <p className="mt-4 text-[10px] font-black uppercase tracking-widest text-muted-foreground">Carregando configurações...</p>
     </div>
   );
 
@@ -79,8 +79,8 @@ function OrgSettings() {
     <div className="space-y-10 font-inter animate-in fade-in duration-500 pb-20">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4">
         <div>
-          <h1 className="text-3xl font-manrope font-black text-navy tracking-tighter uppercase">⚙️ Configurações do Projeto</h1>
-          <p className="text-sm text-muted font-medium">Gestão de identidade, pagamentos e regras operacionais.</p>
+          <h1 className="text-3xl font-manrope font-black text-foreground tracking-tighter uppercase">⚙️ Configurações do Projeto</h1>
+          <p className="text-sm text-muted-foreground font-medium">Gestão de identidade, pagamentos e regras operacionais.</p>
         </div>
         <Button 
           onClick={handleSave}
@@ -95,17 +95,17 @@ function OrgSettings() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2 space-y-8">
           {/* Identidade do Projeto */}
-          <section className="bg-white rounded-[32px] border border-line p-8 space-y-8 shadow-sm">
+          <section className="bg-card rounded-[32px] border border-line p-8 space-y-8 shadow-sm">
             <div className="flex items-center gap-3">
               <div className="p-3 bg-coral/10 rounded-2xl text-coral">
                 <Building2 className="w-6 h-6" />
               </div>
-              <h2 className="text-xl font-manrope font-black text-navy uppercase tracking-tight">Identidade Visual</h2>
+              <h2 className="text-xl font-manrope font-black text-foreground uppercase tracking-tight">Identidade Visual</h2>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-2">
-                <label className="text-[10px] font-black uppercase tracking-widest text-muted">Nome do Projeto</label>
+                <label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Nome do Projeto</label>
                 <Input 
                   value={formData.nome}
                   onChange={(e) => setFormData({...formData, nome: e.target.value})}
@@ -114,7 +114,7 @@ function OrgSettings() {
                 />
               </div>
               <div className="space-y-2">
-                <label className="text-[10px] font-black uppercase tracking-widest text-muted">URL do Logo</label>
+                <label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">URL do Logo</label>
                 <div className="flex gap-2">
                   <Input 
                     value={formData.logo}
@@ -126,7 +126,7 @@ function OrgSettings() {
                     {formData.logo ? (
                       <img src={formData.logo} alt="Preview" className="w-full h-full object-contain" />
                     ) : (
-                      <ImageIcon className="w-5 h-5 text-muted" />
+                      <ImageIcon className="w-5 h-5 text-muted-foreground" />
                     )}
                   </div>
                 </div>
@@ -136,23 +136,23 @@ function OrgSettings() {
           </section>
 
           {/* Integrações */}
-          <section className="bg-white rounded-[32px] border border-line p-8 space-y-8 shadow-sm">
+          <section className="bg-card rounded-[32px] border border-line p-8 space-y-8 shadow-sm">
             <div className="flex items-center gap-3">
-              <div className="p-3 bg-navy/5 rounded-2xl text-navy">
+              <div className="p-3 bg-navy/5 rounded-2xl text-foreground">
                 <CreditCard className="w-6 h-6" />
               </div>
-              <h2 className="text-xl font-manrope font-black text-navy uppercase tracking-tight">Pagamentos e Taxas</h2>
+              <h2 className="text-xl font-manrope font-black text-foreground uppercase tracking-tight">Pagamentos e Taxas</h2>
             </div>
 
             <div className="bg-surface rounded-2xl border border-line p-6 space-y-4">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-white border border-line flex items-center justify-center">
-                    <Globe className="w-5 h-5 text-navy" />
+                  <div className="w-10 h-10 rounded-xl bg-card border border-line flex items-center justify-center">
+                    <Globe className="w-5 h-5 text-foreground" />
                   </div>
                   <div>
-                    <p className="text-sm font-black text-navy uppercase tracking-tight">Stripe Connect</p>
-                    <p className="text-[10px] text-muted font-medium">Receba pagamentos diretamente em sua conta.</p>
+                    <p className="text-sm font-black text-foreground uppercase tracking-tight">Stripe Connect</p>
+                    <p className="text-[10px] text-muted-foreground font-medium">Receba pagamentos diretamente em sua conta.</p>
                   </div>
                 </div>
                 <Badge variant="outline" className="bg-amber-50 text-amber-600 border-amber-200 font-black text-[9px] uppercase tracking-widest">
@@ -189,26 +189,26 @@ function OrgSettings() {
           </section>
 
           {/* Automações Padrão */}
-          <section className="bg-white rounded-[32px] border border-line p-8 space-y-6 shadow-sm">
+          <section className="bg-card rounded-[32px] border border-line p-8 space-y-6 shadow-sm">
             <div className="flex items-center gap-3">
               <div className="p-2.5 bg-good/10 rounded-xl text-good">
                 <Clock className="w-5 h-5" />
               </div>
-              <h3 className="font-manrope font-black text-navy uppercase text-sm tracking-tight">Operação</h3>
+              <h3 className="font-manrope font-black text-foreground uppercase text-sm tracking-tight">Operação</h3>
             </div>
             
             <div className="space-y-4">
               <div className="flex items-center justify-between">
                 <div className="space-y-0.5">
-                  <p className="text-xs font-black text-navy uppercase tracking-tight">Falta Automática</p>
-                  <p className="text-[10px] text-muted font-medium">No-show automático.</p>
+                  <p className="text-xs font-black text-foreground uppercase tracking-tight">Falta Automática</p>
+                  <p className="text-[10px] text-muted-foreground font-medium">No-show automático.</p>
                 </div>
                 <Switch checked={true} />
               </div>
               <div className="flex items-center justify-between">
                 <div className="space-y-0.5">
-                  <p className="text-xs font-black text-navy uppercase tracking-tight">Check-in Pós-Evento</p>
-                  <p className="text-[10px] text-muted font-medium">Permitir após término.</p>
+                  <p className="text-xs font-black text-foreground uppercase tracking-tight">Check-in Pós-Evento</p>
+                  <p className="text-[10px] text-muted-foreground font-medium">Permitir após término.</p>
                 </div>
                 <Switch />
               </div>

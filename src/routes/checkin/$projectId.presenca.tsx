@@ -56,9 +56,9 @@ function PresencaPage() {
     <div className="space-y-6 animate-in fade-in duration-500">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-3xl font-manrope font-black text-navy uppercase tracking-tighter">Lista de Presença</h2>
+          <h2 className="text-3xl font-manrope font-black text-foreground uppercase tracking-tighter">Lista de Presença</h2>
           <p className="text-xs font-black text-coral uppercase tracking-widest mt-1 opacity-80">Projeto: {projectId}</p>
-          <p className="text-sm font-bold text-slate-500 uppercase tracking-widest mt-1">
+          <p className="text-sm font-bold text-muted-foreground uppercase tracking-widest mt-1">
             <span className="text-emerald-600">{checkedInCount}</span> Confirmados de {tickets.length} participantes
           </p>
         </div>
@@ -69,21 +69,21 @@ function PresencaPage() {
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
           <Input 
             placeholder="Buscar por nome ou evento..." 
-            className="pl-12 h-14 rounded-2xl border-slate-200 font-bold focus:ring-coral/20 focus:border-coral transition-all bg-white"
+            className="pl-12 h-14 rounded-2xl border-border font-bold focus:ring-coral/20 focus:border-coral transition-all bg-card"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
-        <Button variant="outline" className="h-14 w-14 rounded-2xl border-slate-200 bg-white">
-          <Filter className="w-5 h-5 text-navy" />
+        <Button variant="outline" className="h-14 w-14 rounded-2xl border-border bg-card">
+          <Filter className="w-5 h-5 text-foreground" />
         </Button>
       </div>
 
       <div className="grid gap-3">
         {filteredTickets.length === 0 ? (
-          <Card className="rounded-[32px] border-dashed border-2 p-12 text-center bg-white/50 flex flex-col items-center justify-center">
+          <Card className="rounded-[32px] border-dashed border-2 p-12 text-center bg-card/50 flex flex-col items-center justify-center">
             <Users className="w-12 h-12 text-slate-300 mx-auto mb-4" />
-            <p className="text-slate-500 font-bold uppercase tracking-widest mb-6">Nenhum participante encontrado</p>
+            <p className="text-muted-foreground font-bold uppercase tracking-widest mb-6">Nenhum participante encontrado</p>
             <Link 
               to="/checkin/$projectId"
               params={{ projectId }}
@@ -93,18 +93,18 @@ function PresencaPage() {
             </Link>
           </Card>
         ) : filteredTickets.map((ticket) => (
-          <Card key={ticket.id} className="rounded-2xl border-slate-200 overflow-hidden hover:shadow-md transition-all group bg-white">
+          <Card key={ticket.id} className="rounded-2xl border-border overflow-hidden hover:shadow-md transition-all group bg-card">
             <CardContent className="p-4 flex items-center gap-4">
-              <Avatar className="h-12 w-12 rounded-xl border border-slate-100 group-hover:border-coral/30 transition-colors">
+              <Avatar className="h-12 w-12 rounded-xl border border-border group-hover:border-coral/30 transition-colors">
                 <AvatarImage src={ticket.profiles?.avatar_url} />
-                <AvatarFallback className="bg-navy/5 text-navy font-black text-xs uppercase">
+                <AvatarFallback className="bg-navy/5 text-foreground font-black text-xs uppercase">
                   {ticket.profiles?.full_name?.substring(0, 2) || '??'}
                 </AvatarFallback>
               </Avatar>
               
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2">
-                  <h4 className="font-black text-navy truncate uppercase text-sm">{ticket.profiles?.full_name}</h4>
+                  <h4 className="font-black text-foreground truncate uppercase text-sm">{ticket.profiles?.full_name}</h4>
                   {ticket.status === 'utilizado' && (
                     <div className="flex items-center gap-1 bg-emerald-100 px-2 py-0.5 rounded-full">
                       <CheckCircle2 className="w-3 h-3 text-emerald-600" />
@@ -119,7 +119,7 @@ function PresencaPage() {
                 {ticket.status === 'utilizado' ? (
                   <div className="flex flex-col items-end">
                     <p className="text-[10px] font-black text-slate-400 uppercase tracking-tighter">Entrada</p>
-                    <p className="text-xs font-black text-navy uppercase">
+                    <p className="text-xs font-black text-foreground uppercase">
                       {new Date(ticket.checked_in_at).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}
                     </p>
                   </div>
@@ -131,7 +131,7 @@ function PresencaPage() {
                 )}
               </div>
 
-              <Button variant="ghost" size="icon" className="text-slate-300 hover:text-navy rounded-xl">
+              <Button variant="ghost" size="icon" className="text-slate-300 hover:text-foreground rounded-xl">
                 <MoreVertical className="w-5 h-5" />
               </Button>
             </CardContent>

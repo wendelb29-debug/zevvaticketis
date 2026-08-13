@@ -131,21 +131,21 @@ function ProdutorLayout() {
     navigate({ to: "/" });
   };
 
-  if (loading) return <div className="min-h-screen bg-white flex items-center justify-center font-inter">
+  if (loading) return <div className="min-h-screen bg-card flex items-center justify-center font-inter">
     <div className="flex flex-col items-center gap-4">
       <div className="w-8 h-8 border-4 border-coral border-t-transparent rounded-full animate-spin"></div>
-      <p className="text-navy font-bold">Carregando painel...</p>
+      <p className="text-foreground font-bold">Carregando painel...</p>
     </div>
   </div>;
 
   if (status === "pendente") {
     return (
       <div className="min-h-screen bg-surface flex items-center justify-center p-6 text-center font-inter">
-        <div className="max-w-md space-y-8 bg-white p-12 rounded-[24px] shadow-xl border border-line">
+        <div className="max-w-md space-y-8 bg-card p-12 rounded-[24px] shadow-xl border border-line">
           <div className="text-6xl animate-bounce">⏳</div>
           <div className="space-y-4">
-            <h1 className="text-3xl font-manrope font-extrabold text-navy">Cadastro em Análise</h1>
-            <p className="text-muted font-medium leading-relaxed">
+            <h1 className="text-3xl font-manrope font-extrabold text-foreground">Cadastro em Análise</h1>
+            <p className="text-muted-foreground font-medium leading-relaxed">
               Sua organização foi cadastrada com sucesso e está sendo revisada por nossa equipe. 
               Você receberá um e-mail assim que for aprovado para começar a vender.
             </p>
@@ -165,11 +165,11 @@ function ProdutorLayout() {
   if (status === "bloqueado") {
     return (
       <div className="min-h-screen bg-surface flex items-center justify-center p-6 text-center font-inter">
-        <div className="max-w-md space-y-8 bg-white p-12 rounded-[24px] shadow-xl border border-destructive/20">
+        <div className="max-w-md space-y-8 bg-card p-12 rounded-[24px] shadow-xl border border-destructive/20">
           <div className="text-6xl">🚫</div>
           <div className="space-y-4">
             <h1 className="text-3xl font-manrope font-extrabold text-destructive">Acesso Bloqueado</h1>
-            <p className="text-muted font-medium leading-relaxed">
+            <p className="text-muted-foreground font-medium leading-relaxed">
               Infelizmente sua conta de produtor foi bloqueada. <br />
               Por favor, entre em contato com nosso suporte para mais informações.
             </p>
@@ -177,7 +177,7 @@ function ProdutorLayout() {
           <Button 
             variant="ghost"
             onClick={handleLogout}
-            className="text-navy font-bold hover:text-coral"
+            className="text-foreground font-bold hover:text-coral"
           >
             Sair da conta
           </Button>
@@ -206,20 +206,20 @@ function ProdutorLayout() {
   );
 
   const SidebarContent = () => (
-    <div className="flex flex-col h-full bg-white border-r border-line py-8 font-inter">
+    <div className="flex flex-col h-full bg-card border-r border-line py-8 font-inter">
       <div className={cn("px-6 mb-12 flex items-center gap-3", !isAdmin && "justify-center")}>
         {isAdmin && (
-          <Link to="/app" className="p-2.5 hover:bg-slate-50 rounded-2xl transition-all text-muted hover:text-coral outline-none border border-line bg-white shadow-sm flex-shrink-0" title="Voltar para o Workspace">
+          <Link to="/app" className="p-2.5 hover:bg-muted rounded-2xl transition-all text-muted-foreground hover:text-coral outline-none border border-line bg-card shadow-sm flex-shrink-0" title="Voltar para o Workspace">
             <Home className="w-5 h-5" />
           </Link>
         )}
         <Link to="/" className={cn("text-2xl font-manrope font-extrabold text-coral tracking-tighter truncate", !isAdmin && "text-center")}>
-          ZEVVA <span className="text-navy">TICKETS</span>
+          ZEVVA <span className="text-foreground">TICKETS</span>
         </Link>
       </div>
       <div className="flex-1 overflow-y-auto">
         {activeTenant && (
-          <div className="mt-6 flex items-center gap-3 p-3 bg-slate-50 rounded-2xl border border-line">
+          <div className="mt-6 flex items-center gap-3 p-3 bg-muted rounded-2xl border border-line">
             <Avatar className="w-10 h-10 rounded-xl border border-line">
               <AvatarImage src={activeTenant.logo || undefined} />
               <AvatarFallback className="bg-navy text-white text-xs font-black">
@@ -227,29 +227,29 @@ function ProdutorLayout() {
               </AvatarFallback>
             </Avatar>
             <div className="flex-1 min-w-0">
-              <p className="text-xs font-black text-navy truncate">{activeTenant.nome}</p>
-              <p className="text-[10px] text-muted font-bold truncate capitalize">{memberRole?.toLowerCase()}</p>
+              <p className="text-xs font-black text-foreground truncate">{activeTenant.nome}</p>
+              <p className="text-[10px] text-muted-foreground font-bold truncate capitalize">{memberRole?.toLowerCase()}</p>
             </div>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button 
                   variant="ghost" 
                   size="icon" 
-                  className="h-8 w-8 text-muted hover:text-coral"
+                  className="h-8 w-8 text-muted-foreground hover:text-coral"
                   title="Trocar Ambiente"
                 >
                   <ChevronRight className="w-4 h-4 rotate-90" />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-56 rounded-xl p-2 border-line shadow-xl font-inter bg-white">
-                <DropdownMenuLabel className="text-[10px] font-black uppercase tracking-widest text-muted px-2 py-1.5">Meus Projetos</DropdownMenuLabel>
+              <DropdownMenuContent align="end" className="w-56 rounded-xl p-2 border-line shadow-xl font-inter bg-card">
+                <DropdownMenuLabel className="text-[10px] font-black uppercase tracking-widest text-muted-foreground px-2 py-1.5">Meus Projetos</DropdownMenuLabel>
                 {tenants.map(t => (
                   <DropdownMenuItem 
                     key={t.id} 
                     onClick={() => switchTenant(t.id)}
                     className={cn(
                       "flex items-center gap-2 px-2 py-2 rounded-lg text-xs font-bold cursor-pointer",
-                      activeTenant.id === t.id ? "bg-coral/10 text-coral" : "text-navy hover:bg-surface"
+                      activeTenant.id === t.id ? "bg-coral/10 text-coral" : "text-foreground hover:bg-surface"
                     )}
                   >
                     <Avatar className="w-5 h-5 rounded-md border border-line">
@@ -265,7 +265,7 @@ function ProdutorLayout() {
                     <DropdownMenuSeparator className="bg-line" />
                     <DropdownMenuItem 
                       onClick={() => navigate({ to: "/app" })}
-                      className="flex items-center gap-2 px-2 py-2 rounded-lg text-xs font-bold text-navy hover:bg-surface cursor-pointer"
+                      className="flex items-center gap-2 px-2 py-2 rounded-lg text-xs font-bold text-foreground hover:bg-surface cursor-pointer"
                     >
                       <Plus className="w-4 h-4 text-coral" /> Gerenciar Projetos
                     </DropdownMenuItem>
@@ -294,9 +294,9 @@ function ProdutorLayout() {
                 )}
                 {...(!isExternal ? {
                   activeProps: { className: "bg-coral text-white shadow-lg shadow-coral/30" },
-                  inactiveProps: { className: "text-navy hover:bg-surface-2 hover:text-navy" }
+                  inactiveProps: { className: "text-foreground hover:bg-surface-2 hover:text-foreground" }
                 } : {
-                  className: "flex items-center gap-3 px-4 py-3.5 rounded-xl text-sm font-extrabold text-navy hover:bg-surface-2 transition-all duration-200"
+                  className: "flex items-center gap-3 px-4 py-3.5 rounded-xl text-sm font-extrabold text-foreground hover:bg-surface-2 transition-all duration-200"
                 })}
               >
                 <item.icon className="w-5 h-5" />
@@ -327,11 +327,11 @@ function ProdutorLayout() {
       </aside>
 
       <div className="flex-1 flex flex-col min-h-screen">
-        <header className="h-20 bg-white/80 backdrop-blur-md border-b border-line sticky top-0 z-40 px-6 sm:px-10 flex items-center justify-between font-inter">
+        <header className="h-20 bg-card/80 backdrop-blur-md border-b border-line sticky top-0 z-40 px-6 sm:px-10 flex items-center justify-between font-inter">
           <div className="flex items-center gap-4">
             <Sheet>
               <SheetTrigger asChild>
-                <Button variant="ghost" size="icon" className="lg:hidden text-navy">
+                <Button variant="ghost" size="icon" className="lg:hidden text-foreground">
                   <Menu className="w-6 h-6" />
                 </Button>
               </SheetTrigger>
@@ -348,7 +348,7 @@ function ProdutorLayout() {
           </div>
 
           <div className="flex items-center gap-3 sm:gap-6">
-            <button className="relative p-2 text-muted hover:text-navy transition-colors">
+            <button className="relative p-2 text-muted-foreground hover:text-foreground transition-colors">
               <Bell className="w-5 h-5" />
               <span className="absolute top-2 right-2 w-2 h-2 bg-coral rounded-full border-2 border-white"></span>
             </button>

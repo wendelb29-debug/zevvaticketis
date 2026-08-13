@@ -39,7 +39,7 @@ const CATEGORY_ICONS = {
   vendas: { icon: ShoppingBag, color: "text-orange-500", bg: "bg-orange-50" },
   atendimento: { icon: MessageSquare, color: "text-green-500", bg: "bg-green-50" },
   marketing: { icon: Megaphone, color: "text-blue-500", bg: "bg-blue-50" },
-  sistema: { icon: Settings, color: "text-navy", bg: "bg-surface" },
+  sistema: { icon: Settings, color: "text-foreground", bg: "bg-surface" },
 };
 
 export function NotificationBell() {
@@ -109,7 +109,7 @@ export function NotificationBell() {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" size="icon" className="relative hover:bg-surface rounded-full transition-all">
-          <Bell className="w-5 h-5 text-navy" />
+          <Bell className="w-5 h-5 text-foreground" />
           {unreadCount > 0 && (
             <Badge 
               className="absolute -top-1 -right-1 h-5 min-w-[20px] px-1 flex items-center justify-center bg-primary text-white border-2 border-white text-[10px] font-black animate-in zoom-in"
@@ -119,9 +119,9 @@ export function NotificationBell() {
           )}
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-96 p-0 rounded-3xl border-line shadow-2xl bg-white overflow-hidden animate-in slide-in-from-top-2 duration-300">
+      <DropdownMenuContent align="end" className="w-96 p-0 rounded-3xl border-line shadow-2xl bg-card overflow-hidden animate-in slide-in-from-top-2 duration-300">
         <div className="p-6 bg-surface/30 border-b border-line flex items-center justify-between">
-          <DropdownMenuLabel className="p-0 font-manrope font-black text-navy uppercase tracking-tighter flex items-center gap-2">
+          <DropdownMenuLabel className="p-0 font-manrope font-black text-foreground uppercase tracking-tighter flex items-center gap-2">
             <Bell className="w-4 h-4 text-primary" />
             Notificações
           </DropdownMenuLabel>
@@ -130,7 +130,7 @@ export function NotificationBell() {
               variant="ghost" 
               size="sm" 
               onClick={clearAll}
-              className="text-[10px] font-black uppercase tracking-widest text-muted-fg hover:text-primary transition-colors"
+              className="text-[10px] font-black uppercase tracking-widest text-muted-foreground-fg hover:text-primary transition-colors"
             >
               Limpar tudo
             </Button>
@@ -163,13 +163,13 @@ export function NotificationBell() {
                       
                       <div className="flex-1 min-w-0 space-y-1">
                         <div className="flex items-start justify-between gap-2">
-                          <p className="text-sm font-extrabold text-navy truncate tracking-tight">{n.title}</p>
-                          <span className="text-[10px] font-bold text-muted-fg shrink-0 flex items-center gap-1">
+                          <p className="text-sm font-extrabold text-foreground truncate tracking-tight">{n.title}</p>
+                          <span className="text-[10px] font-bold text-muted-foreground-fg shrink-0 flex items-center gap-1">
                             <Clock className="w-3 h-3" />
                             {new Date(n.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                           </span>
                         </div>
-                        <p className="text-xs text-muted-fg font-medium leading-relaxed line-clamp-2">
+                        <p className="text-xs text-muted-foreground-fg font-medium leading-relaxed line-clamp-2">
                           {n.message}
                         </p>
                         
@@ -187,7 +187,7 @@ export function NotificationBell() {
                           {n.link && (
                             <a 
                               href={n.link} 
-                              className="text-[10px] font-black uppercase tracking-widest text-navy hover:text-primary flex items-center gap-1 px-2"
+                              className="text-[10px] font-black uppercase tracking-widest text-foreground hover:text-primary flex items-center gap-1 px-2"
                             >
                               <ExternalLink className="w-3 h-3" /> Ver detalhes
                             </a>
@@ -202,11 +202,11 @@ export function NotificationBell() {
           ) : (
             <div className="flex flex-col items-center justify-center h-full py-12 px-6 text-center space-y-4">
               <div className="w-16 h-16 rounded-full bg-surface flex items-center justify-center">
-                <Bell className="w-8 h-8 text-muted-fg/40" />
+                <Bell className="w-8 h-8 text-muted-foreground-fg/40" />
               </div>
               <div>
-                <p className="font-extrabold text-navy uppercase tracking-tight">Tudo em dia!</p>
-                <p className="text-xs text-muted-fg font-medium mt-1">Você não tem novas notificações no momento.</p>
+                <p className="font-extrabold text-foreground uppercase tracking-tight">Tudo em dia!</p>
+                <p className="text-xs text-muted-foreground-fg font-medium mt-1">Você não tem novas notificações no momento.</p>
               </div>
             </div>
           )}
@@ -214,7 +214,7 @@ export function NotificationBell() {
         
         <DropdownMenuSeparator className="bg-line m-0" />
         <div className="p-4 bg-surface/10 text-center">
-          <Button variant="ghost" className="w-full text-[10px] font-black uppercase tracking-widest text-muted-fg hover:text-primary">
+          <Button variant="ghost" className="w-full text-[10px] font-black uppercase tracking-widest text-muted-foreground-fg hover:text-primary">
             Ver todas as notificações
           </Button>
         </div>

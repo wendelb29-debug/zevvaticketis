@@ -22,13 +22,13 @@ export function SalesCardPicker({ isOpen, onClose, onSelect }: SalesCardPickerPr
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="bg-card border-border sm:max-w-md">
+      <DialogContent className="bg-white border-border sm:max-w-md">
         <DialogHeader>
-          <DialogTitle className="text-navy dark:text-white uppercase font-black tracking-tighter">Gerar Proposta de Venda</DialogTitle>
+          <DialogTitle className="text-foreground dark:text-white uppercase font-black tracking-tighter">Gerar Proposta de Venda</DialogTitle>
         </DialogHeader>
         <div className="space-y-4 py-4">
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-fg" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground-fg" />
             <Input 
               placeholder="Buscar ingresso ou pacote..." 
               value={search}
@@ -41,15 +41,15 @@ export function SalesCardPicker({ isOpen, onClose, onSelect }: SalesCardPickerPr
               <button
                 key={t.id}
                 onClick={() => onSelect(t)}
-                className="w-full flex items-center justify-between p-4 rounded-2xl bg-card hover:bg-primary/5 border border-border hover:border-primary/30 transition-all group"
+                className="w-full flex items-center justify-between p-4 rounded-2xl bg-white hover:bg-primary/5 border border-border hover:border-primary/30 transition-all group"
               >
                 <div className="flex items-center gap-3 text-left">
-                  <div className="w-10 h-10 rounded-xl bg-card flex items-center justify-center text-primary border border-border group-hover:bg-primary group-hover:text-white transition-colors">
+                  <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center text-primary border border-border group-hover:bg-primary group-hover:text-white transition-colors">
                     <Ticket className="w-5 h-5" />
                   </div>
                   <div>
-                    <p className="text-sm font-black text-navy dark:text-foreground">{t.title}</p>
-                    <p className="text-[10px] text-muted-fg uppercase font-bold tracking-widest">{t.type}</p>
+                    <p className="text-sm font-black text-foreground dark:text-foreground">{t.title}</p>
+                    <p className="text-[10px] text-muted-foreground-fg uppercase font-bold tracking-widest">{t.type}</p>
                   </div>
                 </div>
                 <div className="text-right">

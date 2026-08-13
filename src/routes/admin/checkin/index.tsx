@@ -10,7 +10,7 @@ function CheckinPage() {
     <div className="space-y-8 pb-20">
       <div className="flex flex-col gap-2">
         <h1 className="text-4xl font-manrope font-black text-foreground tracking-tight">Gestão de Check-in</h1>
-        <p className="text-muted-foreground font-medium">Análise de presença, performance de campanhas e inteligência de acesso.</p>
+        <p className="text-muted-foreground-foreground font-medium">Análise de presença, performance de campanhas e inteligência de acesso.</p>
       </div>
       <CheckinStats />
     </div>

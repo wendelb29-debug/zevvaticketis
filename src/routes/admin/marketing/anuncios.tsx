@@ -58,24 +58,24 @@ function AnunciosPage() {
   return (
     <div className="space-y-6">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <h1 className="text-2xl font-manrope font-extrabold text-navy">Anúncios (Todos os Eventos)</h1>
+        <h1 className="text-2xl font-manrope font-extrabold text-foreground">Anúncios (Todos os Eventos)</h1>
         
         <div className="relative w-full md:w-80">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-navy/40" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-foreground/40" />
           <input
             type="text"
             placeholder="Buscar por nome ou produtor..."
-            className="w-full pl-9 pr-4 py-2 bg-white rounded-xl border border-line text-sm focus:ring-2 focus:ring-coral/20 font-inter"
+            className="w-full pl-9 pr-4 py-2 bg-card rounded-xl border border-line text-sm focus:ring-2 focus:ring-coral/20 font-inter"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
       </div>
 
-      <div className="bg-white rounded-2xl border border-line overflow-hidden shadow-sm">
+      <div className="bg-card rounded-2xl border border-line overflow-hidden shadow-sm">
         <div className="overflow-x-auto">
           <table className="w-full text-left">
-            <thead className="bg-surface text-navy/40 text-[10px] font-black uppercase tracking-wider">
+            <thead className="bg-surface text-foreground/40 text-[10px] font-black uppercase tracking-wider">
               <tr>
                 <th className="px-6 py-4">Evento</th>
                 <th className="px-6 py-4">Produtor / Org</th>
@@ -87,10 +87,10 @@ function AnunciosPage() {
             <tbody className="divide-y divide-line font-inter">
               {filteredEvents?.map((event: any) => (
                 <tr key={event.id} className="hover:bg-surface/50 transition-colors">
-                  <td className="px-6 py-4 font-extrabold text-navy text-sm">
+                  <td className="px-6 py-4 font-extrabold text-foreground text-sm">
                     {event.title}
                   </td>
-                  <td className="px-6 py-4 text-sm text-navy/70 font-medium">
+                  <td className="px-6 py-4 text-sm text-foreground/70 font-medium">
                     {event.tenants?.nome || "Sem organização"}
                   </td>
                   <td className="px-6 py-4">
@@ -114,7 +114,7 @@ function AnunciosPage() {
                         href={`/eventos/${event.id}`} 
                         target="_blank" 
                         rel="noopener noreferrer"
-                        className="p-2 hover:bg-surface rounded-lg transition-colors text-navy/40 hover:text-navy"
+                        className="p-2 hover:bg-surface rounded-lg transition-colors text-foreground/40 hover:text-foreground"
                         title="Ver no site"
                       >
                         <ExternalLink className="w-4 h-4" />

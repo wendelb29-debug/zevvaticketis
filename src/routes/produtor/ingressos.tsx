@@ -44,34 +44,34 @@ function IngressosPage() {
     <div className="container mx-auto py-8 space-y-8 font-inter">
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-manrope font-extrabold text-navy">Ingressos do Projeto</h1>
-          <p className="text-muted font-medium">Controle lotes, preços e disponibilidade do ambiente selecionado.</p>
+          <h1 className="text-3xl font-manrope font-extrabold text-foreground">Ingressos do Projeto</h1>
+          <p className="text-muted-foreground font-medium">Controle lotes, preços e disponibilidade do ambiente selecionado.</p>
         </div>
       </div>
 
       <div className="grid gap-6">
         {ticketTypes?.map((ticket: any) => (
-          <Card key={ticket.id} className="bg-white border-line overflow-hidden hover:border-primary transition-all">
+          <Card key={ticket.id} className="bg-card border-line overflow-hidden hover:border-primary transition-all">
             <CardContent className="p-6 flex items-center gap-6">
               <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center text-primary">
                 <Ticket className="w-8 h-8" />
               </div>
               <div className="flex-grow">
-                <p className="text-[10px] font-black uppercase text-muted tracking-widest mb-1">
+                <p className="text-[10px] font-black uppercase text-muted-foreground tracking-widest mb-1">
                   {ticket.events?.title}
                 </p>
-                <h3 className="text-lg font-bold text-navy">{ticket.nome}</h3>
+                <h3 className="text-lg font-bold text-foreground">{ticket.nome}</h3>
                 <div className="flex gap-4 mt-2">
                   <span className="text-sm font-bold text-primary">
                     R$ {Number(ticket.valor).toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
                   </span>
-                  <span className="text-sm text-muted font-medium">
+                  <span className="text-sm text-muted-foreground font-medium">
                     {ticket.quantidade_vendida || 0} / {ticket.quantidade} vendidos
                   </span>
                 </div>
               </div>
               <div className="flex gap-2">
-                <Button variant="ghost" size="icon" className="text-muted hover:text-navy"><Edit2 className="w-4 h-4" /></Button>
+                <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-foreground"><Edit2 className="w-4 h-4" /></Button>
               </div>
             </CardContent>
           </Card>

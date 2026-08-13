@@ -56,7 +56,7 @@ export function ChatInput({
         <div className="flex gap-1.5 mb-1 shrink-0">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <button className="p-2 hover:bg-primary/5 text-muted-foreground rounded-lg transition-all border border-transparent hover:border-border">
+              <button className="p-2 hover:bg-primary/5 text-muted-foreground-foreground rounded-lg transition-all border border-transparent hover:border-border">
                 <Plus className="w-5 h-5" />
               </button>
             </DropdownMenuTrigger>
@@ -80,18 +80,18 @@ export function ChatInput({
             </DropdownMenuContent>
           </DropdownMenu>
 
-          <button className="p-2 hover:bg-primary/5 text-muted-foreground rounded-lg transition-all border border-transparent hover:border-border">
+          <button className="p-2 hover:bg-primary/5 text-muted-foreground-foreground rounded-lg transition-all border border-transparent hover:border-border">
             <Smile className="w-5 h-5" />
           </button>
 
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <button className="p-2 hover:bg-primary/5 text-muted-foreground rounded-lg transition-all border border-transparent hover:border-border">
+              <button className="p-2 hover:bg-primary/5 text-muted-foreground-foreground rounded-lg transition-all border border-transparent hover:border-border">
                 <Sparkles className="w-5 h-5" />
               </button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="start" side="top" className="w-[280px] bg-popover border border-border p-1 shadow-2xl overflow-y-auto max-h-[450px]">
-              <DropdownMenuLabel className="text-[10px] font-black text-muted-foreground uppercase tracking-widest px-3 py-2 flex items-center gap-2">
+              <DropdownMenuLabel className="text-[10px] font-black text-muted-foreground-foreground uppercase tracking-widest px-3 py-2 flex items-center gap-2">
                 <Sparkles className="w-3 h-3 text-primary" /> Assistente de IA
               </DropdownMenuLabel>
               <DropdownMenuItem className="flex items-center gap-3 px-3 py-2.5 cursor-pointer hover:bg-accent rounded-md">
@@ -106,7 +106,7 @@ export function ChatInput({
                     onCheckedChange={setAiAssistantEnabled}
                     className="scale-75 data-[state=checked]:bg-primary" 
                   />
-                  <span className="text-[10px] font-bold text-muted-foreground">Assistente automático</span>
+                  <span className="text-[10px] font-bold text-muted-foreground-foreground">Assistente automático</span>
                 </div>
               </div>
             </DropdownMenuContent>
@@ -124,7 +124,7 @@ export function ChatInput({
                 onSend();
               }
             }}
-            className="w-full bg-card border border-border p-3.5 pr-14 rounded-xl text-[13px] text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-1 focus:ring-primary/50 transition-all resize-none"
+            className="w-full bg-card border border-border p-3.5 pr-14 rounded-xl text-[13px] text-foreground placeholder:text-muted-foreground-foreground/50 focus:outline-none focus:ring-1 focus:ring-primary/50 transition-all resize-none"
             placeholder="Digite uma mensagem — use ‘/’ para atalhos"
           />
           <button

@@ -53,8 +53,8 @@ function FinanceiroPage() {
     <div className="container mx-auto py-8 space-y-8 font-inter">
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-manrope font-extrabold text-navy">Financeiro do Projeto</h1>
-          <p className="text-muted font-medium">Acompanhe receitas, taxas e repasses deste ambiente.</p>
+          <h1 className="text-3xl font-manrope font-extrabold text-foreground">Financeiro do Projeto</h1>
+          <p className="text-muted-foreground font-medium">Acompanhe receitas, taxas e repasses deste ambiente.</p>
         </div>
         <div className="flex gap-3">
           <Button variant="outline" className="rounded-xl border-line">
@@ -67,32 +67,32 @@ function FinanceiroPage() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <Card className="bg-white border-line overflow-hidden">
+        <Card className="bg-card border-line overflow-hidden">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-xs font-black uppercase tracking-widest text-muted">Vendas Brutas</CardTitle>
+            <CardTitle className="text-xs font-black uppercase tracking-widest text-muted-foreground">Vendas Brutas</CardTitle>
             <DollarSign className="h-4 w-4 text-primary" />
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-black text-navy">R$ {stats?.bruto.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}</div>
+            <div className="text-3xl font-black text-foreground">R$ {stats?.bruto.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}</div>
             <p className="text-[10px] text-green-600 font-bold flex items-center mt-1">
               <ArrowUpRight className="w-3 h-3 mr-1" /> +12.5% em relação ao mês anterior
             </p>
           </CardContent>
         </Card>
 
-        <Card className="bg-white border-line overflow-hidden">
+        <Card className="bg-card border-line overflow-hidden">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-xs font-black uppercase tracking-widest text-muted">Comissão Zevva (10%)</CardTitle>
+            <CardTitle className="text-xs font-black uppercase tracking-widest text-muted-foreground">Comissão Zevva (10%)</CardTitle>
             <TrendingUp className="h-4 w-4 text-coral" />
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-black text-navy">R$ {stats?.taxas.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}</div>
-            <p className="text-[10px] text-muted font-bold mt-1 italic">Retido automaticamente</p>
+            <div className="text-3xl font-black text-foreground">R$ {stats?.taxas.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}</div>
+            <p className="text-[10px] text-muted-foreground font-bold mt-1 italic">Retido automaticamente</p>
           </CardContent>
         </Card>
 
         <Card className="bg-primary text-white border-none overflow-hidden relative">
-          <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-16 -mt-16 blur-3xl"></div>
+          <div className="absolute top-0 right-0 w-32 h-32 bg-card/10 rounded-full -mr-16 -mt-16 blur-3xl"></div>
           <CardHeader className="flex flex-row items-center justify-between pb-2">
             <CardTitle className="text-xs font-black uppercase tracking-widest text-white/60">Saldo a Receber</CardTitle>
             <Wallet className="h-4 w-4 text-white/60" />
@@ -105,11 +105,11 @@ function FinanceiroPage() {
       </div>
 
       <div className="space-y-6">
-        <h2 className="text-xl font-manrope font-extrabold text-navy">Histórico de Transações</h2>
-        <Card className="bg-white border-line overflow-hidden">
+        <h2 className="text-xl font-manrope font-extrabold text-foreground">Histórico de Transações</h2>
+        <Card className="bg-card border-line overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full text-left text-sm">
-              <thead className="bg-accent/50 text-[10px] font-black uppercase tracking-widest text-muted border-b border-line">
+              <thead className="bg-accent/50 text-[10px] font-black uppercase tracking-widest text-muted-foreground border-b border-line">
                 <tr>
                   <th className="px-6 py-4">Data</th>
                   <th className="px-6 py-4">Status</th>
@@ -121,7 +121,7 @@ function FinanceiroPage() {
               <tbody className="divide-y divide-line">
                 {stats?.vendas.map((venda: any, i: number) => (
                   <tr key={i} className="hover:bg-accent/30 transition-colors">
-                    <td className="px-6 py-4 font-bold text-navy">
+                    <td className="px-6 py-4 font-bold text-foreground">
                       {new Date(venda.created_at).toLocaleDateString("pt-BR")}
                     </td>
                     <td className="px-6 py-4">
@@ -129,13 +129,13 @@ function FinanceiroPage() {
                         {venda.status === 'pago' ? 'Aprovado' : venda.status}
                       </span>
                     </td>
-                    <td className="px-6 py-4 font-medium text-muted-fg">
+                    <td className="px-6 py-4 font-medium text-muted-foreground-fg">
                       R$ {Number(venda.valor_bruto || 0).toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
                     </td>
                     <td className="px-6 py-4 font-medium text-coral">
                       - R$ {Number(venda.taxa_plataforma || 0).toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
                     </td>
-                    <td className="px-6 py-4 text-right font-black text-navy">
+                    <td className="px-6 py-4 text-right font-black text-foreground">
                       R$ {Number(venda.valor_liquido_produtor || 0).toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
                     </td>
 
@@ -143,7 +143,7 @@ function FinanceiroPage() {
                 ))}
                 {stats?.vendas.length === 0 && (
                   <tr>
-                    <td colSpan={5} className="px-6 py-12 text-center text-muted italic">
+                    <td colSpan={5} className="px-6 py-12 text-center text-muted-foreground italic">
                       Nenhuma transação registrada.
                     </td>
                   </tr>

@@ -49,14 +49,14 @@ export const Route = createFileRoute("/checkin")({
 function CheckinErrorComponent() {
   const navigate = useNavigate();
   return (
-    <div className="flex min-h-screen items-center justify-center bg-slate-50 p-6">
-      <div className="max-w-md w-full bg-white rounded-3xl p-8 shadow-xl border border-slate-200 text-center space-y-6">
+    <div className="flex min-h-screen items-center justify-center bg-muted p-6">
+      <div className="max-w-md w-full bg-card rounded-3xl p-8 shadow-xl border border-border text-center space-y-6">
         <div className="w-20 h-20 bg-coral/10 rounded-full flex items-center justify-center mx-auto">
           <Building2 className="w-10 h-10 text-coral" />
         </div>
         <div className="space-y-2">
-          <h2 className="text-2xl font-black text-navy uppercase tracking-tight">Ops! Algo deu errado</h2>
-          <p className="text-slate-600 font-medium">
+          <h2 className="text-2xl font-black text-foreground uppercase tracking-tight">Ops! Algo deu errado</h2>
+          <p className="text-muted-foreground font-medium">
             Não conseguimos encontrar as informações deste projeto ou ocorreu um erro na navegação.
           </p>
         </div>
@@ -128,7 +128,7 @@ function CheckinLayout() {
     <div className="flex flex-col h-full bg-navy text-white py-8 font-inter">
       <div className={cn("px-6 mb-12 flex items-center gap-3", !isPlatformAdmin && "justify-center")}>
         {isPlatformAdmin && (
-          <Link to="/app" className="p-2.5 hover:bg-white/10 rounded-2xl transition-all text-white/60 hover:text-coral outline-none border border-white/10 bg-white/5 shadow-sm flex-shrink-0" title="Voltar para o Workspace">
+          <Link to="/app" className="p-2.5 hover:bg-card/10 rounded-2xl transition-all text-white/60 hover:text-coral outline-none border border-white/10 bg-card/5 shadow-sm flex-shrink-0" title="Voltar para o Workspace">
             <Home className="w-5 h-5" />
           </Link>
         )}
@@ -138,10 +138,10 @@ function CheckinLayout() {
       </div>
       
       {activeTenant && (
-        <div className="mt-6 mx-6 flex items-center gap-3 p-3 bg-white/5 rounded-2xl border border-white/10">
+        <div className="mt-6 mx-6 flex items-center gap-3 p-3 bg-card/5 rounded-2xl border border-white/10">
           <Avatar className="w-10 h-10 rounded-xl border border-white/10">
             <AvatarImage src={activeTenant.logo || undefined} />
-            <AvatarFallback className="bg-white/10 text-white text-xs font-black">
+            <AvatarFallback className="bg-card/10 text-white text-xs font-black">
               {activeTenant.nome.substring(0, 2).toUpperCase()}
             </AvatarFallback>
           </Avatar>
@@ -168,8 +168,8 @@ function CheckinLayout() {
             to={item.href as any}
             {...(item.activeOptions ? { activeOptions: item.activeOptions } : {})}
             className="flex items-center gap-3 px-4 py-3.5 rounded-xl text-sm font-bold transition-all duration-200"
-            activeProps={{ className: "bg-white/10 text-coral shadow-sm border border-white/5" }}
-            inactiveProps={{ className: "text-white/60 hover:text-white hover:bg-white/5" }}
+            activeProps={{ className: "bg-card/10 text-coral shadow-sm border border-white/5" }}
+            inactiveProps={{ className: "text-white/60 hover:text-white hover:bg-card/5" }}
           >
             <item.icon className="w-5 h-5" />
             {item.label}
@@ -194,7 +194,7 @@ function CheckinLayout() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50 flex font-inter">
+    <div className="min-h-screen bg-muted flex font-inter">
       {/* Sidebar - Only show if a project is selected */}
       {projectId && (
         <aside className="hidden lg:block w-64 h-screen sticky top-0 shadow-2xl">
@@ -203,10 +203,10 @@ function CheckinLayout() {
       )}
 
       <div className="flex-1 flex flex-col min-h-screen">
-        <header className="h-16 bg-white border-b border-slate-200 sticky top-0 z-40 px-6 flex items-center justify-between">
+        <header className="h-16 bg-card border-b border-border sticky top-0 z-40 px-6 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <ShieldCheck className="w-5 h-5 text-coral" />
-            <h1 className="text-sm font-black text-navy uppercase tracking-widest">Controle de Acesso</h1>
+            <h1 className="text-sm font-black text-foreground uppercase tracking-widest">Controle de Acesso</h1>
           </div>
 
           <div className="flex items-center gap-4">

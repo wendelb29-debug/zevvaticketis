@@ -33,19 +33,19 @@ function AppLayout() {
   };
 
   return (
-    <div className="min-h-screen bg-bg text-navy font-inter">
-      <header className="bg-white border-b border-line h-16 flex items-center px-6 sticky top-0 z-50">
+    <div className="min-h-screen bg-bg text-foreground font-inter">
+      <header className="bg-card border-b border-line h-16 flex items-center px-6 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto w-full flex items-center justify-between">
           <div className="flex items-center gap-8">
             <div className="flex items-center gap-4">
               <button 
                 onClick={() => window.history.back()}
-                className="p-2 hover:bg-surface rounded-full transition-colors text-muted hover:text-navy lg:hidden"
+                className="p-2 hover:bg-surface rounded-full transition-colors text-muted-foreground hover:text-foreground lg:hidden"
               >
                 <ArrowLeft className="w-5 h-5" />
               </button>
               <Link to="/" className="text-xl font-manrope font-extrabold text-coral tracking-tighter">
-                ZEVVA <span className="text-navy">APP</span>
+                ZEVVA <span className="text-foreground">APP</span>
               </Link>
             </div>
 
@@ -55,7 +55,7 @@ function AppLayout() {
                 activeOptions={{ exact: false }}
                 className="px-4 py-2 rounded-full text-sm font-bold transition-all"
                 activeProps={{ className: "bg-coral/10 text-coral" }}
-                inactiveProps={{ className: "text-muted hover:text-navy" }}
+                inactiveProps={{ className: "text-muted-foreground hover:text-foreground" }}
               >
                 Meus Ingressos
               </Link>
@@ -63,7 +63,7 @@ function AppLayout() {
                 to="/app/perfil" 
                 className="px-4 py-2 rounded-full text-sm font-bold transition-all"
                 activeProps={{ className: "bg-coral/10 text-coral" }}
-                inactiveProps={{ className: "text-muted hover:text-navy" }}
+                inactiveProps={{ className: "text-muted-foreground hover:text-foreground" }}
               >
                 Meu Perfil
               </Link>
@@ -71,7 +71,7 @@ function AppLayout() {
                 to="/app/historico" 
                 className="px-4 py-2 rounded-full text-sm font-bold transition-all"
                 activeProps={{ className: "bg-coral/10 text-coral" }}
-                inactiveProps={{ className: "text-muted hover:text-navy" }}
+                inactiveProps={{ className: "text-muted-foreground hover:text-foreground" }}
               >
                 Histórico
               </Link>

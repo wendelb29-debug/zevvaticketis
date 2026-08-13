@@ -58,10 +58,10 @@ function ProdutoresPage() {
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
-        <h1 className="text-2xl font-manrope font-extrabold text-navy">Gestão de Produtores</h1>
+        <h1 className="text-2xl font-manrope font-extrabold text-foreground">Gestão de Produtores</h1>
         
         <div className="flex items-center gap-2">
-          <Filter className="w-4 h-4 text-muted" />
+          <Filter className="w-4 h-4 text-muted-foreground" />
           <Select value={filter} onValueChange={setFilter}>
             <SelectTrigger className="w-[180px]">
               <SelectValue placeholder="Filtrar por status" />
@@ -76,9 +76,9 @@ function ProdutoresPage() {
         </div>
       </div>
       
-      <div className="bg-white rounded-xl border overflow-hidden">
+      <div className="bg-card rounded-xl border overflow-hidden">
         <table className="w-full text-left">
-          <thead className="bg-surface text-muted text-xs font-extrabold uppercase tracking-wider">
+          <thead className="bg-surface text-muted-foreground text-xs font-extrabold uppercase tracking-wider">
             <tr>
               <th className="px-6 py-4">Organização</th>
               <th className="px-6 py-4">Status</th>
@@ -91,12 +91,12 @@ function ProdutoresPage() {
               <tr key={org.id} className="hover:bg-surface/50 transition-colors">
                 <td className="px-6 py-4">
                   <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 bg-surface-2 rounded flex items-center justify-center text-navy">
+                    <div className="w-8 h-8 bg-surface-2 rounded flex items-center justify-center text-foreground">
                       <Building2 className="w-4 h-4" />
                     </div>
                     <div>
-                      <span className="font-bold text-navy block">{org.nome}</span>
-                      <span className="text-xs text-muted font-medium">{org.documento || "Sem documento"}</span>
+                      <span className="font-bold text-foreground block">{org.nome}</span>
+                      <span className="text-xs text-muted-foreground font-medium">{org.documento || "Sem documento"}</span>
                     </div>
                   </div>
                 </td>

@@ -69,14 +69,14 @@ function EventDetailsPage() {
           />
         ) : (
           <div className="w-full h-full bg-accent flex items-center justify-center">
-            <Ticket className="w-20 h-20 text-muted" />
+            <Ticket className="w-20 h-20 text-muted-foreground" />
           </div>
         )}
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
         <div className="absolute bottom-8 left-0 right-0 container mx-auto px-4">
           <Button 
             variant="ghost" 
-            className="text-white mb-4 hover:bg-white/10"
+            className="text-white mb-4 hover:bg-card/10"
             onClick={() => navigate({ to: "/" })}
           >
             <ArrowLeft className="mr-2 h-4 w-4" /> Voltar
@@ -98,7 +98,7 @@ function EventDetailsPage() {
                 </div>
               </div>
             </div>
-            <Button className="bg-white text-navy hover:bg-white/90 font-bold px-8 py-6 rounded-2xl">
+            <Button className="bg-card text-foreground hover:bg-card/90 font-bold px-8 py-6 rounded-2xl">
               <Share2 className="mr-2 h-5 w-5" /> Compartilhar
             </Button>
           </div>
@@ -112,7 +112,7 @@ function EventDetailsPage() {
               <h2 className="text-2xl font-bold flex items-center gap-2">
                 <Info className="h-6 w-6 text-primary" /> Sobre o Evento
               </h2>
-              <div className="prose prose-slate max-w-none text-muted-fg leading-relaxed">
+              <div className="prose prose-slate max-w-none text-muted-foreground-fg leading-relaxed">
                 {event.descricao_completa || "Sem descrição disponível."}
               </div>
             </section>
@@ -127,7 +127,7 @@ function EventDetailsPage() {
                     {event.producers?.nome_empresa?.charAt(0) || "P"}
                   </div>
                   <div>
-                    <p className="text-sm text-muted-fg">Organizado por</p>
+                    <p className="text-sm text-muted-foreground-fg">Organizado por</p>
                     <p className="font-bold text-lg">{event.producers?.nome_empresa || "Produtor Independente"}</p>
                   </div>
                 </CardContent>
@@ -159,7 +159,7 @@ function EventDetailsPage() {
                           R$ {Number(ticket.valor).toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
                         </span>
                       </div>
-                      <p className="text-xs text-muted-fg">{ticket.descricao}</p>
+                      <p className="text-xs text-muted-foreground-fg">{ticket.descricao}</p>
                     </div>
                   ))}
                 </div>
@@ -171,7 +171,7 @@ function EventDetailsPage() {
                   COMPRAR INGRESSO
                 </Button>
                 
-                <p className="text-[10px] text-center text-muted-fg uppercase tracking-widest font-bold">
+                <p className="text-[10px] text-center text-muted-foreground-fg uppercase tracking-widest font-bold">
                   Compra 100% Segura • Zevva Tickets
                 </p>
               </CardContent>

@@ -57,7 +57,7 @@ function JsonView({ value, tone }: { value: any; tone?: "add" | "remove" }) {
             tone === "remove" && line.trim() && "bg-destructive/15",
           )}
         >
-          <span className="select-none text-muted-fg/60 w-6 text-right shrink-0">{i + 1}</span>
+          <span className="select-none text-muted-foreground-fg/60 w-6 text-right shrink-0">{i + 1}</span>
           <span className="text-foreground">{line}</span>
         </div>
       ))}
@@ -163,7 +163,7 @@ export function AuditoriaPanel() {
             <ShieldCheck className="w-5 h-5 text-primary mt-0.5" />
             <div>
               <h3 className="font-bold text-foreground">Auditoria</h3>
-              <p className="text-xs text-muted-fg">Localize rapidamente ações por tipo, usuário e intervalo de datas. Baixe e compartilhe o histórico em CSV ou PDF quando precisar.</p>
+              <p className="text-xs text-muted-foreground-fg">Localize rapidamente ações por tipo, usuário e intervalo de datas. Baixe e compartilhe o histórico em CSV ou PDF quando precisar.</p>
             </div>
           </div>
           <div className="flex items-center gap-2 shrink-0 self-start sm:self-center">
@@ -189,11 +189,11 @@ export function AuditoriaPanel() {
         {/* Filtros */}
         <div className="flex flex-wrap items-end gap-3 px-5 py-4 border-b border-border">
           <div className="min-w-[200px] flex-1">
-            <label className="text-[11px] font-bold uppercase tracking-wider text-muted-fg">Pesquisar</label>
+            <label className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground-fg">Pesquisar</label>
             <Input value={search} onChange={(e) => resetPage(setSearch)(e.target.value)} className="h-9 mt-1" placeholder="Ação, alvo, usuário..." />
           </div>
           <div className="w-[170px]">
-            <label className="text-[11px] font-bold uppercase tracking-wider text-muted-fg">Ação</label>
+            <label className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground-fg">Ação</label>
             <Select value={acao} onValueChange={resetPage(setAcao)}>
               <SelectTrigger className="h-9 mt-1"><SelectValue placeholder="Todas" /></SelectTrigger>
               <SelectContent>
@@ -203,7 +203,7 @@ export function AuditoriaPanel() {
             </Select>
           </div>
           <div className="w-[190px]">
-            <label className="text-[11px] font-bold uppercase tracking-wider text-muted-fg">Usuários</label>
+            <label className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground-fg">Usuários</label>
             <Select value={usuario} onValueChange={resetPage(setUsuario)}>
               <SelectTrigger className="h-9 mt-1"><SelectValue placeholder="Todos" /></SelectTrigger>
               <SelectContent>
@@ -213,7 +213,7 @@ export function AuditoriaPanel() {
             </Select>
           </div>
           <div className="w-[180px]">
-            <label className="text-[11px] font-bold uppercase tracking-wider text-muted-fg">Período</label>
+            <label className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground-fg">Período</label>
             <Select value={periodo} onValueChange={resetPage(setPeriodo)}>
               <SelectTrigger className="h-9 mt-1"><SelectValue /></SelectTrigger>
               <SelectContent>
@@ -225,7 +225,7 @@ export function AuditoriaPanel() {
             <RefreshCcw className={cn("w-4 h-4", isFetching && "animate-spin")} />
           </Button>
           <div className="ml-auto flex items-center gap-2">
-            <span className="text-xs font-bold text-muted-fg">Mostrar</span>
+            <span className="text-xs font-bold text-muted-foreground-fg">Mostrar</span>
             <Select value={perPage} onValueChange={resetPage(setPerPage)}>
               <SelectTrigger className="h-9 w-[80px]"><SelectValue /></SelectTrigger>
               <SelectContent>
@@ -238,7 +238,7 @@ export function AuditoriaPanel() {
         {/* Tabela */}
         <div className="overflow-x-auto">
           <table className="w-full text-left">
-            <thead className="bg-accent/40 text-muted-fg text-[11px] font-extrabold uppercase tracking-widest border-b border-border">
+            <thead className="bg-accent/40 text-muted-foreground-fg text-[11px] font-extrabold uppercase tracking-widest border-b border-border">
               <tr>
                 <th className="px-5 py-3">Data e hora</th>
                 <th className="px-5 py-3">Usuário</th>
@@ -249,7 +249,7 @@ export function AuditoriaPanel() {
             </thead>
             <tbody className="divide-y divide-border/60">
               {isLoading && (
-                <tr><td colSpan={5} className="px-5 py-12 text-center text-muted-fg animate-pulse">Carregando registros...</td></tr>
+                <tr><td colSpan={5} className="px-5 py-12 text-center text-muted-foreground-fg animate-pulse">Carregando registros...</td></tr>
               )}
               {!isLoading && rows.map((log) => {
                 const nome = log.profiles?.nome || "Sistema";
@@ -268,14 +268,14 @@ export function AuditoriaPanel() {
                         </div>
                         <div className="leading-tight">
                           <div className="text-sm font-bold text-foreground">{nome}</div>
-                          <div className="text-[11px] text-muted-fg">{log.profiles?.email || "—"}</div>
+                          <div className="text-[11px] text-muted-foreground-fg">{log.profiles?.email || "—"}</div>
                         </div>
                       </div>
                     </td>
                     <td className="px-5 py-3">
                       <div className="leading-tight">
                         <div className="text-sm font-semibold text-foreground">{log.acao}</div>
-                        <div className="text-[11px] font-mono text-muted-fg">{log.alvo_tipo}.{log.alvo_id?.slice(0, 8)}</div>
+                        <div className="text-[11px] font-mono text-muted-foreground-fg">{log.alvo_tipo}.{log.alvo_id?.slice(0, 8)}</div>
                       </div>
                     </td>
                     <td className="px-5 py-3">
@@ -292,7 +292,7 @@ export function AuditoriaPanel() {
                 );
               })}
               {!isLoading && rows.length === 0 && (
-                <tr><td colSpan={5} className="px-5 py-12 text-center text-muted-fg">Nenhum registro de auditoria encontrado.</td></tr>
+                <tr><td colSpan={5} className="px-5 py-12 text-center text-muted-foreground-fg">Nenhum registro de auditoria encontrado.</td></tr>
               )}
             </tbody>
           </table>
@@ -300,10 +300,10 @@ export function AuditoriaPanel() {
 
         {/* Paginação */}
         <div className="flex flex-wrap items-center gap-3 px-5 py-3 border-t border-border">
-          <span className="text-xs text-muted-fg">
+          <span className="text-xs text-muted-foreground-fg">
             Mostrando {filtered.length === 0 ? 0 : (current - 1) * size + 1} até {Math.min(current * size, filtered.length)} de {filtered.length} registros
           </span>
-          <span className="text-xs text-muted-fg mx-auto">Página {current} de {totalPages}</span>
+          <span className="text-xs text-muted-foreground-fg mx-auto">Página {current} de {totalPages}</span>
           <div className="flex items-center gap-1">
             <Button variant="ghost" size="icon" className="h-8 w-8 border border-border" disabled={current <= 1} onClick={() => setPage(current - 1)}>
               <ChevronLeft className="w-4 h-4" />
@@ -327,11 +327,11 @@ export function AuditoriaPanel() {
           <DialogHeader><DialogTitle>Alterações</DialogTitle></DialogHeader>
           <div className="grid md:grid-cols-2 gap-4">
             <div>
-              <p className="text-xs font-bold text-muted-fg mb-1.5">Antes</p>
+              <p className="text-xs font-bold text-muted-foreground-fg mb-1.5">Antes</p>
               <JsonView value={diffLog?.dados_antes} tone="remove" />
             </div>
             <div>
-              <p className="text-xs font-bold text-muted-fg mb-1.5">Depois</p>
+              <p className="text-xs font-bold text-muted-foreground-fg mb-1.5">Depois</p>
               <JsonView value={diffLog?.dados_depois} tone="add" />
             </div>
           </div>

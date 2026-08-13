@@ -56,7 +56,7 @@ function OAuthReturn() {
       <div className="text-center space-y-3">
         <div className="mx-auto h-10 w-10 rounded-full border-2 border-primary border-t-transparent animate-spin" />
         <h1 className="text-lg font-semibold text-foreground">{message}</h1>
-        <p className="text-sm text-muted-foreground">Você pode fechar esta janela.</p>
+        <p className="text-sm text-muted-foreground-foreground">Você pode fechar esta janela.</p>
       </div>
     </main>
   );
