@@ -32,14 +32,31 @@ export const Route = createFileRoute("/admin/configuracoes")({
 function AuthGuard() {
   const [session, setSession] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const [activeTenantId, setActiveTenantId] = useState<string | null>(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
+    async function init() {
+      const { data: { session } } = await supabase.auth.getSession();
       setSession(session);
+      
+      if (session) {
+        const { data: member } = await supabase
+          .from("tenant_members")
+          .select("tenant_id")
+          .eq("user_id", session.user.id)
+          .limit(1)
+          .maybeSingle();
+        
+        if (member) setActiveTenantId(member.tenant_id);
+      }
+      
       setLoading(false);
       if (!session) navigate({ to: "/" });
-    });
+    }
+    
+    init();
+
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_, session) => {
       setSession(session);
       if (!session) navigate({ to: "/" });
