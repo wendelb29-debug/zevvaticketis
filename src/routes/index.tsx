@@ -19,11 +19,11 @@ import {
 import { Input } from "@/components/ui/input";
 import { Navbar } from "@/components/layout/Navbar";
 import { FeaturedCarousel } from "@/components/home/FeaturedCarousel";
-import { CoverflowCarousel } from "@/components/ui/coverflow-carousel";
+// CoverflowCarousel removido em favor do FeaturedCarousel moderno
 import { EventCard } from "@/components/home/EventCard";
 import { CategoryGrid } from "@/components/home/CategoryGrid";
 import { FAQAccordion } from "@/components/home/FAQAccordion";
-import { CityTicker } from "@/components/home/CityTicker";
+// CityTicker removido para um visual mais limpo e moderno
 import { Footer } from "@/components/layout/Footer";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
@@ -34,9 +34,8 @@ import { tracking } from "@/lib/tracking";
 import { getFeaturedEvents } from "@/lib/events.functions";
 import { useServerFn } from "@tanstack/react-start";
 import { Skeleton } from "@/components/ui/skeleton";
-import { PremiumNewsletter } from "@/components/ui/premium-newsletter";
-import { GridPatternCard, GridPatternCardBody } from "@/components/ui/card-with-grid-pattern";
-import { AdmitOneTicket } from "@/components/ui/admit-one-ticket";
+// Newsletter e outros componentes premium seguem o novo design system
+import { Skeleton } from "@/components/ui/skeleton";
 
 
 export const Route = createFileRoute("/")({
