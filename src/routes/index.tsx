@@ -133,35 +133,38 @@ function HomePage() {
       <Navbar selectedCity={null} />
  
       <main className="relative">
-        {/* Editorial Hero */}
-        <section className="relative h-[80vh] min-h-[600px] flex items-center overflow-hidden bg-[#0A0A0A]">
-          <div className="absolute inset-0 opacity-40">
+        {/* Functional Modern Hero */}
+        <section className="relative h-[85vh] flex items-center bg-dark-surface overflow-hidden">
+          <div className="absolute inset-0">
             <img 
-              src="https://images.unsplash.com/photo-1517457373958-b7bdd4587205?q=80&w=2069&auto=format&fit=crop" 
-              className="w-full h-full object-cover grayscale"
-              alt="Experience background"
+              src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=2070&auto=format&fit=crop" 
+              className="w-full h-full object-cover opacity-50"
+              alt="Events background"
             />
+            <div className="absolute inset-0 bg-gradient-to-r from-dark-surface via-dark-surface/80 to-transparent" />
           </div>
-          <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent" />
           
           <div className="relative z-10 max-w-7xl mx-auto px-6 w-full">
-            <div className="max-w-3xl space-y-8 animate-in fade-in slide-in-from-bottom-8 duration-1000">
-              <span className="inline-block px-4 py-1.5 rounded-full border border-white/20 bg-white/5 text-[10px] font-bold text-white uppercase tracking-[0.2em] backdrop-blur-sm">
-                Exclusividade Zevva
-              </span>
-              <h1 className="text-5xl md:text-8xl font-serif text-white tracking-tight leading-[0.9]">
-                Momentos que <br />
-                <span className="italic text-accent">transcendem</span>.
+            <div className="max-w-2xl space-y-8 animate-in fade-in slide-in-from-left-8 duration-700">
+              <h1 className="text-5xl md:text-7xl font-manrope font-extrabold text-white tracking-tight leading-[1.1]">
+                Encontre experiências que valem a pena viver<span className="text-primary">.</span>
               </h1>
-              <p className="text-lg md:text-xl text-white/60 font-medium max-w-xl leading-relaxed">
-                Curadoria de eventos, caravanas internacionais e experiências culturais de alto padrão.
+              <p className="text-xl text-white/70 font-medium max-w-xl leading-relaxed">
+                Shows, festivais, encontros e eventos perto de você.
               </p>
               <div className="flex flex-wrap gap-4 pt-4">
-                <button className="h-14 px-8 bg-white text-black font-bold rounded-sm hover:bg-white/90 transition-all">
-                  Explorar Calendário
+                <button 
+                  onClick={() => navigate({ to: '/eventos' })}
+                  className="h-14 px-10 bg-primary text-white font-bold rounded-md hover:bg-primary-hover transition-all shadow-xl shadow-primary/20 flex items-center gap-3"
+                >
+                  Explorar eventos
+                  <ArrowRight className="w-5 h-5" />
                 </button>
-                <button className="h-14 px-8 border border-white/20 text-white font-bold rounded-sm hover:bg-white/5 transition-all">
-                  Nossa Curadoria
+                <button 
+                  onClick={() => navigate({ to: '/cadastro' })}
+                  className="h-14 px-10 bg-white/10 backdrop-blur-md border border-white/20 text-white font-bold rounded-md hover:bg-white/20 transition-all"
+                >
+                  Criar meu evento
                 </button>
               </div>
             </div>
@@ -173,13 +176,13 @@ function HomePage() {
 
         {/* Minimalist Search */}
         <section className="relative -mt-12 z-20 px-6">
-          <div className="max-w-6xl mx-auto bg-surface-base p-2 rounded-xl shadow-xl border border-border">
-            <div className="flex flex-col md:flex-row items-center gap-2">
+          <div className="max-w-5xl mx-auto bg-surface p-4 rounded-2xl shadow-2xl border border-border">
+            <div className="flex flex-col md:flex-row items-center gap-4">
               <div className="relative flex-1 w-full">
-                <Search className="absolute left-6 top-1/2 -translate-y-1/2 text-foreground-muted h-4 w-4" />
+                <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-foreground-muted h-5 w-5" />
                 <Input 
-                  placeholder="Encontrar experiência ou destino..."
-                  className="h-16 pl-14 pr-6 text-base rounded-lg border-none bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0 placeholder:text-foreground-muted/50"
+                  placeholder="Qual evento você está procurando?"
+                  className="h-14 pl-12 pr-6 text-base rounded-xl border border-border bg-background focus-visible:ring-primary/20 placeholder:text-foreground-muted/50"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                 />
@@ -188,34 +191,34 @@ function HomePage() {
               <div className="hidden md:flex h-10 w-px bg-border mx-2" />
 
               <div className="flex items-center gap-2 px-4 w-full md:w-auto">
-                <button className="h-16 px-4 flex items-center gap-3 text-sm font-bold text-foreground hover:bg-background rounded-lg transition-colors whitespace-nowrap">
-                  <MapPin className="w-4 h-4 text-accent" /> Local
+                <button className="h-14 px-6 flex items-center gap-3 text-sm font-bold text-foreground hover:bg-background rounded-xl border border-border transition-colors whitespace-nowrap">
+                  <MapPin className="w-4 h-4 text-primary" /> Onde?
                 </button>
-                <button className="h-16 px-4 flex items-center gap-3 text-sm font-bold text-foreground hover:bg-background rounded-lg transition-colors whitespace-nowrap">
-                  <Calendar className="w-4 h-4 text-accent" /> Quando
+                <button className="h-14 px-6 flex items-center gap-3 text-sm font-bold text-foreground hover:bg-background rounded-xl border border-border transition-colors whitespace-nowrap">
+                  <Calendar className="w-4 h-4 text-primary" /> Quando?
                 </button>
               </div>
 
-              <button className="w-full md:w-auto h-16 px-10 bg-primary text-white font-bold rounded-lg hover:bg-primary-hover transition-all shadow-lg shadow-primary/10">
-                PESQUISAR
+              <button className="w-full md:w-auto h-14 px-10 bg-primary text-white font-bold rounded-xl hover:bg-primary-hover transition-all shadow-lg shadow-primary/10">
+                Buscar agora
               </button>
             </div>
           </div>
         </section>
 
         {/* Featured Coverflow */}
-        <section className="py-32">
-          <div className="max-w-7xl mx-auto px-6 mb-20">
+        <section className="py-24 bg-background">
+          <div className="max-w-7xl mx-auto px-6 mb-12">
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
-              <div className="space-y-4 max-w-2xl">
-                <span className="text-[10px] font-bold text-accent uppercase tracking-[0.2em]">Curadoria Semanal</span>
-                <h2 className="text-4xl md:text-6xl font-serif text-foreground tracking-tight">
-                  Experiências em <span className="italic">Destaque</span>
+              <div className="space-y-3">
+                <div className="h-1 w-12 bg-primary rounded-full" />
+                <h2 className="text-3xl md:text-4xl font-manrope font-extrabold text-foreground tracking-tight">
+                  Eventos em destaque
                 </h2>
+                <p className="text-foreground-muted font-medium text-lg max-w-xl">
+                  As melhores experiências selecionadas para você.
+                </p>
               </div>
-              <p className="text-foreground-muted font-medium max-w-xs text-sm leading-relaxed">
-                Seleção exclusiva de eventos que definem novos padrões de excelência cultural e profissional.
-              </p>
             </div>
           </div>
           
@@ -242,15 +245,14 @@ function HomePage() {
         </section>
 
 
-        <section className="px-6 py-32 bg-surface-base border-y border-border">
-          <div className="max-w-7xl mx-auto space-y-20">
-            <div className="flex flex-col items-center text-center space-y-6 max-w-2xl mx-auto">
-              <span className="text-[10px] font-bold text-accent uppercase tracking-[0.2em]">Curadoria Zevva</span>
-              <h2 className="text-4xl md:text-6xl font-serif text-foreground tracking-tight">
-                Explore por <span className="italic">Categorias</span>
+        <section className="px-6 py-24 bg-surface border-y border-border">
+          <div className="max-w-7xl mx-auto space-y-16">
+            <div className="flex flex-col items-center text-center space-y-4 max-w-2xl mx-auto">
+              <h2 className="text-3xl md:text-4xl font-manrope font-extrabold text-foreground tracking-tight">
+                Explore por categorias
               </h2>
-              <p className="text-foreground-muted font-medium text-sm leading-relaxed">
-                Descubra experiências personalizadas através de nossos eixos temáticos exclusivos.
+              <p className="text-foreground-muted font-medium text-lg">
+                Encontre o evento perfeito para seu momento.
               </p>
             </div>
             <CategoryGrid />
