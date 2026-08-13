@@ -109,6 +109,7 @@ export const getWhatsAppContacts = createServerFn({ method: "GET" })
   });
 
 export const getWhatsAppIntegrationStatus = createServerFn({ method: "GET" })
+  .middleware([requireSupabaseAuth])
   .inputValidator((data) => z.object({
     tenantId: z.string().uuid().optional()
   }).parse(data))
