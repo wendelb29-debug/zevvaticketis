@@ -265,8 +265,8 @@ function HomePage() {
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
               <div className="space-y-4">
                 <span className="text-[10px] font-bold text-accent uppercase tracking-[0.2em]">Personalizado</span>
-                <h2 className="text-4xl md:text-6xl font-serif text-foreground tracking-tight">
-                  Sugeridos para <span className="italic">Você</span>
+                <h2 className="text-3xl md:text-4xl font-manrope font-extrabold text-foreground tracking-tight">
+                  Sugeridos para você
                 </h2>
               </div>
             </div>
@@ -290,14 +290,14 @@ function HomePage() {
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
               <div className="space-y-4 max-w-2xl">
                 <span className="text-[10px] font-bold text-accent uppercase tracking-[0.2em]">Calendário</span>
-                <h2 className="text-4xl md:text-6xl font-serif text-foreground tracking-tight">
-                  Próximas <span className="italic">Experiências</span>
+                <h2 className="text-3xl md:text-4xl font-manrope font-extrabold text-foreground tracking-tight">
+                  Próximas experiências
                 </h2>
               </div>
               <Link 
                 to="/eventos" 
                 search={{ categoria: undefined, id: undefined }}
-                className="flex items-center gap-2 text-[10px] font-bold text-accent uppercase tracking-widest hover:text-foreground transition-colors"
+                className="flex items-center gap-2 text-sm font-bold text-primary hover:text-primary-hover transition-colors"
               >
                 Ver Agenda Completa <ArrowRight className="w-3 h-3" />
               </Link>
@@ -323,29 +323,33 @@ function HomePage() {
           </div>
         </section>
 
-        {/* Cursos - Editorial Layout */}
-        <section className="px-6 py-32 bg-[#0F0F0F] text-white">
-          <div className="max-w-7xl mx-auto space-y-24">
-            <div className="flex flex-col items-center text-center space-y-6 max-w-3xl mx-auto">
-              <span className="text-[10px] font-bold text-accent uppercase tracking-[0.2em]">Conhecimento Profissional</span>
-              <h2 className="text-5xl md:text-7xl font-serif tracking-tight">
-                Aprenda com <br /><span className="italic text-accent">Especialistas</span>
+        {/* Cursos - Professional Modern Layout */}
+        <section className="px-6 py-24 bg-surface border-y border-border">
+          <div className="max-w-7xl mx-auto space-y-16">
+            <div className="flex flex-col items-center text-center space-y-4 max-w-3xl mx-auto">
+              <h2 className="text-3xl md:text-5xl font-manrope font-extrabold text-foreground tracking-tight">
+                Cursos e Imersões
               </h2>
+              <p className="text-foreground-muted font-medium text-lg">
+                Conhecimento profissional com os melhores especialistas do mercado.
+              </p>
             </div>
  
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {[
                 { title: "Liderança Exponencial", tutor: "Dr. Marcos Silva", hours: "40h", mode: "Presencial" },
                 { title: "Marketing de Experiência", tutor: "Ana Paula Melo", hours: "12h", mode: "Online" },
                 { title: "Gestão de Caravanas", tutor: "Ricardo Santos", hours: "24h", mode: "Híbrido" }
               ].map((course, i) => (
-                <div key={i} className="group border-b border-white/10 pb-12 hover:border-accent transition-colors">
-                  <span className="text-[10px] font-bold text-accent uppercase tracking-[0.2em] mb-8 block">Módulo 0{i+1}</span>
-                  <h3 className="text-3xl font-serif mb-4 leading-tight">{course.title}</h3>
-                  <p className="text-white/40 text-sm mb-8 font-medium italic">Com {course.tutor}</p>
-                  <div className="flex items-center justify-between">
-                    <span className="text-[10px] font-bold uppercase tracking-widest text-white/60">{course.hours} • {course.mode}</span>
-                    <button className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center group-hover:bg-accent group-hover:border-accent transition-all">
+                <div key={i} className="group p-8 bg-background rounded-xl border border-border hover:border-primary/30 hover:shadow-xl transition-all duration-300">
+                  <div className="w-12 h-12 bg-primary/5 rounded-lg flex items-center justify-center text-primary font-bold mb-6">
+                    0{i+1}
+                  </div>
+                  <h3 className="text-xl font-bold text-foreground mb-2">{course.title}</h3>
+                  <p className="text-foreground-muted text-sm mb-6">Com {course.tutor}</p>
+                  <div className="flex items-center justify-between pt-6 border-t border-border">
+                    <span className="text-xs font-bold text-foreground/60">{course.hours} • {course.mode}</span>
+                    <button className="w-10 h-10 rounded-full bg-surface border border-border flex items-center justify-center group-hover:bg-primary group-hover:text-white group-hover:border-primary transition-all">
                       <ArrowRight className="w-4 h-4" />
                     </button>
                   </div>
@@ -355,15 +359,17 @@ function HomePage() {
           </div>
         </section>
 
-        {/* Caravanas Marketplace - Editorial Grid */}
-        <section className="px-6 py-32 bg-surface-base border-t border-border">
-          <div className="max-w-7xl mx-auto space-y-24">
-            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
-              <div className="space-y-4">
-                <span className="text-[10px] font-bold text-accent uppercase tracking-[0.2em]">Oportunidades</span>
-                <h2 className="text-4xl md:text-6xl font-serif text-foreground tracking-tight">
-                  Caravanas em <span className="italic text-accent">Destaque</span>
+        {/* Caravanas Marketplace - Modern Layout */}
+        <section className="px-6 py-24 bg-background">
+          <div className="max-w-7xl mx-auto space-y-16">
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-l-4 border-primary pl-6">
+              <div className="space-y-2">
+                <h2 className="text-3xl md:text-5xl font-manrope font-extrabold text-foreground tracking-tight">
+                  Caravanas
                 </h2>
+                <p className="text-foreground-muted font-medium text-lg">
+                  Viagens organizadas com todo suporte que você precisa.
+                </p>
               </div>
             </div>
  
@@ -372,18 +378,18 @@ function HomePage() {
                 { title: "Caravana Terra Santa 2027", from: "São Paulo", to: "Israel", date: "Maio 2027", price: "US$ 3.500", image: "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?q=80&w=2017&auto=format&fit=crop" },
                 { title: "Congresso Europa 2026", from: "Rio de Janeiro", to: "Lisboa/Roma", date: "Outubro 2026", price: "US$ 2.800", image: "https://images.unsplash.com/photo-1542281286-9e0a16bb7366?auto=format&fit=crop&q=80" }
               ].map((caravan, i) => (
-                <div key={i} className="group flex flex-col md:flex-row gap-10 items-start border-b border-border pb-12 hover:border-accent transition-colors">
-                  <div className="w-full md:w-64 aspect-square overflow-hidden rounded-sm grayscale group-hover:grayscale-0 transition-all duration-700">
-                    <img src={caravan.image} alt={caravan.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" />
+                <div key={i} className="group flex flex-col md:flex-row gap-8 items-center bg-surface p-6 rounded-2xl border border-border hover:border-primary/30 hover:shadow-xl transition-all duration-300">
+                  <div className="w-full md:w-48 aspect-square overflow-hidden rounded-xl bg-background">
+                    <img src={caravan.image} alt={caravan.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                   </div>
-                  <div className="flex-1 space-y-8 py-2">
-                    <div className="space-y-4">
-                      <span className="text-[10px] font-bold text-accent uppercase tracking-widest">{caravan.date}</span>
-                      <h3 className="text-3xl font-serif leading-tight">{caravan.title}</h3>
-                      <div className="flex items-center gap-8 text-[10px] font-bold text-foreground-muted uppercase tracking-widest">
-                        <div className="flex flex-col gap-1">
-                          <span className="text-[8px] opacity-60">Origem</span>
-                          <span>{caravan.from}</span>
+                  <div className="flex-1 space-y-6 w-full">
+                    <div className="space-y-2">
+                      <span className="text-xs font-bold text-primary uppercase tracking-wider">{caravan.date}</span>
+                      <h3 className="text-2xl font-bold text-foreground leading-tight">{caravan.title}</h3>
+                      <div className="flex items-center gap-6 text-sm font-medium text-foreground-muted">
+                        <div className="flex flex-col">
+                          <span className="text-[10px] uppercase tracking-wider opacity-50">Origem</span>
+                          <span className="font-bold text-foreground">{caravan.from}</span>
                         </div>
                         <div className="flex flex-col gap-1">
                           <span className="text-[8px] opacity-60">Destino</span>
