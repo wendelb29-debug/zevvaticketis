@@ -5,7 +5,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { EventCard } from "@/components/home/EventCard";
-import { Search, MapPin, Calendar, ArrowLeft } from "lucide-react";
+import { Search, ArrowLeft } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
 
@@ -29,11 +29,16 @@ function CategoryPage() {
 
   useEffect(() => {
     if (!category) {
-      navigate({ to: "/eventos", replace: true });
+      navigate({ 
+        to: "/eventos", 
+        search: { busca: undefined, categoria: undefined, cidade: undefined, data: undefined } as any, 
+        replace: true 
+      });
       return;
     }
 
     async function fetchEvents() {
+      if (!category) return;
       setLoading(true);
       try {
         let query = supabase
@@ -41,23 +46,19 @@ function CategoryPage() {
           .select("*, tenants(nome, logo), ticket_types(valor)")
           .eq("status", "publicado");
 
-        // We use string match for category since data might be loose
-        // but normalized in the app.
-        // In a real scenario, we would have a category_id or normalized field.
-        // For now we filter locally to handle the variations mentioned in the spec
         const { data } = await query;
         
         if (data) {
           const filtered = data.filter((e: any) => {
             const normalized = normalizeCategory(e.category);
-            const matchesCategory = normalized === category.id;
+            const matchesCategory = normalized === (category as any).id;
             
             if (!matchesCategory) return false;
             
             if (searchTerm) {
               const q = searchTerm.toLowerCase();
-              const title = (e.title ?? e.nome ?? "").toLowerCase();
-              const city = (e.city ?? e.cidade ?? "").toLowerCase();
+              const title = (e.title ?? "").toLowerCase();
+              const city = (e.city ?? "").toLowerCase();
               return title.includes(q) || city.includes(q);
             }
             
@@ -90,6 +91,7 @@ function CategoryPage() {
             <div className="space-y-6">
               <Link 
                 to="/eventos" 
+                search={{ busca: undefined, categoria: undefined, cidade: undefined, data: undefined } as any}
                 className="inline-flex items-center gap-2 text-sm font-bold text-foreground-muted hover:text-primary transition-colors"
               >
                 <ArrowLeft className="w-4 h-4" /> Voltar para Explorar
