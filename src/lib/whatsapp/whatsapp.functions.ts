@@ -88,6 +88,7 @@ export const sendWhatsAppMessage = createServerFn({ method: "POST" })
   });
 
 export const getWhatsAppContacts = createServerFn({ method: "GET" })
+  .middleware([requireSupabaseAuth])
   .inputValidator((data) => z.object({
     tenantId: z.string().uuid().optional()
   }).parse(data))
