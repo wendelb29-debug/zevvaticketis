@@ -8,13 +8,16 @@ import {
   Scripts,
   useLocation,
 } from "@tanstack/react-router";
-import { useEffect, useState, useRef, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { AuthModal } from "@/components/layout/AuthModal";
 import { useUI } from "@/hooks/use-ui";
 import { LocationModal } from "@/components/home/LocationModal";
 import { ZevvaLoadingScreen } from "@/components/layout/ZevvaLoadingScreen";
 import { TenantProvider } from "@/hooks/use-tenants";
 import { supabase } from "@/integrations/supabase/client";
+import "@/i18n/config";
+import { useTranslation } from "react-i18next";
+import i18next from "i18next";
 
 
 
@@ -109,22 +112,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 });
 
 function RootShell({ children }: { children: ReactNode }) {
-  const { language, activeOverlay, closeOverlay, theme } = useUI() as any;
+  const { language, theme, resolvedTheme } = useUI();
 
   useEffect(() => {
-    const handleOutsideClick = (event: MouseEvent) => {
-      if (activeOverlay === 'language') {
-        const target = event.target as HTMLElement;
-        const isClickInsideLanguageDropdown = target.closest('.language-dropdown-container');
-        if (!isClickInsideLanguageDropdown) {
-          closeOverlay();
-        }
-      }
-    };
-
-    document.addEventListener("mousedown", handleOutsideClick);
-    return () => document.removeEventListener("mousedown", handleOutsideClick);
-  }, [activeOverlay, closeOverlay]);
+    if (language) {
+      i18next.changeLanguage(language);
+      document.documentElement.lang = language;
+    }
+  }, [language]);
 
   return (
     <html lang={language} data-theme={theme}>
@@ -137,9 +132,11 @@ function RootShell({ children }: { children: ReactNode }) {
                 try {
                   const storage = localStorage.getItem('zevva-ui-storage');
                   let theme = 'light';
+                  let language = 'pt-BR';
                   if (storage) {
                     const parsed = JSON.parse(storage);
                     theme = parsed.state.theme || 'light';
+                    language = parsed.state.language || 'pt-BR';
                   }
                   
                   let resolvedTheme = theme;
@@ -150,13 +147,14 @@ function RootShell({ children }: { children: ReactNode }) {
                   document.documentElement.classList.add(resolvedTheme);
                   document.documentElement.setAttribute('data-theme', resolvedTheme);
                   document.documentElement.style.colorScheme = resolvedTheme;
+                  document.documentElement.lang = language;
                 } catch (e) {}
               })();
             `,
           }}
         />
       </head>
-      <body>
+      <body className={resolvedTheme}>
         {children}
         <Scripts />
       </body>
@@ -180,9 +178,14 @@ function RootComponent() {
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session);
+      if (session) {
+        useUI.getState().syncWithBackend(session.user.id);
+      }
     });
 
-    return () => subscription.unsubscribe();
+    return () => {
+      subscription.unsubscribe();
+    };
   }, []);
 
   useEffect(() => {
@@ -196,20 +199,11 @@ function RootComponent() {
     const isUserLoggedIn = !!session;
 
     const applyTheme = () => {
-      // Determine the effective theme
       let effectiveTheme = theme;
-      
-      // RULE: Homepage/Public routes always light if not logged in or even if logged in but on home?
-      // User said: "chat na home page ela nao pode alterar o modo escuro ou claro deixa sempre no claro, so quando loga no sistema poder alterar o dark mode"
-      // Interpretation: If on home page, force light. Only allow dark mode when logged in AND (implied) in internal areas or system-wide if logged in.
-      // Usually "logar no sistema" means the user is inside the dashboard.
       
       if (!isPrivateArea && !isUserLoggedIn) {
         effectiveTheme = 'light';
       } else if (!isPrivateArea && isUserLoggedIn) {
-        // If logged in but on public page, user might still want light theme or their preference.
-        // But the prompt says "chat na home page... deixa sempre no claro". 
-        // Let's force light on home page regardless, and allow theme only in system areas.
         if (location.pathname === '/' || location.pathname === '/eventos') {
            effectiveTheme = 'light';
         }
@@ -232,11 +226,12 @@ function RootComponent() {
 
     if (theme === "system") {
       media.addEventListener("change", applyTheme);
+      return () => {
+        media.removeEventListener("change", applyTheme);
+      };
     }
-
-    return () => {
-      media.removeEventListener("change", applyTheme);
-    };
+    
+    return undefined;
   }, [theme, location.pathname, session]);
 
   useEffect(() => {

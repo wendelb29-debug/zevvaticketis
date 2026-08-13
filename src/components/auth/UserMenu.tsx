@@ -31,7 +31,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useAvatarUrl } from "@/lib/avatar";
 import { cn } from "@/lib/utils";
 import { useLocation } from "@tanstack/react-router";
-import { useUI, type Theme } from "@/hooks/use-ui";
+import { useUI, type ThemePreference } from "@/hooks/use-ui";
 
 interface UserMenuProps {
   user: any;

@@ -21,10 +21,11 @@ interface FeaturedCarouselProps {
 
 import { useUI } from "@/hooks/use-ui";
 import { translations } from "@/lib/translations";
+import { formatCurrency, formatDate } from "@/lib/i18n-helpers";
 
 export function FeaturedCarousel({ events }: FeaturedCarouselProps) {
   const { language } = useUI();
-  const t = translations[language].home;
+  const t = (translations[language] || translations["pt-BR"]).home;
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const pauseTimeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -57,21 +58,15 @@ export function FeaturedCarousel({ events }: FeaturedCarouselProps) {
 
   const currentEvent = events[currentIndex];
 
-  const formatDate = (dateStr: string | null) => {
-    if (!dateStr) return language === "pt" ? "A definir" : "To be defined";
-    return new Date(dateStr).toLocaleDateString(language === "pt" ? "pt-BR" : "en-US", {
-      day: "2-digit",
-      month: "long",
-      year: "numeric",
-    });
+  const displayDate = (dateStr: string | null) => {
+    if (!dateStr) return t.toDefine;
+    return formatDate(dateStr, language);
   };
 
-  const formatPrice = (price: number | null) => {
-    if (price === null || price === undefined) return language === "pt" ? "Consulte os ingressos" : "Check tickets";
-    if (price === 0) return language === "pt" ? "Gratuito" : "Free";
-    return language === "pt" 
-      ? `R$ ${price.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}`
-      : `$ ${price.toLocaleString("en-US", { minimumFractionDigits: 2 })}`;
+  const displayPrice = (price: number | null) => {
+    if (price === null || price === undefined) return t.checkTickets;
+    if (price === 0) return t.free;
+    return formatCurrency(price, 'BRL', language);
   };
 
   return (
@@ -123,7 +118,7 @@ export function FeaturedCarousel({ events }: FeaturedCarouselProps) {
                   </div>
                   <div className="flex items-center gap-2 text-sm font-medium">
                     <Calendar className="w-4 h-4 text-primary" />
-                    {formatDate(currentEvent?.start_date || null)}
+                    {displayDate(currentEvent?.start_date || null)}
                   </div>
                 </div>
 
@@ -147,7 +142,7 @@ export function FeaturedCarousel({ events }: FeaturedCarouselProps) {
                       {currentEvent?.min_price === 0 ? t.free : t.from}
                     </span>
                     <span className="text-2xl font-black text-white">
-                      {formatPrice(currentEvent?.min_price ?? null)}
+                      {displayPrice(currentEvent?.min_price ?? null)}
                     </span>
                   </div>
                 </div>
