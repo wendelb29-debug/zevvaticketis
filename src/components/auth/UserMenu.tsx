@@ -100,7 +100,7 @@ export function UserMenu({ user, onLogout, onNavigate, agentStatus, onStatusChan
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <button className="flex items-center gap-2 p-1 rounded-full hover:bg-primary/5 transition-all outline-none group border border-transparent hover:border-border">
-          <Avatar className="h-8 w-8 border-2 border-white shadow-sm ring-1 ring-border">
+          <Avatar className="h-8 w-8 border-2 border-card shadow-sm ring-1 ring-border">
             <AvatarImage src={avatarUrl} className="object-cover" />
             <AvatarFallback className="bg-foreground text-background text-[10px] font-extrabold">
               {initials}
@@ -108,7 +108,7 @@ export function UserMenu({ user, onLogout, onNavigate, agentStatus, onStatusChan
           </Avatar>
           {isChat && (
             <div className={cn(
-              "absolute -top-0.5 -right-0.5 w-3 h-3 rounded-full border-2 border-white",
+              "absolute -top-0.5 -right-0.5 w-3 h-3 rounded-full border-2 border-card",
               agentStatus === 'online' ? "bg-green-500" : agentStatus === 'busy' ? "bg-amber-500" : "bg-foreground/20"
             )} />
           )}

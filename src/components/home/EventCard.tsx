@@ -18,8 +18,8 @@ export function EventCard({ event, onToggleFavorite }: EventCardProps) {
   };
 
   return (
-    <div className="group bg-surface border border-border overflow-hidden rounded-lg transition-all duration-300 hover:border-primary/30 hover:shadow-xl">
-      <div className="relative aspect-[16/10] overflow-hidden bg-background">
+    <div className="group bg-card border border-border overflow-hidden rounded-lg transition-all duration-300 hover:border-primary/30 hover:shadow-xl">
+      <div className="relative aspect-[16/10] overflow-hidden bg-muted">
         <img
           src={
             event.cover_image ||

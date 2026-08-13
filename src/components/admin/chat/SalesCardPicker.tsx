@@ -33,7 +33,7 @@ export function SalesCardPicker({ isOpen, onClose, onSelect }: SalesCardPickerPr
               placeholder="Buscar ingresso ou pacote..." 
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="pl-9 bg-surface/50 border-line"
+              className="pl-9 bg-muted border-border"
             />
           </div>
           <div className="space-y-2 max-h-[300px] overflow-y-auto">
@@ -41,10 +41,10 @@ export function SalesCardPicker({ isOpen, onClose, onSelect }: SalesCardPickerPr
               <button
                 key={t.id}
                 onClick={() => onSelect(t)}
-                className="w-full flex items-center justify-between p-4 rounded-2xl bg-surface hover:bg-primary/5 border border-line hover:border-primary/30 transition-all group"
+                className="w-full flex items-center justify-between p-4 rounded-2xl bg-card hover:bg-primary/5 border border-border hover:border-primary/30 transition-all group"
               >
                 <div className="flex items-center gap-3 text-left">
-                  <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center text-primary border border-line group-hover:bg-primary group-hover:text-white transition-colors">
+                  <div className="w-10 h-10 rounded-xl bg-card flex items-center justify-center text-primary border border-border group-hover:bg-primary group-hover:text-white transition-colors">
                     <Ticket className="w-5 h-5" />
                   </div>
                   <div>
