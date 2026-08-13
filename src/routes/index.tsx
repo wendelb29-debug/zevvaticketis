@@ -391,16 +391,16 @@ function HomePage() {
                           <span className="text-[10px] uppercase tracking-wider opacity-50">Origem</span>
                           <span className="font-bold text-foreground">{caravan.from}</span>
                         </div>
-                        <div className="flex flex-col gap-1">
-                          <span className="text-[8px] opacity-60">Destino</span>
-                          <span>{caravan.to}</span>
+                        <div className="flex flex-col">
+                          <span className="text-[10px] uppercase tracking-wider opacity-50">Destino</span>
+                          <span className="font-bold text-foreground">{caravan.to}</span>
                         </div>
                       </div>
                     </div>
-                    <div className="flex items-center justify-between pt-4">
-                      <span className="text-2xl font-serif italic text-primary">{caravan.price}</span>
-                      <button className="h-12 px-8 border border-border text-[10px] font-bold uppercase tracking-widest hover:bg-primary hover:text-white hover:border-primary transition-all rounded-sm">
-                        Reservar Vaga
+                    <div className="flex items-center justify-between pt-4 border-t border-border">
+                      <span className="text-2xl font-black text-primary">{caravan.price}</span>
+                      <button className="h-12 px-8 bg-primary text-white text-sm font-bold hover:bg-primary-hover transition-all rounded-md shadow-lg shadow-primary/10">
+                        Saber mais
                       </button>
                     </div>
                   </div>
@@ -410,104 +410,76 @@ function HomePage() {
           </div>
         </section>
 
-        {/* Admit One Ticket Showcase - Minimalist Modern */}
-        <section className="px-6 py-32 bg-[#F0EFEC] border-y border-border overflow-hidden">
-          <div className="max-w-7xl mx-auto space-y-20">
-            <div className="text-center space-y-6 max-w-2xl mx-auto">
-              <span className="text-[10px] font-bold text-accent uppercase tracking-[0.2em]">Tecnologia Exclusiva</span>
-              <h2 className="text-4xl md:text-6xl font-serif text-foreground tracking-tight">
-                Seu Ingresso <br /><span className="italic text-accent">Redefinido</span>
+        {/* Benefits Showcase - Modern & Clean */}
+        <section className="px-6 py-24 bg-surface border-y border-border">
+          <div className="max-w-7xl mx-auto space-y-16">
+            <div className="text-center space-y-4 max-w-2xl mx-auto">
+              <h2 className="text-3xl md:text-5xl font-manrope font-extrabold text-foreground tracking-tight">
+                Vantagens de comprar na Zevva
               </h2>
               <p className="text-foreground-muted font-medium text-lg">
-                Experiência interativa 3D com segurança criptográfica e estética editorial premium.
+                Sua segurança e experiência são nossa prioridade.
               </p>
             </div>
             
-            <div className="max-w-3xl mx-auto">
-              <AdmitOneTicket 
-                title="Congresso Internacional de Liderança"
-                date="15 DE OUTUBRO, 2026"
-                location="SÃO PAULO, BRASIL"
-                price="R$ 450,00"
-                className="shadow-[0_40px_100px_-20px_rgba(0,0,0,0.2)] hover:scale-[1.02] transition-transform duration-700"
-              />
-            </div>
-          </div>
-        </section>
-
-        {/* Features - Editorial Grid */}
-        <section className="px-6 py-32 border-b border-border">
-          <div className="max-w-7xl mx-auto space-y-24">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-20">
-              <div className="space-y-6">
-                <div className="w-12 h-12 border border-accent flex items-center justify-center rounded-sm">
-                  <ShieldCheck className="w-6 h-6 text-accent" />
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+              <div className="text-center space-y-6">
+                <div className="w-16 h-16 bg-primary/5 text-primary rounded-full flex items-center justify-center mx-auto border border-primary/10">
+                  <ShieldCheck className="w-8 h-8" />
                 </div>
-                <h3 className="text-3xl font-serif">Segurança <br /><span className="italic">Criptográfica</span></h3>
-                <p className="text-foreground-muted text-sm leading-relaxed font-medium">
-                  Protocolos avançados que garantem a autenticidade de cada ingresso e a proteção total dos seus dados e transações.
+                <h3 className="text-xl font-bold">Pagamento Seguro</h3>
+                <p className="text-foreground-muted text-sm leading-relaxed">
+                  Transações criptografadas e suporte a diversos métodos de pagamento.
                 </p>
               </div>
 
-              <div className="space-y-6">
-                <div className="w-12 h-12 border border-accent flex items-center justify-center rounded-sm">
-                  <Globe className="w-6 h-6 text-accent" />
+              <div className="text-center space-y-6">
+                <div className="w-16 h-16 bg-primary/5 text-primary rounded-full flex items-center justify-center mx-auto border border-primary/10">
+                  <Globe className="w-8 h-8" />
                 </div>
-                <h3 className="text-3xl font-serif">Escala <br /><span className="italic">Global</span></h3>
-                <p className="text-foreground-muted text-sm leading-relaxed font-medium">
-                  Infraestrutura robusta preparada para suportar grandes volumes de tráfego e vendas em qualquer lugar do mundo.
+                <h3 className="text-xl font-bold">Suporte Dedicado</h3>
+                <p className="text-foreground-muted text-sm leading-relaxed">
+                  Time pronto para ajudar em todas as etapas da sua jornada.
                 </p>
               </div>
 
-              <div className="space-y-6">
-                <div className="w-12 h-12 border border-accent flex items-center justify-center rounded-sm">
-                  <Zap className="w-6 h-6 text-accent" />
+              <div className="text-center space-y-6">
+                <div className="w-16 h-16 bg-primary/5 text-primary rounded-full flex items-center justify-center mx-auto border border-primary/10">
+                  <Zap className="w-8 h-8" />
                 </div>
-                <h3 className="text-3xl font-serif">Experiência <br /><span className="italic">Imersiva</span></h3>
-                <p className="text-foreground-muted text-sm leading-relaxed font-medium">
-                  Design orientado à emoção, transformando a compra de um ingresso em um prelúdio memorável do próprio evento.
+                <h3 className="text-xl font-bold">Ingresso Digital</h3>
+                <p className="text-foreground-muted text-sm leading-relaxed">
+                  Acesse seus ingressos instantaneamente em qualquer dispositivo.
                 </p>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Social Proof - Editorial Section */}
-        <section className="px-6 py-32 bg-surface-base">
-          <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-32 items-center">
-            <div className="space-y-16">
-              <div className="space-y-6">
-                <span className="text-[10px] font-bold text-accent uppercase tracking-[0.2em]">Confiança</span>
-                <h2 className="text-5xl md:text-7xl font-serif text-foreground tracking-tight leading-[0.9]">
-                  Líderes que <br /><span className="italic">Transformam</span> com a Zevva
-                </h2>
-              </div>
-              
-              <div className="grid grid-cols-2 gap-10">
-                {[1,2,3,4].map(i => (
-                  <div key={i} className="space-y-4">
-                    <div className="w-12 h-12 rounded-full bg-accent/10 border border-accent/20" />
-                    <div>
-                      <p className="text-[10px] font-bold text-foreground uppercase tracking-widest">Organizador Verificado</p>
-                      <p className="text-xs text-foreground-muted font-medium italic">Agência de Turismo {i}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="relative p-12 md:p-20 bg-primary text-white rounded-sm overflow-hidden">
-               <Award className="absolute -top-10 -right-10 w-80 h-80 text-white/5 rotate-12" />
-               <div className="relative z-10 space-y-10">
-                 <p className="text-3xl md:text-4xl font-serif italic leading-tight">
-                   "A Zevva transformou a maneira como organizamos nossas caravanas internacionais. A estética editorial e a segurança 3D elevaram nossa percepção de valor perante os clientes."
-                 </p>
-                 <div className="flex items-center gap-6">
-                   <div className="w-16 h-16 bg-accent/20 rounded-full border border-white/10" />
-                   <div>
-                     <p className="text-sm font-bold uppercase tracking-[0.2em]">Dr. André Valadão</p>
-                     <p className="text-[10px] text-white/60 font-medium uppercase tracking-widest">Lagaroinha Global</p>
-                   </div>
+        {/* Organizer CTA - Functional & Clean */}
+        <section className="px-6 py-24 bg-dark-surface">
+          <div className="max-w-7xl mx-auto">
+            <div className="relative p-12 md:p-20 bg-primary rounded-2xl overflow-hidden shadow-2xl">
+               <Zap className="absolute -top-10 -right-10 w-80 h-80 text-white/5 rotate-12" />
+               <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                 <div className="space-y-6">
+                   <h2 className="text-4xl md:text-6xl font-manrope font-extrabold text-white leading-tight">
+                     Quer organizar seu evento na Zevva?
+                   </h2>
+                   <p className="text-white/80 text-xl font-medium">
+                     Temos as melhores ferramentas de gestão, vendas e check-in para o seu negócio.
+                   </p>
+                 </div>
+                 <div className="flex flex-col sm:flex-row gap-4 lg:justify-end">
+                   <button 
+                    onClick={() => navigate({ to: '/cadastro' })}
+                    className="h-16 px-12 bg-white text-primary text-sm font-bold uppercase tracking-widest hover:bg-white/90 transition-all rounded-md shadow-xl"
+                   >
+                     Começar agora
+                   </button>
+                   <button className="h-16 px-12 bg-transparent border-2 border-white/30 text-white text-sm font-bold uppercase tracking-widest hover:bg-white/10 transition-all rounded-md">
+                     Falar com especialista
+                   </button>
                  </div>
                </div>
             </div>
@@ -519,10 +491,11 @@ function HomePage() {
         <section className="px-6 py-32 border-t border-border">
           <div className="max-w-3xl mx-auto space-y-20">
             <div className="text-center space-y-4">
-              <span className="text-[10px] font-bold text-accent uppercase tracking-[0.2em]">Suporte</span>
-              <h2 className="text-4xl md:text-6xl font-serif text-foreground tracking-tight">
-                Dúvidas <span className="italic">Frequentes</span>
+            <div className="text-center space-y-4">
+              <h2 className="text-3xl md:text-5xl font-manrope font-extrabold text-foreground tracking-tight">
+                Dúvidas frequentes
               </h2>
+            </div>
             </div>
             <FAQAccordion />
           </div>
