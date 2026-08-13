@@ -36,34 +36,36 @@ import { ptBR } from "date-fns/locale";
 export const Route = createFileRoute("/eventos")({
   validateSearch: (search: Record<string, unknown>) => {
     return {
-      id: (search['id'] as string) || undefined,
+      busca: (search['busca'] as string) || undefined,
       categoria: (search['categoria'] as string) || undefined,
+      cidade: (search['cidade'] as string) || undefined,
+      data: (search['data'] as string) || undefined,
     };
   },
   component: EventPage,
 });
 
 function EventPage() {
-  const search = useSearch({ from: "/eventos" }) as any;
-  const theme = getThemeByCategory(search.categoria || "Conferências");
-  const getEvent = useServerFn(getEventDetails);
-  
-  const [data, setData] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
-  const [quantities, setQuantities] = useState<Record<string, number>>({});
-  const [activeTab, setActiveTab] = useState("tickets");
+  const navigate = useNavigate();
+  const search = useSearch({ from: "/eventos" });
 
   useEffect(() => {
-    if (search.id) {
-      getEvent({ data: { id: search.id } }).then(res => {
-        setData(res);
-        setLoading(false);
-      }).catch(err => {
-        console.error("Erro ao buscar evento:", err);
-        setLoading(false);
-      });
+    // Legacy redirect for any remaining direct hits with an ID
+    const searchAny = search as any;
+    if (searchAny.id) {
+      navigate({ to: "/eventos/$id", params: { id: searchAny.id }, replace: true });
+    } else {
+      // Otherwise redirect to the canonical listing page
+      navigate({ to: "/eventos/", search, replace: true });
     }
-  }, [search.id, getEvent]);
+  }, [search, navigate]);
+
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-background">
+      <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
+    </div>
+  );
+}
 
   if (loading) return (
     <div className="min-h-screen bg-bg p-8 space-y-8 max-w-7xl mx-auto pt-24">
