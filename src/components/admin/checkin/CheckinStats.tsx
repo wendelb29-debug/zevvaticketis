@@ -222,7 +222,7 @@ export function CheckinStats() {
                 Business Intelligence
               </div>
               <h2 className="text-2xl font-manrope font-black tracking-tighter uppercase">Relatórios Avançados</h2>
-              <p className="text-muted text-sm font-medium">
+              <p className="text-muted-foreground text-sm font-medium">
                 Analise conversão de campanhas, no-show e dados demográficos dos participantes presentes.
               </p>
             </div>
