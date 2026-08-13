@@ -727,7 +727,7 @@ function SettingsPage({ session, activeTenantId }: { session: any, activeTenantI
         </TabsContent>
 
         <TabsContent value="ADMIN" className="space-y-4 focus-visible:outline-none outline-none">
-          <TeamManagement />
+          <TeamManagement tenantId={activeTenantId || undefined} />
           <Accordion type="single" collapsible className="w-full space-y-4">
 
             <AccordionItem value="permissoes" className="border-border bg-card rounded-xl border overflow-hidden shadow-sm">
