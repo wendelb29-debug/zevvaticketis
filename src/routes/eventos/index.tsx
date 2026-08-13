@@ -69,14 +69,14 @@ function EventsListPage() {
             <h1 className="text-4xl md:text-5xl font-manrope font-extrabold text-foreground tracking-tight">
               {categoria ? categoria : "Explorar Eventos"}
             </h1>
-            <p className="text-foreground-muted font-medium text-lg">
+            <p className="text-muted-foreground font-medium text-lg">
               {busca ? `Resultados para "${busca}"` : "Descubra as melhores experiências internacionais."}
             </p>
           </div>
 
           <div className="flex flex-col sm:flex-row gap-4 w-full md:w-auto">
             <div className="relative flex-1 sm:w-64">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-foreground-muted" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
               <Input
                 placeholder="Buscar eventos..."
                 className="pl-10 h-12 rounded-xl"
@@ -109,15 +109,15 @@ function EventsListPage() {
                <RefreshCw className="w-8 h-8 text-danger" />
             </div>
             <h2 className="text-2xl font-bold">Ops! Algo deu errado.</h2>
-            <p className="text-foreground-muted">Não conseguimos carregar os eventos no momento.</p>
+            <p className="text-muted-foreground">Não conseguimos carregar os eventos no momento.</p>
             <Button onClick={() => refetch()} className="bg-primary text-white font-bold">
               Tentar novamente
             </Button>
           </div>
         ) : !events || events.length === 0 ? (
           <div className="text-center py-32 bg-surface rounded-[40px] border border-border border-dashed">
-            <p className="text-xl font-bold text-foreground-muted mb-2">Nenhum evento encontrado.</p>
-            <p className="text-foreground-muted">Tente ajustar seus filtros ou busca.</p>
+            <p className="text-xl font-bold text-muted-foreground mb-2">Nenhum evento encontrado.</p>
+            <p className="text-muted-foreground">Tente ajustar seus filtros ou busca.</p>
             { (busca || categoria || cidade) && (
               <Button 
                 variant="link" 

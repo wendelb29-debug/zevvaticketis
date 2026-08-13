@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
   --animate-marquee: marquee 30s linear infinite;
@@ -14,75 +15,73 @@
     50% { transform: translateX(0); }
     100% { transform: translateX(100%); }
   }
-}
 
-@theme {
   --font-inter: "Inter", sans-serif;
   --font-manrope: "Manrope", sans-serif;
 
   /* Mapeamento de Tokens Semânticos para a Identidade Zevva (Tailwind 4) */
-  --color-background: #F6F7F8;
-  --color-foreground: #17191C;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
   
-  --color-card: #FFFFFF;
-  --color-card-foreground: #17191C;
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
   
-  --color-popover: #FFFFFF;
-  --color-popover-foreground: #17191C;
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
   
-  --color-primary: #D94B52;
-  --color-primary-foreground: #FFFFFF;
-  --color-primary-hover: #BE3941;
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary-hover: var(--primary-hover);
   
-  --color-secondary: #F0F1F3;
-  --color-secondary-foreground: #17191C;
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
   
-  --color-muted: #F0F1F3;
-  --color-muted-foreground: #62666D;
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
   
-  --color-accent: #D94B52;
-  --color-accent-foreground: #FFFFFF;
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
   
-  --color-destructive: #C53D45;
-  --color-destructive-foreground: #FFFFFF;
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
   
-  --color-border: #E3E5E8;
-  --color-input: #E3E5E8;
-  --color-ring: #D94B52;
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
 
   /* Aliases para compatibilidade legada e utilities específicas */
-  --color-navy: #17191C; /* Apontando para o foreground/grafite escuro oficial */
-  --color-coral: var(--color-primary);
-  --color-coral-dark: var(--color-primary-hover);
-  --color-line: var(--color-border);
-  --color-muted-fg: var(--color-muted-foreground);
-  --color-surface: var(--color-card);
-  --color-surface-elevated: var(--color-popover);
-  --color-surface-2: var(--color-secondary);
-  --color-surface-base: var(--color-background);
+  --color-navy: var(--navy);
+  --color-coral: var(--primary);
+  --color-coral-dark: var(--primary-hover);
+  --color-line: var(--border);
+  --color-muted-fg: var(--muted-foreground);
+  --color-surface: var(--card);
+  --color-surface-elevated: var(--popover);
+  --color-surface-2: var(--secondary);
+  --color-surface-base: var(--background);
   --color-good: #23865E;
-  --color-error: var(--color-destructive);
-  --color-danger: var(--color-destructive);
+  --color-error: var(--destructive);
+  --color-danger: var(--destructive);
   --color-success: #23865E;
   --color-warning: #B7791F;
 
   /* WhatsApp Chat Tokens */
-  --color-wa-bg: #F0F2F5;
-  --color-wa-sidebar: #FFFFFF;
-  --color-wa-agent-bubble: #FFFFFF;
-  --color-wa-client-bubble: #D9FDD3;
-  --color-wa-input-bg: #FFFFFF;
-  --color-wa-header-bg: #F0F2F5;
+  --color-wa-bg: var(--wa-bg);
+  --color-wa-sidebar: var(--wa-sidebar);
+  --color-wa-agent-bubble: var(--wa-agent-bubble);
+  --color-wa-client-bubble: var(--wa-client-bubble);
+  --color-wa-input-bg: var(--wa-input-bg);
+  --color-wa-header-bg: var(--wa-header-bg);
 
   /* Sidebar Component Tokens */
-  --color-sidebar: #FFFFFF;
-  --color-sidebar-foreground: #17191C;
-  --color-sidebar-primary: var(--color-primary);
-  --color-sidebar-primary-foreground: var(--color-primary-foreground);
-  --color-sidebar-accent: var(--color-secondary);
-  --color-sidebar-accent-foreground: var(--color-foreground);
-  --color-sidebar-border: var(--color-border);
-  --color-sidebar-ring: var(--color-ring);
+  --color-sidebar: var(--sidebar-background);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--primary);
+  --color-sidebar-primary-foreground: var(--primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--ring);
 
   /* Radius Tokens */
   --radius-sm: 4px;
@@ -90,8 +89,103 @@
   --radius-lg: 8px;
 }
 
-
 @layer base {
+  :root {
+    color-scheme: light;
+
+    --background: #F6F7F8;
+    --foreground: #17191C;
+
+    --card: #FFFFFF;
+    --card-foreground: #17191C;
+
+    --popover: #FFFFFF;
+    --popover-foreground: #17191C;
+
+    --primary: #D94B52;
+    --primary-foreground: #FFFFFF;
+    --primary-hover: #BE3941;
+
+    --secondary: #F0F1F3;
+    --secondary-foreground: #17191C;
+
+    --muted: #F0F1F3;
+    --muted-foreground: #62666D;
+
+    --accent: #F3E7E8;
+    --accent-foreground: #8F2F36;
+
+    --destructive: #C53D45;
+    --destructive-foreground: #FFFFFF;
+
+    --border: #E3E5E8;
+    --input: #E3E5E8;
+    --ring: #D94B52;
+
+    --navy: #17191C;
+    
+    --sidebar-background: #FFFFFF;
+    --sidebar-foreground: #17191C;
+    --sidebar-accent: #F0F1F3;
+    --sidebar-accent-foreground: #17191C;
+    --sidebar-border: #E3E5E8;
+
+    --wa-bg: #F0F2F5;
+    --wa-sidebar: #FFFFFF;
+    --wa-agent-bubble: #FFFFFF;
+    --wa-client-bubble: #D9FDD3;
+    --wa-input-bg: #FFFFFF;
+    --wa-header-bg: #F0F2F5;
+  }
+
+  .dark {
+    color-scheme: dark;
+
+    --background: #101214;
+    --foreground: #F4F5F6;
+
+    --card: #181B1F;
+    --card-foreground: #F4F5F6;
+
+    --popover: #1D2025;
+    --popover-foreground: #F4F5F6;
+
+    --primary: #E35B62;
+    --primary-foreground: #FFFFFF;
+    --primary-hover: #EF7076;
+
+    --secondary: #24282D;
+    --secondary-foreground: #F4F5F6;
+
+    --muted: #24282D;
+    --muted-foreground: #AEB3BA;
+
+    --accent: #322327;
+    --accent-foreground: #FFB1B5;
+
+    --destructive: #E35B62;
+    --destructive-foreground: #FFFFFF;
+
+    --border: #30353B;
+    --input: #30353B;
+    --ring: #E35B62;
+
+    --navy: #F4F5F6;
+    
+    --sidebar-background: #15181C;
+    --sidebar-foreground: #F4F5F6;
+    --sidebar-accent: #24282D;
+    --sidebar-accent-foreground: #F4F5F6;
+    --sidebar-border: #30353B;
+
+    --wa-bg: #0B141A;
+    --wa-sidebar: #111B21;
+    --wa-agent-bubble: #005C4B;
+    --wa-client-bubble: #202C33;
+    --wa-input-bg: #202C33;
+    --wa-header-bg: #202C33;
+  }
+
   * {
     @apply border-border;
   }

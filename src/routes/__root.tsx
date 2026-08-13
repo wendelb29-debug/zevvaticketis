@@ -125,9 +125,34 @@ function RootShell({ children }: { children: ReactNode }) {
   }, [activeOverlay, closeOverlay]);
 
   return (
-    <html lang={language}>
+    <html lang={language} data-theme={theme}>
       <head>
         <HeadContent />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  const storage = localStorage.getItem('zevva-ui-storage');
+                  let theme = 'light';
+                  if (storage) {
+                    const parsed = JSON.parse(storage);
+                    theme = parsed.state.theme || 'light';
+                  }
+                  
+                  let resolvedTheme = theme;
+                  if (theme === 'system') {
+                    resolvedTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+                  }
+                  
+                  document.documentElement.classList.add(resolvedTheme);
+                  document.documentElement.setAttribute('data-theme', resolvedTheme);
+                  document.documentElement.style.colorScheme = resolvedTheme;
+                } catch (e) {}
+              })();
+            `,
+          }}
+        />
       </head>
       <body>
         {children}
@@ -146,14 +171,31 @@ function RootComponent() {
 
   useEffect(() => {
     const root = window.document.documentElement;
-    root.classList.remove("light", "dark");
-    
+    const media = window.matchMedia("(prefers-color-scheme: dark)");
+
+    const applyTheme = () => {
+      const resolvedTheme =
+        theme === "system"
+          ? media.matches
+            ? "dark"
+            : "light"
+          : theme;
+
+      root.classList.remove("light", "dark");
+      root.classList.add(resolvedTheme);
+      root.dataset.theme = resolvedTheme;
+      root.style.colorScheme = resolvedTheme;
+    };
+
+    applyTheme();
+
     if (theme === "system") {
-      const systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-      root.classList.add(systemTheme);
-    } else {
-      root.classList.add(theme);
+      media.addEventListener("change", applyTheme);
     }
+
+    return () => {
+      media.removeEventListener("change", applyTheme);
+    };
   }, [theme]);
 
   useEffect(() => {

@@ -204,10 +204,10 @@ function HomePage() {
           <div className="max-w-5xl mx-auto bg-surface p-4 rounded-2xl shadow-2xl border border-border">
             <div className="flex flex-col md:flex-row items-center gap-4">
               <div className="relative flex-1 w-full">
-                <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-foreground-muted h-5 w-5" />
+                <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground h-5 w-5" />
                 <Input
                   placeholder="Qual evento você está procurando?"
-                  className="h-14 pl-12 pr-6 text-base rounded-xl border border-border bg-background focus-visible:ring-primary/20 placeholder:text-foreground-muted/50"
+                  className="h-14 pl-12 pr-6 text-base rounded-xl border border-border bg-background focus-visible:ring-primary/20 placeholder:text-muted-foreground/50"
                   value={homeSearchTerm}
                   onChange={(e) => setHomeSearchTerm(e.target.value)}
                   onKeyDown={(e) => {
@@ -266,7 +266,7 @@ function HomePage() {
                 <h2 className="text-3xl md:text-4xl font-manrope font-extrabold text-foreground tracking-tight">
                   Eventos em destaque
                 </h2>
-                <p className="text-foreground-muted font-medium text-lg max-w-xl">
+                <p className="text-muted-foreground font-medium text-lg max-w-xl">
                   As melhores experiências selecionadas para você.
                 </p>
               </div>
@@ -299,7 +299,7 @@ function HomePage() {
               <h2 className="text-3xl md:text-4xl font-manrope font-extrabold text-foreground tracking-tight">
                 Explore por categorias
               </h2>
-              <p className="text-foreground-muted font-medium text-lg">
+              <p className="text-muted-foreground font-medium text-lg">
                 Encontre o evento perfeito para seu momento.
               </p>
             </div>
@@ -383,7 +383,7 @@ function HomePage() {
               <h2 className="text-3xl md:text-5xl font-manrope font-extrabold text-foreground tracking-tight">
                 Cursos e Imersões
               </h2>
-              <p className="text-foreground-muted font-medium text-lg">
+              <p className="text-muted-foreground font-medium text-lg">
                 Conhecimento profissional com os melhores especialistas do mercado.
               </p>
             </div>
@@ -417,7 +417,7 @@ function HomePage() {
                     0{i + 1}
                   </div>
                   <h3 className="text-xl font-bold text-foreground mb-2">{course.title}</h3>
-                  <p className="text-foreground-muted text-sm mb-6">Com {course.tutor}</p>
+                  <p className="text-muted-foreground text-sm mb-6">Com {course.tutor}</p>
                   <div className="flex items-center justify-between pt-6 border-t border-border">
                     <span className="text-xs font-bold text-foreground/60">
                       {course.hours} • {course.mode}
@@ -440,7 +440,7 @@ function HomePage() {
                 <h2 className="text-3xl md:text-5xl font-manrope font-extrabold text-foreground tracking-tight">
                   Caravanas
                 </h2>
-                <p className="text-foreground-muted font-medium text-lg">
+                <p className="text-muted-foreground font-medium text-lg">
                   Viagens organizadas com todo suporte que você precisa.
                 </p>
               </div>
@@ -486,7 +486,7 @@ function HomePage() {
                       <h3 className="text-2xl font-bold text-foreground leading-tight">
                         {caravan.title}
                       </h3>
-                      <div className="flex items-center gap-6 text-sm font-medium text-foreground-muted">
+                      <div className="flex items-center gap-6 text-sm font-medium text-muted-foreground">
                         <div className="flex flex-col">
                           <span className="text-[10px] uppercase tracking-wider opacity-50">
                             Origem
@@ -521,7 +521,7 @@ function HomePage() {
               <h2 className="text-3xl md:text-5xl font-manrope font-extrabold text-foreground tracking-tight">
                 Vantagens de comprar na Zevva
               </h2>
-              <p className="text-foreground-muted font-medium text-lg">
+              <p className="text-muted-foreground font-medium text-lg">
                 Sua segurança e experiência são nossa prioridade.
               </p>
             </div>
@@ -532,7 +532,7 @@ function HomePage() {
                   <ShieldCheck className="w-8 h-8" />
                 </div>
                 <h3 className="text-xl font-bold">Pagamento Seguro</h3>
-                <p className="text-foreground-muted text-sm leading-relaxed">
+                <p className="text-muted-foreground text-sm leading-relaxed">
                   Transações criptografadas e suporte a diversos métodos de pagamento.
                 </p>
               </div>
@@ -542,7 +542,7 @@ function HomePage() {
                   <Globe className="w-8 h-8" />
                 </div>
                 <h3 className="text-xl font-bold">Suporte Dedicado</h3>
-                <p className="text-foreground-muted text-sm leading-relaxed">
+                <p className="text-muted-foreground text-sm leading-relaxed">
                   Time pronto para ajudar em todas as etapas da sua jornada.
                 </p>
               </div>
@@ -552,7 +552,7 @@ function HomePage() {
                   <Zap className="w-8 h-8" />
                 </div>
                 <h3 className="text-xl font-bold">Ingresso Digital</h3>
-                <p className="text-foreground-muted text-sm leading-relaxed">
+                <p className="text-muted-foreground text-sm leading-relaxed">
                   Acesse seus ingressos instantaneamente em qualquer dispositivo.
                 </p>
               </div>

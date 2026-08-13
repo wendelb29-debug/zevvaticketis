@@ -87,14 +87,14 @@ function ExplorarEventosPage() {
                 <h1 className="text-4xl font-manrope font-extrabold text-foreground tracking-tight">
                   Explorar eventos
                 </h1>
-                <p className="text-foreground-muted font-medium text-lg">
+                <p className="text-muted-foreground font-medium text-lg">
                   Encontre as melhores experiências em todo o Brasil.
                 </p>
               </div>
 
               <div className="w-full md:w-96">
                 <div className="relative">
-                  <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-foreground-muted h-5 w-5" />
+                  <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground h-5 w-5" />
                   <Input
                     placeholder="Buscar eventos..."
                     className="h-12 pl-12 rounded-xl border border-border bg-surface focus-visible:ring-primary/20"
@@ -161,10 +161,10 @@ function ExplorarEventosPage() {
             ) : (
               <div className="py-24 flex flex-col items-center justify-center border border-dashed border-border rounded-2xl bg-surface/50">
                 <div className="w-16 h-16 bg-surface-elevated rounded-full flex items-center justify-center mb-6">
-                  <Search className="w-8 h-8 text-foreground-muted" />
+                  <Search className="w-8 h-8 text-muted-foreground" />
                 </div>
                 <h2 className="text-xl font-bold text-foreground mb-2">Nenhum evento encontrado</h2>
-                <p className="text-foreground-muted text-sm text-center max-w-sm">
+                <p className="text-muted-foreground text-sm text-center max-w-sm">
                   Tente ajustar seus filtros ou busca para encontrar o que procura.
                 </p>
               </div>
