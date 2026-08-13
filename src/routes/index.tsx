@@ -464,42 +464,41 @@ function HomePage() {
           </div>
         </section>
 
-        {/* Produtores e Prova Social */}
-        <section className="px-6 py-24 bg-surface/30">
-
-          <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
-            <div className="space-y-8">
-              <div className="space-y-4">
-                <h2 className="text-3xl md:text-5xl font-manrope font-black text-navy uppercase tracking-tighter leading-tight">
-                  Organizadores verificados
+        {/* Social Proof - Editorial Section */}
+        <section className="px-6 py-32 bg-surface-base">
+          <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-32 items-center">
+            <div className="space-y-16">
+              <div className="space-y-6">
+                <span className="text-[10px] font-bold text-accent uppercase tracking-[0.2em]">Confiança</span>
+                <h2 className="text-5xl md:text-7xl font-serif text-foreground tracking-tight leading-[0.9]">
+                  Líderes que <br /><span className="italic">Transformam</span> com a Zevva
                 </h2>
-                <p className="text-muted-fg font-bold uppercase tracking-widest text-xs">
-                  Confiança e segurança em todas as experiências
-                </p>
               </div>
-              <div className="grid grid-cols-2 gap-6">
+              
+              <div className="grid grid-cols-2 gap-10">
                 {[1,2,3,4].map(i => (
-                  <div key={i} className="bg-white p-6 rounded-[24px] border border-line flex items-center gap-4 group cursor-pointer hover:shadow-lg transition-all">
-                    <div className="w-12 h-12 bg-accent rounded-full flex-shrink-0" />
+                  <div key={i} className="space-y-4">
+                    <div className="w-12 h-12 rounded-full bg-accent/10 border border-accent/20" />
                     <div>
-                      <p className="text-xs font-black text-navy uppercase">Agência {i}</p>
-                      <p className="text-[10px] font-bold text-muted">150+ Eventos</p>
+                      <p className="text-[10px] font-bold text-foreground uppercase tracking-widest">Organizador Verificado</p>
+                      <p className="text-xs text-foreground-muted font-medium italic">Agência de Turismo {i}</p>
                     </div>
                   </div>
                 ))}
               </div>
             </div>
-            <div className="bg-navy p-12 rounded-[48px] text-white space-y-8 relative overflow-hidden">
-               <Award className="absolute -top-10 -right-10 w-64 h-64 text-white/5 rotate-12" />
-               <div className="relative z-10">
-                 <p className="text-2xl font-manrope font-medium italic leading-relaxed">
-                   "A Zevva transformou a maneira como organizamos nossas caravanas internacionais. A gestão de pagamentos e a comunicação com os viajantes é impecável."
+
+            <div className="relative p-12 md:p-20 bg-primary text-white rounded-sm overflow-hidden">
+               <Award className="absolute -top-10 -right-10 w-80 h-80 text-white/5 rotate-12" />
+               <div className="relative z-10 space-y-10">
+                 <p className="text-3xl md:text-4xl font-serif italic leading-tight">
+                   "A Zevva transformou a maneira como organizamos nossas caravanas internacionais. A estética editorial e a segurança 3D elevaram nossa percepção de valor perante os clientes."
                  </p>
-                 <div className="mt-8 flex items-center gap-4">
-                   <div className="w-14 h-14 bg-coral rounded-2xl" />
+                 <div className="flex items-center gap-6">
+                   <div className="w-16 h-16 bg-accent/20 rounded-full border border-white/10" />
                    <div>
-                     <p className="font-black uppercase tracking-widest text-sm">Pr. André Valadão</p>
-                     <p className="text-xs text-white/40 font-bold uppercase tracking-widest">Lagaroinha Global</p>
+                     <p className="text-sm font-bold uppercase tracking-[0.2em]">Dr. André Valadão</p>
+                     <p className="text-[10px] text-white/60 font-medium uppercase tracking-widest">Lagaroinha Global</p>
                    </div>
                  </div>
                </div>
