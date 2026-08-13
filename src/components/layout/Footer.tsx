@@ -34,14 +34,14 @@ export function Footer() {
 
         {/* Links */}
         <div className="space-y-8">
-          <h4 className="text-xs font-bold text-white uppercase tracking-widest">Plataforma</h4>
+          <h4 className="text-xs font-bold text-white uppercase tracking-widest">{t.platform}</h4>
           <ul className="space-y-4">
             {[
-              { label: "Sobre a Zevva", path: "/" },
-              { label: "Explorar Eventos", path: "/eventos" },
-              { label: "Cursos e Imersões", path: "/" },
-              { label: "Caravanas", path: "/" },
-              { label: "Painel do Produtor", path: "/app" }
+              { label: t.about, path: "/" },
+              { label: t.explore, path: "/eventos" },
+              { label: t.courses, path: "/" },
+              { label: t.caravans, path: "/" },
+              { label: t.producerPanel, path: "/app" }
             ].map(link => (
               <li key={link.label}>
                 <Link to={link.path as any} className="text-sm text-brand-dark-muted font-medium hover:text-white transition-colors">{link.label}</Link>
@@ -51,13 +51,13 @@ export function Footer() {
         </div>
 
         <div className="space-y-8">
-          <h4 className="text-xs font-bold text-white uppercase tracking-widest">Suporte & Legal</h4>
+          <h4 className="text-xs font-bold text-white uppercase tracking-widest">{t.support}</h4>
           <ul className="space-y-4">
             {[
-              { label: "Central de Ajuda", path: "/" },
-              { label: "Termos de Uso", path: "/" },
-              { label: "Privacidade", path: "/" },
-              { label: "Política de Reembolso", path: "/" }
+              { label: t.helpCenter, path: "/" },
+              { label: t.terms, path: "/" },
+              { label: t.privacy, path: "/" },
+              { label: t.refund, path: "/" }
             ].map(link => (
               <li key={link.label}>
                 <Link to={link.path as any} className="text-sm text-brand-dark-muted font-medium hover:text-white transition-colors">{link.label}</Link>
