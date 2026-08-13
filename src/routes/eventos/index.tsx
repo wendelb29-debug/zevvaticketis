@@ -131,9 +131,14 @@ function EventsListPage() {
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {events.map((event: any) => (
-                      <Link to="/eventos/$id" params={{ id: event.id }}>
-                        <EventCard key={event.id} event={event} />
-                      </Link>
+              <Link 
+                key={event.id}
+                to="/eventos/$id" 
+                params={{ id: event.id }}
+                search={{}}
+              >
+                <EventCard event={event} />
+              </Link>
             ))}
           </div>
         )}
