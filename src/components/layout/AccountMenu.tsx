@@ -8,7 +8,10 @@ import {
 import { User, LogOut, LayoutDashboard, ChevronDown } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
+import { useUI } from "@/hooks/use-ui";
+import { translations } from "@/lib/translations";
 import { useAvatarUrl } from "@/lib/avatar";
+
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 interface AccountMenuProps {
@@ -19,6 +22,9 @@ interface AccountMenuProps {
 }
 
 export function AccountMenu({ user, onLogout, onNavigate, onOpenAuth }: AccountMenuProps) {
+  const { language } = useUI();
+  const t = translations[language] || translations["pt-BR"];
+
   const { data: profile } = useQuery({
     queryKey: ["profile", user?.id],
     queryFn: async () => {
@@ -42,7 +48,7 @@ export function AccountMenu({ user, onLogout, onNavigate, onOpenAuth }: AccountM
         onClick={onOpenAuth}
         className="h-10 px-6 bg-primary text-primary-foreground text-[10px] font-bold uppercase tracking-widest hover:bg-primary-hover transition-all rounded-sm shadow-lg shadow-primary/10"
       >
-        Entrar
+        {t.nav.login}
       </button>
     );
   }
@@ -76,7 +82,7 @@ export function AccountMenu({ user, onLogout, onNavigate, onOpenAuth }: AccountM
           className="flex items-center gap-3 px-3 py-2.5 text-[10px] font-bold uppercase tracking-widest cursor-pointer rounded-sm hover:bg-background text-muted-foreground hover:text-primary transition-colors focus:bg-background focus:text-primary"
         >
           <LayoutDashboard className="w-4 h-4" />
-          Painel do Produtor
+          {t.footer.producerPanel}
         </DropdownMenuItem>
 
         <DropdownMenuItem
@@ -84,7 +90,7 @@ export function AccountMenu({ user, onLogout, onNavigate, onOpenAuth }: AccountM
           className="flex items-center gap-3 px-3 py-2.5 text-[10px] font-bold uppercase tracking-widest cursor-pointer rounded-sm hover:bg-background text-muted-foreground hover:text-primary transition-colors focus:bg-background focus:text-primary"
         >
           <User className="w-4 h-4" />
-          Meu Perfil
+          {t.nav.profile || "Meu Perfil"}
         </DropdownMenuItem>
 
         <DropdownMenuSeparator className="my-2 bg-border" />
@@ -94,7 +100,7 @@ export function AccountMenu({ user, onLogout, onNavigate, onOpenAuth }: AccountM
           className="flex items-center gap-3 px-3 py-2.5 text-[10px] font-bold uppercase tracking-widest cursor-pointer rounded-sm hover:bg-danger/5 text-danger transition-colors focus:bg-danger/5 focus:text-danger"
         >
           <LogOut className="w-4 h-4" />
-          Sair da Conta
+          {t.nav.logout || "Sair"}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

@@ -161,6 +161,7 @@ export const useUI = create<UIStore>()(
           .eq('device_id', deviceId)
           .single();
 
+
         if (devicePrefs) {
           set({
             language: devicePrefs.language as SupportedLocale,

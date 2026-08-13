@@ -15,7 +15,9 @@ export const translations = {
       where: "Onde?",
       when: "Quando?",
       search: "Buscar",
-      agenda: "Agenda Completa"
+      agenda: "Agenda Completa",
+      profile: "Meu Perfil",
+      logout: "Sair"
     },
     home: {
       featuredLabel: "Destaque",
@@ -75,7 +77,9 @@ export const translations = {
       where: "Where?",
       when: "When?",
       search: "Search",
-      agenda: "Full Agenda"
+      agenda: "Full Agenda",
+      profile: "My Profile",
+      logout: "Logout"
     },
     home: {
       featuredLabel: "Featured",
@@ -135,7 +139,9 @@ export const translations = {
       where: "¿Dónde?",
       when: "¿Cuándo?",
       search: "Buscar",
-      agenda: "Agenda Completa"
+      agenda: "Agenda Completa",
+      profile: "Mi Perfil",
+      logout: "Cerrar Sesión"
     },
     home: {
       featuredLabel: "Destacado",
@@ -181,6 +187,6 @@ export const translations = {
       caravans: "Caravanas"
     }
   }
-} as const;
+} as any;
 
 export type TranslationKeys = typeof translations;
