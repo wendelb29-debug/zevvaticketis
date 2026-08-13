@@ -221,7 +221,7 @@ export function AuthModal({ isOpen, onClose, defaultView = 'login' }: AuthModalP
                     onChange={(e) => setFormData({...formData, senha: e.target.value})} 
                     className="h-12 rounded-[14px] border-border focus:ring-primary"
                   />
-                  <Button disabled={loading} className="w-full h-14 rounded-[16px] bg-primary hover:bg-primary-hover font-extrabold text-white shadow-lg shadow-primary/20">
+                  <Button disabled={loading} className="w-full h-14 rounded-[16px] font-extrabold shadow-lg">
                     {loading ? "Entrando..." : "Entrar"}
                   </Button>
                   <div className="flex flex-col gap-2 pt-1">
@@ -260,7 +260,7 @@ export function AuthModal({ isOpen, onClose, defaultView = 'login' }: AuthModalP
                     role === 'participante' ? "border-coral bg-coral/5" : "border-border hover:border-border"
                   )}
                 >
-                  <div className={cn("w-12 h-12 rounded-xl flex items-center justify-center", role === 'participante' ? "bg-coral text-white" : "bg-muted text-slate-400")}>
+                  <div className={cn("w-12 h-12 rounded-xl flex items-center justify-center", role === 'participante' ? "bg-primary text-primary-foreground" : "bg-muted text-slate-400")}>
                     <Ticket className="w-6 h-6" />
                   </div>
                   <div>
@@ -275,7 +275,7 @@ export function AuthModal({ isOpen, onClose, defaultView = 'login' }: AuthModalP
                     role === 'produtor' ? "border-coral bg-coral/5" : "border-border hover:border-border"
                   )}
                 >
-                  <div className={cn("w-12 h-12 rounded-xl flex items-center justify-center", role === 'produtor' ? "bg-navy text-white" : "bg-muted text-slate-400")}>
+                  <div className={cn("w-12 h-12 rounded-xl flex items-center justify-center", role === 'produtor' ? "bg-navy text-primary-foreground" : "bg-muted text-slate-400")}>
                     <Store className="w-6 h-6" />
                   </div>
                   <div>
@@ -286,7 +286,7 @@ export function AuthModal({ isOpen, onClose, defaultView = 'login' }: AuthModalP
               </div>
               <Button 
                 onClick={() => role ? setStep(2) : toast.error('Selecione seu perfil')}
-                className="w-full h-14 rounded-[16px] bg-navy text-white font-bold flex items-center justify-center gap-2 group"
+                className="w-full h-14 rounded-[16px] font-bold flex items-center justify-center gap-2 group"
               >
                 Próximo passo <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Button>
@@ -324,7 +324,7 @@ export function AuthModal({ isOpen, onClose, defaultView = 'login' }: AuthModalP
                 </label>
               </div>
 
-              <Button disabled={loading} className="w-full h-14 rounded-[16px] bg-coral hover:bg-coral-dark text-white font-extrabold uppercase tracking-widest shadow-lg shadow-coral/20">
+              <Button disabled={loading} className="w-full h-14 rounded-[16px] font-extrabold uppercase tracking-widest shadow-lg">
                 {loading ? "Processando..." : (role === 'produtor' ? "Solicitar Aprovação" : "Criar Conta")}
               </Button>
             </form>

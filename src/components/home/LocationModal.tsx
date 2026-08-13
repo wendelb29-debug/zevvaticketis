@@ -92,7 +92,7 @@ export function LocationModal({ isOpen, onClose, onSelect }: LocationModalProps)
             onClick={handleGeoLocation}
             className="w-full flex items-center gap-4 px-6 py-4 hover:bg-surface transition-colors text-left group"
           >
-            <div className="w-10 h-10 rounded-full bg-coral/10 flex items-center justify-center text-coral group-hover:bg-coral group-hover:text-white transition-all">
+            <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-all">
               <Target className={cn("w-5 h-5", locating && "animate-spin")} />
             </div>
             <div>
