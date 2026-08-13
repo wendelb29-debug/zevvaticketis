@@ -250,38 +250,88 @@ function ScannerPage() {
       {scannedResult && (
         <Card className={cn(
           "rounded-[32px] border-4 overflow-hidden animate-in fade-in zoom-in",
-          scannedResult.success ? "border-good bg-good/5" : "border-destructive bg-destructive/5"
+          scannedResult.success 
+            ? (scannedResult.offline ? "border-amber-500 bg-amber-500/5" : "border-emerald-500 bg-emerald-500/5") 
+            : "border-red-500 bg-red-500/5"
         )}>
           <CardContent className="p-8 text-center space-y-6">
             <div className={cn(
               "w-20 h-20 rounded-full mx-auto flex items-center justify-center",
-              scannedResult.success ? "bg-good text-white" : "bg-destructive text-white"
+              scannedResult.success 
+                ? (scannedResult.offline ? "bg-amber-500 text-white" : "bg-emerald-500 text-white") 
+                : "bg-red-500 text-white"
             )}>
               {scannedResult.success ? <CheckCircle2 className="w-10 h-10" /> : <XCircle className="w-10 h-10" />}
             </div>
 
             <div className="space-y-2">
-              <h3 className={cn("text-2xl font-black uppercase", scannedResult.success ? "text-good" : "text-destructive")}>
+              <h3 className={cn(
+                "text-2xl font-manrope font-black uppercase tracking-tight",
+                scannedResult.success 
+                  ? (scannedResult.offline ? "text-amber-600" : "text-emerald-500") 
+                  : "text-red-500"
+              )}>
                 {scannedResult.message}
               </h3>
+              {scannedResult.offline && (
+                <p className="text-[10px] font-bold text-amber-600 uppercase tracking-tighter bg-amber-100/50 py-1 px-3 rounded-full inline-block">Sincronização pendente</p>
+              )}
               {scannedResult.ticket && (
                 <div className="space-y-1">
-                  <p className="text-navy font-black text-lg uppercase leading-none">{scannedResult.ticket.profiles?.full_name}</p>
-                  <p className="text-slate-500 font-bold text-xs uppercase tracking-widest">{scannedResult.ticket.name || 'Ingresso Geral'}</p>
-                  <p className="text-[10px] text-slate-400 font-medium">Check-in: {new Date().toLocaleTimeString('pt-BR')}</p>
+                  <p className="text-navy font-black text-lg uppercase leading-none">{scannedResult.ticket.profiles?.full_name || 'Participante'}</p>
+                  <p className="text-slate-500 font-bold text-[10px] uppercase tracking-widest">#{scannedResult.ticket.qr_code?.substring(0,12)}</p>
+                  <p className="text-[10px] text-slate-400 font-medium">Check-in: {DateTime.now().toLocaleString(DateTime.TIME_SIMPLE)}</p>
                 </div>
               )}
             </div>
 
             <Button 
-              className="w-full h-14 rounded-2xl font-black uppercase text-sm bg-navy text-white"
+              className="w-full h-14 rounded-2xl font-black uppercase tracking-widest text-sm bg-navy text-white hover:bg-navy/90"
               onClick={() => setScannedResult(null)}
             >
-              Próximo
+              Próxima Leitura
             </Button>
           </CardContent>
         </Card>
       )}
-    </div>
+
+      {/* Recent History */}
+      <div className="space-y-3 pb-10">
+        <div className="flex items-center justify-between px-2">
+          <h4 className="text-[10px] font-black text-navy uppercase tracking-widest flex items-center gap-2">
+            <HistoryIcon className="w-3 h-3 text-coral" /> Últimas Leituras
+          </h4>
+        </div>
+        <div className="space-y-2">
+          {scanHistory.length === 0 ? (
+            <p className="text-[10px] text-slate-400 font-bold uppercase text-center py-4 bg-slate-50 rounded-2xl border border-dashed border-slate-200">
+              Aguardando scans...
+            </p>
+          ) : scanHistory.map((log) => (
+            <div key={log.id} className="flex items-center gap-3 p-3 bg-white rounded-2xl border border-slate-100 shadow-sm animate-in slide-in-from-right duration-300">
+              <div className={cn(
+                "w-8 h-8 rounded-lg flex items-center justify-center shrink-0",
+                log.status === 'presente' || log.status === 'sucesso' ? "bg-emerald-50 text-emerald-500" : "bg-red-50 text-red-500"
+              )}>
+                {log.status === 'presente' || log.status === 'sucesso' ? <CheckCircle2 className="w-4 h-4" /> : <AlertTriangle className="w-4 h-4" />}
+              </div>
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center justify-between">
+                  <p className="text-[10px] font-black text-navy uppercase truncate">
+                    {log.tickets?.name || log.tickets?.qr_code?.substring(0,8) || "Inválido"}
+                  </p>
+                  <span className="text-[9px] font-bold text-slate-400 uppercase">{log.checkin_time}</span>
+                </div>
+                <div className="flex items-center gap-2 mt-0.5">
+                  <UserIcon className="w-2.5 h-2.5 text-slate-300" />
+                  <span className="text-[9px] font-bold text-slate-400 uppercase truncate">
+                    Op: {log.profiles?.full_name?.split(' ')[0] || 'Sistema'}
+                  </span>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
   );
 }
