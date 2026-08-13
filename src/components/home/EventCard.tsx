@@ -14,19 +14,22 @@ export function EventCard({ event, onToggleFavorite }: EventCardProps) {
 
   const formatDate = (dateStr: string) => {
     if (!dateStr) return "A definir";
-    return new Date(dateStr).toLocaleDateString('pt-BR', { day: '2-digit', month: 'short' });
+    return new Date(dateStr).toLocaleDateString("pt-BR", { day: "2-digit", month: "short" });
   };
 
   return (
     <div className="group bg-surface border border-border overflow-hidden rounded-lg transition-all duration-300 hover:border-primary/30 hover:shadow-xl">
       <div className="relative aspect-[16/10] overflow-hidden bg-background">
-        <img 
-          src={event.cover_image || `https://source.unsplash.com/featured/?${event.category || 'event'}`} 
+        <img
+          src={
+            event.cover_image ||
+            `https://source.unsplash.com/featured/?${event.category || "event"}`
+          }
           alt={event.title}
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
         />
-        
-        <button 
+
+        <button
           onClick={(e) => {
             e.preventDefault();
             onToggleFavorite?.(event.id);
@@ -62,10 +65,11 @@ export function EventCard({ event, onToggleFavorite }: EventCardProps) {
               R$ {event.min_price || 0}
             </span>
           </div>
-          
+
           <Link 
-            to="/eventos" 
-            search={{ id: event.id, categoria: event.category || "CARAVANAS INTERNACIONAIS" } as any}
+            to="/eventos/$id" 
+            params={{ id: event.id }}
+            search={{ busca: undefined, categoria: undefined, cidade: undefined, data: undefined } as any}
             className="h-10 px-5 bg-background border border-border flex items-center justify-center rounded-md text-xs font-bold text-foreground hover:bg-primary hover:text-white hover:border-primary transition-all"
           >
             Ver Detalhes

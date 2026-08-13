@@ -9,6 +9,14 @@ import { toast } from "sonner";
 import { useState } from "react";
 
 export const Route = createFileRoute("/eventos/$id")({
+  validateSearch: (search: Record<string, unknown>) => {
+    return {
+      busca: (search['busca'] as string) || undefined,
+      categoria: (search['categoria'] as string) || undefined,
+      cidade: (search['cidade'] as string) || undefined,
+      data: (search['data'] as string) || undefined,
+    };
+  },
   component: EventDetailsPage,
 });
 

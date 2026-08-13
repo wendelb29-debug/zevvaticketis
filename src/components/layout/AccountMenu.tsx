@@ -8,6 +8,8 @@ import {
 import { User, LogOut, LayoutDashboard, ChevronDown } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
+import { useAvatarUrl } from "@/lib/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 interface AccountMenuProps {
   user: any;
@@ -32,6 +34,8 @@ export function AccountMenu({ user, onLogout, onNavigate, onOpenAuth }: AccountM
     enabled: !!user,
   });
 
+  const avatarUrl = useAvatarUrl(profile?.avatar_url);
+
   if (!user) {
     return (
       <button
@@ -48,17 +52,12 @@ export function AccountMenu({ user, onLogout, onNavigate, onOpenAuth }: AccountM
       <DropdownMenuTrigger asChild>
         <button className="flex items-center gap-3 p-1 rounded-sm hover:bg-background transition-all outline-none group border border-transparent hover:border-border">
           <div className="relative w-8 h-8 rounded-sm overflow-hidden bg-accent/10 border border-border">
-            {profile?.avatar_url ? (
-              <img
-                src={profile.avatar_url}
-                alt={profile.nome || ""}
-                className="w-full h-full object-cover"
-              />
-            ) : (
-              <div className="w-full h-full flex items-center justify-center bg-accent/10 text-accent text-xs font-bold">
+            <Avatar className="w-full h-full rounded-sm">
+              <AvatarImage src={avatarUrl} alt={profile?.nome || ""} className="object-cover" />
+              <AvatarFallback className="bg-accent/10 text-accent text-xs font-bold rounded-sm">
                 {profile?.nome?.charAt(0) || user.email?.charAt(0)}
-              </div>
-            )}
+              </AvatarFallback>
+            </Avatar>
           </div>
           <ChevronDown className="w-3 h-3 text-foreground-muted group-hover:text-primary transition-colors" />
         </button>
