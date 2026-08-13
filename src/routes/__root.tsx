@@ -178,6 +178,9 @@ function RootComponent() {
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session);
+      if (session) {
+        useUI.getState().syncWithBackend(session.user.id);
+      }
     });
 
     return () => subscription.unsubscribe();

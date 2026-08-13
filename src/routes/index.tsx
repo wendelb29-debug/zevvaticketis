@@ -143,8 +143,7 @@ function HomePage() {
 
   return (
     <div
-      className={cn("min-h-screen bg-background", language === "ar" ? "rtl" : "ltr")}
-      dir={language === "ar" ? "rtl" : "ltr"}
+      className="min-h-screen bg-background"
     >
       <Navbar selectedCity={null} />
 
