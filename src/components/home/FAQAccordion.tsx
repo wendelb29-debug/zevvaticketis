@@ -33,10 +33,10 @@ export function FAQAccordion() {
           value={`item-${index}`}
           className="border-b border-border px-0 bg-transparent transition-all shadow-none mb-0 group"
         >
-          <AccordionTrigger className="text-left font-serif text-2xl md:text-3xl hover:no-underline hover:text-accent transition-colors py-10 text-foreground">
+          <AccordionTrigger className="text-left font-bold text-lg md:text-xl hover:no-underline hover:text-primary transition-colors py-6 text-foreground">
             {faq.question}
           </AccordionTrigger>
-          <AccordionContent className="text-foreground-muted font-medium text-lg leading-relaxed pb-10 max-w-2xl">
+          <AccordionContent className="text-foreground-muted font-medium text-base leading-relaxed pb-6 max-w-2xl">
             {faq.answer}
           </AccordionContent>
         </AccordionItem>

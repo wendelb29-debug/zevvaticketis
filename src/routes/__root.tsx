@@ -22,19 +22,19 @@ import { reportLovableError } from "../lib/lovable-error-reporting";
 
 function NotFoundComponent() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background px-4">
+    <div className="flex min-h-screen items-center justify-center bg-[#F6F7F8] px-4">
       <div className="max-w-md text-center">
-        <h1 className="text-7xl font-bold text-foreground">404</h1>
-        <h2 className="mt-4 text-xl font-semibold text-foreground">Page not found</h2>
-        <p className="mt-2 text-sm text-muted-foreground">
-          The page you're looking for doesn't exist or has been moved.
+        <h1 className="text-8xl font-black text-[#17191C]">404</h1>
+        <h2 className="mt-4 text-2xl font-bold text-[#17191C]">Página não encontrada</h2>
+        <p className="mt-4 text-base text-[#62666D]">
+          A página que você está procurando não existe ou foi movida.
         </p>
-        <div className="mt-6">
+        <div className="mt-8">
           <Link
             to="/"
-            className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+            className="inline-flex h-12 items-center justify-center rounded-md bg-[#D94B52] px-8 text-sm font-bold text-white transition-all hover:bg-[#BE3941] shadow-lg shadow-[#D94B52]/10"
           >
-            Go home
+            Voltar ao Início
           </Link>
         </div>
       </div>
@@ -95,7 +95,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     links: [
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
-      { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700&family=Manrope:wght@800&display=swap" },
+      { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@600;700;800&display=swap" },
       { rel: "stylesheet", href: appCss },
       { rel: "icon", href: "/favicon.png", type: "image/png" },
     ],
