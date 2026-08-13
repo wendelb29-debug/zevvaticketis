@@ -15,7 +15,8 @@ import {
   Paperclip, Smile, ImageIcon, Play, Volume2, Pencil, X, Home, ChevronRight,
   ArrowUpDown, SortAsc, SortDesc, CalendarDays, Lock, Globe, MessageCircle,
   Music, FileText, Sparkles, Wand2, ArrowUpCircle, AlignLeft, Languages,
-  PanelLeftClose, PanelLeftOpen, ShoppingCart
+  PanelLeftClose, PanelLeftOpen, ShoppingCart,
+  CheckCircle2, Share2, Users, History
 } from 'lucide-react';
 import { SalesCardPicker } from "@/components/admin/chat/SalesCardPicker";
 import { ChatInput } from "@/components/admin/chat/ChatInput";
@@ -24,6 +25,9 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 import { toast } from "sonner";
 import { useTenants } from "@/hooks/use-tenants";
 import { DateTime } from "luxon";
+import { SidebarGroups } from "@/components/admin/chat/SidebarGroups";
+import { SidebarFiles } from "@/components/admin/chat/SidebarFiles";
+import { SidebarHistory } from "@/components/admin/chat/SidebarHistory";
 
 const READ_RECEIPT_BLUE = "READ_RECEIPT_BLUE";
 const ONLINE_STATUS_GREEN = "ONLINE_STATUS_GREEN";
