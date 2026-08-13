@@ -15,7 +15,7 @@ interface NavbarProps {
 }
 
 export function Navbar({ selectedCity }: { selectedCity?: string | null }) {
-  const [isScrolled, setIsScrolled] = useState(true);
+  const [isScrolled, setIsScrolled] = useState(false);
   const [user, setUser] = useState<any>(null);
   const { openOverlay, activeOverlay, language, setLanguage, isHomeSearchVisible, homeSearchTerm, setHomeSearchTerm } = useUI();
   const navigate = useNavigate();
@@ -25,16 +25,11 @@ export function Navbar({ selectedCity }: { selectedCity?: string | null }) {
   useEffect(() => {
     const handleScroll = () => {
       const scrollPos = window.scrollY || document.documentElement.scrollTop;
-      console.log('Navbar Scroll Position:', scrollPos);
       setIsScrolled(scrollPos > 10);
     };
     handleScroll();
     window.addEventListener("scroll", handleScroll, { passive: true });
-    const interval = setInterval(handleScroll, 1000);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      clearInterval(interval);
-    };
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   useEffect(() => {
@@ -119,7 +114,7 @@ export function Navbar({ selectedCity }: { selectedCity?: string | null }) {
 
         {/* Search & Actions */}
         <div className="flex items-center gap-6">
-          {isScrolled && (
+          {(!isHomeSearchVisible || location.pathname !== "/") && isScrolled && (
             <div className="hidden md:flex items-center animate-in fade-in slide-in-from-right-1.5 duration-200">
               <div className="relative w-64">
                 <input
