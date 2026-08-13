@@ -60,13 +60,25 @@ export function Navbar({ selectedCity }: { selectedCity?: string | null }) {
 
           {/* Main Navigation (Visible when not scrolled or in simpler desktop layout) */}
           <nav className="hidden lg:flex items-center gap-8">
-            <Link to="/eventos" search={{ id: undefined, categoria: undefined }} className="text-sm font-bold text-foreground-muted hover:text-primary transition-colors">
+            <Link 
+              to="/eventos" 
+              search={{ busca: undefined, categoria: undefined, cidade: undefined, data: undefined } as any} 
+              className="text-sm font-bold text-foreground-muted hover:text-primary transition-colors"
+            >
               Explorar
             </Link>
-            <Link to="/eventos" search={{ id: undefined, categoria: 'CARAVANAS INTERNACIONAIS' }} className="text-sm font-bold text-foreground-muted hover:text-primary transition-colors">
+            <Link 
+              to="/eventos" 
+              search={{ busca: undefined, categoria: 'CARAVANAS INTERNACIONAIS', cidade: undefined, data: undefined } as any} 
+              className="text-sm font-bold text-foreground-muted hover:text-primary transition-colors"
+            >
               Caravanas
             </Link>
-            <Link to="/eventos" search={{ id: undefined, categoria: 'CURSOS E IMERSÕES' }} className="text-sm font-bold text-foreground-muted hover:text-primary transition-colors">
+            <Link 
+              to="/eventos" 
+              search={{ busca: undefined, categoria: 'CURSOS E WORKSHOPS', cidade: undefined, data: undefined } as any} 
+              className="text-sm font-bold text-foreground-muted hover:text-primary transition-colors"
+            >
               Cursos
             </Link>
           </nav>
