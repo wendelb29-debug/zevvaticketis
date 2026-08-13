@@ -72,7 +72,7 @@ export function CheckinStats() {
   }, []);
 
   if (loading) {
-    return <div className="p-10 text-center font-inter text-muted-foreground-foreground">Carregando indicadores de check-in...</div>;
+    return <div className="p-10 text-center font-inter text-muted-foreground">Carregando indicadores de check-in...</div>;
   }
 
   return (
@@ -164,7 +164,7 @@ export function CheckinStats() {
                 {adData.map((ad, i) => (
                   <tr key={i} className="hover:bg-accent/10 transition-colors">
                     <td className="px-6 py-4 font-extrabold text-foreground">{ad.name}</td>
-                    <td className="px-4 py-4 text-xs font-bold text-muted-foreground-foreground uppercase">{ad.campaign}</td>
+                    <td className="px-4 py-4 text-xs font-bold text-muted-foreground uppercase">{ad.campaign}</td>
                     <td className="px-4 py-4 text-center font-bold">{ad.sold}</td>
                     <td className="px-4 py-4 text-center font-bold text-emerald-600">{ad.checkins}</td>
                     <td className="px-6 py-4 text-right">
@@ -222,7 +222,7 @@ export function CheckinStats() {
                 Business Intelligence
               </div>
               <h2 className="text-2xl font-manrope font-black tracking-tighter uppercase">Relatórios Avançados</h2>
-              <p className="text-muted-foreground-foreground text-sm font-medium">
+              <p className="text-muted-foreground text-sm font-medium">
                 Analise conversão de campanhas, no-show e dados demográficos dos participantes presentes.
               </p>
             </div>
@@ -256,7 +256,7 @@ function KPIItem({ title, value, icon: Icon, color }: { title: string, value: st
     neutral: {
       bar: "bg-muted-foreground",
       iconBackground: "bg-muted",
-      icon: "text-muted-foreground-foreground",
+      icon: "text-muted-foreground",
     },
   };
 
@@ -267,7 +267,7 @@ function KPIItem({ title, value, icon: Icon, color }: { title: string, value: st
       <div className={cn("absolute top-0 left-0 w-1 h-full", style.bar)} />
       <CardContent className="p-4">
         <div className="flex items-center justify-between mb-2">
-          <p className="text-[10px] font-black text-muted-foreground-foreground uppercase tracking-widest">{title}</p>
+          <p className="text-[10px] font-black text-muted-foreground uppercase tracking-widest">{title}</p>
           <div className={cn("p-2 rounded-lg", style.iconBackground)}>
             <Icon className={cn("w-4 h-4", style.icon)} />
           </div>
@@ -306,7 +306,7 @@ function ReportSummaryCard({ title, subtitle, buttonText, type }: any) {
           </div>
           <div>
             <h3 className="font-manrope font-extrabold text-foreground">{title}</h3>
-            <p className="text-xs text-muted-foreground-foreground font-medium">{subtitle}</p>
+            <p className="text-xs text-muted-foreground font-medium">{subtitle}</p>
           </div>
         </div>
         <Button variant="ghost" className="text-primary font-black text-xs uppercase flex items-center gap-2 group-hover:gap-3 transition-all">

@@ -113,7 +113,7 @@ export function UserMenu({ user, onLogout, onNavigate, agentStatus, onStatusChan
             )} />
           )}
           <div className="flex items-center gap-1">
-             <ChevronDown className="w-4 h-4 text-muted-foreground-foreground group-hover:text-foreground transition-colors" />
+             <ChevronDown className="w-4 h-4 text-muted-foreground group-hover:text-foreground transition-colors" />
           </div>
         </button>
       </DropdownMenuTrigger>
@@ -123,7 +123,7 @@ export function UserMenu({ user, onLogout, onNavigate, agentStatus, onStatusChan
             <p className="text-sm font-extrabold text-foreground truncate">
               {user?.user_metadata?.nome || user?.email}
             </p>
-            <p className="text-[11px] text-muted-foreground-foreground font-medium truncate mb-1">
+            <p className="text-[11px] text-muted-foreground font-medium truncate mb-1">
               {user?.email}
             </p>
             {role && (
@@ -170,7 +170,7 @@ export function UserMenu({ user, onLogout, onNavigate, agentStatus, onStatusChan
             onClick={() => onNavigate("/tickets")}
             className="flex items-center gap-2 px-3 py-2.5 rounded-lg text-sm font-bold text-foreground cursor-pointer hover:bg-primary/5"
           >
-            <Ticket className="w-4 h-4 text-muted-foreground-foreground" />
+            <Ticket className="w-4 h-4 text-muted-foreground" />
             Meus Ingressos
           </DropdownMenuItem>
 
@@ -178,13 +178,13 @@ export function UserMenu({ user, onLogout, onNavigate, agentStatus, onStatusChan
             onClick={() => onNavigate("/app/perfil")}
             className="flex items-center gap-2 px-3 py-2.5 rounded-lg text-sm font-bold text-foreground cursor-pointer hover:bg-primary/5"
           >
-            <UserIcon className="w-4 h-4 text-muted-foreground-foreground" />
+            <UserIcon className="w-4 h-4 text-muted-foreground" />
             Minha Conta
           </DropdownMenuItem>
 
           <DropdownMenuSub>
             <DropdownMenuSubTrigger className="flex items-center gap-2 px-3 py-2.5 rounded-lg text-sm font-bold text-foreground cursor-pointer hover:bg-primary/5">
-              <Palette className="w-4 h-4 text-muted-foreground-foreground" />
+              <Palette className="w-4 h-4 text-muted-foreground" />
               Alterar tema
             </DropdownMenuSubTrigger>
             <DropdownMenuPortal>
@@ -198,17 +198,17 @@ export function UserMenu({ user, onLogout, onNavigate, agentStatus, onStatusChan
 
           <DropdownMenuSub>
             <DropdownMenuSubTrigger className="flex items-center gap-2 px-3 py-2.5 rounded-lg text-sm font-bold text-foreground cursor-pointer hover:bg-primary/5">
-              <Type className="w-4 h-4 text-muted-foreground-foreground" />
+              <Type className="w-4 h-4 text-muted-foreground" />
               <div className="flex flex-1 justify-between items-center">
                 <span>Tamanho do texto</span>
-                <span className="text-[10px] text-muted-foreground-foreground">{fontSize}%</span>
+                <span className="text-[10px] text-muted-foreground">{fontSize}%</span>
               </div>
             </DropdownMenuSubTrigger>
             <DropdownMenuPortal>
               <DropdownMenuSubContent className="w-56 rounded-xl p-4 border-border shadow-xl font-inter bg-popover/95 backdrop-blur-md">
                 <div className="space-y-4">
                   <div className="flex justify-between items-center">
-                    <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground-foreground">Ajustar zoom</p>
+                    <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Ajustar zoom</p>
                     <span className="text-[10px] font-bold text-primary">{fontSize}%</span>
                   </div>
                   <div className="flex items-center gap-3">
@@ -268,7 +268,7 @@ export function UserMenu({ user, onLogout, onNavigate, agentStatus, onStatusChan
               className="flex items-center justify-between px-3 py-2.5 rounded-lg text-sm font-bold text-foreground cursor-pointer hover:bg-primary/5"
             >
               <div className="flex items-center gap-2">
-                <Sliders className="w-4 h-4 text-muted-foreground-foreground" />
+                <Sliders className="w-4 h-4 text-muted-foreground" />
                 Configurações
               </div>
             </DropdownMenuItem>
@@ -277,7 +277,7 @@ export function UserMenu({ user, onLogout, onNavigate, agentStatus, onStatusChan
               onClick={() => onNavigate("/admin/configuracoes")}
               className="flex items-center gap-2 px-3 py-2.5 rounded-lg text-sm font-bold text-foreground cursor-pointer hover:bg-primary/5"
             >
-              <SettingsIcon className="w-4 h-4 text-muted-foreground-foreground" />
+              <SettingsIcon className="w-4 h-4 text-muted-foreground" />
               Configurações
             </DropdownMenuItem>
           )}

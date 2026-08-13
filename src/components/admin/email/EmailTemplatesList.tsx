@@ -44,7 +44,7 @@ export function EmailTemplatesList() {
       <div className="flex justify-between items-center">
         <div>
           <h1 className="text-3xl font-manrope font-extrabold text-foreground">Templates de Comunicação</h1>
-          <p className="text-muted-foreground-foreground">Gerencie o conteúdo dos e-mails automáticos.</p>
+          <p className="text-muted-foreground">Gerencie o conteúdo dos e-mails automáticos.</p>
         </div>
         <Button className="bg-coral hover:bg-coral/90">
           <Plus className="w-4 h-4 mr-2" /> Novo Template
@@ -70,13 +70,13 @@ export function EmailTemplatesList() {
                   </div>
                 </div>
                 <CardTitle className="text-lg font-bold mt-2">{template.name}</CardTitle>
-                <p className="text-xs text-muted-foreground-foreground line-clamp-1 italic">{template.subject}</p>
+                <p className="text-xs text-muted-foreground line-clamp-1 italic">{template.subject}</p>
               </CardHeader>
               <CardContent className="pt-4 border-t">
                 <div className="flex justify-between items-center">
                   <div className="flex items-center gap-2">
                     <div className={`w-2 h-2 rounded-full ${template.status === 'active' ? 'bg-green-500' : 'bg-gray-300'}`} />
-                    <span className="text-[10px] font-bold uppercase tracking-tighter text-muted-foreground-foreground">
+                    <span className="text-[10px] font-bold uppercase tracking-tighter text-muted-foreground">
                       {template.status === 'active' ? 'Ativo' : 'Inativo'}
                     </span>
                   </div>

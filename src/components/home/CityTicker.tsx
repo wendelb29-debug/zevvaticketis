@@ -14,7 +14,7 @@ export function CityTicker() {
       <div className="flex animate-marquee whitespace-nowrap">
         {tickerItems.map((city, index) => (
           <div key={index} className="flex items-center mx-12">
-            <span className="text-[10px] font-bold text-muted-foreground-foreground uppercase tracking-[0.3em]">{city}</span>
+            <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-[0.3em]">{city}</span>
             <div className="w-px h-4 bg-border mx-12 rotate-12" />
           </div>
         ))}
