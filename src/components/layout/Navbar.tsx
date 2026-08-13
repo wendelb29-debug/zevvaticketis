@@ -82,33 +82,22 @@ export function Navbar({ selectedCity }: { selectedCity?: string | null }) {
               Explorar
             </Link>
             <Link
-              to="/eventos"
-              search={
-                {
-                  busca: undefined,
-                  categoria: "CARAVANAS INTERNACIONAIS",
-                  cidade: undefined,
-                  data: undefined,
-                } as any
-              }
+              to="/eventos/categoria/$slug"
+              params={{ slug: "caravanas" }}
+              search={{ busca: undefined, categoria: undefined, cidade: undefined, data: undefined } as any}
               className="text-sm font-bold text-foreground-muted hover:text-primary transition-colors"
             >
               Caravanas
             </Link>
             <Link
-              to="/eventos"
-              search={
-                {
-                  busca: undefined,
-                  categoria: "CURSOS E WORKSHOPS",
-                  cidade: undefined,
-                  data: undefined,
-                } as any
-              }
+              to="/cursos"
+
+
               className="text-sm font-bold text-foreground-muted hover:text-primary transition-colors"
             >
               Cursos
             </Link>
+
           </nav>
         </div>
 
