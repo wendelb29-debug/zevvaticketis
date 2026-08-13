@@ -29,6 +29,8 @@ import { DateTime } from "luxon";
 import { SidebarGroups } from "@/components/admin/chat/SidebarGroups";
 import { SidebarFiles } from "@/components/admin/chat/SidebarFiles";
 import { SidebarHistory } from "@/components/admin/chat/SidebarHistory";
+import { SidebarSchedule } from "@/components/admin/chat/SidebarSchedule";
+import { SidebarFinish } from "@/components/admin/chat/SidebarFinish";
 
 const READ_RECEIPT_BLUE = "READ_RECEIPT_BLUE";
 const ONLINE_STATUS_GREEN = "ONLINE_STATUS_GREEN";
@@ -838,12 +840,12 @@ function AdminChatPage() {
         {/* 9. BARRA VERTICAL DE AÇÕES (52px) */}
         <div className="w-[52px] border-l border-border bg-card flex flex-col items-center py-4 gap-4 z-20 shadow-[-4px_0_12px_rgba(0,0,0,0.05)]">
           {[
-            { id: 'finish', icon: CheckCircle2, label: 'Finalizar', color: 'text-green-500', disabled: true },
+            { id: 'finish', icon: CheckCircle2, label: 'Finalizar', color: 'text-green-500' },
             { id: 'transfer', icon: Share2, label: 'Transferir', disabled: true },
             { id: 'groups', icon: Users, label: 'Grupos' },
             { id: 'files', icon: Paperclip, label: 'Arquivos' },
             { id: 'history', icon: History, label: 'Histórico' },
-            { id: 'schedule', icon: Calendar, label: 'Agendar', disabled: true },
+            { id: 'schedule', icon: Calendar, label: 'Agendar' },
             { id: 'automations', icon: Zap, label: 'Automação', disabled: true },
             { id: 'copy', icon: Copy, label: 'Copiar', disabled: true },
             { id: 'print', icon: Printer, label: 'Imprimir', disabled: true },
@@ -890,6 +892,19 @@ function AdminChatPage() {
 
         <SidebarHistory
           isOpen={activeTool === 'history'}
+          onClose={() => setActiveTool(null)}
+          contactId={selectedContactId || ''}
+        />
+
+        <SidebarSchedule
+          isOpen={activeTool === 'schedule'}
+          onClose={() => setActiveTool(null)}
+          contactId={selectedContactId || ''}
+          tenantId={activeTenant?.id || ''}
+        />
+
+        <SidebarFinish
+          isOpen={activeTool === 'finish'}
           onClose={() => setActiveTool(null)}
           contactId={selectedContactId || ''}
         />
