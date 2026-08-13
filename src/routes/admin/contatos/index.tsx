@@ -37,6 +37,7 @@ import {
 import { Badge } from '@/components/ui/badge';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
+import { cn } from '@/lib/utils';
 
 export const Route = createFileRoute('/admin/contatos/')({
   component: ContactsPage,
