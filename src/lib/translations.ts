@@ -10,7 +10,12 @@ export const translations = {
       organizer: "Organizador",
       login: "Entrar",
       searchPlaceholder: "O que você está buscando?",
-      createEvent: "Criar Evento"
+      createEvent: "Criar Evento",
+      searchFull: "O que você está buscando?",
+      where: "Onde?",
+      when: "Quando?",
+      search: "Buscar",
+      agenda: "Agenda Completa"
     },
     home: {
       featuredLabel: "Destaque",
@@ -29,10 +34,12 @@ export const translations = {
       categoriesSubtitle: "Encontre o que você procura.",
       suggested: "Sugestões para você",
       suggestedSubtitle: "Baseado no seu perfil.",
-      searchFull: "O que você está buscando?",
-      where: "Onde?",
-      when: "Quando?",
-      search: "Buscar"
+      upcoming: "Próximos Eventos",
+      upcomingSubtitle: "Não perca as próximas datas.",
+      coursesTitle: "Cursos e Workshops",
+      coursesSubtitle: "Aprenda com os melhores profissionais do mercado.",
+      caravansTitle: "Caravanas",
+      caravansSubtitle: "Viagens organizadas com todo suporte que você precisa."
     },
     footer: {
       about: "Sobre a Zevva",
@@ -63,7 +70,12 @@ export const translations = {
       organizer: "Organizer",
       login: "Login",
       searchPlaceholder: "What are you looking for?",
-      createEvent: "Create Event"
+      createEvent: "Create Event",
+      searchFull: "What are you looking for?",
+      where: "Where?",
+      when: "When?",
+      search: "Search",
+      agenda: "Full Agenda"
     },
     home: {
       featuredLabel: "Featured",
@@ -82,10 +94,12 @@ export const translations = {
       categoriesSubtitle: "Find what you are looking for.",
       suggested: "Suggestions for you",
       suggestedSubtitle: "Based on your profile.",
-      searchFull: "What are you looking for?",
-      where: "Where?",
-      when: "When?",
-      search: "Search"
+      upcoming: "Upcoming Events",
+      upcomingSubtitle: "Don't miss the next dates.",
+      coursesTitle: "Courses and Workshops",
+      coursesSubtitle: "Learn from the best professionals in the field.",
+      caravansTitle: "Caravans",
+      caravansSubtitle: "Organized trips with all the support you need."
     },
     footer: {
       about: "About Zevva",
@@ -116,7 +130,12 @@ export const translations = {
       organizer: "Organizador",
       login: "Acceder",
       searchPlaceholder: "¿Qué estás buscando?",
-      createEvent: "Crear Evento"
+      createEvent: "Crear Evento",
+      searchFull: "¿Qué estás buscando?",
+      where: "¿Dónde?",
+      when: "¿Cuándo?",
+      search: "Buscar",
+      agenda: "Agenda Completa"
     },
     home: {
       featuredLabel: "Destacado",
@@ -135,10 +154,12 @@ export const translations = {
       categoriesSubtitle: "Encuentra lo que buscas.",
       suggested: "Sugerencias para ti",
       suggestedSubtitle: "Basado en tu perfil.",
-      searchFull: "¿Qué estás buscando?",
-      where: "¿Dónde?",
-      when: "¿Cuándo?",
-      search: "Buscar"
+      upcoming: "Próximos Eventos",
+      upcomingSubtitle: "No te pierdas las próximas fechas.",
+      coursesTitle: "Cursos y Talleres",
+      coursesSubtitle: "Aprende de los mejores profesionales del sector.",
+      caravansTitle: "Caravanas",
+      caravansSubtitle: "Viajes organizados con todo el apoyo que necesitas."
     },
     footer: {
       about: "Sobre Zevva",
