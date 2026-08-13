@@ -265,7 +265,7 @@ export const transferAttendanceAction = createServerFn({ method: "POST" })
     const { data: result, error } = await supabase.rpc('transfer_attendance', {
       p_attendance_id: data.attendanceId,
       p_new_department_id: data.newDepartmentId,
-      p_new_agent_id: data.newAgentId || undefined,
+      p_new_agent_id: data.newAgentId || '',
       p_reason: data.reason,
       p_client_message: data.clientMessage || ''
     });
