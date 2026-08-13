@@ -117,7 +117,7 @@ function initials(name: string) {
     .join("");
 }
 
-export function TeamManagement({ tenantId }: { tenantId?: string | null }) {
+export function TeamManagement({ tenantId }: { tenantId?: string | null | undefined }) {
   const { data: projectRoles = [] } = useQuery({
     queryKey: ["project-roles", tenantId],
     queryFn: () => getProjectRoles({ data: { tenantId: tenantId! } }),
