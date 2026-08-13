@@ -9,7 +9,7 @@ const inviteSchema = z.object({
   departments: z.array(z.string().trim().min(1).max(80)).max(50).default([]),
   accessHours: z.string().trim().max(80).optional(),
   redirectTo: z.string().trim().url().max(500).optional()
-    .refine(url => !url || url.startsWith(process.env.VITE_APP_URL || 'http://localhost:8080'), {
+    .refine(url => !url || url.startsWith(process.env['VITE_APP_URL'] || 'http://localhost:8080'), {
       message: "Redirecionamento permitido apenas para domínios do sistema."
     }),
   tenantId: z.string().uuid(),
