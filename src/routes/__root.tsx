@@ -6,6 +6,7 @@ import {
   useRouter,
   HeadContent,
   Scripts,
+  useLocation,
 } from "@tanstack/react-router";
 import { useEffect, useState, useRef, type ReactNode } from "react";
 import { AuthModal } from "@/components/layout/AuthModal";
@@ -13,6 +14,7 @@ import { useUI } from "@/hooks/use-ui";
 import { LocationModal } from "@/components/home/LocationModal";
 import { ZevvaLoadingScreen } from "@/components/layout/ZevvaLoadingScreen";
 import { TenantProvider } from "@/hooks/use-tenants";
+import { supabase } from "@/integrations/supabase/client";
 
 
 
@@ -167,19 +169,58 @@ function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   const { activeOverlay, authView, closeOverlay, language, theme, fontSize } = useUI() as any;
   const router = useRouter();
+  const location = useLocation();
   const [isNavigating, setIsNavigating] = useState(false);
+  const [session, setSession] = useState<any>(null);
+
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session);
+    });
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
 
   useEffect(() => {
     const root = window.document.documentElement;
     const media = window.matchMedia("(prefers-color-scheme: dark)");
 
+    const isAdminRoute = location.pathname.startsWith('/admin');
+    const isAppRoute = location.pathname.startsWith('/app');
+    const isCheckinRoute = location.pathname.startsWith('/checkin');
+    const isPrivateArea = isAdminRoute || isAppRoute || isCheckinRoute;
+    const isUserLoggedIn = !!session;
+
     const applyTheme = () => {
+      // Determine the effective theme
+      let effectiveTheme = theme;
+      
+      // RULE: Homepage/Public routes always light if not logged in or even if logged in but on home?
+      // User said: "chat na home page ela nao pode alterar o modo escuro ou claro deixa sempre no claro, so quando loga no sistema poder alterar o dark mode"
+      // Interpretation: If on home page, force light. Only allow dark mode when logged in AND (implied) in internal areas or system-wide if logged in.
+      // Usually "logar no sistema" means the user is inside the dashboard.
+      
+      if (!isPrivateArea && !isUserLoggedIn) {
+        effectiveTheme = 'light';
+      } else if (!isPrivateArea && isUserLoggedIn) {
+        // If logged in but on public page, user might still want light theme or their preference.
+        // But the prompt says "chat na home page... deixa sempre no claro". 
+        // Let's force light on home page regardless, and allow theme only in system areas.
+        if (location.pathname === '/' || location.pathname === '/eventos') {
+           effectiveTheme = 'light';
+        }
+      }
+
       const resolvedTheme =
-        theme === "system"
+        effectiveTheme === "system"
           ? media.matches
             ? "dark"
             : "light"
-          : theme;
+          : effectiveTheme;
 
       root.classList.remove("light", "dark");
       root.classList.add(resolvedTheme);
@@ -196,7 +237,7 @@ function RootComponent() {
     return () => {
       media.removeEventListener("change", applyTheme);
     };
-  }, [theme]);
+  }, [theme, location.pathname, session]);
 
   useEffect(() => {
     document.documentElement.style.fontSize = `${(fontSize / 100) * 16}px`;
