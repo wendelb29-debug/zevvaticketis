@@ -100,8 +100,6 @@ function AdminChatPage() {
   const [isSalesPickerOpen, setIsSalesPickerOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<'atendimento' | 'espera'>('atendimento');
   const [activeTool, setActiveTool] = useState<'finish' | 'transfer' | 'groups' | 'files' | 'history' | 'schedule' | 'automations' | null>(null);
-  const selectedContact = contactsData?.find((c: any) => c.id === selectedContactId);
-  const selectedAttendanceId = selectedContact?.current_attendance_id;
 
   const { data: integrationStatus } = useQuery({
     queryKey: ['whatsapp-integration-status', activeTenant?.id],
