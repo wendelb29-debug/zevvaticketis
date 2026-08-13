@@ -112,39 +112,39 @@ function DistribuicaoConversas({ departments }: { departments: Dept[] }) {
           <Workflow className="w-5 h-5 text-primary mt-0.5" />
           <div>
             <p className="font-bold">Distribuição de conversas</p>
-            <p className="text-xs text-muted-foreground-fg">Como as conversas são entregues e distribuídas entre os agentes.</p>
+            <p className="text-xs text-muted-foreground">Como as conversas são entregues e distribuídas entre os agentes.</p>
           </div>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-5">
           <div className="space-y-2">
-            <Label className="text-[11px] font-bold tracking-wider text-muted-foreground-fg uppercase">Modo de entrega de conversas</Label>
+            <Label className="text-[11px] font-bold tracking-wider text-muted-foreground uppercase">Modo de entrega de conversas</Label>
             <OptionRadio label="Forçar aceitação automática" selected={modoEntrega === "automatica"} onSelect={() => setModoEntrega("automatica")} />
             <OptionRadio label="Permitir aceite/recusa" selected={modoEntrega === "aceite"} onSelect={() => setModoEntrega("aceite")} />
           </div>
 
           <div className="space-y-2">
-            <Label className="text-[11px] font-bold tracking-wider text-muted-foreground-fg uppercase">Tipo de distribuição por usuário</Label>
+            <Label className="text-[11px] font-bold tracking-wider text-muted-foreground uppercase">Tipo de distribuição por usuário</Label>
             <OptionRadio label="Circular" selected={tipoDistribuicao === "circular"} onSelect={() => setTipoDistribuicao("circular")} />
             <OptionRadio label="Igualitária" selected={tipoDistribuicao === "igualitaria"} onSelect={() => setTipoDistribuicao("igualitaria")} />
             <OptionRadio label="Por disponibilidade" selected={tipoDistribuicao === "disponibilidade"} onSelect={() => setTipoDistribuicao("disponibilidade")} />
           </div>
 
           <div className="space-y-2">
-            <Label className="text-[11px] font-bold tracking-wider text-muted-foreground-fg uppercase">Conversas por ciclo de distribuição</Label>
+            <Label className="text-[11px] font-bold tracking-wider text-muted-foreground uppercase">Conversas por ciclo de distribuição</Label>
             <Input type="number" value={porCiclo} onChange={(e) => setPorCiclo(e.target.value)} className="bg-background border-border" />
-            <p className="text-xs text-muted-foreground-fg">Máximo de conversas que um agente pode receber a cada ciclo. Evita sobrecarga quando há muitas conversas acumuladas no departamento.</p>
+            <p className="text-xs text-muted-foreground">Máximo de conversas que um agente pode receber a cada ciclo. Evita sobrecarga quando há muitas conversas acumuladas no departamento.</p>
           </div>
 
           <div className="space-y-2">
             <div className="flex items-center justify-between gap-2">
-              <Label className="text-[11px] font-bold tracking-wider text-muted-foreground-fg uppercase">Último atendente</Label>
+              <Label className="text-[11px] font-bold tracking-wider text-muted-foreground uppercase">Último atendente</Label>
               <Switch checked={ultimoAtendente} onCheckedChange={setUltimoAtendente} />
             </div>
             {ultimoAtendente && (
               <>
                 <Input type="number" value={tentativas} onChange={(e) => setTentativas(e.target.value)} className="bg-background border-border" />
-                <p className="text-xs text-muted-foreground-fg">Número de tentativas antes de distribuir normalmente.</p>
+                <p className="text-xs text-muted-foreground">Número de tentativas antes de distribuir normalmente.</p>
               </>
             )}
           </div>
@@ -155,7 +155,7 @@ function DistribuicaoConversas({ departments }: { departments: Dept[] }) {
             <div className="flex items-start justify-between gap-4">
               <div>
                 <p className="font-bold">Limitar conversas receptivas</p>
-                <p className="text-xs text-muted-foreground-fg">Limite de conversas que o agente pode receber por vez, distribuídas automaticamente.</p>
+                <p className="text-xs text-muted-foreground">Limite de conversas que o agente pode receber por vez, distribuídas automaticamente.</p>
               </div>
               <Switch checked={limitarReceptivos} onCheckedChange={setLimitarReceptivos} />
             </div>
@@ -171,7 +171,7 @@ function DistribuicaoConversas({ departments }: { departments: Dept[] }) {
             <div className="flex items-start justify-between gap-4">
               <div>
                 <p className="font-bold">Limitar conversas ativas</p>
-                <p className="text-xs text-muted-foreground-fg">Número máximo de conversas ativas (iniciadas pelo agente) por agente.</p>
+                <p className="text-xs text-muted-foreground">Número máximo de conversas ativas (iniciadas pelo agente) por agente.</p>
               </div>
               <Switch checked={limitarAtivos} onCheckedChange={setLimitarAtivos} />
             </div>
@@ -188,7 +188,7 @@ function DistribuicaoConversas({ departments }: { departments: Dept[] }) {
           <div className="flex items-start justify-between gap-4">
             <div>
               <p className="font-bold">Separar limites por fila de departamento</p>
-              <p className="text-xs text-muted-foreground-fg">Define um limite de conversas simultâneas específico para cada fila.</p>
+              <p className="text-xs text-muted-foreground">Define um limite de conversas simultâneas específico para cada fila.</p>
             </div>
             <Switch checked={porFila} onCheckedChange={setPorFila} />
           </div>
@@ -202,7 +202,7 @@ function DistribuicaoConversas({ departments }: { departments: Dept[] }) {
                     </div>
                     <div>
                       <p className="text-sm font-bold">{d.name}</p>
-                      <p className="text-xs text-muted-foreground-fg">{d.members} agentes na fila</p>
+                      <p className="text-xs text-muted-foreground">{d.members} agentes na fila</p>
                     </div>
                   </div>
                   <Input
@@ -384,7 +384,7 @@ function SettingsPage({ session }: { session: any }) {
     <div className="space-y-8 p-6 max-w-7xl mx-auto pb-12 font-inter text-foreground animate-in fade-in duration-500">
       <div className="flex flex-col gap-2">
         <h1 className="text-3xl font-manrope font-extrabold text-foreground">Configurações do Projeto</h1>
-        <p className="text-muted-foreground-fg">Administre as operações, equipe e o núcleo do sistema Zevva.</p>
+        <p className="text-muted-foreground">Administre as operações, equipe e o núcleo do sistema Zevva.</p>
       </div>
 
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
@@ -424,15 +424,15 @@ function SettingsPage({ session }: { session: any }) {
                       </CardHeader>
                       <CardContent className="p-4 flex justify-between items-center">
                         <div className="text-center">
-                          <p className="text-[10px] text-muted-foreground-fg uppercase font-bold">Em atendimento</p>
+                          <p className="text-[10px] text-muted-foreground uppercase font-bold">Em atendimento</p>
                           <p className="text-lg font-extrabold text-primary">{status.in_service}</p>
                         </div>
                         <div className="text-center">
-                          <p className="text-[10px] text-muted-foreground-fg uppercase font-bold">Pendentes</p>
+                          <p className="text-[10px] text-muted-foreground uppercase font-bold">Pendentes</p>
                           <p className="text-lg font-extrabold text-error">{status.pending}</p>
                         </div>
                         <div className="text-center">
-                          <p className="text-[10px] text-muted-foreground-fg uppercase font-bold">Completas</p>
+                          <p className="text-[10px] text-muted-foreground uppercase font-bold">Completas</p>
                           <p className="text-lg font-extrabold text-emerald-500">{status.completed}</p>
                         </div>
                       </CardContent>
@@ -450,7 +450,7 @@ function SettingsPage({ session }: { session: any }) {
                 </div>
               </AccordionTrigger>
               <AccordionContent className="px-6 pb-6 pt-2 space-y-4">
-                <p className="text-sm text-muted-foreground-fg">
+                <p className="text-sm text-muted-foreground">
                   Crie, edite e gerencie as filas de atendimento vinculadas a departamentos. 
                   Apenas usuários vinculados à fila e ao departamento poderão realizar o atendimento e visualizar o fluxo.
                 </p>
@@ -466,7 +466,7 @@ function SettingsPage({ session }: { session: any }) {
                         <Label htmlFor="notify-queue-changes" className="text-sm font-bold cursor-pointer">
                           Notificar mudanças de fila
                         </Label>
-                        <p className="text-[11px] text-muted-foreground-fg">Notifica agentes ou departamentos sobre alterações no fluxo.</p>
+                        <p className="text-[11px] text-muted-foreground">Notifica agentes ou departamentos sobre alterações no fluxo.</p>
                       </div>
                     </div>
                     {notificarMudancasFila && (
@@ -487,7 +487,7 @@ function SettingsPage({ session }: { session: any }) {
                   {notificarMudancasFila && (
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
                       <div className="space-y-1.5">
-                        <Label className="text-[10px] uppercase font-bold text-muted-foreground-fg">Canal de Notificação</Label>
+                        <Label className="text-[10px] uppercase font-bold text-muted-foreground">Canal de Notificação</Label>
                         <div className="flex gap-2">
                           {["whatsapp", "email", "interno"].map((canal) => (
                             <button
@@ -497,7 +497,7 @@ function SettingsPage({ session }: { session: any }) {
                                 "flex-1 py-1.5 px-2 rounded-lg border text-[10px] font-bold uppercase transition-all",
                                 notificarCanal === canal 
                                   ? "bg-primary text-primary-foreground border-primary" 
-                                  : "bg-background border-border text-muted-foreground-fg hover:border-primary/50"
+                                  : "bg-background border-border text-muted-foreground hover:border-primary/50"
                               )}
                             >
                               {canal}
@@ -525,7 +525,7 @@ function SettingsPage({ session }: { session: any }) {
                         </CardTitle>
                       </CardHeader>
                       <CardContent className="p-4 pt-0">
-                        <p className="text-[11px] text-muted-foreground-fg mb-3 line-clamp-1">Vinculada ao departamento: {dept.name}</p>
+                        <p className="text-[11px] text-muted-foreground mb-3 line-clamp-1">Vinculada ao departamento: {dept.name}</p>
                         <div className="flex gap-2">
                           <Button 
                             variant="secondary" 
@@ -599,7 +599,7 @@ function SettingsPage({ session }: { session: any }) {
                           <p className="font-bold">{dept.name}</p>
                           <div className="flex flex-wrap gap-1 mt-1">
                             {dept.agents.length === 0 && (
-                              <span className="text-xs text-muted-foreground-fg">Nenhum atendente atribuído</span>
+                              <span className="text-xs text-muted-foreground">Nenhum atendente atribuído</span>
                             )}
                             {dept.agents.slice(0, 3).map((id) => (
                               <span key={id} className="px-2 py-0.5 rounded-full border border-border text-xs font-bold">
@@ -617,7 +617,7 @@ function SettingsPage({ session }: { session: any }) {
                       <div className="flex items-center gap-2 shrink-0">
                         <span className={cn(
                           "text-xs font-bold px-2 py-1 rounded-full",
-                          dept.restrictions.length > 0 ? "bg-primary/10 text-primary" : "text-muted-foreground-fg"
+                          dept.restrictions.length > 0 ? "bg-primary/10 text-primary" : "text-muted-foreground"
                         )}>
                           {dept.restrictions.length > 0 ? "Transferências restritas" : "Global"}
                         </span>
@@ -649,7 +649,7 @@ function SettingsPage({ session }: { session: any }) {
                     <div key={tag.id} className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-border bg-background group">
                       <div className="w-3 h-3 rounded-full" style={{ backgroundColor: tag.color }} />
                       <span className="text-sm font-bold">{tag.name}</span>
-                      <button className="text-muted-foreground-fg hover:text-error transition-colors opacity-0 group-hover:opacity-100">
+                      <button className="text-muted-foreground hover:text-error transition-colors opacity-0 group-hover:opacity-100">
                         <X className="w-3 h-3" />
                       </button>
                     </div>
@@ -666,7 +666,7 @@ function SettingsPage({ session }: { session: any }) {
                 </div>
               </AccordionTrigger>
               <AccordionContent className="px-6 pb-6 pt-2 space-y-4">
-                <p className="text-sm text-muted-foreground-fg">Configure ações automáticas baseadas em eventos do chat.</p>
+                <p className="text-sm text-muted-foreground">Configure ações automáticas baseadas em eventos do chat.</p>
                 <Button variant="outline" className="w-full border-dashed border-2 hover:bg-accent hover:border-primary transition-all">
                   <Plus className="w-4 h-4 mr-2" /> Criar Novo Gatilho
                 </Button>
@@ -685,18 +685,18 @@ function SettingsPage({ session }: { session: any }) {
                   <div className="space-y-2">
                     <Label className="font-bold">Tempo de Inatividade (min)</Label>
                     <Input type="number" defaultValue={15} className="bg-background border-border" />
-                    <p className="text-xs text-muted-foreground-fg">Minutos para marcar ticket como inativo.</p>
+                    <p className="text-xs text-muted-foreground">Minutos para marcar ticket como inativo.</p>
                   </div>
                   <div className="space-y-2">
                     <Label className="font-bold">Alerta de SLA (min)</Label>
                     <Input type="number" defaultValue={10} className="bg-background border-border" />
-                    <p className="text-xs text-muted-foreground-fg">Tempo máximo para resposta inicial.</p>
+                    <p className="text-xs text-muted-foreground">Tempo máximo para resposta inicial.</p>
                   </div>
                 </div>
                 <div className="flex items-center justify-between p-4 bg-background border border-border rounded-xl">
                   <div className="space-y-0.5">
                     <Label className="font-bold">Encerramento Automático</Label>
-                    <p className="text-xs text-muted-foreground-fg">Fechar tickets inativos após o prazo.</p>
+                    <p className="text-xs text-muted-foreground">Fechar tickets inativos após o prazo.</p>
                   </div>
                   <Switch defaultChecked />
                 </div>
@@ -716,7 +716,7 @@ function SettingsPage({ session }: { session: any }) {
                 </div>
               </AccordionTrigger>
               <AccordionContent className="px-6 pb-6 pt-2">
-                 <p className="text-sm text-muted-foreground-fg">Defina o que cada perfil pode visualizar e editar.</p>
+                 <p className="text-sm text-muted-foreground">Defina o que cada perfil pode visualizar e editar.</p>
               </AccordionContent>
             </AccordionItem>
             <AccordionItem value="filas" className="border-border bg-card rounded-xl border overflow-hidden shadow-sm">
@@ -726,7 +726,7 @@ function SettingsPage({ session }: { session: any }) {
                 </div>
               </AccordionTrigger>
               <AccordionContent className="px-6 pb-6 pt-2">
-                 <p className="text-sm text-muted-foreground-fg">Organize o fluxo de entrada de mensagens.</p>
+                 <p className="text-sm text-muted-foreground">Organize o fluxo de entrada de mensagens.</p>
               </AccordionContent>
             </AccordionItem>
           </Accordion>
@@ -741,7 +741,7 @@ function SettingsPage({ session }: { session: any }) {
                 </div>
               </AccordionTrigger>
               <AccordionContent className="px-6 pb-6 pt-2">
-                 <p className="text-sm text-muted-foreground-fg">Configurações de infraestrutura e dados do sistema.</p>
+                 <p className="text-sm text-muted-foreground">Configurações de infraestrutura e dados do sistema.</p>
               </AccordionContent>
             </AccordionItem>
             <AccordionItem value="integracoes" className="border-border bg-card rounded-xl border overflow-hidden shadow-sm">
@@ -761,7 +761,7 @@ function SettingsPage({ session }: { session: any }) {
                 </div>
               </AccordionTrigger>
               <AccordionContent className="px-6 pb-6 pt-2">
-                 <p className="text-sm text-muted-foreground-fg">Ajustes finos de interface e comportamento da plataforma.</p>
+                 <p className="text-sm text-muted-foreground">Ajustes finos de interface e comportamento da plataforma.</p>
               </AccordionContent>
             </AccordionItem>
           </Accordion>
@@ -779,7 +779,7 @@ function SettingsPage({ session }: { session: any }) {
             <DialogTitle className="text-xl font-manrope font-extrabold">
               {editingDeptId ? "Editar departamento" : "Criar departamento"}
             </DialogTitle>
-            <DialogDescription className="text-muted-foreground-fg">
+            <DialogDescription className="text-muted-foreground">
               Crie departamentos para organizar e distribuir os atendimentos.
             </DialogDescription>
           </DialogHeader>
@@ -796,12 +796,12 @@ function SettingsPage({ session }: { session: any }) {
 
             <div className="space-y-2">
               <Label className="text-sm font-bold">Atendentes</Label>
-              <p className="text-xs text-muted-foreground-fg">
+              <p className="text-xs text-muted-foreground">
                 Os atendimentos deste departamento serão distribuídos apenas para os usuários selecionados.
               </p>
               <div className="rounded-xl border border-border bg-background overflow-hidden">
                 <div className="flex items-center gap-2 px-3 py-2 border-b border-border">
-                  <Search className="w-4 h-4 text-muted-foreground-fg" />
+                  <Search className="w-4 h-4 text-muted-foreground" />
                   <input
                     value={agentSearch}
                     onChange={(e) => setAgentSearch(e.target.value)}
@@ -816,7 +816,7 @@ function SettingsPage({ session }: { session: any }) {
                         deptAgents.length === filteredAgents.length ? [] : filteredAgents.map((a) => a.id)
                       )
                     }
-                    className="text-muted-foreground-fg hover:text-primary transition-colors"
+                    className="text-muted-foreground hover:text-primary transition-colors"
                   >
                     <ListChecks className="w-4 h-4" />
                   </button>
@@ -835,12 +835,12 @@ function SettingsPage({ session }: { session: any }) {
                         }
                       />
                       <span className="text-sm font-bold">
-                        {a.name} <span className="text-muted-foreground-fg font-normal">({a.email})</span>
+                        {a.name} <span className="text-muted-foreground font-normal">({a.email})</span>
                       </span>
                     </label>
                   ))}
                   {filteredAgents.length === 0 && (
-                    <p className="px-3 py-4 text-sm text-muted-foreground-fg">Nenhum usuário encontrado.</p>
+                    <p className="px-3 py-4 text-sm text-muted-foreground">Nenhum usuário encontrado.</p>
                   )}
                 </div>
               </div>
@@ -848,12 +848,12 @@ function SettingsPage({ session }: { session: any }) {
 
             <div className="space-y-2">
               <Label className="text-sm font-bold">Restringir recebimento de transferências</Label>
-              <p className="text-xs text-muted-foreground-fg">
+              <p className="text-xs text-muted-foreground">
                 Selecione os departamentos que NÃO poderão transferir conversas para este departamento.
               </p>
               <div className="rounded-xl border border-border bg-background overflow-hidden">
                 <div className="flex items-center gap-2 px-3 py-2 border-b border-border">
-                  <Search className="w-4 h-4 text-muted-foreground-fg" />
+                  <Search className="w-4 h-4 text-muted-foreground" />
                   <input
                     value={restrictSearch}
                     onChange={(e) => setRestrictSearch(e.target.value)}
@@ -870,7 +870,7 @@ function SettingsPage({ session }: { session: any }) {
                           : filteredRestrictDepts.map((d) => d.id)
                       )
                     }
-                    className="text-muted-foreground-fg hover:text-primary transition-colors"
+                    className="text-muted-foreground hover:text-primary transition-colors"
                   >
                     <ListChecks className="w-4 h-4" />
                   </button>
@@ -892,7 +892,7 @@ function SettingsPage({ session }: { session: any }) {
                     </label>
                   ))}
                   {filteredRestrictDepts.length === 0 && (
-                    <p className="px-3 py-4 text-sm text-muted-foreground-fg">Nenhum departamento disponível.</p>
+                    <p className="px-3 py-4 text-sm text-muted-foreground">Nenhum departamento disponível.</p>
                   )}
                 </div>
               </div>
@@ -911,7 +911,7 @@ function SettingsPage({ session }: { session: any }) {
         <DialogContent className="sm:max-w-[425px] bg-card border-border p-0 overflow-hidden text-foreground border shadow-2xl">
           <DialogHeader className="p-6 bg-accent/20 border-b border-border">
             <DialogTitle className="text-xl font-manrope font-extrabold">Nova Tag</DialogTitle>
-            <DialogDescription className="text-muted-foreground-fg">Crie classificações visuais para o chat.</DialogDescription>
+            <DialogDescription className="text-muted-foreground">Crie classificações visuais para o chat.</DialogDescription>
           </DialogHeader>
           <div className="p-6 space-y-6">
             <div className="space-y-2">
@@ -952,7 +952,7 @@ function SettingsPage({ session }: { session: any }) {
         <DialogContent className="sm:max-w-[425px] bg-card border-border p-0 overflow-hidden text-foreground border shadow-2xl">
           <DialogHeader className="p-6 bg-accent/20 border-b border-border">
             <DialogTitle className="text-xl font-manrope font-extrabold">Template de Notificação</DialogTitle>
-            <DialogDescription className="text-muted-foreground-fg">Padronize o texto das notificações de mudanças de fila.</DialogDescription>
+            <DialogDescription className="text-muted-foreground">Padronize o texto das notificações de mudanças de fila.</DialogDescription>
           </DialogHeader>
           <div className="p-6 space-y-4">
             <div className="space-y-2">
@@ -964,13 +964,13 @@ function SettingsPage({ session }: { session: any }) {
                 className="w-full rounded-lg border border-border bg-background p-3 text-sm focus:ring-primary outline-none"
                 placeholder="Ex: Olá {agente}, houve uma mudança..."
               />
-              <p className="text-[10px] text-muted-foreground-fg italic">
+              <p className="text-[10px] text-muted-foreground italic">
                 Variáveis: {"{agente}"}, {"{fila}"}, {"{status_anterior}"}, {"{status_atual}"}, {"{data_mudanca}"}
               </p>
             </div>
 
             <div className="rounded-xl border border-border bg-accent/10 p-4 space-y-2">
-              <Label className="text-[10px] uppercase font-bold text-muted-foreground-fg">Pré-visualização</Label>
+              <Label className="text-[10px] uppercase font-bold text-muted-foreground">Pré-visualização</Label>
               <div className="bg-background rounded-lg p-3 text-xs border border-border shadow-inner">
                 {templateNotificacao
                   .replace("{agente}", "Alice Vieira")
@@ -995,7 +995,7 @@ function SettingsPage({ session }: { session: any }) {
         <DialogContent className="sm:max-w-[425px] bg-card border-border p-0 overflow-hidden text-foreground border shadow-2xl">
           <DialogHeader className="p-6 bg-accent/20 border-b border-border">
             <DialogTitle className="text-xl font-manrope font-extrabold">Enviar Notificação de Teste</DialogTitle>
-            <DialogDescription className="text-muted-foreground-fg">Valide o template atual enviando uma notificação real com dados de exemplo.</DialogDescription>
+            <DialogDescription className="text-muted-foreground">Valide o template atual enviando uma notificação real com dados de exemplo.</DialogDescription>
           </DialogHeader>
           <div className="p-6 space-y-4">
             <div className="space-y-2">
@@ -1012,7 +1012,7 @@ function SettingsPage({ session }: { session: any }) {
             </div>
 
             <div className="rounded-xl border border-border bg-accent/10 p-4 space-y-2">
-              <Label className="text-[10px] uppercase font-bold text-muted-foreground-fg">Como o {notificarCanal} será enviado:</Label>
+              <Label className="text-[10px] uppercase font-bold text-muted-foreground">Como o {notificarCanal} será enviado:</Label>
               <div className="bg-background rounded-lg p-3 text-xs border border-border shadow-inner whitespace-pre-wrap leading-relaxed">
                 {templateNotificacao
                   .replace("{agente}", testRecipient)
@@ -1056,25 +1056,25 @@ function SettingsPage({ session }: { session: any }) {
         <DialogContent className="sm:max-w-[900px] bg-card border-border p-0 overflow-hidden text-foreground border shadow-2xl">
           <DialogHeader className="p-6 bg-accent/20 border-b border-border">
             <DialogTitle className="text-xl font-manrope font-extrabold">Histórico de Notificações</DialogTitle>
-            <DialogDescription className="text-muted-foreground-fg">Consulte os registros de notificações enviadas com filtros avançados e detalhes técnicos.</DialogDescription>
+            <DialogDescription className="text-muted-foreground">Consulte os registros de notificações enviadas com filtros avançados e detalhes técnicos.</DialogDescription>
           </DialogHeader>
           
           <div className="p-4 bg-accent/5 border-b border-border">
             <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
               <div className="bg-background p-3 rounded-lg border border-border shadow-sm flex flex-col items-center justify-center">
-                <span className="text-[10px] font-bold text-muted-foreground-fg uppercase tracking-wider">Taxa de Sucesso</span>
+                <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">Taxa de Sucesso</span>
                 <span className="text-xl font-manrope font-extrabold text-primary">
                   {Math.round((notificacoesHistory.filter(h => h.status === 'enviado').length / Math.max(1, notificacoesHistory.length)) * 100)}%
                 </span>
               </div>
               <div className="bg-background p-3 rounded-lg border border-border shadow-sm flex flex-col items-center justify-center">
-                <span className="text-[10px] font-bold text-muted-foreground-fg uppercase tracking-wider">Falhas (Geral)</span>
+                <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">Falhas (Geral)</span>
                 <span className="text-xl font-manrope font-extrabold text-destructive">
                   {notificacoesHistory.filter(h => h.status === 'falhou').length}
                 </span>
               </div>
               <div className="bg-background p-3 rounded-lg border border-border shadow-sm flex flex-col items-center justify-center">
-                <span className="text-[10px] font-bold text-muted-foreground-fg uppercase tracking-wider">Maior Gargalo</span>
+                <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">Maior Gargalo</span>
                 <span className="text-xs font-bold text-foreground">
                   {(() => {
                     const counts: Record<string, number> = {};
@@ -1087,7 +1087,7 @@ function SettingsPage({ session }: { session: any }) {
                 </span>
               </div>
               <div className="bg-background p-3 rounded-lg border border-border shadow-sm flex flex-col items-center justify-center">
-                <span className="text-[10px] font-bold text-muted-foreground-fg uppercase tracking-wider">Melhor Canal</span>
+                <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">Melhor Canal</span>
                 <span className="text-xs font-bold text-primary flex items-center gap-1">
                    <Zap className="w-3 h-3" /> WhatsApp
                 </span>
@@ -1097,9 +1097,9 @@ function SettingsPage({ session }: { session: any }) {
           
           <div className="p-4 border-b border-border bg-background/50 grid grid-cols-1 md:grid-cols-4 gap-3">
             <div className="space-y-1">
-              <Label className="text-[10px] uppercase font-bold text-muted-foreground-fg">Buscar</Label>
+              <Label className="text-[10px] uppercase font-bold text-muted-foreground">Buscar</Label>
               <div className="relative">
-                <Search className="absolute left-2.5 top-2.5 h-3.5 w-3.5 text-muted-foreground-fg" />
+                <Search className="absolute left-2.5 top-2.5 h-3.5 w-3.5 text-muted-foreground" />
                 <Input 
                   placeholder="ID ou Destinatário..." 
                   value={historyFilter.search}
@@ -1109,7 +1109,7 @@ function SettingsPage({ session }: { session: any }) {
               </div>
             </div>
             <div className="space-y-1">
-              <Label className="text-[10px] uppercase font-bold text-muted-foreground-fg">Status</Label>
+              <Label className="text-[10px] uppercase font-bold text-muted-foreground">Status</Label>
               <select 
                 className="w-full h-8 rounded-md border border-input bg-background px-3 py-1 text-xs"
                 value={historyFilter.status}
@@ -1122,7 +1122,7 @@ function SettingsPage({ session }: { session: any }) {
               </select>
             </div>
             <div className="space-y-1">
-              <Label className="text-[10px] uppercase font-bold text-muted-foreground-fg">Canal</Label>
+              <Label className="text-[10px] uppercase font-bold text-muted-foreground">Canal</Label>
               <select 
                 className="w-full h-8 rounded-md border border-input bg-background px-3 py-1 text-xs"
                 value={historyFilter.canal}
@@ -1135,7 +1135,7 @@ function SettingsPage({ session }: { session: any }) {
               </select>
             </div>
             <div className="space-y-1">
-              <Label className="text-[10px] uppercase font-bold text-muted-foreground-fg">Fila</Label>
+              <Label className="text-[10px] uppercase font-bold text-muted-foreground">Fila</Label>
               <select 
                 className="w-full h-8 rounded-md border border-input bg-background px-3 py-1 text-xs"
                 value={historyFilter.fila}
@@ -1151,7 +1151,7 @@ function SettingsPage({ session }: { session: any }) {
 
           <div className="p-0 max-h-[500px] overflow-y-auto overflow-x-auto">
             <table className="w-full text-left text-sm min-w-[800px]">
-              <thead className="bg-accent/50 text-[10px] uppercase font-bold text-muted-foreground-fg sticky top-0">
+              <thead className="bg-accent/50 text-[10px] uppercase font-bold text-muted-foreground sticky top-0">
                 <tr>
                   <th className="px-6 py-3 text-center">Ações</th>
                   <th className="px-6 py-3">ID Tentativa</th>
@@ -1197,7 +1197,7 @@ function SettingsPage({ session }: { session: any }) {
                           </Button>
                         )}
                       </td>
-                      <td className="px-6 py-4 font-mono text-[10px] text-muted-foreground-fg">{log.id}</td>
+                      <td className="px-6 py-4 font-mono text-[10px] text-muted-foreground">{log.id}</td>
                       <td className="px-6 py-4 text-xs whitespace-nowrap">{log.data}</td>
                       <td className="px-6 py-4 font-bold">{log.target}</td>
                       <td className="px-6 py-4">
@@ -1217,11 +1217,11 @@ function SettingsPage({ session }: { session: any }) {
                       <td className="px-6 py-4">
                         <div className="flex flex-col">
                           <span className="text-xs font-bold">{log.fila}</span>
-                          <span className="text-[10px] text-muted-foreground-fg">{log.canal}</span>
+                          <span className="text-[10px] text-muted-foreground">{log.canal}</span>
                         </div>
                       </td>
                       <td className="px-6 py-4">
-                        <div className="max-w-[200px] truncate text-[10px] text-muted-foreground-fg italic bg-accent/10 p-1 rounded" title={log.resposta}>
+                        <div className="max-w-[200px] truncate text-[10px] text-muted-foreground italic bg-accent/10 p-1 rounded" title={log.resposta}>
                           {log.resposta}
                         </div>
                       </td>

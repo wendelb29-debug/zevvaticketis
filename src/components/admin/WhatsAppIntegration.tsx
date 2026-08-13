@@ -185,7 +185,7 @@ export function WhatsAppIntegration() {
       {/* Header Info */}
       <div className="flex flex-col gap-1">
         <h3 className="text-xl font-manrope font-extrabold text-foreground">Gerenciamento da API do WhatsApp</h3>
-        <p className="text-sm text-muted-foreground-fg">Essa área permite conectar, configurar e monitorar integrações WhatsApp do Zevva.</p>
+        <p className="text-sm text-muted-foreground">Essa área permite conectar, configurar e monitorar integrações WhatsApp do Zevva.</p>
       </div>
 
       {/* Main Connection Status */}
@@ -383,7 +383,7 @@ export function WhatsAppIntegration() {
                 </Badge>
               </div>
               <div className="pt-2 border-t border-border mt-2">
-                <p className="text-[10px] uppercase text-muted-foreground-fg font-bold tracking-widest">Última sincronização</p>
+                <p className="text-[10px] uppercase text-muted-foreground font-bold tracking-widest">Última sincronização</p>
                 <p className="text-sm font-bold text-foreground">{lastSync}</p>
               </div>
             </div>
@@ -424,7 +424,7 @@ export function WhatsAppIntegration() {
                   <Label className="text-xs font-bold uppercase tracking-wider text-foreground/70">Horário permitido</Label>
                   <div className="flex items-center gap-2">
                     <Input type="time" defaultValue="08:00" className="w-full" />
-                    <span className="text-muted-foreground-fg">às</span>
+                    <span className="text-muted-foreground">às</span>
                     <Input type="time" defaultValue="20:00" className="w-full" />
                   </div>
                 </div>
@@ -477,7 +477,7 @@ export function WhatsAppIntegration() {
                         <span className="w-1.5 h-1.5 rounded-full bg-background animate-pulse" /> Online
                       </Badge>
                     </TableCell>
-                    <TableCell className="text-muted-foreground-fg text-xs">{n.lastActivity}</TableCell>
+                    <TableCell className="text-muted-foreground text-xs">{n.lastActivity}</TableCell>
                     <TableCell className="text-right">
                       <div className="flex justify-end gap-1">
                         <Button variant="ghost" size="icon" className="h-8 w-8 text-foreground/60 hover:text-primary"><Edit2 className="w-4 h-4" /></Button>
@@ -534,9 +534,9 @@ export function WhatsAppIntegration() {
                 </CardHeader>
                 <CardContent>
                   <div className="bg-accent/10 rounded-lg p-8 border border-dashed border-border flex flex-col items-center justify-center text-center">
-                    <FileText className="w-10 h-10 text-muted-foreground-fg/40 mb-3" />
+                    <FileText className="w-10 h-10 text-muted-foreground/40 mb-3" />
                     <p className="text-sm font-medium text-foreground/70">Interface de criação de templates em desenvolvimento.</p>
-                    <p className="text-xs text-muted-foreground-fg mt-1">Aqui você poderá definir nome, categoria e conteúdo com variáveis.</p>
+                    <p className="text-xs text-muted-foreground mt-1">Aqui você poderá definir nome, categoria e conteúdo com variáveis.</p>
                   </div>
                 </CardContent>
               </Card>
@@ -572,15 +572,15 @@ export function WhatsAppIntegration() {
                               <span className="text-xs font-bold flex items-center gap-1">
                                 <UserCheck className="w-3 h-3 text-primary" /> {t.approvedBy}
                               </span>
-                              <span className="text-[10px] text-muted-foreground-fg flex items-center gap-1">
+                              <span className="text-[10px] text-muted-foreground flex items-center gap-1">
                                 <Clock className="w-2.5 h-2.5" /> {t.approvedAt}
                               </span>
                             </div>
                           ) : (
-                            <span className="text-xs text-muted-foreground-fg italic">Aguardando...</span>
+                            <span className="text-xs text-muted-foreground italic">Aguardando...</span>
                           )}
                         </TableCell>
-                        <TableCell className="text-xs text-muted-foreground-fg truncate max-w-[200px]">{t.content}</TableCell>
+                        <TableCell className="text-xs text-muted-foreground truncate max-w-[200px]">{t.content}</TableCell>
                         <TableCell className="text-right">
                           <div className="flex justify-end gap-1">
                             {t.status !== "APPROVED" && (
@@ -640,7 +640,7 @@ export function WhatsAppIntegration() {
                     ))}
                     {templates.every(t => !t.linkedEvent) && (
                       <TableRow>
-                        <TableCell colSpan={4} className="h-24 text-center text-muted-foreground-fg text-sm italic">
+                        <TableCell colSpan={4} className="h-24 text-center text-muted-foreground text-sm italic">
                           Nenhum template vinculado a eventos no momento.
                         </TableCell>
                       </TableRow>
@@ -672,7 +672,7 @@ export function WhatsAppIntegration() {
                         <TableCell>
                           <Badge variant="outline" className="border-green-200 text-green-600 bg-green-50 font-bold">{log.status}</Badge>
                         </TableCell>
-                        <TableCell className="font-mono text-[10px] text-muted-foreground-fg bg-accent/10 rounded px-2 py-1">{log.response}</TableCell>
+                        <TableCell className="font-mono text-[10px] text-muted-foreground bg-accent/10 rounded px-2 py-1">{log.response}</TableCell>
                       </TableRow>
                     ))}
                   </TableBody>

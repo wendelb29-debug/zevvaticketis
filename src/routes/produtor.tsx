@@ -140,8 +140,8 @@ function ProdutorLayout() {
 
   if (status === "pendente") {
     return (
-      <div className="min-h-screen bg-surface flex items-center justify-center p-6 text-center font-inter">
-        <div className="max-w-md space-y-8 bg-card p-12 rounded-[24px] shadow-xl border border-line">
+      <div className="min-h-screen bg-card flex items-center justify-center p-6 text-center font-inter">
+        <div className="max-w-md space-y-8 bg-card p-12 rounded-[24px] shadow-xl border border-border">
           <div className="text-6xl animate-bounce">⏳</div>
           <div className="space-y-4">
             <h1 className="text-3xl font-manrope font-extrabold text-foreground">Cadastro em Análise</h1>
@@ -164,7 +164,7 @@ function ProdutorLayout() {
 
   if (status === "bloqueado") {
     return (
-      <div className="min-h-screen bg-surface flex items-center justify-center p-6 text-center font-inter">
+      <div className="min-h-screen bg-card flex items-center justify-center p-6 text-center font-inter">
         <div className="max-w-md space-y-8 bg-card p-12 rounded-[24px] shadow-xl border border-destructive/20">
           <div className="text-6xl">🚫</div>
           <div className="space-y-4">
@@ -206,10 +206,10 @@ function ProdutorLayout() {
   );
 
   const SidebarContent = () => (
-    <div className="flex flex-col h-full bg-card border-r border-line py-8 font-inter">
+    <div className="flex flex-col h-full bg-card border-r border-border py-8 font-inter">
       <div className={cn("px-6 mb-12 flex items-center gap-3", !isAdmin && "justify-center")}>
         {isAdmin && (
-          <Link to="/app" className="p-2.5 hover:bg-muted rounded-2xl transition-all text-muted-foreground hover:text-primary outline-none border border-line bg-card shadow-sm flex-shrink-0" title="Voltar para o Workspace">
+          <Link to="/app" className="p-2.5 hover:bg-muted rounded-2xl transition-all text-muted-foreground hover:text-primary outline-none border border-border bg-card shadow-sm flex-shrink-0" title="Voltar para o Workspace">
             <Home className="w-5 h-5" />
           </Link>
         )}
@@ -219,8 +219,8 @@ function ProdutorLayout() {
       </div>
       <div className="flex-1 overflow-y-auto">
         {activeTenant && (
-          <div className="mt-6 flex items-center gap-3 p-3 bg-muted rounded-2xl border border-line">
-            <Avatar className="w-10 h-10 rounded-xl border border-line">
+          <div className="mt-6 flex items-center gap-3 p-3 bg-muted rounded-2xl border border-border">
+            <Avatar className="w-10 h-10 rounded-xl border border-border">
               <AvatarImage src={activeTenant.logo || undefined} />
               <AvatarFallback className="bg-navy text-primary-foreground text-xs font-black">
                 {activeTenant.nome.substring(0, 2).toUpperCase()}
@@ -241,7 +241,7 @@ function ProdutorLayout() {
                   <ChevronRight className="w-4 h-4 rotate-90" />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-56 rounded-xl p-2 border-line shadow-xl font-inter bg-card">
+              <DropdownMenuContent align="end" className="w-56 rounded-xl p-2 border-border shadow-xl font-inter bg-card">
                 <DropdownMenuLabel className="text-[10px] font-black uppercase tracking-widest text-muted-foreground px-2 py-1.5">Meus Projetos</DropdownMenuLabel>
                 {tenants.map(t => (
                   <DropdownMenuItem 
@@ -249,10 +249,10 @@ function ProdutorLayout() {
                     onClick={() => switchTenant(t.id)}
                     className={cn(
                       "flex items-center gap-2 px-2 py-2 rounded-lg text-xs font-bold cursor-pointer",
-                      activeTenant.id === t.id ? "bg-primary/10 text-primary" : "text-foreground hover:bg-surface"
+                      activeTenant.id === t.id ? "bg-primary/10 text-primary" : "text-foreground hover:bg-card"
                     )}
                   >
-                    <Avatar className="w-5 h-5 rounded-md border border-line">
+                    <Avatar className="w-5 h-5 rounded-md border border-border">
                       <AvatarImage src={t.logo || undefined} />
                       <AvatarFallback className="text-[8px] bg-navy text-primary-foreground">{t.nome.substring(0, 1)}</AvatarFallback>
                     </Avatar>
@@ -265,7 +265,7 @@ function ProdutorLayout() {
                     <DropdownMenuSeparator className="bg-line" />
                     <DropdownMenuItem 
                       onClick={() => navigate({ to: "/app" })}
-                      className="flex items-center gap-2 px-2 py-2 rounded-lg text-xs font-bold text-foreground hover:bg-surface cursor-pointer"
+                      className="flex items-center gap-2 px-2 py-2 rounded-lg text-xs font-bold text-foreground hover:bg-card cursor-pointer"
                     >
                       <Plus className="w-4 h-4 text-primary" /> Gerenciar Projetos
                     </DropdownMenuItem>
@@ -294,9 +294,9 @@ function ProdutorLayout() {
                 )}
                 {...(!isExternal ? {
                   activeProps: { className: "bg-primary text-primary-foreground shadow-lg shadow-coral/30" },
-                  inactiveProps: { className: "text-foreground hover:bg-surface-2 hover:text-foreground" }
+                  inactiveProps: { className: "text-foreground hover:bg-secondary hover:text-foreground" }
                 } : {
-                  className: "flex items-center gap-3 px-4 py-3.5 rounded-xl text-sm font-extrabold text-foreground hover:bg-surface-2 transition-all duration-200"
+                  className: "flex items-center gap-3 px-4 py-3.5 rounded-xl text-sm font-extrabold text-foreground hover:bg-secondary transition-all duration-200"
                 })}
               >
                 <item.icon className="w-5 h-5" />
@@ -320,14 +320,14 @@ function ProdutorLayout() {
   );
 
   return (
-    <div className="min-h-screen bg-surface flex">
+    <div className="min-h-screen bg-card flex">
       {/* Desktop Sidebar */}
       <aside className="hidden lg:block w-72 h-screen sticky top-0">
         <SidebarContent />
       </aside>
 
       <div className="flex-1 flex flex-col min-h-screen">
-        <header className="h-20 bg-card/80 backdrop-blur-md border-b border-line sticky top-0 z-40 px-6 sm:px-10 flex items-center justify-between font-inter">
+        <header className="h-20 bg-card/80 backdrop-blur-md border-b border-border sticky top-0 z-40 px-6 sm:px-10 flex items-center justify-between font-inter">
           <div className="flex items-center gap-4">
             <Sheet>
               <SheetTrigger asChild>

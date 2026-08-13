@@ -115,7 +115,7 @@ function EventsListPage() {
             </Button>
           </div>
         ) : !events || events.length === 0 ? (
-          <div className="text-center py-32 bg-surface rounded-[40px] border border-border border-dashed">
+          <div className="text-center py-32 bg-card rounded-[40px] border border-border border-dashed">
             <p className="text-xl font-bold text-muted-foreground mb-2">Nenhum evento encontrado.</p>
             <p className="text-muted-foreground">Tente ajustar seus filtros ou busca.</p>
             { (busca || categoria || cidade) && (

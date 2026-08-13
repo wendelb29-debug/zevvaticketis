@@ -88,17 +88,17 @@ function ProducerEventsPage() {
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground w-4 h-4" />
           <Input 
             placeholder="Buscar por nome do evento..." 
-            className="pl-11 h-12 rounded-xl border-line bg-card"
+            className="pl-11 h-12 rounded-xl border-border bg-card"
           />
         </div>
-        <Button variant="outline" className="h-12 px-6 rounded-xl border-line text-foreground font-bold gap-2">
+        <Button variant="outline" className="h-12 px-6 rounded-xl border-border text-foreground font-bold gap-2">
           <Filter className="w-4 h-4" /> Filtros
         </Button>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
         {events?.map((event) => (
-          <Card key={event.id} className="group border-line shadow-sm hover:shadow-xl transition-all duration-300 rounded-[32px] overflow-hidden bg-card">
+          <Card key={event.id} className="group border-border shadow-sm hover:shadow-xl transition-all duration-300 rounded-[32px] overflow-hidden bg-card">
             <div className="relative aspect-[16/9] overflow-hidden">
               <img 
                 src={event.cover_image || "https://images.unsplash.com/photo-1492684223066-81342ee5ff30"} 
@@ -125,7 +125,7 @@ function ProducerEventsPage() {
                       <MoreVertical className="w-4 h-4" />
                     </Button>
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end" className="w-48 rounded-xl p-2 border-line shadow-xl font-inter">
+                  <DropdownMenuContent align="end" className="w-48 rounded-xl p-2 border-border shadow-xl font-inter">
                     <DropdownMenuItem className="flex items-center gap-2 px-2 py-2 rounded-lg text-xs font-bold text-foreground cursor-pointer">
                       <Edit className="w-4 h-4 text-primary" /> Editar Evento
                     </DropdownMenuItem>
@@ -156,7 +156,7 @@ function ProducerEventsPage() {
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-4 pt-4 border-t border-line">
+              <div className="grid grid-cols-2 gap-4 pt-4 border-t border-border">
                 <div className="space-y-1">
                   <p className="text-[9px] font-black text-muted-foreground uppercase tracking-widest">Vendidos</p>
                   <div className="flex items-end gap-1">
@@ -185,8 +185,8 @@ function ProducerEventsPage() {
         ))}
 
         {events?.length === 0 && (
-          <div className="col-span-full py-20 bg-card rounded-[32px] border-2 border-dashed border-line flex flex-col items-center justify-center gap-6 text-center">
-            <div className="w-20 h-20 rounded-full bg-surface flex items-center justify-center text-muted-foreground">
+          <div className="col-span-full py-20 bg-card rounded-[32px] border-2 border-dashed border-border flex flex-col items-center justify-center gap-6 text-center">
+            <div className="w-20 h-20 rounded-full bg-card flex items-center justify-center text-muted-foreground">
               <FileText className="w-10 h-10" />
             </div>
             <div className="space-y-2">

@@ -117,7 +117,7 @@ function CheckoutPage() {
   if (loadingEvent) return <div className="min-h-screen flex items-center justify-center"><Loader2 className="animate-spin" /></div>;
 
   return (
-    <div className="min-h-screen bg-surface py-12">
+    <div className="min-h-screen bg-card py-12">
       <div className="container mx-auto px-4 max-w-4xl">
         <Button variant="ghost" onClick={() => navigate({ to: `/eventos/${id}` })} className="mb-8">
           <ArrowLeft className="mr-2 h-4 w-4" /> Voltar para o evento
@@ -126,11 +126,11 @@ function CheckoutPage() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <div className="lg:col-span-2 space-y-6">
             <div className="flex items-center gap-4 mb-8">
-              <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold ${step >= 1 ? 'bg-primary text-primary-foreground' : 'bg-muted text-muted-foreground-fg'}`}>1</div>
+              <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold ${step >= 1 ? 'bg-primary text-primary-foreground' : 'bg-muted text-muted-foreground'}`}>1</div>
               <div className="h-px bg-muted flex-1"></div>
-              <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold ${step >= 2 ? 'bg-primary text-primary-foreground' : 'bg-muted text-muted-foreground-fg'}`}>2</div>
+              <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold ${step >= 2 ? 'bg-primary text-primary-foreground' : 'bg-muted text-muted-foreground'}`}>2</div>
               <div className="h-px bg-muted flex-1"></div>
-              <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold ${step >= 3 ? 'bg-primary text-primary-foreground' : 'bg-muted text-muted-foreground-fg'}`}>3</div>
+              <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold ${step >= 3 ? 'bg-primary text-primary-foreground' : 'bg-muted text-muted-foreground'}`}>3</div>
             </div>
 
             {step === 1 && (
@@ -146,7 +146,7 @@ function CheckoutPage() {
                       <div className="flex justify-between items-center">
                         <div>
                           <p className="font-bold text-lg">{t.nome}</p>
-                          <p className="text-sm text-muted-foreground-fg">{t.descricao}</p>
+                          <p className="text-sm text-muted-foreground">{t.descricao}</p>
                         </div>
                         <p className="text-xl font-black text-primary">R$ {Number(t.valor).toLocaleString("pt-BR")}</p>
                       </div>
@@ -194,7 +194,7 @@ function CheckoutPage() {
                 <CardHeader><CardTitle>Pagamento</CardTitle></CardHeader>
                 <CardContent className="space-y-6">
                   <div className="p-4 bg-muted/30 rounded-xl border border-dashed border-muted-fg/20">
-                    <p className="text-sm text-muted-foreground-fg text-center italic">
+                    <p className="text-sm text-muted-foreground text-center italic">
                       Ambiente de teste: Selecione "Simular Sucesso" para gerar seu ingresso.
                     </p>
                   </div>
@@ -260,7 +260,7 @@ function CheckoutPage() {
               </CardContent>
             </Card>
 
-            <div className="p-4 rounded-xl bg-card border border-line flex items-center gap-3">
+            <div className="p-4 rounded-xl bg-card border border-border flex items-center gap-3">
               <ShieldCheck className="text-green-500 w-8 h-8" />
               <div>
                 <p className="text-xs font-bold text-foreground uppercase">Compra Garantida</p>

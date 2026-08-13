@@ -288,7 +288,7 @@ function UserProfile() {
 
       <div className="grid gap-8">
         {/* Personal Info */}
-        <div className="bg-card rounded-[32px] border border-line p-8 space-y-8 shadow-sm">
+        <div className="bg-card rounded-[32px] border border-border p-8 space-y-8 shadow-sm">
           <div className="flex items-center gap-3">
             <div className="p-3 bg-primary/10 rounded-2xl text-primary">
               <User className="w-6 h-6" />
@@ -347,7 +347,7 @@ function UserProfile() {
               <Input 
                 value={profile?.email || ""} 
                 disabled
-                className="h-12 rounded-xl bg-surface/50 text-muted-foreground"
+                className="h-12 rounded-xl bg-card/50 text-muted-foreground"
               />
               <p className="text-[10px] text-muted-foreground font-bold">O e-mail não pode ser alterado diretamente.</p>
             </div>
@@ -355,7 +355,7 @@ function UserProfile() {
         </div>
 
         {/* Notifications Preference */}
-        <div className="bg-card rounded-[32px] border border-line p-8 space-y-8 shadow-sm">
+        <div className="bg-card rounded-[32px] border border-border p-8 space-y-8 shadow-sm">
           <div className="flex items-center gap-3">
             <div className="p-3 bg-primary/10 rounded-2xl text-primary">
               <Bell className="w-6 h-6" />
@@ -447,7 +447,7 @@ function UserProfile() {
         </div>
 
         {/* Privacy & LGPD */}
-        <div className="bg-card rounded-[32px] border border-line p-8 space-y-8 shadow-sm">
+        <div className="bg-card rounded-[32px] border border-border p-8 space-y-8 shadow-sm">
           <div className="flex items-center gap-3">
             <div className="p-3 bg-navy/5 rounded-2xl text-foreground">
               <Shield className="w-6 h-6" />
@@ -456,7 +456,7 @@ function UserProfile() {
           </div>
 
           <div className="space-y-6">
-            <div className="flex items-center justify-between p-4 bg-surface rounded-xl">
+            <div className="flex items-center justify-between p-4 bg-card rounded-xl">
               <div className="space-y-1">
                 <p className="font-bold text-foreground">Perfil público no catálogo</p>
                 <p className="text-xs text-muted-foreground font-medium">Mostrar seu nome em listas de participantes.</p>
@@ -473,7 +473,7 @@ function UserProfile() {
         </div>
 
         {/* Security Actions */}
-        <div className="bg-card rounded-[32px] border border-line p-8 space-y-8 shadow-sm">
+        <div className="bg-card rounded-[32px] border border-border p-8 space-y-8 shadow-sm">
           <div className="flex items-center gap-3">
             <div className="p-3 bg-good/5 rounded-2xl text-good">
               <Lock className="w-6 h-6" />
@@ -482,10 +482,10 @@ function UserProfile() {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <Button variant="outline" className="h-14 rounded-xl font-bold border-line hover:bg-surface transition-all active:scale-95">
+            <Button variant="outline" className="h-14 rounded-xl font-bold border-border hover:bg-card transition-all active:scale-95">
               <Lock className="w-4 h-4 mr-2" /> Alterar Senha
             </Button>
-            <Button variant="outline" className="h-14 rounded-xl font-bold border-line hover:bg-surface transition-all active:scale-95">
+            <Button variant="outline" className="h-14 rounded-xl font-bold border-border hover:bg-card transition-all active:scale-95">
               <Smartphone className="w-4 h-4 mr-2" /> Autenticação 2FA
             </Button>
           </div>
@@ -507,7 +507,7 @@ function UserProfile() {
 
 function NotificationItem({ icon: Icon, title, description }: { icon: any, title: string, description: string }) {
   return (
-    <div className="flex items-center justify-between p-4 bg-surface/50 rounded-2xl border border-line/5 hover:border-coral/20 transition-all group">
+    <div className="flex items-center justify-between p-4 bg-card/50 rounded-2xl border border-border/5 hover:border-coral/20 transition-all group">
       <div className="flex items-center gap-4">
         <div className="p-2.5 bg-navy/5 rounded-xl text-foreground/40 group-hover:text-primary group-hover:bg-primary/10 transition-colors">
           <Icon className="w-5 h-5" />

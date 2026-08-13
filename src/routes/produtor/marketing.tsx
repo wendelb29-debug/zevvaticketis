@@ -66,7 +66,7 @@ function ProjectMarketingPanel() {
                 <stat.icon className={cn("w-5 h-5", stat.color)} />
               </div>
               <div>
-                <p className="text-[9px] font-black text-muted-foreground-fg uppercase tracking-widest">{stat.label}</p>
+                <p className="text-[9px] font-black text-muted-foreground uppercase tracking-widest">{stat.label}</p>
                 <p className="text-xl font-black text-foreground">{stat.value}</p>
               </div>
             </CardContent>
@@ -75,7 +75,7 @@ function ProjectMarketingPanel() {
       </div>
 
       <Tabs defaultValue="campanhas" className="w-full">
-        <TabsList className="bg-card border border-line p-1 rounded-2xl h-14 shadow-sm mb-8 w-full justify-start overflow-x-auto">
+        <TabsList className="bg-card border border-border p-1 rounded-2xl h-14 shadow-sm mb-8 w-full justify-start overflow-x-auto">
           <TabsTrigger value="campanhas" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground rounded-xl h-11 px-6 font-black uppercase tracking-widest text-[10px] gap-2 transition-all">
             <Rocket className="w-4 h-4" /> Campanhas
           </TabsTrigger>
@@ -88,14 +88,14 @@ function ProjectMarketingPanel() {
         </TabsList>
 
         <TabsContent value="campanhas" className="space-y-6">
-          <Card className="border-line shadow-sm rounded-3xl overflow-hidden">
-            <div className="p-6 border-b border-line flex justify-between items-center bg-surface/30">
+          <Card className="border-border shadow-sm rounded-3xl overflow-hidden">
+            <div className="p-6 border-b border-border flex justify-between items-center bg-card/30">
               <h2 className="text-sm font-black text-foreground uppercase tracking-widest">Campanhas Recentes</h2>
               <Button variant="ghost" size="sm" className="text-[10px] font-black uppercase text-primary">Ver Tudo</Button>
             </div>
             <div className="p-0 overflow-x-auto">
               <table className="w-full text-left">
-                <thead className="bg-surface text-muted-foreground text-[10px] font-black uppercase tracking-widest border-b border-line">
+                <thead className="bg-card text-muted-foreground text-[10px] font-black uppercase tracking-widest border-b border-border">
                   <tr>
                     <th className="px-6 py-4">Nome</th>
                     <th className="px-6 py-4">Status</th>
@@ -110,7 +110,7 @@ function ProjectMarketingPanel() {
                     { name: "Promoção Relâmpago ⚡", status: "pausada", reach: "8.2k", clicks: "120" },
                     { name: "Retargeting VIP 💎", status: "finalizada", reach: "2.1k", clicks: "650" },
                   ].map((row, i) => (
-                    <tr key={i} className="hover:bg-surface/50 transition-colors">
+                    <tr key={i} className="hover:bg-card/50 transition-colors">
                       <td className="px-6 py-4 font-bold text-foreground">{row.name}</td>
                       <td className="px-6 py-4">
                         <Badge className={cn(
@@ -121,7 +121,7 @@ function ProjectMarketingPanel() {
                         </Badge>
                       </td>
                       <td className="px-6 py-4 text-sm font-bold text-foreground">{row.reach}</td>
-                      <td className="px-6 py-4 text-sm font-medium text-muted-foreground-fg">{row.clicks}</td>
+                      <td className="px-6 py-4 text-sm font-medium text-muted-foreground">{row.clicks}</td>
                       <td className="px-6 py-4 text-right">
                         <Button variant="ghost" size="sm" className="h-8 rounded-lg font-bold text-[10px] uppercase">Detalhes</Button>
                       </td>

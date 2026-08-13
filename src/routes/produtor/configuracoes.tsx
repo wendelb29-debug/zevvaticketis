@@ -95,7 +95,7 @@ function OrgSettings() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2 space-y-8">
           {/* Identidade do Projeto */}
-          <section className="bg-card rounded-[32px] border border-line p-8 space-y-8 shadow-sm">
+          <section className="bg-card rounded-[32px] border border-border p-8 space-y-8 shadow-sm">
             <div className="flex items-center gap-3">
               <div className="p-3 bg-primary/10 rounded-2xl text-primary">
                 <Building2 className="w-6 h-6" />
@@ -109,7 +109,7 @@ function OrgSettings() {
                 <Input 
                   value={formData.nome}
                   onChange={(e) => setFormData({...formData, nome: e.target.value})}
-                  className="h-12 rounded-xl border-line"
+                  className="h-12 rounded-xl border-border"
                   placeholder="Ex: Minha Caravana"
                 />
               </div>
@@ -119,10 +119,10 @@ function OrgSettings() {
                   <Input 
                     value={formData.logo}
                     onChange={(e) => setFormData({...formData, logo: e.target.value})}
-                    className="h-12 rounded-xl border-line"
+                    className="h-12 rounded-xl border-border"
                     placeholder="https://..."
                   />
-                  <div className="w-12 h-12 rounded-xl border border-line bg-surface flex items-center justify-center overflow-hidden shrink-0">
+                  <div className="w-12 h-12 rounded-xl border border-border bg-card flex items-center justify-center overflow-hidden shrink-0">
                     {formData.logo ? (
                       <img src={formData.logo} alt="Preview" className="w-full h-full object-contain" />
                     ) : (
@@ -136,7 +136,7 @@ function OrgSettings() {
           </section>
 
           {/* Integrações */}
-          <section className="bg-card rounded-[32px] border border-line p-8 space-y-8 shadow-sm">
+          <section className="bg-card rounded-[32px] border border-border p-8 space-y-8 shadow-sm">
             <div className="flex items-center gap-3">
               <div className="p-3 bg-navy/5 rounded-2xl text-foreground">
                 <CreditCard className="w-6 h-6" />
@@ -144,10 +144,10 @@ function OrgSettings() {
               <h2 className="text-xl font-manrope font-black text-foreground uppercase tracking-tight">Pagamentos e Taxas</h2>
             </div>
 
-            <div className="bg-surface rounded-2xl border border-line p-6 space-y-4">
+            <div className="bg-card rounded-2xl border border-border p-6 space-y-4">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-card border border-line flex items-center justify-center">
+                  <div className="w-10 h-10 rounded-xl bg-card border border-border flex items-center justify-center">
                     <Globe className="w-5 h-5 text-foreground" />
                   </div>
                   <div>
@@ -189,7 +189,7 @@ function OrgSettings() {
           </section>
 
           {/* Automações Padrão */}
-          <section className="bg-card rounded-[32px] border border-line p-8 space-y-6 shadow-sm">
+          <section className="bg-card rounded-[32px] border border-border p-8 space-y-6 shadow-sm">
             <div className="flex items-center gap-3">
               <div className="p-2.5 bg-good/10 rounded-xl text-good">
                 <Clock className="w-5 h-5" />

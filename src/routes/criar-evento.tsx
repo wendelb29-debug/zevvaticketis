@@ -130,7 +130,7 @@ function CriarEventoWizard() {
   ];
 
   const SidebarContent = () => (
-    <div className="flex flex-col h-full bg-card border-r border-line py-8 font-inter">
+    <div className="flex flex-col h-full bg-card border-r border-border py-8 font-inter">
       <div className="px-6 mb-12">
         <Link to="/" className="text-2xl font-manrope font-extrabold text-primary tracking-tighter">
           ZEVVA <span className="text-foreground">TICKETS</span>
@@ -144,7 +144,7 @@ function CriarEventoWizard() {
             to={item.href}
             className="flex items-center gap-3 px-4 py-3.5 rounded-xl text-sm font-extrabold transition-all duration-200"
             activeProps={{ className: "bg-primary text-primary-foreground shadow-lg shadow-coral/30" }}
-            inactiveProps={{ className: "text-foreground hover:bg-surface-2 hover:text-foreground" }}
+            inactiveProps={{ className: "text-foreground hover:bg-secondary hover:text-foreground" }}
           >
             <item.icon className="w-5 h-5" />
             {item.label}
@@ -240,9 +240,9 @@ function CriarEventoWizard() {
               </div>
               <div className="space-y-2">
                 <label className="text-sm font-bold text-foreground uppercase tracking-wider">Imagem principal</label>
-                <div className="border-2 border-dashed border-line rounded-[24px] p-12 text-center group hover:border-coral/50 transition-colors cursor-pointer bg-surface/50">
+                <div className="border-2 border-dashed border-border rounded-[24px] p-12 text-center group hover:border-coral/50 transition-colors cursor-pointer bg-card/50">
                   <div className="flex flex-col items-center gap-4">
-                    <div className="w-16 h-16 rounded-full bg-card shadow-sm border border-line flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
+                    <div className="w-16 h-16 rounded-full bg-card shadow-sm border border-border flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
                       <Plus className="w-8 h-8" />
                     </div>
                     <div>
@@ -266,7 +266,7 @@ function CriarEventoWizard() {
                     onClick={() => setFormData((prev: any) => ({ ...prev, event_type: "presencial" }))}
                     className={cn(
                       "h-14 rounded-xl border-2 font-bold flex items-center justify-center gap-2 transition-all",
-                      formData.event_type === "presencial" ? "border-coral bg-primary/5 text-foreground" : "border-line text-muted-foreground hover:bg-surface"
+                      formData.event_type === "presencial" ? "border-coral bg-primary/5 text-foreground" : "border-border text-muted-foreground hover:bg-card"
                     )}
                   >
                     <MapPin className={cn("w-5 h-5", formData.event_type === "presencial" ? "text-primary" : "")} /> Presencial
@@ -275,7 +275,7 @@ function CriarEventoWizard() {
                     onClick={() => setFormData((prev: any) => ({ ...prev, event_type: "online" }))}
                     className={cn(
                       "h-14 rounded-xl border-2 font-bold flex items-center justify-center gap-2 transition-all",
-                      formData.event_type === "online" ? "border-coral bg-primary/5 text-foreground" : "border-line text-muted-foreground hover:bg-surface"
+                      formData.event_type === "online" ? "border-coral bg-primary/5 text-foreground" : "border-border text-muted-foreground hover:bg-card"
                     )}
                   >
                     <Globe className={cn("w-5 h-5", formData.event_type === "online" ? "text-primary" : "")} /> Online
@@ -380,7 +380,7 @@ function CriarEventoWizard() {
             
             <div className="space-y-4">
               {tickets.map((ticket, index) => (
-                <div key={ticket.id} className="p-6 rounded-2xl border border-line bg-surface/30 space-y-4">
+                <div key={ticket.id} className="p-6 rounded-2xl border border-border bg-card/30 space-y-4">
                   <div className="flex justify-between items-center">
                     <h4 className="font-bold text-foreground">Ingresso #{index + 1}</h4>
                     {tickets.length > 1 && (
@@ -501,7 +501,7 @@ function CriarEventoWizard() {
       case 5:
         return (
           <div className="space-y-8 animate-in fade-in zoom-in-95 duration-500">
-            <div className="p-8 rounded-[24px] bg-surface/50 border border-line space-y-8">
+            <div className="p-8 rounded-[24px] bg-card/50 border border-border space-y-8">
               <div className="flex items-center gap-6">
                 <div className="w-32 h-20 bg-line rounded-lg flex items-center justify-center text-muted-foreground">
                   <ImageIcon className="w-8 h-8" />
@@ -522,25 +522,25 @@ function CriarEventoWizard() {
               </div>
 
               <div className="grid grid-cols-3 gap-6">
-                <div className="p-4 bg-card rounded-xl border border-line text-center">
+                <div className="p-4 bg-card rounded-xl border border-border text-center">
                   <p className="text-[10px] font-extrabold text-muted-foreground uppercase tracking-widest mb-1">Status</p>
                   <Badge variant="outline" className="text-primary border-coral/30 bg-primary/5">{formData.status}</Badge>
                 </div>
-                <div className="p-4 bg-card rounded-xl border border-line text-center">
+                <div className="p-4 bg-card rounded-xl border border-border text-center">
                   <p className="text-[10px] font-extrabold text-muted-foreground uppercase tracking-widest mb-1">Visibilidade</p>
                   <p className="font-bold text-foreground">Público</p>
                 </div>
-                <div className="p-4 bg-card rounded-xl border border-line text-center">
+                <div className="p-4 bg-card rounded-xl border border-border text-center">
                   <p className="text-[10px] font-extrabold text-muted-foreground uppercase tracking-widest mb-1">Total de Lotes</p>
                   <p className="font-bold text-foreground">{tickets.length}</p>
                 </div>
               </div>
 
               <div className="space-y-4">
-                <h4 className="font-bold text-foreground border-b border-line pb-2">Ingressos configurados</h4>
+                <h4 className="font-bold text-foreground border-b border-border pb-2">Ingressos configurados</h4>
                 <div className="space-y-2">
                   {tickets.map(t => (
-                    <div key={t.id} className="flex justify-between items-center p-3 bg-card rounded-lg border border-line">
+                    <div key={t.id} className="flex justify-between items-center p-3 bg-card rounded-lg border border-border">
                       <span className="font-medium text-foreground text-sm">{t.name}</span>
                       <span className="font-bold text-primary">US$ {t.price.toFixed(2)}</span>
                     </div>
@@ -563,14 +563,14 @@ function CriarEventoWizard() {
   };
 
   return (
-    <div className="min-h-screen bg-surface flex">
+    <div className="min-h-screen bg-card flex">
       {/* Desktop Sidebar */}
       <aside className="hidden lg:block w-72 h-screen sticky top-0">
         <SidebarContent />
       </aside>
 
       <div className="flex-1 flex flex-col min-h-screen">
-        <header className="h-20 bg-card/80 backdrop-blur-md border-b border-line sticky top-0 z-40 px-6 sm:px-10 flex items-center justify-between font-inter">
+        <header className="h-20 bg-card/80 backdrop-blur-md border-b border-border sticky top-0 z-40 px-6 sm:px-10 flex items-center justify-between font-inter">
           <div className="flex items-center gap-4">
             <Sheet>
               <SheetTrigger asChild>
@@ -617,12 +617,12 @@ function CriarEventoWizard() {
                   <div className={cn(
                     "flex items-center gap-2 px-4 py-2 rounded-full border transition-all duration-300",
                     step === s.id ? "bg-navy border-navy text-primary-foreground shadow-lg shadow-primary/20" : 
-                    step > s.id ? "bg-primary/10 border-coral/20 text-primary" : "bg-card border-line text-muted-foreground"
+                    step > s.id ? "bg-primary/10 border-coral/20 text-primary" : "bg-card border-border text-muted-foreground"
                   )}>
                     <span className={cn(
                       "w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold border",
                       step === s.id ? "bg-card text-foreground border-white" : 
-                      step > s.id ? "bg-primary text-primary-foreground border-coral" : "bg-surface text-muted-foreground border-line"
+                      step > s.id ? "bg-primary text-primary-foreground border-coral" : "bg-card text-muted-foreground border-border"
                     )}>
                       {step > s.id ? "✓" : s.id}
                     </span>
@@ -634,12 +634,12 @@ function CriarEventoWizard() {
             </div>
           </div>
 
-          <div className="bg-card rounded-[32px] border border-line p-6 sm:p-10 shadow-sm min-h-[500px] flex flex-col">
+          <div className="bg-card rounded-[32px] border border-border p-6 sm:p-10 shadow-sm min-h-[500px] flex flex-col">
             <div className="flex-1">
               {renderStep()}
             </div>
 
-            <div className="mt-12 pt-8 border-t border-line flex items-center justify-between">
+            <div className="mt-12 pt-8 border-t border-border flex items-center justify-between">
               <Button 
                 variant="ghost" 
                 className="h-14 px-8 rounded-xl font-bold text-muted-foreground hover:text-foreground"
@@ -652,7 +652,7 @@ function CriarEventoWizard() {
               <div className="flex gap-4">
                 <Button 
                   variant="outline" 
-                  className="h-14 px-8 rounded-xl font-bold border-line hover:bg-surface"
+                  className="h-14 px-8 rounded-xl font-bold border-border hover:bg-card"
                   onClick={() => {
                     localStorage.setItem("zevva_event_draft", JSON.stringify({ formData, tickets }));
                     alert("Rascunho salvo com sucesso!");

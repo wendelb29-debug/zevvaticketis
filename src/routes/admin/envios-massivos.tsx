@@ -56,7 +56,7 @@ function EnviosMassivosPage() {
       <div className="flex justify-between items-end">
         <div>
           <h1 className="text-3xl font-manrope font-extrabold text-foreground tracking-tighter uppercase">📢 Envios Massivos</h1>
-          <p className="text-sm text-muted-foreground-fg mt-2 font-medium">Ferramenta completa de campanhas multicanal Zevva.</p>
+          <p className="text-sm text-muted-foreground mt-2 font-medium">Ferramenta completa de campanhas multicanal Zevva.</p>
         </div>
         <Button 
           onClick={() => handleOpenWizard(true)}
@@ -82,7 +82,7 @@ function EnviosMassivosPage() {
                 <stat.icon className="w-5 h-5" />
               </div>
               <div>
-                <p className="text-[10px] font-extrabold text-muted-foreground-fg uppercase tracking-widest">{stat.label}</p>
+                <p className="text-[10px] font-extrabold text-muted-foreground uppercase tracking-widest">{stat.label}</p>
                 <p className="text-xl font-extrabold text-foreground mt-1">{stat.value}</p>
               </div>
             </CardContent>
@@ -90,14 +90,14 @@ function EnviosMassivosPage() {
         ))}
       </div>
 
-      <div className="bg-card rounded-3xl border border-line shadow-sm overflow-hidden">
-        <div className="p-8 border-b border-line flex justify-between items-center bg-surface/30">
+      <div className="bg-card rounded-3xl border border-border shadow-sm overflow-hidden">
+        <div className="p-8 border-b border-border flex justify-between items-center bg-card/30">
           <h2 className="text-lg font-extrabold text-foreground uppercase tracking-tight">Campanhas e Histórico</h2>
         </div>
         
         <div className="overflow-x-auto">
           <table className="w-full text-left">
-            <thead className="bg-surface text-muted-foreground text-[10px] font-extrabold uppercase tracking-widest">
+            <thead className="bg-card text-muted-foreground text-[10px] font-extrabold uppercase tracking-widest">
               <tr>
                 <th className="px-8 py-5">Nome da Campanha</th>
                 <th className="px-8 py-5">Tipo</th>
@@ -108,11 +108,11 @@ function EnviosMassivosPage() {
               </tr>
             </thead>
             <tbody className="divide-y divide-line">
-              <tr className="hover:bg-surface/50 transition-colors group">
+              <tr className="hover:bg-card/50 transition-colors group">
                 <td className="px-8 py-6">
                   <div className="flex flex-col">
                     <span className="font-extrabold text-foreground group-hover:text-primary transition-colors">Show Ana Carolina - Lembrete</span>
-                    <span className="text-[10px] text-muted-foreground-fg uppercase font-bold mt-1 tracking-wider">ID: #CAM-0823</span>
+                    <span className="text-[10px] text-muted-foreground uppercase font-bold mt-1 tracking-wider">ID: #CAM-0823</span>
                   </div>
                 </td>
                 <td className="px-8 py-6">
@@ -120,7 +120,7 @@ function EnviosMassivosPage() {
                     <div className="w-8 h-8 rounded-lg bg-green-50 text-green-600 flex items-center justify-center">
                       <MessageSquare className="w-4 h-4" />
                     </div>
-                    <span className="text-xs font-bold text-muted-foreground-fg">WhatsApp</span>
+                    <span className="text-xs font-bold text-muted-foreground">WhatsApp</span>
                   </div>
                 </td>
                 <td className="px-8 py-6">
@@ -139,7 +139,7 @@ function EnviosMassivosPage() {
                 <td className="px-8 py-6">
                   <div className="flex flex-col">
                     <span className="text-xs font-bold text-foreground">05/08/2026</span>
-                    <span className="text-[10px] text-muted-foreground-fg mt-0.5">14:30</span>
+                    <span className="text-[10px] text-muted-foreground mt-0.5">14:30</span>
                   </div>
                 </td>
                 <td className="px-8 py-6 text-right">

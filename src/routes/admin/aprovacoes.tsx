@@ -52,7 +52,7 @@ function AprovacoesPage() {
       
       <div className="bg-card rounded-xl border border-border overflow-hidden">
         <table className="w-full text-left">
-          <thead className="bg-accent text-muted-foreground-fg text-xs font-extrabold uppercase tracking-wider">
+          <thead className="bg-accent text-muted-foreground text-xs font-extrabold uppercase tracking-wider">
             <tr>
               <th className="px-6 py-4">Organização</th>
               <th className="px-6 py-4">Documento</th>
@@ -74,7 +74,7 @@ function AprovacoesPage() {
                 </td>
                 <td className="px-6 py-4 text-sm font-medium">{org.documento || "---"}</td>
                 <td className="px-6 py-4 text-sm font-medium">{org.countries?.nome || "---"}</td>
-                <td className="px-6 py-4 text-sm text-muted-foreground-fg">
+                <td className="px-6 py-4 text-sm text-muted-foreground">
                   {new Date(org.created_at).toLocaleDateString()}
                 </td>
                 <td className="px-6 py-4 text-right">

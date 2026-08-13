@@ -61,7 +61,7 @@ function CheckinDashboard() {
       <h2 className="text-3xl font-manrope font-black text-foreground uppercase tracking-tighter">Eventos Disponíveis</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {events.length === 0 ? (
-          <div className="col-span-full p-12 text-center bg-card rounded-3xl border border-line">
+          <div className="col-span-full p-12 text-center bg-card rounded-3xl border border-border">
             <p className="text-muted-foreground font-bold">Nenhum evento encontrado para este projeto.</p>
           </div>
         ) : events.map((e) => (

@@ -51,7 +51,7 @@ function IngressosPage() {
 
       <div className="grid gap-6">
         {ticketTypes?.map((ticket: any) => (
-          <Card key={ticket.id} className="bg-card border-line overflow-hidden hover:border-primary transition-all">
+          <Card key={ticket.id} className="bg-card border-border overflow-hidden hover:border-primary transition-all">
             <CardContent className="p-6 flex items-center gap-6">
               <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center text-primary">
                 <Ticket className="w-8 h-8" />

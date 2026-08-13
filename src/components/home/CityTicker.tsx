@@ -10,7 +10,7 @@ export function CityTicker() {
   const tickerItems = [...cities, ...cities, ...cities];
 
   return (
-    <div className="bg-surface-base border-y border-border py-6 overflow-hidden relative">
+    <div className="bg-card-base border-y border-border py-6 overflow-hidden relative">
       <div className="flex animate-marquee whitespace-nowrap">
         {tickerItems.map((city, index) => (
           <div key={index} className="flex items-center mx-12">

@@ -28,7 +28,7 @@ export function SalesCardPicker({ isOpen, onClose, onSelect }: SalesCardPickerPr
         </DialogHeader>
         <div className="space-y-4 py-4">
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground-fg" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
             <Input 
               placeholder="Buscar ingresso ou pacote..." 
               value={search}
@@ -49,7 +49,7 @@ export function SalesCardPicker({ isOpen, onClose, onSelect }: SalesCardPickerPr
                   </div>
                   <div>
                     <p className="text-sm font-black text-foreground dark:text-foreground">{t.title}</p>
-                    <p className="text-[10px] text-muted-foreground-fg uppercase font-bold tracking-widest">{t.type}</p>
+                    <p className="text-[10px] text-muted-foreground uppercase font-bold tracking-widest">{t.type}</p>
                   </div>
                 </div>
                 <div className="text-right">

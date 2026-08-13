@@ -67,7 +67,7 @@ function SuportePage() {
               <h4 className="text-sm font-extrabold uppercase text-muted-foreground tracking-wider">Pedidos</h4>
               {profile.orders?.length > 0 ? (
                 profile.orders.map((order: any) => (
-                  <div key={order.id} className="p-3 bg-surface rounded-lg flex justify-between items-center">
+                  <div key={order.id} className="p-3 bg-card rounded-lg flex justify-between items-center">
                     <div>
                       <p className="text-sm font-bold">Pedido #{order.id.slice(0,8)}</p>
                       <p className="text-xs text-muted-foreground">{new Date(order.created_at).toLocaleDateString()}</p>

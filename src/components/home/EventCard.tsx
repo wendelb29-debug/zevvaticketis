@@ -1,7 +1,8 @@
 import { Link } from "@tanstack/react-router";
-import { Calendar, MapPin, Heart, ArrowRight } from "lucide-react";
+import { Calendar, MapPin, Heart, ArrowRight, Ticket } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { getThemeByCategory } from "@/lib/categoryThemes";
+import { EventImage } from "@/components/ui/EventImage";
 
 interface EventCardProps {
   event: any;
@@ -17,16 +18,20 @@ export function EventCard({ event, onToggleFavorite }: EventCardProps) {
     return new Date(dateStr).toLocaleDateString("pt-BR", { day: "2-digit", month: "short" });
   };
 
+  const formatPrice = (price: number | null) => {
+    if (price === null || price === undefined) return "Consulte os ingressos";
+    if (price === 0) return "Gratuito";
+    return `R$ ${price.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}`;
+  };
+
   return (
     <div className="group bg-card border border-border overflow-hidden rounded-lg transition-all duration-300 hover:border-primary/30 hover:shadow-xl">
       <div className="relative aspect-[16/10] overflow-hidden bg-muted">
-        <img
-          src={
-            event.cover_image ||
-            `https://source.unsplash.com/featured/?${event.category || "event"}`
-          }
+        <EventImage
+          src={event.cover_image}
           alt={event.title}
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+          containerClassName="w-full h-full"
         />
 
         <button
@@ -34,12 +39,12 @@ export function EventCard({ event, onToggleFavorite }: EventCardProps) {
             e.preventDefault();
             onToggleFavorite?.(event.id);
           }}
-          className="absolute top-3 right-3 w-9 h-9 rounded-full bg-card/90 backdrop-blur-md border border-border flex items-center justify-center text-foreground hover:bg-primary hover:text-primary-foreground transition-all z-10"
+          className="absolute top-3 right-3 w-9 h-9 rounded-full bg-card border border-border flex items-center justify-center text-foreground hover:bg-primary hover:text-primary-foreground transition-all z-10"
         >
           <Heart className="w-4 h-4" />
         </button>
 
-        <div className="absolute top-3 left-3 px-3 py-1 bg-card/90 backdrop-blur-md border border-border rounded-md text-[10px] font-bold text-muted-foreground uppercase tracking-wider">
+        <div className="absolute top-3 left-3 px-3 py-1 bg-primary text-primary-foreground rounded-md text-[10px] font-bold uppercase tracking-wider">
           {event.category || "Evento"}
         </div>
       </div>
@@ -60,9 +65,12 @@ export function EventCard({ event, onToggleFavorite }: EventCardProps) {
 
         <div className="pt-4 flex items-center justify-between border-t border-border">
           <div className="flex flex-col">
-            <span className="text-[10px] font-medium text-muted-foreground">A partir de</span>
+            <span className="text-[10px] font-bold text-muted-foreground flex items-center gap-1">
+              <Ticket className="w-3 h-3 text-primary" />
+              {event.min_price === 0 ? "Aproveite" : "A partir de"}
+            </span>
             <span className="text-lg font-extrabold text-foreground">
-              R$ {event.min_price || 0}
+              {formatPrice(event.min_price)}
             </span>
           </div>
 

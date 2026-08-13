@@ -64,7 +64,7 @@ export function AccountMenu({ user, onLogout, onNavigate, onOpenAuth }: AccountM
       </DropdownMenuTrigger>
       <DropdownMenuContent
         align="end"
-        className="w-56 mt-2 rounded-sm border-border bg-surface-elevated shadow-2xl p-2 z-[60]"
+        className="w-56 mt-2 rounded-sm border-border bg-popover shadow-2xl p-2 z-[60]"
       >
         <div className="px-3 py-4 border-b border-border mb-2">
           <p className="text-xs font-bold text-foreground truncate">{profile?.nome || "Usuário"}</p>

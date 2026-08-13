@@ -176,7 +176,7 @@ export function TeamManagement() {
           <Users className="w-5 h-5 text-primary mt-1" />
           <div>
             <h3 className="font-manrope font-extrabold text-lg text-foreground">Gerenciar equipe</h3>
-            <p className="text-sm text-muted-foreground-fg">Gerencie os membros da equipe e seus acessos</p>
+            <p className="text-sm text-muted-foreground">Gerencie os membros da equipe e seus acessos</p>
           </div>
         </div>
         <div className="flex items-center gap-2">
@@ -193,7 +193,7 @@ export function TeamManagement() {
       <div className="flex flex-wrap items-end justify-between gap-4 px-6 py-4">
         <div className="flex flex-wrap items-end gap-4">
           <div className="space-y-1.5">
-            <Label className="text-xs text-muted-foreground-fg">Pesquisar</Label>
+            <Label className="text-xs text-muted-foreground">Pesquisar</Label>
             <Input
               value={search}
               onChange={(e) => setSearch(e.target.value)}
@@ -202,7 +202,7 @@ export function TeamManagement() {
             />
           </div>
           <div className="space-y-1.5">
-            <Label className="text-xs text-muted-foreground-fg">Departamentos</Label>
+            <Label className="text-xs text-muted-foreground">Departamentos</Label>
             <Select value={deptFilter} onValueChange={setDeptFilter}>
               <SelectTrigger className="w-48"><SelectValue /></SelectTrigger>
               <SelectContent>
@@ -223,7 +223,7 @@ export function TeamManagement() {
           >
             <RefreshCw className="w-4 h-4" />
           </Button>
-          <span className="text-sm text-muted-foreground-fg">Mostrar</span>
+          <span className="text-sm text-muted-foreground">Mostrar</span>
           <Select value={pageSize} onValueChange={setPageSize}>
             <SelectTrigger className="w-20"><SelectValue /></SelectTrigger>
             <SelectContent>
@@ -278,13 +278,13 @@ export function TeamManagement() {
                       ))}
                     </div>
                   </TableCell>
-                  <TableCell className="text-muted-foreground-fg">{m.permission}</TableCell>
+                  <TableCell className="text-muted-foreground">{m.permission}</TableCell>
                   <TableCell>
                     <Badge
                       variant="outline"
                       className={m.status === "online"
                         ? "border-emerald-500/30 bg-emerald-500/10 text-emerald-600 font-normal"
-                        : "text-muted-foreground-fg font-normal"}
+                        : "text-muted-foreground font-normal"}
                     >
                       {m.status === "online" ? "Online" : "Offline"}
                     </Badge>
@@ -309,7 +309,7 @@ export function TeamManagement() {
               ))}
               {visible.length === 0 && (
                 <TableRow>
-                  <TableCell colSpan={7} className="text-center text-muted-foreground-fg py-10">
+                  <TableCell colSpan={7} className="text-center text-muted-foreground py-10">
                     Nenhum usuário encontrado.
                   </TableCell>
                 </TableRow>
@@ -346,7 +346,7 @@ export function TeamManagement() {
                   {PERMISSIONS.map((p) => <SelectItem key={p} value={p}>{p}</SelectItem>)}
                 </SelectContent>
               </Select>
-              <div className="flex gap-2 items-start rounded-xl border border-primary/40 bg-primary/5 p-3 text-xs text-muted-foreground-fg">
+              <div className="flex gap-2 items-start rounded-xl border border-primary/40 bg-primary/5 p-3 text-xs text-muted-foreground">
                 <Info className="w-4 h-4 text-primary shrink-0 mt-0.5" />
                 <p>
                   Permissão. Define o que o usuário vê e pode fazer no projeto. Administrador e Supervisor mantêm
@@ -360,12 +360,12 @@ export function TeamManagement() {
               <Label>Departamentos onde atende como atendente</Label>
               <div className="rounded-xl border border-border overflow-hidden">
                 <div className="flex items-center gap-2 px-3 py-2 border-b border-border">
-                  <Search className="w-4 h-4 text-muted-foreground-fg" />
+                  <Search className="w-4 h-4 text-muted-foreground" />
                   <input
                     value={deptSearch}
                     onChange={(e) => setDeptSearch(e.target.value)}
                     placeholder="Buscar..."
-                    className="flex-1 bg-transparent text-sm outline-none placeholder:text-muted-foreground-fg"
+                    className="flex-1 bg-transparent text-sm outline-none placeholder:text-muted-foreground"
                   />
                   <button
                     type="button"
@@ -377,7 +377,7 @@ export function TeamManagement() {
                           newUser.departments.length === ALL_DEPARTMENTS.length ? [] : [...ALL_DEPARTMENTS],
                       })
                     }
-                    className="text-muted-foreground-fg hover:text-primary"
+                    className="text-muted-foreground hover:text-primary"
                   >
                     <ListChecks className="w-4 h-4" />
                   </button>
@@ -555,10 +555,10 @@ export function TeamManagement() {
                 {invitesPageRows.map((i) => (
                   <TableRow key={i.id}>
                     <TableCell className="font-medium text-foreground">{i.email}</TableCell>
-                    <TableCell className="text-muted-foreground-fg">{i.role}</TableCell>
-                    <TableCell className="text-muted-foreground-fg">{i.invitedBy}</TableCell>
-                    <TableCell className="text-muted-foreground-fg whitespace-nowrap">{i.createdAt}</TableCell>
-                    <TableCell className="text-muted-foreground-fg whitespace-nowrap">{i.expiresAt}</TableCell>
+                    <TableCell className="text-muted-foreground">{i.role}</TableCell>
+                    <TableCell className="text-muted-foreground">{i.invitedBy}</TableCell>
+                    <TableCell className="text-muted-foreground whitespace-nowrap">{i.createdAt}</TableCell>
+                    <TableCell className="text-muted-foreground whitespace-nowrap">{i.expiresAt}</TableCell>
                     <TableCell>
                       <span className={
                         i.status === "Aceito" ? "text-sm font-semibold text-emerald-500"
@@ -602,7 +602,7 @@ export function TeamManagement() {
                 ))}
                 {invitesPageRows.length === 0 && (
                   <TableRow>
-                    <TableCell colSpan={7} className="text-center text-muted-foreground-fg py-8">Nenhum convite encontrado.</TableCell>
+                    <TableCell colSpan={7} className="text-center text-muted-foreground py-8">Nenhum convite encontrado.</TableCell>
                   </TableRow>
                 )}
               </TableBody>
@@ -610,7 +610,7 @@ export function TeamManagement() {
           </div>
 
           {/* Pagination */}
-          <div className="flex flex-wrap items-center justify-between gap-3 text-sm text-muted-foreground-fg">
+          <div className="flex flex-wrap items-center justify-between gap-3 text-sm text-muted-foreground">
             <span>
               Mostrando {filteredInvites.length === 0 ? 0 : (invitePageSafe - 1) * invitePerPage + 1} até{" "}
               {Math.min(invitePageSafe * invitePerPage, filteredInvites.length)} de {filteredInvites.length} registros
@@ -741,7 +741,7 @@ export function TeamManagement() {
             ].map((s) => (
               <div key={s.label} className="rounded-lg border border-border p-4 text-center">
                 <p className="text-2xl font-manrope font-extrabold text-foreground">{s.value}</p>
-                <p className="text-xs text-muted-foreground-fg">{s.label}</p>
+                <p className="text-xs text-muted-foreground">{s.label}</p>
               </div>
             ))}
           </div>

@@ -181,7 +181,7 @@ function TeamManagement() {
                 <label className="text-[10px] font-extrabold uppercase tracking-widest text-muted-foreground">Permissões</label>
                 <div className="grid grid-cols-2 gap-4">
                   {PERMISSIONS.map((perm) => (
-                    <div key={perm.id} className="flex items-center space-x-3 bg-surface p-3 rounded-xl border border-line/50">
+                    <div key={perm.id} className="flex items-center space-x-3 bg-card p-3 rounded-xl border border-border/50">
                       <Checkbox 
                         id={perm.id} 
                         checked={selectedPermissions.includes(perm.id)}
@@ -212,8 +212,8 @@ function TeamManagement() {
 
       <div className="grid gap-8">
         {/* Active Members */}
-        <div className="bg-card rounded-[32px] border border-line shadow-sm overflow-hidden">
-          <div className="px-8 py-6 border-b border-line bg-surface/30">
+        <div className="bg-card rounded-[32px] border border-border shadow-sm overflow-hidden">
+          <div className="px-8 py-6 border-b border-border bg-card/30">
             <h3 className="text-sm font-extrabold uppercase tracking-widest text-foreground">Membros Ativos</h3>
           </div>
           <div className="divide-y divide-line">
@@ -256,8 +256,8 @@ function TeamManagement() {
 
         {/* Pending Invites */}
         {invites.length > 0 && (
-          <div className="bg-card rounded-[32px] border border-line shadow-sm overflow-hidden">
-            <div className="px-8 py-6 border-b border-line bg-surface/30">
+          <div className="bg-card rounded-[32px] border border-border shadow-sm overflow-hidden">
+            <div className="px-8 py-6 border-b border-border bg-card/30">
               <h3 className="text-sm font-extrabold uppercase tracking-widest text-primary flex items-center gap-2">
                 <Clock className="w-4 h-4" /> Convites Pendentes
               </h3>
@@ -266,7 +266,7 @@ function TeamManagement() {
               {invites.map((invite) => (
                 <div key={invite.id} className="px-8 py-6 flex flex-col sm:flex-row sm:items-center justify-between gap-6">
                   <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 rounded-xl bg-surface flex items-center justify-center text-muted-foreground">
+                    <div className="w-10 h-10 rounded-xl bg-card flex items-center justify-center text-muted-foreground">
                       <Mail className="w-5 h-5" />
                     </div>
                     <div className="space-y-1">
@@ -279,7 +279,7 @@ function TeamManagement() {
 
                   <div className="flex flex-wrap gap-2">
                     {(invite.permissions as string[] || []).map(perm => (
-                      <Badge key={perm} variant="outline" className="border-line text-muted-foreground font-extrabold text-[10px] uppercase px-3">
+                      <Badge key={perm} variant="outline" className="border-border text-muted-foreground font-extrabold text-[10px] uppercase px-3">
                         {perm}
                       </Badge>
                     ))}

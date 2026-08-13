@@ -19,7 +19,7 @@ export function GridPatternCard({
       className={cn(
         "border w-full rounded-[32px] overflow-hidden relative",
         "bg-card",
-        "border-line",
+        "border-border",
         className
       )}
       initial={{ opacity: 0, y: -20 }}

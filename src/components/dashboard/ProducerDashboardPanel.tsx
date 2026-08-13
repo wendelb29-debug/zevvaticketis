@@ -146,7 +146,7 @@ export function ProducerDashboardPanel() {
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
         <Card className="border-border shadow-sm">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-bold text-muted-foreground-fg">Eventos Ativos</CardTitle>
+            <CardTitle className="text-sm font-bold text-muted-foreground">Eventos Ativos</CardTitle>
             <Calendar className="w-4 h-4 text-primary" />
           </CardHeader>
           <CardContent>
@@ -155,7 +155,7 @@ export function ProducerDashboardPanel() {
         </Card>
         <Card className="border-border shadow-sm">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-bold text-muted-foreground-fg">Ingressos Vendidos</CardTitle>
+            <CardTitle className="text-sm font-bold text-muted-foreground">Ingressos Vendidos</CardTitle>
             <Ticket className="w-4 h-4 text-primary" />
           </CardHeader>
           <CardContent>
@@ -164,7 +164,7 @@ export function ProducerDashboardPanel() {
         </Card>
         <Card className="border-border shadow-sm">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-bold text-muted-foreground-fg">Participantes</CardTitle>
+            <CardTitle className="text-sm font-bold text-muted-foreground">Participantes</CardTitle>
             <Users className="w-4 h-4 text-primary" />
           </CardHeader>
           <CardContent>
@@ -173,7 +173,7 @@ export function ProducerDashboardPanel() {
         </Card>
         <Card className="border-border shadow-sm">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-bold text-muted-foreground-fg">Receita Líquida</CardTitle>
+            <CardTitle className="text-sm font-bold text-muted-foreground">Receita Líquida</CardTitle>
             <DollarSign className="w-4 h-4 text-emerald-500" />
           </CardHeader>
           <CardContent>
@@ -221,7 +221,7 @@ export function ProducerDashboardPanel() {
               ))}
               {salesReport.length === 0 && (
                 <TableRow>
-                  <TableCell colSpan={6} className="text-center py-10 text-muted-foreground-fg">Nenhuma venda registrada.</TableCell>
+                  <TableCell colSpan={6} className="text-center py-10 text-muted-foreground">Nenhuma venda registrada.</TableCell>
                 </TableRow>
               )}
             </TableBody>

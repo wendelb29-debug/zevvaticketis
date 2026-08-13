@@ -116,7 +116,7 @@ function CategoryPage() {
                 <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground h-5 w-5" />
                 <Input
                   placeholder={`Buscar em ${category.name}...`}
-                  className="h-12 pl-12 rounded-xl border border-border bg-surface focus-visible:ring-primary/20"
+                  className="h-12 pl-12 rounded-xl border border-border bg-card focus-visible:ring-primary/20"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                 />
@@ -142,8 +142,8 @@ function CategoryPage() {
               ))}
             </div>
           ) : (
-            <div className="py-24 flex flex-col items-center justify-center border border-dashed border-border rounded-2xl bg-surface/50">
-              <div className="w-16 h-16 bg-surface-elevated rounded-full flex items-center justify-center mb-6">
+            <div className="py-24 flex flex-col items-center justify-center border border-dashed border-border rounded-2xl bg-card/50">
+              <div className="w-16 h-16 bg-popover rounded-full flex items-center justify-center mb-6">
                 <Icon className="w-8 h-8 text-muted-foreground" />
               </div>
               <h2 className="text-xl font-bold text-foreground mb-2">Nenhum evento encontrado</h2>

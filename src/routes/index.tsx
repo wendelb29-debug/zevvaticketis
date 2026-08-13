@@ -150,14 +150,14 @@ function HomePage() {
 
       <main className="relative">
         {/* Functional Modern Hero */}
-        <section className="relative h-[85vh] flex items-center bg-dark-surface overflow-hidden">
+        <section className="relative h-[85vh] flex items-center bg-brand-dark overflow-hidden">
           <div className="absolute inset-0">
             <img
               src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=2070&auto=format&fit=crop"
               className="w-full h-full object-cover opacity-50"
               alt="Events background"
             />
-            <div className="absolute inset-0 bg-gradient-to-r from-dark-surface via-dark-surface/80 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-transparent" />
           </div>
 
           <div className="relative z-10 max-w-7xl mx-auto px-6 w-full">
@@ -201,7 +201,7 @@ function HomePage() {
 
         {/* Minimalist Search */}
         <section ref={searchRef} className="relative -mt-12 z-20 px-6">
-          <div className="max-w-5xl mx-auto bg-surface p-4 rounded-2xl shadow-2xl border border-border">
+          <div className="max-w-5xl mx-auto bg-card p-4 rounded-2xl shadow-2xl border border-border">
             <div className="flex flex-col md:flex-row items-center gap-4">
               <div className="relative flex-1 w-full">
                 <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground h-5 w-5" />
@@ -293,7 +293,7 @@ function HomePage() {
           )}
         </section>
 
-        <section className="px-6 py-24 bg-surface border-y border-border">
+        <section className="px-6 py-24 bg-background border-y border-border">
           <div className="max-w-7xl mx-auto space-y-16">
             <div className="flex flex-col items-center text-center space-y-4 max-w-2xl mx-auto">
               <h2 className="text-3xl md:text-4xl font-manrope font-extrabold text-foreground tracking-tight">
@@ -312,7 +312,7 @@ function HomePage() {
           <div className="max-w-7xl mx-auto space-y-20">
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
               <div className="space-y-4">
-                <span className="text-[10px] font-bold text-accent uppercase tracking-[0.2em]">
+                <span className="text-[10px] font-bold text-primary uppercase tracking-[0.2em]">
                   Personalizado
                 </span>
                 <h2 className="text-3xl md:text-4xl font-manrope font-extrabold text-foreground tracking-tight">
@@ -334,7 +334,7 @@ function HomePage() {
           <div className="max-w-7xl mx-auto space-y-20">
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
               <div className="space-y-4 max-w-2xl">
-                <span className="text-[10px] font-bold text-accent uppercase tracking-[0.2em]">
+                <span className="text-[10px] font-bold text-primary uppercase tracking-[0.2em]">
                   Calendário
                 </span>
                 <h2 className="text-3xl md:text-4xl font-manrope font-extrabold text-foreground tracking-tight">
@@ -362,7 +362,7 @@ function HomePage() {
                 {[1, 2, 3, 4].map((i) => (
                   <div
                     key={i}
-                    className="aspect-[16/10] rounded-sm bg-surface-elevated animate-pulse border border-border"
+                    className="aspect-[16/10] rounded-sm bg-muted animate-pulse border border-border"
                   />
                 ))}
               </div>
@@ -377,7 +377,7 @@ function HomePage() {
         </section>
 
         {/* Cursos - Professional Modern Layout */}
-        <section className="px-6 py-24 bg-surface border-y border-border">
+        <section className="px-6 py-24 bg-card border-y border-border">
           <div className="max-w-7xl mx-auto space-y-16">
             <div className="flex flex-col items-center text-center space-y-4 max-w-3xl mx-auto">
               <h2 className="text-3xl md:text-5xl font-manrope font-extrabold text-foreground tracking-tight">
@@ -422,7 +422,7 @@ function HomePage() {
                     <span className="text-xs font-bold text-foreground/60">
                       {course.hours} • {course.mode}
                     </span>
-                    <button className="w-10 h-10 rounded-full bg-surface border border-border flex items-center justify-center group-hover:bg-primary group-hover:text-primary-foreground group-hover:border-primary transition-all">
+                    <button className="w-10 h-10 rounded-full bg-card border border-border flex items-center justify-center group-hover:bg-primary group-hover:text-primary-foreground group-hover:border-primary transition-all">
                       <ArrowRight className="w-4 h-4" />
                     </button>
                   </div>
@@ -469,7 +469,7 @@ function HomePage() {
               ].map((caravan, i) => (
                 <div
                   key={i}
-                  className="group flex flex-col md:flex-row gap-8 items-center bg-surface p-6 rounded-2xl border border-border hover:border-primary/30 hover:shadow-xl transition-all duration-300"
+                  className="group flex flex-col md:flex-row gap-8 items-center bg-card p-6 rounded-2xl border border-border hover:border-primary/30 hover:shadow-xl transition-all duration-300"
                 >
                   <div className="w-full md:w-48 aspect-square overflow-hidden rounded-xl bg-background">
                     <img
@@ -515,7 +515,7 @@ function HomePage() {
         </section>
 
         {/* Benefits Showcase - Modern & Clean */}
-        <section className="px-6 py-24 bg-surface border-y border-border">
+        <section className="px-6 py-24 bg-card border-y border-border">
           <div className="max-w-7xl mx-auto space-y-16">
             <div className="text-center space-y-4 max-w-2xl mx-auto">
               <h2 className="text-3xl md:text-5xl font-manrope font-extrabold text-foreground tracking-tight">
@@ -561,7 +561,7 @@ function HomePage() {
         </section>
 
         {/* Organizer CTA - Functional & Clean */}
-        <section className="px-6 py-24 bg-dark-surface">
+        <section className="px-6 py-24 bg-brand-dark">
           <div className="max-w-7xl mx-auto">
             <div className="relative p-12 md:p-20 bg-primary rounded-2xl overflow-hidden shadow-2xl">
               <Zap className="absolute -top-10 -right-10 w-80 h-80 text-primary-foreground/5 rotate-12" />
@@ -592,7 +592,7 @@ function HomePage() {
 
         {/* PremiumNewsletter removido para simplificação inicial */}
 
-        <section className="px-6 py-24 bg-surface border-t border-border">
+        <section className="px-6 py-24 bg-card border-t border-border">
           <div className="max-w-3xl mx-auto space-y-12">
             <div className="text-center space-y-4">
               <h2 className="text-3xl md:text-5xl font-manrope font-extrabold text-foreground tracking-tight">

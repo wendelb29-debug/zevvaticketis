@@ -51,14 +51,14 @@ export function GlobalBreadcrumb({ className }: { className?: string }) {
       >
         Início
       </Link>
-      <span className="sm:hidden text-muted-foreground-fg font-semibold">...</span>
+      <span className="sm:hidden text-muted-foreground font-semibold">...</span>
 
       {crumbs.map((crumb) => (
         <div
           key={crumb.href}
           className={cn("items-center gap-2", crumb.isLast ? "flex" : "hidden sm:flex")}
         >
-          <ChevronRight className="w-4 h-4 text-muted-foreground-fg/40 shrink-0" />
+          <ChevronRight className="w-4 h-4 text-muted-foreground/40 shrink-0" />
           {crumb.isLast ? (
             <span className="text-foreground font-extrabold tracking-tight">{crumb.label}</span>
           ) : (
