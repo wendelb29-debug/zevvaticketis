@@ -104,7 +104,7 @@ export function SidebarHistory({ isOpen, onClose, contactId }: SidebarHistoryPro
                             <p className="text-[9px] font-black text-muted-foreground uppercase tracking-widest mb-1.5">Motivo / Resumo</p>
                             <div className="bg-card p-3 rounded-xl border border-border h-full min-h-[60px]">
                               <p className="text-xs text-foreground/80 leading-relaxed italic">
-                                {attendance.closure_reason || "Sem observações registradas."}
+                                {attendance.finalization_reason || "Sem observações registradas."}
                               </p>
                             </div>
                           </div>
