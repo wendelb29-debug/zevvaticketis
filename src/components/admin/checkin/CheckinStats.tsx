@@ -305,8 +305,8 @@ function ReportSummaryCard({ title, subtitle, buttonText, type }: any) {
             {type === 'presence' ? <Users className="w-6 h-6" /> : <UserX className="w-6 h-6" />}
           </div>
           <div>
-            <h3 className="font-manrope font-extrabold text-navy">{title}</h3>
-            <p className="text-xs text-muted font-medium">{subtitle}</p>
+            <h3 className="font-manrope font-extrabold text-foreground">{title}</h3>
+            <p className="text-xs text-muted-foreground font-medium">{subtitle}</p>
           </div>
         </div>
         <Button variant="ghost" className="text-primary font-black text-xs uppercase flex items-center gap-2 group-hover:gap-3 transition-all">
