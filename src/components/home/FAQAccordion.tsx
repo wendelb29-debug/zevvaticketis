@@ -26,17 +26,17 @@ const faqs = [
 
 export function FAQAccordion() {
   return (
-    <Accordion type="single" collapsible className="w-full">
+    <Accordion type="single" collapsible className="w-full space-y-4">
       {faqs.map((faq, index) => (
         <AccordionItem 
           key={index} 
           value={`item-${index}`}
-          className="border border-line rounded-2xl px-6 bg-white data-[state=open]:shadow-md transition-all shadow-sm mb-4 last:mb-0"
+          className="border-b border-border px-0 bg-transparent transition-all shadow-none mb-0 group"
         >
-          <AccordionTrigger className="text-left font-bold text-lg hover:no-underline hover:text-coral transition-colors py-6 text-navy">
+          <AccordionTrigger className="text-left font-serif text-2xl md:text-3xl hover:no-underline hover:text-accent transition-colors py-10 text-foreground">
             {faq.question}
           </AccordionTrigger>
-          <AccordionContent className="text-muted font-medium leading-relaxed pb-6">
+          <AccordionContent className="text-foreground-muted font-medium text-lg leading-relaxed pb-10 max-w-2xl">
             {faq.answer}
           </AccordionContent>
         </AccordionItem>
