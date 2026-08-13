@@ -1,15 +1,28 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { supabase } from "@/integrations/supabase/client";
+import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 
 export const sendWhatsAppMessage = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
   .inputValidator((data) => z.object({
     contactId: z.string().uuid(),
     phone: z.string(),
     text: z.string(),
     tenantId: z.string().uuid().optional()
   }).parse(data))
-  .handler(async ({ data }) => {
+  .handler(async ({ data, context }) => {
+    // 1. Log audit action
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    await supabaseAdmin.from('audit_logs').insert({
+      admin_id: context.userId,
+      acao: 'send_whatsapp_message',
+      alvo_tipo: 'whatsapp_contact',
+      alvo_id: data.contactId,
+      categoria: 'Chat',
+      payload: { phone: data.phone, tenantId: data.tenantId }
+    });
+
     const UAZAPI_BASE_URL = process.env['UAZAPI_BASE_URL'];
     
     // Fetch an active instance linked to the tenant if provided, or fallback to any active
@@ -75,6 +88,7 @@ export const sendWhatsAppMessage = createServerFn({ method: "POST" })
   });
 
 export const getWhatsAppContacts = createServerFn({ method: "GET" })
+  .middleware([requireSupabaseAuth])
   .inputValidator((data) => z.object({
     tenantId: z.string().uuid().optional()
   }).parse(data))
@@ -95,20 +109,34 @@ export const getWhatsAppContacts = createServerFn({ method: "GET" })
   });
 
 export const getWhatsAppIntegrationStatus = createServerFn({ method: "GET" })
+  .middleware([requireSupabaseAuth])
   .inputValidator((data) => z.object({
     tenantId: z.string().uuid().optional()
   }).parse(data))
-  .handler(async ({ data }) => {
+  .handler(async ({ data, context }) => {
     if (!data.tenantId) return { status: 'offline', details: 'No tenant selected' };
 
     // Check whatsapp_integrations (Meta API)
     const { data: integration, error: integrationError } = await supabase
       .from('whatsapp_integrations')
-      .select('status, updated_at')
+      .select('id, status, updated_at')
       .eq('project_id', data.tenantId)
       .maybeSingle();
 
     if (integrationError) throw integrationError;
+
+    // Log connection check for auditing
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    if (integration?.status !== 'active') {
+       await supabaseAdmin.from('audit_logs').insert({
+        admin_id: context.userId,
+        acao: 'check_whatsapp_connection_failure',
+        alvo_tipo: 'whatsapp_integration',
+        alvo_id: integration?.id || 'none',
+        categoria: 'System',
+        payload: { tenantId: data.tenantId, status: integration?.status || 'missing' }
+      });
+    }
 
     // Check UAZAPI instances if no Meta API or if status is not active
     // This is a simplified check for connection "health"
@@ -138,6 +166,7 @@ export const getWhatsAppIntegrationStatus = createServerFn({ method: "GET" })
   });
 
 export const getWhatsAppMessages = createServerFn({ method: "GET" })
+  .middleware([requireSupabaseAuth])
   .inputValidator((data) => z.object({
     contactId: z.string().uuid()
   }).parse(data))
@@ -153,10 +182,23 @@ export const getWhatsAppMessages = createServerFn({ method: "GET" })
   });
 
 export const markMessagesAsRead = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
   .inputValidator((data) => z.object({
-    contactId: z.string().uuid()
+    contactId: z.string().uuid(),
+    tenantId: z.string().uuid().optional()
   }).parse(data))
-  .handler(async ({ data }) => {
+  .handler(async ({ data, context }) => {
+    // Audit reading action
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    await supabaseAdmin.from('audit_logs').insert({
+      admin_id: context.userId,
+      acao: 'read_whatsapp_chat',
+      alvo_tipo: 'whatsapp_contact',
+      alvo_id: data.contactId,
+      categoria: 'Chat',
+      payload: { tenantId: data.tenantId }
+    });
+
     const { error } = await supabase
       .from('whatsapp_messages')
       .update({ status: 'read' })
