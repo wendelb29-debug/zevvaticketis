@@ -85,7 +85,7 @@ function LoginPage() {
 
         <div className="pt-6 space-y-4">
           <Button 
-            className="w-full h-14 rounded-xl bg-coral hover:bg-coral-dark text-white font-bold text-lg shadow-lg shadow-coral/20"
+            className="w-full h-14 rounded-xl font-bold text-lg shadow-lg"
             onClick={() => openOverlay('auth', 'login')}
           >
             Entrar agora
