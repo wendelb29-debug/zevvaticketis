@@ -165,7 +165,7 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
-  const { activeOverlay, authView, closeOverlay, language, theme, fontSize } = useUI();
+  const { activeOverlay, authView, closeOverlay, language, theme, fontSize } = useUI() as any;
   const router = useRouter();
   const [isNavigating, setIsNavigating] = useState(false);
 
@@ -204,7 +204,6 @@ function RootComponent() {
 
   useEffect(() => {
     const handleOutsideClick = (event: MouseEvent) => {
-      // Check if the click was outside any active dropdown/overlay logic
       if (activeOverlay === 'language') {
         const target = event.target as HTMLElement;
         const isClickInsideLanguageDropdown = target.closest('.language-dropdown-container');
@@ -249,7 +248,6 @@ function RootComponent() {
           isOpen={activeOverlay === 'location'}
           onClose={closeOverlay}
           onSelect={(city) => {
-            // In a real app we'd dispatch this to a global state or search params
             console.log("Selected city:", city);
             closeOverlay();
           }}
