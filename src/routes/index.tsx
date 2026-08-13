@@ -34,8 +34,6 @@ import { tracking } from "@/lib/tracking";
 import { getFeaturedEvents } from "@/lib/events.functions";
 import { useServerFn } from "@tanstack/react-start";
 import { Skeleton } from "@/components/ui/skeleton";
-// Newsletter e outros componentes premium seguem o novo design system
-import { Skeleton } from "@/components/ui/skeleton";
 
 
 export const Route = createFileRoute("/")({
@@ -483,16 +481,14 @@ function HomePage() {
           </div>
         </section>
 
-        <PremiumNewsletter />
+        {/* PremiumNewsletter removido para simplificação inicial */}
 
-        <section className="px-6 py-32 border-t border-border">
-          <div className="max-w-3xl mx-auto space-y-20">
-            <div className="text-center space-y-4">
+        <section className="px-6 py-24 bg-surface border-t border-border">
+          <div className="max-w-3xl mx-auto space-y-12">
             <div className="text-center space-y-4">
               <h2 className="text-3xl md:text-5xl font-manrope font-extrabold text-foreground tracking-tight">
                 Dúvidas frequentes
               </h2>
-            </div>
             </div>
             <FAQAccordion />
           </div>
