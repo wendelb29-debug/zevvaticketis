@@ -112,7 +112,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 });
 
 function RootShell({ children }: { children: ReactNode }) {
-  const { language, theme, resolvedTheme } = useUI();
+  const { language: rawLanguage, theme, resolvedTheme } = useUI();
+  const language = (typeof window !== 'undefined' ? (window as any).normalizeLocale?.(rawLanguage) : rawLanguage) || rawLanguage;
 
   useEffect(() => {
     if (language) {
@@ -128,6 +129,16 @@ function RootShell({ children }: { children: ReactNode }) {
         <script
           dangerouslySetInnerHTML={{
             __html: `
+              window.normalizeLocale = function(value) {
+                if (!value) return 'pt-BR';
+                const normalized = value.trim().toLowerCase();
+                const aliases = {
+                  'pt': 'pt-BR', 'pt-br': 'pt-BR', 'português': 'pt-BR', 'portugues': 'pt-BR',
+                  'en': 'en-US', 'en-us': 'en-US', 'english': 'en-US',
+                  'es': 'es-ES', 'es-es': 'es-ES', 'español': 'es-ES', 'espanol': 'es-ES'
+                };
+                return aliases[normalized] || (['pt-BR', 'en-US', 'es-ES'].includes(value) ? value : 'pt-BR');
+              };
               (function() {
                 try {
                   const storage = localStorage.getItem('zevva-ui-storage');
@@ -136,7 +147,13 @@ function RootShell({ children }: { children: ReactNode }) {
                   if (storage) {
                     const parsed = JSON.parse(storage);
                     theme = parsed.state.theme || 'light';
-                    language = parsed.state.language || 'pt-BR';
+                    let rawLang = parsed.state.language || 'pt-BR';
+                    const aliases = {
+                      'pt': 'pt-BR', 'pt-br': 'pt-BR', 'português': 'pt-BR', 'portugues': 'pt-BR',
+                      'en': 'en-US', 'en-us': 'en-US', 'english': 'en-US',
+                      'es': 'es-ES', 'es-es': 'es-ES', 'español': 'es-ES', 'espanol': 'es-ES'
+                    };
+                    language = aliases[rawLang.toLowerCase()] || (['pt-BR', 'en-US', 'es-ES'].includes(rawLang) ? rawLang : 'pt-BR');
                   }
                   
                   let resolvedTheme = theme;
@@ -165,7 +182,8 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
-  const { activeOverlay, authView, closeOverlay, language, theme, fontSize } = useUI() as any;
+  const { activeOverlay, authView, closeOverlay, language: rawLanguage, theme, fontSize } = useUI() as any;
+  const language = (typeof window !== 'undefined' ? (window as any).normalizeLocale?.(rawLanguage) : rawLanguage) || rawLanguage;
   const router = useRouter();
   const location = useLocation();
   const [isNavigating, setIsNavigating] = useState(false);

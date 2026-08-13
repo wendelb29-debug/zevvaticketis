@@ -19,6 +19,32 @@ export const translations = {
       profile: "Meu Perfil",
       logout: "Sair"
     },
+    navigation: {
+      chat: "Chat",
+      masterConsole: "Master Console",
+      dashboard: "Dashboard",
+      contacts: "Contatos",
+      allContacts: "Todos os Contatos",
+      customerGroups: "Grupos de Clientes",
+      checkin: "Check-in",
+      generalPanel: "Painel Geral",
+      reports: "Relatórios",
+      globalMonitor: "Monitor Global",
+      plans: "Planos",
+      countriesAndCurrencies: "Países e Moedas",
+      marketing: "Marketing",
+      ads: "Anúncios",
+      advertising: "Publicidade",
+      pushNotifications: "Push Notifications",
+      massOutreach: "Envios Massivos",
+      createNew: "Criar novo",
+      outreach: "Envios",
+      emails: "E-mails",
+      templates: "Templates",
+      gmailInbox: "Gmail Inbox",
+      settings: "Configurações",
+      language: "Idioma"
+    },
     home: {
       featuredLabel: "Destaque",
       ensureSpot: "Garantir Vaga",
@@ -80,6 +106,32 @@ export const translations = {
       agenda: "Full Agenda",
       profile: "My Profile",
       logout: "Logout"
+    },
+    navigation: {
+      chat: "Chat",
+      masterConsole: "Master Console",
+      dashboard: "Dashboard",
+      contacts: "Contacts",
+      allContacts: "All Contacts",
+      customerGroups: "Customer Groups",
+      checkin: "Check-in",
+      generalPanel: "General Panel",
+      reports: "Reports",
+      globalMonitor: "Global Monitor",
+      plans: "Plans",
+      countriesAndCurrencies: "Countries and Currencies",
+      marketing: "Marketing",
+      ads: "Ads",
+      advertising: "Advertising",
+      pushNotifications: "Push Notifications",
+      massOutreach: "Mass Outreach",
+      createNew: "Create New",
+      outreach: "Outreach",
+      emails: "Emails",
+      templates: "Templates",
+      gmailInbox: "Gmail Inbox",
+      settings: "Settings",
+      language: "Language"
     },
     home: {
       featuredLabel: "Featured",
@@ -143,6 +195,32 @@ export const translations = {
       profile: "Mi Perfil",
       logout: "Cerrar Sesión"
     },
+    navigation: {
+      chat: "Chat",
+      masterConsole: "Master Console",
+      dashboard: "Panel",
+      contacts: "Contactos",
+      allContacts: "Todos los Contactos",
+      customerGroups: "Grupos de Clientes",
+      checkin: "Check-in",
+      generalPanel: "Panel General",
+      reports: "Informes",
+      globalMonitor: "Monitor Global",
+      plans: "Planes",
+      countriesAndCurrencies: "Países y Monedas",
+      marketing: "Marketing",
+      ads: "Anuncios",
+      advertising: "Publicidad",
+      pushNotifications: "Push Notifications",
+      massOutreach: "Envíos Masivos",
+      createNew: "Crear Nuevo",
+      outreach: "Envíos",
+      emails: "Correos",
+      templates: "Plantillas",
+      gmailInbox: "Bandeja de Gmail",
+      settings: "Configuración",
+      language: "Idioma"
+    },
     home: {
       featuredLabel: "Destacado",
       ensureSpot: "Reservar Ahora",
@@ -187,6 +265,7 @@ export const translations = {
       caravans: "Caravanas"
     }
   }
-} as any;
+} as const;
 
+export type TranslationSchema = typeof translations["pt-BR"];
 export type TranslationKeys = typeof translations;

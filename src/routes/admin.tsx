@@ -6,6 +6,7 @@ import { UserMenu } from "@/components/auth/UserMenu";
 import { NotificationBell } from "@/components/admin/notifications/NotificationBell";
 import { GlobalBreadcrumb } from "@/components/layout/GlobalBreadcrumb";
 import { useUI } from "@/hooks/use-ui";
+import { getTranslations } from "@/lib/i18n-utils";
 import { 
   LayoutDashboard, 
   CheckSquare, 
@@ -90,7 +91,9 @@ function AdminLayout() {
   const [isTransitioning, setIsTransitioning] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
-  const { theme, setTheme, language, setLanguage, isSaving } = useUI();
+  const { theme, setTheme, language: rawLanguage, setLanguage, isSaving } = useUI();
+  const language = (typeof window !== 'undefined' ? (window as any).normalizeLocale?.(rawLanguage) : rawLanguage) || rawLanguage;
+  const t = getTranslations(language);
   const { logout } = useTenants();
   const [openGroup, setOpenGroup] = useState<string | null>(null);
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(() => {
@@ -129,59 +132,59 @@ function AdminLayout() {
   };
 
   const menuItems = [
-    { label: "Chat", icon: MessageSquare, href: "/admin/chat" },
-    { label: "Master Console", icon: Building2, href: "/admin/master" },
-    { label: "Dashboard", icon: LayoutDashboard, href: "/admin", activeOptions: { exact: true } },
+    { label: t.navigation?.chat || "Chat", icon: MessageSquare, href: "/admin/chat" },
+    { label: t.navigation?.masterConsole || "Master Console", icon: Building2, href: "/admin/master" },
+    { label: t.navigation?.dashboard || "Dashboard", icon: LayoutDashboard, href: "/admin", activeOptions: { exact: true } },
     { 
-      label: "Contatos", 
+      label: t.navigation?.contacts || "Contatos", 
       icon: Users, 
       children: [
-        { label: "Todos os Contatos", href: "/admin/contatos" },
-        { label: "Grupos de Clientes", href: "/admin/grupos" },
+        { label: t.navigation?.allContacts || "Todos os Contatos", href: "/admin/contatos" },
+        { label: t.navigation?.customerGroups || "Grupos de Clientes", href: "/admin/grupos" },
       ]
     },
     { 
-      label: "Check-in", 
+      label: t.navigation?.checkin || "Check-in", 
       icon: CheckSquare, 
       children: [
-        { label: "Painel Geral", href: "/admin/checkin" },
-        { label: "Relatórios", href: "/admin/checkin", query: { tab: "reports" } },
-        { label: "Monitor Global", href: "/admin/checkin-monitor" },
+        { label: t.navigation?.generalPanel || "Painel Geral", href: "/admin/checkin" },
+        { label: t.navigation?.reports || "Relatórios", href: "/admin/checkin", query: { tab: "reports" } },
+        { label: t.navigation?.globalMonitor || "Monitor Global", href: "/admin/checkin-monitor" },
       ]
     },
 
     { 
-      label: "Planos", 
+      label: t.navigation?.plans || "Planos", 
       icon: CreditCard, 
       children: [
-        { label: "Planos", href: "/admin/planos" },
-        { label: "Países e Moedas", href: "/admin/paises-moedas" },
+        { label: t.navigation?.plans || "Planos", href: "/admin/planos" },
+        { label: t.navigation?.countriesAndCurrencies || "Países e Moedas", href: "/admin/paises-moedas" },
       ]
     },
     { 
-      label: "Marketing", 
+      label: t.navigation?.marketing || "Marketing", 
       icon: Megaphone, 
       children: [
-        { label: "Anúncios", href: "/admin/marketing/anuncios" },
-        { label: "Publicidade", href: "/admin/marketing/publicidade" },
-        { label: "Push Notifications", href: "/admin/marketing/push" },
+        { label: t.navigation?.ads || "Anúncios", href: "/admin/marketing/anuncios" },
+        { label: t.navigation?.advertising || "Publicidade", href: "/admin/marketing/publicidade" },
+        { label: t.navigation?.pushNotifications || "Push Notifications", href: "/admin/marketing/push" },
       ]
     },
     { 
-      label: "Envios Massivos", 
+      label: t.navigation?.massOutreach || "Envios Massivos", 
       icon: Rocket, 
       children: [
-        { label: "Criar novo", href: "/admin/envios-massivos", query: { wizard: "true" } },
-        { label: "Envios", href: "/admin/envios-massivos" },
+        { label: t.navigation?.createNew || "Criar novo", href: "/admin/envios-massivos", query: { wizard: "true" } },
+        { label: t.navigation?.outreach || "Envios", href: "/admin/envios-massivos" },
       ]
     },
     { 
-      label: "E-mails", 
+      label: t.navigation?.emails || "E-mails", 
       icon: Mail, 
       children: [
-        { label: "Dashboard", href: "/admin/email-management" },
-        { label: "Templates", href: "/admin/email-templates" },
-        { label: "Gmail Inbox", href: "/admin/emails" },
+        { label: t.navigation?.dashboard || "Dashboard", href: "/admin/email-management" },
+        { label: t.navigation?.templates || "Templates", href: "/admin/email-templates" },
+        { label: t.navigation?.gmailInbox || "Gmail Inbox", href: "/admin/emails" },
       ]
     },
   ];
@@ -289,7 +292,7 @@ function AdminLayout() {
                       <Link
                         key={child.label}
                         to={child.href as any}
-                        search={child.query as any}
+                        search={(child as any).query}
                         className="block py-2 rounded-lg text-xs font-bold transition-all duration-200 outline-none focus:ring-2 focus:ring-primary focus:text-primary active:scale-[0.98]"
                         activeProps={{ className: "text-primary ring-2 ring-primary/20" }}
                         inactiveProps={{ className: "text-muted-foreground hover:text-foreground hover:bg-accent/30" }}
@@ -314,7 +317,7 @@ function AdminLayout() {
               className={cn(
                 "flex items-center gap-3 py-3.5 rounded-xl text-sm font-extrabold transition-all duration-300 border-2 outline-none focus:ring-2 focus:ring-primary focus:border-primary active:scale-[0.98]",
                 isSidebarCollapsed ? "px-0 justify-center" : (isChat ? "px-4 justify-center" : "px-4"),
-                isChat && "bg-primary text-primary-foreground border-transparent shadow-lg shadow-primary/30"
+                isChat && "bg-[#D94B52] text-white border-transparent shadow-lg shadow-[#D94B52]/30"
               )}
               {...(!isChat ? {
                 activeProps: { className: "border-border bg-transparent text-foreground shadow-none" },
@@ -375,7 +378,7 @@ function AdminLayout() {
               ) : (
                 <>
                   <Globe className="w-5 h-5 shrink-0 text-muted-foreground" />
-                  <span className="truncate flex-1 text-left">Idioma</span>
+                  <span className="truncate flex-1 text-left">{t.navigation?.language || "Idioma"}</span>
                   <span className="text-[10px] bg-accent px-1.5 py-0.5 rounded-md font-bold uppercase tracking-tighter">
                     {language.split('-')[0]}
                   </span>
@@ -427,7 +430,7 @@ function AdminLayout() {
               <TooltipTrigger asChild>
                 <button 
                   className="flex items-center justify-center w-full h-full outline-none focus:ring-2 focus:ring-primary rounded-lg transition-all"
-                  aria-label="Configurações"
+                  aria-label={t.navigation?.settings || "Configurações"}
                   onClick={(e) => {
                     e.preventDefault();
                     navigate({ to: "/admin/configuracoes" as any });

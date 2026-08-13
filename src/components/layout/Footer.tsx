@@ -4,10 +4,11 @@ import logoAsset from "@/assets/logo-zevva.png.asset.json";
 
 import { useUI } from "@/hooks/use-ui";
 import { translations } from "@/lib/translations";
+import { getTranslations } from "@/lib/i18n-utils";
 
 export function Footer() {
   const { language } = useUI();
-  const t = translations[language].footer;
+  const t = getTranslations(language).footer;
 
   return (
     <footer className="bg-brand-dark text-brand-dark-foreground py-24 px-6 border-t border-white/5">

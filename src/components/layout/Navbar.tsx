@@ -7,6 +7,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { cn } from "@/lib/utils";
 import logoAsset from "@/assets/logo-zevva.png.asset.json";
 import { translations } from "@/lib/translations";
+import { getTranslations } from "@/lib/i18n-utils";
 
 interface NavbarProps {
   onOpenAuth: () => void;
@@ -79,7 +80,7 @@ export function Navbar({ selectedCity }: { selectedCity?: string | null }) {
               }
               className="text-sm font-bold text-muted-foreground hover:text-primary transition-colors"
             >
-              {translations[language].nav.explore}
+              {getTranslations(language).nav.explore}
             </Link>
             <Link
               to="/eventos/categoria/$slug"
@@ -87,13 +88,13 @@ export function Navbar({ selectedCity }: { selectedCity?: string | null }) {
               search={{ busca: undefined, categoria: undefined, cidade: undefined, data: undefined } as any}
               className="text-sm font-bold text-muted-foreground hover:text-primary transition-colors"
             >
-              {translations[language].nav.caravans}
+              {getTranslations(language).nav.caravans}
             </Link>
             <Link
               to="/cursos"
               className="text-sm font-bold text-muted-foreground hover:text-primary transition-colors"
             >
-              {translations[language].nav.courses}
+              {getTranslations(language).nav.courses}
             </Link>
           </nav>
         </div>
@@ -106,7 +107,7 @@ export function Navbar({ selectedCity }: { selectedCity?: string | null }) {
                 <input
                   ref={inputRef}
                   type="text"
-                  placeholder={translations[language].nav.searchPlaceholder}
+                  placeholder={getTranslations(language).nav.searchPlaceholder}
                   value={homeSearchTerm}
                   onChange={(e) => setHomeSearchTerm(e.target.value)}
                   onKeyDown={(e) => {
@@ -140,7 +141,7 @@ export function Navbar({ selectedCity }: { selectedCity?: string | null }) {
               }}
               className="hidden sm:flex h-11 px-6 items-center justify-center bg-primary text-primary-foreground text-sm font-bold hover:bg-primary-hover transition-all rounded-md shadow-lg shadow-primary/10"
             >
-              {translations[language].nav.createEvent}
+              {getTranslations(language).nav.createEvent}
             </Link>
 
             <button
