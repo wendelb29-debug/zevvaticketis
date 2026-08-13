@@ -260,7 +260,7 @@ export function AuthModal({ isOpen, onClose, defaultView = 'login' }: AuthModalP
                     role === 'participante' ? "border-coral bg-primary/5" : "border-border hover:border-border"
                   )}
                 >
-                  <div className={cn("w-12 h-12 rounded-xl flex items-center justify-center", role === 'participante' ? "bg-primary text-primary-foreground" : "bg-muted text-slate-400")}>
+                  <div className={cn("w-12 h-12 rounded-xl flex items-center justify-center", role === 'participante' ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground")}>
                     <Ticket className="w-6 h-6" />
                   </div>
                   <div>
@@ -275,7 +275,7 @@ export function AuthModal({ isOpen, onClose, defaultView = 'login' }: AuthModalP
                     role === 'produtor' ? "border-coral bg-primary/5" : "border-border hover:border-border"
                   )}
                 >
-                  <div className={cn("w-12 h-12 rounded-xl flex items-center justify-center", role === 'produtor' ? "bg-navy text-primary-foreground" : "bg-muted text-slate-400")}>
+                  <div className={cn("w-12 h-12 rounded-xl flex items-center justify-center", role === 'produtor' ? "bg-navy text-primary-foreground" : "bg-muted text-muted-foreground")}>
                     <Store className="w-6 h-6" />
                   </div>
                   <div>
