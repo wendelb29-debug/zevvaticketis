@@ -5,7 +5,7 @@ import { UserMenu } from "@/components/auth/UserMenu";
 import { useUI } from '@/hooks/use-ui';
 import { Button } from "@/components/ui/button";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { getWhatsAppContacts, getWhatsAppMessages, sendWhatsAppMessage } from "@/lib/whatsapp/whatsapp.functions";
+import { getWhatsAppContacts, getWhatsAppMessages, sendWhatsAppMessage, markMessagesAsRead } from "@/lib/whatsapp/whatsapp.functions";
 import { 
   Search, Send, User, Check, CheckCheck, Phone, Plus, Bell, ChevronDown, 
   MoreVertical, CheckCircle, Shuffle, Users as PeopleIcon, Folder, Clock, 
@@ -93,8 +93,8 @@ function AdminChatPage() {
   const [activeTab, setActiveTab] = useState<'atendimento' | 'espera'>('atendimento');
 
   const { data: contactsData, isLoading: isLoadingContacts } = useQuery({
-    queryKey: ['whatsapp-contacts'],
-    queryFn: () => getWhatsAppContacts()
+    queryKey: ['whatsapp-contacts', activeTenant?.id],
+    queryFn: () => getWhatsAppContacts({ data: { tenantId: activeTenant?.id } })
   });
 
   const { data: messagesData, isLoading: isLoadingMessages } = useQuery({
@@ -105,11 +105,11 @@ function AdminChatPage() {
 
   const sendMutation = useMutation({
     mutationFn: (data: { contactId: string, phone: string, text: string }) => 
-      sendWhatsAppMessage({ data }),
+      sendWhatsAppMessage({ data: { ...data, tenantId: activeTenant?.id } }),
     onSuccess: () => {
       setMessageText("");
       queryClient.invalidateQueries({ queryKey: ['whatsapp-messages', selectedContactId] });
-      queryClient.invalidateQueries({ queryKey: ['whatsapp-contacts'] });
+      queryClient.invalidateQueries({ queryKey: ['whatsapp-contacts', activeTenant?.id] });
     },
     onError: (err: any) => {
       toast.error("Erro ao enviar mensagem: " + err.message);
@@ -124,20 +124,19 @@ function AdminChatPage() {
       .on(
         'postgres_changes',
         {
-          event: '*',
+          event: 'INSERT',
           schema: 'public',
-          table: 'whatsapp_messages'
+          table: 'whatsapp_messages',
+          filter: `contact_id=eq.${selectedContactId}`
         },
         (payload) => {
-          if (payload.eventType === 'INSERT' && (payload.new as any).contact_id === selectedContactId) {
-            queryClient.setQueryData(['whatsapp-messages', selectedContactId], (old: any) => {
-              if (!old) return [payload.new];
-              if (old.some((m: any) => m.id === (payload.new as any).id)) return old;
-              return [...old, payload.new];
-            });
-            scrollToBottom();
-          }
-          queryClient.invalidateQueries({ queryKey: ['whatsapp-contacts'] });
+          queryClient.setQueryData(['whatsapp-messages', selectedContactId], (old: any) => {
+            if (!old) return [payload.new];
+            if (old.some((m: any) => m.id === (payload.new as any).id)) return old;
+            return [...old, payload.new];
+          });
+          scrollToBottom();
+          queryClient.invalidateQueries({ queryKey: ['whatsapp-contacts', activeTenant?.id] });
         }
       )
       .subscribe();
@@ -145,6 +144,19 @@ function AdminChatPage() {
     return () => {
       supabase.removeChannel(channel);
     };
+  }, [selectedContactId, activeTenant?.id]);
+
+  const markAsReadMutation = useMutation({
+    mutationFn: (contactId: string) => markMessagesAsRead({ data: { contactId } }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['whatsapp-contacts', activeTenant?.id] });
+    }
+  });
+
+  useEffect(() => {
+    if (selectedContactId) {
+      markAsReadMutation.mutate(selectedContactId);
+    }
   }, [selectedContactId]);
 
   const scrollToBottom = () => {
@@ -163,7 +175,26 @@ function AdminChatPage() {
   const contacts = useMemo(() => {
     if (!contactsData) return [];
     
-    let sorted = [...contactsData].map(c => {
+    // Filtro cliente por status de atendimento (Em Atendimento vs Espera)
+    // Para simplificar agora, vamos usar a direção da última mensagem
+    // Inbound sem resposta recente = Espera. Outbound recente = Atendimento.
+    let filtered = [...contactsData];
+    
+    if (activeTab === 'espera') {
+      filtered = filtered.filter(c => {
+        const msgs = (c.whatsapp_messages as any[]) || [];
+        const lastMsg = msgs[msgs.length - 1];
+        return lastMsg?.direction === 'inbound';
+      });
+    } else {
+      filtered = filtered.filter(c => {
+        const msgs = (c.whatsapp_messages as any[]) || [];
+        const lastMsg = msgs[msgs.length - 1];
+        return !lastMsg || lastMsg?.direction === 'outbound';
+      });
+    }
+
+    let sorted = filtered.map(c => {
       const msgs = (c.whatsapp_messages as any[]) || [];
       const lastMsg = msgs[msgs.length - 1];
       
@@ -190,7 +221,7 @@ function AdminChatPage() {
     }
 
     return sorted;
-  }, [contactsData, sortBy]);
+  }, [contactsData, sortBy, activeTab]);
 
   const messages = useMemo(() => {
     if (!messagesData) return [];
