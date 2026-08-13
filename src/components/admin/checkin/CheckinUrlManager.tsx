@@ -60,7 +60,7 @@ export function CheckinUrlManager() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <Card className="md:col-span-2 border-line shadow-xl rounded-[32px] overflow-hidden">
+        <Card className="md:col-span-2 border-border shadow-xl rounded-[32px] overflow-hidden">
           <CardHeader className="bg-navy text-primary-foreground pb-8">
             <div className="flex items-center justify-between">
               <CardTitle className="text-xl font-manrope font-black flex items-center gap-3">
@@ -80,12 +80,12 @@ export function CheckinUrlManager() {
                   <Input 
                     readOnly 
                     value={checkinUrl}
-                    className="h-14 pl-12 pr-4 bg-surface border-line rounded-2xl font-bold text-foreground outline-none focus-visible:ring-primary/20"
+                    className="h-14 pl-12 pr-4 bg-card border-border rounded-2xl font-bold text-foreground outline-none focus-visible:ring-primary/20"
                   />
                 </div>
                 <Button 
                   onClick={copyToClipboard}
-                  className="h-14 w-14 rounded-2xl bg-card border border-line text-foreground hover:bg-surface shadow-sm"
+                  className="h-14 w-14 rounded-2xl bg-card border border-border text-foreground hover:bg-card shadow-sm"
                   title="Copiar Link"
                 >
                   <Copy className="w-5 h-5" />
@@ -100,7 +100,7 @@ export function CheckinUrlManager() {
               </div>
             </div>
 
-            <div className="p-6 bg-muted rounded-3xl border border-line space-y-4">
+            <div className="p-6 bg-muted rounded-3xl border border-border space-y-4">
               <div className="flex items-start gap-4">
                 <div className="w-10 h-10 rounded-xl bg-navy/5 flex items-center justify-center text-foreground shrink-0">
                   <ShieldCheck className="w-6 h-6" />
@@ -113,7 +113,7 @@ export function CheckinUrlManager() {
                   </p>
                 </div>
               </div>
-              <div className="pt-4 flex items-center justify-between border-t border-line">
+              <div className="pt-4 flex items-center justify-between border-t border-border">
                 <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Expiração: Nunca</p>
                 <Button 
                   variant="ghost" 
@@ -129,14 +129,14 @@ export function CheckinUrlManager() {
           </CardContent>
         </Card>
 
-        <Card className="border-line shadow-xl rounded-[32px] overflow-hidden bg-surface/30">
+        <Card className="border-border shadow-xl rounded-[32px] overflow-hidden bg-card/30">
           <CardHeader className="pb-4">
             <CardTitle className="text-lg font-manrope font-black text-foreground flex items-center gap-2">
               <Smartphone className="w-5 h-5 text-primary" /> Mobile Setup
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-6">
-            <div className="aspect-square bg-card rounded-3xl border border-line p-6 flex flex-col items-center justify-center space-y-4 shadow-inner">
+            <div className="aspect-square bg-card rounded-3xl border border-border p-6 flex flex-col items-center justify-center space-y-4 shadow-inner">
               <div className="relative">
                 <QrCode className="w-32 h-32 text-foreground" />
                 <div className="absolute inset-0 flex items-center justify-center opacity-10">
@@ -147,7 +147,7 @@ export function CheckinUrlManager() {
             </div>
             
             <div className="space-y-3">
-              <Button variant="outline" className="w-full h-12 rounded-xl border-line text-foreground font-bold text-xs uppercase tracking-widest gap-2 bg-card">
+              <Button variant="outline" className="w-full h-12 rounded-xl border-border text-foreground font-bold text-xs uppercase tracking-widest gap-2 bg-card">
                 <Settings className="w-4 h-4" /> Configurações
               </Button>
               <Button variant="ghost" className="w-full h-12 rounded-xl text-muted-foreground font-bold text-xs uppercase tracking-widest">
@@ -159,7 +159,7 @@ export function CheckinUrlManager() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div className="p-8 bg-card rounded-[40px] border border-line shadow-sm space-y-4">
+        <div className="p-8 bg-card rounded-[40px] border border-border shadow-sm space-y-4">
           <h3 className="font-manrope font-black text-foreground text-xl">Como usar?</h3>
           <ul className="space-y-4">
             <li className="flex gap-4">

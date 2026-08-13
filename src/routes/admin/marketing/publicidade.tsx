@@ -52,7 +52,7 @@ function MarketingPage() {
 
       <div className="bg-card rounded-xl border overflow-hidden">
         <table className="w-full text-left">
-          <thead className="bg-surface text-muted-foreground text-xs font-extrabold uppercase">
+          <thead className="bg-card text-muted-foreground text-xs font-extrabold uppercase">
             <tr>
               <th className="px-6 py-4">Evento</th>
               <th className="px-6 py-4">Organização</th>

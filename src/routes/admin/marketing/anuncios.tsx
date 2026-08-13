@@ -65,17 +65,17 @@ function AnunciosPage() {
           <input
             type="text"
             placeholder="Buscar por nome ou produtor..."
-            className="w-full pl-9 pr-4 py-2 bg-card rounded-xl border border-line text-sm focus:ring-2 focus:ring-coral/20 font-inter"
+            className="w-full pl-9 pr-4 py-2 bg-card rounded-xl border border-border text-sm focus:ring-2 focus:ring-coral/20 font-inter"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
       </div>
 
-      <div className="bg-card rounded-2xl border border-line overflow-hidden shadow-sm">
+      <div className="bg-card rounded-2xl border border-border overflow-hidden shadow-sm">
         <div className="overflow-x-auto">
           <table className="w-full text-left">
-            <thead className="bg-surface text-foreground/40 text-[10px] font-black uppercase tracking-wider">
+            <thead className="bg-card text-foreground/40 text-[10px] font-black uppercase tracking-wider">
               <tr>
                 <th className="px-6 py-4">Evento</th>
                 <th className="px-6 py-4">Produtor / Org</th>
@@ -86,7 +86,7 @@ function AnunciosPage() {
             </thead>
             <tbody className="divide-y divide-line font-inter">
               {filteredEvents?.map((event: any) => (
-                <tr key={event.id} className="hover:bg-surface/50 transition-colors">
+                <tr key={event.id} className="hover:bg-card/50 transition-colors">
                   <td className="px-6 py-4 font-extrabold text-foreground text-sm">
                     {event.title}
                   </td>
@@ -114,7 +114,7 @@ function AnunciosPage() {
                         href={`/eventos/${event.id}`} 
                         target="_blank" 
                         rel="noopener noreferrer"
-                        className="p-2 hover:bg-surface rounded-lg transition-colors text-foreground/40 hover:text-foreground"
+                        className="p-2 hover:bg-card rounded-lg transition-colors text-foreground/40 hover:text-foreground"
                         title="Ver no site"
                       >
                         <ExternalLink className="w-4 h-4" />

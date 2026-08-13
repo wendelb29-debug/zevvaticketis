@@ -238,7 +238,7 @@ export const AdmitOneTicket = forwardRef<HTMLDivElement, AdmitOneTicketProps>(
                 </span>
               )}
               <div className="h-14 w-14 bg-background p-1 rounded-lg flex items-center justify-center shadow-lg">
-                <div className="w-full h-full border-2 border-navy/20 rounded-sm bg-surface flex items-center justify-center">
+                <div className="w-full h-full border-2 border-navy/20 rounded-sm bg-card flex items-center justify-center">
                    <div className="w-8 h-8 bg-navy/10 rounded-xs" />
                 </div>
               </div>

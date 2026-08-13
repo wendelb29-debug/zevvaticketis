@@ -456,7 +456,7 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
                     <div className="flex justify-between items-end">
                       <div>
                         <h3 className="text-lg font-manrope font-extrabold text-foreground">Filtre sua base Zevva</h3>
-                        <p className="text-sm text-muted-foreground-fg mt-1">Defina as condições para segmentar seu público</p>
+                        <p className="text-sm text-muted-foreground mt-1">Defina as condições para segmentar seu público</p>
                       </div>
                       <Button variant="outline" className="border-primary text-primary hover:bg-primary/5 h-11 px-6 rounded-xl font-bold">
                         <Filter className="w-4 h-4 mr-2" /> Adicionar Filtro
@@ -471,14 +471,14 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
                         <table className="w-full text-left">
                           <thead className="bg-accent/50">
                             <tr>
-                              <th className="px-6 py-4 text-[10px] font-extrabold text-muted-foreground-fg uppercase tracking-widest">Nome</th>
-                              <th className="px-6 py-4 text-[10px] font-extrabold text-muted-foreground-fg uppercase tracking-widest">Telefone</th>
-                              <th className="px-6 py-4 text-[10px] font-extrabold text-muted-foreground-fg uppercase tracking-widest">Tags</th>
+                              <th className="px-6 py-4 text-[10px] font-extrabold text-muted-foreground uppercase tracking-widest">Nome</th>
+                              <th className="px-6 py-4 text-[10px] font-extrabold text-muted-foreground uppercase tracking-widest">Telefone</th>
+                              <th className="px-6 py-4 text-[10px] font-extrabold text-muted-foreground uppercase tracking-widest">Tags</th>
                             </tr>
                           </thead>
                           <tbody>
                             <tr>
-                              <td colSpan={3} className="px-6 py-16 text-center text-muted-foreground-fg italic text-sm">
+                              <td colSpan={3} className="px-6 py-16 text-center text-muted-foreground italic text-sm">
                                 Use os filtros acima para listar contatos da sua base.
                               </td>
                             </tr>
@@ -494,7 +494,7 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
                   <div className="space-y-6">
                     <div>
                       <h3 className="text-lg font-manrope font-extrabold text-foreground">Entrada Manual</h3>
-                      <p className="text-sm text-muted-foreground-fg mt-1">Adicione os contatos que receberão as mensagens.</p>
+                      <p className="text-sm text-muted-foreground mt-1">Adicione os contatos que receberão as mensagens.</p>
                     </div>
 
                     <div className="bg-primary/5 border border-dashed border-primary/30 p-4 rounded-xl flex gap-3">
@@ -513,7 +513,7 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
                              <Plus className="w-4 h-4 mr-2" /> Variável
                            </Button>
                         </div>
-                        <p className="text-[10px] text-muted-foreground-fg italic font-medium">As variáveis ficam disponíveis no criador de conteúdo.</p>
+                        <p className="text-[10px] text-muted-foreground italic font-medium">As variáveis ficam disponíveis no criador de conteúdo.</p>
                       </div>
 
                       <div className="grid grid-cols-[1fr_1fr_48px] gap-4 items-end">
@@ -532,7 +532,7 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
                           </div>
                         </div>
                         <div>
-                           <Button variant="ghost" size="icon" className="h-12 w-12 text-muted-foreground-fg/40 hover:text-error hover:bg-error/10 rounded-xl">
+                           <Button variant="ghost" size="icon" className="h-12 w-12 text-muted-foreground/40 hover:text-error hover:bg-error/10 rounded-xl">
                              <Trash2 className="w-5 h-5" />
                            </Button>
                         </div>
@@ -553,7 +553,7 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
             <div className="animate-in fade-in slide-in-from-bottom-4 duration-500 space-y-8">
               <div>
                 <h2 className="text-xl font-manrope font-extrabold text-foreground uppercase tracking-tight">Corresponder colunas</h2>
-                <p className="text-sm text-muted-foreground-fg mt-1">Relacione as colunas da planilha aos campos obrigatórios e variáveis do template.</p>
+                <p className="text-sm text-muted-foreground mt-1">Relacione as colunas da planilha aos campos obrigatórios e variáveis do template.</p>
               </div>
 
               <div className="p-5 bg-muted border border-[#E5E7EB] rounded-2xl flex items-center gap-4">
@@ -749,7 +749,7 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
                               <Button 
                                 variant="ghost" 
                                 size="icon" 
-                                className="text-muted-foreground-fg hover:text-primary"
+                                className="text-muted-foreground hover:text-primary"
                                 onClick={() => setCtaButtons(prev => prev.filter(b => b.id !== btn.id))}
                               >
                                 <Trash2 className="w-4 h-4" />

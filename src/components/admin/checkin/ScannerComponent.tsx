@@ -124,7 +124,7 @@ export function ScannerComponent() {
     <div className="max-w-4xl mx-auto space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500 font-inter">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Scanner Control */}
-        <Card className="border-line shadow-xl overflow-hidden rounded-[32px]">
+        <Card className="border-border shadow-xl overflow-hidden rounded-[32px]">
           <CardHeader className="bg-navy text-primary-foreground pb-8">
             <CardTitle className="text-xl font-manrope font-black flex items-center gap-3">
               <Camera className="w-6 h-6 text-primary" /> Scanner de Ingresso
@@ -169,21 +169,21 @@ export function ScannerComponent() {
               </div>
             )}
           </CardContent>
-          <div className="p-6 bg-surface border-t border-line">
+          <div className="p-6 bg-card border-t border-border">
             <div className="flex gap-2">
               <div className="relative flex-1">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-foreground/40" />
                 <input 
                   type="text" 
                   placeholder="Código do ingresso manual..."
-                  className="w-full pl-10 pr-4 h-12 bg-card rounded-xl border border-line focus:ring-2 focus:ring-primary/20 outline-none font-bold text-sm"
+                  className="w-full pl-10 pr-4 h-12 bg-card rounded-xl border border-border focus:ring-2 focus:ring-primary/20 outline-none font-bold text-sm"
                   value={manualCode}
                   onChange={(e) => setManualCode(e.target.value)}
                 />
               </div>
               <Button 
                 variant="outline" 
-                className="h-12 px-6 rounded-xl border-line text-foreground font-bold hover:bg-card"
+                className="h-12 px-6 rounded-xl border-border text-foreground font-bold hover:bg-card"
                 onClick={() => handleScan(manualCode)}
               >
                 Validar
@@ -196,12 +196,12 @@ export function ScannerComponent() {
         <div className="space-y-6">
           <Card className={cn(
             "border-2 transition-all duration-500 rounded-[32px] overflow-hidden shadow-xl min-h-[400px] flex flex-col",
-            !scannedResult ? "border-line bg-card" : 
+            !scannedResult ? "border-border bg-card" : 
             scannedResult.success ? "border-emerald-500 bg-emerald-50/30" : "border-red-500 bg-red-50/30"
           )}>
             {!scannedResult ? (
               <div className="flex-1 flex flex-col items-center justify-center text-center p-10 space-y-4">
-                <div className="w-20 h-20 rounded-full bg-surface flex items-center justify-center text-foreground/20">
+                <div className="w-20 h-20 rounded-full bg-card flex items-center justify-center text-foreground/20">
                   <TicketIcon className="w-10 h-10" />
                 </div>
                 <div>
@@ -255,18 +255,18 @@ export function ScannerComponent() {
 
           {/* History */}
           {lastCheckins.length > 0 && (
-            <Card className="border-line shadow-sm overflow-hidden rounded-[24px]">
-              <CardHeader className="bg-surface py-3 px-6 border-b border-line">
+            <Card className="border-border shadow-sm overflow-hidden rounded-[24px]">
+              <CardHeader className="bg-card py-3 px-6 border-b border-border">
                 <CardTitle className="text-xs font-black text-foreground/40 uppercase tracking-widest flex items-center gap-2">
                   <History className="w-4 h-4" /> Últimos Check-ins
                 </CardTitle>
               </CardHeader>
               <div className="divide-y divide-line">
                 {lastCheckins.map((item, i) => (
-                  <div key={i} className="px-6 py-3 flex items-center justify-between hover:bg-surface/50 transition-colors">
+                  <div key={i} className="px-6 py-3 flex items-center justify-between hover:bg-card/50 transition-colors">
                     <div>
                       <p className="text-sm font-bold text-foreground">{item.participantName}</p>
-                      <p className="text-[10px] text-muted-foreground-fg font-bold uppercase">{item.ticketType} • {item.checkinTime}</p>
+                      <p className="text-[10px] text-muted-foreground font-bold uppercase">{item.ticketType} • {item.checkinTime}</p>
                     </div>
                     <CheckCircle2 className="w-4 h-4 text-emerald-500" />
                   </div>

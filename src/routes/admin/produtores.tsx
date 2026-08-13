@@ -78,7 +78,7 @@ function ProdutoresPage() {
       
       <div className="bg-card rounded-xl border overflow-hidden">
         <table className="w-full text-left">
-          <thead className="bg-surface text-muted-foreground text-xs font-extrabold uppercase tracking-wider">
+          <thead className="bg-card text-muted-foreground text-xs font-extrabold uppercase tracking-wider">
             <tr>
               <th className="px-6 py-4">Organização</th>
               <th className="px-6 py-4">Status</th>
@@ -88,10 +88,10 @@ function ProdutoresPage() {
           </thead>
           <tbody className="divide-y divide-line">
             {tenants?.map((org: any) => (
-              <tr key={org.id} className="hover:bg-surface/50 transition-colors">
+              <tr key={org.id} className="hover:bg-card/50 transition-colors">
                 <td className="px-6 py-4">
                   <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 bg-surface-2 rounded flex items-center justify-center text-foreground">
+                    <div className="w-8 h-8 bg-secondary rounded flex items-center justify-center text-foreground">
                       <Building2 className="w-4 h-4" />
                     </div>
                     <div>

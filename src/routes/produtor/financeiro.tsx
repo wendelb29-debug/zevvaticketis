@@ -57,7 +57,7 @@ function FinanceiroPage() {
           <p className="text-muted-foreground font-medium">Acompanhe receitas, taxas e repasses deste ambiente.</p>
         </div>
         <div className="flex gap-3">
-          <Button variant="outline" className="rounded-xl border-line">
+          <Button variant="outline" className="rounded-xl border-border">
             <Calendar className="mr-2 h-4 w-4" /> Últimos 30 dias
           </Button>
           <Button className="bg-navy text-primary-foreground hover:bg-navy/90 rounded-xl">
@@ -67,7 +67,7 @@ function FinanceiroPage() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <Card className="bg-card border-line overflow-hidden">
+        <Card className="bg-card border-border overflow-hidden">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
             <CardTitle className="text-xs font-black uppercase tracking-widest text-muted-foreground">Vendas Brutas</CardTitle>
             <DollarSign className="h-4 w-4 text-primary" />
@@ -80,7 +80,7 @@ function FinanceiroPage() {
           </CardContent>
         </Card>
 
-        <Card className="bg-card border-line overflow-hidden">
+        <Card className="bg-card border-border overflow-hidden">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
             <CardTitle className="text-xs font-black uppercase tracking-widest text-muted-foreground">Comissão Zevva (10%)</CardTitle>
             <TrendingUp className="h-4 w-4 text-primary" />
@@ -106,10 +106,10 @@ function FinanceiroPage() {
 
       <div className="space-y-6">
         <h2 className="text-xl font-manrope font-extrabold text-foreground">Histórico de Transações</h2>
-        <Card className="bg-card border-line overflow-hidden">
+        <Card className="bg-card border-border overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full text-left text-sm">
-              <thead className="bg-accent/50 text-[10px] font-black uppercase tracking-widest text-muted-foreground border-b border-line">
+              <thead className="bg-accent/50 text-[10px] font-black uppercase tracking-widest text-muted-foreground border-b border-border">
                 <tr>
                   <th className="px-6 py-4">Data</th>
                   <th className="px-6 py-4">Status</th>
@@ -129,7 +129,7 @@ function FinanceiroPage() {
                         {venda.status === 'pago' ? 'Aprovado' : venda.status}
                       </span>
                     </td>
-                    <td className="px-6 py-4 font-medium text-muted-foreground-fg">
+                    <td className="px-6 py-4 font-medium text-muted-foreground">
                       R$ {Number(venda.valor_bruto || 0).toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
                     </td>
                     <td className="px-6 py-4 font-medium text-primary">

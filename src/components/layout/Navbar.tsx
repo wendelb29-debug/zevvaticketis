@@ -152,7 +152,7 @@ export function Navbar({ selectedCity }: { selectedCity?: string | null }) {
             >
               <Globe className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors" />
               {activeOverlay === "language" && (
-                <div className="absolute top-full right-0 mt-4 w-48 bg-surface-elevated border border-border rounded-lg shadow-2xl p-2 z-[60] animate-in fade-in zoom-in-95 duration-300">
+                <div className="absolute top-full right-0 mt-4 w-48 bg-popover border border-border rounded-lg shadow-2xl p-2 z-[60] animate-in fade-in zoom-in-95 duration-300">
                   {[
                     { id: "pt", label: "Português" },
                     { id: "en", label: "English" },

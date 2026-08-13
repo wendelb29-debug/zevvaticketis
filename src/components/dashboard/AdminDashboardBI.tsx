@@ -204,7 +204,7 @@ export function AdminDashboardBI() {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div>
           <h1 className="text-4xl font-manrope font-black text-foreground tracking-tight">Zevva BI</h1>
-          <p className="text-muted-foreground-fg font-medium">Inteligência de Mercado e Performance Operacional</p>
+          <p className="text-muted-foreground font-medium">Inteligência de Mercado e Performance Operacional</p>
         </div>
         
         <div className="flex flex-wrap items-center gap-3">
@@ -215,7 +215,7 @@ export function AdminDashboardBI() {
                 onClick={() => setPeriod(p)}
                 className={cn(
                   "px-4 py-2 text-xs font-bold rounded-lg transition-all capitalize",
-                  period === p ? "bg-card text-foreground shadow-sm" : "text-muted-foreground-fg hover:text-foreground"
+                  period === p ? "bg-card text-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"
                 )}
               >
                 {p === "today" ? "Hoje" : p === "7d" ? "7 Dias" : p === "30d" ? "30 Dias" : "Personalizado"}
@@ -238,7 +238,7 @@ export function AdminDashboardBI() {
               
               <div className="space-y-6">
                 <div className="space-y-2">
-                  <label className="text-[10px] font-black text-muted-foreground-fg uppercase tracking-widest">Produtor / Organização</label>
+                  <label className="text-[10px] font-black text-muted-foreground uppercase tracking-widest">Produtor / Organização</label>
                   <Select value={filters.producerId} onValueChange={(val) => setFilters({...filters, producerId: val})}>
                     <SelectTrigger className="w-full h-11 rounded-xl bg-secondary border-border">
                       <SelectValue placeholder="Todos os Produtores" />
@@ -253,7 +253,7 @@ export function AdminDashboardBI() {
                 </div>
 
                 <div className="space-y-2">
-                  <label className="text-[10px] font-black text-muted-foreground-fg uppercase tracking-widest">Evento Específico</label>
+                  <label className="text-[10px] font-black text-muted-foreground uppercase tracking-widest">Evento Específico</label>
                   <Select value={filters.eventId} onValueChange={(val) => setFilters({...filters, eventId: val})}>
                     <SelectTrigger className="w-full h-11 rounded-xl bg-secondary border-border">
                       <SelectValue placeholder="Todos os Eventos" />
@@ -268,7 +268,7 @@ export function AdminDashboardBI() {
                 </div>
 
                 <div className="space-y-2">
-                  <label className="text-[10px] font-black text-muted-foreground-fg uppercase tracking-widest">Categoria</label>
+                  <label className="text-[10px] font-black text-muted-foreground uppercase tracking-widest">Categoria</label>
                   <Select value={filters.category} onValueChange={(val) => setFilters({...filters, category: val})}>
                     <SelectTrigger className="w-full h-11 rounded-xl bg-secondary border-border">
                       <SelectValue placeholder="Todas as Categorias" />
@@ -299,7 +299,7 @@ export function AdminDashboardBI() {
                       setFilters({ eventId: "all", producerId: "all", category: "all" });
                     }}
                   >
-                    <X className="w-5 h-5 text-muted-foreground-fg" />
+                    <X className="w-5 h-5 text-muted-foreground" />
                   </Button>
                 </div>
               </div>
@@ -372,7 +372,7 @@ export function AdminDashboardBI() {
           icon={Ticket}
           subMetrics={[
             { label: "Vendidos", val: stats.totalTickets.sold, color: "text-foreground" },
-            { label: "Disponíveis", val: stats.totalTickets.available, color: "text-muted-foreground-fg" }
+            { label: "Disponíveis", val: stats.totalTickets.available, color: "text-muted-foreground" }
           ]}
         />
         {/* VENDAS */}
@@ -416,7 +416,7 @@ export function AdminDashboardBI() {
           <CardHeader className="flex flex-row items-center justify-between border-b border-border/50 pb-4">
             <div>
               <CardTitle className="text-xl font-manrope font-black text-foreground">Performance de Campanhas</CardTitle>
-              <p className="text-xs text-muted-foreground-fg font-bold uppercase mt-1">ROI e Atribuição de Origem</p>
+              <p className="text-xs text-muted-foreground font-bold uppercase mt-1">ROI e Atribuição de Origem</p>
             </div>
             <div className="flex gap-2">
               <Button variant="outline" size="sm" className="h-8 rounded-lg text-[10px] font-black uppercase">Filtros</Button>
@@ -428,11 +428,11 @@ export function AdminDashboardBI() {
               <table className="w-full text-left">
                 <thead>
                   <tr className="border-b border-border">
-                    <th className="pb-3 text-[10px] font-black text-muted-foreground-fg uppercase">Campanha</th>
-                    <th className="pb-3 text-[10px] font-black text-muted-foreground-fg uppercase text-center">Cliques</th>
-                    <th className="pb-3 text-[10px] font-black text-muted-foreground-fg uppercase text-center">Conversão</th>
-                    <th className="pb-3 text-[10px] font-black text-muted-foreground-fg uppercase text-center">ROI</th>
-                    <th className="pb-3 text-[10px] font-black text-muted-foreground-fg uppercase text-right">Receita</th>
+                    <th className="pb-3 text-[10px] font-black text-muted-foreground uppercase">Campanha</th>
+                    <th className="pb-3 text-[10px] font-black text-muted-foreground uppercase text-center">Cliques</th>
+                    <th className="pb-3 text-[10px] font-black text-muted-foreground uppercase text-center">Conversão</th>
+                    <th className="pb-3 text-[10px] font-black text-muted-foreground uppercase text-center">ROI</th>
+                    <th className="pb-3 text-[10px] font-black text-muted-foreground uppercase text-right">Receita</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-border/50">
@@ -443,7 +443,7 @@ export function AdminDashboardBI() {
                           <div className={cn("w-2 h-2 rounded-full", i === 0 ? "bg-primary" : i === 1 ? "bg-primary" : "bg-navy")} />
                           <div>
                             <p className="text-sm font-bold text-foreground">{c.name}</p>
-                            <p className="text-[10px] text-muted-foreground-fg uppercase font-bold">{c.source}</p>
+                            <p className="text-[10px] text-muted-foreground uppercase font-bold">{c.source}</p>
                           </div>
                         </div>
                       </td>
@@ -465,7 +465,7 @@ export function AdminDashboardBI() {
         <Card className="border-border shadow-sm">
           <CardHeader className="border-b border-border/50 pb-4">
             <CardTitle className="text-xl font-manrope font-black text-foreground">Funil de Conversão</CardTitle>
-            <p className="text-xs text-muted-foreground-fg font-bold uppercase mt-1">Eficiência do Pipeline</p>
+            <p className="text-xs text-muted-foreground font-bold uppercase mt-1">Eficiência do Pipeline</p>
           </CardHeader>
           <CardContent className="pt-6">
             <div className="space-y-6">
@@ -473,7 +473,7 @@ export function AdminDashboardBI() {
                 <div key={i} className="relative">
                   <div className="flex justify-between items-center mb-1">
                     <span className="text-xs font-black text-foreground uppercase tracking-wider">{step.step}</span>
-                    <span className="text-xs font-bold text-muted-foreground-fg">{step.val}%</span>
+                    <span className="text-xs font-bold text-muted-foreground">{step.val}%</span>
                   </div>
                   <div className="h-3 bg-accent rounded-full overflow-hidden">
                     <div 
@@ -482,7 +482,7 @@ export function AdminDashboardBI() {
                     />
                   </div>
                   {i < funnelData.length - 1 && (
-                    <div className="absolute left-1/2 -bottom-4 translate-x-1/2 text-[10px] font-bold text-muted-foreground-fg">
+                    <div className="absolute left-1/2 -bottom-4 translate-x-1/2 text-[10px] font-bold text-muted-foreground">
                       ↓ {(funnelData[i+1].val / step.val * 100).toFixed(0)}%
                     </div>
                   )}
@@ -513,7 +513,7 @@ export function AdminDashboardBI() {
                           <div className="w-10 h-10 rounded-xl bg-accent flex items-center justify-center font-black text-foreground">{i+1}</div>
                           <div>
                             <p className="text-sm font-bold text-foreground">{ad.ad}</p>
-                            <p className="text-[10px] text-muted-foreground-fg uppercase font-bold">{ad.event}</p>
+                            <p className="text-[10px] text-muted-foreground uppercase font-bold">{ad.event}</p>
                           </div>
                        </div>
                        <div className="text-right">
@@ -521,7 +521,7 @@ export function AdminDashboardBI() {
                             <span className="text-[10px] font-black px-2 py-0.5 bg-primary/10 text-primary rounded-full">{ad.badge}</span>
                             <span className="text-sm font-black text-foreground">{ad.roi}</span>
                           </div>
-                          <p className="text-[10px] text-muted-foreground-fg font-bold uppercase">{ad.sales} Vendas • {ad.clicks} Cliques</p>
+                          <p className="text-[10px] text-muted-foreground font-bold uppercase">{ad.sales} Vendas • {ad.clicks} Cliques</p>
                        </div>
                     </div>
                   ))}
@@ -568,7 +568,7 @@ function BIStatCard({ title, value, icon: Icon, subMetrics, className }: any) {
     <Card className={cn("border border-border bg-card text-card-foreground shadow-sm hover:shadow-lg transition-all border-b-4 border-b-primary/30", className)}>
 
       <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
-        <CardTitle className="text-[10px] font-black text-muted-foreground-fg uppercase tracking-widest">{title}</CardTitle>
+        <CardTitle className="text-[10px] font-black text-muted-foreground uppercase tracking-widest">{title}</CardTitle>
         <div className="w-8 h-8 rounded-lg bg-accent flex items-center justify-center text-primary">
           <Icon className="w-4 h-4" />
         </div>
@@ -578,7 +578,7 @@ function BIStatCard({ title, value, icon: Icon, subMetrics, className }: any) {
         <div className="space-y-2 border-t border-border/50 pt-3">
           {subMetrics.map((m: any, i: number) => (
             <div key={i} className="flex justify-between items-center text-[11px] font-bold">
-              <span className="text-muted-foreground-fg">{m.label}</span>
+              <span className="text-muted-foreground">{m.label}</span>
               <span className={m.color}>{m.val}</span>
             </div>
           ))}

@@ -29,11 +29,11 @@ export function CoverflowCarousel({ events }: CoverflowCarouselProps) {
   if (!events || events.length === 0) {
     return (
       <div className="w-full py-20 flex flex-col items-center justify-center bg-accent/5 rounded-[40px] border border-dashed border-border">
-        <SparklesIcon className="w-12 h-12 text-muted-foreground-fg/20 mb-4" />
+        <SparklesIcon className="w-12 h-12 text-muted-foreground/20 mb-4" />
         <h3 className="text-xl font-manrope font-black text-foreground">
           Novos eventos chegando em breve
         </h3>
-        <p className="text-muted-foreground-fg font-bold mt-2 mb-8">
+        <p className="text-muted-foreground font-bold mt-2 mb-8">
           Fique atento às nossas próximas experiências exclusivas.
         </p>
         <Link
@@ -159,8 +159,8 @@ export function CoverflowCarousel({ events }: CoverflowCarouselProps) {
             {/* Counter */}
             <div className="px-4 py-2 bg-accent/30 rounded-full">
               <span className="text-sm font-black text-foreground">{currentIndex + 1}</span>
-              <span className="text-xs font-bold text-muted-foreground-fg mx-1">/</span>
-              <span className="text-xs font-bold text-muted-foreground-fg">{events.length}</span>
+              <span className="text-xs font-bold text-muted-foreground mx-1">/</span>
+              <span className="text-xs font-bold text-muted-foreground">{events.length}</span>
             </div>
 
             <button

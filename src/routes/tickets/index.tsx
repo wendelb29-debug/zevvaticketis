@@ -83,8 +83,8 @@ function MyTickets() {
       </div>
 
       {tickets.length === 0 ? (
-        <div className="bg-card border border-line rounded-[32px] p-20 text-center space-y-4 shadow-sm">
-          <div className="w-20 h-20 bg-surface rounded-full flex items-center justify-center text-muted-foreground mx-auto">
+        <div className="bg-card border border-border rounded-[32px] p-20 text-center space-y-4 shadow-sm">
+          <div className="w-20 h-20 bg-card rounded-full flex items-center justify-center text-muted-foreground mx-auto">
             <Ticket className="w-10 h-10" />
           </div>
           <div className="space-y-2">
@@ -101,7 +101,7 @@ function MyTickets() {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {tickets.map((ticket) => (
-            <div key={ticket.id} className="bg-card border border-line rounded-[24px] overflow-hidden flex flex-col shadow-sm hover-lift transition-all group">
+            <div key={ticket.id} className="bg-card border border-border rounded-[24px] overflow-hidden flex flex-col shadow-sm hover-lift transition-all group">
               {/* Event Cover Image Placeholder */}
               <div className="h-40 bg-navy relative">
                  <div className="absolute top-4 left-4 z-10">
@@ -130,17 +130,17 @@ function MyTickets() {
                   </div>
                 </div>
 
-                <div className="flex flex-col gap-2 pt-4 border-t border-line/50">
+                <div className="flex flex-col gap-2 pt-4 border-t border-border/50">
                   <Button asChild className="w-full bg-navy text-primary-foreground rounded-xl font-bold h-11">
                     <a href={`/tickets/${ticket.id}`} className="flex items-center justify-center">
                         <ExternalLink className="w-4 h-4 mr-2" /> Ver Ingresso
                     </a>
                   </Button>
                   <div className="flex gap-2">
-                    <Button variant="outline" className="flex-1 rounded-xl font-bold h-10 border-2 text-foreground hover:bg-surface border-line px-2">
+                    <Button variant="outline" className="flex-1 rounded-xl font-bold h-10 border-2 text-foreground hover:bg-card border-border px-2">
                         <Download className="w-4 h-4 mr-1 md:mr-2" /> <span className="text-[10px] md:text-sm">PDF</span>
                     </Button>
-                    <Button variant="outline" className="flex-1 rounded-xl font-bold h-10 border-2 text-foreground hover:bg-surface border-line px-2">
+                    <Button variant="outline" className="flex-1 rounded-xl font-bold h-10 border-2 text-foreground hover:bg-card border-border px-2">
                         <Send className="w-4 h-4 mr-1 md:mr-2" /> <span className="text-[10px] md:text-sm">Enviar</span>
                     </Button>
                   </div>

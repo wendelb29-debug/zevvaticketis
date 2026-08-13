@@ -57,8 +57,8 @@ function UnauthorizedPage() {
   const Icon = details.icon;
 
   return (
-    <div className="min-h-screen bg-surface flex items-center justify-center p-6 font-inter">
-      <div className="max-w-md w-full space-y-8 bg-card p-10 rounded-[32px] shadow-xl border border-line text-center">
+    <div className="min-h-screen bg-card flex items-center justify-center p-6 font-inter">
+      <div className="max-w-md w-full space-y-8 bg-card p-10 rounded-[32px] shadow-xl border border-border text-center">
         <div className="w-16 h-16 bg-destructive/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
           <Icon className="w-8 h-8 text-destructive" />
         </div>

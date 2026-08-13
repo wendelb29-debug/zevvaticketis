@@ -92,7 +92,7 @@ function PaisesMoedasPage() {
 
           <div className="bg-card rounded-xl border overflow-hidden max-h-[500px] overflow-y-auto">
             {countries?.map((c: any) => (
-              <div key={c.id} className="px-4 py-3 flex items-center justify-between hover:bg-surface/30 transition-colors border-b last:border-0">
+              <div key={c.id} className="px-4 py-3 flex items-center justify-between hover:bg-card/30 transition-colors border-b last:border-0">
                 <div className="flex items-center gap-3">
                   <span className="text-xs font-black text-muted-foreground w-8">{c.codigo_iso}</span>
                   <span className="font-bold text-foreground">{c.nome}</span>
@@ -126,7 +126,7 @@ function PaisesMoedasPage() {
 
           <div className="bg-card rounded-xl border overflow-hidden max-h-[500px] overflow-y-auto">
             {currencies?.map((cur: any) => (
-              <div key={cur.id} className="px-4 py-3 flex items-center justify-between hover:bg-surface/30 transition-colors border-b last:border-0">
+              <div key={cur.id} className="px-4 py-3 flex items-center justify-between hover:bg-card/30 transition-colors border-b last:border-0">
                 <div className="flex items-center gap-3">
                   <span className="text-xs font-black text-muted-foreground w-10">{cur.codigo}</span>
                   <span className="font-bold text-foreground">{cur.simbolo}</span>

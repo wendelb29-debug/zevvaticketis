@@ -142,7 +142,7 @@ function ConsentPage() {
         <Button
           variant="outline"
           onClick={signInWithGoogle}
-          className="w-full h-12 rounded-[14px] border-line font-extrabold text-foreground"
+          className="w-full h-12 rounded-[14px] border-border font-extrabold text-foreground"
         >
           Continuar com Google
         </Button>
@@ -152,7 +152,7 @@ function ConsentPage() {
             placeholder="Seu e-mail"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="h-12 rounded-[14px] border-line"
+            className="h-12 rounded-[14px] border-border"
             required
           />
           <Input
@@ -160,7 +160,7 @@ function ConsentPage() {
             placeholder="Sua senha"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="h-12 rounded-[14px] border-line"
+            className="h-12 rounded-[14px] border-border"
             required
           />
           <Button disabled={busy} className="w-full h-12 rounded-[14px] bg-primary hover:bg-primary-dark text-primary-foreground font-extrabold">
@@ -194,7 +194,7 @@ function ConsentPage() {
           disabled={busy}
           variant="outline"
           onClick={() => decide(false)}
-          className="flex-1 h-12 rounded-[14px] border-line font-extrabold text-foreground"
+          className="flex-1 h-12 rounded-[14px] border-border font-extrabold text-foreground"
         >
           Recusar
         </Button>
@@ -206,7 +206,7 @@ function ConsentPage() {
 function Shell({ children }: { children: React.ReactNode }) {
   return (
     <main className="min-h-screen flex items-center justify-center bg-card p-6">
-      <div className="w-full max-w-md space-y-5 rounded-[24px] border border-line p-8 shadow-xl">
+      <div className="w-full max-w-md space-y-5 rounded-[24px] border border-border p-8 shadow-xl">
         {children}
       </div>
     </main>

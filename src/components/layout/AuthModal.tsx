@@ -190,7 +190,7 @@ export function AuthModal({ isOpen, onClose, defaultView = 'login' }: AuthModalP
                 <Button 
                   variant="outline" 
                   onClick={() => handleSocialLogin('google')}
-                  className="w-full justify-start gap-3 h-14 rounded-[16px] border-line font-extrabold text-foreground hover:bg-surface transition-all group"
+                  className="w-full justify-start gap-3 h-14 rounded-[16px] border-border font-extrabold text-foreground hover:bg-card transition-all group"
                 >
                   <img src="https://www.google.com/favicon.ico" alt="Google" className="w-5 h-5" />
                   Google
@@ -199,7 +199,7 @@ export function AuthModal({ isOpen, onClose, defaultView = 'login' }: AuthModalP
                 <Button 
                   variant="outline" 
                   onClick={() => setShowEmailFields(true)}
-                  className="w-full justify-start gap-3 h-14 rounded-[16px] border-line font-extrabold text-foreground hover:bg-surface transition-all"
+                  className="w-full justify-start gap-3 h-14 rounded-[16px] border-border font-extrabold text-foreground hover:bg-card transition-all"
                 >
                   <Mail className="w-5 h-5 text-muted-foreground" />
                   E-mail
@@ -294,25 +294,25 @@ export function AuthModal({ isOpen, onClose, defaultView = 'login' }: AuthModalP
           ) : (
             <form onSubmit={handleRegister} className="space-y-4 animate-in fade-in slide-in-from-right-4">
               <div className="grid grid-cols-2 gap-3">
-                <Input placeholder="Nome" value={formData.nome} onChange={(e) => setFormData({...formData, nome: e.target.value})} className="h-11 rounded-[12px] border-line" required />
-                <Input placeholder="Sobrenome" value={formData.sobrenome} onChange={(e) => setFormData({...formData, sobrenome: e.target.value})} className="h-11 rounded-[12px] border-line" required />
+                <Input placeholder="Nome" value={formData.nome} onChange={(e) => setFormData({...formData, nome: e.target.value})} className="h-11 rounded-[12px] border-border" required />
+                <Input placeholder="Sobrenome" value={formData.sobrenome} onChange={(e) => setFormData({...formData, sobrenome: e.target.value})} className="h-11 rounded-[12px] border-border" required />
               </div>
-              <Input type="email" placeholder="E-mail" value={formData.email} onChange={(e) => setFormData({...formData, email: e.target.value})} className="h-11 rounded-[12px] border-line" required />
-              <Input type="password" placeholder="Senha" value={formData.senha} onChange={(e) => setFormData({...formData, senha: e.target.value})} className="h-11 rounded-[12px] border-line" required />
+              <Input type="email" placeholder="E-mail" value={formData.email} onChange={(e) => setFormData({...formData, email: e.target.value})} className="h-11 rounded-[12px] border-border" required />
+              <Input type="password" placeholder="Senha" value={formData.senha} onChange={(e) => setFormData({...formData, senha: e.target.value})} className="h-11 rounded-[12px] border-border" required />
 
               {role === 'produtor' && (
-                <div className="space-y-4 pt-4 border-t border-line">
+                <div className="space-y-4 pt-4 border-t border-border">
                   <div className="bg-primary/5 p-3 rounded-xl flex gap-3">
                     <ShieldCheck className="w-4 h-4 text-primary shrink-0 mt-0.5" />
                     <p className="text-[10px] text-primary-dark font-medium">Sua organização passará por aprovação.</p>
                   </div>
-                  <Input placeholder="Nome da Organização" value={formData.orgNome} onChange={(e) => setFormData({...formData, orgNome: e.target.value})} className="h-11 rounded-[12px] border-line" required />
+                  <Input placeholder="Nome da Organização" value={formData.orgNome} onChange={(e) => setFormData({...formData, orgNome: e.target.value})} className="h-11 rounded-[12px] border-border" required />
                   <div className="grid grid-cols-2 gap-3">
                     <select value={formData.paisId} onChange={(e) => setFormData({...formData, paisId: e.target.value})} className="h-11 rounded-[12px] border-border bg-secondary border px-3 text-sm text-foreground" required>
                       <option value="">País...</option>
                       {countries.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
                     </select>
-                    <Input placeholder="Documento" value={formData.orgDocumento} onChange={(e) => setFormData({...formData, orgDocumento: e.target.value})} className="h-11 rounded-[12px] border-line" required />
+                    <Input placeholder="Documento" value={formData.orgDocumento} onChange={(e) => setFormData({...formData, orgDocumento: e.target.value})} className="h-11 rounded-[12px] border-border" required />
                   </div>
                 </div>
               )}
@@ -335,7 +335,7 @@ export function AuthModal({ isOpen, onClose, defaultView = 'login' }: AuthModalP
           </p>
         </div>
 
-        <div className="bg-surface/50 p-6 border-t border-line text-center">
+        <div className="bg-card/50 p-6 border-t border-border text-center">
           <p className="text-sm font-bold text-foreground">
             {view === 'login' ? "Não tem conta? " : "Já tem conta? "}
             <button 

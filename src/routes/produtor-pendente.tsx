@@ -31,7 +31,7 @@ function ProducerPendingPage() {
           <div className="w-24 h-24 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
             <Clock className="w-12 h-12 text-primary animate-pulse" />
           </div>
-          <div className="absolute top-16 right-[38%] bg-card rounded-full p-1 border border-line">
+          <div className="absolute top-16 right-[38%] bg-card rounded-full p-1 border border-border">
             <ShieldCheck className="w-6 h-6 text-foreground" />
           </div>
         </div>
@@ -44,9 +44,9 @@ function ProducerPendingPage() {
           </p>
         </div>
 
-        <div className="bg-surface/50 border border-line rounded-[20px] p-6 space-y-4 text-left">
+        <div className="bg-card/50 border border-border rounded-[20px] p-6 space-y-4 text-left">
           <div className="flex gap-4">
-            <div className="w-10 h-10 bg-card rounded-xl border border-line flex items-center justify-center shrink-0">
+            <div className="w-10 h-10 bg-card rounded-xl border border-border flex items-center justify-center shrink-0">
               <Mail className="w-5 h-5 text-primary" />
             </div>
             <div>

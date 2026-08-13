@@ -377,7 +377,7 @@ function HomePage() {
         </section>
 
         {/* Cursos - Professional Modern Layout */}
-        <section className="px-6 py-24 bg-surface border-y border-border">
+        <section className="px-6 py-24 bg-card border-y border-border">
           <div className="max-w-7xl mx-auto space-y-16">
             <div className="flex flex-col items-center text-center space-y-4 max-w-3xl mx-auto">
               <h2 className="text-3xl md:text-5xl font-manrope font-extrabold text-foreground tracking-tight">
@@ -422,7 +422,7 @@ function HomePage() {
                     <span className="text-xs font-bold text-foreground/60">
                       {course.hours} • {course.mode}
                     </span>
-                    <button className="w-10 h-10 rounded-full bg-surface border border-border flex items-center justify-center group-hover:bg-primary group-hover:text-primary-foreground group-hover:border-primary transition-all">
+                    <button className="w-10 h-10 rounded-full bg-card border border-border flex items-center justify-center group-hover:bg-primary group-hover:text-primary-foreground group-hover:border-primary transition-all">
                       <ArrowRight className="w-4 h-4" />
                     </button>
                   </div>
@@ -469,7 +469,7 @@ function HomePage() {
               ].map((caravan, i) => (
                 <div
                   key={i}
-                  className="group flex flex-col md:flex-row gap-8 items-center bg-surface p-6 rounded-2xl border border-border hover:border-primary/30 hover:shadow-xl transition-all duration-300"
+                  className="group flex flex-col md:flex-row gap-8 items-center bg-card p-6 rounded-2xl border border-border hover:border-primary/30 hover:shadow-xl transition-all duration-300"
                 >
                   <div className="w-full md:w-48 aspect-square overflow-hidden rounded-xl bg-background">
                     <img
@@ -515,7 +515,7 @@ function HomePage() {
         </section>
 
         {/* Benefits Showcase - Modern & Clean */}
-        <section className="px-6 py-24 bg-surface border-y border-border">
+        <section className="px-6 py-24 bg-card border-y border-border">
           <div className="max-w-7xl mx-auto space-y-16">
             <div className="text-center space-y-4 max-w-2xl mx-auto">
               <h2 className="text-3xl md:text-5xl font-manrope font-extrabold text-foreground tracking-tight">
@@ -592,7 +592,7 @@ function HomePage() {
 
         {/* PremiumNewsletter removido para simplificação inicial */}
 
-        <section className="px-6 py-24 bg-surface border-t border-border">
+        <section className="px-6 py-24 bg-card border-t border-border">
           <div className="max-w-3xl mx-auto space-y-12">
             <div className="text-center space-y-4">
               <h2 className="text-3xl md:text-5xl font-manrope font-extrabold text-foreground tracking-tight">

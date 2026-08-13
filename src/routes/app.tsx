@@ -34,13 +34,13 @@ function AppLayout() {
 
   return (
     <div className="min-h-screen bg-bg text-foreground font-inter">
-      <header className="bg-card border-b border-line h-16 flex items-center px-6 sticky top-0 z-50">
+      <header className="bg-card border-b border-border h-16 flex items-center px-6 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto w-full flex items-center justify-between">
           <div className="flex items-center gap-8">
             <div className="flex items-center gap-4">
               <button 
                 onClick={() => window.history.back()}
-                className="p-2 hover:bg-surface rounded-full transition-colors text-muted-foreground hover:text-foreground lg:hidden"
+                className="p-2 hover:bg-card rounded-full transition-colors text-muted-foreground hover:text-foreground lg:hidden"
               >
                 <ArrowLeft className="w-5 h-5" />
               </button>

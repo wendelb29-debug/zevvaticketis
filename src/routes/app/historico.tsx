@@ -76,14 +76,14 @@ function OrderHistory() {
         
         <div className="relative w-full sm:w-64">
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-          <Input placeholder="Buscar evento..." className="pl-11 h-12 rounded-xl border-line" />
+          <Input placeholder="Buscar evento..." className="pl-11 h-12 rounded-xl border-border" />
         </div>
       </div>
 
       <div className="grid gap-4">
         {orders.length === 0 ? (
-          <div className="bg-card rounded-[32px] border border-line border-dashed p-20 flex flex-col items-center text-center gap-4">
-            <div className="p-6 bg-surface rounded-full text-muted-foreground">
+          <div className="bg-card rounded-[32px] border border-border border-dashed p-20 flex flex-col items-center text-center gap-4">
+            <div className="p-6 bg-card rounded-full text-muted-foreground">
               <HistoryIcon className="w-10 h-10" />
             </div>
             <div className="space-y-1">
@@ -96,9 +96,9 @@ function OrderHistory() {
           </div>
         ) : (
           orders.map((order) => (
-            <div key={order.id} className="bg-card rounded-3xl border border-line overflow-hidden hover:shadow-lg transition-all group">
+            <div key={order.id} className="bg-card rounded-3xl border border-border overflow-hidden hover:shadow-lg transition-all group">
               <div className="flex flex-col sm:flex-row items-stretch">
-                <div className="w-full sm:w-48 h-48 rounded-2xl bg-surface overflow-hidden flex-shrink-0 m-4">
+                <div className="w-full sm:w-48 h-48 rounded-2xl bg-card overflow-hidden flex-shrink-0 m-4">
                   {order.events?.imagem_capa ? (
                      <img src={order.events.imagem_capa} alt="" className="w-full h-full object-cover" />
                   ) : (
@@ -114,7 +114,7 @@ function OrderHistory() {
                       <h3 className="font-manrope font-extrabold text-xl text-foreground">{order.events?.nome_evento}</h3>
                       <Badge className={cn(
                         "font-black text-[10px] uppercase",
-                        order.status === 'ativo' ? "bg-green-100 text-green-700" : "bg-muted text-muted-foreground-fg"
+                        order.status === 'ativo' ? "bg-green-100 text-green-700" : "bg-muted text-muted-foreground"
                       )}>
                         {order.status === 'ativo' ? 'Válido' : 'Utilizado'}
                       </Badge>
@@ -128,8 +128,8 @@ function OrderHistory() {
                   </div>
                 </div>
 
-                <div className="w-full sm:w-48 bg-accent/30 p-6 flex flex-col items-center justify-center border-l border-line gap-3">
-                  <div className="bg-card p-2 rounded-xl shadow-sm border border-line">
+                <div className="w-full sm:w-48 bg-accent/30 p-6 flex flex-col items-center justify-center border-l border-border gap-3">
+                  <div className="bg-card p-2 rounded-xl shadow-sm border border-border">
                     {/* Placeholder para QR Code real */}
                     <div className="w-24 h-24 bg-navy flex items-center justify-center text-primary-foreground text-[8px] text-center p-2 font-mono">
                       {order.qr_code}

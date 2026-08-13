@@ -25,8 +25,8 @@ function CursosPage() {
             </p>
           </div>
 
-          <div className="py-24 flex flex-col items-center justify-center border border-dashed border-border rounded-2xl bg-surface/50">
-            <div className="w-16 h-16 bg-surface-elevated rounded-full flex items-center justify-center mb-6">
+          <div className="py-24 flex flex-col items-center justify-center border border-dashed border-border rounded-2xl bg-card/50">
+            <div className="w-16 h-16 bg-popover rounded-full flex items-center justify-center mb-6">
               <BookOpen className="w-8 h-8 text-muted-foreground" />
             </div>
             <h2 className="text-xl font-bold text-foreground mb-2">Nenhum curso disponível no momento</h2>

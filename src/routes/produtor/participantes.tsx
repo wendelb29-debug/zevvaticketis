@@ -44,19 +44,19 @@ function ParticipantesPage() {
           <h1 className="text-3xl font-manrope font-extrabold text-foreground">Participantes do Projeto</h1>
           <p className="text-muted-foreground font-medium">Lista de pessoas vinculadas aos eventos deste ambiente.</p>
         </div>
-        <Button variant="outline" className="rounded-xl border-line">
+        <Button variant="outline" className="rounded-xl border-border">
           <Download className="mr-2 h-4 w-4" /> Exportar CSV
         </Button>
       </div>
 
       <div className="relative">
         <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground h-4 w-4" />
-        <Input placeholder="Buscar participante por nome, e-mail ou código..." className="pl-11 h-12 rounded-xl border-line" />
+        <Input placeholder="Buscar participante por nome, e-mail ou código..." className="pl-11 h-12 rounded-xl border-border" />
       </div>
 
-      <div className="bg-card rounded-3xl border border-line overflow-hidden">
+      <div className="bg-card rounded-3xl border border-border overflow-hidden">
         <table className="w-full text-left text-sm">
-          <thead className="bg-accent/50 text-[10px] font-black uppercase tracking-widest text-muted-foreground border-b border-line">
+          <thead className="bg-accent/50 text-[10px] font-black uppercase tracking-widest text-muted-foreground border-b border-border">
             <tr>
               <th className="px-6 py-4">Participante</th>
               <th className="px-6 py-4">Evento / Ingresso</th>
@@ -80,7 +80,7 @@ function ParticipantesPage() {
                 <td className="px-6 py-4">
                   <span className={cn(
                     "text-[10px] font-black uppercase px-2 py-1 rounded-full",
-                    ticket.status === 'ativo' ? "bg-green-100 text-green-700" : "bg-muted text-muted-foreground-fg"
+                    ticket.status === 'ativo' ? "bg-green-100 text-green-700" : "bg-muted text-muted-foreground"
                   )}>
                     {ticket.status === 'ativo' ? 'Válido' : 'Utilizado'}
                   </span>

@@ -59,7 +59,7 @@ function EventDetailsPage() {
   );
 
   return (
-    <div className="min-h-screen bg-surface pb-20">
+    <div className="min-h-screen bg-card pb-20">
       <div className="relative h-[400px] w-full overflow-hidden">
         {event.imagem_capa ? (
           <img 
@@ -112,7 +112,7 @@ function EventDetailsPage() {
               <h2 className="text-2xl font-bold flex items-center gap-2">
                 <Info className="h-6 w-6 text-primary" /> Sobre o Evento
               </h2>
-              <div className="prose prose-slate max-w-none text-muted-foreground-fg leading-relaxed">
+              <div className="prose prose-slate max-w-none text-muted-foreground leading-relaxed">
                 {event.descricao_completa || "Sem descrição disponível."}
               </div>
             </section>
@@ -127,7 +127,7 @@ function EventDetailsPage() {
                     {event.producers?.nome_empresa?.charAt(0) || "P"}
                   </div>
                   <div>
-                    <p className="text-sm text-muted-foreground-fg">Organizado por</p>
+                    <p className="text-sm text-muted-foreground">Organizado por</p>
                     <p className="font-bold text-lg">{event.producers?.nome_empresa || "Produtor Independente"}</p>
                   </div>
                 </CardContent>
@@ -159,7 +159,7 @@ function EventDetailsPage() {
                           R$ {Number(ticket.valor).toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
                         </span>
                       </div>
-                      <p className="text-xs text-muted-foreground-fg">{ticket.descricao}</p>
+                      <p className="text-xs text-muted-foreground">{ticket.descricao}</p>
                     </div>
                   ))}
                 </div>
@@ -171,7 +171,7 @@ function EventDetailsPage() {
                   COMPRAR INGRESSO
                 </Button>
                 
-                <p className="text-[10px] text-center text-muted-foreground-fg uppercase tracking-widest font-bold">
+                <p className="text-[10px] text-center text-muted-foreground uppercase tracking-widest font-bold">
                   Compra 100% Segura • Zevva Tickets
                 </p>
               </CardContent>
