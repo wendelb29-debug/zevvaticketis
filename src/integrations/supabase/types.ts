@@ -2544,6 +2544,7 @@ export type Database = {
       }
       transfer_attendance: {
         Args: {
+          p_actor_id?: string
           p_attendance_id: string
           p_client_message?: string
           p_new_agent_id?: string
