@@ -66,9 +66,10 @@ export function EventCard({ event, onToggleFavorite }: EventCardProps) {
             </span>
           </div>
 
-          <Link
-            to="/eventos/$id"
+          <Link 
+            to="/eventos/$id" 
             params={{ id: event.id }}
+            search={{}}
             className="h-10 px-5 bg-background border border-border flex items-center justify-center rounded-md text-xs font-bold text-foreground hover:bg-primary hover:text-white hover:border-primary transition-all"
           >
             Ver Detalhes
