@@ -841,7 +841,7 @@ function AdminChatPage() {
         <div className="w-[52px] border-l border-border bg-card flex flex-col items-center py-4 gap-4 z-20 shadow-[-4px_0_12px_rgba(0,0,0,0.05)]">
           {[
             { id: 'finish', icon: CheckCircle2, label: 'Finalizar', color: 'text-green-500' },
-            { id: 'transfer', icon: Share2, label: 'Transferir', disabled: true },
+            { id: 'transfer', icon: Share2, label: 'Transferir', disabled: !selectedContactId || selectedContact?.status === 'finalized' },
             { id: 'groups', icon: Users, label: 'Grupos' },
             { id: 'files', icon: Paperclip, label: 'Arquivos' },
             { id: 'history', icon: History, label: 'Histórico' },
