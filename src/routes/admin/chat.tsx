@@ -5,7 +5,7 @@ import { UserMenu } from "@/components/auth/UserMenu";
 import { useUI } from '@/hooks/use-ui';
 import { Button } from "@/components/ui/button";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { getWhatsAppContacts, getWhatsAppMessages, sendWhatsAppMessage } from "@/lib/whatsapp/whatsapp.functions";
+import { getWhatsAppContacts, getWhatsAppMessages, sendWhatsAppMessage, markMessagesAsRead } from "@/lib/whatsapp/whatsapp.functions";
 import { 
   Search, Send, User, Check, CheckCheck, Phone, Plus, Bell, ChevronDown, 
   MoreVertical, CheckCircle, Shuffle, Users as PeopleIcon, Folder, Clock, 
@@ -93,8 +93,8 @@ function AdminChatPage() {
   const [activeTab, setActiveTab] = useState<'atendimento' | 'espera'>('atendimento');
 
   const { data: contactsData, isLoading: isLoadingContacts } = useQuery({
-    queryKey: ['whatsapp-contacts'],
-    queryFn: () => getWhatsAppContacts()
+    queryKey: ['whatsapp-contacts', activeTenant?.id],
+    queryFn: () => getWhatsAppContacts({ data: { tenantId: activeTenant?.id } })
   });
 
   const { data: messagesData, isLoading: isLoadingMessages } = useQuery({
@@ -105,7 +105,7 @@ function AdminChatPage() {
 
   const sendMutation = useMutation({
     mutationFn: (data: { contactId: string, phone: string, text: string }) => 
-      sendWhatsAppMessage({ data }),
+      sendWhatsAppMessage({ data: { ...data, tenantId: activeTenant?.id } }),
     onSuccess: () => {
       setMessageText("");
       queryClient.invalidateQueries({ queryKey: ['whatsapp-messages', selectedContactId] });
@@ -145,6 +145,19 @@ function AdminChatPage() {
     return () => {
       supabase.removeChannel(channel);
     };
+  }, [selectedContactId, activeTenant?.id]);
+
+  const markAsReadMutation = useMutation({
+    mutationFn: (contactId: string) => markMessagesAsRead({ data: { contactId } }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['whatsapp-contacts'] });
+    }
+  });
+
+  useEffect(() => {
+    if (selectedContactId) {
+      markAsReadMutation.mutate(selectedContactId);
+    }
   }, [selectedContactId]);
 
   const scrollToBottom = () => {
