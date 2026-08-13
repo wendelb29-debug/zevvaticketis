@@ -30,7 +30,7 @@ export function PremiumNewsletter() {
                 <input 
                   type="email" 
                   placeholder="Seu melhor e-mail" 
-                  className="flex-1 h-16 px-6 bg-white/5 border border-white/10 rounded-2xl text-white placeholder:text-white/30 focus:outline-none focus:border-coral transition-colors"
+                  className="flex-1 h-16 px-6 bg-card/5 border border-white/10 rounded-2xl text-white placeholder:text-white/30 focus:outline-none focus:border-coral transition-colors"
                 />
                 <Button className="h-16 px-8 bg-coral hover:bg-coral-dark text-white font-black rounded-2xl gap-2 group">
                   INSCREVER-SE

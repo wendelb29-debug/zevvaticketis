@@ -212,7 +212,7 @@ function AdminLayout() {
             <Link 
               to="/app" 
               className={cn(
-                "p-2 hover:bg-accent rounded-lg transition-all text-muted hover:text-primary outline-none active:scale-95 border border-border bg-card",
+                "p-2 hover:bg-accent rounded-lg transition-all text-muted-foreground hover:text-primary outline-none active:scale-95 border border-border bg-card",
                 isSidebarCollapsed ? "w-10 h-10 flex items-center justify-center" : ""
               )}
             >
@@ -285,7 +285,7 @@ function AdminLayout() {
                         search={child.query as any}
                         className="block py-2 rounded-lg text-xs font-bold transition-all duration-200 outline-none focus:ring-2 focus:ring-primary focus:text-primary active:scale-[0.98]"
                         activeProps={{ className: "text-primary ring-2 ring-primary/20" }}
-                        inactiveProps={{ className: "text-muted-fg hover:text-foreground hover:bg-accent/30" }}
+                        inactiveProps={{ className: "text-muted-foreground-fg hover:text-foreground hover:bg-accent/30" }}
                       >
                         {child.label}
                       </Link>

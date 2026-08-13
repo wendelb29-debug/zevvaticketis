@@ -129,7 +129,7 @@ export function ScannerComponent() {
             <CardTitle className="text-xl font-manrope font-black flex items-center gap-3">
               <Camera className="w-6 h-6 text-coral" /> Scanner de Ingresso
             </CardTitle>
-            <p className="text-navy-foreground/60 text-xs font-bold uppercase tracking-wider">Câmera em tempo real</p>
+            <p className="text-foreground-foreground/60 text-xs font-bold uppercase tracking-wider">Câmera em tempo real</p>
           </CardHeader>
           <CardContent className="p-0 relative bg-black aspect-square flex flex-col items-center justify-center">
             {isScanning ? (
@@ -172,7 +172,7 @@ export function ScannerComponent() {
           <div className="p-6 bg-surface border-t border-line">
             <div className="flex gap-2">
               <div className="relative flex-1">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-navy/40" />
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-foreground/40" />
                 <input 
                   type="text" 
                   placeholder="Código do ingresso manual..."
@@ -183,7 +183,7 @@ export function ScannerComponent() {
               </div>
               <Button 
                 variant="outline" 
-                className="h-12 px-6 rounded-xl border-line text-navy font-bold hover:bg-white"
+                className="h-12 px-6 rounded-xl border-line text-foreground font-bold hover:bg-white"
                 onClick={() => handleScan(manualCode)}
               >
                 Validar
@@ -201,12 +201,12 @@ export function ScannerComponent() {
           )}>
             {!scannedResult ? (
               <div className="flex-1 flex flex-col items-center justify-center text-center p-10 space-y-4">
-                <div className="w-20 h-20 rounded-full bg-surface flex items-center justify-center text-navy/20">
+                <div className="w-20 h-20 rounded-full bg-surface flex items-center justify-center text-foreground/20">
                   <TicketIcon className="w-10 h-10" />
                 </div>
                 <div>
-                  <h3 className="text-navy font-extrabold text-xl">Aguardando Leitura</h3>
-                  <p className="text-muted text-sm">Os detalhes do ingresso aparecerão aqui após o scan.</p>
+                  <h3 className="text-foreground font-extrabold text-xl">Aguardando Leitura</h3>
+                  <p className="text-muted-foreground text-sm">Os detalhes do ingresso aparecerão aqui após o scan.</p>
                 </div>
               </div>
             ) : scannedResult.success ? (
@@ -257,7 +257,7 @@ export function ScannerComponent() {
           {lastCheckins.length > 0 && (
             <Card className="border-line shadow-sm overflow-hidden rounded-[24px]">
               <CardHeader className="bg-surface py-3 px-6 border-b border-line">
-                <CardTitle className="text-xs font-black text-navy/40 uppercase tracking-widest flex items-center gap-2">
+                <CardTitle className="text-xs font-black text-foreground/40 uppercase tracking-widest flex items-center gap-2">
                   <History className="w-4 h-4" /> Últimos Check-ins
                 </CardTitle>
               </CardHeader>
@@ -265,8 +265,8 @@ export function ScannerComponent() {
                 {lastCheckins.map((item, i) => (
                   <div key={i} className="px-6 py-3 flex items-center justify-between hover:bg-surface/50 transition-colors">
                     <div>
-                      <p className="text-sm font-bold text-navy">{item.participantName}</p>
-                      <p className="text-[10px] text-muted-fg font-bold uppercase">{item.ticketType} • {item.checkinTime}</p>
+                      <p className="text-sm font-bold text-foreground">{item.participantName}</p>
+                      <p className="text-[10px] text-muted-foreground-fg font-bold uppercase">{item.ticketType} • {item.checkinTime}</p>
                     </div>
                     <CheckCircle2 className="w-4 h-4 text-emerald-500" />
                   </div>
@@ -288,7 +288,7 @@ function ResultItem({ label, value, icon: Icon }: any) {
       </div>
       <div>
         <p className="text-[10px] font-black text-emerald-600/60 uppercase tracking-widest mb-0.5">{label}</p>
-        <p className="text-lg font-manrope font-black text-navy leading-tight">{value}</p>
+        <p className="text-lg font-manrope font-black text-foreground leading-tight">{value}</p>
       </div>
     </div>
   );

@@ -45,8 +45,8 @@ function ProjectMarketingPanel() {
     <div className="space-y-8 font-inter animate-in fade-in duration-500">
       <div className="flex justify-between items-end">
         <div>
-          <h1 className="text-3xl font-manrope font-black text-navy tracking-tighter uppercase">🚀 Central de Marketing</h1>
-          <p className="text-sm text-muted font-medium">Gerencie anúncios, push e campanhas deste projeto.</p>
+          <h1 className="text-3xl font-manrope font-black text-foreground tracking-tighter uppercase">🚀 Central de Marketing</h1>
+          <p className="text-sm text-muted-foreground font-medium">Gerencie anúncios, push e campanhas deste projeto.</p>
         </div>
         <Button className="bg-coral hover:bg-coral/90 text-white gap-2 font-black px-8 h-12 shadow-lg shadow-coral/20 rounded-xl uppercase tracking-widest text-xs">
           <Plus className="w-5 h-5" /> Nova Campanha
@@ -66,8 +66,8 @@ function ProjectMarketingPanel() {
                 <stat.icon className={cn("w-5 h-5", stat.color)} />
               </div>
               <div>
-                <p className="text-[9px] font-black text-muted-fg uppercase tracking-widest">{stat.label}</p>
-                <p className="text-xl font-black text-navy">{stat.value}</p>
+                <p className="text-[9px] font-black text-muted-foreground-fg uppercase tracking-widest">{stat.label}</p>
+                <p className="text-xl font-black text-foreground">{stat.value}</p>
               </div>
             </CardContent>
           </Card>
@@ -75,7 +75,7 @@ function ProjectMarketingPanel() {
       </div>
 
       <Tabs defaultValue="campanhas" className="w-full">
-        <TabsList className="bg-white border border-line p-1 rounded-2xl h-14 shadow-sm mb-8 w-full justify-start overflow-x-auto">
+        <TabsList className="bg-card border border-line p-1 rounded-2xl h-14 shadow-sm mb-8 w-full justify-start overflow-x-auto">
           <TabsTrigger value="campanhas" className="data-[state=active]:bg-primary data-[state=active]:text-white rounded-xl h-11 px-6 font-black uppercase tracking-widest text-[10px] gap-2 transition-all">
             <Rocket className="w-4 h-4" /> Campanhas
           </TabsTrigger>
@@ -90,12 +90,12 @@ function ProjectMarketingPanel() {
         <TabsContent value="campanhas" className="space-y-6">
           <Card className="border-line shadow-sm rounded-3xl overflow-hidden">
             <div className="p-6 border-b border-line flex justify-between items-center bg-surface/30">
-              <h2 className="text-sm font-black text-navy uppercase tracking-widest">Campanhas Recentes</h2>
+              <h2 className="text-sm font-black text-foreground uppercase tracking-widest">Campanhas Recentes</h2>
               <Button variant="ghost" size="sm" className="text-[10px] font-black uppercase text-primary">Ver Tudo</Button>
             </div>
             <div className="p-0 overflow-x-auto">
               <table className="w-full text-left">
-                <thead className="bg-surface text-muted text-[10px] font-black uppercase tracking-widest border-b border-line">
+                <thead className="bg-surface text-muted-foreground text-[10px] font-black uppercase tracking-widest border-b border-line">
                   <tr>
                     <th className="px-6 py-4">Nome</th>
                     <th className="px-6 py-4">Status</th>
@@ -111,17 +111,17 @@ function ProjectMarketingPanel() {
                     { name: "Retargeting VIP 💎", status: "finalizada", reach: "2.1k", clicks: "650" },
                   ].map((row, i) => (
                     <tr key={i} className="hover:bg-surface/50 transition-colors">
-                      <td className="px-6 py-4 font-bold text-navy">{row.name}</td>
+                      <td className="px-6 py-4 font-bold text-foreground">{row.name}</td>
                       <td className="px-6 py-4">
                         <Badge className={cn(
                           "text-[9px] font-black uppercase tracking-widest",
-                          row.status === "ativa" ? "bg-green-500" : row.status === "pausada" ? "bg-amber-500" : "bg-slate-500"
+                          row.status === "ativa" ? "bg-green-500" : row.status === "pausada" ? "bg-amber-500" : "bg-muted0"
                         )}>
                           {row.status}
                         </Badge>
                       </td>
-                      <td className="px-6 py-4 text-sm font-bold text-navy">{row.reach}</td>
-                      <td className="px-6 py-4 text-sm font-medium text-muted-fg">{row.clicks}</td>
+                      <td className="px-6 py-4 text-sm font-bold text-foreground">{row.reach}</td>
+                      <td className="px-6 py-4 text-sm font-medium text-muted-foreground-fg">{row.clicks}</td>
                       <td className="px-6 py-4 text-right">
                         <Button variant="ghost" size="sm" className="h-8 rounded-lg font-bold text-[10px] uppercase">Detalhes</Button>
                       </td>

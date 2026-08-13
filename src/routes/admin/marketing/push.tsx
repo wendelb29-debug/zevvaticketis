@@ -130,8 +130,8 @@ function PushNotificationsPage() {
       <div className="p-8 max-w-7xl mx-auto space-y-8 animate-in fade-in duration-500 font-inter">
       <div className="flex justify-between items-end">
         <div>
-          <h1 className="text-3xl font-manrope font-black text-navy tracking-tighter uppercase">📱 Push Notifications</h1>
-          <p className="text-sm text-muted-fg mt-2 font-medium">Envie avisos rápidos e segmentados para os usuários do Zevva.</p>
+          <h1 className="text-3xl font-manrope font-black text-foreground tracking-tighter uppercase">📱 Push Notifications</h1>
+          <p className="text-sm text-muted-foreground-fg mt-2 font-medium">Envie avisos rápidos e segmentados para os usuários do Zevva.</p>
         </div>
         <Button 
           onClick={() => setActiveTab("novo")}
@@ -142,7 +142,7 @@ function PushNotificationsPage() {
       </div>
 
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-        <TabsList className="bg-white border border-line p-1 rounded-2xl h-14 shadow-sm mb-8 w-full justify-start overflow-x-auto">
+        <TabsList className="bg-card border border-line p-1 rounded-2xl h-14 shadow-sm mb-8 w-full justify-start overflow-x-auto">
           <TabsTrigger value="historico" className="data-[state=active]:bg-primary data-[state=active]:text-white rounded-xl h-11 px-6 font-black uppercase tracking-widest text-[10px] gap-2 transition-all">
             <History className="w-4 h-4" /> Histórico
           </TabsTrigger>
@@ -162,22 +162,22 @@ function PushNotificationsPage() {
 
         <TabsContent value="metricas" className="space-y-8 animate-in fade-in duration-500">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8">
-            <h3 className="text-xl font-black text-navy uppercase tracking-tight flex items-center gap-2">
+            <h3 className="text-xl font-black text-foreground uppercase tracking-tight flex items-center gap-2">
               <TrendingUp className="w-6 h-6 text-primary" /> Métricas Detalhadas
             </h3>
             <div className="flex items-center gap-3">
-              <div className="flex items-center gap-2 bg-white border border-line rounded-xl px-4 py-2 shadow-sm">
-                <Filter className="w-4 h-4 text-muted-fg" />
-                <select className="bg-transparent border-none outline-none text-[10px] font-black uppercase tracking-widest text-navy">
+              <div className="flex items-center gap-2 bg-card border border-line rounded-xl px-4 py-2 shadow-sm">
+                <Filter className="w-4 h-4 text-muted-foreground-fg" />
+                <select className="bg-transparent border-none outline-none text-[10px] font-black uppercase tracking-widest text-foreground">
                   <option>Últimos 30 dias</option>
                   <option>Últimos 7 dias</option>
                   <option>Hoje</option>
                   <option>Personalizado</option>
                 </select>
               </div>
-              <div className="flex items-center gap-2 bg-white border border-line rounded-xl px-4 py-2 shadow-sm">
-                <Users className="w-4 h-4 text-muted-fg" />
-                <select className="bg-transparent border-none outline-none text-[10px] font-black uppercase tracking-widest text-navy">
+              <div className="flex items-center gap-2 bg-card border border-line rounded-xl px-4 py-2 shadow-sm">
+                <Users className="w-4 h-4 text-muted-foreground-fg" />
+                <select className="bg-transparent border-none outline-none text-[10px] font-black uppercase tracking-widest text-foreground">
                   <option>Todos os Públicos</option>
                   <option>Compradores</option>
                   <option>Interessados</option>
@@ -192,7 +192,7 @@ function PushNotificationsPage() {
               { label: "Cliques", value: "19.5%", icon: TrendingUp, color: "text-orange-500", bg: "bg-orange-50" },
               { label: "Conversão", value: "4.2%", icon: Zap, color: "text-primary", bg: "bg-primary/5" },
               { label: "Tempo Leitura", value: "12min", icon: Clock, color: "text-blue-500", bg: "bg-blue-50" },
-              { label: "Volume Total", value: "45.8k", icon: Smartphone, color: "text-navy", bg: "bg-surface" },
+              { label: "Volume Total", value: "45.8k", icon: Smartphone, color: "text-foreground", bg: "bg-surface" },
             ].map((stat, i) => (
               <Card key={i} className="border-border shadow-sm">
                 <CardContent className="p-4 flex items-center gap-3">
@@ -200,8 +200,8 @@ function PushNotificationsPage() {
                     <stat.icon className={cn("w-5 h-5", stat.color)} />
                   </div>
                   <div>
-                    <p className="text-[9px] font-black text-muted-fg uppercase tracking-widest">{stat.label}</p>
-                    <p className="text-xl font-black text-navy">{stat.value}</p>
+                    <p className="text-[9px] font-black text-muted-foreground-fg uppercase tracking-widest">{stat.label}</p>
+                    <p className="text-xl font-black text-foreground">{stat.value}</p>
                   </div>
                 </CardContent>
               </Card>
@@ -211,9 +211,9 @@ function PushNotificationsPage() {
           <Card className="border-line shadow-sm rounded-3xl">
             <CardContent className="p-8">
               <div className="flex justify-between items-center mb-8">
-                <h3 className="text-lg font-black text-navy uppercase tracking-tight">Engajamento (Últimos 30 dias)</h3>
+                <h3 className="text-lg font-black text-foreground uppercase tracking-tight">Engajamento (Últimos 30 dias)</h3>
                 <div className="flex gap-2">
-                  <Badge variant="outline" className="text-[10px] font-bold text-muted-fg uppercase tracking-widest bg-surface/50 border-line">
+                  <Badge variant="outline" className="text-[10px] font-bold text-muted-foreground-fg uppercase tracking-widest bg-surface/50 border-line">
                     Julho 2026
                   </Badge>
                 </div>
@@ -232,7 +232,7 @@ function PushNotificationsPage() {
                   </div>
                 ))}
               </div>
-              <div className="flex justify-between mt-4 px-2 text-[9px] font-black text-muted-fg uppercase tracking-widest">
+              <div className="flex justify-between mt-4 px-2 text-[9px] font-black text-muted-foreground-fg uppercase tracking-widest">
                 <span>01 Ago</span>
                 <span>15 Ago</span>
                 <span>30 Ago</span>
@@ -247,7 +247,7 @@ function PushNotificationsPage() {
               { label: "Total Enviados", value: "12.450", icon: Smartphone, color: "text-primary", bg: "bg-primary/5" },
               { label: "Entregues", value: "98.2%", icon: CheckCircle2, color: "text-green-600", bg: "bg-green-50" },
               { label: "Cliques", value: "1.240", icon: TrendingUp, color: "text-orange-500", bg: "bg-orange-50" },
-              { label: "Taxa média", value: "10%", icon: Zap, color: "text-navy", bg: "bg-surface" },
+              { label: "Taxa média", value: "10%", icon: Zap, color: "text-foreground", bg: "bg-surface" },
             ].map((stat, i) => (
               <Card key={i} className="border-border shadow-sm">
                 <CardContent className="p-6 flex items-center gap-4">
@@ -255,21 +255,21 @@ function PushNotificationsPage() {
                     <stat.icon className={cn("w-6 h-6", stat.color)} />
                   </div>
                   <div>
-                    <p className="text-[10px] font-black text-muted-fg uppercase tracking-widest">{stat.label}</p>
-                    <p className="text-2xl font-black text-navy mt-1">{stat.value}</p>
+                    <p className="text-[10px] font-black text-muted-foreground-fg uppercase tracking-widest">{stat.label}</p>
+                    <p className="text-2xl font-black text-foreground mt-1">{stat.value}</p>
                   </div>
                 </CardContent>
               </Card>
             ))}
           </div>
 
-          <div className="bg-white rounded-3xl border border-line shadow-sm overflow-hidden">
+          <div className="bg-card rounded-3xl border border-line shadow-sm overflow-hidden">
             <div className="p-8 border-b border-line flex justify-between items-center bg-surface/30">
-              <h2 className="text-lg font-black text-navy uppercase tracking-tight">Campanhas Recentes</h2>
+              <h2 className="text-lg font-black text-foreground uppercase tracking-tight">Campanhas Recentes</h2>
             </div>
             <div className="overflow-x-auto">
               <table className="w-full text-left">
-                <thead className="bg-surface text-muted text-[10px] font-black uppercase tracking-widest">
+                <thead className="bg-surface text-muted-foreground text-[10px] font-black uppercase tracking-widest">
                   <tr>
                     <th className="px-8 py-5">Campanha / ID</th>
                     <th className="px-8 py-5">Automation ID</th>
@@ -288,12 +288,12 @@ function PushNotificationsPage() {
                     <tr key={i} className="hover:bg-surface/50 transition-colors group">
                       <td className="px-8 py-6">
                         <div className="flex flex-col">
-                          <span className="font-extrabold text-navy group-hover:text-primary transition-colors">{row.name}</span>
-                          <span className="text-[9px] font-bold text-muted-fg mt-0.5">{row.id}</span>
+                          <span className="font-extrabold text-foreground group-hover:text-primary transition-colors">{row.name}</span>
+                          <span className="text-[9px] font-bold text-muted-foreground-fg mt-0.5">{row.id}</span>
                         </div>
                       </td>
                       <td className="px-8 py-6">
-                        <Badge variant="outline" className="text-[9px] font-bold text-muted-fg uppercase tracking-widest bg-white">
+                        <Badge variant="outline" className="text-[9px] font-bold text-muted-foreground-fg uppercase tracking-widest bg-card">
                           {row.auto_id}
                         </Badge>
                       </td>
@@ -305,8 +305,8 @@ function PushNotificationsPage() {
                           {row.status}
                         </Badge>
                       </td>
-                      <td className="px-8 py-6 text-[10px] font-bold text-navy">{row.sent}</td>
-                      <td className="px-8 py-6 text-[10px] font-bold text-muted-fg">{row.read}</td>
+                      <td className="px-8 py-6 text-[10px] font-bold text-foreground">{row.sent}</td>
+                      <td className="px-8 py-6 text-[10px] font-bold text-muted-foreground-fg">{row.read}</td>
                       <td className="px-8 py-6 text-[10px] font-bold text-red-500">{row.error}</td>
                     </tr>
                   ))}
@@ -322,13 +322,13 @@ function PushNotificationsPage() {
               <Card className="border-line shadow-sm rounded-3xl">
                 <CardContent className="p-8 space-y-8">
                   <div className="space-y-6">
-                    <h3 className="text-xl font-black text-navy uppercase tracking-tight flex items-center gap-2">
+                    <h3 className="text-xl font-black text-foreground uppercase tracking-tight flex items-center gap-2">
                       <Smartphone className="w-5 h-5 text-primary" /> Conteúdo da Mensagem
                     </h3>
                     
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div className="space-y-3">
-                        <Label className="text-xs font-black uppercase tracking-widest text-muted-fg">Título do Push</Label>
+                        <Label className="text-xs font-black uppercase tracking-widest text-muted-foreground-fg">Título do Push</Label>
                         <Input 
                           placeholder="Ex: Seu ingresso foi confirmado 🎉" 
                           className="h-12 border-line focus:ring-primary rounded-xl font-bold"
@@ -337,9 +337,9 @@ function PushNotificationsPage() {
                         />
                       </div>
                       <div className="space-y-3">
-                        <Label className="text-xs font-black uppercase tracking-widest text-muted-fg">Link de Ação</Label>
+                        <Label className="text-xs font-black uppercase tracking-widest text-muted-foreground-fg">Link de Ação</Label>
                         <div className="relative">
-                          <LinkIcon className="absolute left-3 top-3.5 w-5 h-5 text-muted-fg" />
+                          <LinkIcon className="absolute left-3 top-3.5 w-5 h-5 text-muted-foreground-fg" />
                           <Input 
                             placeholder="https://zevva.app/ingresso" 
                             className="pl-11 h-12 border-line focus:ring-primary rounded-xl font-bold"
@@ -351,7 +351,7 @@ function PushNotificationsPage() {
                     </div>
 
                     <div className="space-y-3">
-                      <Label className="text-xs font-black uppercase tracking-widest text-muted-fg">Corpo da Mensagem</Label>
+                      <Label className="text-xs font-black uppercase tracking-widest text-muted-foreground-fg">Corpo da Mensagem</Label>
                       <Textarea 
                         placeholder="Olá João, sua entrada para o evento está disponível." 
                         className="min-h-[120px] border-line focus:ring-primary rounded-xl font-medium p-4"
@@ -362,14 +362,14 @@ function PushNotificationsPage() {
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div className="space-y-3">
-                        <Label className="text-xs font-black uppercase tracking-widest text-muted-fg">Imagem (Opcional)</Label>
+                        <Label className="text-xs font-black uppercase tracking-widest text-muted-foreground-fg">Imagem (Opcional)</Label>
                         <div className="border-2 border-dashed border-line rounded-2xl p-8 flex flex-col items-center justify-center gap-3 bg-surface/20 hover:bg-surface/40 hover:border-primary/30 transition-all cursor-pointer">
-                          <ImageIcon className="w-8 h-8 text-muted-fg" />
-                          <p className="text-[10px] font-black uppercase tracking-widest text-muted-fg">Arraste ou clique para upload</p>
+                          <ImageIcon className="w-8 h-8 text-muted-foreground-fg" />
+                          <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground-fg">Arraste ou clique para upload</p>
                         </div>
                       </div>
                       <div className="space-y-3">
-                        <Label className="text-xs font-black uppercase tracking-widest text-muted-fg">Texto do Botão</Label>
+                        <Label className="text-xs font-black uppercase tracking-widest text-muted-foreground-fg">Texto do Botão</Label>
                         <Input 
                           placeholder="Ex: Ver ingresso" 
                           className="h-12 border-line focus:ring-primary rounded-xl font-bold"
@@ -382,13 +382,13 @@ function PushNotificationsPage() {
                   </div>
 
                   <div className="pt-8 border-t border-line space-y-6">
-                    <h3 className="text-xl font-black text-navy uppercase tracking-tight flex items-center gap-2">
+                    <h3 className="text-xl font-black text-foreground uppercase tracking-tight flex items-center gap-2">
                       <Filter className="w-5 h-5 text-primary" /> Segmentação do Público
                     </h3>
 
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                       <div className="space-y-3">
-                        <Label className="text-xs font-black uppercase tracking-widest text-muted-fg">Público</Label>
+                        <Label className="text-xs font-black uppercase tracking-widest text-muted-foreground-fg">Público</Label>
                         <select className="w-full h-12 border border-line rounded-xl px-4 font-bold outline-none focus:ring-1 focus:ring-primary text-sm">
                           <option>Todos os Usuários</option>
                           <option>Compradores</option>
@@ -397,7 +397,7 @@ function PushNotificationsPage() {
                         </select>
                       </div>
                       <div className="space-y-3">
-                        <Label className="text-xs font-black uppercase tracking-widest text-muted-fg">Evento Específico</Label>
+                        <Label className="text-xs font-black uppercase tracking-widest text-muted-foreground-fg">Evento Específico</Label>
                         <select className="w-full h-12 border border-line rounded-xl px-4 font-bold outline-none focus:ring-1 focus:ring-primary text-sm">
                           <option>Nenhum</option>
                           <option>Evento Ana Carolina</option>
@@ -405,7 +405,7 @@ function PushNotificationsPage() {
                         </select>
                       </div>
                       <div className="space-y-3">
-                        <Label className="text-xs font-black uppercase tracking-widest text-muted-fg">Status de Pagamento</Label>
+                        <Label className="text-xs font-black uppercase tracking-widest text-muted-foreground-fg">Status de Pagamento</Label>
                         <select className="w-full h-12 border border-line rounded-xl px-4 font-bold outline-none focus:ring-1 focus:ring-primary text-sm">
                           <option>Qualquer um</option>
                           <option>Aprovado</option>
@@ -422,13 +422,13 @@ function PushNotificationsPage() {
                 <Card className="border-line shadow-sm rounded-3xl animate-in fade-in slide-in-from-top-4 duration-500">
                   <CardContent className="p-8 space-y-6">
                     <div className="flex justify-between items-center">
-                      <h3 className="text-xl font-black text-navy uppercase tracking-tight flex items-center gap-2">
+                      <h3 className="text-xl font-black text-foreground uppercase tracking-tight flex items-center gap-2">
                         <Calendar className="w-5 h-5 text-primary" /> Agendamento de Disparo
                       </h3>
                       <div className="flex items-center gap-2 bg-surface px-3 py-1.5 rounded-xl border border-line">
                         <Globe className="w-4 h-4 text-primary" />
                         <select 
-                          className="bg-transparent border-none outline-none text-[10px] font-black uppercase tracking-widest text-navy"
+                          className="bg-transparent border-none outline-none text-[10px] font-black uppercase tracking-widest text-foreground"
                           value={pushContent.timezone}
                           onChange={(e) => setPushContent(prev => ({ ...prev, timezone: e.target.value }))}
                         >
@@ -439,13 +439,13 @@ function PushNotificationsPage() {
                         </select>
                       </div>
                     </div>
-                    <p className="text-xs font-bold text-muted-fg uppercase tracking-widest leading-relaxed">
+                    <p className="text-xs font-bold text-muted-foreground-fg uppercase tracking-widest leading-relaxed">
                       Escolha data e horário local para o disparo. O sistema ajustará automaticamente para o fuso horário selecionado.
                     </p>
                     
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div className="space-y-3">
-                        <Label className="text-xs font-black uppercase tracking-widest text-muted-fg">Data do Disparo</Label>
+                        <Label className="text-xs font-black uppercase tracking-widest text-muted-foreground-fg">Data do Disparo</Label>
                         <Input 
                           type="date"
                           className="h-12 border-line focus:ring-primary rounded-xl font-bold"
@@ -454,7 +454,7 @@ function PushNotificationsPage() {
                         />
                       </div>
                       <div className="space-y-3">
-                        <Label className="text-xs font-black uppercase tracking-widest text-muted-fg">Horário do Disparo</Label>
+                        <Label className="text-xs font-black uppercase tracking-widest text-muted-foreground-fg">Horário do Disparo</Label>
                         <Input 
                           type="time"
                           className="h-12 border-line focus:ring-primary rounded-xl font-bold"
@@ -486,7 +486,7 @@ function PushNotificationsPage() {
                   onClick={() => setIsScheduling(!isScheduling)}
                   className={cn(
                     "flex-1 border-line font-black uppercase tracking-widest text-xs h-14 rounded-2xl transition-all",
-                    isScheduling ? "bg-navy text-white hover:bg-navy/90" : "bg-white text-navy hover:bg-surface"
+                    isScheduling ? "bg-navy text-white hover:bg-navy/90" : "bg-card text-foreground hover:bg-surface"
                   )}
                 >
                   <CalendarClock className="w-5 h-5 mr-2" /> {isScheduling ? "Cancelar Agendamento" : "Programar Envio"}
@@ -496,11 +496,11 @@ function PushNotificationsPage() {
 
             <div className="space-y-6">
               <div className="sticky top-28 space-y-6">
-                <h3 className="text-xs font-black text-muted-fg uppercase tracking-[0.2em]">Pré-visualização</h3>
+                <h3 className="text-xs font-black text-muted-foreground-fg uppercase tracking-[0.2em]">Pré-visualização</h3>
                 <div className="w-full max-w-[320px] mx-auto bg-navy rounded-[40px] p-4 border-[8px] border-[#1a1a1a] shadow-2xl relative">
                   <div className="w-32 h-6 bg-[#1a1a1a] absolute top-0 left-1/2 -translate-x-1/2 rounded-b-2xl z-10" />
                   
-                  <div className="mt-12 bg-white/10 backdrop-blur-xl rounded-2xl p-4 border border-white/20 animate-in fade-in slide-in-from-top-4 duration-700">
+                  <div className="mt-12 bg-card/10 backdrop-blur-xl rounded-2xl p-4 border border-white/20 animate-in fade-in slide-in-from-top-4 duration-700">
                     <div className="flex gap-3">
                       <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center text-white shrink-0 shadow-lg shadow-primary/20">
                         <Smartphone className="w-5 h-5" />
@@ -513,7 +513,7 @@ function PushNotificationsPage() {
                     </div>
                     {pushContent.buttonText && (
                       <div className="mt-4 pt-4 border-t border-white/10">
-                        <div className="w-full py-2 bg-white/20 hover:bg-white/30 rounded-lg text-center transition-colors">
+                        <div className="w-full py-2 bg-card/20 hover:bg-card/30 rounded-lg text-center transition-colors">
                           <span className="text-[10px] font-black text-white uppercase tracking-widest">{pushContent.buttonText}</span>
                         </div>
                       </div>
@@ -522,7 +522,7 @@ function PushNotificationsPage() {
                   </div>
                   
                   <div className="mt-60 space-y-3">
-                    <div className="h-0.5 w-1/3 mx-auto bg-white/20 rounded-full" />
+                    <div className="h-0.5 w-1/3 mx-auto bg-card/20 rounded-full" />
                     <p className="text-center text-[10px] font-medium text-white/40">Zevva Mobile Interface Mockup</p>
                   </div>
                 </div>
@@ -533,16 +533,16 @@ function PushNotificationsPage() {
 
         <TabsContent value="automacoes" className="animate-in fade-in duration-500">
           <div className="mb-8 p-6 bg-surface/30 border border-line rounded-3xl">
-            <h3 className="text-xl font-black text-navy uppercase tracking-tight flex items-center gap-2 mb-2">
+            <h3 className="text-xl font-black text-foreground uppercase tracking-tight flex items-center gap-2 mb-2">
               <Zap className="w-5 h-5 text-primary" /> Automações Inteligentes
             </h3>
-            <p className="text-xs font-bold text-muted-fg uppercase tracking-widest leading-relaxed">
+            <p className="text-xs font-bold text-muted-foreground-fg uppercase tracking-widest leading-relaxed">
               disparar notificações automaticamente. Criar um histórico detalhado de execuções das automações e dos envios de push (campanha, automation_id, status, sent_at, read_at e erros) para auditoria. Implementar métricas segmentadas por automação (taxa de entregues, cliques, conversões e tempo até leitura) com filtros por período e público.
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {isLoading ? (
-              <div className="col-span-full flex flex-col items-center justify-center py-20 text-muted-fg animate-pulse">
+              <div className="col-span-full flex flex-col items-center justify-center py-20 text-muted-foreground-fg animate-pulse">
                 <Loader2 className="w-12 h-12 mb-4 animate-spin" />
                 <p className="font-black uppercase tracking-widest text-[10px]">Carregando automações...</p>
               </div>
@@ -554,7 +554,7 @@ function PushNotificationsPage() {
                     <CardContent className="p-6 space-y-4">
                       <div className="flex justify-between items-start">
                         <div className="w-12 h-12 rounded-2xl bg-surface flex items-center justify-center group-hover:bg-primary/5 transition-colors">
-                          <Icon className="w-6 h-6 text-navy group-hover:text-primary transition-colors" />
+                          <Icon className="w-6 h-6 text-foreground group-hover:text-primary transition-colors" />
                         </div>
                         <Badge className={cn(
                           "text-[9px] font-black uppercase tracking-widest",
@@ -564,8 +564,8 @@ function PushNotificationsPage() {
                         </Badge>
                       </div>
                       <div>
-                        <h3 className="font-black text-navy uppercase tracking-tight">{item.name}</h3>
-                        <p className="text-xs text-muted-fg font-medium mt-1">{item.description}</p>
+                        <h3 className="font-black text-foreground uppercase tracking-tight">{item.name}</h3>
+                        <p className="text-xs text-muted-foreground-fg font-medium mt-1">{item.description}</p>
                       </div>
                       <div className="pt-4 flex gap-2">
                         <Button 
@@ -580,7 +580,7 @@ function PushNotificationsPage() {
                           Configurar
                         </Button>
                         <Button variant="ghost" size="sm" className="h-9 w-9 rounded-lg border border-line p-0">
-                          <Settings className="w-4 h-4 text-muted-fg" />
+                          <Settings className="w-4 h-4 text-muted-foreground-fg" />
                         </Button>
                       </div>
                     </CardContent>
@@ -595,7 +595,7 @@ function PushNotificationsPage() {
           <div className="fixed inset-0 bg-navy/60 backdrop-blur-sm z-[100] flex items-center justify-center p-4 animate-in fade-in duration-300">
             <Card className="w-full max-w-2xl border-line shadow-2xl rounded-3xl overflow-hidden animate-in zoom-in-95 duration-300">
               <div className="p-8 border-b border-line bg-surface/30 flex justify-between items-center">
-                <h2 className="text-xl font-black text-navy uppercase tracking-tight flex items-center gap-2">
+                <h2 className="text-xl font-black text-foreground uppercase tracking-tight flex items-center gap-2">
                   <Settings className="w-6 h-6 text-primary" /> Configuração da Automação
                 </h2>
                 <Button variant="ghost" size="sm" onClick={() => setIsConfiguring(false)} className="rounded-xl h-10 w-10 p-0">
@@ -607,7 +607,7 @@ function PushNotificationsPage() {
                 <CardContent className="p-8 space-y-8">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="space-y-3">
-                      <Label className="text-xs font-black uppercase tracking-widest text-muted-fg">Nome da Automação</Label>
+                      <Label className="text-xs font-black uppercase tracking-widest text-muted-foreground-fg">Nome da Automação</Label>
                       <Input 
                         value={selectedAutomation.name}
                         onChange={(e) => setSelectedAutomation({ ...selectedAutomation, name: e.target.value })}
@@ -615,7 +615,7 @@ function PushNotificationsPage() {
                       />
                     </div>
                     <div className="space-y-3">
-                      <Label className="text-xs font-black uppercase tracking-widest text-muted-fg">Status</Label>
+                      <Label className="text-xs font-black uppercase tracking-widest text-muted-foreground-fg">Status</Label>
                       <select 
                         value={selectedAutomation.status}
                         onChange={(e) => setSelectedAutomation({ ...selectedAutomation, status: e.target.value })}
@@ -630,7 +630,7 @@ function PushNotificationsPage() {
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="space-y-3">
-                      <Label className="text-xs font-black uppercase tracking-widest text-muted-fg">Gatilho (Trigger)</Label>
+                      <Label className="text-xs font-black uppercase tracking-widest text-muted-foreground-fg">Gatilho (Trigger)</Label>
                       <Input 
                         value={selectedAutomation.trigger_type} 
                         disabled 
@@ -638,7 +638,7 @@ function PushNotificationsPage() {
                       />
                     </div>
                     <div className="space-y-3">
-                      <Label className="text-xs font-black uppercase tracking-widest text-muted-fg">Público Alvo</Label>
+                      <Label className="text-xs font-black uppercase tracking-widest text-muted-foreground-fg">Público Alvo</Label>
                       <select 
                         value={selectedAutomation.audience}
                         onChange={(e) => setSelectedAutomation({ ...selectedAutomation, audience: e.target.value })}
@@ -653,10 +653,10 @@ function PushNotificationsPage() {
                   </div>
 
                   <div className="space-y-6 pt-4 border-t border-line">
-                    <h4 className="text-sm font-black text-navy uppercase tracking-widest">Conteúdo do Push</h4>
+                    <h4 className="text-sm font-black text-foreground uppercase tracking-widest">Conteúdo do Push</h4>
                     <div className="space-y-4">
                       <div className="space-y-3">
-                        <Label className="text-xs font-black uppercase tracking-widest text-muted-fg">Título da Mensagem</Label>
+                        <Label className="text-xs font-black uppercase tracking-widest text-muted-foreground-fg">Título da Mensagem</Label>
                         <Input 
                           value={selectedAutomation.title_template || ''}
                           onChange={(e) => setSelectedAutomation({ ...selectedAutomation, title_template: e.target.value })}
@@ -665,7 +665,7 @@ function PushNotificationsPage() {
                         />
                       </div>
                       <div className="space-y-3">
-                        <Label className="text-xs font-black uppercase tracking-widest text-muted-fg">Corpo da Mensagem</Label>
+                        <Label className="text-xs font-black uppercase tracking-widest text-muted-foreground-fg">Corpo da Mensagem</Label>
                         <Textarea 
                           value={selectedAutomation.message_template || ''}
                           onChange={(e) => setSelectedAutomation({ ...selectedAutomation, message_template: e.target.value })}
@@ -675,7 +675,7 @@ function PushNotificationsPage() {
                       </div>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div className="space-y-3">
-                          <Label className="text-xs font-black uppercase tracking-widest text-muted-fg">Texto do Botão</Label>
+                          <Label className="text-xs font-black uppercase tracking-widest text-muted-foreground-fg">Texto do Botão</Label>
                           <Input 
                             value={selectedAutomation.button_text || ''}
                             onChange={(e) => setSelectedAutomation({ ...selectedAutomation, button_text: e.target.value })}
@@ -684,7 +684,7 @@ function PushNotificationsPage() {
                           />
                         </div>
                         <div className="space-y-3">
-                          <Label className="text-xs font-black uppercase tracking-widest text-muted-fg">Aguardar (Delay)</Label>
+                          <Label className="text-xs font-black uppercase tracking-widest text-muted-foreground-fg">Aguardar (Delay)</Label>
                           <Input 
                             value={selectedAutomation.delay_time || ''}
                             onChange={(e) => setSelectedAutomation({ ...selectedAutomation, delay_time: e.target.value })}
@@ -726,27 +726,27 @@ function PushNotificationsPage() {
                 </div>
                 
                 <div className="space-y-2">
-                  <h2 className="text-2xl font-black text-navy uppercase tracking-tighter">
+                  <h2 className="text-2xl font-black text-foreground uppercase tracking-tighter">
                     {isScheduling ? "Confirmar Agendamento?" : "Confirmar Envio Imediato?"}
                   </h2>
-                  <p className="text-sm text-muted-fg font-medium">
+                  <p className="text-sm text-muted-foreground-fg font-medium">
                     Revise os detalhes da campanha antes de prosseguir.
                   </p>
                 </div>
 
                 <div className="bg-surface rounded-3xl p-6 text-left space-y-4 border border-line">
                   <div className="space-y-1">
-                    <Label className="text-[10px] font-black uppercase tracking-widest text-muted-fg">Título</Label>
-                    <p className="font-bold text-navy truncate">{pushContent.title || "Sem título"}</p>
+                    <Label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground-fg">Título</Label>
+                    <p className="font-bold text-foreground truncate">{pushContent.title || "Sem título"}</p>
                   </div>
                   
                   <div className="grid grid-cols-2 gap-4 pt-2 border-t border-line/50">
                     <div className="space-y-1">
-                      <Label className="text-[10px] font-black uppercase tracking-widest text-muted-fg">Destinatários</Label>
-                      <p className="font-bold text-navy">Todos os Usuários</p>
+                      <Label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground-fg">Destinatários</Label>
+                      <p className="font-bold text-foreground">Todos os Usuários</p>
                     </div>
                     <div className="space-y-1 text-right">
-                      <Label className="text-[10px] font-black uppercase tracking-widest text-muted-fg">Disparo</Label>
+                      <Label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground-fg">Disparo</Label>
                       <p className="font-bold text-primary">
                         {isScheduling ? `${pushContent.scheduleDate} às ${pushContent.scheduleTime}` : "Agora"}
                       </p>
@@ -755,8 +755,8 @@ function PushNotificationsPage() {
                   
                   {isScheduling && (
                     <div className="pt-2 border-t border-line/50 flex items-center gap-2">
-                      <Globe className="w-3 h-3 text-muted-fg" />
-                      <span className="text-[9px] font-black text-muted-fg uppercase tracking-widest">
+                      <Globe className="w-3 h-3 text-muted-foreground-fg" />
+                      <span className="text-[9px] font-black text-muted-foreground-fg uppercase tracking-widest">
                         Fuso: {pushContent.timezone}
                       </span>
                     </div>
@@ -788,21 +788,21 @@ function PushNotificationsPage() {
         )}
 
         <TabsContent value="agendados" className="space-y-6">
-          <div className="bg-white rounded-[40px] border border-line shadow-sm overflow-hidden animate-in fade-in duration-500">
+          <div className="bg-card rounded-[40px] border border-line shadow-sm overflow-hidden animate-in fade-in duration-500">
             <div className="p-8 border-b border-line flex flex-col md:flex-row md:items-center justify-between gap-6 bg-surface/30">
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center">
                   <CalendarDays className="w-6 h-6 text-primary" />
                 </div>
                 <div>
-                  <h2 className="text-xl font-black text-navy uppercase tracking-tighter">Próximos Disparos</h2>
-                  <p className="text-xs text-muted-fg font-medium">Gerencie suas campanhas agendadas.</p>
+                  <h2 className="text-xl font-black text-foreground uppercase tracking-tighter">Próximos Disparos</h2>
+                  <p className="text-xs text-muted-foreground-fg font-medium">Gerencie suas campanhas agendadas.</p>
                 </div>
               </div>
 
               <div className="flex items-center gap-3">
                 <div className="relative w-full md:w-64">
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-fg" />
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground-fg" />
                   <Input 
                     placeholder="Pesquisar agendadas..." 
                     value={searchScheduled}
@@ -811,14 +811,14 @@ function PushNotificationsPage() {
                   />
                 </div>
                 <Button variant="outline" size="icon" className="h-11 w-11 rounded-xl border-line">
-                  <Filter className="w-4 h-4 text-muted-fg" />
+                  <Filter className="w-4 h-4 text-muted-foreground-fg" />
                 </Button>
               </div>
             </div>
 
             <div className="overflow-x-auto">
               <table className="w-full text-left">
-                <thead className="bg-surface/50 text-muted-fg text-[10px] font-black uppercase tracking-[0.2em]">
+                <thead className="bg-surface/50 text-muted-foreground-fg text-[10px] font-black uppercase tracking-[0.2em]">
                   <tr>
                     <th className="px-8 py-5">Campanha</th>
                     <th className="px-8 py-5">Agendamento</th>
@@ -836,22 +836,22 @@ function PushNotificationsPage() {
                     <tr key={row.id} className="hover:bg-surface/30 transition-colors group">
                       <td className="px-8 py-6">
                         <div className="flex flex-col">
-                          <span className="font-extrabold text-navy group-hover:text-primary transition-colors">{row.name}</span>
-                          <span className="text-[10px] font-medium text-muted-fg mt-1">ID: #{row.id}</span>
+                          <span className="font-extrabold text-foreground group-hover:text-primary transition-colors">{row.name}</span>
+                          <span className="text-[10px] font-medium text-muted-foreground-fg mt-1">ID: #{row.id}</span>
                         </div>
                       </td>
                       <td className="px-8 py-6">
-                        <div className="flex items-center gap-2 text-navy font-bold">
+                        <div className="flex items-center gap-2 text-foreground font-bold">
                           <Clock className="w-3 h-3 text-primary" />
                           <span>{row.date} às {row.time}</span>
                         </div>
                       </td>
                       <td className="px-8 py-6">
-                        <Badge variant="outline" className="text-[9px] font-black uppercase tracking-widest bg-white border-line text-muted-fg">
+                        <Badge variant="outline" className="text-[9px] font-black uppercase tracking-widest bg-card border-line text-muted-foreground-fg">
                           {row.public}
                         </Badge>
                       </td>
-                      <td className="px-8 py-6 text-[10px] font-black text-muted-fg uppercase tracking-widest">{row.tz}</td>
+                      <td className="px-8 py-6 text-[10px] font-black text-muted-foreground-fg uppercase tracking-widest">{row.tz}</td>
                       <td className="px-8 py-6 text-right space-x-2">
                         <Tooltip>
                           <TooltipTrigger asChild>
@@ -886,7 +886,7 @@ function PushNotificationsPage() {
                         </Tooltip>
 
                         <button className="p-2 hover:bg-accent rounded-lg transition-colors">
-                          <MoreVertical className="w-4 h-4 text-muted-fg" />
+                          <MoreVertical className="w-4 h-4 text-muted-foreground-fg" />
                         </button>
                       </td>
                     </tr>
@@ -896,7 +896,7 @@ function PushNotificationsPage() {
             </div>
             
             <div className="p-8 bg-surface/20 border-t border-line flex items-center justify-between">
-              <p className="text-[10px] font-black text-muted-fg uppercase tracking-[0.2em]">Total de 3 agendamentos pendentes</p>
+              <p className="text-[10px] font-black text-muted-foreground-fg uppercase tracking-[0.2em]">Total de 3 agendamentos pendentes</p>
               <div className="flex gap-2">
                 <Button variant="outline" size="sm" className="h-9 rounded-xl border-line text-[10px] font-black uppercase tracking-widest">Anterior</Button>
                 <Button variant="outline" size="sm" className="h-9 rounded-xl border-line text-[10px] font-black uppercase tracking-widest">Próximo</Button>

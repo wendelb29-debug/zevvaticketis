@@ -24,7 +24,7 @@ function UsuariosPage() {
       
       <div className="bg-card rounded-xl border border-border overflow-hidden">
         <table className="w-full text-left">
-          <thead className="bg-accent text-muted-fg text-xs font-extrabold uppercase">
+          <thead className="bg-accent text-muted-foreground-fg text-xs font-extrabold uppercase">
             <tr>
               <th className="px-6 py-4">Nome</th>
               <th className="px-6 py-4">E-mail</th>
@@ -35,7 +35,7 @@ function UsuariosPage() {
             {users?.map((user: any) => (
               <tr key={user.id} className="hover:bg-accent/50 transition-colors">
                 <td className="px-6 py-4 font-bold text-foreground">{user.nome}</td>
-                <td className="px-6 py-4 text-muted-fg">{user.email}</td>
+                <td className="px-6 py-4 text-muted-foreground-fg">{user.email}</td>
                 <td className="px-6 py-4">
                   <Button size="sm" variant="outline" className="border-border hover:bg-primary hover:text-primary-foreground transition-all">Ver Permissões</Button>
                 </td>

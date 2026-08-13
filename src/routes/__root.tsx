@@ -107,7 +107,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 });
 
 function RootShell({ children }: { children: ReactNode }) {
-  const { language, activeOverlay, closeOverlay } = useUI();
+  const { language, activeOverlay, closeOverlay, theme } = useUI() as any;
 
   useEffect(() => {
     const handleOutsideClick = (event: MouseEvent) => {
@@ -125,9 +125,34 @@ function RootShell({ children }: { children: ReactNode }) {
   }, [activeOverlay, closeOverlay]);
 
   return (
-    <html lang={language}>
+    <html lang={language} data-theme={theme}>
       <head>
         <HeadContent />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  const storage = localStorage.getItem('zevva-ui-storage');
+                  let theme = 'light';
+                  if (storage) {
+                    const parsed = JSON.parse(storage);
+                    theme = parsed.state.theme || 'light';
+                  }
+                  
+                  let resolvedTheme = theme;
+                  if (theme === 'system') {
+                    resolvedTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+                  }
+                  
+                  document.documentElement.classList.add(resolvedTheme);
+                  document.documentElement.setAttribute('data-theme', resolvedTheme);
+                  document.documentElement.style.colorScheme = resolvedTheme;
+                } catch (e) {}
+              })();
+            `,
+          }}
+        />
       </head>
       <body>
         {children}
@@ -140,20 +165,37 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
-  const { activeOverlay, authView, closeOverlay, language, theme, fontSize } = useUI();
+  const { activeOverlay, authView, closeOverlay, language, theme, fontSize } = useUI() as any;
   const router = useRouter();
   const [isNavigating, setIsNavigating] = useState(false);
 
   useEffect(() => {
     const root = window.document.documentElement;
-    root.classList.remove("light", "dark");
-    
+    const media = window.matchMedia("(prefers-color-scheme: dark)");
+
+    const applyTheme = () => {
+      const resolvedTheme =
+        theme === "system"
+          ? media.matches
+            ? "dark"
+            : "light"
+          : theme;
+
+      root.classList.remove("light", "dark");
+      root.classList.add(resolvedTheme);
+      root.setAttribute('data-theme', resolvedTheme);
+      root.style.colorScheme = resolvedTheme;
+    };
+
+    applyTheme();
+
     if (theme === "system") {
-      const systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-      root.classList.add(systemTheme);
-    } else {
-      root.classList.add(theme);
+      media.addEventListener("change", applyTheme);
     }
+
+    return () => {
+      media.removeEventListener("change", applyTheme);
+    };
   }, [theme]);
 
   useEffect(() => {
@@ -162,7 +204,6 @@ function RootComponent() {
 
   useEffect(() => {
     const handleOutsideClick = (event: MouseEvent) => {
-      // Check if the click was outside any active dropdown/overlay logic
       if (activeOverlay === 'language') {
         const target = event.target as HTMLElement;
         const isClickInsideLanguageDropdown = target.closest('.language-dropdown-container');
@@ -207,7 +248,6 @@ function RootComponent() {
           isOpen={activeOverlay === 'location'}
           onClose={closeOverlay}
           onSelect={(city) => {
-            // In a real app we'd dispatch this to a global state or search params
             console.log("Selected city:", city);
             closeOverlay();
           }}

@@ -58,32 +58,32 @@ function UnauthorizedPage() {
 
   return (
     <div className="min-h-screen bg-surface flex items-center justify-center p-6 font-inter">
-      <div className="max-w-md w-full space-y-8 bg-white p-10 rounded-[32px] shadow-xl border border-line text-center">
+      <div className="max-w-md w-full space-y-8 bg-card p-10 rounded-[32px] shadow-xl border border-line text-center">
         <div className="w-16 h-16 bg-destructive/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
           <Icon className="w-8 h-8 text-destructive" />
         </div>
         
         <div className="space-y-4">
           <div className="space-y-1">
-            <h1 className="text-3xl font-manrope font-extrabold text-navy">{details.title}</h1>
+            <h1 className="text-3xl font-manrope font-extrabold text-foreground">{details.title}</h1>
             {code && (
-              <span className="inline-block px-2 py-1 rounded bg-muted/50 text-[10px] font-mono text-muted uppercase tracking-wider">
+              <span className="inline-block px-2 py-1 rounded bg-muted/50 text-[10px] font-mono text-muted-foreground uppercase tracking-wider">
                 ID do Erro: {code}
               </span>
             )}
           </div>
           
           <div className="space-y-3">
-            <p className="text-muted font-medium leading-relaxed">
+            <p className="text-muted-foreground font-medium leading-relaxed">
               {reason || 'Você não possui permissão para acessar este painel.'}
             </p>
             
             <div className="p-4 bg-navy/[0.03] rounded-2xl border border-navy/5 text-left">
-              <div className="flex gap-2 text-navy mb-1">
+              <div className="flex gap-2 text-foreground mb-1">
                 <HelpCircle className="w-4 h-4 mt-0.5 shrink-0" />
                 <span className="font-bold text-sm">Como resolver?</span>
               </div>
-              <p className="text-xs text-muted leading-relaxed pl-6">
+              <p className="text-xs text-muted-foreground leading-relaxed pl-6">
                 {details.instruction}
               </p>
             </div>

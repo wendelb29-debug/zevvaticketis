@@ -55,8 +55,8 @@ function EnviosMassivosPage() {
     <div className="p-8 max-w-7xl mx-auto space-y-8 animate-in fade-in duration-500">
       <div className="flex justify-between items-end">
         <div>
-          <h1 className="text-3xl font-manrope font-extrabold text-navy tracking-tighter uppercase">📢 Envios Massivos</h1>
-          <p className="text-sm text-muted-fg mt-2 font-medium">Ferramenta completa de campanhas multicanal Zevva.</p>
+          <h1 className="text-3xl font-manrope font-extrabold text-foreground tracking-tighter uppercase">📢 Envios Massivos</h1>
+          <p className="text-sm text-muted-foreground-fg mt-2 font-medium">Ferramenta completa de campanhas multicanal Zevva.</p>
         </div>
         <Button 
           onClick={() => handleOpenWizard(true)}
@@ -71,7 +71,7 @@ function EnviosMassivosPage() {
           { label: "Total enviadas", value: "0", icon: Megaphone, color: "text-primary", bg: "bg-primary/5" },
           { label: "Entregues", value: "0", icon: CheckCircle, color: "text-primary", bg: "bg-primary/5" },
           { label: "Falharam", value: "0", icon: AlertCircle, color: "text-error", bg: "bg-error/5" },
-          { label: "Aguardando", value: "0", icon: Clock, color: "text-navy", bg: "bg-accent" },
+          { label: "Aguardando", value: "0", icon: Clock, color: "text-foreground", bg: "bg-accent" },
           { label: "Taxa Abertura", value: "0%", icon: TrendingUp, color: "text-primary", bg: "bg-primary/5" },
           { label: "Taxa Resposta", value: "0%", icon: Users, color: "text-primary", bg: "bg-primary/5" },
 
@@ -82,22 +82,22 @@ function EnviosMassivosPage() {
                 <stat.icon className="w-5 h-5" />
               </div>
               <div>
-                <p className="text-[10px] font-extrabold text-muted-fg uppercase tracking-widest">{stat.label}</p>
-                <p className="text-xl font-extrabold text-navy mt-1">{stat.value}</p>
+                <p className="text-[10px] font-extrabold text-muted-foreground-fg uppercase tracking-widest">{stat.label}</p>
+                <p className="text-xl font-extrabold text-foreground mt-1">{stat.value}</p>
               </div>
             </CardContent>
           </Card>
         ))}
       </div>
 
-      <div className="bg-white rounded-3xl border border-line shadow-sm overflow-hidden">
+      <div className="bg-card rounded-3xl border border-line shadow-sm overflow-hidden">
         <div className="p-8 border-b border-line flex justify-between items-center bg-surface/30">
-          <h2 className="text-lg font-extrabold text-navy uppercase tracking-tight">Campanhas e Histórico</h2>
+          <h2 className="text-lg font-extrabold text-foreground uppercase tracking-tight">Campanhas e Histórico</h2>
         </div>
         
         <div className="overflow-x-auto">
           <table className="w-full text-left">
-            <thead className="bg-surface text-muted text-[10px] font-extrabold uppercase tracking-widest">
+            <thead className="bg-surface text-muted-foreground text-[10px] font-extrabold uppercase tracking-widest">
               <tr>
                 <th className="px-8 py-5">Nome da Campanha</th>
                 <th className="px-8 py-5">Tipo</th>
@@ -111,8 +111,8 @@ function EnviosMassivosPage() {
               <tr className="hover:bg-surface/50 transition-colors group">
                 <td className="px-8 py-6">
                   <div className="flex flex-col">
-                    <span className="font-extrabold text-navy group-hover:text-primary transition-colors">Show Ana Carolina - Lembrete</span>
-                    <span className="text-[10px] text-muted-fg uppercase font-bold mt-1 tracking-wider">ID: #CAM-0823</span>
+                    <span className="font-extrabold text-foreground group-hover:text-primary transition-colors">Show Ana Carolina - Lembrete</span>
+                    <span className="text-[10px] text-muted-foreground-fg uppercase font-bold mt-1 tracking-wider">ID: #CAM-0823</span>
                   </div>
                 </td>
                 <td className="px-8 py-6">
@@ -120,7 +120,7 @@ function EnviosMassivosPage() {
                     <div className="w-8 h-8 rounded-lg bg-green-50 text-green-600 flex items-center justify-center">
                       <MessageSquare className="w-4 h-4" />
                     </div>
-                    <span className="text-xs font-bold text-muted-fg">WhatsApp</span>
+                    <span className="text-xs font-bold text-muted-foreground-fg">WhatsApp</span>
                   </div>
                 </td>
                 <td className="px-8 py-6">
@@ -130,7 +130,7 @@ function EnviosMassivosPage() {
                 </td>
                 <td className="px-8 py-6 text-center">
                   <div className="flex flex-col items-center">
-                    <span className="font-bold text-navy">450/1.200</span>
+                    <span className="font-bold text-foreground">450/1.200</span>
                     <div className="w-24 h-1.5 bg-line rounded-full mt-2 overflow-hidden">
                       <div className="h-full bg-primary w-[37%]" />
                     </div>
@@ -138,8 +138,8 @@ function EnviosMassivosPage() {
                 </td>
                 <td className="px-8 py-6">
                   <div className="flex flex-col">
-                    <span className="text-xs font-bold text-navy">05/08/2026</span>
-                    <span className="text-[10px] text-muted-fg mt-0.5">14:30</span>
+                    <span className="text-xs font-bold text-foreground">05/08/2026</span>
+                    <span className="text-[10px] text-muted-foreground-fg mt-0.5">14:30</span>
                   </div>
                 </td>
                 <td className="px-8 py-6 text-right">

@@ -58,7 +58,7 @@ function EventCheckinLayout() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50 flex font-inter">
+    <div className="min-h-screen bg-muted flex font-inter">
       <aside className="w-64 h-screen bg-navy text-white sticky top-0 hidden lg:flex flex-col py-8">
         <div className="px-6 mb-8 flex flex-col gap-2">
           <Link to={"/checkin/$projectId"} params={{ projectId }} className="flex items-center gap-2 text-white/60 hover:text-white transition-colors text-xs font-bold uppercase">
@@ -77,8 +77,8 @@ function EventCheckinLayout() {
             <Link
               key={item.label}
               to={item.href as any}
-              className="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold text-white/60 hover:text-white hover:bg-white/5 transition-all"
-              activeProps={{ className: "bg-white/10 text-coral border border-white/5" }}
+              className="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold text-white/60 hover:text-white hover:bg-card/5 transition-all"
+              activeProps={{ className: "bg-card/10 text-coral border border-white/5" }}
             >
               <item.icon className="w-5 h-5" />
               {item.label}

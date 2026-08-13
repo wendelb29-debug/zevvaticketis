@@ -189,9 +189,9 @@ export function UserMenu({ user, onLogout, onNavigate, agentStatus, onStatusChan
             </DropdownMenuSubTrigger>
             <DropdownMenuPortal>
               <DropdownMenuSubContent className="w-40 rounded-xl p-1.5 border-border shadow-xl font-inter bg-popover/95 backdrop-blur-md">
-                <DropdownMenuItem onClick={() => setTheme('light')} className={cn("text-xs font-bold text-foreground cursor-pointer", theme === 'light' && "bg-card")}>Claro</DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setTheme('dark')} className={cn("text-xs font-bold text-foreground cursor-pointer", theme === 'dark' && "bg-card")}>Escuro</DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setTheme('system')} className={cn("text-xs font-bold text-foreground cursor-pointer", theme === 'system' && "bg-card")}>Sistema</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setTheme('light')} className={cn("text-xs font-bold text-foreground cursor-pointer", theme === 'light' && "bg-white")}>Claro</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setTheme('dark')} className={cn("text-xs font-bold text-foreground cursor-pointer", theme === 'dark' && "bg-white")}>Escuro</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setTheme('system')} className={cn("text-xs font-bold text-foreground cursor-pointer", theme === 'system' && "bg-white")}>Sistema</DropdownMenuItem>
               </DropdownMenuSubContent>
             </DropdownMenuPortal>
           </DropdownMenuSub>

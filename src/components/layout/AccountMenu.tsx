@@ -59,7 +59,7 @@ export function AccountMenu({ user, onLogout, onNavigate, onOpenAuth }: AccountM
               </AvatarFallback>
             </Avatar>
           </div>
-          <ChevronDown className="w-3 h-3 text-foreground-muted group-hover:text-primary transition-colors" />
+          <ChevronDown className="w-3 h-3 text-muted-foreground group-hover:text-primary transition-colors" />
         </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent
@@ -68,12 +68,12 @@ export function AccountMenu({ user, onLogout, onNavigate, onOpenAuth }: AccountM
       >
         <div className="px-3 py-4 border-b border-border mb-2">
           <p className="text-xs font-bold text-foreground truncate">{profile?.nome || "Usuário"}</p>
-          <p className="text-[10px] font-medium text-foreground-muted truncate">{user.email}</p>
+          <p className="text-[10px] font-medium text-muted-foreground truncate">{user.email}</p>
         </div>
 
         <DropdownMenuItem
           onClick={() => onNavigate("/app")}
-          className="flex items-center gap-3 px-3 py-2.5 text-[10px] font-bold uppercase tracking-widest cursor-pointer rounded-sm hover:bg-background text-foreground-muted hover:text-primary transition-colors focus:bg-background focus:text-primary"
+          className="flex items-center gap-3 px-3 py-2.5 text-[10px] font-bold uppercase tracking-widest cursor-pointer rounded-sm hover:bg-background text-muted-foreground hover:text-primary transition-colors focus:bg-background focus:text-primary"
         >
           <LayoutDashboard className="w-4 h-4" />
           Painel do Produtor
@@ -81,7 +81,7 @@ export function AccountMenu({ user, onLogout, onNavigate, onOpenAuth }: AccountM
 
         <DropdownMenuItem
           onClick={() => onNavigate("/app/perfil")}
-          className="flex items-center gap-3 px-3 py-2.5 text-[10px] font-bold uppercase tracking-widest cursor-pointer rounded-sm hover:bg-background text-foreground-muted hover:text-primary transition-colors focus:bg-background focus:text-primary"
+          className="flex items-center gap-3 px-3 py-2.5 text-[10px] font-bold uppercase tracking-widest cursor-pointer rounded-sm hover:bg-background text-muted-foreground hover:text-primary transition-colors focus:bg-background focus:text-primary"
         >
           <User className="w-4 h-4" />
           Meu Perfil

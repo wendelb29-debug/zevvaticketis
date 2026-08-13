@@ -72,27 +72,27 @@ function SupervisorPanel() {
   return (
     <div className="space-y-8">
       <div>
-        <h2 className="text-3xl font-manrope font-black text-navy uppercase tracking-tighter">Painel Supervisor</h2>
-        <p className="text-slate-500 font-medium">Gestão de equipe e monitoramento de fluxo.</p>
+        <h2 className="text-3xl font-manrope font-black text-foreground uppercase tracking-tighter">Painel Supervisor</h2>
+        <p className="text-muted-foreground font-medium">Gestão de equipe e monitoramento de fluxo.</p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        <Card className="rounded-[32px] border-slate-200 shadow-sm">
+        <Card className="rounded-[32px] border-border shadow-sm">
           <CardHeader>
-            <CardTitle className="text-lg font-black text-navy uppercase flex items-center gap-2">
+            <CardTitle className="text-lg font-black text-foreground uppercase flex items-center gap-2">
               <Users className="w-5 h-5 text-coral" /> Equipe em Campo
             </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
               {operators.map((op) => (
-                <div key={op.id} className="flex items-center justify-between p-4 bg-slate-50 rounded-2xl border border-slate-100">
+                <div key={op.id} className="flex items-center justify-between p-4 bg-muted rounded-2xl border border-border">
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 rounded-full bg-navy text-white flex items-center justify-center font-black">
                       {op.name.charAt(0)}
                     </div>
                     <div>
-                      <p className="text-sm font-black text-navy uppercase">{op.name}</p>
+                      <p className="text-sm font-black text-foreground uppercase">{op.name}</p>
                       <p className="text-[10px] font-bold text-slate-400">{op.email}</p>
                     </div>
                   </div>
@@ -106,9 +106,9 @@ function SupervisorPanel() {
           </CardContent>
         </Card>
 
-        <Card className="rounded-[32px] border-slate-200 shadow-sm">
+        <Card className="rounded-[32px] border-border shadow-sm">
           <CardHeader>
-            <CardTitle className="text-lg font-black text-navy uppercase flex items-center gap-2">
+            <CardTitle className="text-lg font-black text-foreground uppercase flex items-center gap-2">
               <Activity className="w-5 h-5 text-coral" /> Fluxo por Hora
             </CardTitle>
           </CardHeader>
@@ -149,9 +149,9 @@ function SupervisorPanel() {
 
 function SummaryCard({ label, value, sublabel }: any) {
   return (
-    <div className="bg-white p-6 rounded-[24px] border border-slate-200 shadow-sm">
+    <div className="bg-card p-6 rounded-[24px] border border-border shadow-sm">
       <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">{label}</p>
-      <p className="text-2xl font-black text-navy">{value}</p>
+      <p className="text-2xl font-black text-foreground">{value}</p>
       <p className="text-xs font-bold text-coral uppercase mt-1">{sublabel}</p>
     </div>
   );

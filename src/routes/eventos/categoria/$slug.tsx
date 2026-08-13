@@ -92,7 +92,7 @@ function CategoryPage() {
               <Link 
                 to="/eventos" 
                 search={{ busca: undefined, categoria: undefined, cidade: undefined, data: undefined } as any}
-                className="inline-flex items-center gap-2 text-sm font-bold text-foreground-muted hover:text-primary transition-colors"
+                className="inline-flex items-center gap-2 text-sm font-bold text-muted-foreground hover:text-primary transition-colors"
               >
                 <ArrowLeft className="w-4 h-4" /> Voltar para Explorar
               </Link>
@@ -105,7 +105,7 @@ function CategoryPage() {
                     {category.name}
                   </h1>
                 </div>
-                <p className="text-foreground-muted font-medium text-lg max-w-xl">
+                <p className="text-muted-foreground font-medium text-lg max-w-xl">
                   {category.description}
                 </p>
               </div>
@@ -113,7 +113,7 @@ function CategoryPage() {
 
             <div className="w-full md:w-96">
               <div className="relative">
-                <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-foreground-muted h-5 w-5" />
+                <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground h-5 w-5" />
                 <Input
                   placeholder={`Buscar em ${category.name}...`}
                   className="h-12 pl-12 rounded-xl border border-border bg-surface focus-visible:ring-primary/20"
@@ -144,10 +144,10 @@ function CategoryPage() {
           ) : (
             <div className="py-24 flex flex-col items-center justify-center border border-dashed border-border rounded-2xl bg-surface/50">
               <div className="w-16 h-16 bg-surface-elevated rounded-full flex items-center justify-center mb-6">
-                <Icon className="w-8 h-8 text-foreground-muted" />
+                <Icon className="w-8 h-8 text-muted-foreground" />
               </div>
               <h2 className="text-xl font-bold text-foreground mb-2">Nenhum evento encontrado</h2>
-              <p className="text-foreground-muted text-sm text-center max-w-sm">
+              <p className="text-muted-foreground text-sm text-center max-w-sm">
                 {searchTerm 
                   ? "Tente ajustar sua busca para encontrar o que procura nesta categoria." 
                   : `Ainda não temos eventos publicados na categoria ${category.name}.`}

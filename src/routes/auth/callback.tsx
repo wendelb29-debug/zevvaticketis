@@ -70,10 +70,10 @@ function AuthCallbackPage() {
   }, [navigate]);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-white font-manrope">
+    <div className="min-h-screen flex items-center justify-center bg-card font-manrope">
       <div className="flex flex-col items-center gap-4">
         <div className="w-12 h-12 border-4 border-coral border-t-transparent rounded-full animate-spin"></div>
-        <p className="text-navy font-extrabold animate-pulse">Autenticando...</p>
+        <p className="text-foreground font-extrabold animate-pulse">Autenticando...</p>
       </div>
     </div>
   );

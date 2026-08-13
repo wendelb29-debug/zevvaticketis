@@ -267,7 +267,7 @@ function UserProfile() {
   if (loading) return (
     <div className="flex flex-col items-center justify-center py-20">
       <Loader2 className="w-8 h-8 animate-spin text-coral" />
-      <p className="mt-4 text-xs font-bold text-muted uppercase tracking-widest">Carregando perfil...</p>
+      <p className="mt-4 text-xs font-bold text-muted-foreground uppercase tracking-widest">Carregando perfil...</p>
     </div>
   );
 
@@ -282,25 +282,25 @@ function UserProfile() {
       />
       <GlobalBreadcrumb className="py-4" />
       <div className="space-y-1">
-        <h1 className="text-3xl font-manrope font-extrabold text-navy">Meu Perfil</h1>
-        <p className="text-muted font-medium">Gerencie suas informações pessoais e preferências.</p>
+        <h1 className="text-3xl font-manrope font-extrabold text-foreground">Meu Perfil</h1>
+        <p className="text-muted-foreground font-medium">Gerencie suas informações pessoais e preferências.</p>
       </div>
 
       <div className="grid gap-8">
         {/* Personal Info */}
-        <div className="bg-white rounded-[32px] border border-line p-8 space-y-8 shadow-sm">
+        <div className="bg-card rounded-[32px] border border-line p-8 space-y-8 shadow-sm">
           <div className="flex items-center gap-3">
             <div className="p-3 bg-coral/10 rounded-2xl text-coral">
               <User className="w-6 h-6" />
             </div>
-            <h2 className="text-xl font-manrope font-extrabold text-navy">Dados Pessoais</h2>
+            <h2 className="text-xl font-manrope font-extrabold text-foreground">Dados Pessoais</h2>
           </div>
 
           <div className="flex flex-col items-center gap-6 pb-4">
             <div className="relative group">
               <Avatar className="w-32 h-32 border-4 border-surface shadow-xl">
                 <AvatarImage src={avatarUrl} className="object-cover" />
-                <AvatarFallback className="bg-gradient-to-br from-coral/20 to-coral/40 text-2xl font-black text-navy uppercase">
+                <AvatarFallback className="bg-gradient-to-br from-coral/20 to-coral/40 text-2xl font-black text-foreground uppercase">
                   {initials}
                 </AvatarFallback>
               </Avatar>
@@ -335,7 +335,7 @@ function UserProfile() {
 
           <div className="space-y-6">
             <div className="space-y-2">
-              <label className="text-[10px] font-extrabold uppercase tracking-widest text-muted">Nome Completo</label>
+              <label className="text-[10px] font-extrabold uppercase tracking-widest text-muted-foreground">Nome Completo</label>
               <Input 
                 value={profile?.nome || ""} 
                 onChange={(e) => setProfile({...profile, nome: e.target.value})}
@@ -343,28 +343,28 @@ function UserProfile() {
               />
             </div>
             <div className="space-y-2">
-              <label className="text-[10px] font-extrabold uppercase tracking-widest text-muted">E-mail</label>
+              <label className="text-[10px] font-extrabold uppercase tracking-widest text-muted-foreground">E-mail</label>
               <Input 
                 value={profile?.email || ""} 
                 disabled
-                className="h-12 rounded-xl bg-surface/50 text-muted"
+                className="h-12 rounded-xl bg-surface/50 text-muted-foreground"
               />
-              <p className="text-[10px] text-muted font-bold">O e-mail não pode ser alterado diretamente.</p>
+              <p className="text-[10px] text-muted-foreground font-bold">O e-mail não pode ser alterado diretamente.</p>
             </div>
           </div>
         </div>
 
         {/* Notifications Preference */}
-        <div className="bg-white rounded-[32px] border border-line p-8 space-y-8 shadow-sm">
+        <div className="bg-card rounded-[32px] border border-line p-8 space-y-8 shadow-sm">
           <div className="flex items-center gap-3">
             <div className="p-3 bg-coral/10 rounded-2xl text-coral">
               <Bell className="w-6 h-6" />
             </div>
-            <h2 className="text-xl font-manrope font-extrabold text-navy">Notificações</h2>
+            <h2 className="text-xl font-manrope font-extrabold text-foreground">Notificações</h2>
             <Button variant="outline" size="sm" className="ml-auto rounded-lg text-[10px] font-bold uppercase tracking-wider h-8">Ativar tudo</Button>
           </div>
 
-          <p className="text-xs text-muted font-medium mb-6">Escolha quais alertas você recebe e por onde.</p>
+          <p className="text-xs text-muted-foreground font-medium mb-6">Escolha quais alertas você recebe e por onde.</p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {/* Fila e SLA */}
@@ -447,24 +447,24 @@ function UserProfile() {
         </div>
 
         {/* Privacy & LGPD */}
-        <div className="bg-white rounded-[32px] border border-line p-8 space-y-8 shadow-sm">
+        <div className="bg-card rounded-[32px] border border-line p-8 space-y-8 shadow-sm">
           <div className="flex items-center gap-3">
-            <div className="p-3 bg-navy/5 rounded-2xl text-navy">
+            <div className="p-3 bg-navy/5 rounded-2xl text-foreground">
               <Shield className="w-6 h-6" />
             </div>
-            <h2 className="text-xl font-manrope font-extrabold text-navy">Privacidade e LGPD</h2>
+            <h2 className="text-xl font-manrope font-extrabold text-foreground">Privacidade e LGPD</h2>
           </div>
 
           <div className="space-y-6">
             <div className="flex items-center justify-between p-4 bg-surface rounded-xl">
               <div className="space-y-1">
-                <p className="font-bold text-navy">Perfil público no catálogo</p>
-                <p className="text-xs text-muted font-medium">Mostrar seu nome em listas de participantes.</p>
+                <p className="font-bold text-foreground">Perfil público no catálogo</p>
+                <p className="text-xs text-muted-foreground font-medium">Mostrar seu nome em listas de participantes.</p>
               </div>
               <Switch />
             </div>
             <div className="p-4 bg-navy/5 rounded-xl border border-navy/10">
-              <p className="text-xs text-navy font-bold leading-relaxed">
+              <p className="text-xs text-foreground font-bold leading-relaxed">
                 Seus dados são processados de acordo com a nossa Política de Privacidade. 
                 Você pode solicitar a exportação ou exclusão total dos seus dados a qualquer momento via suporte.
               </p>
@@ -473,12 +473,12 @@ function UserProfile() {
         </div>
 
         {/* Security Actions */}
-        <div className="bg-white rounded-[32px] border border-line p-8 space-y-8 shadow-sm">
+        <div className="bg-card rounded-[32px] border border-line p-8 space-y-8 shadow-sm">
           <div className="flex items-center gap-3">
             <div className="p-3 bg-good/5 rounded-2xl text-good">
               <Lock className="w-6 h-6" />
             </div>
-            <h2 className="text-xl font-manrope font-extrabold text-navy">Segurança</h2>
+            <h2 className="text-xl font-manrope font-extrabold text-foreground">Segurança</h2>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -509,22 +509,22 @@ function NotificationItem({ icon: Icon, title, description }: { icon: any, title
   return (
     <div className="flex items-center justify-between p-4 bg-surface/50 rounded-2xl border border-line/5 hover:border-coral/20 transition-all group">
       <div className="flex items-center gap-4">
-        <div className="p-2.5 bg-navy/5 rounded-xl text-navy/40 group-hover:text-coral group-hover:bg-coral/10 transition-colors">
+        <div className="p-2.5 bg-navy/5 rounded-xl text-foreground/40 group-hover:text-coral group-hover:bg-coral/10 transition-colors">
           <Icon className="w-5 h-5" />
         </div>
         <div className="space-y-0.5">
           <div className="flex items-center gap-1.5">
-            <p className="text-sm font-bold text-navy">{title}</p>
-            <Info className="w-3 h-3 text-muted/40 cursor-help" />
+            <p className="text-sm font-bold text-foreground">{title}</p>
+            <Info className="w-3 h-3 text-muted-foreground/40 cursor-help" />
           </div>
-          <p className="text-[10px] text-muted font-medium leading-tight">{description}</p>
+          <p className="text-[10px] text-muted-foreground font-medium leading-tight">{description}</p>
         </div>
       </div>
       <div className="flex items-center gap-2">
-        <button className="p-2 bg-navy/5 rounded-lg text-navy/40 hover:text-coral hover:bg-coral-dark transition-all" title="No app">
+        <button className="p-2 bg-navy/5 rounded-lg text-foreground/40 hover:text-coral hover:bg-coral-dark transition-all" title="No app">
           <Bell className="w-3.5 h-3.5" />
         </button>
-        <button className="p-2 bg-navy/5 rounded-lg text-navy/40 hover:text-coral hover:bg-coral-dark transition-all" title="E-mail">
+        <button className="p-2 bg-navy/5 rounded-lg text-foreground/40 hover:text-coral hover:bg-coral-dark transition-all" title="E-mail">
           <Mail className="w-3.5 h-3.5" />
         </button>
       </div>

@@ -299,8 +299,8 @@ function ScannerPage() {
           <QrCode className="w-10 h-10 text-slate-300" />
         </div>
         <div className="max-w-xs space-y-2">
-          <h3 className="text-xl font-manrope font-black text-navy uppercase">Nenhum Evento Selecionado</h3>
-          <p className="text-slate-500 text-sm font-medium">Selecione um evento na aba <b>Operação</b> para habilitar a câmera e iniciar as validações.</p>
+          <h3 className="text-xl font-manrope font-black text-foreground uppercase">Nenhum Evento Selecionado</h3>
+          <p className="text-muted-foreground text-sm font-medium">Selecione um evento na aba <b>Operação</b> para habilitar a câmera e iniciar as validações.</p>
         </div>
         <Button 
           onClick={() => navigate({ to: "/checkin/$projectId", params: { projectId } as any })}
@@ -319,7 +319,7 @@ function ScannerPage() {
           variant="ghost" 
           size="sm" 
           onClick={() => { stopScanner(); navigate({ to: "/checkin/$projectId", params: { projectId } as any }); }}
-          className="text-navy font-bold hover:bg-navy/5 -ml-2"
+          className="text-foreground font-bold hover:bg-navy/5 -ml-2"
         >
           <ChevronLeft className="w-4 h-4 mr-1" /> Voltar
         </Button>
@@ -356,7 +356,7 @@ function ScannerPage() {
 
       <div className="max-w-md mx-auto space-y-6">
         {/* Status Indicator */}
-        <div className="flex items-center justify-center gap-2 py-2 px-4 bg-white rounded-2xl border border-slate-100 shadow-sm">
+        <div className="flex items-center justify-center gap-2 py-2 px-4 bg-card rounded-2xl border border-border shadow-sm">
           <div className={cn(
             "w-2 h-2 rounded-full animate-pulse",
             status === 'idle' && "bg-slate-300",
@@ -365,7 +365,7 @@ function ScannerPage() {
             status === 'error' && "bg-red-500",
             status === 'success' && "bg-blue-500"
           )} />
-          <span className="text-[10px] font-black text-navy uppercase tracking-widest">
+          <span className="text-[10px] font-black text-foreground uppercase tracking-widest">
             {status === 'idle' && "Pronto"}
             {status === 'starting' && "Iniciando Câmera..."}
             {status === 'scanning' && "Escaneando..."}
@@ -417,7 +417,7 @@ function ScannerPage() {
                 </div>
                 <Button 
                   variant="outline"
-                  className="border-white/20 text-white hover:bg-white/10 font-black uppercase tracking-widest text-xs h-10 px-6 rounded-xl"
+                  className="border-white/20 text-white hover:bg-card/10 font-black uppercase tracking-widest text-xs h-10 px-6 rounded-xl"
                   onClick={startScanner}
                 >
                   <RefreshCw className="w-3 h-3 mr-2" /> Tentar Novamente
@@ -476,8 +476,8 @@ function ScannerPage() {
                              )}
                             {scannedResult.ticket && (
                                 <div className="space-y-1">
-                                    <p className="text-navy font-black text-lg uppercase leading-none">{scannedResult.ticket.profiles?.full_name || 'Participante'}</p>
-                                    <p className="text-slate-500 font-bold text-[10px] uppercase tracking-widest">#{scannedResult.ticket.qr_code?.substring(0,12)}</p>
+                                    <p className="text-foreground font-black text-lg uppercase leading-none">{scannedResult.ticket.profiles?.full_name || 'Participante'}</p>
+                                    <p className="text-muted-foreground font-bold text-[10px] uppercase tracking-widest">#{scannedResult.ticket.qr_code?.substring(0,12)}</p>
                                 </div>
                             )}
                         </div>
@@ -495,11 +495,11 @@ function ScannerPage() {
         </div>
 
         {/* Stats Grid */}
-        <div className="bg-white rounded-[32px] p-6 border border-slate-200 shadow-sm grid grid-cols-2 gap-6">
+        <div className="bg-card rounded-[32px] p-6 border border-border shadow-sm grid grid-cols-2 gap-6">
             <div className="space-y-1">
                 <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Realizados</p>
                 <div className="flex items-baseline gap-1">
-                    <p className="text-2xl font-black text-navy leading-none">{stats.checkedIn}</p>
+                    <p className="text-2xl font-black text-foreground leading-none">{stats.checkedIn}</p>
                     <span className="text-[10px] font-bold text-slate-400">/{stats.total}</span>
                 </div>
             </div>
@@ -517,17 +517,17 @@ function ScannerPage() {
         {/* Recent History */}
         <div className="space-y-3">
           <div className="flex items-center justify-between px-2">
-            <h4 className="text-[10px] font-black text-navy uppercase tracking-widest flex items-center gap-2">
+            <h4 className="text-[10px] font-black text-foreground uppercase tracking-widest flex items-center gap-2">
               <HistoryIcon className="w-3 h-3 text-coral" /> Últimas Leituras
             </h4>
           </div>
           <div className="space-y-2">
             {scanHistory.length === 0 ? (
-              <p className="text-[10px] text-slate-400 font-bold uppercase text-center py-4 bg-slate-50 rounded-2xl border border-dashed border-slate-200">
+              <p className="text-[10px] text-slate-400 font-bold uppercase text-center py-4 bg-muted rounded-2xl border border-dashed border-border">
                 Aguardando scans...
               </p>
             ) : scanHistory.map((log) => (
-              <div key={log.id} className="flex items-center gap-3 p-3 bg-white rounded-2xl border border-slate-100 shadow-sm animate-in slide-in-from-right duration-300">
+              <div key={log.id} className="flex items-center gap-3 p-3 bg-card rounded-2xl border border-border shadow-sm animate-in slide-in-from-right duration-300">
                 <div className={cn(
                   "w-8 h-8 rounded-lg flex items-center justify-center shrink-0",
                   log.status === 'sucesso' ? "bg-emerald-50 text-emerald-500" : "bg-red-50 text-red-500"
@@ -536,7 +536,7 @@ function ScannerPage() {
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center justify-between">
-                    <p className="text-[10px] font-black text-navy uppercase truncate">
+                    <p className="text-[10px] font-black text-foreground uppercase truncate">
                       {log.tickets?.name || log.tickets?.qr_code?.substring(0,8) || "Inválido"}
                     </p>
                     <span className="text-[9px] font-bold text-slate-400 uppercase">{log.checkin_time}</span>

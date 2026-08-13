@@ -94,8 +94,8 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-6xl p-0 overflow-hidden bg-white border border-border text-[#0F172A] rounded-2xl max-h-[95vh] flex flex-col">
-        <DialogHeader className="p-0 border-b border-border bg-white relative">
+      <DialogContent className="max-w-6xl p-0 overflow-hidden bg-card border border-border text-[#0F172A] rounded-2xl max-h-[95vh] flex flex-col">
+        <DialogHeader className="p-0 border-b border-border bg-card relative">
           <div className="flex items-center justify-between px-8 py-6">
             <div className="flex flex-col">
               <DialogTitle className="text-xl font-manrope font-extrabold text-[#0F172A]">Nova Campanha</DialogTitle>
@@ -127,7 +127,7 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
                   <div className={cn(
                     "w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold transition-all border-2",
                     step === s.number ? "bg-[#F06452] text-white border-[#F06452] shadow-sm" : 
-                    step > s.number ? "bg-white text-[#F06452] border-[#F06452]" : "bg-white text-[#0F172A] border-[#E5E7EB]"
+                    step > s.number ? "bg-card text-[#F06452] border-[#F06452]" : "bg-card text-[#0F172A] border-[#E5E7EB]"
                   )}>
                     {step > s.number ? <Check className="w-4 h-4" /> : s.number}
                   </div>
@@ -147,7 +147,7 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
                 variant="outline"
                 onClick={prevStep}
                 disabled={step === 1}
-                className="border-[#E5E7EB] text-[#0F172A] hover:bg-slate-50 font-bold px-6 h-11 rounded-xl"
+                className="border-[#E5E7EB] text-[#0F172A] hover:bg-muted font-bold px-6 h-11 rounded-xl"
               >
                 Voltar
               </Button>
@@ -163,7 +163,7 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
         </DialogHeader>
 
 
-        <ScrollArea className="flex-1 bg-white">
+        <ScrollArea className="flex-1 bg-card">
           <div className="p-8">
           {step === 1 && (
             <div className="grid grid-cols-1 lg:grid-cols-[400px_1fr] gap-12 animate-in fade-in slide-in-from-bottom-4 duration-500">
@@ -180,7 +180,7 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
                       placeholder="Ex: Show Ana Carolina - Lembrete" 
                       value={campaignName}
                       onChange={(e) => setCampaignName(e.target.value)}
-                      className="bg-white border-[#E5E7EB] text-[#0F172A] h-12 rounded-xl focus-visible:ring-[#F06452]"
+                      className="bg-card border-[#E5E7EB] text-[#0F172A] h-12 rounded-xl focus-visible:ring-[#F06452]"
                     />
                   </div>
 
@@ -193,7 +193,7 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
                           "flex items-center p-5 rounded-2xl border-2 transition-all duration-300 gap-4 group text-left",
                           channelType === "gupshup" 
                             ? "bg-[#FDF0ED] border-[#F06452] shadow-sm" 
-                            : "bg-white border-[#E5E7EB] hover:border-[#F06452]/30"
+                            : "bg-card border-[#E5E7EB] hover:border-[#F06452]/30"
                         )}
                       >
                         <div className={cn(
@@ -214,7 +214,7 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
                           "flex items-center p-5 rounded-2xl border-2 transition-all duration-300 gap-4 group text-left",
                           channelType === "email" 
                             ? "bg-[#FDF0ED] border-[#F06452] shadow-sm" 
-                            : "bg-white border-[#E5E7EB] hover:border-[#F06452]/30"
+                            : "bg-card border-[#E5E7EB] hover:border-[#F06452]/30"
                         )}
                       >
                         <div className={cn(
@@ -234,10 +234,10 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
                   <div className="space-y-2">
                     <Label className="text-xs font-black text-[#0F172A] uppercase tracking-widest">Canal de saída <span className="text-[#F06452]">*</span></Label>
                     <Select value={channel} onValueChange={setChannel}>
-                      <SelectTrigger className="bg-white border-[#E5E7EB] text-[#0F172A] h-12 rounded-xl">
+                      <SelectTrigger className="bg-card border-[#E5E7EB] text-[#0F172A] h-12 rounded-xl">
                         <SelectValue placeholder="Selecione o canal" />
                       </SelectTrigger>
-                      <SelectContent className="bg-white border-[#E5E7EB]">
+                      <SelectContent className="bg-card border-[#E5E7EB]">
                         <SelectItem value="savecar">Zevva Oficial - 34 9867-9585</SelectItem>
                       </SelectContent>
                     </Select>
@@ -246,7 +246,7 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
               </div>
 
 
-              <div className="bg-slate-50 rounded-3xl flex items-center justify-center p-12 border border-[#E5E7EB]">
+              <div className="bg-muted rounded-3xl flex items-center justify-center p-12 border border-[#E5E7EB]">
                 <div className="max-w-md w-full text-center space-y-8">
                   <div className="flex justify-center">
                     <div className="bg-[#FDF0ED] p-5 rounded-[2rem]">
@@ -263,13 +263,13 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
                     <p className="text-sm text-[#64748B] leading-relaxed">Personalize cada disparo e aumente sua conversão com a tecnologia Zevva.</p>
                   </div>
                   
-                  <div className="bg-white rounded-2xl p-6 border border-[#E5E7EB] shadow-2xl relative overflow-hidden group">
+                  <div className="bg-card rounded-2xl p-6 border border-[#E5E7EB] shadow-2xl relative overflow-hidden group">
                     <div className="absolute top-0 left-0 w-1.5 h-full bg-[#F06452]" />
                     <div className="space-y-4 text-left">
-                      <div className="bg-slate-50 text-[#0F172A] px-4 py-2.5 rounded-xl text-sm font-bold inline-block border border-[#E5E7EB]">
+                      <div className="bg-muted text-[#0F172A] px-4 py-2.5 rounded-xl text-sm font-bold inline-block border border-[#E5E7EB]">
                         Olá <span className="text-[#F06452]">{"{{"}nome{"}}"}</span>! 👋
                       </div>
-                      <div className="bg-slate-50 rounded-xl aspect-[16/9] flex items-center justify-center border border-dashed border-[#E5E7EB] group-hover:bg-slate-100 transition-colors">
+                      <div className="bg-muted rounded-xl aspect-[16/9] flex items-center justify-center border border-dashed border-[#E5E7EB] group-hover:bg-slate-100 transition-colors">
                         <div className="text-center space-y-2">
                           <ImageIcon className="w-10 h-10 text-slate-300 mx-auto" />
                           <p className="text-[10px] text-[#64748B] font-black uppercase tracking-[0.2em]">Sua Imagem Aqui</p>
@@ -308,7 +308,7 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
                             "p-5 rounded-2xl border transition-all duration-300 cursor-pointer flex items-center gap-4 group",
                             publicType === item.id 
                               ? "bg-[#FDF0ED] border-[#F06452] shadow-sm" 
-                              : "bg-white border-[#E5E7EB] hover:border-[#F06452]/30"
+                              : "bg-card border-[#E5E7EB] hover:border-[#F06452]/30"
                           )}
                         >
                           <div className={cn(
@@ -334,14 +334,14 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
                 </div>
               </div>
 
-              <div className="bg-slate-50 rounded-3xl p-8 border border-[#E5E7EB]">
+              <div className="bg-muted rounded-3xl p-8 border border-[#E5E7EB]">
 
                 {publicType === "arquivo" && (
                   <div className="h-full flex flex-col space-y-6">
                     <div className="grid grid-cols-2 gap-6">
                       <div className="space-y-4">
                         <Label className="text-xs font-black text-[#0F172A] uppercase tracking-widest">DDI padrão</Label>
-                        <div className="bg-white p-4 rounded-xl border border-[#E5E7EB] flex items-center gap-3 shadow-sm">
+                        <div className="bg-card p-4 rounded-xl border border-[#E5E7EB] flex items-center gap-3 shadow-sm">
                            <span className="text-2xl">🇧🇷</span>
                            <span className="text-sm font-bold text-[#0F172A]">Brasil (+55)</span>
                            <ChevronDown className="w-4 h-4 ml-auto text-[#64748B]" />
@@ -366,7 +366,7 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
 
                     {!uploadedFile ? (
                       <div className="flex-1 flex flex-col items-center justify-center">
-                        <div className="w-full max-w-xl aspect-[16/7] border-2 border-dashed border-[#F06452]/20 rounded-3xl flex flex-col items-center justify-center gap-4 bg-white hover:bg-[#FDF0ED] hover:border-[#F06452]/40 transition-all cursor-pointer group shadow-sm relative">
+                        <div className="w-full max-w-xl aspect-[16/7] border-2 border-dashed border-[#F06452]/20 rounded-3xl flex flex-col items-center justify-center gap-4 bg-card hover:bg-[#FDF0ED] hover:border-[#F06452]/40 transition-all cursor-pointer group shadow-sm relative">
                           <input 
                             type="file" 
                             accept=".csv, .xlsx" 
@@ -398,8 +398,8 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
                         </div>
                       </div>
                     ) : (
-                      <div className="flex-1 bg-white rounded-2xl border border-[#E5E7EB] shadow-sm overflow-hidden flex flex-col">
-                        <div className="p-4 border-b border-[#E5E7EB] bg-slate-50 flex items-center justify-between">
+                      <div className="flex-1 bg-card rounded-2xl border border-[#E5E7EB] shadow-sm overflow-hidden flex flex-col">
+                        <div className="p-4 border-b border-[#E5E7EB] bg-muted flex items-center justify-between">
                           <div className="flex items-center gap-3">
                             <div className="p-2 bg-[#FDF0ED] rounded-lg">
                               <FileText className="w-4 h-4 text-[#F06452]" />
@@ -421,7 +421,7 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
 
                         <ScrollArea className="flex-1">
                           <table className="w-full text-left border-collapse">
-                            <thead className="sticky top-0 bg-slate-50 z-10">
+                            <thead className="sticky top-0 bg-muted z-10">
                               <tr>
                                 <th className="p-4 border-b border-[#E5E7EB] text-[10px] font-black text-[#64748B] uppercase tracking-widest w-12 text-center">#</th>
                                 {csvPreview[0]?.map((header, i) => (
@@ -431,7 +431,7 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
                             </thead>
                             <tbody>
                               {csvPreview.slice(1).map((row, rowIndex) => (
-                                <tr key={rowIndex} className="border-b border-[#E5E7EB] hover:bg-slate-50/80 transition-colors">
+                                <tr key={rowIndex} className="border-b border-[#E5E7EB] hover:bg-muted/80 transition-colors">
                                   <td className="p-4 text-center">
                                     <div className="w-4 h-4 rounded-full border border-[#F06452] flex items-center justify-center mx-auto">
                                       <div className="w-2 h-2 rounded-full bg-[#F06452]" />
@@ -455,8 +455,8 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
                   <div className="space-y-6">
                     <div className="flex justify-between items-end">
                       <div>
-                        <h3 className="text-lg font-manrope font-extrabold text-navy">Filtre sua base Zevva</h3>
-                        <p className="text-sm text-muted-fg mt-1">Defina as condições para segmentar seu público</p>
+                        <h3 className="text-lg font-manrope font-extrabold text-foreground">Filtre sua base Zevva</h3>
+                        <p className="text-sm text-muted-foreground-fg mt-1">Defina as condições para segmentar seu público</p>
                       </div>
                       <Button variant="outline" className="border-primary text-primary hover:bg-primary/5 h-11 px-6 rounded-xl font-bold">
                         <Filter className="w-4 h-4 mr-2" /> Adicionar Filtro
@@ -465,20 +465,20 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
 
                     <div className="space-y-4">
                       <div className="flex items-center justify-between">
-                        <p className="text-xs font-extrabold uppercase tracking-widest text-navy">Contatos Selecionados <span className="bg-primary/10 text-primary px-2.5 py-0.5 rounded-full text-[10px] ml-2">0</span></p>
+                        <p className="text-xs font-extrabold uppercase tracking-widest text-foreground">Contatos Selecionados <span className="bg-primary/10 text-primary px-2.5 py-0.5 rounded-full text-[10px] ml-2">0</span></p>
                       </div>
-                      <div className="bg-white rounded-2xl overflow-hidden border border-border shadow-sm">
+                      <div className="bg-card rounded-2xl overflow-hidden border border-border shadow-sm">
                         <table className="w-full text-left">
                           <thead className="bg-accent/50">
                             <tr>
-                              <th className="px-6 py-4 text-[10px] font-extrabold text-muted-fg uppercase tracking-widest">Nome</th>
-                              <th className="px-6 py-4 text-[10px] font-extrabold text-muted-fg uppercase tracking-widest">Telefone</th>
-                              <th className="px-6 py-4 text-[10px] font-extrabold text-muted-fg uppercase tracking-widest">Tags</th>
+                              <th className="px-6 py-4 text-[10px] font-extrabold text-muted-foreground-fg uppercase tracking-widest">Nome</th>
+                              <th className="px-6 py-4 text-[10px] font-extrabold text-muted-foreground-fg uppercase tracking-widest">Telefone</th>
+                              <th className="px-6 py-4 text-[10px] font-extrabold text-muted-foreground-fg uppercase tracking-widest">Tags</th>
                             </tr>
                           </thead>
                           <tbody>
                             <tr>
-                              <td colSpan={3} className="px-6 py-16 text-center text-muted-fg italic text-sm">
+                              <td colSpan={3} className="px-6 py-16 text-center text-muted-foreground-fg italic text-sm">
                                 Use os filtros acima para listar contatos da sua base.
                               </td>
                             </tr>
@@ -493,18 +493,18 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
                 {publicType === "manual" && (
                   <div className="space-y-6">
                     <div>
-                      <h3 className="text-lg font-manrope font-extrabold text-navy">Entrada Manual</h3>
-                      <p className="text-sm text-muted-fg mt-1">Adicione os contatos que receberão as mensagens.</p>
+                      <h3 className="text-lg font-manrope font-extrabold text-foreground">Entrada Manual</h3>
+                      <p className="text-sm text-muted-foreground-fg mt-1">Adicione os contatos que receberão as mensagens.</p>
                     </div>
 
                     <div className="bg-primary/5 border border-dashed border-primary/30 p-4 rounded-xl flex gap-3">
                        <HelpCircle className="w-5 h-5 text-primary shrink-0" />
-                       <p className="text-xs text-navy font-medium">Você pode colar uma lista no formato <strong>Nome, Telefone</strong>. Colunas extras serão tratadas como variáveis personalizadas.</p>
+                       <p className="text-xs text-foreground font-medium">Você pode colar uma lista no formato <strong>Nome, Telefone</strong>. Colunas extras serão tratadas como variáveis personalizadas.</p>
                     </div>
 
                     <div className="space-y-4">
-                      <div className="p-5 bg-white border border-border rounded-2xl shadow-sm space-y-4">
-                        <div className="flex items-center gap-2 text-[10px] font-extrabold text-navy uppercase tracking-widest">
+                      <div className="p-5 bg-card border border-border rounded-2xl shadow-sm space-y-4">
+                        <div className="flex items-center gap-2 text-[10px] font-extrabold text-foreground uppercase tracking-widest">
                           <span className="text-primary">{"{ }"}</span> Variáveis Dinâmicas
                         </div>
                         <div className="flex gap-3">
@@ -513,26 +513,26 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
                              <Plus className="w-4 h-4 mr-2" /> Variável
                            </Button>
                         </div>
-                        <p className="text-[10px] text-muted-fg italic font-medium">As variáveis ficam disponíveis no criador de conteúdo.</p>
+                        <p className="text-[10px] text-muted-foreground-fg italic font-medium">As variáveis ficam disponíveis no criador de conteúdo.</p>
                       </div>
 
                       <div className="grid grid-cols-[1fr_1fr_48px] gap-4 items-end">
                         <div className="space-y-2">
-                          <Label className="text-[10px] font-extrabold text-navy uppercase tracking-widest">Nome completo</Label>
+                          <Label className="text-[10px] font-extrabold text-foreground uppercase tracking-widest">Nome completo</Label>
                           <Input placeholder="Nome do contato" className="bg-accent/30 border-border h-12 rounded-xl" />
                         </div>
                         <div className="space-y-2">
-                          <Label className="text-[10px] font-extrabold text-navy uppercase tracking-widest">Whatsapp / Telefone</Label>
+                          <Label className="text-[10px] font-extrabold text-foreground uppercase tracking-widest">Whatsapp / Telefone</Label>
                           <div className="flex">
                             <div className="bg-accent/50 border border-r-0 border-border h-12 px-4 flex items-center gap-2 rounded-l-xl">
                               <span className="text-xl">🇧🇷</span>
-                              <span className="text-xs font-bold text-navy">+55</span>
+                              <span className="text-xs font-bold text-foreground">+55</span>
                             </div>
                             <Input placeholder="(00) 00000-0000" className="bg-accent/30 border-border h-12 rounded-l-none rounded-r-xl" />
                           </div>
                         </div>
                         <div>
-                           <Button variant="ghost" size="icon" className="h-12 w-12 text-muted-fg/40 hover:text-error hover:bg-error/10 rounded-xl">
+                           <Button variant="ghost" size="icon" className="h-12 w-12 text-muted-foreground-fg/40 hover:text-error hover:bg-error/10 rounded-xl">
                              <Trash2 className="w-5 h-5" />
                            </Button>
                         </div>
@@ -552,11 +552,11 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
           {step === 3 && (
             <div className="animate-in fade-in slide-in-from-bottom-4 duration-500 space-y-8">
               <div>
-                <h2 className="text-xl font-manrope font-extrabold text-navy uppercase tracking-tight">Corresponder colunas</h2>
-                <p className="text-sm text-muted-fg mt-1">Relacione as colunas da planilha aos campos obrigatórios e variáveis do template.</p>
+                <h2 className="text-xl font-manrope font-extrabold text-foreground uppercase tracking-tight">Corresponder colunas</h2>
+                <p className="text-sm text-muted-foreground-fg mt-1">Relacione as colunas da planilha aos campos obrigatórios e variáveis do template.</p>
               </div>
 
-              <div className="p-5 bg-slate-50 border border-[#E5E7EB] rounded-2xl flex items-center gap-4">
+              <div className="p-5 bg-muted border border-[#E5E7EB] rounded-2xl flex items-center gap-4">
                 <AlertCircle className="w-6 h-6 text-[#F06452]" />
                 <p className="text-xs font-semibold text-[#0F172A] leading-relaxed">
                   Exibindo as 3 primeiras linhas do arquivo para você estabelecer o vínculo visual entre as colunas e os campos. 
@@ -564,12 +564,12 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
                 </p>
               </div>
 
-              <div className="bg-white rounded-2xl border border-[#E5E7EB] shadow-sm overflow-hidden">
+              <div className="bg-card rounded-2xl border border-[#E5E7EB] shadow-sm overflow-hidden">
                 <table className="w-full text-left border-collapse">
-                  <thead className="bg-slate-50">
+                  <thead className="bg-muted">
                     <tr>
                       {csvPreview[0]?.map((header, i) => (
-                        <th key={i} className="p-6 border-b border-[#E5E7EB] bg-slate-50/50">
+                        <th key={i} className="p-6 border-b border-[#E5E7EB] bg-muted/50">
                           <div className="space-y-4">
                             <div className="flex items-center justify-between">
                               <span className="text-xs font-black text-[#0F172A] uppercase tracking-widest">{header}</span>
@@ -583,10 +583,10 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
                               </Button>
                             </div>
                             <Select defaultValue={i === 0 ? "nome" : i === 2 ? "telefone" : "variavel"}>
-                              <SelectTrigger className="bg-white border-[#E5E7EB] h-11 rounded-xl focus:ring-[#F06452]">
+                              <SelectTrigger className="bg-card border-[#E5E7EB] h-11 rounded-xl focus:ring-[#F06452]">
                                 <SelectValue placeholder="Selecione o campo" />
                               </SelectTrigger>
-                              <SelectContent className="bg-white border-[#E5E7EB]">
+                              <SelectContent className="bg-card border-[#E5E7EB]">
                                 <SelectItem value="nome">Nome</SelectItem>
                                 <SelectItem value="telefone">Telefone</SelectItem>
                                 <SelectItem value="departamento">Departamento</SelectItem>
@@ -610,7 +610,7 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
                   </thead>
                   <tbody>
                     {csvPreview.slice(1, 4).map((row, rowIndex) => (
-                      <tr key={rowIndex} className="border-b border-[#E5E7EB] hover:bg-slate-50 transition-colors">
+                      <tr key={rowIndex} className="border-b border-[#E5E7EB] hover:bg-muted transition-colors">
                         {row.map((cell, cellIndex) => (
                           <td key={cellIndex} className="p-6 text-sm font-medium text-[#64748B] italic truncate max-w-[200px]">
                             {cell}
@@ -646,7 +646,7 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
                           "p-5 rounded-2xl border transition-all duration-300 cursor-pointer flex items-center gap-4 group",
                           contentType === item.id 
                             ? "bg-[#FDF0ED] border-[#F06452] shadow-sm" 
-                            : "bg-white border-[#E5E7EB] hover:border-[#F06452]/30"
+                            : "bg-card border-[#E5E7EB] hover:border-[#F06452]/30"
                         )}
                       >
                         <div className={cn(
@@ -674,12 +674,12 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
                 </div>
               </div>
 
-              <div className="bg-slate-50 rounded-3xl p-8 border border-[#E5E7EB]">
+              <div className="bg-muted rounded-3xl p-8 border border-[#E5E7EB]">
                 {contentType === "mensagem" ? (
                   <div className="grid grid-cols-1 lg:grid-cols-[1fr_350px] gap-8">
                     <div className="space-y-6">
-                      <div className="bg-white border border-[#E5E7EB] rounded-2xl shadow-xl overflow-hidden">
-                        <div className="p-4 border-b border-[#E5E7EB] bg-slate-50 flex items-center justify-between">
+                      <div className="bg-card border border-[#E5E7EB] rounded-2xl shadow-xl overflow-hidden">
+                        <div className="p-4 border-b border-[#E5E7EB] bg-muted flex items-center justify-between">
                           <div className="flex gap-2">
                             <Button variant="ghost" size="sm" className="h-9 w-9 p-0 text-[#64748B] hover:text-[#F06452] hover:bg-[#FDF0ED]">
                               <Smile className="w-5 h-5" />
@@ -719,16 +719,16 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
                         </div>
                         <textarea 
                           placeholder="Escreva sua mensagem aqui..."
-                          className="w-full min-h-[250px] p-6 text-[#0F172A] focus:outline-none resize-none leading-relaxed text-sm bg-white"
+                          className="w-full min-h-[250px] p-6 text-[#0F172A] focus:outline-none resize-none leading-relaxed text-sm bg-card"
                           value={messageText}
                           onChange={(e) => setMessageText(e.target.value)}
                         />
-                        <div className="p-4 border-t border-[#E5E7EB] bg-slate-50 flex justify-between items-center">
+                        <div className="p-4 border-t border-[#E5E7EB] bg-muted flex justify-between items-center">
                           <p className="text-[10px] text-[#64748B] font-black uppercase tracking-widest">Aprox. {messageText.length} caracteres</p>
                           <Button 
                             variant="outline" 
                             size="sm" 
-                            className="border-[#E5E7EB] text-[#0F172A] hover:bg-white font-bold h-9 rounded-xl"
+                            className="border-[#E5E7EB] text-[#0F172A] hover:bg-card font-bold h-9 rounded-xl"
                             onClick={() => setCtaButtons(prev => [...prev, { id: crypto.randomUUID(), label: "Clique aqui" }])}
                           >
                             <Plus className="w-4 h-4 mr-2" /> Botão CTA
@@ -744,12 +744,12 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
                               <Input 
                                 value={btn.label}
                                 onChange={(e) => setCtaButtons(prev => prev.map(b => b.id === btn.id ? { ...b, label: e.target.value } : b))}
-                                className="bg-white border-[#E5E7EB] h-10 rounded-xl flex-1"
+                                className="bg-card border-[#E5E7EB] h-10 rounded-xl flex-1"
                               />
                               <Button 
                                 variant="ghost" 
                                 size="icon" 
-                                className="text-muted-fg hover:text-[#F06452]"
+                                className="text-muted-foreground-fg hover:text-[#F06452]"
                                 onClick={() => setCtaButtons(prev => prev.filter(b => b.id !== btn.id))}
                               >
                                 <Trash2 className="w-4 h-4" />
@@ -774,7 +774,7 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
 
                       {/* Message Area */}
                       <div className="space-y-4 flex-1 -mx-4 p-5 overflow-y-auto">
-                        <div className="bg-white rounded-lg shadow-[0_1px_0.5px_rgba(0,0,0,0.13)] max-w-[85%] relative ml-2">
+                        <div className="bg-card rounded-lg shadow-[0_1px_0.5px_rgba(0,0,0,0.13)] max-w-[85%] relative ml-2">
                           {/* Triangle tip */}
                           <div className="absolute top-0 -left-2 w-0 h-0 border-t-[10px] border-t-white border-l-[10px] border-l-transparent" />
                           
@@ -805,7 +805,7 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
                           {ctaButtons.length > 0 && (
                             <div className="border-t border-[#f0f2f5] mt-1">
                               {ctaButtons.map((btn) => (
-                                <div key={btn.id} className="py-2.5 px-4 flex items-center justify-center gap-2 border-b last:border-b-0 border-[#f0f2f5] cursor-default bg-white hover:bg-[#f8f9fa] active:bg-[#f1f2f3] transition-colors first:rounded-b-none last:rounded-b-lg">
+                                <div key={btn.id} className="py-2.5 px-4 flex items-center justify-center gap-2 border-b last:border-b-0 border-[#f0f2f5] cursor-default bg-card hover:bg-[#f8f9fa] active:bg-[#f1f2f3] transition-colors first:rounded-b-none last:rounded-b-lg">
                                   <MousePointer2 className="w-3.5 h-3.5 text-[#00a884]" />
                                   <span className="text-[14px] font-normal text-[#00a884]">{btn.label}</span>
                                 </div>
@@ -827,10 +827,10 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
                       <div className="space-y-2">
                         <Label className="text-xs font-black text-[#0F172A] uppercase tracking-widest">Departamento <span className="text-[#F06452]">*</span></Label>
                         <Select>
-                          <SelectTrigger className="bg-white border-[#E5E7EB] h-12 rounded-xl focus:ring-[#F06452]">
+                          <SelectTrigger className="bg-card border-[#E5E7EB] h-12 rounded-xl focus:ring-[#F06452]">
                             <SelectValue placeholder="Selecione um departamento" />
                           </SelectTrigger>
-                          <SelectContent className="bg-white border-[#E5E7EB]">
+                          <SelectContent className="bg-card border-[#E5E7EB]">
                             <SelectItem value="vendas">Vendas</SelectItem>
                             <SelectItem value="suporte">Suporte</SelectItem>
                             <SelectItem value="financeiro">Financeiro</SelectItem>
@@ -895,7 +895,7 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
                       onClick={() => setSendingSpeed(item.id)}
                       className={cn(
                         "p-5 rounded-2xl border-2 transition-all cursor-pointer flex flex-col gap-4 relative group",
-                        sendingSpeed === item.id ? "bg-[#FDF0ED] border-[#F06452] shadow-sm" : "bg-white border-[#E5E7EB] hover:border-[#F06452]/30"
+                        sendingSpeed === item.id ? "bg-[#FDF0ED] border-[#F06452] shadow-sm" : "bg-card border-[#E5E7EB] hover:border-[#F06452]/30"
                       )}
                     >
                       <div className="flex items-center justify-between">
@@ -925,7 +925,7 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
               </div>
 
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                <div className="bg-white rounded-[2rem] border border-[#E5E7EB] p-8 space-y-6 shadow-xl shadow-slate-200/50">
+                <div className="bg-card rounded-[2rem] border border-[#E5E7EB] p-8 space-y-6 shadow-xl shadow-slate-200/50">
                   <div className="flex items-center gap-4">
                     <div className="bg-slate-100 p-2.5 rounded-xl"><Users className="w-5 h-5 text-[#0F172A]" /></div>
                     <div className="space-y-0.5">
@@ -934,9 +934,9 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
                     </div>
                   </div>
 
-                  <div className="bg-slate-50 rounded-2xl p-5 flex gap-4 overflow-x-auto no-scrollbar border border-[#E5E7EB]">
+                  <div className="bg-muted rounded-2xl p-5 flex gap-4 overflow-x-auto no-scrollbar border border-[#E5E7EB]">
                     {[1, 2, 3].map(i => (
-                      <div key={i} className="min-w-[150px] bg-white border border-[#E5E7EB] rounded-xl p-4 text-center space-y-2 shadow-sm">
+                      <div key={i} className="min-w-[150px] bg-card border border-[#E5E7EB] rounded-xl p-4 text-center space-y-2 shadow-sm">
                         <p className="text-[10px] font-black text-[#F06452] uppercase tracking-widest">Lote {i}</p>
                         <p className="text-sm font-black text-[#0F172A]">50 contatos</p>
                         <div className="flex items-center justify-center gap-2 pt-2 border-t border-slate-50">
@@ -954,7 +954,7 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
                         type="number" 
                         value={contactsPerBatch}
                         onChange={(e) => setContactsPerBatch(Number(e.target.value))}
-                        className="bg-white border-[#E5E7EB] h-12 rounded-xl font-bold text-[#0F172A] focus:ring-[#F06452]"
+                        className="bg-card border-[#E5E7EB] h-12 rounded-xl font-bold text-[#0F172A] focus:ring-[#F06452]"
                       />
                     </div>
                     <div className="space-y-2">
@@ -963,7 +963,7 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
                         type="number" 
                         value={intervalBetweenBatches}
                         onChange={(e) => setIntervalBetweenBatches(Number(e.target.value))}
-                        className="bg-white border-[#E5E7EB] h-12 rounded-xl font-bold text-[#0F172A] focus:ring-[#F06452]"
+                        className="bg-card border-[#E5E7EB] h-12 rounded-xl font-bold text-[#0F172A] focus:ring-[#F06452]"
                       />
                     </div>
                   </div>
@@ -985,7 +985,7 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
                   </div>
                 </div>
 
-                <div className="bg-white rounded-[2rem] border border-[#E5E7EB] p-8 space-y-6 shadow-xl shadow-slate-200/50 flex flex-col">
+                <div className="bg-card rounded-[2rem] border border-[#E5E7EB] p-8 space-y-6 shadow-xl shadow-slate-200/50 flex flex-col">
                   <div className="flex items-center gap-4">
                     <div className="bg-slate-100 p-2.5 rounded-xl"><Clock className="w-5 h-5 text-[#0F172A]" /></div>
                     <div className="space-y-0.5">
@@ -999,7 +999,7 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
                       <div className="absolute top-0 left-0 w-full h-full bg-[#F06452]/20 rounded-full" />
                       {[0, 6, 12, 18, 24].map(h => (
                         <div key={h} className="absolute top-1/2 -translate-y-1/2 flex flex-col items-center gap-2" style={{ left: `${(h / 24) * 100}%` }}>
-                          <div className="w-3 h-3 rounded-full bg-white border-2 border-[#F06452] shadow-sm" />
+                          <div className="w-3 h-3 rounded-full bg-card border-2 border-[#F06452] shadow-sm" />
                           <span className="text-[11px] font-black text-[#64748B] mt-5">{h}h</span>
                         </div>
                       ))}
@@ -1012,7 +1012,7 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
                           <Input 
                             value={startTime}
                             onChange={(e) => setStartTime(e.target.value)}
-                            className="w-28 bg-white border-[#E5E7EB] h-12 rounded-xl font-bold text-[#0F172A] text-center focus:ring-[#F06452]"
+                            className="w-28 bg-card border-[#E5E7EB] h-12 rounded-xl font-bold text-[#0F172A] text-center focus:ring-[#F06452]"
                           />
                           <Clock className="w-5 h-5 text-[#64748B]" />
                         </div>
@@ -1023,7 +1023,7 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
                           <Input 
                             value={endTime}
                             onChange={(e) => setEndTime(e.target.value)}
-                            className="w-28 bg-white border-[#E5E7EB] h-12 rounded-xl font-bold text-[#0F172A] text-center focus:ring-[#F06452]"
+                            className="w-28 bg-card border-[#E5E7EB] h-12 rounded-xl font-bold text-[#0F172A] text-center focus:ring-[#F06452]"
                           />
                           <Clock className="w-5 h-5 text-[#64748B]" />
                         </div>

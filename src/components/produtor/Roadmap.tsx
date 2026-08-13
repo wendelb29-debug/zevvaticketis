@@ -103,8 +103,8 @@ export function Roadmap() {
   return (
     <div className="space-y-6">
       <div className="flex flex-col gap-2">
-        <h2 className="text-3xl font-manrope font-bold text-navy">Plano de Desenvolvimento</h2>
-        <p className="text-slate-500 max-w-2xl">
+        <h2 className="text-3xl font-manrope font-bold text-foreground">Plano de Desenvolvimento</h2>
+        <p className="text-muted-foreground max-w-2xl">
           Acompanhe o progresso da plataforma Zevva Tickets através das ondas de desenvolvimento.
           Cada etapa é projetada para entregar valor incremental e segurança.
         </p>
@@ -132,12 +132,12 @@ export function Roadmap() {
                   <Circle className="w-5 h-5 text-slate-300" />
                 )}
               </div>
-              <CardTitle className="text-lg font-manrope font-bold text-navy">{wave.title}</CardTitle>
+              <CardTitle className="text-lg font-manrope font-bold text-foreground">{wave.title}</CardTitle>
             </CardHeader>
             <CardContent>
               <ul className="space-y-2">
                 {wave.items.map((item, i) => (
-                  <li key={i} className="text-sm text-slate-600 flex items-start gap-2">
+                  <li key={i} className="text-sm text-muted-foreground flex items-start gap-2">
                     <div className={`w-1.5 h-1.5 rounded-full mt-1.5 shrink-0 ${wave.status === 'Concluído' ? 'bg-emerald-400' : 'bg-slate-300'}`} />
                     {item}
                   </li>

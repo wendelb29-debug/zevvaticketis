@@ -72,33 +72,33 @@ export function CheckinStats() {
   }, []);
 
   if (loading) {
-    return <div className="p-10 text-center font-inter text-muted">Carregando indicadores de check-in...</div>;
+    return <div className="p-10 text-center font-inter text-muted-foreground">Carregando indicadores de check-in...</div>;
   }
 
   return (
     <div className="space-y-8 animate-in fade-in duration-500">
       {/* KPI Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-4">
-        <KPIItem title="Ingressos Vendidos" value={stats.totalSold.toLocaleString()} icon={Ticket} color="bg-navy" />
-        <KPIItem title="Check-ins Realizados" value={stats.totalCheckins.toLocaleString()} icon={CheckCircle2} color="bg-emerald-500" />
-        <KPIItem title="Total Presentes" value={stats.totalPresent.toLocaleString()} icon={Users} color="bg-emerald-600" />
-        <KPIItem title="Total Faltantes" value={stats.totalMissing.toLocaleString()} icon={UserX} color="bg-coral" />
-        <KPIItem title="Presença" value={`${stats.presenceRate}%`} icon={TrendingUp} color="bg-primary" />
-        <KPIItem title="Ausência" value={`${stats.absenceRate}%`} icon={BarChart3} color="bg-slate-400" />
+        <KPIItem title="Ingressos Vendidos" value={stats.totalSold.toLocaleString()} icon={Ticket} color="navy" />
+        <KPIItem title="Check-ins Realizados" value={stats.totalCheckins.toLocaleString()} icon={CheckCircle2} color="success" />
+        <KPIItem title="Total Presentes" value={stats.totalPresent.toLocaleString()} icon={Users} color="success" />
+        <KPIItem title="Total Faltantes" value={stats.totalMissing.toLocaleString()} icon={UserX} color="primary" />
+        <KPIItem title="Presença" value={`${stats.presenceRate}%`} icon={TrendingUp} color="primary" />
+        <KPIItem title="Ausência" value={`${stats.absenceRate}%`} icon={BarChart3} color="neutral" />
       </div>
 
       {/* Filters */}
       <Card className="border-line shadow-sm">
         <CardContent className="p-4 flex flex-wrap items-center gap-4">
           <div className="flex items-center gap-2 px-3 py-2 bg-surface rounded-xl border border-line">
-            <Filter className="w-4 h-4 text-navy/40" />
-            <span className="text-xs font-bold text-navy/60 uppercase">Filtros:</span>
+            <Filter className="w-4 h-4 text-foreground/40" />
+            <span className="text-xs font-bold text-foreground/60 uppercase">Filtros:</span>
           </div>
           <SelectFilter placeholder="Evento" options={["Todos os Eventos", "Festival 2026", "Congresso Zevva"]} />
           <SelectFilter placeholder="Produtor" options={["Todos", "Zevva Org", "Producer X"]} />
           <SelectFilter placeholder="Cidade" options={["Todas", "São Paulo", "Rio de Janeiro", "Lisboa"]} />
           <SelectFilter placeholder="Campanha" options={["Todas", "Instagram Festival", "Facebook Ads"]} />
-          <Button variant="outline" className="ml-auto rounded-xl border-line text-navy font-bold flex items-center gap-2">
+          <Button variant="outline" className="ml-auto rounded-xl border-line text-foreground font-bold flex items-center gap-2">
             <Download className="w-4 h-4" /> Exportar Relatório
           </Button>
         </CardContent>
@@ -108,14 +108,14 @@ export function CheckinStats() {
         {/* Check-in por Campanha */}
         <Card className="border-line shadow-sm overflow-hidden">
           <CardHeader className="bg-surface border-b border-line">
-            <CardTitle className="text-lg font-manrope font-black text-navy flex items-center justify-between">
+            <CardTitle className="text-lg font-manrope font-black text-foreground flex items-center justify-between">
               Check-in por Campanha
               <Tag className="w-5 h-5 text-coral" />
             </CardTitle>
           </CardHeader>
           <CardContent className="p-0">
             <table className="w-full text-left text-sm">
-              <thead className="bg-surface/50 text-[10px] font-black text-navy/40 uppercase tracking-widest border-b border-line">
+              <thead className="bg-surface/50 text-[10px] font-black text-foreground/40 uppercase tracking-widest border-b border-line">
                 <tr>
                   <th className="px-6 py-4">Campanha</th>
                   <th className="px-4 py-4 text-center">Vendidos</th>
@@ -127,8 +127,8 @@ export function CheckinStats() {
               <tbody className="divide-y divide-line font-inter">
                 {campaignData.map((c, i) => (
                   <tr key={i} className="hover:bg-surface/30 transition-colors">
-                    <td className="px-6 py-4 font-extrabold text-navy">{c.name}</td>
-                    <td className="px-4 py-4 text-center font-bold text-navy/70">{c.sold}</td>
+                    <td className="px-6 py-4 font-extrabold text-foreground">{c.name}</td>
+                    <td className="px-4 py-4 text-center font-bold text-foreground/70">{c.sold}</td>
                     <td className="px-4 py-4 text-center font-bold text-emerald-600">{c.checkins}</td>
                     <td className="px-4 py-4 text-center font-bold text-coral">{c.missing}</td>
                     <td className="px-6 py-4 text-right">
@@ -151,7 +151,7 @@ export function CheckinStats() {
           </CardHeader>
           <CardContent className="p-0">
             <table className="w-full text-left text-sm">
-              <thead className="bg-navy/5 text-[10px] font-black text-navy/40 uppercase tracking-widest border-b border-line">
+              <thead className="bg-navy/5 text-[10px] font-black text-foreground/40 uppercase tracking-widest border-b border-line">
                 <tr>
                   <th className="px-6 py-4">Anúncio</th>
                   <th className="px-4 py-4">Campanha</th>
@@ -163,12 +163,12 @@ export function CheckinStats() {
               <tbody className="divide-y divide-line font-inter">
                 {adData.map((ad, i) => (
                   <tr key={i} className="hover:bg-accent/10 transition-colors">
-                    <td className="px-6 py-4 font-extrabold text-navy">{ad.name}</td>
-                    <td className="px-4 py-4 text-xs font-bold text-muted uppercase">{ad.campaign}</td>
+                    <td className="px-6 py-4 font-extrabold text-foreground">{ad.name}</td>
+                    <td className="px-4 py-4 text-xs font-bold text-muted-foreground uppercase">{ad.campaign}</td>
                     <td className="px-4 py-4 text-center font-bold">{ad.sold}</td>
                     <td className="px-4 py-4 text-center font-bold text-emerald-600">{ad.checkins}</td>
                     <td className="px-6 py-4 text-right">
-                      <span className="font-black text-navy">{ad.conv}%</span>
+                      <span className="font-black text-foreground">{ad.conv}%</span>
                     </td>
                   </tr>
                 ))}
@@ -216,17 +216,17 @@ export function CheckinStats() {
         </Card>
 
         <Card className="border-line shadow-xl rounded-[40px] overflow-hidden bg-white border border-line h-full">
-          <CardContent className="p-8 flex flex-col items-start justify-between gap-6 h-full text-navy">
+          <CardContent className="p-8 flex flex-col items-start justify-between gap-6 h-full text-foreground">
             <div className="space-y-4">
-              <div className="inline-flex items-center gap-2 px-3 py-1 bg-navy/5 text-navy/60 rounded-full border border-line text-[10px] font-black uppercase tracking-widest">
+              <div className="inline-flex items-center gap-2 px-3 py-1 bg-navy/5 text-foreground/60 rounded-full border border-line text-[10px] font-black uppercase tracking-widest">
                 Business Intelligence
               </div>
               <h2 className="text-2xl font-manrope font-black tracking-tighter uppercase">Relatórios Avançados</h2>
-              <p className="text-muted text-sm font-medium">
+              <p className="text-muted-foreground text-sm font-medium">
                 Analise conversão de campanhas, no-show e dados demográficos dos participantes presentes.
               </p>
             </div>
-            <Button variant="outline" className="w-full h-14 border-line text-navy hover:bg-surface rounded-2xl font-black uppercase tracking-widest text-xs group">
+            <Button variant="outline" className="w-full h-14 border-line text-foreground hover:bg-surface rounded-2xl font-black uppercase tracking-widest text-xs group">
               Exportar BI <BarChart3 className="w-4 h-4 ml-2 group-hover:scale-110 transition-transform text-coral" />
             </Button>
           </CardContent>
@@ -236,18 +236,43 @@ export function CheckinStats() {
   );
 }
 
-function KPIItem({ title, value, icon: Icon, color }: any) {
+function KPIItem({ title, value, icon: Icon, color }: { title: string, value: string, icon: any, color: 'navy' | 'success' | 'primary' | 'neutral' }) {
+  const KPI_STYLES = {
+    navy: {
+      bar: "bg-foreground",
+      iconBackground: "bg-foreground/10",
+      icon: "text-foreground",
+    },
+    success: {
+      bar: "bg-success",
+      iconBackground: "bg-success/10",
+      icon: "text-success",
+    },
+    primary: {
+      bar: "bg-primary",
+      iconBackground: "bg-primary/10",
+      icon: "text-primary",
+    },
+    neutral: {
+      bar: "bg-muted-foreground",
+      iconBackground: "bg-muted",
+      icon: "text-muted-foreground",
+    },
+  };
+
+  const style = KPI_STYLES[color];
+
   return (
     <Card className="border-line bg-white shadow-sm overflow-hidden relative group">
-      <div className={cn("absolute top-0 left-0 w-1 h-full", color)} />
+      <div className={cn("absolute top-0 left-0 w-1 h-full", style.bar)} />
       <CardContent className="p-4">
         <div className="flex items-center justify-between mb-2">
-          <p className="text-[10px] font-black text-muted uppercase tracking-widest">{title}</p>
-          <div className={cn("p-2 rounded-lg bg-opacity-10", color.replace('bg-', 'bg-').replace('bg-', 'text-'))}>
-            <Icon className={cn("w-4 h-4", color.replace('bg-', 'text-'))} />
+          <p className="text-[10px] font-black text-muted-foreground uppercase tracking-widest">{title}</p>
+          <div className={cn("p-2 rounded-lg", style.iconBackground)}>
+            <Icon className={cn("w-4 h-4", style.icon)} />
           </div>
         </div>
-        <p className="text-2xl font-manrope font-black text-navy">{value}</p>
+        <p className="text-2xl font-manrope font-black text-foreground">{value}</p>
       </CardContent>
     </Card>
   );
@@ -256,7 +281,7 @@ function KPIItem({ title, value, icon: Icon, color }: any) {
 function SelectFilter({ placeholder, options }: any) {
   return (
     <Select>
-      <SelectTrigger className="w-40 h-10 bg-white border-line rounded-xl text-xs font-bold text-navy/70">
+      <SelectTrigger className="w-40 h-10 bg-white border-line rounded-xl text-xs font-bold text-foreground/70">
         <SelectValue placeholder={placeholder} />
       </SelectTrigger>
       <SelectContent>
@@ -280,8 +305,8 @@ function ReportSummaryCard({ title, subtitle, buttonText, type }: any) {
             {type === 'presence' ? <Users className="w-6 h-6" /> : <UserX className="w-6 h-6" />}
           </div>
           <div>
-            <h3 className="font-manrope font-extrabold text-navy">{title}</h3>
-            <p className="text-xs text-muted font-medium">{subtitle}</p>
+            <h3 className="font-manrope font-extrabold text-foreground">{title}</h3>
+            <p className="text-xs text-muted-foreground font-medium">{subtitle}</p>
           </div>
         </div>
         <Button variant="ghost" className="text-primary font-black text-xs uppercase flex items-center gap-2 group-hover:gap-3 transition-all">

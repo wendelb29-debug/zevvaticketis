@@ -43,7 +43,7 @@ export function EmailTemplatesList() {
     <div className="space-y-8">
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-manrope font-extrabold text-navy">Templates de Comunicação</h1>
+          <h1 className="text-3xl font-manrope font-extrabold text-foreground">Templates de Comunicação</h1>
           <p className="text-muted-foreground">Gerencie o conteúdo dos e-mails automáticos.</p>
         </div>
         <Button className="bg-coral hover:bg-coral/90">

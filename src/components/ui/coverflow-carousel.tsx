@@ -29,11 +29,11 @@ export function CoverflowCarousel({ events }: CoverflowCarouselProps) {
   if (!events || events.length === 0) {
     return (
       <div className="w-full py-20 flex flex-col items-center justify-center bg-accent/5 rounded-[40px] border border-dashed border-border">
-        <SparklesIcon className="w-12 h-12 text-muted-fg/20 mb-4" />
-        <h3 className="text-xl font-manrope font-black text-navy">
+        <SparklesIcon className="w-12 h-12 text-muted-foreground-fg/20 mb-4" />
+        <h3 className="text-xl font-manrope font-black text-foreground">
           Novos eventos chegando em breve
         </h3>
-        <p className="text-muted-fg font-bold mt-2 mb-8">
+        <p className="text-muted-foreground-fg font-bold mt-2 mb-8">
           Fique atento às nossas próximas experiências exclusivas.
         </p>
         <Link
@@ -135,7 +135,7 @@ export function CoverflowCarousel({ events }: CoverflowCarouselProps) {
 
                     {/* Desktop Hover Info */}
                     <div className="absolute inset-0 bg-navy/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none">
-                      <button className="px-6 py-3 bg-white text-navy font-black rounded-xl shadow-lg transform -translate-y-4 group-hover:translate-y-0 transition-transform">
+                      <button className="px-6 py-3 bg-white text-foreground font-black rounded-xl shadow-lg transform -translate-y-4 group-hover:translate-y-0 transition-transform">
                         VER DETALHES
                       </button>
                     </div>
@@ -151,21 +151,21 @@ export function CoverflowCarousel({ events }: CoverflowCarouselProps) {
           <div className="flex items-center gap-4">
             <button
               onClick={prev}
-              className="w-12 h-12 rounded-full border border-border bg-white flex items-center justify-center text-navy hover:bg-accent transition-colors shadow-sm"
+              className="w-12 h-12 rounded-full border border-border bg-white flex items-center justify-center text-foreground hover:bg-accent transition-colors shadow-sm"
             >
               <ChevronLeft className="w-6 h-6" />
             </button>
 
             {/* Counter */}
             <div className="px-4 py-2 bg-accent/30 rounded-full">
-              <span className="text-sm font-black text-navy">{currentIndex + 1}</span>
-              <span className="text-xs font-bold text-muted-fg mx-1">/</span>
-              <span className="text-xs font-bold text-muted-fg">{events.length}</span>
+              <span className="text-sm font-black text-foreground">{currentIndex + 1}</span>
+              <span className="text-xs font-bold text-muted-foreground-fg mx-1">/</span>
+              <span className="text-xs font-bold text-muted-foreground-fg">{events.length}</span>
             </div>
 
             <button
               onClick={next}
-              className="w-12 h-12 rounded-full border border-border bg-white flex items-center justify-center text-navy hover:bg-accent transition-colors shadow-sm"
+              className="w-12 h-12 rounded-full border border-border bg-white flex items-center justify-center text-foreground hover:bg-accent transition-colors shadow-sm"
             >
               <ChevronRight className="w-6 h-6" />
             </button>

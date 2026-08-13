@@ -124,7 +124,7 @@ export function FeaturedCarousel({ events }: FeaturedCarouselProps) {
                         } as any,
                       })
                     }
-                    className="h-14 px-10 bg-white text-dark-surface text-sm font-bold uppercase tracking-widest hover:bg-white/90 transition-all rounded-md shadow-2xl"
+                    className="h-14 px-10 bg-card text-dark-surface text-sm font-bold uppercase tracking-widest hover:bg-card/90 transition-all rounded-md shadow-2xl"
                   >
                     Garantir minha vaga
                   </button>
@@ -151,7 +151,7 @@ export function FeaturedCarousel({ events }: FeaturedCarouselProps) {
               handleManualInteraction();
               prevSlide();
             }}
-            className="w-12 h-12 rounded-full border border-white/20 bg-white/5 backdrop-blur-md flex items-center justify-center text-white hover:bg-white/20 transition-all"
+            className="w-12 h-12 rounded-full border border-white/20 bg-card/5 backdrop-blur-md flex items-center justify-center text-white hover:bg-card/20 transition-all"
           >
             <ChevronLeft className="w-6 h-6" />
           </button>
@@ -160,7 +160,7 @@ export function FeaturedCarousel({ events }: FeaturedCarouselProps) {
               handleManualInteraction();
               nextSlide();
             }}
-            className="w-12 h-12 rounded-full border border-white/20 bg-white/5 backdrop-blur-md flex items-center justify-center text-white hover:bg-white/20 transition-all"
+            className="w-12 h-12 rounded-full border border-white/20 bg-card/5 backdrop-blur-md flex items-center justify-center text-white hover:bg-card/20 transition-all"
           >
             <ChevronRight className="w-6 h-6" />
           </button>
@@ -176,7 +176,7 @@ export function FeaturedCarousel({ events }: FeaturedCarouselProps) {
               }}
               className={cn(
                 "h-1.5 transition-all duration-300 rounded-full",
-                i === currentIndex ? "w-8 bg-primary" : "w-2 bg-white/20 hover:bg-white/40",
+                i === currentIndex ? "w-8 bg-primary" : "w-2 bg-card/20 hover:bg-card/40",
               )}
             />
           ))}

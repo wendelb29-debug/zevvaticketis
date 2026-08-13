@@ -60,34 +60,34 @@ function PlanosPage() {
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
-        <h1 className="text-2xl font-manrope font-extrabold text-navy">Gestão de Planos</h1>
+        <h1 className="text-2xl font-manrope font-extrabold text-foreground">Gestão de Planos</h1>
         <Button onClick={() => setIsEditing('new')} className="bg-coral">
           <Plus className="w-4 h-4 mr-2" /> Novo Plano
         </Button>
       </div>
 
       {(isEditing === 'new' || !!isEditing?.id) && (
-        <div className="bg-white p-6 rounded-xl border space-y-4">
-          <h3 className="font-bold text-navy">{isEditing === 'new' ? "Criar Novo Plano" : "Editar Plano"}</h3>
+        <div className="bg-card p-6 rounded-xl border space-y-4">
+          <h3 className="font-bold text-foreground">{isEditing === 'new' ? "Criar Novo Plano" : "Editar Plano"}</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
             <div className="space-y-1">
-              <label className="text-xs font-bold uppercase text-muted">Nome</label>
+              <label className="text-xs font-bold uppercase text-muted-foreground">Nome</label>
               <Input value={formData.nome} onChange={e => setFormData({...formData, nome: e.target.value})} />
             </div>
             <div className="space-y-1">
-              <label className="text-xs font-bold uppercase text-muted">Taxa (%)</label>
+              <label className="text-xs font-bold uppercase text-muted-foreground">Taxa (%)</label>
               <Input type="number" value={formData.taxa_percentual} onChange={e => setFormData({...formData, taxa_percentual: Number(e.target.value)})} />
             </div>
             <div className="space-y-1">
-              <label className="text-xs font-bold uppercase text-muted">Limite Eventos</label>
+              <label className="text-xs font-bold uppercase text-muted-foreground">Limite Eventos</label>
               <Input type="number" value={formData.limite_eventos} onChange={e => setFormData({...formData, limite_eventos: Number(e.target.value)})} />
             </div>
             <div className="space-y-1">
-              <label className="text-xs font-bold uppercase text-muted">Limite Ingressos</label>
+              <label className="text-xs font-bold uppercase text-muted-foreground">Limite Ingressos</label>
               <Input type="number" value={formData.limite_ingressos} onChange={e => setFormData({...formData, limite_ingressos: Number(e.target.value)})} />
             </div>
             <div className="space-y-1">
-              <label className="text-xs font-bold uppercase text-muted">Preço Mensal</label>
+              <label className="text-xs font-bold uppercase text-muted-foreground">Preço Mensal</label>
               <Input type="number" value={formData.preco_mensal} onChange={e => setFormData({...formData, preco_mensal: Number(e.target.value)})} />
             </div>
           </div>
@@ -102,14 +102,14 @@ function PlanosPage() {
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {plans?.map((plan: any) => (
-          <div key={plan.id} className="bg-white p-6 rounded-xl border flex flex-col justify-between">
+          <div key={plan.id} className="bg-card p-6 rounded-xl border flex flex-col justify-between">
             <div className="space-y-4">
               <div className="flex justify-between items-start">
                 <div className="w-10 h-10 bg-coral/10 rounded-lg flex items-center justify-center text-coral">
                   <CreditCard className="w-5 h-5" />
                 </div>
                 <div className="flex gap-1">
-                  <Button size="icon" variant="ghost" className="h-8 w-8 text-muted hover:text-navy" onClick={() => { setIsEditing(plan); setFormData(plan); }}>
+                  <Button size="icon" variant="ghost" className="h-8 w-8 text-muted-foreground hover:text-foreground" onClick={() => { setIsEditing(plan); setFormData(plan); }}>
                     <Edit2 className="w-4 h-4" />
                   </Button>
                   <Button size="icon" variant="ghost" className="h-8 w-8 text-destructive/50 hover:text-destructive" onClick={() => deletePlan.mutate(plan.id)}>
@@ -118,23 +118,23 @@ function PlanosPage() {
                 </div>
               </div>
               <div>
-                <h3 className="text-xl font-manrope font-extrabold text-navy">{plan.nome}</h3>
+                <h3 className="text-xl font-manrope font-extrabold text-foreground">{plan.nome}</h3>
                 <p className="text-2xl font-black text-coral mt-1">
-                  R$ {plan.preco_mensal?.toFixed(2)}<span className="text-xs font-medium text-muted">/mês</span>
+                  R$ {plan.preco_mensal?.toFixed(2)}<span className="text-xs font-medium text-muted-foreground">/mês</span>
                 </p>
               </div>
               <ul className="space-y-2">
                 <li className="text-sm font-medium flex justify-between">
-                  <span className="text-muted">Taxa por venda:</span>
-                  <span className="text-navy">{plan.taxa_percentual}%</span>
+                  <span className="text-muted-foreground">Taxa por venda:</span>
+                  <span className="text-foreground">{plan.taxa_percentual}%</span>
                 </li>
                 <li className="text-sm font-medium flex justify-between">
-                  <span className="text-muted">Limite Eventos:</span>
-                  <span className="text-navy">{plan.limite_eventos || "Ilimitado"}</span>
+                  <span className="text-muted-foreground">Limite Eventos:</span>
+                  <span className="text-foreground">{plan.limite_eventos || "Ilimitado"}</span>
                 </li>
                 <li className="text-sm font-medium flex justify-between">
-                  <span className="text-muted">Limite Ingressos:</span>
-                  <span className="text-navy">{plan.limite_ingressos || "Ilimitado"}</span>
+                  <span className="text-muted-foreground">Limite Ingressos:</span>
+                  <span className="text-foreground">{plan.limite_ingressos || "Ilimitado"}</span>
                 </li>
               </ul>
             </div>

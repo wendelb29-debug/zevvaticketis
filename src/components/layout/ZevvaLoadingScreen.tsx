@@ -31,7 +31,7 @@ export const ZevvaLoadingScreen = () => {
         <div className="w-48 h-1 bg-accent rounded-full overflow-hidden">
           <div className="h-full bg-primary w-full animate-progress" />
         </div>
-        <p className="text-[10px] font-bold text-muted-fg uppercase tracking-widest animate-pulse">Carregando...</p>
+        <p className="text-[10px] font-bold text-muted-foreground-fg uppercase tracking-widest animate-pulse">Carregando...</p>
       </div>
     </div>
   );

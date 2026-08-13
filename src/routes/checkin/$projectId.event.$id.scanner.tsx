@@ -165,7 +165,7 @@ function ScannerPage() {
           variant="ghost" 
           size="sm" 
           onClick={() => navigate({ to: `/checkin/${projectId}/event/${eventId}` })}
-          className="text-navy font-bold hover:bg-navy/5 -ml-2"
+          className="text-foreground font-bold hover:bg-navy/5 -ml-2"
         >
           <ChevronLeft className="w-4 h-4 mr-1" /> Voltar
         </Button>
@@ -237,7 +237,7 @@ function ScannerPage() {
         <input 
           type="text" 
           placeholder="Digitar código manual..." 
-          className="w-full h-14 rounded-2xl border border-slate-200 px-6 font-bold text-navy focus:ring-2 focus:ring-coral/20 outline-none transition-all"
+          className="w-full h-14 rounded-2xl border border-border px-6 font-bold text-foreground focus:ring-2 focus:ring-coral/20 outline-none transition-all"
           onKeyDown={(e) => {
             if (e.key === 'Enter') {
               handleManualCheckin((e.target as HTMLInputElement).value);
@@ -278,8 +278,8 @@ function ScannerPage() {
               )}
               {scannedResult.ticket && (
                 <div className="space-y-1">
-                  <p className="text-navy font-black text-lg uppercase leading-none">{scannedResult.ticket.profiles?.full_name || 'Participante'}</p>
-                  <p className="text-slate-500 font-bold text-[10px] uppercase tracking-widest">#{scannedResult.ticket.qr_code?.substring(0,12)}</p>
+                  <p className="text-foreground font-black text-lg uppercase leading-none">{scannedResult.ticket.profiles?.full_name || 'Participante'}</p>
+                  <p className="text-muted-foreground font-bold text-[10px] uppercase tracking-widest">#{scannedResult.ticket.qr_code?.substring(0,12)}</p>
                   <p className="text-[10px] text-slate-400 font-medium">Check-in: {DateTime.now().toLocaleString(DateTime.TIME_SIMPLE)}</p>
                 </div>
               )}
@@ -298,17 +298,17 @@ function ScannerPage() {
       {/* Recent History */}
       <div className="space-y-3 pb-10">
         <div className="flex items-center justify-between px-2">
-          <h4 className="text-[10px] font-black text-navy uppercase tracking-widest flex items-center gap-2">
+          <h4 className="text-[10px] font-black text-foreground uppercase tracking-widest flex items-center gap-2">
             <HistoryIcon className="w-3 h-3 text-coral" /> Últimas Leituras
           </h4>
         </div>
         <div className="space-y-2">
           {scanHistory.length === 0 ? (
-            <p className="text-[10px] text-slate-400 font-bold uppercase text-center py-4 bg-slate-50 rounded-2xl border border-dashed border-slate-200">
+            <p className="text-[10px] text-slate-400 font-bold uppercase text-center py-4 bg-muted rounded-2xl border border-dashed border-border">
               Aguardando scans...
             </p>
           ) : scanHistory.map((log) => (
-            <div key={log.id} className="flex items-center gap-3 p-3 bg-white rounded-2xl border border-slate-100 shadow-sm animate-in slide-in-from-right duration-300">
+            <div key={log.id} className="flex items-center gap-3 p-3 bg-card rounded-2xl border border-border shadow-sm animate-in slide-in-from-right duration-300">
               <div className={cn(
                 "w-8 h-8 rounded-lg flex items-center justify-center shrink-0",
                 log.status === 'presente' || log.status === 'sucesso' ? "bg-emerald-50 text-emerald-500" : "bg-red-50 text-red-500"
@@ -317,7 +317,7 @@ function ScannerPage() {
               </div>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center justify-between">
-                  <p className="text-[10px] font-black text-navy uppercase truncate">
+                  <p className="text-[10px] font-black text-foreground uppercase truncate">
                     {log.tickets?.name || log.tickets?.qr_code?.substring(0,8) || "Inválido"}
                   </p>
                   <span className="text-[9px] font-bold text-slate-400 uppercase">{log.checkin_time}</span>

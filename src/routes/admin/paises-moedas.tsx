@@ -72,17 +72,17 @@ function PaisesMoedasPage() {
 
   return (
     <div className="space-y-10 font-inter">
-      <h1 className="text-2xl font-manrope font-extrabold text-navy">Países e Moedas</h1>
+      <h1 className="text-2xl font-manrope font-extrabold text-foreground">Países e Moedas</h1>
       
       <div className="grid lg:grid-cols-2 gap-10">
         {/* Countries Column */}
         <div className="space-y-6">
           <div className="flex items-center gap-2 border-b pb-4">
             <Globe className="text-coral" />
-            <h2 className="text-lg font-extrabold text-navy">Países Ativos</h2>
+            <h2 className="text-lg font-extrabold text-foreground">Países Ativos</h2>
           </div>
           
-          <div className="bg-white p-4 rounded-xl border flex gap-2">
+          <div className="bg-card p-4 rounded-xl border flex gap-2">
             <Input placeholder="Nome" value={countryForm.nome} onChange={e => setCountryForm({...countryForm, nome: e.target.value})} />
             <Input placeholder="ISO" className="w-20" value={countryForm.codigo_iso} onChange={e => setCountryForm({...countryForm, codigo_iso: e.target.value})} />
             <Button size="icon" className="bg-coral shrink-0" onClick={() => addCountry.mutate(countryForm)}>
@@ -90,18 +90,18 @@ function PaisesMoedasPage() {
             </Button>
           </div>
 
-          <div className="bg-white rounded-xl border overflow-hidden max-h-[500px] overflow-y-auto">
+          <div className="bg-card rounded-xl border overflow-hidden max-h-[500px] overflow-y-auto">
             {countries?.map((c: any) => (
               <div key={c.id} className="px-4 py-3 flex items-center justify-between hover:bg-surface/30 transition-colors border-b last:border-0">
                 <div className="flex items-center gap-3">
-                  <span className="text-xs font-black text-muted w-8">{c.codigo_iso}</span>
-                  <span className="font-bold text-navy">{c.nome}</span>
+                  <span className="text-xs font-black text-muted-foreground w-8">{c.codigo_iso}</span>
+                  <span className="font-bold text-foreground">{c.nome}</span>
                 </div>
                 <button onClick={() => updateCountry.mutate({ id: c.id, ativo: !c.ativo })}>
                   {c.ativo ? (
                     <ToggleRight className="text-coral w-8 h-8" />
                   ) : (
-                    <ToggleLeft className="text-muted w-8 h-8" />
+                    <ToggleLeft className="text-muted-foreground w-8 h-8" />
                   )}
                 </button>
               </div>
@@ -113,10 +113,10 @@ function PaisesMoedasPage() {
         <div className="space-y-6">
           <div className="flex items-center gap-2 border-b pb-4">
             <DollarSign className="text-coral" />
-            <h2 className="text-lg font-extrabold text-navy">Moedas Ativas</h2>
+            <h2 className="text-lg font-extrabold text-foreground">Moedas Ativas</h2>
           </div>
 
-          <div className="bg-white p-4 rounded-xl border flex gap-2">
+          <div className="bg-card p-4 rounded-xl border flex gap-2">
             <Input placeholder="Código (Ex: BRL)" value={currencyForm.codigo} onChange={e => setCurrencyForm({...currencyForm, codigo: e.target.value})} />
             <Input placeholder="Símbolo" className="w-20" value={currencyForm.simbolo} onChange={e => setCurrencyForm({...currencyForm, simbolo: e.target.value})} />
             <Button size="icon" className="bg-coral shrink-0" onClick={() => addCurrency.mutate(currencyForm)}>
@@ -124,18 +124,18 @@ function PaisesMoedasPage() {
             </Button>
           </div>
 
-          <div className="bg-white rounded-xl border overflow-hidden max-h-[500px] overflow-y-auto">
+          <div className="bg-card rounded-xl border overflow-hidden max-h-[500px] overflow-y-auto">
             {currencies?.map((cur: any) => (
               <div key={cur.id} className="px-4 py-3 flex items-center justify-between hover:bg-surface/30 transition-colors border-b last:border-0">
                 <div className="flex items-center gap-3">
-                  <span className="text-xs font-black text-muted w-10">{cur.codigo}</span>
-                  <span className="font-bold text-navy">{cur.simbolo}</span>
+                  <span className="text-xs font-black text-muted-foreground w-10">{cur.codigo}</span>
+                  <span className="font-bold text-foreground">{cur.simbolo}</span>
                 </div>
                 <button onClick={() => updateCurrency.mutate({ id: cur.id, ativo: !cur.ativo })}>
                   {cur.ativo ? (
                     <ToggleRight className="text-coral w-8 h-8" />
                   ) : (
-                    <ToggleLeft className="text-muted w-8 h-8" />
+                    <ToggleLeft className="text-muted-foreground w-8 h-8" />
                   )}
                 </button>
               </div>

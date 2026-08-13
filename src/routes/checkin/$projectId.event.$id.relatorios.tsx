@@ -90,8 +90,8 @@ function ReportsPage() {
     <div className="space-y-8">
       <div className="flex justify-between items-end">
         <div>
-          <h2 className="text-3xl font-manrope font-black text-navy uppercase tracking-tighter">Relatórios</h2>
-          <p className="text-slate-500 font-medium">Gestão de participantes e auditoria de entrada.</p>
+          <h2 className="text-3xl font-manrope font-black text-foreground uppercase tracking-tighter">Relatórios</h2>
+          <p className="text-muted-foreground font-medium">Gestão de participantes e auditoria de entrada.</p>
         </div>
         <div className="flex gap-3">
           <Button variant="outline" className="rounded-xl font-black uppercase text-xs" onClick={exportCSV}>
@@ -103,7 +103,7 @@ function ReportsPage() {
         </div>
       </div>
 
-      <div className="bg-white rounded-[32px] p-6 border border-slate-200 shadow-sm flex gap-4">
+      <div className="bg-card rounded-[32px] p-6 border border-border shadow-sm flex gap-4">
          <div className="flex-1 flex gap-2">
             {['todos', 'presente', 'faltante'].map((s) => (
               <Button 
@@ -111,7 +111,7 @@ function ReportsPage() {
                 variant={filterStatus === s ? 'default' : 'outline'}
                 className={cn(
                   "rounded-full px-6 font-black uppercase text-[10px] tracking-widest",
-                  filterStatus === s ? "bg-navy" : "text-slate-500"
+                  filterStatus === s ? "bg-navy" : "text-muted-foreground"
                 )}
                 onClick={() => setFilterStatus(s)}
               >
@@ -121,10 +121,10 @@ function ReportsPage() {
          </div>
       </div>
 
-      <div className="bg-white rounded-[32px] border border-slate-200 shadow-sm overflow-hidden">
+      <div className="bg-card rounded-[32px] border border-border shadow-sm overflow-hidden">
         <table className="w-full text-left border-collapse">
           <thead>
-            <tr className="bg-slate-50 border-b border-slate-200">
+            <tr className="bg-muted border-b border-border">
               <th className="p-6 text-[10px] font-black text-slate-400 uppercase tracking-widest">Participante</th>
               <th className="p-6 text-[10px] font-black text-slate-400 uppercase tracking-widest">Status</th>
               <th className="p-6 text-[10px] font-black text-slate-400 uppercase tracking-widest">Check-in</th>
@@ -132,10 +132,10 @@ function ReportsPage() {
           </thead>
           <tbody>
             {filteredTickets.map((t) => (
-              <tr key={t.id} className="border-b border-slate-100 hover:bg-slate-50/50 transition-colors">
+              <tr key={t.id} className="border-b border-border hover:bg-muted/50 transition-colors">
                 <td className="p-6">
                   <div className="flex flex-col">
-                    <span className="text-sm font-black text-navy uppercase">{t.profiles?.full_name}</span>
+                    <span className="text-sm font-black text-foreground uppercase">{t.profiles?.full_name}</span>
                     <span className="text-[10px] font-bold text-slate-400">{t.profiles?.email}</span>
                   </div>
                 </td>
@@ -144,12 +144,12 @@ function ReportsPage() {
                     "px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest border",
                     t.status === 'utilizado' 
                       ? "bg-good/10 text-good border-good/20" 
-                      : "bg-slate-100 text-slate-500 border-slate-200"
+                      : "bg-slate-100 text-muted-foreground border-border"
                   )}>
                     {t.status === 'utilizado' ? 'Presente' : 'Ausente'}
                   </span>
                 </td>
-                <td className="p-6 text-xs font-bold text-slate-500">
+                <td className="p-6 text-xs font-bold text-muted-foreground">
                   {t.checked_in_at ? new Date(t.checked_in_at).toLocaleString('pt-BR') : "-"}
                 </td>
               </tr>

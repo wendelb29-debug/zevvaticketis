@@ -136,14 +136,14 @@ function HistoricoPage() {
     <div className="space-y-6 animate-in fade-in duration-500">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h2 className="text-3xl font-manrope font-black text-navy uppercase tracking-tighter">Histórico de Operação</h2>
+          <h2 className="text-3xl font-manrope font-black text-foreground uppercase tracking-tighter">Histórico de Operação</h2>
           <p className="text-xs font-black text-coral uppercase tracking-widest mt-1 opacity-80">Projeto: {projectId}</p>
         </div>
         <div className="flex gap-2">
           <Button 
             onClick={exportCSV}
             variant="outline"
-            className="border-slate-200 text-navy rounded-2xl h-12 px-6 font-black uppercase tracking-widest text-xs gap-2 bg-white"
+            className="border-border text-foreground rounded-2xl h-12 px-6 font-black uppercase tracking-widest text-xs gap-2 bg-card"
           >
             <Download className="w-4 h-4" /> CSV
           </Button>
@@ -161,7 +161,7 @@ function HistoricoPage() {
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
           <Input 
             placeholder="Buscar participante ou evento..." 
-            className="pl-10 h-12 rounded-xl border-slate-200 font-bold focus:ring-coral/20 focus:border-coral transition-all bg-white"
+            className="pl-10 h-12 rounded-xl border-border font-bold focus:ring-coral/20 focus:border-coral transition-all bg-card"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
@@ -170,7 +170,7 @@ function HistoricoPage() {
           <Calendar className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
           <Input 
             type="date"
-            className="pl-10 h-12 rounded-xl border-slate-200 font-bold focus:ring-coral/20 focus:border-coral transition-all bg-white"
+            className="pl-10 h-12 rounded-xl border-border font-bold focus:ring-coral/20 focus:border-coral transition-all bg-card"
             value={dateFilter}
             onChange={(e) => setDateFilter(e.target.value)}
           />
@@ -179,18 +179,18 @@ function HistoricoPage() {
           <User className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
           <Input 
             placeholder="Filtrar por Operador..." 
-            className="pl-10 h-12 rounded-xl border-slate-200 font-bold focus:ring-coral/20 focus:border-coral transition-all bg-white"
+            className="pl-10 h-12 rounded-xl border-border font-bold focus:ring-coral/20 focus:border-coral transition-all bg-card"
             value={userFilter}
             onChange={(e) => setUserFilter(e.target.value)}
           />
         </div>
       </div>
 
-      <div className="bg-white rounded-[32px] border border-slate-200 overflow-hidden shadow-sm">
+      <div className="bg-card rounded-[32px] border border-border overflow-hidden shadow-sm">
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse">
             <thead>
-              <tr className="bg-slate-50 border-b border-slate-200">
+              <tr className="bg-muted border-b border-border">
                 <th className="px-6 py-4 text-[10px] font-black text-slate-400 uppercase tracking-widest">Data / Hora</th>
                 <th className="px-6 py-4 text-[10px] font-black text-slate-400 uppercase tracking-widest">Participante</th>
                 <th className="px-6 py-4 text-[10px] font-black text-slate-400 uppercase tracking-widest">Evento</th>
@@ -207,34 +207,34 @@ function HistoricoPage() {
                     <Link 
                       to="/checkin/$projectId"
                       params={{ projectId }}
-                      className="inline-flex items-center justify-center px-4 py-2 bg-navy/5 text-navy border border-navy/10 rounded-lg font-black text-[10px] uppercase tracking-widest hover:bg-navy/10 transition-all"
+                      className="inline-flex items-center justify-center px-4 py-2 bg-navy/5 text-foreground border border-navy/10 rounded-lg font-black text-[10px] uppercase tracking-widest hover:bg-navy/10 transition-all"
                     >
                       Selecionar outro evento
                     </Link>
                   </td>
                 </tr>
               ) : filteredLogs.map((log) => (
-                <tr key={log.id} className="hover:bg-slate-50/50 transition-colors">
+                <tr key={log.id} className="hover:bg-muted/50 transition-colors">
                   <td className="px-6 py-4">
                     <div className="flex flex-col">
-                      <span className="text-xs font-black text-navy uppercase">{DateTime.fromISO(log.checkin_date).toFormat('dd/MM/yyyy')}</span>
+                      <span className="text-xs font-black text-foreground uppercase">{DateTime.fromISO(log.checkin_date).toFormat('dd/MM/yyyy')}</span>
                       <span className="text-[10px] font-bold text-slate-400 uppercase">{log.checkin_time}</span>
                     </div>
                   </td>
                   <td className="px-6 py-4">
                     <div className="flex items-center gap-2">
                       <div className="w-8 h-8 rounded-lg bg-navy/5 flex items-center justify-center">
-                        <User className="w-4 h-4 text-navy" />
+                        <User className="w-4 h-4 text-foreground" />
                       </div>
                       <div className="flex flex-col min-w-0">
-                        <span className="text-xs font-black text-navy uppercase truncate">{log.tickets?.name || 'N/A'}</span>
+                        <span className="text-xs font-black text-foreground uppercase truncate">{log.tickets?.name || 'N/A'}</span>
                         <span className="text-[9px] font-bold text-slate-400 uppercase truncate">#{log.tickets?.qr_code?.substring(0,8)}</span>
                       </div>
                     </div>
                   </td>
                   <td className="px-6 py-4">
                     <div className="flex flex-col min-w-0">
-                      <span className="text-xs font-black text-navy uppercase truncate">{log.events?.title}</span>
+                      <span className="text-xs font-black text-foreground uppercase truncate">{log.events?.title}</span>
                       <div className="flex items-center gap-1">
                         <MapPin className="w-2.5 h-2.5 text-slate-300" />
                         <span className="text-[9px] font-bold text-slate-400 uppercase truncate">{log.events?.location}</span>
@@ -242,7 +242,7 @@ function HistoricoPage() {
                     </div>
                   </td>
                   <td className="px-6 py-4">
-                    <span className="text-[10px] font-black text-navy uppercase">{log.profiles?.full_name || 'Sistema'}</span>
+                    <span className="text-[10px] font-black text-foreground uppercase">{log.profiles?.full_name || 'Sistema'}</span>
                   </td>
                   <td className="px-6 py-4 text-right">
                     <span className={cn(

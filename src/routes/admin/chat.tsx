@@ -321,7 +321,7 @@ function AdminChatPage() {
                       "w-2 h-2 rounded-full",
                       integrationStatus?.status === 'online' ? "bg-green-500 animate-pulse" : "bg-red-500"
                     )} />
-                    <span className="text-[10px] font-bold uppercase tracking-wider text-muted-fg">
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground-fg">
                       {integrationStatus?.status === 'online' ? "Conectado" : "Desconectado"}
                     </span>
                   </div>
@@ -334,7 +334,7 @@ function AdminChatPage() {
                         {integrationStatus?.status === 'online' ? "VÍNCULO ATIVO" : "QUEBRA DE VÍNCULO"}
                       </Badge>
                     </div>
-                    <p className="text-[10px] text-muted-fg">
+                    <p className="text-[10px] text-muted-foreground-fg">
                       {integrationStatus?.status === 'online' 
                         ? "Sua integração com o WhatsApp está funcionando normalmente e pronta para enviar/receber mensagens." 
                         : "Detectamos uma falha na conexão com o WhatsApp. eu rastrear quando algo não estiver interligado. Adicionar testes automatizados de isolamento multi-tenant para garantir que mensagens e estado de leitura nunca vazem ou fiquem desinterligados."}
@@ -356,7 +356,7 @@ function AdminChatPage() {
           </div>
           
           <div className="flex items-center gap-6">
-          <button className="relative p-2 hover:bg-accent rounded-full transition-colors text-muted-fg">
+          <button className="relative p-2 hover:bg-accent rounded-full transition-colors text-muted-foreground-fg">
             <Bell className="w-5 h-5" />
             <span className="absolute top-1.5 right-1.5 w-3 h-3 bg-primary rounded-full text-[8px] flex items-center justify-center border-2 border-card text-primary-foreground font-bold">3</span>
           </button>
@@ -366,7 +366,7 @@ function AdminChatPage() {
               <div className="text-[10px] font-black text-foreground uppercase leading-tight">Admin Zevva</div>
               <div className={cn(
                 "text-[9px] font-black uppercase tracking-widest leading-tight",
-                agentStatus === 'online' ? "text-green-500" : agentStatus === 'busy' ? "text-amber-500" : "text-muted-fg"
+                agentStatus === 'online' ? "text-green-500" : agentStatus === 'busy' ? "text-amber-500" : "text-muted-foreground-fg"
               )}>{agentStatus}</div>
             </div>
             
@@ -1079,11 +1079,11 @@ function AdminChatPage() {
           <DialogHeader className="p-6 bg-accent/20 border-b border-border">
             <div className="flex items-center justify-between w-full">
               <DialogTitle className="text-xl font-manrope font-extrabold">Finalizar atendimento</DialogTitle>
-              <Badge variant="outline" className="bg-background border-border text-muted-fg text-[10px] px-3 py-1 font-mono">
+              <Badge variant="outline" className="bg-background border-border text-muted-foreground-fg text-[10px] px-3 py-1 font-mono">
                 TKT-{selectedContactId || '000'}
               </Badge>
             </div>
-            <DialogDescription className="text-muted-fg mt-2 font-inter text-sm">
+            <DialogDescription className="text-muted-foreground-fg mt-2 font-inter text-sm">
               Ao finalizar este atendimento, o ticket será arquivado no histórico.
             </DialogDescription>
           </DialogHeader>
@@ -1095,15 +1095,15 @@ function AdminChatPage() {
             </div>
             
             <div className="space-y-3">
-              <Label className="text-xs font-bold uppercase tracking-wider text-muted-fg ml-1">Resumo do Atendimento</Label>
+              <Label className="text-xs font-bold uppercase tracking-wider text-muted-foreground-fg ml-1">Resumo do Atendimento</Label>
               <div className="bg-background rounded-xl border border-border overflow-hidden focus-within:border-primary/50 transition-colors shadow-sm">
                 <div className="flex items-center gap-4 px-4 py-3 bg-accent/30 border-b border-border">
-                  <div className="flex gap-4 text-muted-fg">
+                  <div className="flex gap-4 text-muted-foreground-fg">
                      <button type="button" className="hover:text-primary transition-colors"><AlignLeft className="w-4 h-4" /></button>
                      <button type="button" className="hover:text-primary transition-colors"><Languages className="w-4 h-4" /></button>
                   </div>
                   <div className="flex-1" />
-                  <div className="flex gap-4 text-muted-fg">
+                  <div className="flex gap-4 text-muted-foreground-fg">
                     <button type="button" className="hover:text-primary transition-colors"><Smile className="w-4 h-4" /></button>
                     <button type="button" className="hover:text-primary transition-colors"><Paperclip className="w-4 h-4" /></button>
                   </div>
@@ -1115,8 +1115,8 @@ function AdminChatPage() {
                 <div className="flex items-center justify-between px-4 py-3 bg-accent/10 border-t border-border">
                    <Zap className="w-4 h-4 text-primary animate-pulse" />
                    <div className="flex items-center gap-3">
-                     <span className="text-[10px] font-bold text-muted-fg uppercase tracking-widest">0 / 1024</span>
-                     <MoreVertical className="w-4 h-4 text-muted-fg" />
+                     <span className="text-[10px] font-bold text-muted-foreground-fg uppercase tracking-widest">0 / 1024</span>
+                     <MoreVertical className="w-4 h-4 text-muted-foreground-fg" />
                    </div>
                 </div>
               </div>
@@ -1215,14 +1215,14 @@ function AdminChatPage() {
           .flex-1.flex.flex-col.bg-background.shrink-0.relative, .flex-1.flex.flex-col.bg-background.shrink-0.relative * {
             visibility: visible;
           }
-          .flex-1.flex.flex-col.bg-white.shrink-0.relative {
+          .flex-1.flex.flex-col.bg-card.shrink-0.relative {
             position: absolute;
             left: 0;
             top: 0;
             width: 100%;
             height: auto;
           }
-          header, .w-[540px], .w-[52px], .p-4.bg-white.border-t, .h-\[72px\] .flex.items-center.gap-2 {
+          header, .w-[540px], .w-[52px], .p-4.bg-card.border-t, .h-\[72px\] .flex.items-center.gap-2 {
             display: none !important;
           }
           .flex-1.overflow-y-auto.p-8.space-y-8 {

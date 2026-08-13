@@ -34,12 +34,12 @@ export function EventCard({ event, onToggleFavorite }: EventCardProps) {
             e.preventDefault();
             onToggleFavorite?.(event.id);
           }}
-          className="absolute top-3 right-3 w-9 h-9 rounded-full bg-white/90 backdrop-blur-md border border-border flex items-center justify-center text-foreground hover:bg-primary hover:text-white transition-all z-10"
+          className="absolute top-3 right-3 w-9 h-9 rounded-full bg-card/90 backdrop-blur-md border border-border flex items-center justify-center text-foreground hover:bg-primary hover:text-white transition-all z-10"
         >
           <Heart className="w-4 h-4" />
         </button>
 
-        <div className="absolute top-3 left-3 px-3 py-1 bg-white/90 backdrop-blur-md border border-border rounded-md text-[10px] font-bold text-foreground-muted uppercase tracking-wider">
+        <div className="absolute top-3 left-3 px-3 py-1 bg-card/90 backdrop-blur-md border border-border rounded-md text-[10px] font-bold text-muted-foreground uppercase tracking-wider">
           {event.category || "Evento"}
         </div>
       </div>
@@ -52,7 +52,7 @@ export function EventCard({ event, onToggleFavorite }: EventCardProps) {
           <h3 className="text-lg font-bold text-foreground line-clamp-2 leading-tight group-hover:text-primary transition-colors">
             {event.title}
           </h3>
-          <div className="flex items-center gap-1.5 text-foreground-muted text-xs">
+          <div className="flex items-center gap-1.5 text-muted-foreground text-xs">
             <MapPin className="w-3.5 h-3.5" />
             <span className="truncate">{event.location || "A definir"}</span>
           </div>
@@ -60,7 +60,7 @@ export function EventCard({ event, onToggleFavorite }: EventCardProps) {
 
         <div className="pt-4 flex items-center justify-between border-t border-border">
           <div className="flex flex-col">
-            <span className="text-[10px] font-medium text-foreground-muted">A partir de</span>
+            <span className="text-[10px] font-medium text-muted-foreground">A partir de</span>
             <span className="text-lg font-extrabold text-foreground">
               R$ {event.min_price || 0}
             </span>

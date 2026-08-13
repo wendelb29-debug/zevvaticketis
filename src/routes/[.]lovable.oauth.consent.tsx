@@ -118,7 +118,7 @@ function ConsentPage() {
   if (!authorization_id) {
     return (
       <Shell>
-        <p className="text-sm text-muted">Requisição de autorização inválida.</p>
+        <p className="text-sm text-muted-foreground">Requisição de autorização inválida.</p>
       </Shell>
     );
   }
@@ -126,7 +126,7 @@ function ConsentPage() {
   if (checking) {
     return (
       <Shell>
-        <p className="text-sm text-muted">Carregando…</p>
+        <p className="text-sm text-muted-foreground">Carregando…</p>
       </Shell>
     );
   }
@@ -134,15 +134,15 @@ function ConsentPage() {
   if (!session) {
     return (
       <Shell>
-        <h1 className="text-2xl font-manrope font-extrabold text-navy">Entre para continuar</h1>
-        <p className="text-sm text-muted">
+        <h1 className="text-2xl font-manrope font-extrabold text-foreground">Entre para continuar</h1>
+        <p className="text-sm text-muted-foreground">
           Faça login na Zevva Tickets para autorizar o acesso do aplicativo.
         </p>
         {error && <p role="alert" className="text-sm text-coral">{error}</p>}
         <Button
           variant="outline"
           onClick={signInWithGoogle}
-          className="w-full h-12 rounded-[14px] border-line font-extrabold text-navy"
+          className="w-full h-12 rounded-[14px] border-line font-extrabold text-foreground"
         >
           Continuar com Google
         </Button>
@@ -175,10 +175,10 @@ function ConsentPage() {
 
   return (
     <Shell>
-      <h1 className="text-2xl font-manrope font-extrabold text-navy">
+      <h1 className="text-2xl font-manrope font-extrabold text-foreground">
         Conectar {clientName} à sua conta
       </h1>
-      <p className="text-sm text-muted">
+      <p className="text-sm text-muted-foreground">
         Isso permite que {clientName} acesse a Zevva Tickets como você — seus eventos e ingressos.
       </p>
       {error && <p role="alert" className="text-sm text-coral">{error}</p>}
@@ -194,7 +194,7 @@ function ConsentPage() {
           disabled={busy}
           variant="outline"
           onClick={() => decide(false)}
-          className="flex-1 h-12 rounded-[14px] border-line font-extrabold text-navy"
+          className="flex-1 h-12 rounded-[14px] border-line font-extrabold text-foreground"
         >
           Recusar
         </Button>
@@ -205,7 +205,7 @@ function ConsentPage() {
 
 function Shell({ children }: { children: React.ReactNode }) {
   return (
-    <main className="min-h-screen flex items-center justify-center bg-white p-6">
+    <main className="min-h-screen flex items-center justify-center bg-card p-6">
       <div className="w-full max-w-md space-y-5 rounded-[24px] border border-line p-8 shadow-xl">
         {children}
       </div>
