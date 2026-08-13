@@ -31,6 +31,7 @@ import { SidebarFiles } from "@/components/admin/chat/SidebarFiles";
 import { SidebarHistory } from "@/components/admin/chat/SidebarHistory";
 import { SidebarSchedule } from "@/components/admin/chat/SidebarSchedule";
 import { SidebarFinish } from "@/components/admin/chat/SidebarFinish";
+import { SidebarTransfer } from "@/components/admin/chat/SidebarTransfer";
 
 const READ_RECEIPT_BLUE = "READ_RECEIPT_BLUE";
 const ONLINE_STATUS_GREEN = "ONLINE_STATUS_GREEN";
@@ -1184,57 +1185,45 @@ function AdminChatPage() {
         </DialogContent>
       </Dialog>
 
-      {/* Dialog: Transferir Atendimento */}
-      <Dialog open={isTransferDialogOpen} onOpenChange={setIsTransferDialogOpen}>
-        <DialogContent className="max-w-2xl bg-card border-border text-foreground">
-          <DialogHeader>
-            <div className="flex items-center gap-3">
-              <DialogTitle className="text-xl font-bold">Transferir atendimento</DialogTitle>
-              <Badge variant="outline" className="bg-card border-none text-muted-foreground text-[10px] px-2 py-0">20240804-001</Badge>
-            </div>
-            <DialogDescription className="text-muted-foreground">Escolha o destinatário para transferir este atendimento.</DialogDescription>
-          </DialogHeader>
-          <div className="py-6 space-y-6">
-            <div className="grid grid-cols-2 gap-6">
-              <div className="space-y-2">
-                <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Tipo de transferência</Label>
-                <Select defaultValue="agent">
-                  <SelectTrigger className="bg-muted border-border text-xs h-11">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent className="bg-popover border-border text-foreground">
-                    <SelectItem value="agent">Para Agente</SelectItem>
-                    <SelectItem value="dept">Para Departamento</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              <div className="space-y-2">
-                <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Destinatário</Label>
-                <Select>
-                  <SelectTrigger className="bg-muted border-border text-xs h-11">
-                    <SelectValue placeholder="Selecione um agente" />
-                  </SelectTrigger>
-                  <SelectContent className="bg-popover border-border text-foreground">
-                    <SelectItem value="a1">Carlos Aguiar</SelectItem>
-                    <SelectItem value="a2">Ana Pereira</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
-            <div className="space-y-2">
-              <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Motivo da transferência</Label>
-              <textarea 
-                className="w-full bg-muted border border-border p-4 rounded-xl text-xs text-foreground placeholder:text-muted-foreground outline-none min-h-[100px] resize-none"
-                placeholder="Explique o motivo da transferência..."
-              />
-            </div>
-          </div>
-          <DialogFooter className="mt-4 flex justify-between sm:justify-between items-center w-full">
-            <button onClick={() => setIsTransferDialogOpen(false)} className="text-sm font-bold hover:underline">Cancelar</button>
-            <button onClick={handleTransfer} className="flex-1 max-w-[400px] py-3 bg-primary hover:bg-primary/90 text-primary-foreground text-[11px] font-black uppercase tracking-widest rounded-lg">Transferir agora</button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+      {/* Sidebar Tools Components */}
+      <SidebarGroups 
+        isOpen={activeSidebarTool === 'groups'} 
+        onClose={() => setActiveSidebarTool(null)}
+        contactId={selectedContactId || ''}
+        tenantId={activeTenant?.id || ''}
+      />
+      
+      <SidebarFiles 
+        isOpen={activeSidebarTool === 'files'} 
+        onClose={() => setActiveSidebarTool(null)}
+        contactId={selectedContactId || ''}
+      />
+
+      <SidebarHistory 
+        isOpen={activeSidebarTool === 'history'} 
+        onClose={() => setActiveSidebarTool(null)}
+        contactId={selectedContactId || ''}
+      />
+
+      <SidebarSchedule 
+        isOpen={activeSidebarTool === 'schedule'} 
+        onClose={() => setActiveSidebarTool(null)}
+        contactId={selectedContactId || ''}
+        tenantId={activeTenant?.id || ''}
+      />
+
+      <SidebarFinish 
+        isOpen={isFinishDialogOpen} 
+        onClose={() => setIsFinishDialogOpen(false)}
+        contactId={selectedContactId || ''}
+      />
+
+      <SidebarTransfer 
+        isOpen={isTransferDialogOpen} 
+        onClose={() => setIsTransferDialogOpen(false)}
+        contactId={selectedContactId || ''}
+        tenantId={activeTenant?.id || ''}
+      />
 
       <style>{`
         .chat-container {
