@@ -79,7 +79,7 @@ import { Route as CheckinProjectIdHistoricoRouteImport } from './routes/checkin/
 import { Route as CheckinProjectIdPresencaRouteImport } from './routes/checkin/$projectId.presenca'
 import { Route as CheckinProjectIdScannerRouteImport } from './routes/checkin/$projectId.scanner'
 import { Route as EventosIdCheckoutRouteImport } from './routes/eventos/$id.checkout'
-import { Route as EventosCategoriaSlugRouteImport } from './routes/eventos.categoria.$slug'
+import { Route as EventosCategoriaSlugRouteImport } from './routes/eventos/categoria/$slug'
 import { Route as OauthGoogleReturnRouteImport } from './routes/oauth/google/return'
 import { Route as ProdutorIdDashboardRouteImport } from './routes/produtor/$id.dashboard'
 import { Route as CheckinProjectIdEventIdRouteImport } from './routes/checkin/$projectId.event.$id'
