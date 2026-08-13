@@ -347,11 +347,22 @@ export function TeamManagement({ tenantId }: { tenantId?: string }) {
             </div>
 
             <div className="space-y-1.5">
-              <Label>Permissão</Label>
+              <Label>Cargo / Permissão</Label>
               <Select value={newUser.permission} onValueChange={(v) => setNewUser({ ...newUser, permission: v })}>
-                <SelectTrigger><SelectValue placeholder="Selecione uma permissão" /></SelectTrigger>
+                <SelectTrigger><SelectValue placeholder="Selecione um cargo" /></SelectTrigger>
                 <SelectContent>
-                  {PERMISSIONS.map((p) => <SelectItem key={p} value={p}>{p}</SelectItem>)}
+                  {projectRoles.length > 0 ? (
+                    projectRoles.map((role: any) => (
+                      <SelectItem key={role.id} value={role.id}>
+                        <div className="flex items-center gap-2">
+                          <div className="w-2 h-2 rounded-full" style={{ backgroundColor: role.color || '#E8604A' }} />
+                          {role.name}
+                        </div>
+                      </SelectItem>
+                    ))
+                  ) : (
+                    PERMISSIONS.map((p) => <SelectItem key={p} value={p}>{p}</SelectItem>)
+                  )}
                 </SelectContent>
               </Select>
               <div className="flex gap-2 items-start rounded-xl border border-primary/40 bg-primary/5 p-3 text-xs text-muted-foreground">
