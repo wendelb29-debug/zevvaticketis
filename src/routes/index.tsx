@@ -163,10 +163,10 @@ function HomePage() {
           <div className="relative z-10 max-w-7xl mx-auto px-6 w-full">
             <div className="max-w-2xl space-y-8 animate-in fade-in slide-in-from-left-8 duration-700">
               <h1 className="text-5xl md:text-7xl font-manrope font-extrabold text-primary-foreground tracking-tight leading-[1.1]">
-                Encontre experiências que valem a pena viver<span className="text-primary">.</span>
+                {translations[language].home.heroTitle}<span className="text-primary">.</span>
               </h1>
               <p className="text-xl text-primary-foreground/70 font-medium max-w-xl leading-relaxed">
-                Shows, festivais, encontros e eventos perto de você.
+                {translations[language].home.heroSubtitle}
               </p>
               <div className="flex flex-wrap gap-4 pt-4">
                 <button
@@ -183,14 +183,14 @@ function HomePage() {
                   }
                   className="h-14 px-10 bg-primary text-primary-foreground font-bold rounded-md hover:bg-primary-hover transition-all shadow-xl shadow-primary/20 flex items-center gap-3"
                 >
-                  Explorar eventos
+                  {translations[language].home.exploreEvents}
                   <ArrowRight className="w-5 h-5" />
                 </button>
                 <button
                   onClick={() => navigate({ to: "/cadastro" })}
                   className="h-14 px-10 bg-card/10 backdrop-blur-md border border-white/20 text-primary-foreground font-bold rounded-md hover:bg-card/20 transition-all"
                 >
-                  Criar meu evento
+                  {translations[language].home.createMyEvent}
                 </button>
               </div>
             </div>
@@ -206,7 +206,7 @@ function HomePage() {
               <div className="relative flex-1 w-full">
                 <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground h-5 w-5" />
                 <Input
-                  placeholder="Qual evento você está procurando?"
+                  placeholder={translations[language].nav.searchFull}
                   className="h-14 pl-12 pr-6 text-base rounded-xl border border-border bg-background focus-visible:ring-primary/20 placeholder:text-muted-foreground/50"
                   value={homeSearchTerm}
                   onChange={(e) => setHomeSearchTerm(e.target.value)}
@@ -230,10 +230,10 @@ function HomePage() {
 
               <div className="flex items-center gap-2 px-4 w-full md:w-auto">
                 <button className="h-14 px-6 flex items-center gap-3 text-sm font-bold text-foreground hover:bg-background rounded-xl border border-border transition-colors whitespace-nowrap">
-                  <MapPin className="w-4 h-4 text-primary" /> Onde?
+                  <MapPin className="w-4 h-4 text-primary" /> {translations[language].nav.where}
                 </button>
                 <button className="h-14 px-6 flex items-center gap-3 text-sm font-bold text-foreground hover:bg-background rounded-xl border border-border transition-colors whitespace-nowrap">
-                  <Calendar className="w-4 h-4 text-primary" /> Quando?
+                  <Calendar className="w-4 h-4 text-primary" /> {translations[language].nav.when}
                 </button>
               </div>
 
@@ -251,7 +251,7 @@ function HomePage() {
                 }
                 className="w-full md:w-auto h-14 px-10 bg-primary text-primary-foreground font-bold rounded-xl hover:bg-primary-hover transition-all shadow-lg shadow-primary/10"
               >
-                Buscar agora
+                {translations[language].nav.search}
               </button>
             </div>
           </div>
@@ -264,10 +264,10 @@ function HomePage() {
               <div className="space-y-3">
                 <div className="h-1 w-12 bg-primary rounded-full" />
                 <h2 className="text-3xl md:text-4xl font-manrope font-extrabold text-foreground tracking-tight">
-                  Eventos em destaque
+                  {translations[language].home.featured}
                 </h2>
                 <p className="text-muted-foreground font-medium text-lg max-w-xl">
-                  As melhores experiências selecionadas para você.
+                  {translations[language].home.featuredSubtitle}
                 </p>
               </div>
             </div>
@@ -297,10 +297,10 @@ function HomePage() {
           <div className="max-w-7xl mx-auto space-y-16">
             <div className="flex flex-col items-center text-center space-y-4 max-w-2xl mx-auto">
               <h2 className="text-3xl md:text-4xl font-manrope font-extrabold text-foreground tracking-tight">
-                Explore por categorias
+                {translations[language].home.categories}
               </h2>
               <p className="text-muted-foreground font-medium text-lg">
-                Encontre o evento perfeito para seu momento.
+                {translations[language].home.categoriesSubtitle}
               </p>
             </div>
             <CategoryGrid />
@@ -313,10 +313,10 @@ function HomePage() {
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
               <div className="space-y-4">
                 <span className="text-[10px] font-bold text-primary uppercase tracking-[0.2em]">
-                  Personalizado
+                  {translations[language].home.suggestedSubtitle}
                 </span>
                 <h2 className="text-3xl md:text-4xl font-manrope font-extrabold text-foreground tracking-tight">
-                  Sugeridos para você
+                  {translations[language].home.suggested}
                 </h2>
               </div>
             </div>
@@ -335,10 +335,10 @@ function HomePage() {
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
               <div className="space-y-4 max-w-2xl">
                 <span className="text-[10px] font-bold text-primary uppercase tracking-[0.2em]">
-                  Calendário
+                  {translations[language].home.upcomingSubtitle}
                 </span>
                 <h2 className="text-3xl md:text-4xl font-manrope font-extrabold text-foreground tracking-tight">
-                  Próximas experiências
+                  {translations[language].home.upcoming}
                 </h2>
               </div>
               <Link
@@ -353,7 +353,7 @@ function HomePage() {
                 }
                 className="flex items-center gap-2 text-sm font-bold text-primary hover:text-primary-hover transition-colors"
               >
-                Ver Agenda Completa <ArrowRight className="w-3 h-3" />
+                {translations[language].nav.agenda} <ArrowRight className="w-3 h-3" />
               </Link>
             </div>
 
@@ -381,10 +381,10 @@ function HomePage() {
           <div className="max-w-7xl mx-auto space-y-16">
             <div className="flex flex-col items-center text-center space-y-4 max-w-3xl mx-auto">
               <h2 className="text-3xl md:text-5xl font-manrope font-extrabold text-foreground tracking-tight">
-                Cursos e Imersões
+                {translations[language].home.coursesTitle}
               </h2>
               <p className="text-muted-foreground font-medium text-lg">
-                Conhecimento profissional com os melhores especialistas do mercado.
+                {translations[language].home.coursesSubtitle}
               </p>
             </div>
 
