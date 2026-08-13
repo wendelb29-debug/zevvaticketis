@@ -8,7 +8,13 @@ export const translations = {
       courses: "Cursos",
       plans: "Planos",
       organizer: "Organizador",
-      login: "Entrar"
+      login: "Entrar",
+      searchPlaceholder: "O que você está buscando?",
+      createEvent: "Criar Evento",
+      searchFull: "O que você está buscando?",
+      where: "Onde?",
+      when: "Quando?",
+      search: "Buscar"
     },
     home: {
       featuredLabel: "Destaque",
@@ -25,13 +31,19 @@ export const translations = {
     },
     footer: {
       about: "Sobre a Zevva",
-      aboutText: "A Zevva é a plataforma premium para gestão de eventos, caravanas e cursos internacionais.",
+      description: "A Zevva é a plataforma premium para gestão de eventos, caravanas e cursos internacionais.",
       platform: "Plataforma",
       help: "Ajuda",
       newsletter: "Newsletter",
       newsletterPlaceholder: "Seu melhor e-mail",
       subscribe: "Assinar",
-      rights: "Zevva. Todos os direitos reservados."
+      rights: "Zevva. Todos os direitos reservados.",
+      support: "Suporte",
+      helpCenter: "Central de Ajuda",
+      terms: "Termos",
+      privacy: "Privacidade",
+      refund: "Reembolso",
+      producerPanel: "Painel do Produtor"
     }
   },
   "en-US": {
@@ -41,7 +53,13 @@ export const translations = {
       courses: "Courses",
       plans: "Plans",
       organizer: "Organizer",
-      login: "Login"
+      login: "Login",
+      searchPlaceholder: "What are you looking for?",
+      createEvent: "Create Event",
+      searchFull: "What are you looking for?",
+      where: "Where?",
+      when: "When?",
+      search: "Search"
     },
     home: {
       featuredLabel: "Featured",
@@ -58,13 +76,19 @@ export const translations = {
     },
     footer: {
       about: "About Zevva",
-      aboutText: "Zevva is the premium platform for managing international events, caravans, and courses.",
+      description: "Zevva is the premium platform for managing international events, caravans, and courses.",
       platform: "Platform",
       help: "Help",
       newsletter: "Newsletter",
       newsletterPlaceholder: "Your best email",
       subscribe: "Subscribe",
-      rights: "Zevva. All rights reserved."
+      rights: "Zevva. All rights reserved.",
+      support: "Support",
+      helpCenter: "Help Center",
+      terms: "Terms",
+      privacy: "Privacy",
+      refund: "Refund",
+      producerPanel: "Producer Panel"
     }
   },
   "es-ES": {
@@ -74,7 +98,13 @@ export const translations = {
       courses: "Cursos",
       plans: "Planes",
       organizer: "Organizador",
-      login: "Acceder"
+      login: "Acceder",
+      searchPlaceholder: "¿Qué estás buscando?",
+      createEvent: "Crear Evento",
+      searchFull: "¿Qué estás buscando?",
+      where: "¿Dónde?",
+      when: "¿Cuándo?",
+      search: "Buscar"
     },
     home: {
       featuredLabel: "Destacado",
