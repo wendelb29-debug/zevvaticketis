@@ -10,7 +10,10 @@ import {
   Bus,
   Users,
   Award,
-  BookOpen
+  BookOpen,
+  ShieldCheck,
+  Globe,
+  Zap
 } from "lucide-react";
 
 import { Input } from "@/components/ui/input";
@@ -126,71 +129,94 @@ function HomePage() {
   };
 
   return (
-    <div className={cn("min-h-screen bg-white", language === 'ar' ? "rtl" : "ltr")} dir={language === 'ar' ? "rtl" : "ltr"}>
+    <div className={cn("min-h-screen bg-background", language === 'ar' ? "rtl" : "ltr")} dir={language === 'ar' ? "rtl" : "ltr"}>
       <Navbar selectedCity={null} />
-
+ 
       <main className="relative">
-        {/* Premium Hero */}
-        <section className="hero-premium-bg h-[600px] flex items-center justify-center text-center text-white px-6">
-          <div className="max-w-3xl space-y-6 animate-in fade-in zoom-in-95 duration-700">
-            <h1 className="text-4xl md:text-7xl font-manrope font-black tracking-tighter uppercase leading-tight">
-              Viva experiências que conectam pessoas
-            </h1>
-            <p className="text-lg md:text-xl font-medium text-white/90">
-              Eventos, cursos, caravanas e experiências em um só lugar.
-            </p>
+        {/* Editorial Hero */}
+        <section className="relative h-[80vh] min-h-[600px] flex items-center overflow-hidden bg-[#0A0A0A]">
+          <div className="absolute inset-0 opacity-40">
+            <img 
+              src="https://images.unsplash.com/photo-1517457373958-b7bdd4587205?q=80&w=2069&auto=format&fit=crop" 
+              className="w-full h-full object-cover grayscale"
+              alt="Experience background"
+            />
+          </div>
+          <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent" />
+          
+          <div className="relative z-10 max-w-7xl mx-auto px-6 w-full">
+            <div className="max-w-3xl space-y-8 animate-in fade-in slide-in-from-bottom-8 duration-1000">
+              <span className="inline-block px-4 py-1.5 rounded-full border border-white/20 bg-white/5 text-[10px] font-bold text-white uppercase tracking-[0.2em] backdrop-blur-sm">
+                Exclusividade Zevva
+              </span>
+              <h1 className="text-5xl md:text-8xl font-serif text-white tracking-tight leading-[0.9]">
+                Momentos que <br />
+                <span className="italic text-accent">transcendem</span>.
+              </h1>
+              <p className="text-lg md:text-xl text-white/60 font-medium max-w-xl leading-relaxed">
+                Curadoria de eventos, caravanas internacionais e experiências culturais de alto padrão.
+              </p>
+              <div className="flex flex-wrap gap-4 pt-4">
+                <button className="h-14 px-8 bg-white text-black font-bold rounded-sm hover:bg-white/90 transition-all">
+                  Explorar Calendário
+                </button>
+                <button className="h-14 px-8 border border-white/20 text-white font-bold rounded-sm hover:bg-white/5 transition-all">
+                  Nossa Curadoria
+                </button>
+              </div>
+            </div>
           </div>
         </section>
 
         <CityTicker />
 
 
-        {/* Main Search & Quick Filters */}
-        <section className="relative -mt-16 z-20 px-6">
-          <div className="max-w-4xl mx-auto bg-white p-6 md:p-8 rounded-[32px] shadow-2xl border border-line space-y-6">
-            <div className="flex flex-col md:flex-row gap-4">
-              <div className="relative flex-[2]">
-                <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-muted h-5 w-5" />
+        {/* Minimalist Search */}
+        <section className="relative -mt-12 z-20 px-6">
+          <div className="max-w-6xl mx-auto bg-surface-base p-2 rounded-xl shadow-xl border border-border">
+            <div className="flex flex-col md:flex-row items-center gap-2">
+              <div className="relative flex-1 w-full">
+                <Search className="absolute left-6 top-1/2 -translate-y-1/2 text-foreground-muted h-4 w-4" />
                 <Input 
-                  placeholder="🔎 O que você procura? Ex: Congresso, Curso..."
-                  className="h-14 pl-12 text-lg rounded-2xl border-2 border-line bg-surface/50 focus-visible:ring-coral"
+                  placeholder="Encontrar experiência ou destino..."
+                  className="h-16 pl-14 pr-6 text-base rounded-lg border-none bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0 placeholder:text-foreground-muted/50"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                 />
               </div>
               
-              <div className="flex-[1.5] flex gap-2">
-                <button className="flex-1 h-14 bg-surface border-2 border-line rounded-2xl text-xs font-black text-navy uppercase flex items-center justify-center gap-2 hover:bg-line transition-all">
-                  <MapPin className="w-4 h-4 text-coral" /> Localização
+              <div className="hidden md:flex h-10 w-px bg-border mx-2" />
+
+              <div className="flex items-center gap-2 px-4 w-full md:w-auto">
+                <button className="h-16 px-4 flex items-center gap-3 text-sm font-bold text-foreground hover:bg-background rounded-lg transition-colors whitespace-nowrap">
+                  <MapPin className="w-4 h-4 text-accent" /> Local
                 </button>
-                <button className="flex-1 h-14 bg-surface border-2 border-line rounded-2xl text-xs font-black text-navy uppercase flex items-center justify-center gap-2 hover:bg-line transition-all">
-                  <Calendar className="w-4 h-4 text-coral" /> Data
+                <button className="h-16 px-4 flex items-center gap-3 text-sm font-bold text-foreground hover:bg-background rounded-lg transition-colors whitespace-nowrap">
+                  <Calendar className="w-4 h-4 text-accent" /> Quando
                 </button>
               </div>
 
-              <button className="h-14 px-8 bg-coral text-white font-black rounded-2xl hover:bg-coral-dark transition-all shadow-lg active:scale-95">
-                BUSCAR EXPERIÊNCIAS
+              <button className="w-full md:w-auto h-16 px-10 bg-primary text-white font-bold rounded-lg hover:bg-primary-hover transition-all shadow-lg shadow-primary/10">
+                PESQUISAR
               </button>
-            </div>
-            
-            <div className="flex flex-wrap items-center gap-4 text-[10px] font-bold text-muted uppercase tracking-widest pt-4 border-t border-line">
-              <span>Buscas em alta:</span>
-              <button className="px-3 py-1 bg-accent/30 rounded-full hover:bg-accent transition-colors">#Israel2027</button>
-              <button className="px-3 py-1 bg-accent/30 rounded-full hover:bg-accent transition-colors">#Liderança</button>
-              <button className="px-3 py-1 bg-accent/30 rounded-full hover:bg-accent transition-colors">#Festivais</button>
             </div>
           </div>
         </section>
 
         {/* Featured Coverflow */}
-        <section className="py-24 bg-surface/10">
-          <div className="max-w-7xl mx-auto px-6 mb-16 text-center">
-            <h2 className="text-3xl md:text-5xl font-manrope font-black text-navy uppercase tracking-tighter">
-              Experiências em destaque
-            </h2>
-            <p className="text-muted-fg font-bold mt-4 uppercase tracking-widest text-xs md:text-sm">
-              Seleção exclusiva Zevva para você
-            </p>
+        <section className="py-32">
+          <div className="max-w-7xl mx-auto px-6 mb-20">
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+              <div className="space-y-4 max-w-2xl">
+                <span className="text-[10px] font-bold text-accent uppercase tracking-[0.2em]">Curadoria Semanal</span>
+                <h2 className="text-4xl md:text-6xl font-serif text-foreground tracking-tight">
+                  Experiências em <span className="italic">Destaque</span>
+                </h2>
+              </div>
+              <p className="text-foreground-muted font-medium max-w-xs text-sm leading-relaxed">
+                Seleção exclusiva de eventos que definem novos padrões de excelência cultural e profissional.
+              </p>
+            </div>
           </div>
           
           {loadingFeatured ? (
@@ -216,33 +242,34 @@ function HomePage() {
         </section>
 
 
-        <section className="px-6 py-24 bg-surface/30">
-          <div className="max-w-7xl mx-auto space-y-12">
-            <div className="text-center space-y-4">
-              <h2 className="text-3xl md:text-5xl font-manrope font-black text-navy uppercase tracking-tighter">
-                Explore Categorias
+        <section className="px-6 py-32 bg-surface-base border-y border-border">
+          <div className="max-w-7xl mx-auto space-y-20">
+            <div className="flex flex-col items-center text-center space-y-6 max-w-2xl mx-auto">
+              <span className="text-[10px] font-bold text-accent uppercase tracking-[0.2em]">Curadoria Zevva</span>
+              <h2 className="text-4xl md:text-6xl font-serif text-foreground tracking-tight">
+                Explore por <span className="italic">Categorias</span>
               </h2>
-              <p className="text-muted-fg font-bold uppercase tracking-widest text-xs">
-                O que você deseja vivenciar hoje?
+              <p className="text-foreground-muted font-medium text-sm leading-relaxed">
+                Descubra experiências personalizadas através de nossos eixos temáticos exclusivos.
               </p>
             </div>
             <CategoryGrid />
           </div>
         </section>
 
-        {/* Recomendados - Seção Inteligente */}
-        <section className="px-6 py-24">
-          <div className="max-w-7xl mx-auto space-y-12">
-            <div className="flex justify-between items-end">
-              <div className="space-y-2">
-                <h2 className="text-3xl font-manrope font-black text-navy flex items-center gap-3">
-                  <Star className="w-8 h-8 text-coral animate-pulse" /> Selecionados para você
+        {/* Selected for You - Minimal Grid */}
+        <section className="px-6 py-32">
+          <div className="max-w-7xl mx-auto space-y-20">
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+              <div className="space-y-4">
+                <span className="text-[10px] font-bold text-accent uppercase tracking-[0.2em]">Personalizado</span>
+                <h2 className="text-4xl md:text-6xl font-serif text-foreground tracking-tight">
+                  Sugeridos para <span className="italic">Você</span>
                 </h2>
-                <p className="text-muted-fg font-bold uppercase tracking-widest text-xs">Com base no seu perfil e localização</p>
               </div>
             </div>
             
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
               {events.slice(0, 4).map((event) => (
                 <EventCard 
                   key={event.id} 
@@ -255,33 +282,33 @@ function HomePage() {
         </section>
 
 
-        {/* Eventos Próximos */}
-        <section className="px-6 py-24">
-          <div className="max-w-7xl mx-auto space-y-12">
-            <div className="flex justify-between items-end">
-              <div className="space-y-2">
-                <h2 className="text-3xl font-manrope font-black text-navy flex items-center gap-3">
-                  <TrendingUp className="w-8 h-8 text-coral" /> Próximos Eventos
+        {/* Upcoming - Minimalist Layout */}
+        <section className="px-6 py-32 bg-background border-y border-border">
+          <div className="max-w-7xl mx-auto space-y-20">
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+              <div className="space-y-4 max-w-2xl">
+                <span className="text-[10px] font-bold text-accent uppercase tracking-[0.2em]">Calendário</span>
+                <h2 className="text-4xl md:text-6xl font-serif text-foreground tracking-tight">
+                  Próximas <span className="italic">Experiências</span>
                 </h2>
-                <p className="text-muted-fg font-bold uppercase tracking-widest text-xs">As melhores experiências agendadas para você</p>
               </div>
               <Link 
                 to="/eventos" 
                 search={{ categoria: undefined, id: undefined }}
-                className="group flex items-center gap-2 text-primary font-bold hover:underline"
+                className="flex items-center gap-2 text-[10px] font-bold text-accent uppercase tracking-widest hover:text-foreground transition-colors"
               >
-                Ver tudo <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                Ver Agenda Completa <ArrowRight className="w-3 h-3" />
               </Link>
             </div>
-
+ 
             {loadingEvents ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
                 {[1,2,3,4].map(i => (
-                  <div key={i} className="aspect-[3/4] rounded-[24px] bg-slate-100 animate-pulse" />
+                  <div key={i} className="aspect-[16/10] rounded-sm bg-surface-elevated animate-pulse border border-border" />
                 ))}
               </div>
             ) : (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
                 {filteredEvents.map((event) => (
                   <EventCard 
                     key={event.id} 
@@ -294,33 +321,31 @@ function HomePage() {
           </div>
         </section>
 
-        {/* Cursos e Imersões */}
-        <section className="px-6 py-24 bg-navy text-white">
-          <div className="max-w-7xl mx-auto space-y-12">
-            <div className="text-center space-y-4">
-              <h2 className="text-3xl md:text-5xl font-manrope font-black uppercase tracking-tighter">
-                Aprenda com especialistas
+        {/* Cursos - Editorial Layout */}
+        <section className="px-6 py-32 bg-[#0F0F0F] text-white">
+          <div className="max-w-7xl mx-auto space-y-24">
+            <div className="flex flex-col items-center text-center space-y-6 max-w-3xl mx-auto">
+              <span className="text-[10px] font-bold text-accent uppercase tracking-[0.2em]">Conhecimento Profissional</span>
+              <h2 className="text-5xl md:text-7xl font-serif tracking-tight">
+                Aprenda com <br /><span className="italic text-accent">Especialistas</span>
               </h2>
-              <p className="text-white/60 font-bold uppercase tracking-widest text-xs">
-                Cursos, workshops e imersões presenciais e online
-              </p>
             </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+ 
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
               {[
                 { title: "Liderança Exponencial", tutor: "Dr. Marcos Silva", hours: "40h", mode: "Presencial" },
                 { title: "Marketing de Experiência", tutor: "Ana Paula Melo", hours: "12h", mode: "Online" },
                 { title: "Gestão de Caravanas", tutor: "Ricardo Santos", hours: "24h", mode: "Híbrido" }
               ].map((course, i) => (
-                <div key={i} className="bg-white/5 border border-white/10 p-8 rounded-[32px] hover:bg-white/10 transition-colors group">
-                  <div className="w-12 h-12 bg-coral rounded-2xl flex items-center justify-center mb-6">
-                    <BookOpen className="w-6 h-6" />
-                  </div>
-                  <h3 className="text-xl font-manrope font-black mb-2 uppercase">{course.title}</h3>
-                  <p className="text-white/40 text-sm mb-6">Com {course.tutor}</p>
-                  <div className="flex items-center justify-between text-[10px] font-black uppercase tracking-widest">
-                    <span className="flex items-center gap-2"><Users className="w-4 h-4 text-coral" /> {course.hours}</span>
-                    <span className="px-3 py-1 bg-white/10 rounded-full">{course.mode}</span>
+                <div key={i} className="group border-b border-white/10 pb-12 hover:border-accent transition-colors">
+                  <span className="text-[10px] font-bold text-accent uppercase tracking-[0.2em] mb-8 block">Módulo 0{i+1}</span>
+                  <h3 className="text-3xl font-serif mb-4 leading-tight">{course.title}</h3>
+                  <p className="text-white/40 text-sm mb-8 font-medium italic">Com {course.tutor}</p>
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] font-bold uppercase tracking-widest text-white/60">{course.hours} • {course.mode}</span>
+                    <button className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center group-hover:bg-accent group-hover:border-accent transition-all">
+                      <ArrowRight className="w-4 h-4" />
+                    </button>
                   </div>
                 </div>
               ))}
@@ -328,36 +353,47 @@ function HomePage() {
           </div>
         </section>
 
-        {/* Caravanas Marketplace */}
-        <section className="px-6 py-24">
-          <div className="max-w-7xl mx-auto space-y-12">
-            <div className="flex justify-between items-end">
-              <div className="space-y-2">
-                <h2 className="text-3xl font-manrope font-black text-navy flex items-center gap-3">
-                  <Bus className="w-8 h-8 text-coral" /> Caravanas em Destaque
+        {/* Caravanas Marketplace - Editorial Grid */}
+        <section className="px-6 py-32 bg-surface-base border-t border-border">
+          <div className="max-w-7xl mx-auto space-y-24">
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+              <div className="space-y-4">
+                <span className="text-[10px] font-bold text-accent uppercase tracking-[0.2em]">Oportunidades</span>
+                <h2 className="text-4xl md:text-6xl font-serif text-foreground tracking-tight">
+                  Caravanas em <span className="italic text-accent">Destaque</span>
                 </h2>
-                <p className="text-muted-fg font-bold uppercase tracking-widest text-xs">Viagens em grupo com suporte completo</p>
               </div>
             </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+ 
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
               {[
-                { title: "Caravana Terra Santa 2027", from: "São Paulo", to: "Israel", date: "Maio 2027", price: "US$ 3.500" },
-                { title: "Congresso Europa 2026", from: "Rio de Janeiro", to: "Lisboa/Roma", date: "Outubro 2026", price: "US$ 2.800" }
+                { title: "Caravana Terra Santa 2027", from: "São Paulo", to: "Israel", date: "Maio 2027", price: "US$ 3.500", image: "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?q=80&w=2017&auto=format&fit=crop" },
+                { title: "Congresso Europa 2026", from: "Rio de Janeiro", to: "Lisboa/Roma", date: "Outubro 2026", price: "US$ 2.800", image: "https://images.unsplash.com/photo-1542281286-9e0a16bb7366?auto=format&fit=crop&q=80" }
               ].map((caravan, i) => (
-                <div key={i} className="bg-surface rounded-[40px] p-8 border border-line flex flex-col md:flex-row gap-8 items-center group">
-                  <div className="w-full md:w-48 h-48 bg-slate-200 rounded-[32px] flex items-center justify-center overflow-hidden">
-                    <img src={`https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?q=80&w=2017&auto=format&fit=crop`} className="w-full h-full object-cover group-hover:scale-110 transition-transform" />
+                <div key={i} className="group flex flex-col md:flex-row gap-10 items-start border-b border-border pb-12 hover:border-accent transition-colors">
+                  <div className="w-full md:w-64 aspect-square overflow-hidden rounded-sm grayscale group-hover:grayscale-0 transition-all duration-700">
+                    <img src={caravan.image} alt={caravan.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" />
                   </div>
-                  <div className="flex-1 space-y-4">
-                    <h3 className="text-2xl font-manrope font-black text-navy uppercase leading-tight">{caravan.title}</h3>
-                    <div className="grid grid-cols-2 gap-4 text-[10px] font-bold text-muted uppercase tracking-widest">
-                      <div><p className="text-coral">Origem</p><p className="text-navy">{caravan.from}</p></div>
-                      <div><p className="text-coral">Destino</p><p className="text-navy">{caravan.to}</p></div>
+                  <div className="flex-1 space-y-8 py-2">
+                    <div className="space-y-4">
+                      <span className="text-[10px] font-bold text-accent uppercase tracking-widest">{caravan.date}</span>
+                      <h3 className="text-3xl font-serif leading-tight">{caravan.title}</h3>
+                      <div className="flex items-center gap-8 text-[10px] font-bold text-foreground-muted uppercase tracking-widest">
+                        <div className="flex flex-col gap-1">
+                          <span className="text-[8px] opacity-60">Origem</span>
+                          <span>{caravan.from}</span>
+                        </div>
+                        <div className="flex flex-col gap-1">
+                          <span className="text-[8px] opacity-60">Destino</span>
+                          <span>{caravan.to}</span>
+                        </div>
+                      </div>
                     </div>
-                    <div className="pt-4 border-t border-line flex items-center justify-between">
-                      <span className="text-xl font-manrope font-black text-navy">{caravan.price}</span>
-                      <button className="px-6 py-3 bg-navy text-white text-[10px] font-black uppercase tracking-widest rounded-xl hover:bg-coral transition-colors">Reservar Vaga</button>
+                    <div className="flex items-center justify-between pt-4">
+                      <span className="text-2xl font-serif italic text-primary">{caravan.price}</span>
+                      <button className="h-12 px-8 border border-border text-[10px] font-bold uppercase tracking-widest hover:bg-primary hover:text-white hover:border-primary transition-all rounded-sm">
+                        Reservar Vaga
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -366,100 +402,103 @@ function HomePage() {
           </div>
         </section>
 
-        {/* Admit One Ticket Showcase */}
-        <section className="px-6 py-24 bg-surface/10 overflow-hidden">
-          <div className="max-w-7xl mx-auto space-y-12">
-            <div className="text-center space-y-4">
-              <h2 className="text-3xl md:text-5xl font-manrope font-black text-navy uppercase tracking-tighter">
-                Seu Ingresso Digital
+        {/* Admit One Ticket Showcase - Minimalist Modern */}
+        <section className="px-6 py-32 bg-[#F0EFEC] border-y border-border overflow-hidden">
+          <div className="max-w-7xl mx-auto space-y-20">
+            <div className="text-center space-y-6 max-w-2xl mx-auto">
+              <span className="text-[10px] font-bold text-accent uppercase tracking-[0.2em]">Tecnologia Exclusiva</span>
+              <h2 className="text-4xl md:text-6xl font-serif text-foreground tracking-tight">
+                Seu Ingresso <br /><span className="italic text-accent">Redefinido</span>
               </h2>
-              <p className="text-muted-fg font-bold uppercase tracking-widest text-xs">
-                Experiência interativa 3D exclusiva Zevva
+              <p className="text-foreground-muted font-medium text-lg">
+                Experiência interativa 3D com segurança criptográfica e estética editorial premium.
               </p>
             </div>
             
-            <div className="max-w-2xl mx-auto">
+            <div className="max-w-3xl mx-auto">
               <AdmitOneTicket 
                 title="Congresso Internacional de Liderança"
                 date="15 DE OUTUBRO, 2026"
                 location="SÃO PAULO, BRASIL"
                 price="R$ 450,00"
-                className="shadow-2xl hover:scale-[1.02] transition-transform duration-500"
+                className="shadow-[0_40px_100px_-20px_rgba(0,0,0,0.2)] hover:scale-[1.02] transition-transform duration-700"
               />
             </div>
           </div>
         </section>
 
-        {/* Grid Pattern Showcase - Por que a Zevva? */}
-        <section className="px-6 py-24">
-          <div className="max-w-7xl mx-auto space-y-12">
-            <div className="text-center space-y-4">
-              <h2 className="text-3xl md:text-5xl font-manrope font-black text-navy uppercase tracking-tighter">
-                Por que escolher a Zevva?
-              </h2>
-            </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <GridPatternCard>
-                <GridPatternCardBody>
-                  <h3 className="text-2xl font-manrope font-black text-navy uppercase mb-4">Tecnologia 3D</h3>
-                  <p className="text-muted-fg font-medium">Ingressos interativos com segurança criptográfica e visual premium.</p>
-                </GridPatternCardBody>
-              </GridPatternCard>
+        {/* Features - Editorial Grid */}
+        <section className="px-6 py-32 border-b border-border">
+          <div className="max-w-7xl mx-auto space-y-24">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-20">
+              <div className="space-y-6">
+                <div className="w-12 h-12 border border-accent flex items-center justify-center rounded-sm">
+                  <ShieldCheck className="w-6 h-6 text-accent" />
+                </div>
+                <h3 className="text-3xl font-serif">Segurança <br /><span className="italic">Criptográfica</span></h3>
+                <p className="text-foreground-muted text-sm leading-relaxed font-medium">
+                  Protocolos avançados que garantem a autenticidade de cada ingresso e a proteção total dos seus dados e transações.
+                </p>
+              </div>
 
-              <GridPatternCard>
-                <GridPatternCardBody>
-                  <h3 className="text-2xl font-manrope font-black text-navy uppercase mb-4">Ecossistema</h3>
-                  <p className="text-muted-fg font-medium">Conectamos organizadores e participantes em uma jornada completa.</p>
-                </GridPatternCardBody>
-              </GridPatternCard>
+              <div className="space-y-6">
+                <div className="w-12 h-12 border border-accent flex items-center justify-center rounded-sm">
+                  <Globe className="w-6 h-6 text-accent" />
+                </div>
+                <h3 className="text-3xl font-serif">Escala <br /><span className="italic">Global</span></h3>
+                <p className="text-foreground-muted text-sm leading-relaxed font-medium">
+                  Infraestrutura robusta preparada para suportar grandes volumes de tráfego e vendas em qualquer lugar do mundo.
+                </p>
+              </div>
 
-              <GridPatternCard>
-                <GridPatternCardBody>
-                  <h3 className="text-2xl font-manrope font-black text-navy uppercase mb-4">Alcance Global</h3>
-                  <p className="text-muted-fg font-medium">Especialistas em caravanas internacionais e grandes eventos.</p>
-                </GridPatternCardBody>
-              </GridPatternCard>
+              <div className="space-y-6">
+                <div className="w-12 h-12 border border-accent flex items-center justify-center rounded-sm">
+                  <Zap className="w-6 h-6 text-accent" />
+                </div>
+                <h3 className="text-3xl font-serif">Experiência <br /><span className="italic">Imersiva</span></h3>
+                <p className="text-foreground-muted text-sm leading-relaxed font-medium">
+                  Design orientado à emoção, transformando a compra de um ingresso em um prelúdio memorável do próprio evento.
+                </p>
+              </div>
             </div>
           </div>
         </section>
 
-        {/* Produtores e Prova Social */}
-        <section className="px-6 py-24 bg-surface/30">
-
-          <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
-            <div className="space-y-8">
-              <div className="space-y-4">
-                <h2 className="text-3xl md:text-5xl font-manrope font-black text-navy uppercase tracking-tighter leading-tight">
-                  Organizadores verificados
+        {/* Social Proof - Editorial Section */}
+        <section className="px-6 py-32 bg-surface-base">
+          <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-32 items-center">
+            <div className="space-y-16">
+              <div className="space-y-6">
+                <span className="text-[10px] font-bold text-accent uppercase tracking-[0.2em]">Confiança</span>
+                <h2 className="text-5xl md:text-7xl font-serif text-foreground tracking-tight leading-[0.9]">
+                  Líderes que <br /><span className="italic">Transformam</span> com a Zevva
                 </h2>
-                <p className="text-muted-fg font-bold uppercase tracking-widest text-xs">
-                  Confiança e segurança em todas as experiências
-                </p>
               </div>
-              <div className="grid grid-cols-2 gap-6">
+              
+              <div className="grid grid-cols-2 gap-10">
                 {[1,2,3,4].map(i => (
-                  <div key={i} className="bg-white p-6 rounded-[24px] border border-line flex items-center gap-4 group cursor-pointer hover:shadow-lg transition-all">
-                    <div className="w-12 h-12 bg-accent rounded-full flex-shrink-0" />
+                  <div key={i} className="space-y-4">
+                    <div className="w-12 h-12 rounded-full bg-accent/10 border border-accent/20" />
                     <div>
-                      <p className="text-xs font-black text-navy uppercase">Agência {i}</p>
-                      <p className="text-[10px] font-bold text-muted">150+ Eventos</p>
+                      <p className="text-[10px] font-bold text-foreground uppercase tracking-widest">Organizador Verificado</p>
+                      <p className="text-xs text-foreground-muted font-medium italic">Agência de Turismo {i}</p>
                     </div>
                   </div>
                 ))}
               </div>
             </div>
-            <div className="bg-navy p-12 rounded-[48px] text-white space-y-8 relative overflow-hidden">
-               <Award className="absolute -top-10 -right-10 w-64 h-64 text-white/5 rotate-12" />
-               <div className="relative z-10">
-                 <p className="text-2xl font-manrope font-medium italic leading-relaxed">
-                   "A Zevva transformou a maneira como organizamos nossas caravanas internacionais. A gestão de pagamentos e a comunicação com os viajantes é impecável."
+
+            <div className="relative p-12 md:p-20 bg-primary text-white rounded-sm overflow-hidden">
+               <Award className="absolute -top-10 -right-10 w-80 h-80 text-white/5 rotate-12" />
+               <div className="relative z-10 space-y-10">
+                 <p className="text-3xl md:text-4xl font-serif italic leading-tight">
+                   "A Zevva transformou a maneira como organizamos nossas caravanas internacionais. A estética editorial e a segurança 3D elevaram nossa percepção de valor perante os clientes."
                  </p>
-                 <div className="mt-8 flex items-center gap-4">
-                   <div className="w-14 h-14 bg-coral rounded-2xl" />
+                 <div className="flex items-center gap-6">
+                   <div className="w-16 h-16 bg-accent/20 rounded-full border border-white/10" />
                    <div>
-                     <p className="font-black uppercase tracking-widest text-sm">Pr. André Valadão</p>
-                     <p className="text-xs text-white/40 font-bold uppercase tracking-widest">Lagaroinha Global</p>
+                     <p className="text-sm font-bold uppercase tracking-[0.2em]">Dr. André Valadão</p>
+                     <p className="text-[10px] text-white/60 font-medium uppercase tracking-widest">Lagaroinha Global</p>
                    </div>
                  </div>
                </div>
@@ -469,15 +508,13 @@ function HomePage() {
 
         <PremiumNewsletter />
 
-        <section className="px-6 py-24">
-          <div className="max-w-3xl mx-auto space-y-12">
+        <section className="px-6 py-32 border-t border-border">
+          <div className="max-w-3xl mx-auto space-y-20">
             <div className="text-center space-y-4">
-              <h2 className="text-4xl font-manrope font-extrabold text-navy">
-                Dúvidas Frequentes
+              <span className="text-[10px] font-bold text-accent uppercase tracking-[0.2em]">Suporte</span>
+              <h2 className="text-4xl md:text-6xl font-serif text-foreground tracking-tight">
+                Dúvidas <span className="italic">Frequentes</span>
               </h2>
-              <p className="text-muted font-medium">
-                Tudo o que você precisa saber sobre a Zevva
-              </p>
             </div>
             <FAQAccordion />
           </div>

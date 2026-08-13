@@ -1,14 +1,12 @@
 import { useNavigate } from "@tanstack/react-router";
 import { CATEGORY_THEMES, CategoryType } from "@/lib/categoryThemes";
-import { cn } from "@/lib/utils";
-import { Eye } from "lucide-react";
 
 export function CategoryGrid() {
   const navigate = useNavigate();
   const categories = Object.keys(CATEGORY_THEMES) as CategoryType[];
 
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6">
+    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-x-12 gap-y-20">
       {categories.map((catName) => {
         const theme = CATEGORY_THEMES[catName];
         const Icon = theme.icon;
@@ -16,31 +14,20 @@ export function CategoryGrid() {
         return (
           <button 
             key={catName}
-            onClick={() => navigate({ to: '/eventos', search: { categoria: catName } as any })}
-            className="group relative flex flex-col items-center p-8 rounded-[32px] border-2 border-transparent transition-all duration-500 overflow-hidden"
-            style={{ 
-              backgroundColor: theme.accentColor + '08'
-            }}
+            onClick={() => navigate({ to: '/eventos', search: { categoria: catName, id: undefined } as any })}
+            className="group flex flex-col items-center gap-6 transition-all duration-500"
           >
-            {/* Hover Background Accent */}
-            <div 
-              className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-              style={{ backgroundColor: theme.accentColor + '15' }}
-            />
-
-            <div 
-              className="w-16 h-16 rounded-[24px] mb-6 flex items-center justify-center text-white shadow-xl group-hover:scale-110 group-hover:rotate-6 transition-all duration-500 relative z-10"
-              style={{ backgroundColor: theme.accentColor }}
-            >
-              <Icon className="w-8 h-8" />
+            <div className="relative w-full aspect-[4/5] bg-surface-base border border-border flex items-center justify-center overflow-hidden grayscale group-hover:grayscale-0 group-hover:border-accent group-hover:bg-white transition-all duration-700">
+              <Icon 
+                className="w-10 h-10 text-foreground-muted group-hover:text-accent transition-all duration-500 transform group-hover:scale-110"
+              />
+              <div className="absolute inset-x-0 bottom-0 h-1 bg-accent transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
             </div>
 
-            <h3 className="text-[11px] font-black text-navy uppercase tracking-widest text-center leading-tight relative z-10 group-hover:text-navy/70">
-              {theme.name}
-            </h3>
-
-            <div className="absolute bottom-4 opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-2 group-hover:translate-y-0">
-              <Eye className="w-4 h-4 text-navy/40" />
+            <div className="space-y-1 text-center">
+              <h3 className="text-[10px] font-bold text-foreground uppercase tracking-[0.2em] leading-tight group-hover:text-accent transition-colors">
+                {theme.name}
+              </h3>
             </div>
           </button>
         );

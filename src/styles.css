@@ -17,13 +17,10 @@
 }
 
 @theme {
-  --font-fredoka: "Fredoka", sans-serif;
-  --font-baloo: "Baloo 2", sans-serif;
   --font-manrope: "Manrope", sans-serif;
   --font-inter: "Inter", sans-serif;
+  --font-serif: "Instrument Serif", serif;
 
-  --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  
   --color-coral: #E8604A;
   --color-coral-dark: #C94733;
   --color-navy: #14182A;
@@ -34,55 +31,61 @@
   --color-good: #10B981;
   --color-error: #EF4444;
 
-  /* Semantic Tokens for Theme Switching */
+  /* Zevva Premium Tokens */
   --color-background: var(--background);
+  --color-surface-base: var(--surface-base);
+  --color-surface-elevated: var(--surface-elevated);
   --color-foreground: var(--foreground);
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
-  --color-popover: var(--popover);
-  --color-popover-foreground: var(--popover-foreground);
+  --color-foreground-muted: var(--foreground-muted);
   --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-muted-bg: var(--muted-bg);
-  --color-muted-fg: var(--muted-fg);
+  --color-primary-hover: var(--primary-hover);
   --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
   --color-border: var(--border);
-  --color-input: var(--input);
-  --color-ring: var(--ring);
+  --color-border-strong: var(--border-strong);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-danger: var(--danger);
+  --color-focus: var(--focus);
+  --color-overlay: var(--overlay);
 
-  @keyframes pulse-subtle {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.7; transform: scale(1.02); }
-  }
-  --color-wa-bg: var(--wa-bg);
-  --color-wa-sidebar: var(--wa-sidebar);
-  --color-wa-agent-bubble: var(--wa-agent-bubble);
-  --color-wa-client-bubble: var(--wa-client-bubble);
-  --color-wa-input-bg: var(--wa-input-bg);
-  --color-wa-header-bg: var(--wa-header-bg);
+  /* Legacy Semantic Mappings (for compatibility during transition) */
+  --color-card: var(--surface-base);
+  --color-card-foreground: var(--foreground);
+  --color-popover: var(--surface-elevated);
+  --color-popover-foreground: var(--foreground);
+  --color-primary-foreground: #FFFFFF;
+  --color-secondary: var(--surface-elevated);
+  --color-secondary-foreground: var(--foreground);
+  --color-muted-bg: var(--surface-elevated);
+  --color-muted-fg: var(--foreground-muted);
+  --color-accent-foreground: var(--foreground);
+  --color-input: var(--border);
+  --color-ring: var(--primary);
+
+  /* Radius Tokens */
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 10px;
+  --radius-lg: 12px;
+  --radius-full: 9999px;
 }
 
 :root {
-  --background: #FFFFFF;
-  --foreground: #14182A;
-  --card: #FFFFFF;
-  --card-foreground: #14182A;
-  --popover: #FFFFFF;
-  --popover-foreground: #14182A;
-  --primary: #E8604A;
-  --primary-foreground: #FFFFFF;
-  --secondary: #FFFFFF;
-  --secondary-foreground: #14182A;
-  --muted-bg: #FFFFFF;
-  --muted-fg: #64748B;
-  --accent: #FDF0ED;
-  --accent-foreground: #14182A;
-  --border: rgba(0,0,0,0.09);
-  --input: rgba(0,0,0,0.09);
-  --ring: #E8604A;
+  --background: #F7F6F2;
+  --surface-base: #FEFDFB;
+  --surface-elevated: #FFFFFF;
+  --foreground: #171717;
+  --foreground-muted: #686762;
+  --primary: #7A2538;
+  --primary-hover: #641E2E;
+  --accent: #A98554;
+  --border: #E5E1DA;
+  --border-strong: #D1CDC5;
+  --success: #287A55;
+  --warning: #D97706;
+  --danger: #B63C43;
+  --focus: #7A2538;
+  --overlay: rgba(23, 23, 23, 0.4);
 
   /* WhatsApp Light Fallback */
   --wa-bg: #efeae2;
@@ -94,25 +97,49 @@
 }
 
 .dark {
-  --background: #14182A;
-  --foreground: #F1F5F9;
-  --card: #1E253A;
-  --card-foreground: #F1F5F9;
-  --popover: #1E253A;
-  --popover-foreground: #F1F5F9;
-  --primary: #E8604A;
-  --primary-foreground: #FFFFFF;
-  --secondary: #1E253A;
-  --secondary-foreground: #F1F5F9;
-  --muted-bg: #1E253A;
-  --muted-fg: #94A3B8;
-  --accent: #1E253A;
-  --accent-foreground: #F1F5F9;
-  --border: rgba(255,255,255,0.1);
-  --input: rgba(255,255,255,0.1);
-  --ring: #E8604A;
+  --background: #121210;
+  --surface-base: #1C1C1A;
+  --surface-elevated: #242422;
+  --foreground: #F7F6F2;
+  --foreground-muted: #A1A19A;
+  --primary: #9B3E52;
+  --primary-hover: #B45268;
+  --accent: #C2A378;
+  --border: #2D2D2A;
+  --border-strong: #3D3D3A;
+  --success: #34A876;
+  --warning: #F59E0B;
+  --danger: #D9535D;
+  --focus: #9B3E52;
+  --overlay: rgba(0, 0, 0, 0.7);
 
-  /* WhatsApp Premium Dark Palette Overlay for Chat */
+  /* WhatsApp Premium Dark */
+  --wa-bg: #0b141a;
+  --wa-sidebar: #111b21;
+  --wa-agent-bubble: #005c4b;
+  --wa-client-bubble: #202c33;
+  --wa-input-bg: #2a3942;
+  --wa-header-bg: #202c33;
+}
+
+.dark {
+  --background: #121210;
+  --surface-base: #1C1C1A;
+  --surface-elevated: #242422;
+  --foreground: #F7F6F2;
+  --foreground-muted: #A1A19A;
+  --primary: #9B3E52;
+  --primary-hover: #B45268;
+  --accent: #C2A378;
+  --border: #2D2D2A;
+  --border-strong: #3D3D3A;
+  --success: #34A876;
+  --warning: #F59E0B;
+  --danger: #D9535D;
+  --focus: #9B3E52;
+  --overlay: rgba(0, 0, 0, 0.7);
+
+  /* WhatsApp Premium Dark */
   --wa-bg: #0b141a;
   --wa-sidebar: #111b21;
   --wa-agent-bubble: #005c4b;
@@ -134,11 +161,11 @@
     @apply border-border;
   }
   body {
-    @apply font-inter bg-background text-foreground;
+    @apply font-inter bg-background text-foreground antialiased;
   }
   
   h1, h2, h3, h4, h5, h6 {
-    @apply font-manrope;
+    @apply font-serif leading-tight;
   }
 }
 
