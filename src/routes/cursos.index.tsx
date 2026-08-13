@@ -5,7 +5,7 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { BookOpen, GraduationCap, ArrowRight } from "lucide-react";
 
-export const Route = createFileRoute("/cursos")({
+export const Route = createFileRoute("/cursos/")({
   component: CursosPage,
 });
 
