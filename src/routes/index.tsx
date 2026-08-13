@@ -150,14 +150,14 @@ function HomePage() {
 
       <main className="relative">
         {/* Functional Modern Hero */}
-        <section className="relative h-[85vh] flex items-center bg-dark-surface overflow-hidden">
+        <section className="relative h-[85vh] flex items-center bg-brand-dark overflow-hidden">
           <div className="absolute inset-0">
             <img
               src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=2070&auto=format&fit=crop"
               className="w-full h-full object-cover opacity-50"
               alt="Events background"
             />
-            <div className="absolute inset-0 bg-gradient-to-r from-dark-surface via-dark-surface/80 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-transparent" />
           </div>
 
           <div className="relative z-10 max-w-7xl mx-auto px-6 w-full">
@@ -312,7 +312,7 @@ function HomePage() {
           <div className="max-w-7xl mx-auto space-y-20">
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
               <div className="space-y-4">
-                <span className="text-[10px] font-bold text-accent uppercase tracking-[0.2em]">
+                <span className="text-[10px] font-bold text-primary uppercase tracking-[0.2em]">
                   Personalizado
                 </span>
                 <h2 className="text-3xl md:text-4xl font-manrope font-extrabold text-foreground tracking-tight">
@@ -334,7 +334,7 @@ function HomePage() {
           <div className="max-w-7xl mx-auto space-y-20">
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
               <div className="space-y-4 max-w-2xl">
-                <span className="text-[10px] font-bold text-accent uppercase tracking-[0.2em]">
+                <span className="text-[10px] font-bold text-primary uppercase tracking-[0.2em]">
                   Calendário
                 </span>
                 <h2 className="text-3xl md:text-4xl font-manrope font-extrabold text-foreground tracking-tight">

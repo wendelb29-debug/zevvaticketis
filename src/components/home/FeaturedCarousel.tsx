@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import { Link, useNavigate } from "@tanstack/react-router";
-import { ChevronLeft, ChevronRight, ArrowRight, MapPin, Calendar } from "lucide-react";
+import { ChevronLeft, ChevronRight, ArrowRight, MapPin, Calendar, Ticket } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
+import { EventImage } from "@/components/ui/EventImage";
 
 interface FeaturedEvent {
   id: string;
@@ -60,8 +61,14 @@ export function FeaturedCarousel({ events }: FeaturedCarouselProps) {
     });
   };
 
+  const formatPrice = (price: number | null) => {
+    if (price === null || price === undefined) return "Consulte os ingressos";
+    if (price === 0) return "Gratuito";
+    return `R$ ${price.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}`;
+  };
+
   return (
-    <div className="relative w-full h-[600px] md:h-[700px] overflow-hidden bg-dark-surface rounded-2xl">
+    <div className="relative w-full h-[600px] md:h-[700px] overflow-hidden bg-brand-dark rounded-2xl">
       <AnimatePresence initial={false} mode="wait">
         <motion.div
           key={currentIndex}
@@ -73,13 +80,16 @@ export function FeaturedCarousel({ events }: FeaturedCarouselProps) {
         >
           {/* Hero Image */}
           <div className="absolute inset-0">
-            <img
-              src={currentEvent?.cover_image || "/placeholder.jpg"}
-              alt={currentEvent?.title || "Destaque"}
+            <EventImage
+              src={currentEvent?.cover_image}
+              alt={currentEvent?.title || "Evento em destaque"}
               className="w-full h-full object-cover"
+              containerClassName="w-full h-full"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-dark-surface via-dark-surface/40 to-transparent" />
-            <div className="absolute inset-0 bg-gradient-to-r from-dark-surface via-dark-surface/20 to-transparent" />
+            {/* Vertical Gradient */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/45 to-black/10" />
+            {/* Horizontal Gradient */}
+            <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/20 to-transparent" />
           </div>
 
           {/* Content */}
@@ -110,30 +120,26 @@ export function FeaturedCarousel({ events }: FeaturedCarouselProps) {
                   </div>
                 </div>
 
-                <div className="flex items-center gap-8 pt-4">
+                <div className="flex flex-col md:flex-row items-start md:items-center gap-8 pt-4">
                   <button
                     onClick={() =>
                       navigate({
                         to: "/eventos/$id",
                         params: { id: currentEvent?.id || "" },
-                        search: {
-                          busca: undefined,
-                          categoria: undefined,
-                          cidade: undefined,
-                          data: undefined,
-                        } as any,
                       })
                     }
-                    className="h-14 px-10 bg-card text-dark-surface text-sm font-bold uppercase tracking-widest hover:bg-card/90 transition-all rounded-md shadow-2xl"
+                    className="h-14 px-10 bg-primary text-primary-foreground text-sm font-bold uppercase tracking-widest hover:bg-primary-hover transition-all rounded-md shadow-2xl flex items-center gap-2"
                   >
                     Garantir minha vaga
+                    <ArrowRight className="w-4 h-4" />
                   </button>
                   <div className="flex flex-col">
-                    <span className="text-[10px] font-bold text-primary-foreground/50 uppercase tracking-widest">
-                      A partir de
+                    <span className="text-[10px] font-bold text-white/60 uppercase tracking-widest flex items-center gap-1.5">
+                      <Ticket className="w-3 h-3 text-primary" />
+                      {currentEvent?.min_price === 0 ? "Aproveite" : "A partir de"}
                     </span>
-                    <span className="text-2xl font-black text-primary-foreground">
-                      R$ {currentEvent?.min_price || 0}
+                    <span className="text-2xl font-black text-white">
+                      {formatPrice(currentEvent?.min_price)}
                     </span>
                   </div>
                 </div>
