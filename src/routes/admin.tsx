@@ -174,17 +174,6 @@ function AdminLayout() {
         { label: "Gmail Inbox", href: "/admin/emails" },
       ]
     },
-    { 
-      label: "Configurações", 
-      icon: UserCog, 
-      children: [
-        { label: "Aprovações", href: "/admin/aprovacoes" },
-        { label: "Equipe e Recursos", href: "/admin/configuracoes", query: { tab: "team" } },
-        { label: "Produtores", href: "/admin/produtores" },
-        { label: "Eventos Pendentes", href: "/admin/aprovacoes", query: { tab: "events" } },
-        { label: "SLA e Filas", href: "/admin/configuracoes", query: { tab: "system" } },
-      ]
-    },
   ];
 
   useEffect(() => {
