@@ -50,9 +50,10 @@ export const Route = createFileRoute('/api/public/uazapi-webhook')({
                 }
 
                 if (tenantId) {
-                  // 2. Normalize phone and resolve/create contact
-                  const { data: normalizedPhone } = await supabase.rpc('normalize_phone', { p_phone: rawPhone });
+                  const { data: normalizedPhone } = await supabase.rpc('normalize_phone', { p_phone: rawPhone }) as { data: string };
                   
+                  if (!normalizedPhone) throw new Error("Falha na normalização do telefone");
+
                   // manual resolve/upsert to avoid type issues with composite onConflict for now
                   let { data: contact, error: contactErr } = await supabase
                     .from('whatsapp_contacts')
@@ -69,7 +70,7 @@ export const Route = createFileRoute('/api/public/uazapi-webhook')({
                         phone: rawPhone,
                         normalized_phone: normalizedPhone,
                         name: msgData.pushName || rawPhone,
-                        last_contact_at: new Date().toISOString(),
+                        last_interaction_at: new Date().toISOString(), // Usando o campo existente compatível
                         status: 'active',
                         channel: 'whatsapp'
                       })
@@ -82,9 +83,9 @@ export const Route = createFileRoute('/api/public/uazapi-webhook')({
                     await supabase
                       .from('whatsapp_contacts')
                       .update({ 
-                        last_contact_at: new Date().toISOString(),
-                        name: msgData.pushName || undefined // only update if provided
-                      })
+                        last_interaction_at: new Date().toISOString(),
+                        name: msgData.pushName || undefined
+                      } as any)
                       .eq('id', contact.id);
                   }
 
@@ -95,11 +96,10 @@ export const Route = createFileRoute('/api/public/uazapi-webhook')({
                       .select('id')
                       .eq('contact_id', contact.id)
                       .eq('tenant_id', tenantId)
-                      .eq('status', 'active') // or waiting
+                      .eq('status', 'active') 
                       .maybeSingle();
 
                     if (!attendance) {
-                      // Create new attendance cycle
                       const protocol = `${new Date().getFullYear()}${Math.floor(Math.random() * 1000000).toString().padStart(6, '0')}`;
                       const { data: newAttendance, error: attendErr } = await supabase
                         .from('whatsapp_attendances')
@@ -110,7 +110,7 @@ export const Route = createFileRoute('/api/public/uazapi-webhook')({
                           protocol,
                           channel: 'whatsapp',
                           started_at: new Date().toISOString()
-                        })
+                        } as any)
                         .select('id')
                         .single();
                       
@@ -140,10 +140,10 @@ export const Route = createFileRoute('/api/public/uazapi-webhook')({
           
           try {
              await supabase.from('whatsapp_webhook_errors').insert({
-                event_type: payload?.event || 'unknown',
-                error_message: error.message,
+                event_type: String(payload?.event || 'unknown'),
+                error_message: String(error.message || 'unknown error'),
                 payload: payload
-             });
+             } as any);
           } catch (logErr) {
              console.error("Failed to log webhook error:", logErr);
           }
