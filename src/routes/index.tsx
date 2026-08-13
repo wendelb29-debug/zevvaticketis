@@ -10,7 +10,10 @@ import {
   Bus,
   Users,
   Award,
-  BookOpen
+  BookOpen,
+  ShieldCheck,
+  Globe,
+  Zap
 } from "lucide-react";
 
 import { Input } from "@/components/ui/input";
