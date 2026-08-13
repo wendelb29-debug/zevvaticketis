@@ -25,12 +25,12 @@ export function Navbar({ selectedCity }: { selectedCity?: string | null }) {
   useEffect(() => {
     const handleScroll = () => {
       const scrollPos = window.scrollY || document.documentElement.scrollTop;
+      console.log('Navbar Scroll Position:', scrollPos);
       setIsScrolled(scrollPos > 10);
     };
     handleScroll();
     window.addEventListener("scroll", handleScroll, { passive: true });
-    // Also check on a small interval for cases where scroll events might be missed or suppressed
-    const interval = setInterval(handleScroll, 500);
+    const interval = setInterval(handleScroll, 1000);
     return () => {
       window.removeEventListener("scroll", handleScroll);
       clearInterval(interval);
