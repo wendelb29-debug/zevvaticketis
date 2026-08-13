@@ -151,9 +151,9 @@ export function Navbar({ selectedCity }: { selectedCity?: string | null }) {
               {activeOverlay === "language" && (
                 <div className="absolute top-full right-0 mt-4 w-48 bg-popover border border-border rounded-lg shadow-2xl p-2 z-[60] animate-in fade-in zoom-in-95 duration-300">
                   {[
-                    { id: "pt", label: "Português" },
-                    { id: "en", label: "English" },
-                    { id: "es", label: "Español" },
+                    { id: "pt-BR", label: "Português" },
+                    { id: "en-US", label: "English" },
+                    { id: "es-ES", label: "Español" },
                   ].map((lang) => (
                     <button
                       key={lang.id}
@@ -163,7 +163,7 @@ export function Navbar({ selectedCity }: { selectedCity?: string | null }) {
                       }}
                       className={cn(
                         "w-full text-left px-3 py-2 rounded-md text-xs font-bold transition-all",
-                        language === lang.id
+                        language === lang.id || (language.split('-')[0] === lang.id.split('-')[0])
                           ? "bg-primary/5 text-primary"
                           : "text-muted-foreground hover:bg-background",
                       )}

@@ -181,6 +181,6 @@ export const translations = {
       caravans: "Caravanas"
     }
   }
-} as const;
+} as any;
 
 export type TranslationKeys = typeof translations;
