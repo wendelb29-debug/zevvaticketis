@@ -22,6 +22,7 @@ import { TeamManagement } from "@/components/admin/TeamManagement";
 import { AuditoriaPanel } from "@/components/admin/AuditoriaPanel";
 import { WhatsAppIntegration } from "@/components/admin/WhatsAppIntegration";
 import { useQuery } from "@tanstack/react-query";
+import { PermissionsRolesManager } from "@/components/admin/PermissionsRolesManager";
 
 
 export const Route = createFileRoute("/admin/configuracoes")({
