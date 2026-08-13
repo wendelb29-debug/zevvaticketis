@@ -75,7 +75,7 @@ export function SidebarHistory({ isOpen, onClose, contactId }: SidebarHistoryPro
                             <div className="flex flex-col items-end">
                               <span className="text-[9px] font-black text-muted-foreground uppercase tracking-widest">Finalizado em</span>
                               <span className="text-[11px] font-bold text-foreground">
-                                {attendance.closed_at ? DateTime.fromISO(attendance.closed_at).toFormat('dd/MM/yy HH:mm') : 'N/A'}
+                                {attendance.finalized_at ? DateTime.fromISO(attendance.finalized_at).toFormat('dd/MM/yy HH:mm') : 'N/A'}
                               </span>
                             </div>
                             <div className="w-8 h-8 rounded-lg bg-green-500/10 flex items-center justify-center text-green-500">
