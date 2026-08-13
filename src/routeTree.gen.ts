@@ -44,7 +44,6 @@ import { Route as AppHistoricoRouteImport } from './routes/app/historico'
 import { Route as AppPerfilRouteImport } from './routes/app/perfil'
 import { Route as AuthCallbackRouteImport } from './routes/auth/callback'
 import { Route as CheckinIndexRouteImport } from './routes/checkin/index'
-import { Route as EventosIndexRouteImport } from './routes/eventos/index'
 import { Route as EventosIdRouteImport } from './routes/eventos/$id'
 import { Route as LovableDemoDashboardRouteImport } from './routes/lovable/demo-dashboard'
 import { Route as ProdutorIndexRouteImport } from './routes/produtor/index'
@@ -265,11 +264,6 @@ const CheckinIndexRoute = CheckinIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => CheckinRoute,
-} as any)
-const EventosIndexRoute = EventosIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => EventosRoute,
 } as any)
 const EventosIdRoute = EventosIdRouteImport.update({
   id: '/$id',
@@ -549,7 +543,6 @@ export interface FileRoutesByFullPath {
   '/admin/': typeof AdminIndexRoute
   '/app/': typeof AppIndexRoute
   '/checkin/': typeof CheckinIndexRoute
-  '/eventos/': typeof EventosIndexRoute
   '/produtor/': typeof ProdutorIndexRoute
   '/tickets/': typeof TicketsIndexRoute
   '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
@@ -582,6 +575,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/cadastro': typeof CadastroRoute
   '/criar-evento': typeof CriarEventoRoute
+  '/eventos': typeof EventosRouteWithChildren
   '/login': typeof LoginRoute
   '/mcp': typeof McpRoute
   '/politica-de-privacidade': typeof PoliticaDePrivacidadeRoute
@@ -625,7 +619,6 @@ export interface FileRoutesByTo {
   '/admin': typeof AdminIndexRoute
   '/app': typeof AppIndexRoute
   '/checkin': typeof CheckinIndexRoute
-  '/eventos': typeof EventosIndexRoute
   '/produtor': typeof ProdutorIndexRoute
   '/tickets': typeof TicketsIndexRoute
   '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
@@ -706,7 +699,6 @@ export interface FileRoutesById {
   '/admin/': typeof AdminIndexRoute
   '/app/': typeof AppIndexRoute
   '/checkin/': typeof CheckinIndexRoute
-  '/eventos/': typeof EventosIndexRoute
   '/produtor/': typeof ProdutorIndexRoute
   '/tickets/': typeof TicketsIndexRoute
   '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
@@ -789,7 +781,6 @@ export interface FileRouteTypes {
     | '/admin/'
     | '/app/'
     | '/checkin/'
-    | '/eventos/'
     | '/produtor/'
     | '/tickets/'
     | '/.lovable/oauth/consent'
@@ -822,6 +813,7 @@ export interface FileRouteTypes {
     | '/'
     | '/cadastro'
     | '/criar-evento'
+    | '/eventos'
     | '/login'
     | '/mcp'
     | '/politica-de-privacidade'
@@ -865,7 +857,6 @@ export interface FileRouteTypes {
     | '/admin'
     | '/app'
     | '/checkin'
-    | '/eventos'
     | '/produtor'
     | '/tickets'
     | '/.lovable/oauth/consent'
@@ -945,7 +936,6 @@ export interface FileRouteTypes {
     | '/admin/'
     | '/app/'
     | '/checkin/'
-    | '/eventos/'
     | '/produtor/'
     | '/tickets/'
     | '/.lovable/oauth/consent'
@@ -1251,13 +1241,6 @@ declare module '@tanstack/react-router' {
       fullPath: '/checkin/'
       preLoaderRoute: typeof CheckinIndexRouteImport
       parentRoute: typeof CheckinRoute
-    }
-    '/eventos/': {
-      id: '/eventos/'
-      path: '/'
-      fullPath: '/eventos/'
-      preLoaderRoute: typeof EventosIndexRouteImport
-      parentRoute: typeof EventosRoute
     }
     '/eventos/$id': {
       id: '/eventos/$id'
@@ -1684,12 +1667,10 @@ const EventosIdRouteWithChildren = EventosIdRoute._addFileChildren(
 
 interface EventosRouteChildren {
   EventosIdRoute: typeof EventosIdRouteWithChildren
-  EventosIndexRoute: typeof EventosIndexRoute
 }
 
 const EventosRouteChildren: EventosRouteChildren = {
   EventosIdRoute: EventosIdRouteWithChildren,
-  EventosIndexRoute: EventosIndexRoute,
 }
 
 const EventosRouteWithChildren =
