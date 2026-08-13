@@ -135,7 +135,7 @@ function EventsListPage() {
                 key={event.id}
                 to="/eventos/$id" 
                 params={{ id: event.id }}
-                search={{}}
+                search={{ busca: undefined, categoria: undefined, cidade: undefined, data: undefined } as any}
               >
                 <EventCard event={event} />
               </Link>

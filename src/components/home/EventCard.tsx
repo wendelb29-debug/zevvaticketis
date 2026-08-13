@@ -69,7 +69,7 @@ export function EventCard({ event, onToggleFavorite }: EventCardProps) {
           <Link 
             to="/eventos/$id" 
             params={{ id: event.id }}
-            search={{}}
+            search={{ busca: undefined, categoria: undefined, cidade: undefined, data: undefined } as any}
             className="h-10 px-5 bg-background border border-border flex items-center justify-center rounded-md text-xs font-bold text-foreground hover:bg-primary hover:text-white hover:border-primary transition-all"
           >
             Ver Detalhes

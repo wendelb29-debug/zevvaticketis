@@ -21,9 +21,9 @@ function EventRedirectPage() {
   useEffect(() => {
     const { id, ...otherParams } = search as any;
     if (id) {
-      navigate({ to: "/eventos/$id", params: { id }, replace: true });
+      navigate({ to: "/eventos/$id", params: { id }, search: otherParams, replace: true });
     } else {
-      navigate({ to: "/eventos/", search: otherParams, replace: true });
+      navigate({ to: "/eventos", search: otherParams, replace: true });
     }
   }, [search, navigate]);
 
