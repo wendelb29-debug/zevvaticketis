@@ -285,7 +285,7 @@ export function AdminDashboardBI() {
 
                 <div className="pt-6 flex gap-3">
                   <Button 
-                    className="flex-1 bg-navy text-white font-bold h-12 rounded-xl"
+                    className="flex-1 bg-primary text-primary-foreground font-bold h-12 rounded-xl"
                     onClick={() => {
                       fetchBIData();
                     }}
