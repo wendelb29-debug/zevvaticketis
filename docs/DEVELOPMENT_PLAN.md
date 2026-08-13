@@ -327,7 +327,22 @@ currencies
 
 ---
 
-## Wave 8 (opcional) — Integrações Gmail, Google Drive, Agenda, Planilhas e Maps
+## Wave 8 — Auditoria e Isolamento Multi-tenant do Chat
+
+```
+1. Implemente trilha de auditoria completa para ações do chat:
+   - Registro de envio de mensagens em audit_logs com metadados do contato e tenant.
+   - Registro de leitura/visualização de conversas para conformidade e rastreio de acessos.
+   
+2. Garanta isolamento multi-tenant rigoroso no backend:
+   - Todas as Server Functions de chat (sendWhatsAppMessage, markMessagesAsRead, getWhatsAppContacts) devem obrigatoriamente validar o tenantId do contexto.
+   - Implemente testes automatizados de isolamento para garantir que mensagens e estado de leitura nunca vazem entre organizações ou fiquem desinterligados.
+   
+3. UI de Auditoria:
+   - Exiba indicadores de "vínculo ativo" vs "quebra de vínculo" baseados no status real da integração por tenant.
+```
+
+## Wave 9 (opcional) — Integrações Gmail, Google Drive, Agenda, Planilhas e Maps
 
 **Antes de colar este prompt:** os conectores precisam ser habilitados manualmente primeiro. No painel de Conectores do Lovable (ícone de conectores → aba "Todos"), clique em **Conectar** em cada um destes 5: **Gmail**, **Google Drive**, **Google Agenda**, **Planilhas Google** e **Plataforma Google Maps** — cada um pede autorização OAuth separada com sua conta Google. Só depois de conectados o prompt abaixo funciona, porque ele instrui o Lovable a *usar* os conectores, não a habilitá-los.
 
