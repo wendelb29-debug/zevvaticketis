@@ -2087,6 +2087,78 @@ export type Database = {
           },
         ]
       }
+      user_device_preferences: {
+        Row: {
+          created_at: string
+          device_id: string
+          font_size: number
+          id: string
+          language: Database["public"]["Enums"]["supported_language"]
+          last_seen_at: string
+          locale: string | null
+          theme: Database["public"]["Enums"]["theme_preference"]
+          timezone: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          device_id: string
+          font_size?: number
+          id?: string
+          language: Database["public"]["Enums"]["supported_language"]
+          last_seen_at?: string
+          locale?: string | null
+          theme: Database["public"]["Enums"]["theme_preference"]
+          timezone?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          device_id?: string
+          font_size?: number
+          id?: string
+          language?: Database["public"]["Enums"]["supported_language"]
+          last_seen_at?: string
+          locale?: string | null
+          theme?: Database["public"]["Enums"]["theme_preference"]
+          timezone?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      user_preferences: {
+        Row: {
+          created_at: string
+          default_font_size: number
+          default_language: Database["public"]["Enums"]["supported_language"]
+          default_theme: Database["public"]["Enums"]["theme_preference"]
+          timezone: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          default_font_size?: number
+          default_language?: Database["public"]["Enums"]["supported_language"]
+          default_theme?: Database["public"]["Enums"]["theme_preference"]
+          timezone?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          default_font_size?: number
+          default_language?: Database["public"]["Enums"]["supported_language"]
+          default_theme?: Database["public"]["Enums"]["theme_preference"]
+          timezone?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       whatsapp_attendances: {
         Row: {
           agent_id: string | null
@@ -2744,6 +2816,7 @@ export type Database = {
     Enums: {
       app_role: "admin" | "produtor_owner" | "equipe" | "participante"
       staff_role: "scanner_only" | "supervisor"
+      supported_language: "pt-BR" | "en-US" | "es-ES"
       tenant_role:
         | "OWNER"
         | "ADMIN"
@@ -2753,6 +2826,7 @@ export type Database = {
         | "FINANCEIRO"
         | "MARKETING"
         | "CHECKIN_MANAGER"
+      theme_preference: "light" | "dark" | "system"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -2882,6 +2956,7 @@ export const Constants = {
     Enums: {
       app_role: ["admin", "produtor_owner", "equipe", "participante"],
       staff_role: ["scanner_only", "supervisor"],
+      supported_language: ["pt-BR", "en-US", "es-ES"],
       tenant_role: [
         "OWNER",
         "ADMIN",
@@ -2892,6 +2967,7 @@ export const Constants = {
         "MARKETING",
         "CHECKIN_MANAGER",
       ],
+      theme_preference: ["light", "dark", "system"],
     },
   },
 } as const
