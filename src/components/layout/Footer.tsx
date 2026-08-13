@@ -2,7 +2,13 @@ import { Link } from "@tanstack/react-router";
 import { Mail, Phone, Globe } from "lucide-react";
 import logoAsset from "@/assets/logo-zevva.png.asset.json";
 
+import { useUI } from "@/hooks/use-ui";
+import { translations } from "@/lib/translations";
+
 export function Footer() {
+  const { language } = useUI();
+  const t = translations[language].footer;
+
   return (
     <footer className="bg-brand-dark text-brand-dark-foreground py-24 px-6 border-t border-white/5">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-16">
@@ -17,7 +23,7 @@ export function Footer() {
             </span>
           </Link>
           <p className="text-sm text-brand-dark-muted font-medium leading-relaxed max-w-xs">
-            A plataforma brasileira de eventos e ingressos. Facilitamos descoberta, compra, gestão e check-in.
+            {t.description}
           </p>
           <div className="flex items-center gap-4">
             <a href="#" className="w-10 h-10 bg-white/5 border border-white/10 flex items-center justify-center text-brand-dark-muted hover:text-white hover:border-white/30 transition-all rounded-md">
@@ -87,7 +93,7 @@ export function Footer() {
       </div>
 
       <div className="max-w-7xl mx-auto mt-24 pt-10 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-8">
-        <p className="text-xs text-brand-dark-muted font-bold uppercase tracking-widest">© 2026 Zevva Tickets. Todos os direitos reservados.</p>
+        <p className="text-xs text-brand-dark-muted font-bold uppercase tracking-widest">{t.rights}</p>
         <div className="flex items-center gap-10 grayscale opacity-40 brightness-0 invert">
           <img src="https://stripe.com/img/v3/home/social.png" alt="Stripe" className="h-4" />
         </div>

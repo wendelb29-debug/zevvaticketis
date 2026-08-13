@@ -19,7 +19,12 @@ interface FeaturedCarouselProps {
   events: FeaturedEvent[];
 }
 
+import { useUI } from "@/hooks/use-ui";
+import { translations } from "@/lib/translations";
+
 export function FeaturedCarousel({ events }: FeaturedCarouselProps) {
+  const { language } = useUI();
+  const t = translations[language].home;
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const pauseTimeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -53,8 +58,8 @@ export function FeaturedCarousel({ events }: FeaturedCarouselProps) {
   const currentEvent = events[currentIndex];
 
   const formatDate = (dateStr: string | null) => {
-    if (!dateStr) return "A definir";
-    return new Date(dateStr).toLocaleDateString("pt-BR", {
+    if (!dateStr) return language === "pt" ? "A definir" : "To be defined";
+    return new Date(dateStr).toLocaleDateString(language === "pt" ? "pt-BR" : "en-US", {
       day: "2-digit",
       month: "long",
       year: "numeric",
@@ -62,9 +67,11 @@ export function FeaturedCarousel({ events }: FeaturedCarouselProps) {
   };
 
   const formatPrice = (price: number | null) => {
-    if (price === null || price === undefined) return "Consulte os ingressos";
-    if (price === 0) return "Gratuito";
-    return `R$ ${price.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}`;
+    if (price === null || price === undefined) return language === "pt" ? "Consulte os ingressos" : "Check tickets";
+    if (price === 0) return language === "pt" ? "Gratuito" : "Free";
+    return language === "pt" 
+      ? `R$ ${price.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}`
+      : `$ ${price.toLocaleString("en-US", { minimumFractionDigits: 2 })}`;
   };
 
   return (
@@ -102,7 +109,7 @@ export function FeaturedCarousel({ events }: FeaturedCarouselProps) {
                 className="space-y-6"
               >
                 <div className="inline-flex items-center gap-2 px-3 py-1 bg-primary text-primary-foreground text-[10px] font-bold uppercase tracking-wider rounded-md shadow-lg shadow-primary/20">
-                  Evento em destaque
+                  {t.featuredLabel}
                 </div>
 
                 <h2 className="text-4xl md:text-6xl font-manrope font-extrabold text-primary-foreground leading-tight tracking-tight">
@@ -131,13 +138,13 @@ export function FeaturedCarousel({ events }: FeaturedCarouselProps) {
                     }
                     className="h-14 px-10 bg-primary text-primary-foreground text-sm font-bold uppercase tracking-widest hover:bg-primary-hover transition-all rounded-md shadow-2xl flex items-center gap-2"
                   >
-                    Garantir minha vaga
+                    {t.ensureSpot}
                     <ArrowRight className="w-4 h-4" />
                   </button>
                   <div className="flex flex-col">
                     <span className="text-[10px] font-bold text-white/65 uppercase tracking-widest flex items-center gap-1.5">
                       <Ticket className="w-3 h-3 text-primary" />
-                      {currentEvent?.min_price === 0 ? "Aproveite" : "A partir de"}
+                      {currentEvent?.min_price === 0 ? t.free : t.from}
                     </span>
                     <span className="text-2xl font-black text-white">
                       {formatPrice(currentEvent?.min_price ?? null)}

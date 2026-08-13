@@ -79,7 +79,7 @@ export function Navbar({ selectedCity }: { selectedCity?: string | null }) {
               }
               className="text-sm font-bold text-muted-foreground hover:text-primary transition-colors"
             >
-              Explorar
+              {translations[language].nav.explore}
             </Link>
             <Link
               to="/eventos/categoria/$slug"
@@ -87,17 +87,14 @@ export function Navbar({ selectedCity }: { selectedCity?: string | null }) {
               search={{ busca: undefined, categoria: undefined, cidade: undefined, data: undefined } as any}
               className="text-sm font-bold text-muted-foreground hover:text-primary transition-colors"
             >
-              Caravanas
+              {translations[language].nav.caravans}
             </Link>
             <Link
               to="/cursos"
-
-
               className="text-sm font-bold text-muted-foreground hover:text-primary transition-colors"
             >
-              Cursos
+              {translations[language].nav.courses}
             </Link>
-
           </nav>
         </div>
 
@@ -109,7 +106,7 @@ export function Navbar({ selectedCity }: { selectedCity?: string | null }) {
                 <input
                   ref={inputRef}
                   type="text"
-                  placeholder="Buscar..."
+                  placeholder={translations[language].nav.searchPlaceholder}
                   value={homeSearchTerm}
                   onChange={(e) => setHomeSearchTerm(e.target.value)}
                   onKeyDown={(e) => {
@@ -143,7 +140,7 @@ export function Navbar({ selectedCity }: { selectedCity?: string | null }) {
               }}
               className="hidden sm:flex h-11 px-6 items-center justify-center bg-primary text-primary-foreground text-sm font-bold hover:bg-primary-hover transition-all rounded-md shadow-lg shadow-primary/10"
             >
-              Organizar Evento
+              {translations[language].nav.createEvent}
             </Link>
 
             <button
