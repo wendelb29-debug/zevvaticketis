@@ -261,7 +261,12 @@ function ContactDetailsPage() {
                               </p>
                             </div>
                           </div>
-                          <Button variant="ghost" size="sm" className="font-bold text-xs opacity-0 group-hover:opacity-100 transition-opacity">
+                          <Button 
+                            variant="ghost" 
+                            size="sm" 
+                            className="font-bold text-xs opacity-0 group-hover:opacity-100 transition-opacity"
+                            onClick={() => setSelectedAttendance({ id: att.id, protocol: att.protocol })}
+                          >
                             Ver Detalhes
                           </Button>
                         </div>
@@ -298,6 +303,13 @@ function ContactDetailsPage() {
           </Tabs>
         </div>
       </div>
+
+      <AttendanceDetailModal 
+        isOpen={!!selectedAttendance}
+        onClose={() => setSelectedAttendance(null)}
+        attendanceId={selectedAttendance?.id || null}
+        protocol={selectedAttendance?.protocol}
+      />
     </div>
   );
 }
