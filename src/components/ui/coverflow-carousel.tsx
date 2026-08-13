@@ -33,7 +33,7 @@ export function CoverflowCarousel({ events }: CoverflowCarouselProps) {
         <SparklesIcon className="w-12 h-12 text-muted-fg/20 mb-4" />
         <h3 className="text-xl font-manrope font-black text-navy">Novos eventos chegando em breve</h3>
         <p className="text-muted-fg font-bold mt-2 mb-8">Fique atento às nossas próximas experiências exclusivas.</p>
-        <Link to="/eventos" search={{ id: undefined, categoria: "CARAVANAS INTERNACIONAIS" }}>
+        <Link to="/eventos" search={{ busca: undefined, categoria: "CARAVANAS INTERNACIONAIS", cidade: undefined, data: undefined } as any}>
           <button className="px-8 py-4 bg-navy text-white font-black rounded-2xl hover:bg-navy/90 transition-all">
             Conheça a Zevva
           </button>
@@ -74,8 +74,9 @@ export function CoverflowCarousel({ events }: CoverflowCarouselProps) {
                 }}
               >
                 <Link 
-                  to="/eventos" 
-                  search={{ id: event.id, categoria: event.categoria || "CARAVANAS INTERNACIONAIS" }}
+                  to="/eventos/$id" 
+                  params={{ id: event.id }}
+                  search={{ busca: undefined, categoria: undefined, cidade: undefined, data: undefined } as any}
                 >
 
 
