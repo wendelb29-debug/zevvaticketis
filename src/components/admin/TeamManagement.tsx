@@ -117,7 +117,13 @@ function initials(name: string) {
     .join("");
 }
 
-export function TeamManagement() {
+export function TeamManagement({ tenantId }: { tenantId?: string }) {
+  const { data: projectRoles = [] } = useQuery({
+    queryKey: ["project-roles", tenantId],
+    queryFn: () => getProjectRoles({ data: { tenantId: tenantId! } }),
+    enabled: !!tenantId
+  });
+
   const [members, setMembers] = useState<Member[]>(INITIAL_MEMBERS);
   const [search, setSearch] = useState("");
   const [deptFilter, setDeptFilter] = useState("todas");
