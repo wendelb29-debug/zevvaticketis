@@ -143,19 +143,19 @@ function PushNotificationsPage() {
 
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
         <TabsList className="bg-card border border-line p-1 rounded-2xl h-14 shadow-sm mb-8 w-full justify-start overflow-x-auto">
-          <TabsTrigger value="historico" className="data-[state=active]:bg-primary data-[state=active]:text-white rounded-xl h-11 px-6 font-black uppercase tracking-widest text-[10px] gap-2 transition-all">
+          <TabsTrigger value="historico" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground rounded-xl h-11 px-6 font-black uppercase tracking-widest text-[10px] gap-2 transition-all">
             <History className="w-4 h-4" /> Histórico
           </TabsTrigger>
-          <TabsTrigger value="agendados" className="data-[state=active]:bg-primary data-[state=active]:text-white rounded-xl h-11 px-6 font-black uppercase tracking-widest text-[10px] gap-2 transition-all">
+          <TabsTrigger value="agendados" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground rounded-xl h-11 px-6 font-black uppercase tracking-widest text-[10px] gap-2 transition-all">
             <CalendarDays className="w-4 h-4" /> Agendados
           </TabsTrigger>
-          <TabsTrigger value="novo" className="data-[state=active]:bg-primary data-[state=active]:text-white rounded-xl h-11 px-6 font-black uppercase tracking-widest text-[10px] gap-2 transition-all">
+          <TabsTrigger value="novo" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground rounded-xl h-11 px-6 font-black uppercase tracking-widest text-[10px] gap-2 transition-all">
             <Plus className="w-4 h-4" /> Criar Campanha
           </TabsTrigger>
-          <TabsTrigger value="automacoes" className="data-[state=active]:bg-primary data-[state=active]:text-white rounded-xl h-11 px-6 font-black uppercase tracking-widest text-[10px] gap-2 transition-all">
+          <TabsTrigger value="automacoes" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground rounded-xl h-11 px-6 font-black uppercase tracking-widest text-[10px] gap-2 transition-all">
             <Zap className="w-4 h-4" /> Automações
           </TabsTrigger>
-          <TabsTrigger value="metricas" className="data-[state=active]:bg-primary data-[state=active]:text-white rounded-xl h-11 px-6 font-black uppercase tracking-widest text-[10px] gap-2 transition-all">
+          <TabsTrigger value="metricas" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground rounded-xl h-11 px-6 font-black uppercase tracking-widest text-[10px] gap-2 transition-all">
             <TrendingUp className="w-4 h-4" /> Métricas
           </TabsTrigger>
         </TabsList>
@@ -502,19 +502,19 @@ function PushNotificationsPage() {
                   
                   <div className="mt-12 bg-card/10 backdrop-blur-xl rounded-2xl p-4 border border-white/20 animate-in fade-in slide-in-from-top-4 duration-700">
                     <div className="flex gap-3">
-                      <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center text-white shrink-0 shadow-lg shadow-primary/20">
+                      <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center text-primary-foreground shrink-0 shadow-lg shadow-primary/20">
                         <Smartphone className="w-5 h-5" />
                       </div>
                       <div className="min-w-0 flex-1">
-                        <p className="text-[11px] font-black text-white/60 uppercase tracking-widest">Zevva App • Agora</p>
-                        <p className="text-sm font-black text-white mt-1 truncate">{pushContent.title || "Seu ingresso foi confirmado 🎉"}</p>
-                        <p className="text-[11px] font-medium text-white/80 mt-1 line-clamp-2">{pushContent.body || "Olá João, sua entrada para o evento está disponível."}</p>
+                        <p className="text-[11px] font-black text-primary-foreground/60 uppercase tracking-widest">Zevva App • Agora</p>
+                        <p className="text-sm font-black text-primary-foreground mt-1 truncate">{pushContent.title || "Seu ingresso foi confirmado 🎉"}</p>
+                        <p className="text-[11px] font-medium text-primary-foreground/80 mt-1 line-clamp-2">{pushContent.body || "Olá João, sua entrada para o evento está disponível."}</p>
                       </div>
                     </div>
                     {pushContent.buttonText && (
                       <div className="mt-4 pt-4 border-t border-white/10">
                         <div className="w-full py-2 bg-card/20 hover:bg-card/30 rounded-lg text-center transition-colors">
-                          <span className="text-[10px] font-black text-white uppercase tracking-widest">{pushContent.buttonText}</span>
+                          <span className="text-[10px] font-black text-primary-foreground uppercase tracking-widest">{pushContent.buttonText}</span>
                         </div>
                       </div>
                     )}
@@ -523,7 +523,7 @@ function PushNotificationsPage() {
                   
                   <div className="mt-60 space-y-3">
                     <div className="h-0.5 w-1/3 mx-auto bg-card/20 rounded-full" />
-                    <p className="text-center text-[10px] font-medium text-white/40">Zevva Mobile Interface Mockup</p>
+                    <p className="text-center text-[10px] font-medium text-primary-foreground/40">Zevva Mobile Interface Mockup</p>
                   </div>
                 </div>
               </div>

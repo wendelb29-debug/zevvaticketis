@@ -81,8 +81,8 @@ function ProjectsPage() {
       <div className="max-w-4xl mx-auto space-y-12">
         <header className="flex justify-between items-center bg-card p-6 rounded-[24px] border border-border shadow-sm">
           <div className="flex items-center gap-4">
-            <div className="w-12 h-12 bg-coral/10 rounded-2xl flex items-center justify-center">
-              <Building2 className="w-6 h-6 text-coral" />
+            <div className="w-12 h-12 bg-primary/10 rounded-2xl flex items-center justify-center">
+              <Building2 className="w-6 h-6 text-primary" />
             </div>
             <div>
               <h1 className="text-2xl font-manrope font-black text-foreground tracking-tight">Meus Projetos</h1>
@@ -90,7 +90,7 @@ function ProjectsPage() {
             </div>
           </div>
 
-          <Button variant="ghost" onClick={handleLogout} className="text-foreground hover:text-coral font-bold gap-2">
+          <Button variant="ghost" onClick={handleLogout} className="text-foreground hover:text-primary font-bold gap-2">
             <LogOut className="w-4 h-4" /> Sair
           </Button>
         </header>
@@ -100,10 +100,10 @@ function ProjectsPage() {
             className="flex flex-col items-center justify-center p-8 border-dashed border-2 border-slate-300 hover:border-coral transition-all cursor-pointer group rounded-[24px] min-h-[320px] hover:bg-card bg-muted/50"
             onClick={() => setIsDialogOpen(true)}
           >
-            <div className="w-16 h-16 bg-card group-hover:bg-coral/10 rounded-full flex items-center justify-center mb-4 transition-colors shadow-sm border border-border group-hover:border-coral/20">
-              <Plus className="w-8 h-8 text-slate-400 group-hover:text-coral transition-colors" />
+            <div className="w-16 h-16 bg-card group-hover:bg-primary/10 rounded-full flex items-center justify-center mb-4 transition-colors shadow-sm border border-border group-hover:border-coral/20">
+              <Plus className="w-8 h-8 text-slate-400 group-hover:text-primary transition-colors" />
             </div>
-            <CardTitle className="text-lg font-manrope font-black text-foreground group-hover:text-coral transition-colors">Novo Projeto</CardTitle>
+            <CardTitle className="text-lg font-manrope font-black text-foreground group-hover:text-primary transition-colors">Novo Projeto</CardTitle>
             <CardDescription className="text-center font-medium px-4 mt-2">
               Crie um novo ambiente para gerenciar seus eventos.
             </CardDescription>
@@ -124,7 +124,7 @@ function ProjectsPage() {
                     </AvatarFallback>
                   </Avatar>
                   <div className="flex flex-col items-end gap-1">
-                    <span className="text-[9px] font-black uppercase tracking-widest text-coral bg-coral/10 px-3 py-1 rounded-full border border-coral/20">
+                    <span className="text-[9px] font-black uppercase tracking-widest text-primary bg-primary/10 px-3 py-1 rounded-full border border-coral/20">
                       {tenant.plan}
                     </span>
                     {tenant.status === 'ACTIVE' && (
@@ -138,7 +138,7 @@ function ProjectsPage() {
               </CardHeader>
               <CardContent className="space-y-4 flex-grow flex flex-col justify-between">
                 <div>
-                  <CardTitle className="text-lg font-manrope font-black text-foreground group-hover:text-coral transition-colors line-clamp-2 leading-tight">
+                  <CardTitle className="text-lg font-manrope font-black text-foreground group-hover:text-primary transition-colors line-clamp-2 leading-tight">
                     {tenant.nome}
                   </CardTitle>
                   <CardDescription className="text-muted-foreground font-medium truncate mt-1">
@@ -152,7 +152,7 @@ function ProjectsPage() {
                     <span className="text-[10px] font-black uppercase text-slate-400 tracking-tight">Ambiente Isolado</span>
                   </div>
 
-                  <Button className="w-full bg-navy hover:bg-navy/90 text-white font-black uppercase tracking-widest text-[10px] py-6 rounded-xl group-hover:bg-coral group-hover:shadow-lg group-hover:shadow-coral/30 transition-all duration-300">
+                  <Button className="w-full bg-navy hover:bg-navy/90 text-primary-foreground font-black uppercase tracking-widest text-[10px] py-6 rounded-xl group-hover:bg-primary group-hover:shadow-lg group-hover:shadow-coral/30 transition-all duration-300">
                     Gerenciar Workspace
                   </Button>
                 </div>
@@ -164,13 +164,13 @@ function ProjectsPage() {
 
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <DialogContent className="sm:max-w-[425px] rounded-[32px] border-none shadow-2xl p-0 overflow-hidden">
-          <div className="bg-navy p-8 text-white relative">
+          <div className="bg-navy p-8 text-primary-foreground relative">
             <div className="absolute top-0 right-0 p-8 opacity-10">
               <Building2 size={120} />
             </div>
             <DialogHeader className="relative z-10">
-              <DialogTitle className="text-2xl font-manrope font-black tracking-tight text-white">Novo Projeto</DialogTitle>
-              <DialogDescription className="text-white/60 font-medium">
+              <DialogTitle className="text-2xl font-manrope font-black tracking-tight text-primary-foreground">Novo Projeto</DialogTitle>
+              <DialogDescription className="text-primary-foreground/60 font-medium">
                 Dê um nome ao seu novo ambiente de trabalho.
               </DialogDescription>
             </DialogHeader>
@@ -203,7 +203,7 @@ function ProjectsPage() {
               <Button 
                 type="submit" 
                 disabled={isCreating || !newProjectName.trim()}
-                className="bg-coral hover:bg-navy text-primary-foreground font-black uppercase tracking-widest text-xs px-8 rounded-xl py-6 h-auto shadow-lg shadow-coral/20 flex gap-2"
+                className="bg-primary hover:bg-navy text-primary-foreground font-black uppercase tracking-widest text-xs px-8 rounded-xl py-6 h-auto shadow-lg shadow-primary/20 flex gap-2"
               >
                 {isCreating ? (
                   <>

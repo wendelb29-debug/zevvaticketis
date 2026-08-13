@@ -138,7 +138,7 @@ function ConsentPage() {
         <p className="text-sm text-muted-foreground">
           Faça login na Zevva Tickets para autorizar o acesso do aplicativo.
         </p>
-        {error && <p role="alert" className="text-sm text-coral">{error}</p>}
+        {error && <p role="alert" className="text-sm text-primary">{error}</p>}
         <Button
           variant="outline"
           onClick={signInWithGoogle}
@@ -163,7 +163,7 @@ function ConsentPage() {
             className="h-12 rounded-[14px] border-line"
             required
           />
-          <Button disabled={busy} className="w-full h-12 rounded-[14px] bg-coral hover:bg-coral-dark text-white font-extrabold">
+          <Button disabled={busy} className="w-full h-12 rounded-[14px] bg-primary hover:bg-primary-dark text-primary-foreground font-extrabold">
             {busy ? "Entrando…" : "Entrar"}
           </Button>
         </form>
@@ -181,12 +181,12 @@ function ConsentPage() {
       <p className="text-sm text-muted-foreground">
         Isso permite que {clientName} acesse a Zevva Tickets como você — seus eventos e ingressos.
       </p>
-      {error && <p role="alert" className="text-sm text-coral">{error}</p>}
+      {error && <p role="alert" className="text-sm text-primary">{error}</p>}
       <div className="flex gap-3">
         <Button
           disabled={busy}
           onClick={() => decide(true)}
-          className="flex-1 h-12 rounded-[14px] bg-coral hover:bg-coral-dark text-white font-extrabold"
+          className="flex-1 h-12 rounded-[14px] bg-primary hover:bg-primary-dark text-primary-foreground font-extrabold"
         >
           Autorizar
         </Button>

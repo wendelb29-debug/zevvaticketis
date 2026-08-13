@@ -26,12 +26,12 @@ function CheckinSelectionPage() {
       <div className="max-w-5xl mx-auto space-y-12">
         <header className="flex flex-col md:flex-row justify-between items-start md:items-center bg-card p-8 rounded-[32px] border border-border shadow-sm gap-6">
           <div className="flex items-center gap-5">
-            <div className="w-14 h-14 bg-navy rounded-2xl flex items-center justify-center shadow-lg shadow-navy/20">
-              <ShieldCheck className="w-7 h-7 text-white" />
+            <div className="w-14 h-14 bg-navy rounded-2xl flex items-center justify-center shadow-lg shadow-primary/20">
+              <ShieldCheck className="w-7 h-7 text-primary-foreground" />
             </div>
             <div>
               <div className="flex items-center gap-2 mb-1">
-                <span className="text-[10px] font-black uppercase tracking-[0.2em] text-coral bg-coral/10 px-3 py-1 rounded-full">Operacional</span>
+                <span className="text-[10px] font-black uppercase tracking-[0.2em] text-primary bg-primary/10 px-3 py-1 rounded-full">Operacional</span>
               </div>
               <h1 className="text-3xl font-manrope font-black text-foreground tracking-tight">Zevva Staff</h1>
               <p className="text-muted-foreground font-medium">Selecione um projeto para iniciar a operação de check-in.</p>
@@ -62,14 +62,14 @@ function CheckinSelectionPage() {
                       {tenant.nome.substring(0, 2).toUpperCase()}
                     </AvatarFallback>
                   </Avatar>
-                  <div className="bg-muted p-3 rounded-2xl group-hover:bg-coral/10 transition-colors">
-                    <ArrowRight className="w-6 h-6 text-slate-300 group-hover:text-coral group-hover:translate-x-1 transition-all" />
+                  <div className="bg-muted p-3 rounded-2xl group-hover:bg-primary/10 transition-colors">
+                    <ArrowRight className="w-6 h-6 text-slate-300 group-hover:text-primary group-hover:translate-x-1 transition-all" />
                   </div>
                 </div>
               </CardHeader>
               <CardContent className="p-8 pt-0 space-y-6 flex-grow flex flex-col justify-between">
                 <div>
-                  <CardTitle className="text-xl font-manrope font-black text-foreground group-hover:text-coral transition-colors line-clamp-2 leading-tight mb-2">
+                  <CardTitle className="text-xl font-manrope font-black text-foreground group-hover:text-primary transition-colors line-clamp-2 leading-tight mb-2">
                     {tenant.nome}
                   </CardTitle>
                   <div className="flex items-center gap-2 text-slate-400 font-bold text-xs uppercase tracking-widest">
@@ -78,7 +78,7 @@ function CheckinSelectionPage() {
                   </div>
                 </div>
                 
-                <Button className="w-full bg-muted hover:bg-coral text-foreground hover:text-primary-foreground font-black uppercase tracking-widest text-[11px] py-7 rounded-2xl shadow-none hover:shadow-xl hover:shadow-coral/30 transition-all duration-300 border border-border hover:border-coral">
+                <Button className="w-full bg-muted hover:bg-primary text-foreground hover:text-primary-foreground font-black uppercase tracking-widest text-[11px] py-7 rounded-2xl shadow-none hover:shadow-xl hover:shadow-coral/30 transition-all duration-300 border border-border hover:border-coral">
                   Acessar Operação
                 </Button>
               </CardContent>

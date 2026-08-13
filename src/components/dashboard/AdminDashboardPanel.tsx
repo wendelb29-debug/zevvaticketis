@@ -400,7 +400,7 @@ export function AdminDashboardPanel() {
             <div className="space-y-5">
               {[
                 { label: "Congressos", value: 85, color: "bg-primary" },
-                { label: "Festivais", value: 65, color: "bg-coral" },
+                { label: "Festivais", value: 65, color: "bg-primary" },
                 { label: "Caravanas", value: 45, color: "bg-emerald-500" },
                 { label: "Experiências", value: 30, color: "bg-blue-500" },
               ].map((cat, i) => (

@@ -32,7 +32,7 @@ function NotFoundComponent() {
         <div className="mt-8">
           <Link
             to="/"
-            className="inline-flex h-12 items-center justify-center rounded-md bg-[#D94B52] px-8 text-sm font-bold text-white transition-all hover:bg-[#BE3941] shadow-lg shadow-[#D94B52]/10"
+            className="inline-flex h-12 items-center justify-center rounded-md bg-[#D94B52] px-8 text-sm font-bold text-primary-foreground transition-all hover:bg-[#BE3941] shadow-lg shadow-[#D94B52]/10"
           >
             Voltar ao Início
           </Link>
@@ -230,8 +230,8 @@ function RootComponent() {
     <QueryClientProvider client={queryClient}>
       <TenantProvider>
         {isNavigating && (
-          <div className="fixed top-0 left-0 right-0 h-1 z-[9999] bg-coral/20 overflow-hidden">
-            <div className="h-full bg-coral w-1/2 animate-progress" />
+          <div className="fixed top-0 left-0 right-0 h-1 z-[9999] bg-primary/20 overflow-hidden">
+            <div className="h-full bg-primary w-1/2 animate-progress" />
           </div>
         )}
         <Outlet />

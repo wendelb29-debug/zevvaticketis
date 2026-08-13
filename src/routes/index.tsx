@@ -162,10 +162,10 @@ function HomePage() {
 
           <div className="relative z-10 max-w-7xl mx-auto px-6 w-full">
             <div className="max-w-2xl space-y-8 animate-in fade-in slide-in-from-left-8 duration-700">
-              <h1 className="text-5xl md:text-7xl font-manrope font-extrabold text-white tracking-tight leading-[1.1]">
+              <h1 className="text-5xl md:text-7xl font-manrope font-extrabold text-primary-foreground tracking-tight leading-[1.1]">
                 Encontre experiências que valem a pena viver<span className="text-primary">.</span>
               </h1>
-              <p className="text-xl text-white/70 font-medium max-w-xl leading-relaxed">
+              <p className="text-xl text-primary-foreground/70 font-medium max-w-xl leading-relaxed">
                 Shows, festivais, encontros e eventos perto de você.
               </p>
               <div className="flex flex-wrap gap-4 pt-4">
@@ -564,13 +564,13 @@ function HomePage() {
         <section className="px-6 py-24 bg-dark-surface">
           <div className="max-w-7xl mx-auto">
             <div className="relative p-12 md:p-20 bg-primary rounded-2xl overflow-hidden shadow-2xl">
-              <Zap className="absolute -top-10 -right-10 w-80 h-80 text-white/5 rotate-12" />
+              <Zap className="absolute -top-10 -right-10 w-80 h-80 text-primary-foreground/5 rotate-12" />
               <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                 <div className="space-y-6">
-                  <h2 className="text-4xl md:text-6xl font-manrope font-extrabold text-white leading-tight">
+                  <h2 className="text-4xl md:text-6xl font-manrope font-extrabold text-primary-foreground leading-tight">
                     Quer organizar seu evento na Zevva?
                   </h2>
-                  <p className="text-white/80 text-xl font-medium">
+                  <p className="text-primary-foreground/80 text-xl font-medium">
                     Temos as melhores ferramentas de gestão, vendas e check-in para o seu negócio.
                   </p>
                 </div>
@@ -581,7 +581,7 @@ function HomePage() {
                   >
                     Começar agora
                   </button>
-                  <button className="h-16 px-12 bg-transparent border-2 border-white/30 text-white text-sm font-bold uppercase tracking-widest hover:bg-card/10 transition-all rounded-md">
+                  <button className="h-16 px-12 bg-transparent border-2 border-white/30 text-primary-foreground text-sm font-bold uppercase tracking-widest hover:bg-card/10 transition-all rounded-md">
                     Falar com especialista
                   </button>
                 </div>

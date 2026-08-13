@@ -171,7 +171,7 @@ function ScannerPage() {
         </Button>
         <div className="text-right">
           <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Scanner Profissional</p>
-          <p className="text-sm font-black text-coral uppercase truncate max-w-[200px]">{event?.title}</p>
+          <p className="text-sm font-black text-primary uppercase truncate max-w-[200px]">{event?.title}</p>
         </div>
       </div>
 
@@ -202,16 +202,16 @@ function ScannerPage() {
 
       <div className="relative aspect-square rounded-[32px] overflow-hidden bg-navy shadow-2xl border-4 border-white">
         {!isScanning ? (
-          <div className="absolute inset-0 flex flex-col items-center justify-center text-white p-8 text-center space-y-6">
-            <div className="w-24 h-24 bg-coral/20 rounded-full flex items-center justify-center border-2 border-coral/30 animate-pulse">
-              <QrCode className="w-12 h-12 text-coral" />
+          <div className="absolute inset-0 flex flex-col items-center justify-center text-primary-foreground p-8 text-center space-y-6">
+            <div className="w-24 h-24 bg-primary/20 rounded-full flex items-center justify-center border-2 border-coral/30 animate-pulse">
+              <QrCode className="w-12 h-12 text-primary" />
             </div>
             <div className="space-y-2">
               <h3 className="text-xl font-black uppercase">Pronto para Validar</h3>
-              <p className="text-white/60 text-sm font-medium">Aponte para o QR Code do participante.</p>
+              <p className="text-primary-foreground/60 text-sm font-medium">Aponte para o QR Code do participante.</p>
             </div>
             <Button 
-              className="bg-coral hover:bg-coral-dark text-white font-black uppercase tracking-widest text-xs h-12 px-8 rounded-xl shadow-lg"
+              className="bg-primary hover:bg-primary-dark text-primary-foreground font-black uppercase tracking-widest text-xs h-12 px-8 rounded-xl shadow-lg"
               onClick={() => setIsScanning(true)}
             >
               <Zap className="w-4 h-4 mr-2" /> Ativar Scanner
@@ -220,11 +220,11 @@ function ScannerPage() {
         ) : (
           <div className="absolute inset-0 bg-black flex items-center justify-center">
              <div className="w-64 h-64 border-2 border-coral rounded-2xl relative">
-                <div className="absolute inset-x-0 top-0 h-0.5 bg-coral shadow-[0_0_15px_rgba(240,84,84,0.8)] animate-scan" />
+                <div className="absolute inset-x-0 top-0 h-0.5 bg-primary shadow-[0_0_15px_rgba(240,84,84,0.8)] animate-scan" />
              </div>
              <Button 
                 variant="ghost" 
-                className="absolute bottom-6 text-white/60"
+                className="absolute bottom-6 text-primary-foreground/60"
                 onClick={() => setIsScanning(false)}
              >
                 Cancelar
@@ -258,8 +258,8 @@ function ScannerPage() {
             <div className={cn(
               "w-20 h-20 rounded-full mx-auto flex items-center justify-center",
               scannedResult.success 
-                ? (scannedResult.offline ? "bg-amber-500 text-white" : "bg-emerald-500 text-white") 
-                : "bg-red-500 text-white"
+                ? (scannedResult.offline ? "bg-amber-500 text-primary-foreground" : "bg-emerald-500 text-primary-foreground") 
+                : "bg-red-500 text-primary-foreground"
             )}>
               {scannedResult.success ? <CheckCircle2 className="w-10 h-10" /> : <XCircle className="w-10 h-10" />}
             </div>
@@ -299,7 +299,7 @@ function ScannerPage() {
       <div className="space-y-3 pb-10">
         <div className="flex items-center justify-between px-2">
           <h4 className="text-[10px] font-black text-foreground uppercase tracking-widest flex items-center gap-2">
-            <HistoryIcon className="w-3 h-3 text-coral" /> Últimas Leituras
+            <HistoryIcon className="w-3 h-3 text-primary" /> Últimas Leituras
           </h4>
         </div>
         <div className="space-y-2">

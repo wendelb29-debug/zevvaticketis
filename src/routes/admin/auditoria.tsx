@@ -44,10 +44,10 @@ function AuditoriaPage() {
 
       <Tabs defaultValue="acoes" className="w-full">
         <TabsList className="bg-card border border-line p-1 rounded-2xl h-14 shadow-sm mb-8">
-          <TabsTrigger value="acoes" className="data-[state=active]:bg-primary data-[state=active]:text-white rounded-xl h-11 px-6 font-black uppercase tracking-widest text-[10px] gap-2 transition-all">
+          <TabsTrigger value="acoes" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground rounded-xl h-11 px-6 font-black uppercase tracking-widest text-[10px] gap-2 transition-all">
             <History className="w-4 h-4" /> Ações do Sistema
           </TabsTrigger>
-          <TabsTrigger value="acessos" className="data-[state=active]:bg-primary data-[state=active]:text-white rounded-xl h-11 px-6 font-black uppercase tracking-widest text-[10px] gap-2 transition-all">
+          <TabsTrigger value="acessos" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground rounded-xl h-11 px-6 font-black uppercase tracking-widest text-[10px] gap-2 transition-all">
             <ShieldAlert className="w-4 h-4" /> Auditoria de Acesso
           </TabsTrigger>
         </TabsList>

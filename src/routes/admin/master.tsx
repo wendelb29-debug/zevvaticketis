@@ -102,12 +102,12 @@ function MasterAdminPage() {
             <Building2 size={120} />
           </div>
           <CardHeader className="pb-2">
-            <CardTitle className="text-xs font-black uppercase tracking-widest text-white/60">Projetos Ativos</CardTitle>
+            <CardTitle className="text-xs font-black uppercase tracking-widest text-primary-foreground/60">Projetos Ativos</CardTitle>
           </CardHeader>
 
           <CardContent>
             <div className="text-4xl font-manrope font-black">{stats?.tenants || 0}</div>
-            <p className="text-xs font-medium text-white/60 mt-2">+12 novos este mês</p>
+            <p className="text-xs font-medium text-primary-foreground/60 mt-2">+12 novos este mês</p>
           </CardContent>
         </Card>
 
@@ -136,13 +136,13 @@ function MasterAdminPage() {
             <Ticket size={120} />
           </div>
           <CardHeader className="pb-2">
-            <CardTitle className="text-xs font-black uppercase tracking-widest text-white/60">Receita Plataforma</CardTitle>
+            <CardTitle className="text-xs font-black uppercase tracking-widest text-primary-foreground/60">Receita Plataforma</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-4xl font-manrope font-black">
               {stats?.platformRevenue.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}
             </div>
-            <p className="text-xs font-medium text-white/60 mt-2">Comissões sobre GMV</p>
+            <p className="text-xs font-medium text-primary-foreground/60 mt-2">Comissões sobre GMV</p>
           </CardContent>
         </Card>
 
@@ -186,11 +186,11 @@ function MasterAdminPage() {
                   <tr key={tenant.id} className="hover:bg-muted/50 transition-colors group">
                     <td className="px-8 py-6">
                       <div className="flex items-center gap-4">
-                        <div className="w-12 h-12 bg-navy rounded-2xl flex items-center justify-center text-white font-black text-lg border-2 border-white shadow-sm overflow-hidden">
+                        <div className="w-12 h-12 bg-navy rounded-2xl flex items-center justify-center text-primary-foreground font-black text-lg border-2 border-white shadow-sm overflow-hidden">
                           {tenant.logo ? <img src={tenant.logo} className="w-full h-full object-cover" /> : tenant.nome.substring(0, 2).toUpperCase()}
                         </div>
                         <div>
-                          <p className="font-manrope font-black text-foreground group-hover:text-coral transition-colors">{tenant.nome}</p>
+                          <p className="font-manrope font-black text-foreground group-hover:text-primary transition-colors">{tenant.nome}</p>
                           <p className="text-xs text-slate-400 font-medium tracking-tight">/{tenant.slug}</p>
                         </div>
                       </div>

@@ -211,10 +211,10 @@ export const AdmitOneTicket = forwardRef<HTMLDivElement, AdmitOneTicketProps>(
         className={cn("relative w-full aspect-[2/1] group perspective-1000", className)}
       >
         <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" />
-        <div className="absolute inset-0 p-6 md:p-8 flex flex-col justify-between text-white pointer-events-none z-10">
+        <div className="absolute inset-0 p-6 md:p-8 flex flex-col justify-between text-primary-foreground pointer-events-none z-10">
           <div className="flex justify-between items-start">
             <div className="space-y-1">
-              <p className="text-[10px] font-black uppercase tracking-[0.3em] text-coral drop-shadow-sm">ZEVVA PREMIUM TICKET</p>
+              <p className="text-[10px] font-black uppercase tracking-[0.3em] text-primary drop-shadow-sm">ZEVVA PREMIUM TICKET</p>
               <h3 className="text-xl md:text-3xl font-manrope font-black uppercase tracking-tighter leading-none drop-shadow-md">{title}</h3>
             </div>
             <div className="text-right">
@@ -237,7 +237,7 @@ export const AdmitOneTicket = forwardRef<HTMLDivElement, AdmitOneTicketProps>(
                   {status}
                 </span>
               )}
-              <div className="h-14 w-14 bg-white p-1 rounded-lg flex items-center justify-center shadow-lg">
+              <div className="h-14 w-14 bg-background p-1 rounded-lg flex items-center justify-center shadow-lg">
                 <div className="w-full h-full border-2 border-navy/20 rounded-sm bg-surface flex items-center justify-center">
                    <div className="w-8 h-8 bg-navy/10 rounded-xs" />
                 </div>

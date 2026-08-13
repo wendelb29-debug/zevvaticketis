@@ -80,7 +80,7 @@ function SupervisorPanel() {
         <Card className="rounded-[32px] border-border shadow-sm">
           <CardHeader>
             <CardTitle className="text-lg font-black text-foreground uppercase flex items-center gap-2">
-              <Users className="w-5 h-5 text-coral" /> Equipe em Campo
+              <Users className="w-5 h-5 text-primary" /> Equipe em Campo
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -97,7 +97,7 @@ function SupervisorPanel() {
                     </div>
                   </div>
                   <div className="text-right">
-                    <p className="text-lg font-black text-coral">{op.checkins}</p>
+                    <p className="text-lg font-black text-primary">{op.checkins}</p>
                     <p className="text-[9px] font-black text-slate-400 uppercase">Entradas</p>
                   </div>
                 </div>
@@ -109,7 +109,7 @@ function SupervisorPanel() {
         <Card className="rounded-[32px] border-border shadow-sm">
           <CardHeader>
             <CardTitle className="text-lg font-black text-foreground uppercase flex items-center gap-2">
-              <Activity className="w-5 h-5 text-coral" /> Fluxo por Hora
+              <Activity className="w-5 h-5 text-primary" /> Fluxo por Hora
             </CardTitle>
           </CardHeader>
           <CardContent className="h-[300px]">
@@ -152,7 +152,7 @@ function SummaryCard({ label, value, sublabel }: any) {
     <div className="bg-card p-6 rounded-[24px] border border-border shadow-sm">
       <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">{label}</p>
       <p className="text-2xl font-black text-foreground">{value}</p>
-      <p className="text-xs font-bold text-coral uppercase mt-1">{sublabel}</p>
+      <p className="text-xs font-bold text-primary uppercase mt-1">{sublabel}</p>
     </div>
   );
 }

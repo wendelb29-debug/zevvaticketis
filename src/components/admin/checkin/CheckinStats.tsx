@@ -208,7 +208,7 @@ export function CheckinStats() {
               </p>
             </div>
             <Link to={"/produtor/checkin-url" as any} className="w-full">
-              <Button className="w-full h-14 bg-primary hover:bg-primary-hover text-white rounded-2xl font-black uppercase tracking-widest text-xs shadow-xl shadow-primary/20 group">
+              <Button className="w-full h-14 bg-primary hover:bg-primary-hover text-primary-foreground rounded-2xl font-black uppercase tracking-widest text-xs shadow-xl shadow-primary/20 group">
                 Configurar Links <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
               </Button>
             </Link>

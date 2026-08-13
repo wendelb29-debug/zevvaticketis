@@ -107,21 +107,21 @@ export function CoverflowCarousel({ events }: CoverflowCarouselProps) {
                     <div className="absolute inset-0 bg-gradient-to-t from-navy/90 via-navy/20 to-transparent opacity-80" />
 
                     {/* Content */}
-                    <div className="absolute bottom-0 left-0 right-0 p-8 text-white translate-y-2 group-hover:translate-y-0 transition-transform">
+                    <div className="absolute bottom-0 left-0 right-0 p-8 text-primary-foreground translate-y-2 group-hover:translate-y-0 transition-transform">
                       <div className="flex items-center gap-2 mb-2">
-                        <span className="px-3 py-1 bg-coral text-[10px] font-black uppercase rounded-full tracking-widest">
+                        <span className="px-3 py-1 bg-primary text-[10px] font-black uppercase rounded-full tracking-widest">
                           {event.categoria}
                         </span>
-                        <span className="text-[10px] font-bold text-white/70 flex items-center gap-1">
+                        <span className="text-[10px] font-bold text-primary-foreground/70 flex items-center gap-1">
                           <MapPin className="w-3 h-3" /> {event.cidade}
                         </span>
                       </div>
                       <h3 className="text-xl md:text-2xl font-manrope font-black mb-2 line-clamp-2 leading-tight uppercase">
                         {event.nome}
                       </h3>
-                      <div className="flex items-center gap-4 text-xs font-bold text-white/60">
+                      <div className="flex items-center gap-4 text-xs font-bold text-primary-foreground/60">
                         <span className="flex items-center gap-1.5">
-                          <Calendar className="w-4 h-4 text-coral" />
+                          <Calendar className="w-4 h-4 text-primary" />
                           {event.data_inicio
                             ? new Date(event.data_inicio).toLocaleDateString("pt-BR", {
                                 day: "numeric",
@@ -179,7 +179,7 @@ export function CoverflowCarousel({ events }: CoverflowCarouselProps) {
                 onClick={() => setCurrentIndex(i)}
                 className={cn(
                   "h-1.5 transition-all duration-300 rounded-full",
-                  currentIndex === i ? "w-8 bg-coral" : "w-1.5 bg-line",
+                  currentIndex === i ? "w-8 bg-primary" : "w-1.5 bg-line",
                 )}
               />
             ))}

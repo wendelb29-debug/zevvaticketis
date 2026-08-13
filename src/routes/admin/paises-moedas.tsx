@@ -78,14 +78,14 @@ function PaisesMoedasPage() {
         {/* Countries Column */}
         <div className="space-y-6">
           <div className="flex items-center gap-2 border-b pb-4">
-            <Globe className="text-coral" />
+            <Globe className="text-primary" />
             <h2 className="text-lg font-extrabold text-foreground">Países Ativos</h2>
           </div>
           
           <div className="bg-card p-4 rounded-xl border flex gap-2">
             <Input placeholder="Nome" value={countryForm.nome} onChange={e => setCountryForm({...countryForm, nome: e.target.value})} />
             <Input placeholder="ISO" className="w-20" value={countryForm.codigo_iso} onChange={e => setCountryForm({...countryForm, codigo_iso: e.target.value})} />
-            <Button size="icon" className="bg-coral shrink-0" onClick={() => addCountry.mutate(countryForm)}>
+            <Button size="icon" className="bg-primary shrink-0" onClick={() => addCountry.mutate(countryForm)}>
               <Plus className="w-4 h-4" />
             </Button>
           </div>
@@ -99,7 +99,7 @@ function PaisesMoedasPage() {
                 </div>
                 <button onClick={() => updateCountry.mutate({ id: c.id, ativo: !c.ativo })}>
                   {c.ativo ? (
-                    <ToggleRight className="text-coral w-8 h-8" />
+                    <ToggleRight className="text-primary w-8 h-8" />
                   ) : (
                     <ToggleLeft className="text-muted-foreground w-8 h-8" />
                   )}
@@ -112,14 +112,14 @@ function PaisesMoedasPage() {
         {/* Currencies Column */}
         <div className="space-y-6">
           <div className="flex items-center gap-2 border-b pb-4">
-            <DollarSign className="text-coral" />
+            <DollarSign className="text-primary" />
             <h2 className="text-lg font-extrabold text-foreground">Moedas Ativas</h2>
           </div>
 
           <div className="bg-card p-4 rounded-xl border flex gap-2">
             <Input placeholder="Código (Ex: BRL)" value={currencyForm.codigo} onChange={e => setCurrencyForm({...currencyForm, codigo: e.target.value})} />
             <Input placeholder="Símbolo" className="w-20" value={currencyForm.simbolo} onChange={e => setCurrencyForm({...currencyForm, simbolo: e.target.value})} />
-            <Button size="icon" className="bg-coral shrink-0" onClick={() => addCurrency.mutate(currencyForm)}>
+            <Button size="icon" className="bg-primary shrink-0" onClick={() => addCurrency.mutate(currencyForm)}>
               <Plus className="w-4 h-4" />
             </Button>
           </div>
@@ -133,7 +133,7 @@ function PaisesMoedasPage() {
                 </div>
                 <button onClick={() => updateCurrency.mutate({ id: cur.id, ativo: !cur.ativo })}>
                   {cur.ativo ? (
-                    <ToggleRight className="text-coral w-8 h-8" />
+                    <ToggleRight className="text-primary w-8 h-8" />
                   ) : (
                     <ToggleLeft className="text-muted-foreground w-8 h-8" />
                   )}

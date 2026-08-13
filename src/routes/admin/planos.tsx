@@ -61,7 +61,7 @@ function PlanosPage() {
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <h1 className="text-2xl font-manrope font-extrabold text-foreground">Gestão de Planos</h1>
-        <Button onClick={() => setIsEditing('new')} className="bg-coral">
+        <Button onClick={() => setIsEditing('new')} className="bg-primary">
           <Plus className="w-4 h-4 mr-2" /> Novo Plano
         </Button>
       </div>
@@ -105,7 +105,7 @@ function PlanosPage() {
           <div key={plan.id} className="bg-card p-6 rounded-xl border flex flex-col justify-between">
             <div className="space-y-4">
               <div className="flex justify-between items-start">
-                <div className="w-10 h-10 bg-coral/10 rounded-lg flex items-center justify-center text-coral">
+                <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center text-primary">
                   <CreditCard className="w-5 h-5" />
                 </div>
                 <div className="flex gap-1">
@@ -119,7 +119,7 @@ function PlanosPage() {
               </div>
               <div>
                 <h3 className="text-xl font-manrope font-extrabold text-foreground">{plan.nome}</h3>
-                <p className="text-2xl font-black text-coral mt-1">
+                <p className="text-2xl font-black text-primary mt-1">
                   R$ {plan.preco_mensal?.toFixed(2)}<span className="text-xs font-medium text-muted-foreground">/mês</span>
                 </p>
               </div>

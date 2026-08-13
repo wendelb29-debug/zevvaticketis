@@ -54,7 +54,7 @@ function SuportePage() {
         {results.map((profile: any) => (
           <div key={profile.id} className="bg-card p-6 rounded-xl border space-y-4">
             <div className="flex items-center gap-3 border-b pb-4">
-              <div className="w-10 h-10 bg-coral/10 rounded-full flex items-center justify-center text-coral">
+              <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center text-primary">
                 <User />
               </div>
               <div>
@@ -73,7 +73,7 @@ function SuportePage() {
                       <p className="text-xs text-muted-foreground">{new Date(order.created_at).toLocaleDateString()}</p>
                     </div>
                     <div className="text-right">
-                      <span className="text-xs font-bold px-2 py-1 rounded bg-coral/10 text-coral">
+                      <span className="text-xs font-bold px-2 py-1 rounded bg-primary/10 text-primary">
                         {order.status}
                       </span>
                       <p className="text-sm font-extrabold mt-1">

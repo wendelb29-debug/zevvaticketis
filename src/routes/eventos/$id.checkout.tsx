@@ -209,7 +209,7 @@ function CheckoutPage() {
                 </CardContent>
                 <CardFooter className="flex flex-col gap-4">
                   <Button 
-                    className="w-full h-14 text-lg font-black bg-green-600 hover:bg-green-700 text-white" 
+                    className="w-full h-14 text-lg font-black bg-green-600 hover:bg-green-700 text-primary-foreground" 
                     disabled={createOrderMutation.isPending}
                     onClick={() => createOrderMutation.mutate()}
                   >
@@ -223,7 +223,7 @@ function CheckoutPage() {
 
           <div className="space-y-6">
             <Card className="bg-navy text-primary-foreground overflow-hidden">
-              <div className="h-2 bg-coral w-full"></div>
+              <div className="h-2 bg-primary w-full"></div>
               <CardHeader>
                 <CardTitle className="text-lg">Resumo da Compra</CardTitle>
               </CardHeader>
@@ -234,27 +234,27 @@ function CheckoutPage() {
                   </div>
                   <div>
                     <p className="font-bold text-sm leading-tight mb-1">{event.nome_evento}</p>
-                    <p className="text-[10px] text-white/60 uppercase font-black">{event.city}</p>
+                    <p className="text-[10px] text-primary-foreground/60 uppercase font-black">{event.city}</p>
                   </div>
                 </div>
 
                 <div className="pt-4 border-t border-white/10 space-y-2">
                   <div className="flex justify-between text-sm">
-                    <span className="text-white/60">Ingresso:</span>
+                    <span className="text-primary-foreground/60">Ingresso:</span>
                     <span className="font-bold">{selectedTicket?.nome || "---"}</span>
                   </div>
                   <div className="flex justify-between text-sm">
-                    <span className="text-white/60">Valor:</span>
+                    <span className="text-primary-foreground/60">Valor:</span>
                     <span>R$ {selectedTicket ? Number(selectedTicket.valor).toLocaleString("pt-BR") : "0,00"}</span>
                   </div>
                   <div className="flex justify-between text-sm">
-                    <span className="text-white/60">Taxa de serviço (10%):</span>
+                    <span className="text-primary-foreground/60">Taxa de serviço (10%):</span>
                     <span>R$ {platformFee.toLocaleString("pt-BR")}</span>
                   </div>
                 </div>
 
                 <div className="pt-4 border-t border-white/10 flex justify-between items-end">
-                  <span className="text-sm font-bold uppercase text-coral">Total:</span>
+                  <span className="text-sm font-bold uppercase text-primary">Total:</span>
                   <span className="text-3xl font-black">R$ {totalAmount.toLocaleString("pt-BR")}</span>
                 </div>
               </CardContent>

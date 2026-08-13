@@ -440,7 +440,7 @@ export function AdminDashboardBI() {
                     <tr key={i} className="hover:bg-accent/30 transition-colors">
                       <td className="py-4">
                         <div className="flex items-center gap-3">
-                          <div className={cn("w-2 h-2 rounded-full", i === 0 ? "bg-primary" : i === 1 ? "bg-coral" : "bg-navy")} />
+                          <div className={cn("w-2 h-2 rounded-full", i === 0 ? "bg-primary" : i === 1 ? "bg-primary" : "bg-navy")} />
                           <div>
                             <p className="text-sm font-bold text-foreground">{c.name}</p>
                             <p className="text-[10px] text-muted-foreground-fg uppercase font-bold">{c.source}</p>
@@ -477,7 +477,7 @@ export function AdminDashboardBI() {
                   </div>
                   <div className="h-3 bg-accent rounded-full overflow-hidden">
                     <div 
-                      className={cn("h-full transition-all duration-1000", i < 2 ? "bg-primary" : i < 4 ? "bg-coral" : "bg-navy")} 
+                      className={cn("h-full transition-all duration-1000", i < 2 ? "bg-primary" : i < 4 ? "bg-primary" : "bg-navy")} 
                       style={{ width: `${step.val}%` }} 
                     />
                   </div>
@@ -498,7 +498,7 @@ export function AdminDashboardBI() {
          <Card className="border-border shadow-sm overflow-hidden">
             <CardHeader className="bg-navy text-primary-foreground">
               <CardTitle className="text-lg font-manrope font-bold flex items-center gap-2">
-                <BarChart3 className="w-5 h-5 text-coral" /> Melhores Anúncios (ROI)
+                <BarChart3 className="w-5 h-5 text-primary" /> Melhores Anúncios (ROI)
               </CardTitle>
             </CardHeader>
             <CardContent className="p-0">
@@ -518,7 +518,7 @@ export function AdminDashboardBI() {
                        </div>
                        <div className="text-right">
                           <div className="flex items-center gap-2 mb-1 justify-end">
-                            <span className="text-[10px] font-black px-2 py-0.5 bg-coral/10 text-coral rounded-full">{ad.badge}</span>
+                            <span className="text-[10px] font-black px-2 py-0.5 bg-primary/10 text-primary rounded-full">{ad.badge}</span>
                             <span className="text-sm font-black text-foreground">{ad.roi}</span>
                           </div>
                           <p className="text-[10px] text-muted-foreground-fg font-bold uppercase">{ad.sales} Vendas • {ad.clicks} Cliques</p>

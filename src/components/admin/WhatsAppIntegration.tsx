@@ -446,11 +446,11 @@ export function WhatsAppIntegration() {
 
       {/* Numbers and Templates */}
       <Tabs defaultValue="numbers" className="w-full">
-        <TabsList className="bg-white border border-border p-1 h-auto w-full justify-start rounded-xl shadow-sm mb-4">
-          <TabsTrigger value="numbers" className="data-[state=active]:bg-primary data-[state=active]:text-white rounded-lg py-2 px-4 text-xs font-bold">
+        <TabsList className="bg-background border border-border p-1 h-auto w-full justify-start rounded-xl shadow-sm mb-4">
+          <TabsTrigger value="numbers" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground rounded-lg py-2 px-4 text-xs font-bold">
             <Smartphone className="w-3.5 h-3.5 mr-2" /> Números Conectados
           </TabsTrigger>
-          <TabsTrigger value="atendimento" className="data-[state=active]:bg-primary data-[state=active]:text-white rounded-lg py-2 px-4 text-xs font-bold">
+          <TabsTrigger value="atendimento" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground rounded-lg py-2 px-4 text-xs font-bold">
             <MessageSquare className="w-3.5 h-3.5 mr-2" /> Atendimento Vinculados
           </TabsTrigger>
         </TabsList>
@@ -473,8 +473,8 @@ export function WhatsAppIntegration() {
                     <TableCell className="font-bold">{n.number}</TableCell>
                     <TableCell className="text-foreground/80">{n.name}</TableCell>
                     <TableCell>
-                      <Badge className="bg-green-500 text-white border-0 gap-1.5">
-                        <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" /> Online
+                      <Badge className="bg-green-500 text-primary-foreground border-0 gap-1.5">
+                        <span className="w-1.5 h-1.5 rounded-full bg-background animate-pulse" /> Online
                       </Badge>
                     </TableCell>
                     <TableCell className="text-muted-foreground-fg text-xs">{n.lastActivity}</TableCell>

@@ -234,7 +234,7 @@ function NovoEventoPage() {
           <Button type="button" variant="outline" onClick={() => navigate({ to: "/produtor" })}>
             Cancelar
           </Button>
-          <Button type="submit" disabled={createEventMutation.isPending} className="bg-coral hover:bg-coral/90">
+          <Button type="submit" disabled={createEventMutation.isPending} className="bg-primary hover:bg-primary/90">
             {createEventMutation.isPending ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />

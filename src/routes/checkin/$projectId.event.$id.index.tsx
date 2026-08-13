@@ -84,7 +84,7 @@ function EventOperationalDashboard() {
           label="Presença" 
           value={`${stats.percentage}%`} 
           icon={TrendingUp} 
-          color="bg-coral" 
+          color="bg-primary" 
         />
       </div>
 
@@ -92,7 +92,7 @@ function EventOperationalDashboard() {
         <h3 className="text-xl font-black text-foreground uppercase mb-6">Status da Lotação</h3>
         <div className="w-full h-4 bg-slate-100 rounded-full overflow-hidden">
           <div 
-            className="h-full bg-coral transition-all duration-500" 
+            className="h-full bg-primary transition-all duration-500" 
             style={{ width: `${stats.percentage}%` }}
           />
         </div>
@@ -115,7 +115,7 @@ function StatCard({ label, value, icon: Icon, color }: any) {
             <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">{label}</p>
             <p className="text-3xl font-black text-foreground">{value}</p>
           </div>
-          <div className={`${color} p-3 rounded-xl text-white`}>
+          <div className={`${color} p-3 rounded-xl text-primary-foreground`}>
             <Icon className="w-6 h-6" />
           </div>
         </div>

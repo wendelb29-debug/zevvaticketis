@@ -242,7 +242,7 @@ export function AuthModal({ isOpen, onClose, defaultView = 'login' }: AuthModalP
                         if (error) toast.error(error.message);
                         else toast.success("E-mail de confirmação reenviado!");
                       }} 
-                      className="w-full text-center text-[10px] font-bold text-coral hover:text-coral-dark"
+                      className="w-full text-center text-[10px] font-bold text-primary hover:text-primary-dark"
                     >
                       Não chegou o e-mail? Clique aqui para reenviar
                     </button>
@@ -257,7 +257,7 @@ export function AuthModal({ isOpen, onClose, defaultView = 'login' }: AuthModalP
                   onClick={() => setRole('participante')}
                   className={cn(
                     "flex flex-col items-center p-6 rounded-[20px] border-2 transition-all space-y-4 text-center",
-                    role === 'participante' ? "border-coral bg-coral/5" : "border-border hover:border-border"
+                    role === 'participante' ? "border-coral bg-primary/5" : "border-border hover:border-border"
                   )}
                 >
                   <div className={cn("w-12 h-12 rounded-xl flex items-center justify-center", role === 'participante' ? "bg-primary text-primary-foreground" : "bg-muted text-slate-400")}>
@@ -272,7 +272,7 @@ export function AuthModal({ isOpen, onClose, defaultView = 'login' }: AuthModalP
                   onClick={() => setRole('produtor')}
                   className={cn(
                     "flex flex-col items-center p-6 rounded-[20px] border-2 transition-all space-y-4 text-center",
-                    role === 'produtor' ? "border-coral bg-coral/5" : "border-border hover:border-border"
+                    role === 'produtor' ? "border-coral bg-primary/5" : "border-border hover:border-border"
                   )}
                 >
                   <div className={cn("w-12 h-12 rounded-xl flex items-center justify-center", role === 'produtor' ? "bg-navy text-primary-foreground" : "bg-muted text-slate-400")}>
@@ -302,9 +302,9 @@ export function AuthModal({ isOpen, onClose, defaultView = 'login' }: AuthModalP
 
               {role === 'produtor' && (
                 <div className="space-y-4 pt-4 border-t border-line">
-                  <div className="bg-coral/5 p-3 rounded-xl flex gap-3">
-                    <ShieldCheck className="w-4 h-4 text-coral shrink-0 mt-0.5" />
-                    <p className="text-[10px] text-coral-dark font-medium">Sua organização passará por aprovação.</p>
+                  <div className="bg-primary/5 p-3 rounded-xl flex gap-3">
+                    <ShieldCheck className="w-4 h-4 text-primary shrink-0 mt-0.5" />
+                    <p className="text-[10px] text-primary-dark font-medium">Sua organização passará por aprovação.</p>
                   </div>
                   <Input placeholder="Nome da Organização" value={formData.orgNome} onChange={(e) => setFormData({...formData, orgNome: e.target.value})} className="h-11 rounded-[12px] border-line" required />
                   <div className="grid grid-cols-2 gap-3">
@@ -343,7 +343,7 @@ export function AuthModal({ isOpen, onClose, defaultView = 'login' }: AuthModalP
                 setView(view === 'login' ? 'register' : 'login');
                 setStep(1);
               }}
-              className="text-coral hover:text-coral-dark underline decoration-2 underline-offset-4"
+              className="text-primary hover:text-primary-dark underline decoration-2 underline-offset-4"
             >
               {view === 'login' ? "Cadastre-se" : "Entrar"}
             </button>

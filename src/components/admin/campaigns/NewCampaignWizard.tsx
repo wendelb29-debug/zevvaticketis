@@ -325,7 +325,7 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
                             "w-5 h-5 rounded-full border-2 flex items-center justify-center",
                             publicType === item.id ? "border-primary bg-primary" : "border-[#E5E7EB]"
                           )}>
-                            {publicType === item.id && <Check className="w-3 h-3 text-white" />}
+                            {publicType === item.id && <Check className="w-3 h-3 text-primary-foreground" />}
                           </div>
                         </div>
                       ))}
@@ -666,7 +666,7 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
                           "w-5 h-5 rounded-full border-2 flex items-center justify-center",
                           contentType === item.id ? "border-primary bg-primary" : "border-[#E5E7EB]"
                         )}>
-                          {contentType === item.id && <Check className="w-3 h-3 text-white" />}
+                          {contentType === item.id && <Check className="w-3 h-3 text-primary-foreground" />}
                         </div>
                       </div>
                     ))}
@@ -764,11 +764,11 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
                       {/* WhatsApp Header */}
                       <div className="bg-[#008069] p-4 flex items-center gap-3 -mx-4 -mt-4 mb-4">
                         <div className="w-9 h-9 rounded-full bg-[#D1D7DB] flex items-center justify-center">
-                          <Users className="w-5 h-5 text-white" />
+                          <Users className="w-5 h-5 text-primary-foreground" />
                         </div>
                         <div className="flex-1">
-                          <div className="text-white text-sm font-medium">Zevva Business</div>
-                          <div className="text-white/70 text-[10px]">online</div>
+                          <div className="text-primary-foreground text-sm font-medium">Zevva Business</div>
+                          <div className="text-primary-foreground/70 text-[10px]">online</div>
                         </div>
                       </div>
 
@@ -862,7 +862,7 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
 
               <div className="bg-primary/10 border border-primary/20 rounded-2xl p-5 flex items-center gap-4">
                 <div className="bg-primary p-2.5 rounded-xl shadow-lg shadow-[#F06452]/20">
-                  <Rocket className="w-5 h-5 text-white" />
+                  <Rocket className="w-5 h-5 text-primary-foreground" />
                 </div>
                 <div className="flex-1 text-sm text-foreground">
                   <span className="text-muted-foreground">Hoje este envio dispara </span>
@@ -900,7 +900,7 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
                     >
                       <div className="flex items-center justify-between">
                         <span className="text-2xl">{item.icon}</span>
-                        {sendingSpeed === item.id && <div className="w-5 h-5 rounded-full bg-primary flex items-center justify-center shadow-md shadow-[#F06452]/20"><Check className="w-3 h-3 text-white" /></div>}
+                        {sendingSpeed === item.id && <div className="w-5 h-5 rounded-full bg-primary flex items-center justify-center shadow-md shadow-[#F06452]/20"><Check className="w-3 h-3 text-primary-foreground" /></div>}
                       </div>
                       <div className="space-y-1">
                         <p className={cn("text-sm font-bold", sendingSpeed === item.id ? "text-primary" : "text-foreground")}>{item.label}</p>
@@ -1032,7 +1032,7 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
                   </div>
 
                   <Button 
-                    className="w-full bg-primary hover:bg-[#D95342] text-white font-black h-16 rounded-[1.25rem] shadow-2xl shadow-[#F06452]/30 text-lg uppercase tracking-widest mt-auto transition-all transform active:scale-[0.98]"
+                    className="w-full bg-primary hover:bg-[#D95342] text-primary-foreground font-black h-16 rounded-[1.25rem] shadow-2xl shadow-[#F06452]/30 text-lg uppercase tracking-widest mt-auto transition-all transform active:scale-[0.98]"
                     onClick={() => onOpenChange(false)}
                   >
                     <Rocket className="w-6 h-6 mr-3" /> Iniciar Envio Agora

@@ -71,7 +71,7 @@ function CheckinDashboard() {
                 <h3 className="text-xl font-black text-foreground">{e.title}</h3>
                 <p className="text-xs font-bold text-muted-foreground uppercase">{e.location} - {new Date(e.start_date).toLocaleDateString('pt-BR')}</p>
               </div>
-              <QrCode className="text-coral w-6 h-6" />
+              <QrCode className="text-primary w-6 h-6" />
             </div>
             <div className="grid grid-cols-3 gap-2 mb-6">
               <div className="bg-muted p-3 rounded-lg text-center">
@@ -82,13 +82,13 @@ function CheckinDashboard() {
                 <p className="text-[9px] font-black text-emerald-600 uppercase">Entraram</p>
                 <p className="text-lg font-black text-emerald-600">{e.checkedIn}</p>
               </div>
-              <div className="bg-coral/10 p-3 rounded-lg text-center">
-                <p className="text-[9px] font-black text-coral uppercase">Faltam</p>
-                <p className="text-lg font-black text-coral">{e.total - e.checkedIn}</p>
+              <div className="bg-primary/10 p-3 rounded-lg text-center">
+                <p className="text-[9px] font-black text-primary uppercase">Faltam</p>
+                <p className="text-lg font-black text-primary">{e.total - e.checkedIn}</p>
               </div>
             </div>
             <Button 
-              className="w-full bg-navy hover:bg-navy/90 text-white font-black uppercase tracking-widest text-[11px] h-14 rounded-2xl group-hover:bg-coral transition-colors"
+              className="w-full bg-navy hover:bg-navy/90 text-primary-foreground font-black uppercase tracking-widest text-[11px] h-14 rounded-2xl group-hover:bg-primary transition-colors"
               onClick={() => navigate({ 
                 to: "/checkin/$projectId/scanner", 
                 params: { projectId: projectId },

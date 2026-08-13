@@ -97,7 +97,7 @@ function ReportsPage() {
           <Button variant="outline" className="rounded-xl font-black uppercase text-xs" onClick={exportCSV}>
             <Download className="w-4 h-4 mr-2" /> CSV
           </Button>
-          <Button className="bg-coral hover:bg-coral-dark text-white rounded-xl font-black uppercase text-xs" onClick={exportPDF}>
+          <Button className="bg-primary hover:bg-primary-dark text-primary-foreground rounded-xl font-black uppercase text-xs" onClick={exportPDF}>
             <FileText className="w-4 h-4 mr-2" /> PDF Profissional
           </Button>
         </div>

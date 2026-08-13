@@ -416,10 +416,10 @@ function AdminChatPage() {
             }}
             className={cn(
               "absolute top-0 right-[-4px] w-2 h-full z-50 cursor-col-resize group transition-colors",
-              isResizing ? "bg-coral/40" : "hover:bg-coral/20"
+              isResizing ? "bg-primary/40" : "hover:bg-primary/20"
             )}
           >
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[2px] h-8 bg-border group-hover:bg-coral transition-colors rounded-full" />
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[2px] h-8 bg-border group-hover:bg-primary transition-colors rounded-full" />
           </div>
 
           <div className="p-4 space-y-4">
@@ -550,7 +550,7 @@ function AdminChatPage() {
                       {contact.name?.substring(0, 2).toUpperCase() || "WA"}
                     </div>
                     <div className="absolute -bottom-1 -right-1 bg-green-500 rounded-full p-0.5 border-2 border-card">
-                      <MessageCircle className="w-2.5 h-2.5 text-white fill-current" />
+                      <MessageCircle className="w-2.5 h-2.5 text-primary-foreground fill-current" />
                     </div>
                   </div>
                   <div className="flex-1 min-w-0">

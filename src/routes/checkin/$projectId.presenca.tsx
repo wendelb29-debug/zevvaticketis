@@ -57,7 +57,7 @@ function PresencaPage() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h2 className="text-3xl font-manrope font-black text-foreground uppercase tracking-tighter">Lista de Presença</h2>
-          <p className="text-xs font-black text-coral uppercase tracking-widest mt-1 opacity-80">Projeto: {projectId}</p>
+          <p className="text-xs font-black text-primary uppercase tracking-widest mt-1 opacity-80">Projeto: {projectId}</p>
           <p className="text-sm font-bold text-muted-foreground uppercase tracking-widest mt-1">
             <span className="text-emerald-600">{checkedInCount}</span> Confirmados de {tickets.length} participantes
           </p>
@@ -124,7 +124,7 @@ function PresencaPage() {
                     </p>
                   </div>
                 ) : (
-                  <div className="flex items-center gap-1.5 text-coral/40">
+                  <div className="flex items-center gap-1.5 text-primary/40">
                     <Clock className="w-3.5 h-3.5" />
                     <span className="text-[10px] font-black uppercase tracking-tighter">Aguardando</span>
                   </div>

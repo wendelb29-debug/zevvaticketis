@@ -24,7 +24,7 @@ export function SalesCardPicker({ isOpen, onClose, onSelect }: SalesCardPickerPr
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="bg-card border-border sm:max-w-md">
         <DialogHeader>
-          <DialogTitle className="text-foreground dark:text-white uppercase font-black tracking-tighter">Gerar Proposta de Venda</DialogTitle>
+          <DialogTitle className="text-foreground dark:text-primary-foreground uppercase font-black tracking-tighter">Gerar Proposta de Venda</DialogTitle>
         </DialogHeader>
         <div className="space-y-4 py-4">
           <div className="relative">
