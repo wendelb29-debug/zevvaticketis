@@ -853,7 +853,12 @@ function AdminChatPage() {
           ].map((tool) => (
             <div key={tool.id} className="relative group flex flex-col items-center">
               <button 
-                onClick={() => !tool.disabled && setActiveTool(activeTool === tool.id ? null as any : tool.id as any)}
+                onClick={() => {
+                  if (tool.disabled) return;
+                  if (tool.id === 'finish') setIsFinishDialogOpen(true);
+                  else if (tool.id === 'transfer') setIsTransferDialogOpen(true);
+                  else setActiveTool(activeTool === tool.id ? null as any : tool.id as any);
+                }}
                 disabled={tool.disabled}
                 className={cn(
                   "p-2.5 rounded-xl transition-all duration-300 relative overflow-hidden",
