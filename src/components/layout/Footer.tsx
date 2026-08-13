@@ -38,14 +38,14 @@ export function Footer() {
               { label: "Painel do Produtor", path: "/app" }
             ].map(link => (
               <li key={link.label}>
-                <Link to={link.path as any} className="text-sm text-foreground-muted font-medium hover:text-accent transition-colors">{link.label}</Link>
+                <Link to={link.path as any} className="text-sm text-white/50 font-medium hover:text-primary transition-colors">{link.label}</Link>
               </li>
             ))}
           </ul>
         </div>
 
         <div className="space-y-8">
-          <h4 className="text-[10px] font-bold text-accent uppercase tracking-[0.3em]">Suporte & Legal</h4>
+          <h4 className="text-xs font-bold text-white uppercase tracking-widest">Suporte & Legal</h4>
           <ul className="space-y-4">
             {[
               { label: "Central de Ajuda", path: "/" },
@@ -54,7 +54,7 @@ export function Footer() {
               { label: "Política de Reembolso", path: "/" }
             ].map(link => (
               <li key={link.label}>
-                <Link to={link.path as any} className="text-sm text-foreground-muted font-medium hover:text-accent transition-colors">{link.label}</Link>
+                <Link to={link.path as any} className="text-sm text-white/50 font-medium hover:text-primary transition-colors">{link.label}</Link>
               </li>
             ))}
           </ul>
@@ -62,32 +62,32 @@ export function Footer() {
 
         {/* Contact */}
         <div className="space-y-10">
-          <h4 className="text-[10px] font-bold text-accent uppercase tracking-[0.3em]">Contato</h4>
+          <h4 className="text-xs font-bold text-white uppercase tracking-widest">Contato</h4>
           <div className="space-y-6">
             <div className="flex items-center gap-4">
-              <div className="w-10 h-10 border border-border flex items-center justify-center text-accent">
+              <div className="w-10 h-10 bg-white/5 border border-white/10 flex items-center justify-center text-primary rounded-md">
                 <Mail className="w-4 h-4" />
               </div>
               <div>
-                <p className="text-[8px] font-bold text-accent uppercase tracking-widest">Email</p>
-                <p className="text-sm font-bold text-foreground">suporte@zevvaticjets.com</p>
+                <p className="text-[10px] font-bold text-white/40 uppercase tracking-widest">Email</p>
+                <p className="text-sm font-bold text-white">suporte@zevvaticjets.com</p>
               </div>
             </div>
             <div className="flex items-center gap-4">
-              <div className="w-10 h-10 border border-border flex items-center justify-center text-accent">
+              <div className="w-10 h-10 bg-white/5 border border-white/10 flex items-center justify-center text-primary rounded-md">
                 <Phone className="w-4 h-4" />
               </div>
               <div>
-                <p className="text-[8px] font-bold text-accent uppercase tracking-widest">WhatsApp</p>
-                <p className="text-sm font-bold text-foreground">+55 (11) 9999-9999</p>
+                <p className="text-[10px] font-bold text-white/40 uppercase tracking-widest">WhatsApp</p>
+                <p className="text-sm font-bold text-white">+55 (11) 9999-9999</p>
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto mt-32 pt-10 border-t border-border flex flex-col md:flex-row justify-between items-center gap-8">
-        <p className="text-[10px] text-foreground-muted font-bold uppercase tracking-[0.2em]">© 2026 Zevva Tickets. Premium Event Management.</p>
+      <div className="max-w-7xl mx-auto mt-24 pt-10 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-8">
+        <p className="text-xs text-white/30 font-bold uppercase tracking-widest">© 2026 Zevva Tickets. Todos os direitos reservados.</p>
         <div className="flex items-center gap-10 grayscale opacity-40">
           <img src="https://stripe.com/img/v3/home/social.png" alt="Stripe" className="h-4" />
         </div>
