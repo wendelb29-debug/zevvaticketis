@@ -201,7 +201,7 @@ function HomePage() {
 
         {/* Minimalist Search */}
         <section ref={searchRef} className="relative -mt-12 z-20 px-6">
-          <div className="max-w-5xl mx-auto bg-surface p-4 rounded-2xl shadow-2xl border border-border">
+          <div className="max-w-5xl mx-auto bg-card p-4 rounded-2xl shadow-2xl border border-border">
             <div className="flex flex-col md:flex-row items-center gap-4">
               <div className="relative flex-1 w-full">
                 <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground h-5 w-5" />
@@ -293,7 +293,7 @@ function HomePage() {
           )}
         </section>
 
-        <section className="px-6 py-24 bg-surface border-y border-border">
+        <section className="px-6 py-24 bg-background border-y border-border">
           <div className="max-w-7xl mx-auto space-y-16">
             <div className="flex flex-col items-center text-center space-y-4 max-w-2xl mx-auto">
               <h2 className="text-3xl md:text-4xl font-manrope font-extrabold text-foreground tracking-tight">
@@ -362,7 +362,7 @@ function HomePage() {
                 {[1, 2, 3, 4].map((i) => (
                   <div
                     key={i}
-                    className="aspect-[16/10] rounded-sm bg-surface-elevated animate-pulse border border-border"
+                    className="aspect-[16/10] rounded-sm bg-muted animate-pulse border border-border"
                   />
                 ))}
               </div>
