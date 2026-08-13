@@ -6,6 +6,7 @@ import { UserMenu } from "@/components/auth/UserMenu";
 import { NotificationBell } from "@/components/admin/notifications/NotificationBell";
 import { GlobalBreadcrumb } from "@/components/layout/GlobalBreadcrumb";
 import { useUI } from "@/hooks/use-ui";
+import { getTranslations } from "@/lib/i18n-utils";
 import { 
   LayoutDashboard, 
   CheckSquare, 
@@ -90,7 +91,9 @@ function AdminLayout() {
   const [isTransitioning, setIsTransitioning] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
-  const { theme, setTheme, language, setLanguage, isSaving } = useUI();
+  const { theme, setTheme, language: rawLanguage, setLanguage, isSaving } = useUI();
+  const language = (typeof window !== 'undefined' ? (window as any).normalizeLocale?.(rawLanguage) : rawLanguage) || rawLanguage;
+  const t = getTranslations(language);
   const { logout } = useTenants();
   const [openGroup, setOpenGroup] = useState<string | null>(null);
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(() => {
@@ -129,9 +132,9 @@ function AdminLayout() {
   };
 
   const menuItems = [
-    { label: "Chat", icon: MessageSquare, href: "/admin/chat" },
-    { label: "Master Console", icon: Building2, href: "/admin/master" },
-    { label: "Dashboard", icon: LayoutDashboard, href: "/admin", activeOptions: { exact: true } },
+    { label: t.navigation?.chat || "Chat", icon: MessageSquare, href: "/admin/chat" },
+    { label: t.navigation?.masterConsole || "Master Console", icon: Building2, href: "/admin/master" },
+    { label: t.navigation?.dashboard || "Dashboard", icon: LayoutDashboard, href: "/admin", activeOptions: { exact: true } },
     { 
       label: "Contatos", 
       icon: Users, 
