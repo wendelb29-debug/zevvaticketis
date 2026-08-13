@@ -124,22 +124,22 @@ function AdminChatPage() {
       .on(
         'postgres_changes',
         {
-          event: '*',
+          event: 'INSERT',
           schema: 'public',
-          table: 'whatsapp_messages'
+          table: 'whatsapp_messages',
+          filter: `contact_id=eq.${selectedContactId}`
         },
         (payload) => {
-          if (payload.eventType === 'INSERT' && (payload.new as any).contact_id === selectedContactId) {
-            queryClient.setQueryData(['whatsapp-messages', selectedContactId], (old: any) => {
-              if (!old) return [payload.new];
-              if (old.some((m: any) => m.id === (payload.new as any).id)) return old;
-              return [...old, payload.new];
-            });
-            scrollToBottom();
-          }
-          queryClient.invalidateQueries({ queryKey: ['whatsapp-contacts'] });
+          queryClient.setQueryData(['whatsapp-messages', selectedContactId], (old: any) => {
+            if (!old) return [payload.new];
+            if (old.some((m: any) => m.id === (payload.new as any).id)) return old;
+            return [...old, payload.new];
+          });
+          scrollToBottom();
+          queryClient.invalidateQueries({ queryKey: ['whatsapp-contacts', activeTenant?.id] });
         }
       )
+      .subscribe();
       .subscribe();
 
     return () => {
