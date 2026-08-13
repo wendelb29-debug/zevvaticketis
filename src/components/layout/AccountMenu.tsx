@@ -1,249 +1,95 @@
-import { useState, useEffect } from "react";
-import { supabase } from "@/integrations/supabase/client";
-import { 
-  User as UserIcon, 
-  HelpCircle,
-  Menu,
-  Heart,
-  Calendar,
-  PlusCircle,
-  Settings,
-  LogOut,
-  ChevronRight,
-  UserCircle,
-  Globe
-} from "lucide-react";
-import { 
-  DropdownMenu, 
-  DropdownMenuContent, 
-  DropdownMenuItem, 
-  DropdownMenuSeparator, 
-  DropdownMenuTrigger 
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { cn } from "@/lib/utils";
-import { Progress } from "@/components/ui/progress";
-import { useAvatarUrl } from "@/lib/avatar";
+import { User, LogOut, LayoutDashboard, ChevronDown } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
 
 interface AccountMenuProps {
   user: any;
   onLogout: () => void;
   onNavigate: (path: string) => void;
-  onOpenAuth: (view?: 'login' | 'register') => void;
+  onOpenAuth: () => void;
 }
 
 export function AccountMenu({ user, onLogout, onNavigate, onOpenAuth }: AccountMenuProps) {
-  const [profile, setProfile] = useState<any>(null);
-  const [isProducer, setIsProducer] = useState(false);
-  const [isAdminUser, setIsAdminUser] = useState(false);
-  const [completionPercentage, setCompletionPercentage] = useState(0);
-  const avatarUrl = useAvatarUrl(profile?.avatar_url);
-
-  useEffect(() => {
-    async function fetchData() {
-      if (!user) return;
-
-      const { data: profileData } = await supabase
-        .from("profiles")
-        .select("*")
-        .eq("id", user.id)
-        .maybeSingle();
+  const { data: profile } = useQuery({
+    queryKey: ['profile', user?.id],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('profiles')
+        .select('*')
+        .eq('id', user.id)
+        .single();
       
-      setProfile(profileData);
-
-      if (profileData) {
-        const fields = ["nome", "telefone", "documento", "pais_id", "idioma_preferido"] as const;
-        const filledFields = fields.filter(f => profileData[f]);
-        setCompletionPercentage(filledFields.length * 20);
-      }
-
-      const { data: member } = await supabase
-        .from("tenant_members")
-        .select("id")
-        .eq("user_id", user.id)
-        .maybeSingle();
-      
-      setIsProducer(!!member);
-
-      const { data: isAdminRole, error: roleError } = await supabase.rpc('check_is_platform_admin', { _user_id: user.id });
-      setIsAdminUser(!!isAdminRole && !roleError);
-    }
-    fetchData();
-  }, [user]);
-
-  const initials = profile?.nome 
-    ? profile.nome.split(' ').map((n: string) => n[0]).join('').toUpperCase().slice(0, 2)
-    : user?.email?.slice(0, 2).toUpperCase();
+      if (error) throw error;
+      return data;
+    },
+    enabled: !!user,
+  });
 
   if (!user) {
     return (
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <button className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-line hover:border-coral/30 hover:shadow-sm transition-all outline-none bg-white">
-            <Menu className="w-4 h-4 text-navy" />
-            <div className="w-8 h-8 rounded-full bg-surface flex items-center justify-center border border-line">
-              <UserIcon className="w-4 h-4 text-navy/40" />
-            </div>
-          </button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="end" className="w-56 mt-2 rounded-[20px] p-2 border-line shadow-2xl font-manrope bg-white">
-          <DropdownMenuItem 
-            onClick={() => onOpenAuth('login')}
-            className="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-extrabold text-navy cursor-pointer hover:bg-surface transition-colors"
-          >
-            <UserCircle className="w-4 h-4 text-coral" />
-            Entrar
-          </DropdownMenuItem>
-          <DropdownMenuItem 
-            onClick={() => onOpenAuth('register')}
-            className="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-extrabold text-navy cursor-pointer hover:bg-surface transition-colors"
-          >
-            <PlusCircle className="w-4 h-4 text-coral" />
-            Cadastrar
-          </DropdownMenuItem>
-          <DropdownMenuSeparator className="bg-line mx-2" />
-          <DropdownMenuItem 
-            className="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-extrabold text-navy cursor-pointer hover:bg-surface transition-colors"
-          >
-            <Globe className="w-4 h-4 text-muted" />
-            Português (BR)
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
+      <button
+        onClick={onOpenAuth}
+        className="h-10 px-6 bg-primary text-white text-[10px] font-bold uppercase tracking-widest hover:bg-primary-hover transition-all rounded-sm shadow-lg shadow-primary/10"
+      >
+        Entrar
+      </button>
     );
   }
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <button className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-line hover:border-coral/30 hover:shadow-md transition-all outline-none bg-white active:scale-95 group">
-          <Menu className="w-4 h-4 text-navy transition-colors group-hover:text-coral" />
-          <Avatar className="w-8 h-8 border border-line">
-            <AvatarImage src={avatarUrl} className="object-cover" />
-            <AvatarFallback className="bg-gradient-to-br from-coral/20 to-coral/40 text-[10px] font-black text-navy uppercase">
-              {initials}
-            </AvatarFallback>
-          </Avatar>
+        <button className="flex items-center gap-3 p-1 rounded-sm hover:bg-background transition-all outline-none group border border-transparent hover:border-border">
+          <div className="relative w-8 h-8 rounded-sm overflow-hidden bg-accent/10 border border-border">
+            {profile?.avatar_url ? (
+              <img src={profile.avatar_url} alt={profile.nome || ''} className="w-full h-full object-cover" />
+            ) : (
+              <div className="w-full h-full flex items-center justify-center bg-accent/10 text-accent text-xs font-bold">
+                {profile?.nome?.charAt(0) || user.email?.charAt(0)}
+              </div>
+            )}
+          </div>
+          <ChevronDown className="w-3 h-3 text-foreground-muted group-hover:text-primary transition-colors" />
         </button>
       </DropdownMenuTrigger>
-      
-      <DropdownMenuContent align="end" className="w-[300px] mt-2 rounded-[24px] p-0 border-line shadow-2xl overflow-hidden font-manrope bg-white animate-in fade-in zoom-in-95 duration-200">
-        {/* Header */}
-        <div className="p-5 flex items-center gap-4 bg-surface/30">
-          <Avatar className="w-14 h-14 border-2 border-white shadow-sm">
-            <AvatarImage src={avatarUrl} className="object-cover" />
-            <AvatarFallback className="bg-gradient-to-br from-coral/20 to-coral/40 text-lg font-black text-navy uppercase">
-              {initials}
-            </AvatarFallback>
-          </Avatar>
-          <div className="flex flex-col min-w-0">
-            <p className="text-base font-extrabold text-navy truncate">
-              {profile?.nome || "Usuário"}
-            </p>
-            <p className="text-[11px] text-muted font-bold truncate">
-              {user?.email}
-            </p>
-          </div>
+      <DropdownMenuContent align="end" className="w-56 mt-2 rounded-sm border-border bg-surface-elevated shadow-2xl p-2 z-[60]">
+        <div className="px-3 py-4 border-b border-border mb-2">
+          <p className="text-xs font-bold text-foreground truncate">{profile?.nome || 'Usuário'}</p>
+          <p className="text-[10px] font-medium text-foreground-muted truncate">{user.email}</p>
         </div>
+        
+        <DropdownMenuItem 
+          onClick={() => onNavigate('/app')}
+          className="flex items-center gap-3 px-3 py-2.5 text-[10px] font-bold uppercase tracking-widest cursor-pointer rounded-sm hover:bg-background text-foreground-muted hover:text-primary transition-colors focus:bg-background focus:text-primary"
+        >
+          <LayoutDashboard className="w-4 h-4" />
+          Painel do Produtor
+        </DropdownMenuItem>
 
-        <DropdownMenuSeparator className="bg-line m-0" />
+        <DropdownMenuItem 
+          onClick={() => onNavigate('/meu-perfil')}
+          className="flex items-center gap-3 px-3 py-2.5 text-[10px] font-bold uppercase tracking-widest cursor-pointer rounded-sm hover:bg-background text-foreground-muted hover:text-primary transition-colors focus:bg-background focus:text-primary"
+        >
+          <User className="w-4 h-4" />
+          Meu Perfil
+        </DropdownMenuItem>
 
-        {/* Profile Completion Card */}
-        {completionPercentage < 100 && (
-          <div className="p-3">
-            <div className="bg-navy rounded-xl p-4 text-white space-y-3">
-              <div className="flex gap-2">
-                <HelpCircle className="w-4 h-4 text-coral shrink-0" />
-                <p className="text-[11px] font-bold leading-relaxed">
-                  Complete seus dados para <span className="font-extrabold text-coral">garantir</span> mais segurança no acesso à sua conta!
-                </p>
-              </div>
-              
-              <div className="flex items-center gap-3">
-                <div className="flex-1 h-1.5 bg-white/10 rounded-full overflow-hidden">
-                  <div 
-                    className="h-full bg-gradient-to-r from-coral to-coral-dark transition-all duration-1000" 
-                    style={{ width: `${completionPercentage}%` }}
-                  />
-                </div>
-                <span className="text-[10px] font-extrabold text-coral">{completionPercentage}%</span>
-              </div>
-
-              <button 
-                onClick={() => onNavigate("/app/perfil")}
-                className="w-full bg-coral hover:bg-coral-dark text-white text-[11px] font-extrabold py-2 rounded-lg transition-colors"
-              >
-                Completar dados
-              </button>
-            </div>
-          </div>
-        )}
-
-        {/* Menu Options */}
-        <div className="p-2 space-y-1">
-          <DropdownMenuItem 
-            onClick={() => onNavigate("/app/perfil")}
-            className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-extrabold text-navy cursor-pointer hover:bg-surface group"
-          >
-            <UserCircle className="w-4 h-4 text-navy/40 group-hover:text-coral transition-colors" />
-            Minha conta
-          </DropdownMenuItem>
-          
-          <DropdownMenuItem 
-            onClick={() => onNavigate("/app/favoritos")}
-            className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-extrabold text-navy cursor-pointer hover:bg-surface group"
-          >
-            <Heart className="w-4 h-4 text-navy/40 group-hover:text-coral transition-colors" />
-            Favoritos
-          </DropdownMenuItem>
-
-          <DropdownMenuItem 
-            onClick={() => onNavigate(isProducer ? "/criar-evento" : "/cadastro")}
-            className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-extrabold text-navy cursor-pointer hover:bg-surface group"
-          >
-            <PlusCircle className="w-4 h-4 text-navy/40 group-hover:text-coral transition-colors" />
-            Criar evento
-          </DropdownMenuItem>
-
-          {isProducer && (
-            <DropdownMenuItem 
-              onClick={() => onNavigate("/app")}
-              className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-extrabold text-navy cursor-pointer hover:bg-surface group"
-            >
-              <Calendar className="w-4 h-4 text-navy/40 group-hover:text-coral transition-colors" />
-              Meus Projetos
-            </DropdownMenuItem>
-          )}
-
-
-          {isAdminUser && (
-            <DropdownMenuItem 
-              onClick={() => onNavigate("/admin")}
-              className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-extrabold text-navy cursor-pointer hover:bg-surface group"
-            >
-              <Settings className="w-4 h-4 text-navy/40 group-hover:text-coral transition-colors" />
-              Painel Admin
-            </DropdownMenuItem>
-          )}
-
-          <DropdownMenuSeparator className="bg-line mx-2" />
-          
-          <DropdownMenuItem 
-            onClick={() => onNavigate("/ajuda")}
-            className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-extrabold text-navy cursor-pointer hover:bg-surface group"
-          >
-            <HelpCircle className="w-4 h-4 text-navy/40 group-hover:text-coral transition-colors" />
-            Central de Ajuda
-          </DropdownMenuItem>
-
-          <DropdownMenuItem 
-            onClick={onLogout}
-            className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-extrabold text-error cursor-pointer hover:bg-error/5 group"
-          >
-            <LogOut className="w-4 h-4 text-error/40 group-hover:text-error transition-colors" />
-            Sair
-          </DropdownMenuItem>
-        </div>
+        <DropdownMenuSeparator className="my-2 bg-border" />
+        
+        <DropdownMenuItem 
+          onClick={onLogout}
+          className="flex items-center gap-3 px-3 py-2.5 text-[10px] font-bold uppercase tracking-widest cursor-pointer rounded-sm hover:bg-danger/5 text-danger transition-colors focus:bg-danger/5 focus:text-danger"
+        >
+          <LogOut className="w-4 h-4" />
+          Sair da Conta
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );

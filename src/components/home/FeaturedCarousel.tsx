@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import { Link } from "@tanstack/react-router";
-import { MapPin, Calendar, ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface FeaturedEvent {
   id: string;
@@ -10,6 +11,7 @@ interface FeaturedEvent {
   min_price: number | null;
   cover_image: string | null;
   start_date: string | null;
+  description?: string;
 }
 
 interface FeaturedCarouselProps {
@@ -40,110 +42,109 @@ export function FeaturedCarousel({ events }: FeaturedCarouselProps) {
 
   useEffect(() => {
     if (isPaused) return;
-
     const interval = setInterval(nextSlide, 5000);
     return () => clearInterval(interval);
   }, [nextSlide, isPaused]);
 
-  if (!events.length) return null;
+  if (!events || events.length === 0) return null;
 
   const currentEvent = events[currentIndex];
 
   return (
-    <div className="w-full space-y-8 overflow-hidden py-4">
-      <div className="relative max-w-7xl mx-auto px-6 h-[400px] flex items-center justify-center">
-        {/* Slides Container */}
-        <div className="relative w-full h-full flex items-center justify-center">
-          {events.map((event, index) => {
-            let position = index - currentIndex;
-            if (position < -1) position += events.length;
-            if (position > events.length - 2) position -= events.length;
-
-            const isCenter = position === 0;
-            const isLeft = position === -1;
-            const isRight = position === 1;
-            const isVisible = isCenter || isLeft || isRight;
-
-            if (!isVisible) return null;
-
-            return (
-              <Link
-                key={event.id}
-                to="/eventos"
-                search={{ id: event.id } as any}
-                className={cn(
-                  "absolute transition-all duration-500 ease-in-out cursor-pointer overflow-hidden rounded-[20px]",
-                  isCenter ? "w-[70%] h-full z-20 shadow-2xl scale-100 opacity-100" : 
-                  "w-[60%] h-[90%] z-10 opacity-40 scale-95 grayscale-[50%]",
-                  isLeft && "-translate-x-[40%]",
-                  isRight && "translate-x-[40%]"
-                )}
-              >
-                <img 
-                  src={event.cover_image || "/placeholder.jpg"} 
-                  alt={event.title}
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                
-                {/* Price Badge for all cards */}
-                <div className="absolute top-6 right-6">
-                  <div className="bg-white/90 backdrop-blur px-4 py-2 rounded-full shadow-lg border border-white/20">
-                    <span className="text-xs font-extrabold text-navy uppercase tracking-widest">A partir de</span>
-                    <p className="text-lg font-extrabold text-coral leading-none">{event.min_price ? `US$ ${event.min_price}` : "Sob consulta"}</p>
-                  </div>
-                </div>
-              </Link>
-            );
-          })}
-        </div>
-
-        {/* Navigation Arrows */}
-        <button 
-          onClick={(e) => { e.preventDefault(); handleManualInteraction(); prevSlide(); }}
-          className="absolute left-[18%] z-30 w-12 h-12 rounded-full bg-white shadow-xl flex items-center justify-center text-navy hover:scale-110 active:scale-95 transition-all duration-150 group"
+    <div className="relative w-full h-[60vh] md:h-[85vh] overflow-hidden bg-background">
+      <AnimatePresence initial={false} mode="wait">
+        <motion.div
+          key={currentIndex}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+          className="absolute inset-0"
         >
-          <ChevronLeft className="w-6 h-6 group-hover:-translate-x-0.5 transition-transform" />
-        </button>
-        <button 
-          onClick={(e) => { e.preventDefault(); handleManualInteraction(); nextSlide(); }}
-          className="absolute right-[18%] z-30 w-12 h-12 rounded-full bg-white shadow-xl flex items-center justify-center text-navy hover:scale-110 active:scale-95 transition-all duration-150 group"
-        >
-          <ChevronRight className="w-6 h-6 group-hover:translate-x-0.5 transition-transform" />
-        </button>
-      </div>
-
-      {/* Info & Pagination */}
-      <div className="max-w-7xl mx-auto px-6 text-center space-y-4 animate-in fade-in slide-in-from-bottom-2 duration-500">
-        <div className="space-y-1">
-          <Link 
-            to="/eventos" 
-            search={{ id: currentEvent?.id } as any}
-            className="text-2xl font-manrope font-extrabold text-navy uppercase tracking-wider hover:text-coral transition-colors"
+          {/* Hero Image with Ken Burns effect */}
+          <motion.div 
+            initial={{ scale: 1.1, filter: "grayscale(100%)" }}
+            animate={{ scale: 1, filter: "grayscale(0%)" }}
+            transition={{ duration: 8, ease: "linear" }}
+            className="absolute inset-0"
           >
-            {currentEvent?.title}
-          </Link>
-          <div className="flex items-center justify-center gap-6 text-sm font-bold text-muted">
-            <div className="flex items-center gap-1.5">
-              <MapPin className="w-4 h-4 text-coral" />
-              {currentEvent?.city}
-            </div>
-            <div className="flex items-center gap-1.5">
-              <Calendar className="w-4 h-4 text-coral" />
-              {currentEvent?.start_date ? new Date(currentEvent.start_date).toLocaleDateString() : ""}
+            <img
+              src={currentEvent?.cover_image || "/placeholder.jpg"}
+              alt={currentEvent?.title || "Destaque"}
+              className="w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent" />
+          </motion.div>
+
+          {/* Editorial Content */}
+          <div className="absolute inset-0 flex items-center px-6 md:px-20">
+            <div className="max-w-4xl w-full">
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5, duration: 0.8 }}
+                className="space-y-10"
+              >
+                <div className="space-y-6">
+                  <div className="flex items-center gap-4">
+                    <span className="text-[10px] font-bold text-accent uppercase tracking-[0.3em]">Em Destaque</span>
+                    <div className="h-px w-12 bg-accent/30" />
+                  </div>
+                  
+                  <h1 className="text-6xl md:text-[10rem] font-serif text-foreground leading-[0.8] tracking-tight">
+                    {(currentEvent?.title || "Evento").split(' ').map((word, i) => (
+                      <span key={i} className={i % 2 !== 0 ? "italic block md:ml-40" : "block"}>
+                        {word}{' '}
+                      </span>
+                    ))}
+                  </h1>
+                </div>
+
+                <div className="flex flex-col md:flex-row md:items-center gap-10">
+                  <p className="text-foreground-muted text-lg md:text-xl font-medium max-w-md leading-relaxed">
+                    Experiência exclusiva em {currentEvent?.city || 'Destino internacional'}. 
+                    {currentEvent?.start_date && ` Partida em ${new Date(currentEvent.start_date).toLocaleDateString()}.`}
+                  </p>
+                  
+                  <Link 
+                    to="/eventos" 
+                    search={{ id: currentEvent?.id } as any}
+                    className="group h-16 px-12 bg-primary text-white text-[10px] font-bold uppercase tracking-widest flex items-center justify-center gap-4 hover:bg-primary-hover transition-all rounded-sm shadow-2xl shadow-primary/20"
+                  >
+                    Garantir Experiência
+                    <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-2" />
+                  </Link>
+                </div>
+              </motion.div>
             </div>
           </div>
-        </div>
+        </motion.div>
+      </AnimatePresence>
 
-        {/* Dots */}
-        <div className="flex justify-center gap-2">
-          {events.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => { handleManualInteraction(); setCurrentIndex(index); }}
+      {/* Modern Carousel Controls */}
+      <div className="absolute bottom-20 left-6 md:left-20 flex items-center gap-8">
+        <div className="flex items-center gap-4">
+          <button 
+            onClick={() => { handleManualInteraction(); prevSlide(); }}
+            className="w-12 h-12 rounded-full border border-border flex items-center justify-center hover:bg-background transition-all"
+          >
+            <ChevronLeft className="w-5 h-5 text-foreground" />
+          </button>
+          <button 
+            onClick={() => { handleManualInteraction(); nextSlide(); }}
+            className="w-12 h-12 rounded-full border border-border flex items-center justify-center hover:bg-background transition-all"
+          >
+            <ChevronRight className="w-5 h-5 text-foreground" />
+          </button>
+        </div>
+        
+        <div className="flex items-center gap-3">
+          {events.map((_, i) => (
+            <div 
+              key={i}
               className={cn(
-                "w-2.5 h-2.5 rounded-full transition-all duration-300",
-                currentIndex === index ? "bg-coral w-6" : "bg-line hover:bg-muted"
+                "h-px transition-all duration-500",
+                i === currentIndex ? "w-12 bg-accent" : "w-4 bg-border"
               )}
             />
           ))}
