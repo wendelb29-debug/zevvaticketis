@@ -95,7 +95,8 @@ export const getWhatsAppContacts = createServerFn({ method: "GET" })
   .handler(async ({ data }) => {
     let query = supabase
       .from('whatsapp_contacts')
-      .select('*, whatsapp_messages(content, created_at, direction, status)')
+      .select('*, whatsapp_messages(content, created_at, direction, status), whatsapp_attendances(id, status)')
+      .eq('whatsapp_attendances.status', 'open')
       .order('last_interaction_at', { ascending: false });
 
     if (data.tenantId) {

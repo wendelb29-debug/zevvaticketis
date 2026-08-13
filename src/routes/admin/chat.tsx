@@ -188,7 +188,11 @@ function AdminChatPage() {
     [contactsData, selectedContactId]
   );
 
-  const selectedAttendanceId = (selectedContact as any)?.current_attendance_id;
+  const selectedAttendanceId = useMemo(() => {
+    if (!selectedContact) return null;
+    const openAttendance = (selectedContact as any).whatsapp_attendances?.find((a: any) => a.status === 'open');
+    return openAttendance?.id || null;
+  }, [selectedContact]);
 
   const contacts = useMemo(() => {
     if (!contactsData) return [];
