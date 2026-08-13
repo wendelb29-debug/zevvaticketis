@@ -125,8 +125,11 @@ function HomePage() {
 
   useEffect(() => {
     const observer = new IntersectionObserver(
-      ([entry]) => {
-        setIsHomeSearchVisible(entry.isIntersecting);
+      (entries) => {
+        const entry = entries[0];
+        if (entry) {
+          setIsHomeSearchVisible(entry.isIntersecting);
+        }
       },
       { threshold: 0.1, rootMargin: "-80px 0px 0px 0px" }
     );

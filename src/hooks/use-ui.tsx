@@ -21,10 +21,6 @@ interface UIStore {
   setFontSize: (size: number) => void;
   setIsHomeSearchVisible: (visible: boolean) => void;
   setHomeSearchTerm: (term: string) => void;
-  closeOverlay: () => void;
-  setLanguage: (lang: Language) => void;
-  setTheme: (theme: Theme) => void;
-  setFontSize: (size: number) => void;
 }
 
 export const useUI = create<UIStore>()(
