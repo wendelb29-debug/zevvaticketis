@@ -53,24 +53,40 @@ export const Route = createFileRoute('/api/public/uazapi-webhook')({
                   // 2. Normalize phone and resolve/create contact
                   const { data: normalizedPhone } = await supabase.rpc('normalize_phone', { p_phone: rawPhone });
                   
-                  // Upsert contact
-                  const { data: contact, error: contactErr } = await supabase
+                  // manual resolve/upsert to avoid type issues with composite onConflict for now
+                  let { data: contact, error: contactErr } = await supabase
                     .from('whatsapp_contacts')
-                    .upsert({ 
-                      tenant_id: tenantId,
-                      phone: rawPhone,
-                      normalized_phone: normalizedPhone,
-                      name: msgData.pushName || rawPhone,
-                      last_contact_at: new Date().toISOString(),
-                      status: 'active',
-                      channel: 'whatsapp'
-                    }, {
-                      onConflict: 'tenant_id, normalized_phone'
-                    })
                     .select('id')
-                    .single();
+                    .eq('tenant_id', tenantId)
+                    .eq('normalized_phone', normalizedPhone)
+                    .maybeSingle();
 
-                  if (contactErr) throw contactErr;
+                  if (!contact && !contactErr) {
+                    const { data: newContact, error: createErr } = await supabase
+                      .from('whatsapp_contacts')
+                      .insert({ 
+                        tenant_id: tenantId,
+                        phone: rawPhone,
+                        normalized_phone: normalizedPhone,
+                        name: msgData.pushName || rawPhone,
+                        last_contact_at: new Date().toISOString(),
+                        status: 'active',
+                        channel: 'whatsapp'
+                      })
+                      .select('id')
+                      .single();
+                    
+                    if (createErr) throw createErr;
+                    contact = newContact;
+                  } else if (contact) {
+                    await supabase
+                      .from('whatsapp_contacts')
+                      .update({ 
+                        last_contact_at: new Date().toISOString(),
+                        name: msgData.pushName || undefined // only update if provided
+                      })
+                      .eq('id', contact.id);
+                  }
 
                   if (contact) {
                     // 3. Resolve Attendance (Open or create new)
