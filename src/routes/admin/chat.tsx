@@ -1,5 +1,6 @@
 import { createFileRoute, Link, useNavigate } from '@tanstack/react-router';
 import { useState, useEffect, useRef, useMemo } from 'react';
+import { motion, AnimatePresence } from "framer-motion";
 import { supabase } from "@/integrations/supabase/client";
 import { UserMenu } from "@/components/auth/UserMenu";
 import { useUI } from '@/hooks/use-ui';
@@ -15,7 +16,8 @@ import {
   Paperclip, Smile, ImageIcon, Play, Volume2, Pencil, X, Home, ChevronRight,
   ArrowUpDown, SortAsc, SortDesc, CalendarDays, Lock, Globe, MessageCircle,
   Music, FileText, Sparkles, Wand2, ArrowUpCircle, AlignLeft, Languages,
-  PanelLeftClose, PanelLeftOpen, ShoppingCart
+  PanelLeftClose, PanelLeftOpen, ShoppingCart,
+  CheckCircle2, Share2, Users, History
 } from 'lucide-react';
 import { SalesCardPicker } from "@/components/admin/chat/SalesCardPicker";
 import { ChatInput } from "@/components/admin/chat/ChatInput";
@@ -24,6 +26,11 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 import { toast } from "sonner";
 import { useTenants } from "@/hooks/use-tenants";
 import { DateTime } from "luxon";
+import { SidebarGroups } from "@/components/admin/chat/SidebarGroups";
+import { SidebarFiles } from "@/components/admin/chat/SidebarFiles";
+import { SidebarHistory } from "@/components/admin/chat/SidebarHistory";
+import { SidebarSchedule } from "@/components/admin/chat/SidebarSchedule";
+import { SidebarFinish } from "@/components/admin/chat/SidebarFinish";
 
 const READ_RECEIPT_BLUE = "READ_RECEIPT_BLUE";
 const ONLINE_STATUS_GREEN = "ONLINE_STATUS_GREEN";
@@ -91,6 +98,7 @@ function AdminChatPage() {
   const { theme, setTheme } = useUI();
   const [isSalesPickerOpen, setIsSalesPickerOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<'atendimento' | 'espera'>('atendimento');
+  const [activeTool, setActiveTool] = useState<'finish' | 'transfer' | 'groups' | 'files' | 'history' | 'schedule' | 'automations' | null>(null);
 
   const { data: integrationStatus } = useQuery({
     queryKey: ['whatsapp-integration-status', activeTenant?.id],
@@ -830,52 +838,76 @@ function AdminChatPage() {
         </div>
 
         {/* 9. BARRA VERTICAL DE AÇÕES (52px) */}
-        <div className="w-[52px] border-l border-border flex flex-col items-center py-6 gap-4 bg-card shrink-0 z-10">
+        <div className="w-[52px] border-l border-border bg-card flex flex-col items-center py-4 gap-4 z-20 shadow-[-4px_0_12px_rgba(0,0,0,0.05)]">
           {[
-            { icon: CheckCircle, label: "Finalizar atendimento", onClick: () => setIsFinishDialogOpen(true), active: isFinishDialogOpen },
-            { icon: Shuffle, label: "Transferir atendimento", onClick: () => setIsTransferDialogOpen(true), active: isTransferDialogOpen },
-            { icon: PeopleIcon, label: "Grupos do cliente", disabled: true },
-            { icon: Folder, label: "Arquivos", disabled: true },
-            { icon: HistoryIcon, label: "Histórico", onClick: () => setIsHistoryDialogOpen(true), active: isHistoryDialogOpen },
-            { icon: Calendar, label: "Agendar", disabled: true },
-            { icon: Zap, label: "Automação", disabled: true },
-            { icon: Copy, label: "Copiar conversa", onClick: () => {
-              const text = messages.map(m => `${m.time} - ${m.sender === 'agent' ? 'Atendente' : 'Cliente'}: ${m.text}`).join('\n');
-              navigator.clipboard.writeText(text);
-              toast.success("Conversa copiada para a área de transferência");
-            }},
-            { icon: Printer, label: "Imprimir", onClick: () => window.print() },
-          ].map((action, i) => (
-            <Tooltip key={i} delayDuration={200}>
-              <TooltipTrigger asChild>
-                <div className="relative">
-                  <button 
-                    onClick={action.onClick}
-                    disabled={action.disabled}
-                    aria-label={action.label}
-                    className={cn(
-                      "p-2.5 rounded-lg transition-all group relative border border-transparent outline-none ring-offset-background focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
-                      action.active 
-                        ? "bg-primary text-primary-foreground shadow-[0_0_15px_rgba(217,75,82,0.3)] border-primary" 
-                        : action.disabled
-                          ? "opacity-40 cursor-not-allowed text-muted-foreground"
-                          : "text-muted-foreground hover:bg-muted hover:text-foreground active:scale-95"
-                    )}
-                  >
-                    <action.icon className="w-5 h-5" />
-                  </button>
-                </div>
-              </TooltipTrigger>
-              <TooltipContent 
-                side="left" 
-                sideOffset={10}
-                className="bg-popover text-popover-foreground border-border text-[12px] font-semibold px-3 py-1.5 rounded-md shadow-md animate-in fade-in zoom-in-95 duration-200"
+            { id: 'finish', icon: CheckCircle2, label: 'Finalizar', color: 'text-green-500' },
+            { id: 'transfer', icon: Share2, label: 'Transferir', disabled: true },
+            { id: 'groups', icon: Users, label: 'Grupos' },
+            { id: 'files', icon: Paperclip, label: 'Arquivos' },
+            { id: 'history', icon: History, label: 'Histórico' },
+            { id: 'schedule', icon: Calendar, label: 'Agendar' },
+            { id: 'automations', icon: Zap, label: 'Automação', disabled: true },
+            { id: 'copy', icon: Copy, label: 'Copiar', disabled: true },
+            { id: 'print', icon: Printer, label: 'Imprimir', disabled: true },
+          ].map((tool) => (
+            <div key={tool.id} className="relative group flex flex-col items-center">
+              <button 
+                onClick={() => !tool.disabled && setActiveTool(activeTool === tool.id ? null as any : tool.id as any)}
+                disabled={tool.disabled}
+                className={cn(
+                  "p-2.5 rounded-xl transition-all duration-300 relative overflow-hidden",
+                  activeTool === tool.id 
+                    ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20 scale-110" 
+                    : tool.disabled 
+                      ? "text-muted-foreground/30 cursor-not-allowed" 
+                      : "text-muted-foreground hover:text-primary hover:bg-primary/5 hover:scale-105"
+                )}
               >
-                {action.label}{action.disabled && " — em breve"}
-              </TooltipContent>
-            </Tooltip>
+                <tool.icon className={cn("w-[18px] h-[18px]", tool.color)} />
+              </button>
+              
+              {/* Tooltip */}
+              <div className="absolute left-full ml-3 px-2.5 py-1.5 bg-foreground text-background text-[10px] font-bold uppercase tracking-widest rounded-md opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-50 shadow-xl border border-border/10">
+                {tool.label}
+                {tool.disabled && <span className="ml-2 opacity-50 text-[8px]">(em breve)</span>}
+                <div className="absolute top-1/2 -left-1 -translate-y-1/2 w-2 h-2 bg-foreground rotate-45" />
+              </div>
+            </div>
           ))}
         </div>
+
+        {/* Painéis Laterais Dinâmicos */}
+        <SidebarFiles 
+          isOpen={activeTool === 'files'} 
+          onClose={() => setActiveTool(null)} 
+          contactId={selectedContactId || ''} 
+        />
+
+        <SidebarGroups 
+          isOpen={activeTool === 'groups'} 
+          onClose={() => setActiveTool(null)} 
+          contactId={selectedContactId || ''}
+          tenantId={activeTenant?.id || ''}
+        />
+
+        <SidebarHistory
+          isOpen={activeTool === 'history'}
+          onClose={() => setActiveTool(null)}
+          contactId={selectedContactId || ''}
+        />
+
+        <SidebarSchedule
+          isOpen={activeTool === 'schedule'}
+          onClose={() => setActiveTool(null)}
+          contactId={selectedContactId || ''}
+          tenantId={activeTenant?.id || ''}
+        />
+
+        <SidebarFinish
+          isOpen={activeTool === 'finish'}
+          onClose={() => setActiveTool(null)}
+          contactId={selectedContactId || ''}
+        />
       </div>
 
       {/* Dialog: Filtros */}
