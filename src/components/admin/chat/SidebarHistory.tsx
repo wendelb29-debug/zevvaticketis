@@ -4,7 +4,8 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } f
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Badge } from "@/components/ui/badge";
 import { DateTime } from "luxon";
-import { Clock, User, CheckCircle2, Loader2, MessageSquare, History } from "lucide-react";
+import { Clock, CheckCircle2, Loader2, MessageSquare, History } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface SidebarHistoryProps {
   isOpen: boolean;
@@ -43,7 +44,7 @@ export function SidebarHistory({ isOpen, onClose, contactId }: SidebarHistoryPro
             </div>
           ) : (
             <ScrollArea className="h-full p-6">
-              {history?.length === 0 ? (
+              {!history || history.length === 0 ? (
                 <div className="flex flex-col items-center justify-center py-20 space-y-4">
                   <div className="w-16 h-16 rounded-full bg-accent/30 flex items-center justify-center text-muted-foreground/30">
                     <MessageSquare className="w-8 h-8" />
@@ -52,12 +53,10 @@ export function SidebarHistory({ isOpen, onClose, contactId }: SidebarHistoryPro
                 </div>
               ) : (
                 <div className="space-y-6 relative">
-                  {/* Vertical line for the timeline */}
                   <div className="absolute left-[19px] top-2 bottom-2 w-px bg-border hidden sm:block" />
 
-                  {history?.map((attendance) => (
+                  {history.map((attendance: any) => (
                     <div key={attendance.id} className="relative pl-0 sm:pl-12 group">
-                      {/* Timeline dot */}
                       <div className="absolute left-[13px] top-1.5 w-3 h-3 rounded-full bg-primary border-4 border-card z-10 hidden sm:block group-hover:scale-125 transition-transform" />
                       
                       <div className="bg-accent/30 rounded-2xl border border-border overflow-hidden hover:border-primary/30 transition-colors shadow-sm">
@@ -76,7 +75,7 @@ export function SidebarHistory({ isOpen, onClose, contactId }: SidebarHistoryPro
                             <div className="flex flex-col items-end">
                               <span className="text-[9px] font-black text-muted-foreground uppercase tracking-widest">Finalizado em</span>
                               <span className="text-[11px] font-bold text-foreground">
-                                {DateTime.fromISO(attendance.closed_at).toFormat('dd/MM/yy HH:mm')}
+                                {attendance.closed_at ? DateTime.fromISO(attendance.closed_at).toFormat('dd/MM/yy HH:mm') : 'N/A'}
                               </span>
                             </div>
                             <div className="w-8 h-8 rounded-lg bg-green-500/10 flex items-center justify-center text-green-500">
@@ -94,8 +93,8 @@ export function SidebarHistory({ isOpen, onClose, contactId }: SidebarHistoryPro
                                   {attendance.profiles?.full_name?.substring(0, 2) || "U"}
                                 </div>
                                 <div>
-                                  <p className="text-xs font-bold text-foreground truncate">{attendance.profiles?.full_name || 'Desconhecido'}</p>
-                                  <p className="text-[10px] text-muted-foreground">Agente Zevva</p>
+                                  <p className="text-xs font-bold text-foreground truncate">{attendance.profiles?.full_name || 'Agente Zevva'}</p>
+                                  <p className="text-[10px] text-muted-foreground">ID: {attendance.agent_id?.slice(0, 8)}</p>
                                 </div>
                               </div>
                             </div>
@@ -105,18 +104,18 @@ export function SidebarHistory({ isOpen, onClose, contactId }: SidebarHistoryPro
                             <p className="text-[9px] font-black text-muted-foreground uppercase tracking-widest mb-1.5">Motivo / Resumo</p>
                             <div className="bg-card p-3 rounded-xl border border-border h-full min-h-[60px]">
                               <p className="text-xs text-foreground/80 leading-relaxed italic">
-                                {attendance.summary || "Sem observações registradas."}
+                                {attendance.closure_reason || "Sem observações registradas."}
                               </p>
                             </div>
                           </div>
                         </div>
 
-                        {attendance.satisfaction_rating && (
+                        {attendance.rating && (
                           <div className="px-4 py-2 bg-primary/5 border-t border-border/50 flex items-center justify-between">
                              <span className="text-[10px] font-black text-primary uppercase tracking-widest">Avaliação do Cliente</span>
                              <div className="flex items-center gap-1">
                                 {[1,2,3,4,5].map(star => (
-                                  <div key={star} className={cn("w-2 h-2 rounded-full", star <= attendance.satisfaction_rating ? "bg-primary" : "bg-muted-foreground/20")} />
+                                  <div key={star} className={cn("w-2 h-2 rounded-full", star <= attendance.rating ? "bg-primary" : "bg-muted-foreground/20")} />
                                 ))}
                              </div>
                           </div>
@@ -133,5 +132,3 @@ export function SidebarHistory({ isOpen, onClose, contactId }: SidebarHistoryPro
     </Dialog>
   );
 }
-
-import { cn } from "@/lib/utils";
