@@ -149,7 +149,7 @@ export const getAttendanceHistory = createServerFn({ method: "GET" })
   .handler(async ({ data }) => {
     const { data: history, error } = await supabase
       .from('whatsapp_attendances')
-      .select('*')
+      .select('*, profiles(full_name)')
       .eq('contact_id', data.contactId)
       .eq('status', 'closed')
       .order('created_at', { ascending: false });
