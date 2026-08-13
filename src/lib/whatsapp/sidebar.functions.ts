@@ -261,14 +261,17 @@ export const transferAttendanceAction = createServerFn({ method: "POST" })
     reason: z.string().min(1),
     clientMessage: z.string().optional().nullable()
   }).parse(data))
-  .handler(async ({ data }) => {
-    const { data: result, error } = await supabase.rpc('transfer_attendance', {
+  .handler(async ({ data, context }) => {
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+
+    const { data: result, error } = await supabaseAdmin.rpc('transfer_attendance', {
       p_attendance_id: data.attendanceId,
       p_new_department_id: data.newDepartmentId,
-      p_new_agent_id: data.newAgentId || '',
+      p_new_agent_id: data.newAgentId || null,
       p_reason: data.reason,
-      p_client_message: data.clientMessage || ''
-    });
+      p_client_message: data.clientMessage || '',
+      p_actor_id: context.userId,
+    } as never);
 
     if (error) throw error;
     return result;
