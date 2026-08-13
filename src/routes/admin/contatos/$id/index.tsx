@@ -25,6 +25,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import { cn } from '@/lib/utils';
+import { useState } from 'react';
+import { AttendanceDetailModal } from '@/components/admin/contacts/AttendanceDetailModal';
 
 export const Route = createFileRoute('/admin/contatos/$id/')({
   component: ContactDetailsPage,
@@ -32,6 +34,7 @@ export const Route = createFileRoute('/admin/contatos/$id/')({
 
 function ContactDetailsPage() {
   const { id } = Route.useParams();
+  const [selectedAttendance, setSelectedAttendance] = useState<{ id: string, protocol?: string } | null>(null);
 
   const { data: contact, isLoading } = useQuery({
     queryKey: ['admin-contact', id],
@@ -258,7 +261,12 @@ function ContactDetailsPage() {
                               </p>
                             </div>
                           </div>
-                          <Button variant="ghost" size="sm" className="font-bold text-xs opacity-0 group-hover:opacity-100 transition-opacity">
+                          <Button 
+                            variant="ghost" 
+                            size="sm" 
+                            className="font-bold text-xs opacity-0 group-hover:opacity-100 transition-opacity"
+                            onClick={() => setSelectedAttendance({ id: att.id, protocol: att.protocol })}
+                          >
                             Ver Detalhes
                           </Button>
                         </div>
@@ -295,6 +303,13 @@ function ContactDetailsPage() {
           </Tabs>
         </div>
       </div>
+
+      <AttendanceDetailModal 
+        isOpen={!!selectedAttendance}
+        onClose={() => setSelectedAttendance(null)}
+        attendanceId={selectedAttendance?.id || null}
+        protocol={selectedAttendance?.protocol}
+      />
     </div>
   );
 }
