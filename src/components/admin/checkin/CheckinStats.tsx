@@ -281,7 +281,7 @@ function KPIItem({ title, value, icon: Icon, color }: { title: string, value: st
 function SelectFilter({ placeholder, options }: any) {
   return (
     <Select>
-      <SelectTrigger className="w-40 h-10 bg-white border-line rounded-xl text-xs font-bold text-navy/70">
+      <SelectTrigger className="w-40 h-10 bg-card border-line rounded-xl text-xs font-bold text-foreground/70">
         <SelectValue placeholder={placeholder} />
       </SelectTrigger>
       <SelectContent>
