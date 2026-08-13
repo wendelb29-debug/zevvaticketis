@@ -35,7 +35,7 @@ export function FeaturedCarousel({ events }: FeaturedCarouselProps) {
   const handleManualInteraction = useCallback(() => {
     setIsPaused(true);
     if (pauseTimeoutRef.current) clearTimeout(pauseTimeoutRef.current);
-    
+
     pauseTimeoutRef.current = setTimeout(() => {
       setIsPaused(false);
     }, 8000);
@@ -53,7 +53,11 @@ export function FeaturedCarousel({ events }: FeaturedCarouselProps) {
 
   const formatDate = (dateStr: string | null) => {
     if (!dateStr) return "A definir";
-    return new Date(dateStr).toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric' });
+    return new Date(dateStr).toLocaleDateString("pt-BR", {
+      day: "2-digit",
+      month: "long",
+      year: "numeric",
+    });
   };
 
   return (
@@ -90,7 +94,7 @@ export function FeaturedCarousel({ events }: FeaturedCarouselProps) {
                 <div className="inline-flex items-center gap-2 px-3 py-1 bg-primary text-white text-[10px] font-bold uppercase tracking-wider rounded-md shadow-lg shadow-primary/20">
                   Evento em destaque
                 </div>
-                
+
                 <h2 className="text-4xl md:text-6xl font-manrope font-extrabold text-white leading-tight tracking-tight">
                   {currentEvent?.title}
                 </h2>
@@ -98,7 +102,7 @@ export function FeaturedCarousel({ events }: FeaturedCarouselProps) {
                 <div className="flex flex-wrap gap-6 text-white/80">
                   <div className="flex items-center gap-2 text-sm font-medium">
                     <MapPin className="w-4 h-4 text-primary" />
-                    {currentEvent?.city || 'Destino internacional'}
+                    {currentEvent?.city || "Destino internacional"}
                   </div>
                   <div className="flex items-center gap-2 text-sm font-medium">
                     <Calendar className="w-4 h-4 text-primary" />
@@ -107,15 +111,21 @@ export function FeaturedCarousel({ events }: FeaturedCarouselProps) {
                 </div>
 
                 <div className="flex items-center gap-8 pt-4">
-                  <button 
-                    onClick={() => navigate({ to: '/eventos/$id', params: { id: currentEvent?.id } })}
+                  <button
+                    onClick={() =>
+                      navigate({ to: "/eventos/$id", params: { id: currentEvent?.id } })
+                    }
                     className="h-14 px-10 bg-white text-dark-surface text-sm font-bold uppercase tracking-widest hover:bg-white/90 transition-all rounded-md shadow-2xl"
                   >
                     Garantir minha vaga
                   </button>
                   <div className="flex flex-col">
-                    <span className="text-[10px] font-bold text-white/50 uppercase tracking-widest">A partir de</span>
-                    <span className="text-2xl font-black text-white">R$ {currentEvent?.min_price || 0}</span>
+                    <span className="text-[10px] font-bold text-white/50 uppercase tracking-widest">
+                      A partir de
+                    </span>
+                    <span className="text-2xl font-black text-white">
+                      R$ {currentEvent?.min_price || 0}
+                    </span>
                   </div>
                 </div>
               </motion.div>
@@ -127,28 +137,37 @@ export function FeaturedCarousel({ events }: FeaturedCarouselProps) {
       {/* Controls */}
       <div className="absolute bottom-12 right-6 md:right-16 flex items-center gap-6">
         <div className="flex items-center gap-3">
-          <button 
-            onClick={() => { handleManualInteraction(); prevSlide(); }}
+          <button
+            onClick={() => {
+              handleManualInteraction();
+              prevSlide();
+            }}
             className="w-12 h-12 rounded-full border border-white/20 bg-white/5 backdrop-blur-md flex items-center justify-center text-white hover:bg-white/20 transition-all"
           >
             <ChevronLeft className="w-6 h-6" />
           </button>
-          <button 
-            onClick={() => { handleManualInteraction(); nextSlide(); }}
+          <button
+            onClick={() => {
+              handleManualInteraction();
+              nextSlide();
+            }}
             className="w-12 h-12 rounded-full border border-white/20 bg-white/5 backdrop-blur-md flex items-center justify-center text-white hover:bg-white/20 transition-all"
           >
             <ChevronRight className="w-6 h-6" />
           </button>
         </div>
-        
+
         <div className="hidden md:flex items-center gap-2">
           {events.map((_, i) => (
-            <button 
+            <button
               key={i}
-              onClick={() => { handleManualInteraction(); setCurrentIndex(i); }}
+              onClick={() => {
+                handleManualInteraction();
+                setCurrentIndex(i);
+              }}
               className={cn(
                 "h-1.5 transition-all duration-300 rounded-full",
-                i === currentIndex ? "w-8 bg-primary" : "w-2 bg-white/20 hover:bg-white/40"
+                i === currentIndex ? "w-8 bg-primary" : "w-2 bg-white/20 hover:bg-white/40",
               )}
             />
           ))}

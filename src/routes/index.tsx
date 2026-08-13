@@ -1,7 +1,7 @@
-import { createFileRoute, useNavigate, Link } from '@tanstack/react-router';
+import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
-import { 
-  Search, 
+import {
+  Search,
   TrendingUp,
   ArrowRight,
   MapPin,
@@ -13,7 +13,7 @@ import {
   BookOpen,
   ShieldCheck,
   Globe,
-  Zap
+  Zap,
 } from "lucide-react";
 
 import { Input } from "@/components/ui/input";
@@ -35,7 +35,6 @@ import { getFeaturedEvents } from "@/lib/events.functions";
 import { useServerFn } from "@tanstack/react-start";
 import { Skeleton } from "@/components/ui/skeleton";
 
-
 export const Route = createFileRoute("/")({
   component: HomePage,
 });
@@ -49,26 +48,25 @@ function HomePage() {
   const navigate = useNavigate();
   const { language } = useUI();
   const t = translations[language].home;
-  
+
   const fetchFeatured = useServerFn(getFeaturedEvents);
 
   useEffect(() => {
     tracking.captureUTMs();
     tracking.logEvent("page_view_home");
-    
+
     async function fetchInitialData() {
       try {
         const featured = await fetchFeatured();
         setFeaturedEvents(featured || []);
         setLoadingFeatured(false);
-        
+
         const { data: all } = await (supabase
           .from("events")
           .select("*, tenants(nome, logo), ticket_types(valor)")
           .eq("status", "publicado")
-          .order('created_at', { ascending: false })
+          .order("created_at", { ascending: false })
           .limit(8) as any);
-
 
         if (all) setEvents(all);
         setLoadingEvents(false);
@@ -90,10 +88,12 @@ function HomePage() {
   });
 
   const handleToggleFavorite = async (eventId: string) => {
-    const { data: { session } } = await supabase.auth.getSession();
-    
+    const {
+      data: { session },
+    } = await supabase.auth.getSession();
+
     if (!session) {
-      navigate({ to: '/login' });
+      navigate({ to: "/login" });
       return;
     }
 
@@ -112,12 +112,10 @@ function HomePage() {
           .eq("id", existing.id) as any);
         toast.success("Removido dos favoritos");
       } else {
-        await (supabase
-          .from("event_favorites" as any)
-          .insert({
-            event_id: eventId,
-            user_id: session.user.id
-          }) as any);
+        await (supabase.from("event_favorites" as any).insert({
+          event_id: eventId,
+          user_id: session.user.id,
+        }) as any);
         toast.success("Adicionado aos favoritos");
       }
     } catch (error) {
@@ -126,21 +124,24 @@ function HomePage() {
   };
 
   return (
-    <div className={cn("min-h-screen bg-background", language === 'ar' ? "rtl" : "ltr")} dir={language === 'ar' ? "rtl" : "ltr"}>
+    <div
+      className={cn("min-h-screen bg-background", language === "ar" ? "rtl" : "ltr")}
+      dir={language === "ar" ? "rtl" : "ltr"}
+    >
       <Navbar selectedCity={null} />
- 
+
       <main className="relative">
         {/* Functional Modern Hero */}
         <section className="relative h-[85vh] flex items-center bg-dark-surface overflow-hidden">
           <div className="absolute inset-0">
-            <img 
-              src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=2070&auto=format&fit=crop" 
+            <img
+              src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=2070&auto=format&fit=crop"
               className="w-full h-full object-cover opacity-50"
               alt="Events background"
             />
             <div className="absolute inset-0 bg-gradient-to-r from-dark-surface via-dark-surface/80 to-transparent" />
           </div>
-          
+
           <div className="relative z-10 max-w-7xl mx-auto px-6 w-full">
             <div className="max-w-2xl space-y-8 animate-in fade-in slide-in-from-left-8 duration-700">
               <h1 className="text-5xl md:text-7xl font-manrope font-extrabold text-white tracking-tight leading-[1.1]">
@@ -150,15 +151,25 @@ function HomePage() {
                 Shows, festivais, encontros e eventos perto de você.
               </p>
               <div className="flex flex-wrap gap-4 pt-4">
-                <button 
-                  onClick={() => navigate({ to: '/eventos', search: { busca: undefined, categoria: undefined, cidade: undefined, data: undefined } as any })}
+                <button
+                  onClick={() =>
+                    navigate({
+                      to: "/eventos",
+                      search: {
+                        busca: undefined,
+                        categoria: undefined,
+                        cidade: undefined,
+                        data: undefined,
+                      } as any,
+                    })
+                  }
                   className="h-14 px-10 bg-primary text-white font-bold rounded-md hover:bg-primary-hover transition-all shadow-xl shadow-primary/20 flex items-center gap-3"
                 >
                   Explorar eventos
                   <ArrowRight className="w-5 h-5" />
                 </button>
-                <button 
-                  onClick={() => navigate({ to: '/cadastro' })}
+                <button
+                  onClick={() => navigate({ to: "/cadastro" })}
                   className="h-14 px-10 bg-white/10 backdrop-blur-md border border-white/20 text-white font-bold rounded-md hover:bg-white/20 transition-all"
                 >
                   Criar meu evento
@@ -170,26 +181,33 @@ function HomePage() {
 
         {/* City Ticker removed for clean modern look */}
 
-
         {/* Minimalist Search */}
         <section className="relative -mt-12 z-20 px-6">
           <div className="max-w-5xl mx-auto bg-surface p-4 rounded-2xl shadow-2xl border border-border">
             <div className="flex flex-col md:flex-row items-center gap-4">
               <div className="relative flex-1 w-full">
                 <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-foreground-muted h-5 w-5" />
-                <Input 
+                <Input
                   placeholder="Qual evento você está procurando?"
                   className="h-14 pl-12 pr-6 text-base rounded-xl border border-border bg-background focus-visible:ring-primary/20 placeholder:text-foreground-muted/50"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   onKeyDown={(e) => {
-                    if (e.key === 'Enter') {
-                      navigate({ to: '/eventos', search: { busca: searchTerm, categoria: undefined, cidade: undefined, data: undefined } as any });
+                    if (e.key === "Enter") {
+                      navigate({
+                        to: "/eventos",
+                        search: {
+                          busca: searchTerm,
+                          categoria: undefined,
+                          cidade: undefined,
+                          data: undefined,
+                        } as any,
+                      });
                     }
                   }}
                 />
               </div>
-              
+
               <div className="hidden md:flex h-10 w-px bg-border mx-2" />
 
               <div className="flex items-center gap-2 px-4 w-full md:w-auto">
@@ -201,8 +219,18 @@ function HomePage() {
                 </button>
               </div>
 
-              <button 
-                onClick={() => navigate({ to: '/eventos', search: { busca: searchTerm, categoria: undefined, cidade: undefined, data: undefined } as any })}
+              <button
+                onClick={() =>
+                  navigate({
+                    to: "/eventos",
+                    search: {
+                      busca: searchTerm,
+                      categoria: undefined,
+                      cidade: undefined,
+                      data: undefined,
+                    } as any,
+                  })
+                }
                 className="w-full md:w-auto h-14 px-10 bg-primary text-white font-bold rounded-xl hover:bg-primary-hover transition-all shadow-lg shadow-primary/10"
               >
                 Buscar agora
@@ -226,27 +254,26 @@ function HomePage() {
               </div>
             </div>
           </div>
-          
+
           {loadingFeatured ? (
             <div className="max-w-7xl mx-auto px-6">
               <Skeleton className="h-[400px] w-full rounded-2xl" />
             </div>
           ) : (
             <div className="max-w-7xl mx-auto px-6">
-              <FeaturedCarousel 
-                events={featuredEvents.map(e => ({
+              <FeaturedCarousel
+                events={featuredEvents.map((e) => ({
                   id: e.id,
                   title: e.nome_evento || e.nome,
                   city: e.cidade || e.location_city,
                   cover_image: e.imagem_capa || e.imagem_url,
                   start_date: e.data_inicio || e.start_date,
-                  min_price: e.price_from || (e.ticket_types?.[0]?.valor)
-                }))} 
+                  min_price: e.price_from || e.ticket_types?.[0]?.valor,
+                }))}
               />
             </div>
           )}
         </section>
-
 
         <section className="px-6 py-24 bg-surface border-y border-border">
           <div className="max-w-7xl mx-auto space-y-16">
@@ -267,59 +294,64 @@ function HomePage() {
           <div className="max-w-7xl mx-auto space-y-20">
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
               <div className="space-y-4">
-                <span className="text-[10px] font-bold text-accent uppercase tracking-[0.2em]">Personalizado</span>
+                <span className="text-[10px] font-bold text-accent uppercase tracking-[0.2em]">
+                  Personalizado
+                </span>
                 <h2 className="text-3xl md:text-4xl font-manrope font-extrabold text-foreground tracking-tight">
                   Sugeridos para você
                 </h2>
               </div>
             </div>
-            
+
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
               {events.slice(0, 4).map((event) => (
-                <EventCard 
-                  key={event.id} 
-                  event={event} 
-                  onToggleFavorite={handleToggleFavorite}
-                />
+                <EventCard key={event.id} event={event} onToggleFavorite={handleToggleFavorite} />
               ))}
             </div>
           </div>
         </section>
-
 
         {/* Upcoming - Minimalist Layout */}
         <section className="px-6 py-32 bg-background border-y border-border">
           <div className="max-w-7xl mx-auto space-y-20">
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
               <div className="space-y-4 max-w-2xl">
-                <span className="text-[10px] font-bold text-accent uppercase tracking-[0.2em]">Calendário</span>
+                <span className="text-[10px] font-bold text-accent uppercase tracking-[0.2em]">
+                  Calendário
+                </span>
                 <h2 className="text-3xl md:text-4xl font-manrope font-extrabold text-foreground tracking-tight">
                   Próximas experiências
                 </h2>
               </div>
-              <Link 
-                to="/eventos" 
-                search={{ categoria: undefined, busca: undefined, cidade: undefined, data: undefined } as any}
+              <Link
+                to="/eventos"
+                search={
+                  {
+                    categoria: undefined,
+                    busca: undefined,
+                    cidade: undefined,
+                    data: undefined,
+                  } as any
+                }
                 className="flex items-center gap-2 text-sm font-bold text-primary hover:text-primary-hover transition-colors"
               >
                 Ver Agenda Completa <ArrowRight className="w-3 h-3" />
               </Link>
             </div>
- 
+
             {loadingEvents ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-                {[1,2,3,4].map(i => (
-                  <div key={i} className="aspect-[16/10] rounded-sm bg-surface-elevated animate-pulse border border-border" />
+                {[1, 2, 3, 4].map((i) => (
+                  <div
+                    key={i}
+                    className="aspect-[16/10] rounded-sm bg-surface-elevated animate-pulse border border-border"
+                  />
                 ))}
               </div>
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
                 {filteredEvents.map((event) => (
-                  <EventCard 
-                    key={event.id} 
-                    event={event} 
-                    onToggleFavorite={handleToggleFavorite}
-                  />
+                  <EventCard key={event.id} event={event} onToggleFavorite={handleToggleFavorite} />
                 ))}
               </div>
             )}
@@ -337,21 +369,41 @@ function HomePage() {
                 Conhecimento profissional com os melhores especialistas do mercado.
               </p>
             </div>
- 
+
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {[
-                { title: "Liderança Exponencial", tutor: "Dr. Marcos Silva", hours: "40h", mode: "Presencial" },
-                { title: "Marketing de Experiência", tutor: "Ana Paula Melo", hours: "12h", mode: "Online" },
-                { title: "Gestão de Caravanas", tutor: "Ricardo Santos", hours: "24h", mode: "Híbrido" }
+                {
+                  title: "Liderança Exponencial",
+                  tutor: "Dr. Marcos Silva",
+                  hours: "40h",
+                  mode: "Presencial",
+                },
+                {
+                  title: "Marketing de Experiência",
+                  tutor: "Ana Paula Melo",
+                  hours: "12h",
+                  mode: "Online",
+                },
+                {
+                  title: "Gestão de Caravanas",
+                  tutor: "Ricardo Santos",
+                  hours: "24h",
+                  mode: "Híbrido",
+                },
               ].map((course, i) => (
-                <div key={i} className="group p-8 bg-background rounded-xl border border-border hover:border-primary/30 hover:shadow-xl transition-all duration-300">
+                <div
+                  key={i}
+                  className="group p-8 bg-background rounded-xl border border-border hover:border-primary/30 hover:shadow-xl transition-all duration-300"
+                >
                   <div className="w-12 h-12 bg-primary/5 rounded-lg flex items-center justify-center text-primary font-bold mb-6">
-                    0{i+1}
+                    0{i + 1}
                   </div>
                   <h3 className="text-xl font-bold text-foreground mb-2">{course.title}</h3>
                   <p className="text-foreground-muted text-sm mb-6">Com {course.tutor}</p>
                   <div className="flex items-center justify-between pt-6 border-t border-border">
-                    <span className="text-xs font-bold text-foreground/60">{course.hours} • {course.mode}</span>
+                    <span className="text-xs font-bold text-foreground/60">
+                      {course.hours} • {course.mode}
+                    </span>
                     <button className="w-10 h-10 rounded-full bg-surface border border-border flex items-center justify-center group-hover:bg-primary group-hover:text-white group-hover:border-primary transition-all">
                       <ArrowRight className="w-4 h-4" />
                     </button>
@@ -375,27 +427,58 @@ function HomePage() {
                 </p>
               </div>
             </div>
- 
+
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
               {[
-                { title: "Caravana Terra Santa 2027", from: "São Paulo", to: "Israel", date: "Maio 2027", price: "US$ 3.500", image: "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?q=80&w=2017&auto=format&fit=crop" },
-                { title: "Congresso Europa 2026", from: "Rio de Janeiro", to: "Lisboa/Roma", date: "Outubro 2026", price: "US$ 2.800", image: "https://images.unsplash.com/photo-1542281286-9e0a16bb7366?auto=format&fit=crop&q=80" }
+                {
+                  title: "Caravana Terra Santa 2027",
+                  from: "São Paulo",
+                  to: "Israel",
+                  date: "Maio 2027",
+                  price: "US$ 3.500",
+                  image:
+                    "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?q=80&w=2017&auto=format&fit=crop",
+                },
+                {
+                  title: "Congresso Europa 2026",
+                  from: "Rio de Janeiro",
+                  to: "Lisboa/Roma",
+                  date: "Outubro 2026",
+                  price: "US$ 2.800",
+                  image:
+                    "https://images.unsplash.com/photo-1542281286-9e0a16bb7366?auto=format&fit=crop&q=80",
+                },
               ].map((caravan, i) => (
-                <div key={i} className="group flex flex-col md:flex-row gap-8 items-center bg-surface p-6 rounded-2xl border border-border hover:border-primary/30 hover:shadow-xl transition-all duration-300">
+                <div
+                  key={i}
+                  className="group flex flex-col md:flex-row gap-8 items-center bg-surface p-6 rounded-2xl border border-border hover:border-primary/30 hover:shadow-xl transition-all duration-300"
+                >
                   <div className="w-full md:w-48 aspect-square overflow-hidden rounded-xl bg-background">
-                    <img src={caravan.image} alt={caravan.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                    <img
+                      src={caravan.image}
+                      alt={caravan.title}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
                   </div>
                   <div className="flex-1 space-y-6 w-full">
                     <div className="space-y-2">
-                      <span className="text-xs font-bold text-primary uppercase tracking-wider">{caravan.date}</span>
-                      <h3 className="text-2xl font-bold text-foreground leading-tight">{caravan.title}</h3>
+                      <span className="text-xs font-bold text-primary uppercase tracking-wider">
+                        {caravan.date}
+                      </span>
+                      <h3 className="text-2xl font-bold text-foreground leading-tight">
+                        {caravan.title}
+                      </h3>
                       <div className="flex items-center gap-6 text-sm font-medium text-foreground-muted">
                         <div className="flex flex-col">
-                          <span className="text-[10px] uppercase tracking-wider opacity-50">Origem</span>
+                          <span className="text-[10px] uppercase tracking-wider opacity-50">
+                            Origem
+                          </span>
                           <span className="font-bold text-foreground">{caravan.from}</span>
                         </div>
                         <div className="flex flex-col">
-                          <span className="text-[10px] uppercase tracking-wider opacity-50">Destino</span>
+                          <span className="text-[10px] uppercase tracking-wider opacity-50">
+                            Destino
+                          </span>
                           <span className="font-bold text-foreground">{caravan.to}</span>
                         </div>
                       </div>
@@ -424,7 +507,7 @@ function HomePage() {
                 Sua segurança e experiência são nossa prioridade.
               </p>
             </div>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
               <div className="text-center space-y-6">
                 <div className="w-16 h-16 bg-primary/5 text-primary rounded-full flex items-center justify-center mx-auto border border-primary/10">
@@ -463,28 +546,28 @@ function HomePage() {
         <section className="px-6 py-24 bg-dark-surface">
           <div className="max-w-7xl mx-auto">
             <div className="relative p-12 md:p-20 bg-primary rounded-2xl overflow-hidden shadow-2xl">
-               <Zap className="absolute -top-10 -right-10 w-80 h-80 text-white/5 rotate-12" />
-               <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                 <div className="space-y-6">
-                   <h2 className="text-4xl md:text-6xl font-manrope font-extrabold text-white leading-tight">
-                     Quer organizar seu evento na Zevva?
-                   </h2>
-                   <p className="text-white/80 text-xl font-medium">
-                     Temos as melhores ferramentas de gestão, vendas e check-in para o seu negócio.
-                   </p>
-                 </div>
-                 <div className="flex flex-col sm:flex-row gap-4 lg:justify-end">
-                   <button 
-                    onClick={() => navigate({ to: '/cadastro' })}
+              <Zap className="absolute -top-10 -right-10 w-80 h-80 text-white/5 rotate-12" />
+              <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div className="space-y-6">
+                  <h2 className="text-4xl md:text-6xl font-manrope font-extrabold text-white leading-tight">
+                    Quer organizar seu evento na Zevva?
+                  </h2>
+                  <p className="text-white/80 text-xl font-medium">
+                    Temos as melhores ferramentas de gestão, vendas e check-in para o seu negócio.
+                  </p>
+                </div>
+                <div className="flex flex-col sm:flex-row gap-4 lg:justify-end">
+                  <button
+                    onClick={() => navigate({ to: "/cadastro" })}
                     className="h-16 px-12 bg-white text-primary text-sm font-bold uppercase tracking-widest hover:bg-white/90 transition-all rounded-md shadow-xl"
-                   >
-                     Começar agora
-                   </button>
-                   <button className="h-16 px-12 bg-transparent border-2 border-white/30 text-white text-sm font-bold uppercase tracking-widest hover:bg-white/10 transition-all rounded-md">
-                     Falar com especialista
-                   </button>
-                 </div>
-               </div>
+                  >
+                    Começar agora
+                  </button>
+                  <button className="h-16 px-12 bg-transparent border-2 border-white/30 text-white text-sm font-bold uppercase tracking-widest hover:bg-white/10 transition-all rounded-md">
+                    Falar com especialista
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </section>
@@ -507,4 +590,3 @@ function HomePage() {
     </div>
   );
 }
-
