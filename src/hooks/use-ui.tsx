@@ -46,6 +46,17 @@ export const useUI = create<UIStore>()(
     {
       name: 'zevva-ui-storage',
       partialize: (state) => ({ language: state.language, theme: state.theme, fontSize: state.fontSize }),
+      merge: (persistedState: any, currentState) => {
+        const theme = persistedState?.theme || currentState.theme;
+        
+        // Force light theme on initial load if we don't know if we're in admin/app
+        // The RootComponent will override this once it detects the route/auth state
+        return {
+          ...currentState,
+          ...persistedState,
+          theme: theme
+        };
+      }
     }
   )
 );
