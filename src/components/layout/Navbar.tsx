@@ -89,7 +89,8 @@ export function Navbar({ selectedCity }: { selectedCity?: string | null }) {
               Caravanas
             </Link>
             <Link
-              to="/cursos"
+              to="/cursos/"
+
               className="text-sm font-bold text-foreground-muted hover:text-primary transition-colors"
             >
               Cursos

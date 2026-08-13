@@ -46,10 +46,11 @@ function ExplorarEventosPage() {
           if (searchTerm) {
             const q = searchTerm.toLowerCase();
             filtered = filtered.filter(e => {
-              const title = (e.title ?? e.nome ?? "").toLowerCase();
-              const city = (e.city ?? e.cidade ?? "").toLowerCase();
+              const title = (e.title ?? "").toLowerCase();
+              const city = (e.city ?? "").toLowerCase();
               return title.includes(q) || city.includes(q);
             });
+
           }
 
           if (search.categoria) {
@@ -140,8 +141,9 @@ function ExplorarEventosPage() {
                       </h2>
                     </div>
                     <Link
-                      to={group.id === "CURSOS" ? "/cursos" : "/eventos/categoria/$slug"}
-                      params={group.id === "CURSOS" ? {} : { slug: group.slug }}
+                      to={group.id === "CURSOS" ? "/cursos/" : "/eventos/categoria/$slug"}
+                      params={group.id === "CURSOS" ? ({} as any) : { slug: group.slug }}
+
                       className="text-sm font-bold text-primary hover:text-primary-hover transition-colors"
                     >
                       Ver todos
