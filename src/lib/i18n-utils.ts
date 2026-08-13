@@ -1,4 +1,4 @@
-import { translations, type TranslationKeys } from "./translations";
+import { translations, type TranslationSchema } from "./translations";
 import { normalizeLocale, DEFAULT_LOCALE, type SupportedLocale } from "@/hooks/use-ui";
 
 /**
@@ -14,7 +14,7 @@ export function getTranslations(lang: string | null | undefined) {
   //   available: Object.keys(translations)
   // });
 
-  return (translations[locale] || translations[DEFAULT_LOCALE]) as any;
+  return (translations[locale as SupportedLocale] || translations[DEFAULT_LOCALE]) as TranslationSchema;
 }
 
 /**

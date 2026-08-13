@@ -187,6 +187,7 @@ export const translations = {
       caravans: "Caravanas"
     }
   }
-} as any;
+} as const;
 
+export type TranslationSchema = typeof translations["pt-BR"];
 export type TranslationKeys = typeof translations;
