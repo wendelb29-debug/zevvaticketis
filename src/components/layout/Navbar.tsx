@@ -43,31 +43,30 @@ export function Navbar({ selectedCity }: { selectedCity?: string | null }) {
   return (
     <header 
       className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-in-out bg-surface-base/80 backdrop-blur-xl border-b border-border",
-        isScrolled ? "h-16" : "h-20"
+        "fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-surface/90 backdrop-blur-md border-b border-border",
+        isScrolled ? "h-16 shadow-sm" : "h-20"
       )}
     >
-      <div className={cn("max-w-7xl mx-auto px-6 h-full flex items-center justify-between", language === 'ar' ? "text-right" : "text-left")}>
-        {/* Row 1: Logo & Nav Links */}
+      <div className="max-w-7xl mx-auto px-6 h-full flex items-center justify-between">
         <div className="flex items-center gap-12">
           <Link to="/" className="flex items-center gap-2 group">
-            <div className="w-10 h-10 flex items-center justify-center transition-transform duration-500 group-hover:scale-105">
-              <img src={logoAsset.url} alt="Zevva" className="w-full h-full object-contain grayscale brightness-50 contrast-125 group-hover:grayscale-0 group-hover:brightness-100" />
+            <div className="w-9 h-9 flex items-center justify-center transition-transform group-hover:scale-105">
+              <img src={logoAsset.url} alt="Zevva" className="w-full h-full object-contain" />
             </div>
-            <span className="text-lg font-serif italic text-foreground tracking-tight">
-              Zevva <span className="not-italic font-sans font-bold text-[10px] uppercase tracking-[0.2em] text-accent ml-1">Tickets</span>
+            <span className="text-xl font-manrope font-extrabold text-foreground tracking-tight">
+              ZEVVA<span className="text-primary ml-0.5">.</span>
             </span>
           </Link>
 
           {/* Main Navigation (Visible when not scrolled or in simpler desktop layout) */}
           <nav className="hidden lg:flex items-center gap-8">
-            <Link to="/eventos" search={{ id: undefined, categoria: undefined }} className="text-[10px] font-bold text-foreground-muted hover:text-primary uppercase tracking-[0.15em] transition-colors">
+            <Link to="/eventos" search={{ id: undefined, categoria: undefined }} className="text-sm font-bold text-foreground-muted hover:text-primary transition-colors">
               Explorar
             </Link>
-            <Link to="/eventos" search={{ id: undefined, categoria: 'CARAVANAS INTERNACIONAIS' }} className="text-[10px] font-bold text-foreground-muted hover:text-primary uppercase tracking-[0.15em] transition-colors">
+            <Link to="/eventos" search={{ id: undefined, categoria: 'CARAVANAS INTERNACIONAIS' }} className="text-sm font-bold text-foreground-muted hover:text-primary transition-colors">
               Caravanas
             </Link>
-            <Link to="/eventos" search={{ id: undefined, categoria: 'CURSOS E IMERSÕES' }} className="text-[10px] font-bold text-foreground-muted hover:text-primary uppercase tracking-[0.15em] transition-colors">
+            <Link to="/eventos" search={{ id: undefined, categoria: 'CURSOS E IMERSÕES' }} className="text-sm font-bold text-foreground-muted hover:text-primary transition-colors">
               Cursos
             </Link>
           </nav>
@@ -92,7 +91,7 @@ export function Navbar({ selectedCity }: { selectedCity?: string | null }) {
             <Link 
               to={user ? "/criar-evento" : "/cadastro"} 
               onClick={(e) => { if (!user) { e.preventDefault(); openOverlay('auth', 'register'); } }}
-              className="hidden sm:flex h-10 px-5 items-center justify-center border border-border text-[10px] font-bold text-foreground uppercase tracking-widest hover:bg-background transition-all rounded-sm"
+              className="hidden sm:flex h-11 px-6 items-center justify-center bg-primary text-white text-sm font-bold hover:bg-primary-hover transition-all rounded-md shadow-lg shadow-primary/10"
             >
               Organizar Evento
             </Link>
