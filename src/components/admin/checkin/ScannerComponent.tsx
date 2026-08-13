@@ -157,7 +157,7 @@ export function ScannerComponent() {
                   <Camera className="w-10 h-10 text-white/40" />
                 </div>
                 <div className="space-y-2">
-                  <h3 className="text-white font-bold text-lg">Pronto para escanear</h3>
+                  <h3 className="text-primary-foreground font-bold text-lg">Pronto para escanear</h3>
                   <p className="text-white/40 text-sm max-w-[200px] mx-auto">Posicione o QR Code do participante dentro da área demarcada.</p>
                 </div>
                 <Button 

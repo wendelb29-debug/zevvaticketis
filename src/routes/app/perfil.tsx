@@ -495,7 +495,7 @@ function UserProfile() {
           <Button 
             onClick={handleSave}
             disabled={saving}
-            className="bg-coral hover:bg-coral-dark text-white font-extrabold px-12 rounded-xl h-14 shadow-xl shadow-coral/20 transition-all active:scale-95"
+            className="bg-coral hover:bg-coral-dark text-primary-foreground font-extrabold px-12 rounded-xl h-14 shadow-xl shadow-coral/20 transition-all active:scale-95"
           >
             {saving ? <Loader2 className="w-5 h-5 animate-spin" /> : "Salvar Alterações"}
           </Button>

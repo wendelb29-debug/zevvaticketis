@@ -154,7 +154,7 @@ function TeamManagement() {
 
         <Dialog open={isInviteOpen} onOpenChange={setIsInviteOpen}>
           <DialogTrigger asChild>
-            <Button className="bg-coral hover:bg-coral-dark text-white font-extrabold px-6 rounded-xl h-12 shadow-lg shadow-coral/20">
+            <Button className="bg-coral hover:bg-coral-dark text-primary-foreground font-extrabold px-6 rounded-xl h-12 shadow-lg shadow-coral/20">
               <UserPlus className="w-5 h-5 mr-2" /> Convidar membro
             </Button>
           </DialogTrigger>

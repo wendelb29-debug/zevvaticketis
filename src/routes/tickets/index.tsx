@@ -93,7 +93,7 @@ function MyTickets() {
           </div>
           <Button 
             asChild
-            className="bg-coral hover:bg-coral-dark text-white font-extrabold px-8 rounded-xl"
+            className="bg-coral hover:bg-coral-dark text-primary-foreground font-extrabold px-8 rounded-xl"
           >
             <Link to="/">Explorar Eventos</Link>
           </Button>

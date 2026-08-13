@@ -90,7 +90,7 @@ function OrderHistory() {
               <p className="font-bold text-foreground text-xl">Nenhum pedido encontrado</p>
               <p className="text-muted-foreground font-medium">Seus ingressos passados aparecerão aqui.</p>
             </div>
-            <Button asChild className="mt-4 bg-coral hover:bg-coral-dark text-white font-extrabold px-8 rounded-xl h-12">
+            <Button asChild className="mt-4 bg-coral hover:bg-coral-dark text-primary-foreground font-extrabold px-8 rounded-xl h-12">
               <Link to="/">Explorar Eventos</Link>
             </Button>
           </div>

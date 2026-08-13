@@ -272,7 +272,7 @@ export function WhatsAppIntegration() {
                 />
               </div>
             </div>
-            <Button onClick={handleSaveConnection} className="w-full bg-primary hover:bg-primary/90 text-white font-bold">
+            <Button onClick={handleSaveConnection} className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-bold">
               <Save className="w-4 h-4 mr-2" /> Salvar conexão
             </Button>
           </CardContent>
@@ -335,7 +335,7 @@ export function WhatsAppIntegration() {
               </div>
             </div>
 
-            <Button onClick={handleSaveWebhook} className="w-full bg-primary hover:bg-primary/90 text-white font-bold">
+            <Button onClick={handleSaveWebhook} className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-bold">
               <Save className="w-4 h-4 mr-2" /> Salvar webhook
             </Button>
           </CardContent>

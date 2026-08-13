@@ -154,7 +154,7 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
               <Button 
                 onClick={nextStep}
                 disabled={!canGoNext || step === 5}
-                className="bg-primary hover:bg-[#D95342] text-white font-bold px-8 h-11 rounded-xl shadow-lg shadow-[#F06452]/20"
+                className="bg-primary hover:bg-[#D95342] text-primary-foreground font-bold px-8 h-11 rounded-xl shadow-lg shadow-[#F06452]/20"
               >
                 Continuar
               </Button>

@@ -188,7 +188,7 @@ function HomePage() {
                 </button>
                 <button
                   onClick={() => navigate({ to: "/cadastro" })}
-                  className="h-14 px-10 bg-card/10 backdrop-blur-md border border-white/20 text-white font-bold rounded-md hover:bg-card/20 transition-all"
+                  className="h-14 px-10 bg-card/10 backdrop-blur-md border border-white/20 text-primary-foreground font-bold rounded-md hover:bg-card/20 transition-all"
                 >
                   Criar meu evento
                 </button>
