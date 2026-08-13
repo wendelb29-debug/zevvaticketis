@@ -39,7 +39,7 @@ export function PermissionsRolesManager({ tenantId }: PermissionsRolesManagerPro
   // Queries
   const { data: roles = [], isLoading: isLoadingRoles } = useQuery({
     queryKey: ["project-roles", tenantId],
-    queryFn: () => getProjectRoles({ tenantId })
+    queryFn: () => getProjectRoles({ data: { tenantId } })
   });
 
   const { data: permissionDefs = [], isLoading: isLoadingDefs } = useQuery({
@@ -49,7 +49,7 @@ export function PermissionsRolesManager({ tenantId }: PermissionsRolesManagerPro
 
   // Mutations
   const upsertMutation = useMutation({
-    mutationFn: upsertProjectRole,
+    mutationFn: (args: any) => upsertProjectRole({ data: args }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["project-roles", tenantId] });
       toast.success(editingRole?.id ? "Cargo atualizado com sucesso!" : "Cargo criado com sucesso!");
@@ -61,7 +61,7 @@ export function PermissionsRolesManager({ tenantId }: PermissionsRolesManagerPro
   });
 
   const deleteMutation = useMutation({
-    mutationFn: deleteProjectRole,
+    mutationFn: (args: any) => deleteProjectRole({ data: args }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["project-roles", tenantId] });
       toast.success("Cargo excluído com sucesso!");
@@ -70,6 +70,7 @@ export function PermissionsRolesManager({ tenantId }: PermissionsRolesManagerPro
       toast.error(error.message || "Erro ao excluir cargo.");
     }
   });
+
 
   // Filters
   const filteredRoles = useMemo(() => {
