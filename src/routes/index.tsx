@@ -424,36 +424,39 @@ function HomePage() {
           </div>
         </section>
 
-        {/* Grid Pattern Showcase - Por que a Zevva? */}
-        <section className="px-6 py-24">
-          <div className="max-w-7xl mx-auto space-y-12">
-            <div className="text-center space-y-4">
-              <h2 className="text-3xl md:text-5xl font-manrope font-black text-navy uppercase tracking-tighter">
-                Por que escolher a Zevva?
-              </h2>
-            </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <GridPatternCard>
-                <GridPatternCardBody>
-                  <h3 className="text-2xl font-manrope font-black text-navy uppercase mb-4">Tecnologia 3D</h3>
-                  <p className="text-muted-fg font-medium">Ingressos interativos com segurança criptográfica e visual premium.</p>
-                </GridPatternCardBody>
-              </GridPatternCard>
+        {/* Features - Editorial Grid */}
+        <section className="px-6 py-32 border-b border-border">
+          <div className="max-w-7xl mx-auto space-y-24">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-20">
+              <div className="space-y-6">
+                <div className="w-12 h-12 border border-accent flex items-center justify-center rounded-sm">
+                  <ShieldCheck className="w-6 h-6 text-accent" />
+                </div>
+                <h3 className="text-3xl font-serif">Segurança <br /><span className="italic">Criptográfica</span></h3>
+                <p className="text-foreground-muted text-sm leading-relaxed font-medium">
+                  Protocolos avançados que garantem a autenticidade de cada ingresso e a proteção total dos seus dados e transações.
+                </p>
+              </div>
 
-              <GridPatternCard>
-                <GridPatternCardBody>
-                  <h3 className="text-2xl font-manrope font-black text-navy uppercase mb-4">Ecossistema</h3>
-                  <p className="text-muted-fg font-medium">Conectamos organizadores e participantes em uma jornada completa.</p>
-                </GridPatternCardBody>
-              </GridPatternCard>
+              <div className="space-y-6">
+                <div className="w-12 h-12 border border-accent flex items-center justify-center rounded-sm">
+                  <Globe className="w-6 h-6 text-accent" />
+                </div>
+                <h3 className="text-3xl font-serif">Escala <br /><span className="italic">Global</span></h3>
+                <p className="text-foreground-muted text-sm leading-relaxed font-medium">
+                  Infraestrutura robusta preparada para suportar grandes volumes de tráfego e vendas em qualquer lugar do mundo.
+                </p>
+              </div>
 
-              <GridPatternCard>
-                <GridPatternCardBody>
-                  <h3 className="text-2xl font-manrope font-black text-navy uppercase mb-4">Alcance Global</h3>
-                  <p className="text-muted-fg font-medium">Especialistas em caravanas internacionais e grandes eventos.</p>
-                </GridPatternCardBody>
-              </GridPatternCard>
+              <div className="space-y-6">
+                <div className="w-12 h-12 border border-accent flex items-center justify-center rounded-sm">
+                  <Zap className="w-6 h-6 text-accent" />
+                </div>
+                <h3 className="text-3xl font-serif">Experiência <br /><span className="italic">Imersiva</span></h3>
+                <p className="text-foreground-muted text-sm leading-relaxed font-medium">
+                  Design orientado à emoção, transformando a compra de um ingresso em um prelúdio memorável do próprio evento.
+                </p>
+              </div>
             </div>
           </div>
         </section>
