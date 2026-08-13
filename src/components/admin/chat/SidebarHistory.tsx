@@ -4,7 +4,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } f
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Badge } from "@/components/ui/badge";
 import { DateTime } from "luxon";
-import { Clock, CheckCircle2, Loader2, MessageSquare, History } from "lucide-react";
+import { Clock, CheckCircle2, Loader2, MessageSquare, History, Share2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface SidebarHistoryProps {
