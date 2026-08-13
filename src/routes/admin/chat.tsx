@@ -5,7 +5,7 @@ import { UserMenu } from "@/components/auth/UserMenu";
 import { useUI } from '@/hooks/use-ui';
 import { Button } from "@/components/ui/button";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { getWhatsAppContacts, getWhatsAppMessages, sendWhatsAppMessage, markMessagesAsRead } from "@/lib/whatsapp/whatsapp.functions";
+import { getWhatsAppContacts, getWhatsAppMessages, sendWhatsAppMessage, markMessagesAsRead, getWhatsAppIntegrationStatus } from "@/lib/whatsapp/whatsapp.functions";
 import { 
   Search, Send, User, Check, CheckCheck, Phone, Plus, Bell, ChevronDown, 
   MoreVertical, CheckCircle, Shuffle, Users as PeopleIcon, Folder, Clock, 
@@ -91,6 +91,13 @@ function AdminChatPage() {
   const { theme, setTheme } = useUI();
   const [isSalesPickerOpen, setIsSalesPickerOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<'atendimento' | 'espera'>('atendimento');
+
+  const { data: integrationStatus } = useQuery({
+    queryKey: ['whatsapp-integration-status', activeTenant?.id],
+    queryFn: () => getWhatsAppIntegrationStatus({ data: { tenantId: activeTenant?.id } }),
+    enabled: !!activeTenant?.id,
+    refetchInterval: 30000 // Check every 30s
+  });
 
   const { data: contactsData, isLoading: isLoadingContacts } = useQuery({
     queryKey: ['whatsapp-contacts', activeTenant?.id],
@@ -305,6 +312,46 @@ function AdminChatPage() {
               <span className="font-black text-lg tracking-tighter text-primary italic">
                 zevva.<span className="text-foreground">chat</span>
               </span>
+              
+              {/* Connection Status Indicator */}
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <div className="flex items-center gap-2 px-2 py-1 bg-accent/50 rounded-full border border-border cursor-help">
+                    <div className={cn(
+                      "w-2 h-2 rounded-full",
+                      integrationStatus?.status === 'online' ? "bg-green-500 animate-pulse" : "bg-red-500"
+                    )} />
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-muted-fg">
+                      {integrationStatus?.status === 'online' ? "Conectado" : "Desconectado"}
+                    </span>
+                  </div>
+                </TooltipTrigger>
+                <TooltipContent side="bottom" className="max-w-xs p-3">
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between gap-4">
+                      <span className="text-xs font-medium">Status da Instância:</span>
+                      <Badge variant={integrationStatus?.status === 'online' ? "outline" : "destructive"} className="text-[9px]">
+                        {integrationStatus?.status === 'online' ? "VÍNCULO ATIVO" : "QUEBRA DE VÍNCULO"}
+                      </Badge>
+                    </div>
+                    <p className="text-[10px] text-muted-fg">
+                      {integrationStatus?.status === 'online' 
+                        ? "Sua integração com o WhatsApp está funcionando normalmente e pronta para enviar/receber mensagens." 
+                        : "Detectamos uma falha na conexão com o WhatsApp. Verifique as configurações na Central de Integração."}
+                    </p>
+                    {integrationStatus?.status !== 'online' && (
+                      <Button 
+                        size="sm" 
+                        variant="link" 
+                        className="h-auto p-0 text-[10px] text-primary underline font-bold"
+                        onClick={() => navigate({ to: '/admin/configuracoes' as any })}
+                      >
+                        Resolver quebra de vínculo
+                      </Button>
+                    )}
+                  </div>
+                </TooltipContent>
+              </Tooltip>
             </div>
           </div>
           
