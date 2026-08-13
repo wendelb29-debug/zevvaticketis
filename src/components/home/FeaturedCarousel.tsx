@@ -102,7 +102,7 @@ export function FeaturedCarousel({ events }: FeaturedCarouselProps) {
                   </div>
                   <div className="flex items-center gap-2 text-sm font-medium">
                     <Calendar className="w-4 h-4 text-primary" />
-                    {formatDate(currentEvent?.start_date)}
+                    {formatDate(currentEvent?.start_date || null)}
                   </div>
                 </div>
 

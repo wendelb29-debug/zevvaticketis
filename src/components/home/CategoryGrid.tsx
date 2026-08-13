@@ -1,4 +1,4 @@
-import { useNavigate } from "@tanstack/react-router";
+import { useNavigate, Link } from "@tanstack/react-router";
 import { CATEGORY_THEMES, CategoryType } from "@/lib/categoryThemes";
 
 export function CategoryGrid() {
