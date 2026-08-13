@@ -66,7 +66,7 @@ function AuthGuard() {
 
   if (loading) return null;
   if (!session) return null;
-  return <SettingsPage session={session} />;
+  return <SettingsPage session={session} activeTenantId={activeTenantId} />;
 }
 
 type Dept = { id: string; name: string; members: number; status: "ativo" | "inativo"; department_id: string };
