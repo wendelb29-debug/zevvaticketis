@@ -1,11 +1,13 @@
 import { createFileRoute, useParams, useNavigate } from "@tanstack/react-router";
 import { supabase } from "@/integrations/supabase/client";
 import { useEffect, useState, useRef } from "react";
-import { QrCode, CheckCircle2, XCircle, ChevronLeft, Zap, Info } from "lucide-react";
+import { QrCode, CheckCircle2, XCircle, ChevronLeft, Zap, Info, Wifi, WifiOff, Database, History as HistoryIcon, AlertTriangle, User as UserIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
+import { useOfflineScanner } from "@/hooks/use-offline-scanner";
+import { DateTime } from "luxon";
 
 export const Route = createFileRoute("/checkin/$projectId/event/$id/scanner")({
   component: ScannerPage,
@@ -18,6 +20,8 @@ function ScannerPage() {
   const [loading, setLoading] = useState(true);
   const [scannedResult, setScannedResult] = useState<any>(null);
   const [isScanning, setIsScanning] = useState(false);
+  const [scanHistory, setScanHistory] = useState<any[]>([]);
+  const { isOnline, offlineQueue, addToQueue } = useOfflineScanner();
 
   useEffect(() => {
     async function loadEvent() {
@@ -28,12 +32,51 @@ function ScannerPage() {
         .single();
       
       setEvent(data);
+
+      // Load Recent History
+      const { data: history } = await supabase
+        .from("checkin_records")
+        .select(`
+          id,
+          status,
+          checkin_time,
+          checkin_date,
+          profiles:operator_id(full_name),
+          tickets(name, qr_code)
+        `)
+        .eq("event_id", eventId)
+        .order("created_at", { ascending: false })
+        .limit(5);
+      
+      setScanHistory(history || []);
       setLoading(false);
     }
     loadEvent();
   }, [eventId]);
 
   const handleManualCheckin = async (code: string) => {
+    const { data: { user: operator } } = await supabase.auth.getUser();
+    const now = DateTime.now();
+
+    // OFFLINE PERSISTENCE
+    if (!isOnline) {
+      addToQueue({
+        code,
+        eventId,
+        operatorId: operator?.id || '',
+        timestamp: now.toISO()!,
+        tenantId: event?.tenant_id || projectId
+      });
+      
+      setScannedResult({ 
+        success: true, 
+        message: "ENFILEIRADO (OFFLINE)", 
+        offline: true,
+        ticket: { qr_code: code } 
+      });
+      return;
+    }
+
     try {
       const { data: ticket, error: ticketError } = await supabase
         .from("tickets")
@@ -46,54 +89,115 @@ function ScannerPage() {
 
       if (!ticket) {
         setScannedResult({ success: false, message: "INGRESSO NÃO ENCONTRADO" });
+        await logRecord('falha', null, operator?.id, code);
         return;
       }
-
-      // Check payment status if column exists (mocked logic if not sure)
-      // Assuming 'pago' status or similar exists in orders or tickets
 
       if (ticket.status === 'utilizado') {
         setScannedResult({ success: false, message: "INGRESSO JÁ UTILIZADO", ticket });
+        await logRecord('falha', ticket.id, operator?.id, code);
         return;
       }
-
-      const { data: { user } } = await supabase.auth.getUser();
 
       // Update ticket status
       const { error: updateError } = await supabase
         .from("tickets")
         .update({ 
             status: 'utilizado',
-            checked_in_at: new Date().toISOString()
+            checked_in_at: now.toISO()
         } as any)
         .eq("id", ticket.id);
 
       if (updateError) throw updateError;
 
       // Log record
-      await supabase.from("checkin_records").insert({
-        event_id: eventId,
-        ticket_id: ticket.id,
-        operator_id: user?.id || null,
-        status: 'presente'
-      });
+      await logRecord('sucesso', ticket.id, operator?.id, code);
 
       setScannedResult({ success: true, message: "ENTRADA LIBERADA", ticket });
       toast.success("Check-in realizado!");
       
     } catch (err) {
       console.error(err);
-      toast.error("Erro ao validar ingresso.");
+      // Fallback to offline queue if server error
+      addToQueue({
+        code,
+        eventId,
+        operatorId: operator?.id || '',
+        timestamp: now.toISO()!,
+        tenantId: event?.tenant_id || projectId
+      });
+      setScannedResult({ 
+        success: true, 
+        message: "ENFILEIRADO (ERRO SYNC)", 
+        offline: true,
+        ticket: { qr_code: code } 
+      });
+    }
+  };
+
+  const logRecord = async (recStatus: string, ticketId: string | null, operatorId: string | undefined, code: string) => {
+    const now = DateTime.now();
+    const { data: newRecord } = await (supabase.from("checkin_records") as any).insert({
+      event_id: eventId,
+      ticket_id: ticketId,
+      operator_id: operatorId ?? null,
+      status: recStatus === 'sucesso' ? 'presente' : 'falha', // Matching existing enum/string logic in this file
+      checkin_date: now.toISODate(),
+      checkin_time: now.toFormat('HH:mm:ss'),
+      tenant_id: event.tenant_id
+    }).select(`
+      id, status, checkin_time, checkin_date,
+      profiles:operator_id(full_name),
+      tickets(name, qr_code)
+    `).single();
+
+    if (newRecord) {
+      setScanHistory(prev => [newRecord, ...prev].slice(0, 5));
     }
   };
 
   if (loading) return null;
 
   return (
-    <div className="space-y-6 max-w-md mx-auto">
-      <div className="text-center space-y-2">
-        <h2 className="text-2xl font-black text-navy uppercase">Scanner de Acesso</h2>
-        <p className="text-xs font-bold text-coral uppercase tracking-widest">{event?.title}</p>
+    <div className="space-y-6 max-w-md mx-auto animate-in fade-in duration-500">
+      <div className="flex items-center justify-between">
+        <Button 
+          variant="ghost" 
+          size="sm" 
+          onClick={() => navigate({ to: `/checkin/${projectId}/event/${eventId}` })}
+          className="text-navy font-bold hover:bg-navy/5 -ml-2"
+        >
+          <ChevronLeft className="w-4 h-4 mr-1" /> Voltar
+        </Button>
+        <div className="text-right">
+          <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Scanner Profissional</p>
+          <p className="text-sm font-black text-coral uppercase truncate max-w-[200px]">{event?.title}</p>
+        </div>
+      </div>
+
+      {/* Connection and Queue Status */}
+      <div className="flex gap-2">
+        <div className={cn(
+          "flex-1 flex items-center justify-center gap-2 py-2 px-4 rounded-2xl border shadow-sm",
+          isOnline ? "bg-emerald-50 border-emerald-100" : "bg-amber-50 border-amber-100"
+        )}>
+          {isOnline ? <Wifi className="w-3 h-3 text-emerald-500" /> : <WifiOff className="w-3 h-3 text-amber-500" />}
+          <span className={cn(
+            "text-[9px] font-black uppercase tracking-widest",
+            isOnline ? "text-emerald-600" : "text-amber-600"
+          )}>
+            {isOnline ? "Conectado" : "Modo Offline"}
+          </span>
+        </div>
+        
+        {offlineQueue.length > 0 && (
+          <div className="flex-1 flex items-center justify-center gap-2 py-2 px-4 bg-blue-50 border border-blue-100 rounded-2xl shadow-sm animate-pulse">
+            <Database className="w-3 h-3 text-blue-500" />
+            <span className="text-[9px] font-black text-blue-600 uppercase tracking-widest">
+              {offlineQueue.length} na fila
+            </span>
+          </div>
+        )}
       </div>
 
       <div className="relative aspect-square rounded-[32px] overflow-hidden bg-navy shadow-2xl border-4 border-white">
@@ -146,38 +250,89 @@ function ScannerPage() {
       {scannedResult && (
         <Card className={cn(
           "rounded-[32px] border-4 overflow-hidden animate-in fade-in zoom-in",
-          scannedResult.success ? "border-good bg-good/5" : "border-destructive bg-destructive/5"
+          scannedResult.success 
+            ? (scannedResult.offline ? "border-amber-500 bg-amber-500/5" : "border-emerald-500 bg-emerald-500/5") 
+            : "border-red-500 bg-red-500/5"
         )}>
           <CardContent className="p-8 text-center space-y-6">
             <div className={cn(
               "w-20 h-20 rounded-full mx-auto flex items-center justify-center",
-              scannedResult.success ? "bg-good text-white" : "bg-destructive text-white"
+              scannedResult.success 
+                ? (scannedResult.offline ? "bg-amber-500 text-white" : "bg-emerald-500 text-white") 
+                : "bg-red-500 text-white"
             )}>
               {scannedResult.success ? <CheckCircle2 className="w-10 h-10" /> : <XCircle className="w-10 h-10" />}
             </div>
 
             <div className="space-y-2">
-              <h3 className={cn("text-2xl font-black uppercase", scannedResult.success ? "text-good" : "text-destructive")}>
+              <h3 className={cn(
+                "text-2xl font-manrope font-black uppercase tracking-tight",
+                scannedResult.success 
+                  ? (scannedResult.offline ? "text-amber-600" : "text-emerald-500") 
+                  : "text-red-500"
+              )}>
                 {scannedResult.message}
               </h3>
+              {scannedResult.offline && (
+                <p className="text-[10px] font-bold text-amber-600 uppercase tracking-tighter bg-amber-100/50 py-1 px-3 rounded-full inline-block">Sincronização pendente</p>
+              )}
               {scannedResult.ticket && (
                 <div className="space-y-1">
-                  <p className="text-navy font-black text-lg uppercase leading-none">{scannedResult.ticket.profiles?.full_name}</p>
-                  <p className="text-slate-500 font-bold text-xs uppercase tracking-widest">{scannedResult.ticket.name || 'Ingresso Geral'}</p>
-                  <p className="text-[10px] text-slate-400 font-medium">Check-in: {new Date().toLocaleTimeString('pt-BR')}</p>
+                  <p className="text-navy font-black text-lg uppercase leading-none">{scannedResult.ticket.profiles?.full_name || 'Participante'}</p>
+                  <p className="text-slate-500 font-bold text-[10px] uppercase tracking-widest">#{scannedResult.ticket.qr_code?.substring(0,12)}</p>
+                  <p className="text-[10px] text-slate-400 font-medium">Check-in: {DateTime.now().toLocaleString(DateTime.TIME_SIMPLE)}</p>
                 </div>
               )}
             </div>
 
             <Button 
-              className="w-full h-14 rounded-2xl font-black uppercase text-sm bg-navy text-white"
+              className="w-full h-14 rounded-2xl font-black uppercase tracking-widest text-sm bg-navy text-white hover:bg-navy/90"
               onClick={() => setScannedResult(null)}
             >
-              Próximo
+              Próxima Leitura
             </Button>
           </CardContent>
         </Card>
       )}
+
+      {/* Recent History */}
+      <div className="space-y-3 pb-10">
+        <div className="flex items-center justify-between px-2">
+          <h4 className="text-[10px] font-black text-navy uppercase tracking-widest flex items-center gap-2">
+            <HistoryIcon className="w-3 h-3 text-coral" /> Últimas Leituras
+          </h4>
+        </div>
+        <div className="space-y-2">
+          {scanHistory.length === 0 ? (
+            <p className="text-[10px] text-slate-400 font-bold uppercase text-center py-4 bg-slate-50 rounded-2xl border border-dashed border-slate-200">
+              Aguardando scans...
+            </p>
+          ) : scanHistory.map((log) => (
+            <div key={log.id} className="flex items-center gap-3 p-3 bg-white rounded-2xl border border-slate-100 shadow-sm animate-in slide-in-from-right duration-300">
+              <div className={cn(
+                "w-8 h-8 rounded-lg flex items-center justify-center shrink-0",
+                log.status === 'presente' || log.status === 'sucesso' ? "bg-emerald-50 text-emerald-500" : "bg-red-50 text-red-500"
+              )}>
+                {log.status === 'presente' || log.status === 'sucesso' ? <CheckCircle2 className="w-4 h-4" /> : <AlertTriangle className="w-4 h-4" />}
+              </div>
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center justify-between">
+                  <p className="text-[10px] font-black text-navy uppercase truncate">
+                    {log.tickets?.name || log.tickets?.qr_code?.substring(0,8) || "Inválido"}
+                  </p>
+                  <span className="text-[9px] font-bold text-slate-400 uppercase">{log.checkin_time}</span>
+                </div>
+                <div className="flex items-center gap-2 mt-0.5">
+                  <UserIcon className="w-2.5 h-2.5 text-slate-300" />
+                  <span className="text-[9px] font-bold text-slate-400 uppercase truncate">
+                    Op: {log.profiles?.full_name?.split(' ')[0] || 'Sistema'}
+                  </span>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }
