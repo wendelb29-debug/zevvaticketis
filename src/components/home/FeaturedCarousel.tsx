@@ -126,6 +126,7 @@ export function FeaturedCarousel({ events }: FeaturedCarouselProps) {
                       navigate({
                         to: "/eventos/$id",
                         params: { id: currentEvent?.id || "" },
+                        search: { busca: undefined, categoria: undefined, cidade: undefined, data: undefined } as any,
                       })
                     }
                     className="h-14 px-10 bg-primary text-primary-foreground text-sm font-bold uppercase tracking-widest hover:bg-primary-hover transition-all rounded-md shadow-2xl flex items-center gap-2"
@@ -139,7 +140,7 @@ export function FeaturedCarousel({ events }: FeaturedCarouselProps) {
                       {currentEvent?.min_price === 0 ? "Aproveite" : "A partir de"}
                     </span>
                     <span className="text-2xl font-black text-white">
-                      {formatPrice(currentEvent?.min_price)}
+                      {formatPrice(currentEvent?.min_price ?? null)}
                     </span>
                   </div>
                 </div>

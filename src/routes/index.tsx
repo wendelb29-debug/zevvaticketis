@@ -561,7 +561,7 @@ function HomePage() {
         </section>
 
         {/* Organizer CTA - Functional & Clean */}
-        <section className="px-6 py-24 bg-dark-surface">
+        <section className="px-6 py-24 bg-brand-dark">
           <div className="max-w-7xl mx-auto">
             <div className="relative p-12 md:p-20 bg-primary rounded-2xl overflow-hidden shadow-2xl">
               <Zap className="absolute -top-10 -right-10 w-80 h-80 text-primary-foreground/5 rotate-12" />
