@@ -1187,27 +1187,27 @@ function AdminChatPage() {
 
       {/* Sidebar Tools Components */}
       <SidebarGroups 
-        isOpen={activeSidebarTool === 'groups'} 
-        onClose={() => setActiveSidebarTool(null)}
+        isOpen={activeTool === 'groups'} 
+        onClose={() => setActiveTool(null)}
         contactId={selectedContactId || ''}
         tenantId={activeTenant?.id || ''}
       />
       
       <SidebarFiles 
-        isOpen={activeSidebarTool === 'files'} 
-        onClose={() => setActiveSidebarTool(null)}
+        isOpen={activeTool === 'files'} 
+        onClose={() => setActiveTool(null)}
         contactId={selectedContactId || ''}
       />
 
       <SidebarHistory 
-        isOpen={activeSidebarTool === 'history'} 
-        onClose={() => setActiveSidebarTool(null)}
+        isOpen={activeTool === 'history'} 
+        onClose={() => setActiveTool(null)}
         contactId={selectedContactId || ''}
       />
 
       <SidebarSchedule 
-        isOpen={activeSidebarTool === 'schedule'} 
-        onClose={() => setActiveSidebarTool(null)}
+        isOpen={activeTool === 'schedule'} 
+        onClose={() => setActiveTool(null)}
         contactId={selectedContactId || ''}
         tenantId={activeTenant?.id || ''}
       />
