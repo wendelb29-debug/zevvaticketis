@@ -396,6 +396,9 @@ function SettingsPage({ session }: { session: any }) {
           <TabsTrigger value="ADMIN" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground rounded-lg py-2.5 px-6 flex items-center gap-2 text-sm font-bold transition-all">
             <Users className="w-4 h-4" /> Equipe e Recursos
           </TabsTrigger>
+          <TabsTrigger value="permissoes" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground rounded-lg py-2.5 px-6 flex items-center gap-2 text-sm font-bold transition-all">
+            <Lock className="w-4 h-4" /> Permissões e Cargos
+          </TabsTrigger>
           <TabsTrigger value="sistema" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground rounded-lg py-2.5 px-6 flex items-center gap-2 text-sm font-bold transition-all">
             <Settings className="w-4 h-4" /> Sistema
           </TabsTrigger>
