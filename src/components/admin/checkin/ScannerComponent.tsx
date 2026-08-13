@@ -125,9 +125,9 @@ export function ScannerComponent() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Scanner Control */}
         <Card className="border-line shadow-xl overflow-hidden rounded-[32px]">
-          <CardHeader className="bg-navy text-white pb-8">
+          <CardHeader className="bg-navy text-primary-foreground pb-8">
             <CardTitle className="text-xl font-manrope font-black flex items-center gap-3">
-              <Camera className="w-6 h-6 text-coral" /> Scanner de Ingresso
+              <Camera className="w-6 h-6 text-primary" /> Scanner de Ingresso
             </CardTitle>
             <p className="text-foreground-foreground/60 text-xs font-bold uppercase tracking-wider">Câmera em tempo real</p>
           </CardHeader>
@@ -141,7 +141,7 @@ export function ScannerComponent() {
                    <div className="absolute bottom-0 left-0 w-8 h-8 border-b-4 border-l-4 border-white rounded-bl-lg" />
                    <div className="absolute bottom-0 right-0 w-8 h-8 border-b-4 border-r-4 border-white rounded-br-lg" />
                 </div>
-                <div className="w-full h-full bg-slate-900 flex items-center justify-center text-white/20">
+                <div className="w-full h-full bg-slate-900 flex items-center justify-center text-primary-foreground/20">
                    <RefreshCw className="w-12 h-12 animate-spin" />
                 </div>
                 <Button 
@@ -154,15 +154,15 @@ export function ScannerComponent() {
             ) : (
               <div className="text-center p-10 space-y-6">
                 <div className="w-24 h-24 rounded-full bg-navy/20 flex items-center justify-center mx-auto border-4 border-white/10">
-                  <Camera className="w-10 h-10 text-white/40" />
+                  <Camera className="w-10 h-10 text-primary-foreground/40" />
                 </div>
                 <div className="space-y-2">
-                  <h3 className="text-white font-bold text-lg">Pronto para escanear</h3>
-                  <p className="text-white/40 text-sm max-w-[200px] mx-auto">Posicione o QR Code do participante dentro da área demarcada.</p>
+                  <h3 className="text-primary-foreground font-bold text-lg">Pronto para escanear</h3>
+                  <p className="text-primary-foreground/40 text-sm max-w-[200px] mx-auto">Posicione o QR Code do participante dentro da área demarcada.</p>
                 </div>
                 <Button 
                   onClick={toggleScanner}
-                  className="bg-coral hover:bg-coral/90 text-white rounded-2xl px-10 h-16 font-black text-lg shadow-xl shadow-coral/20 group"
+                  className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-2xl px-10 h-16 font-black text-lg shadow-xl shadow-primary/20 group"
                 >
                   <Maximize2 className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform" /> Iniciar Scanner
                 </Button>
@@ -211,7 +211,7 @@ export function ScannerComponent() {
               </div>
             ) : scannedResult.success ? (
               <>
-                <div className="bg-emerald-500 p-8 text-center text-white">
+                <div className="bg-emerald-500 p-8 text-center text-primary-foreground">
                   <CheckCircle2 className="w-16 h-16 mx-auto mb-4 animate-bounce" />
                   <h2 className="text-3xl font-manrope font-black uppercase tracking-tight">✅ Entrada Liberada</h2>
                 </div>
@@ -232,7 +232,7 @@ export function ScannerComponent() {
               </>
             ) : (
               <>
-                <div className="bg-red-500 p-8 text-center text-white">
+                <div className="bg-red-500 p-8 text-center text-primary-foreground">
                   <XCircle className="w-16 h-16 mx-auto mb-4" />
                   <h2 className="text-3xl font-manrope font-black uppercase tracking-tight">❌ Ingresso Inválido</h2>
                 </div>

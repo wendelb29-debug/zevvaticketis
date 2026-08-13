@@ -135,7 +135,7 @@ export function ProducerDashboardPanel() {
               <Ticket className="w-5 h-5" /> Ver Ingressos
             </Link>
           </Button>
-          <Button asChild className="bg-coral hover:bg-coral/90 text-white gap-2 px-6 rounded-xl font-bold">
+          <Button asChild className="bg-primary hover:bg-primary/90 text-primary-foreground gap-2 px-6 rounded-xl font-bold">
             <Link to="/produtor/novo-evento">
               <Plus className="w-5 h-5" /> Criar Evento
             </Link>

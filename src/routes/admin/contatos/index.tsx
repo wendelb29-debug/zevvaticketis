@@ -224,7 +224,7 @@ function ContactsPage() {
                           <Badge 
                             key={idx} 
                             variant="secondary" 
-                            className="text-[9px] px-1.5 py-0 border-transparent text-white"
+                            className="text-[9px] px-1.5 py-0 border-transparent text-primary-foreground"
                             style={{ backgroundColor: m.whatsapp_contact_groups?.color || '#333' }}
                           >
                             {m.whatsapp_contact_groups?.name}

@@ -304,7 +304,7 @@ function ScannerPage() {
         </div>
         <Button 
           onClick={() => navigate({ to: "/checkin/$projectId", params: { projectId } as any })}
-          className="bg-navy hover:bg-navy/90 text-white font-black uppercase tracking-widest text-xs h-12 px-8 rounded-xl"
+          className="bg-navy hover:bg-navy/90 text-primary-foreground font-black uppercase tracking-widest text-xs h-12 px-8 rounded-xl"
         >
           Ir para Operação
         </Button>
@@ -325,7 +325,7 @@ function ScannerPage() {
         </Button>
         <div className="text-right">
           <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Scanner Profissional</p>
-          <p className="text-sm font-black text-coral uppercase truncate max-w-[200px]">{event?.title}</p>
+          <p className="text-sm font-black text-primary uppercase truncate max-w-[200px]">{event?.title}</p>
         </div>
       </div>
 
@@ -377,16 +377,16 @@ function ScannerPage() {
         {/* Scanner Area */}
         <div className="relative aspect-square rounded-[32px] overflow-hidden bg-navy shadow-2xl border-4 border-white ring-1 ring-slate-200">
            {status === 'idle' && (
-              <div className="absolute inset-0 flex flex-col items-center justify-center text-white p-8 text-center space-y-6">
-                  <div className="w-24 h-24 bg-coral/20 rounded-full flex items-center justify-center border-2 border-coral/30">
-                      <QrCode className="w-12 h-12 text-coral" />
+              <div className="absolute inset-0 flex flex-col items-center justify-center text-primary-foreground p-8 text-center space-y-6">
+                  <div className="w-24 h-24 bg-primary/20 rounded-full flex items-center justify-center border-2 border-coral/30">
+                      <QrCode className="w-12 h-12 text-primary" />
                   </div>
                   <div className="space-y-2">
                     <h3 className="text-xl font-manrope font-black uppercase">Ativar Validação</h3>
-                    <p className="text-white/60 text-sm font-medium">Aponte para o QR Code para realizar o check-in automático.</p>
+                    <p className="text-primary-foreground/60 text-sm font-medium">Aponte para o QR Code para realizar o check-in automático.</p>
                   </div>
                   <Button 
-                    className="bg-coral hover:bg-coral-dark text-white font-black uppercase tracking-widest text-xs h-12 px-8 rounded-xl shadow-lg shadow-coral/30"
+                    className="bg-primary hover:bg-primary-dark text-primary-foreground font-black uppercase tracking-widest text-xs h-12 px-8 rounded-xl shadow-lg shadow-coral/30"
                     onClick={startScanner}
                   >
                     <Zap className="w-4 h-4 mr-2" /> Ativar Scanner
@@ -400,14 +400,14 @@ function ScannerPage() {
            <div id={scannerContainerId} className={cn("w-full h-full", (status !== 'scanning' && status !== 'success') && "hidden")} />
 
            {status === 'starting' && (
-             <div className="absolute inset-0 bg-navy flex flex-col items-center justify-center text-white space-y-4">
-                <RefreshCw className="w-10 h-10 text-coral animate-spin" />
+             <div className="absolute inset-0 bg-navy flex flex-col items-center justify-center text-primary-foreground space-y-4">
+                <RefreshCw className="w-10 h-10 text-primary animate-spin" />
                 <p className="text-xs font-black uppercase tracking-widest">Configurando Câmera...</p>
              </div>
            )}
 
            {status === 'error' && (
-             <div className="absolute inset-0 bg-red-950 flex flex-col items-center justify-center text-white p-8 text-center space-y-6">
+             <div className="absolute inset-0 bg-red-950 flex flex-col items-center justify-center text-primary-foreground p-8 text-center space-y-6">
                 <div className="w-16 h-16 bg-red-500/20 rounded-full flex items-center justify-center border-2 border-red-500/30">
                     <AlertTriangle className="w-8 h-8 text-red-500" />
                 </div>
@@ -417,7 +417,7 @@ function ScannerPage() {
                 </div>
                 <Button 
                   variant="outline"
-                  className="border-white/20 text-white hover:bg-card/10 font-black uppercase tracking-widest text-xs h-10 px-6 rounded-xl"
+                  className="border-white/20 text-primary-foreground hover:bg-card/10 font-black uppercase tracking-widest text-xs h-10 px-6 rounded-xl"
                   onClick={startScanner}
                 >
                   <RefreshCw className="w-3 h-3 mr-2" /> Tentar Novamente
@@ -430,12 +430,12 @@ function ScannerPage() {
               <>
                 <div className="absolute inset-0 border-[40px] border-black/40 pointer-events-none flex items-center justify-center">
                     <div className="w-full aspect-square border-2 border-coral rounded-2xl relative shadow-[0_0_50px_rgba(0,0,0,0.5)]">
-                        <div className="absolute inset-x-0 top-0 h-0.5 bg-coral shadow-[0_0_15px_rgba(240,84,84,0.8)] animate-scan" />
+                        <div className="absolute inset-x-0 top-0 h-0.5 bg-primary shadow-[0_0_15px_rgba(240,84,84,0.8)] animate-scan" />
                     </div>
                 </div>
                 <Button 
                     variant="ghost" 
-                    className="absolute bottom-6 left-1/2 -translate-x-1/2 text-white/60 hover:text-white bg-black/20 backdrop-blur-sm rounded-xl px-6"
+                    className="absolute bottom-6 left-1/2 -translate-x-1/2 text-primary-foreground/60 hover:text-primary-foreground bg-black/20 backdrop-blur-sm rounded-xl px-6"
                     onClick={stopScanner}
                 >
                     Interromper
@@ -456,8 +456,8 @@ function ScannerPage() {
                          <div className={cn(
                              "w-20 h-20 rounded-full mx-auto flex items-center justify-center",
                              scannedResult.success 
-                                ? (scannedResult.offline ? "bg-amber-500 text-white" : "bg-emerald-500 text-white") 
-                                : "bg-red-500 text-white"
+                                ? (scannedResult.offline ? "bg-amber-500 text-primary-foreground" : "bg-emerald-500 text-primary-foreground") 
+                                : "bg-red-500 text-primary-foreground"
                          )}>
                              {scannedResult.success ? <CheckCircle2 className="w-10 h-10" /> : <XCircle className="w-10 h-10" />}
                          </div>
@@ -483,7 +483,7 @@ function ScannerPage() {
                         </div>
 
                         <Button 
-                            className="w-full h-14 rounded-2xl font-black uppercase tracking-widest text-sm bg-navy text-white hover:bg-navy/90"
+                            className="w-full h-14 rounded-2xl font-black uppercase tracking-widest text-sm bg-navy text-primary-foreground hover:bg-navy/90"
                             onClick={resumeScanning}
                         >
                             Próxima Leitura
@@ -518,7 +518,7 @@ function ScannerPage() {
         <div className="space-y-3">
           <div className="flex items-center justify-between px-2">
             <h4 className="text-[10px] font-black text-foreground uppercase tracking-widest flex items-center gap-2">
-              <HistoryIcon className="w-3 h-3 text-coral" /> Últimas Leituras
+              <HistoryIcon className="w-3 h-3 text-primary" /> Últimas Leituras
             </h4>
           </div>
           <div className="space-y-2">

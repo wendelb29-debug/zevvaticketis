@@ -61,10 +61,10 @@ export function CheckinUrlManager() {
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <Card className="md:col-span-2 border-line shadow-xl rounded-[32px] overflow-hidden">
-          <CardHeader className="bg-navy text-white pb-8">
+          <CardHeader className="bg-navy text-primary-foreground pb-8">
             <div className="flex items-center justify-between">
               <CardTitle className="text-xl font-manrope font-black flex items-center gap-3">
-                <LinkIcon className="w-6 h-6 text-coral" /> Link Operacional
+                <LinkIcon className="w-6 h-6 text-primary" /> Link Operacional
               </CardTitle>
               <div className="px-3 py-1 bg-emerald-500/20 text-emerald-400 rounded-full border border-emerald-500/20 text-[10px] font-black uppercase tracking-widest">
                 Ativo
@@ -92,7 +92,7 @@ export function CheckinUrlManager() {
                 </Button>
                 <Button 
                   onClick={openUrl}
-                  className="h-14 w-14 rounded-2xl bg-coral text-white hover:bg-coral-dark shadow-lg shadow-coral/20"
+                  className="h-14 w-14 rounded-2xl bg-primary text-primary-foreground hover:bg-primary-dark shadow-lg shadow-primary/20"
                   title="Abrir Link"
                 >
                   <ExternalLink className="w-5 h-5" />
@@ -132,7 +132,7 @@ export function CheckinUrlManager() {
         <Card className="border-line shadow-xl rounded-[32px] overflow-hidden bg-surface/30">
           <CardHeader className="pb-4">
             <CardTitle className="text-lg font-manrope font-black text-foreground flex items-center gap-2">
-              <Smartphone className="w-5 h-5 text-coral" /> Mobile Setup
+              <Smartphone className="w-5 h-5 text-primary" /> Mobile Setup
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-6">
@@ -140,7 +140,7 @@ export function CheckinUrlManager() {
               <div className="relative">
                 <QrCode className="w-32 h-32 text-foreground" />
                 <div className="absolute inset-0 flex items-center justify-center opacity-10">
-                   <QrCode className="w-full h-full text-coral" />
+                   <QrCode className="w-full h-full text-primary" />
                 </div>
               </div>
               <p className="text-[10px] font-black text-foreground/40 uppercase tracking-widest text-center">Escaneie para configurar <br /> o coletor mobile</p>
@@ -163,29 +163,29 @@ export function CheckinUrlManager() {
           <h3 className="font-manrope font-black text-foreground text-xl">Como usar?</h3>
           <ul className="space-y-4">
             <li className="flex gap-4">
-              <span className="w-8 h-8 rounded-full bg-coral/10 text-coral flex items-center justify-center font-black shrink-0">1</span>
+              <span className="w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center font-black shrink-0">1</span>
               <p className="text-sm text-muted-foreground font-medium">Copie o link acima e envie para os operadores de recepção.</p>
             </li>
             <li className="flex gap-4">
-              <span className="w-8 h-8 rounded-full bg-coral/10 text-coral flex items-center justify-center font-black shrink-0">2</span>
+              <span className="w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center font-black shrink-0">2</span>
               <p className="text-sm text-muted-foreground font-medium">Ao acessar, eles poderão selecionar o evento e iniciar o scanner.</p>
             </li>
             <li className="flex gap-4">
-              <span className="w-8 h-8 rounded-full bg-coral/10 text-coral flex items-center justify-center font-black shrink-0">3</span>
+              <span className="w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center font-black shrink-0">3</span>
               <p className="text-sm text-muted-foreground font-medium">Todos os dados de check-in serão sincronizados em tempo real com este painel.</p>
             </li>
           </ul>
         </div>
 
-        <div className="p-8 bg-navy rounded-[40px] text-white space-y-6 relative overflow-hidden group">
-          <div className="absolute top-0 right-0 w-64 h-64 bg-coral/10 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl group-hover:bg-coral/20 transition-all duration-700" />
+        <div className="p-8 bg-navy rounded-[40px] text-primary-foreground space-y-6 relative overflow-hidden group">
+          <div className="absolute top-0 right-0 w-64 h-64 bg-primary/10 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl group-hover:bg-primary/20 transition-all duration-700" />
           <div className="space-y-2 relative z-10">
             <h3 className="font-manrope font-black text-2xl">Zevva Staff</h3>
-            <p className="text-white/60 text-sm font-medium">O ambiente operacional de check-in (Zevva Staff) está configurado. Acesse agora para gerenciar a entrada dos participantes.</p>
+            <p className="text-primary-foreground/60 text-sm font-medium">O ambiente operacional de check-in (Zevva Staff) está configurado. Acesse agora para gerenciar a entrada dos participantes.</p>
           </div>
           <Button 
             onClick={() => navigate({ to: activeTenant ? `/checkin/${activeTenant.slug || activeTenant.id}` : '/checkin' })}
-            className="w-full h-14 bg-coral hover:bg-coral-dark text-white rounded-2xl font-black uppercase tracking-widest text-sm shadow-xl shadow-coral/20 relative z-10"
+            className="w-full h-14 bg-primary hover:bg-primary-dark text-primary-foreground rounded-2xl font-black uppercase tracking-widest text-sm shadow-xl shadow-primary/20 relative z-10"
           >
             Acessar Zevva Staff
           </Button>

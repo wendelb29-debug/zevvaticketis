@@ -137,7 +137,7 @@ function HistoricoPage() {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <h2 className="text-3xl font-manrope font-black text-foreground uppercase tracking-tighter">Histórico de Operação</h2>
-          <p className="text-xs font-black text-coral uppercase tracking-widest mt-1 opacity-80">Projeto: {projectId}</p>
+          <p className="text-xs font-black text-primary uppercase tracking-widest mt-1 opacity-80">Projeto: {projectId}</p>
         </div>
         <div className="flex gap-2">
           <Button 
@@ -149,9 +149,9 @@ function HistoricoPage() {
           </Button>
           <Button 
             onClick={exportPDF}
-            className="bg-navy hover:bg-navy/90 text-white rounded-2xl h-12 px-6 font-black uppercase tracking-widest text-xs gap-2 shadow-lg"
+            className="bg-navy hover:bg-navy/90 text-primary-foreground rounded-2xl h-12 px-6 font-black uppercase tracking-widest text-xs gap-2 shadow-lg"
           >
-            <FileText className="w-4 h-4 text-coral" /> Exportar PDF
+            <FileText className="w-4 h-4 text-primary" /> Exportar PDF
           </Button>
         </div>
       </div>

@@ -153,7 +153,7 @@ function ProdutorLayout() {
           <Button 
             variant="ghost"
             onClick={handleLogout}
-            className="text-coral font-bold hover:text-coral-dark"
+            className="text-primary font-bold hover:text-primary-dark"
           >
             Sair da conta
           </Button>
@@ -177,7 +177,7 @@ function ProdutorLayout() {
           <Button 
             variant="ghost"
             onClick={handleLogout}
-            className="text-foreground font-bold hover:text-coral"
+            className="text-foreground font-bold hover:text-primary"
           >
             Sair da conta
           </Button>
@@ -209,11 +209,11 @@ function ProdutorLayout() {
     <div className="flex flex-col h-full bg-card border-r border-line py-8 font-inter">
       <div className={cn("px-6 mb-12 flex items-center gap-3", !isAdmin && "justify-center")}>
         {isAdmin && (
-          <Link to="/app" className="p-2.5 hover:bg-muted rounded-2xl transition-all text-muted-foreground hover:text-coral outline-none border border-line bg-card shadow-sm flex-shrink-0" title="Voltar para o Workspace">
+          <Link to="/app" className="p-2.5 hover:bg-muted rounded-2xl transition-all text-muted-foreground hover:text-primary outline-none border border-line bg-card shadow-sm flex-shrink-0" title="Voltar para o Workspace">
             <Home className="w-5 h-5" />
           </Link>
         )}
-        <Link to="/" className={cn("text-2xl font-manrope font-extrabold text-coral tracking-tighter truncate", !isAdmin && "text-center")}>
+        <Link to="/" className={cn("text-2xl font-manrope font-extrabold text-primary tracking-tighter truncate", !isAdmin && "text-center")}>
           ZEVVA <span className="text-foreground">TICKETS</span>
         </Link>
       </div>
@@ -222,7 +222,7 @@ function ProdutorLayout() {
           <div className="mt-6 flex items-center gap-3 p-3 bg-muted rounded-2xl border border-line">
             <Avatar className="w-10 h-10 rounded-xl border border-line">
               <AvatarImage src={activeTenant.logo || undefined} />
-              <AvatarFallback className="bg-navy text-white text-xs font-black">
+              <AvatarFallback className="bg-navy text-primary-foreground text-xs font-black">
                 {activeTenant.nome.substring(0, 2).toUpperCase()}
               </AvatarFallback>
             </Avatar>
@@ -235,7 +235,7 @@ function ProdutorLayout() {
                 <Button 
                   variant="ghost" 
                   size="icon" 
-                  className="h-8 w-8 text-muted-foreground hover:text-coral"
+                  className="h-8 w-8 text-muted-foreground hover:text-primary"
                   title="Trocar Ambiente"
                 >
                   <ChevronRight className="w-4 h-4 rotate-90" />
@@ -249,12 +249,12 @@ function ProdutorLayout() {
                     onClick={() => switchTenant(t.id)}
                     className={cn(
                       "flex items-center gap-2 px-2 py-2 rounded-lg text-xs font-bold cursor-pointer",
-                      activeTenant.id === t.id ? "bg-coral/10 text-coral" : "text-foreground hover:bg-surface"
+                      activeTenant.id === t.id ? "bg-primary/10 text-primary" : "text-foreground hover:bg-surface"
                     )}
                   >
                     <Avatar className="w-5 h-5 rounded-md border border-line">
                       <AvatarImage src={t.logo || undefined} />
-                      <AvatarFallback className="text-[8px] bg-navy text-white">{t.nome.substring(0, 1)}</AvatarFallback>
+                      <AvatarFallback className="text-[8px] bg-navy text-primary-foreground">{t.nome.substring(0, 1)}</AvatarFallback>
                     </Avatar>
                     {t.nome}
                   </DropdownMenuItem>
@@ -267,7 +267,7 @@ function ProdutorLayout() {
                       onClick={() => navigate({ to: "/app" })}
                       className="flex items-center gap-2 px-2 py-2 rounded-lg text-xs font-bold text-foreground hover:bg-surface cursor-pointer"
                     >
-                      <Plus className="w-4 h-4 text-coral" /> Gerenciar Projetos
+                      <Plus className="w-4 h-4 text-primary" /> Gerenciar Projetos
                     </DropdownMenuItem>
                   </>
                 )}
@@ -293,7 +293,7 @@ function ProdutorLayout() {
                   !isExternal && "" 
                 )}
                 {...(!isExternal ? {
-                  activeProps: { className: "bg-coral text-white shadow-lg shadow-coral/30" },
+                  activeProps: { className: "bg-primary text-primary-foreground shadow-lg shadow-coral/30" },
                   inactiveProps: { className: "text-foreground hover:bg-surface-2 hover:text-foreground" }
                 } : {
                   className: "flex items-center gap-3 px-4 py-3.5 rounded-xl text-sm font-extrabold text-foreground hover:bg-surface-2 transition-all duration-200"
@@ -341,7 +341,7 @@ function ProdutorLayout() {
             </Sheet>
             
             <div className="hidden lg:flex items-center gap-2">
-              <span className="text-xs font-extrabold uppercase tracking-widest text-coral bg-coral/5 px-3 py-1 rounded-full border border-coral/10">
+              <span className="text-xs font-extrabold uppercase tracking-widest text-primary bg-primary/5 px-3 py-1 rounded-full border border-coral/10">
                 Área do Produtor
               </span>
             </div>
@@ -350,7 +350,7 @@ function ProdutorLayout() {
           <div className="flex items-center gap-3 sm:gap-6">
             <button className="relative p-2 text-muted-foreground hover:text-foreground transition-colors">
               <Bell className="w-5 h-5" />
-              <span className="absolute top-2 right-2 w-2 h-2 bg-coral rounded-full border-2 border-white"></span>
+              <span className="absolute top-2 right-2 w-2 h-2 bg-primary rounded-full border-2 border-white"></span>
             </button>
 
             {user && (

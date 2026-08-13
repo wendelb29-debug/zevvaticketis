@@ -28,8 +28,8 @@ function ProducerPendingPage() {
     <div className="min-h-screen flex items-center justify-center bg-card font-inter p-6">
       <div className="max-w-md w-full space-y-8 text-center">
         <div className="relative">
-          <div className="w-24 h-24 bg-coral/10 rounded-full flex items-center justify-center mx-auto mb-6">
-            <Clock className="w-12 h-12 text-coral animate-pulse" />
+          <div className="w-24 h-24 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
+            <Clock className="w-12 h-12 text-primary animate-pulse" />
           </div>
           <div className="absolute top-16 right-[38%] bg-card rounded-full p-1 border border-line">
             <ShieldCheck className="w-6 h-6 text-foreground" />
@@ -47,7 +47,7 @@ function ProducerPendingPage() {
         <div className="bg-surface/50 border border-line rounded-[20px] p-6 space-y-4 text-left">
           <div className="flex gap-4">
             <div className="w-10 h-10 bg-card rounded-xl border border-line flex items-center justify-center shrink-0">
-              <Mail className="w-5 h-5 text-coral" />
+              <Mail className="w-5 h-5 text-primary" />
             </div>
             <div>
               <p className="text-sm font-bold text-foreground">O que acontece agora?</p>
@@ -59,7 +59,7 @@ function ProducerPendingPage() {
         <div className="space-y-4">
           <Button 
             variant="outline"
-            className="w-full h-12 rounded-xl font-bold border-navy text-foreground hover:bg-navy hover:text-white transition-all flex items-center justify-center gap-2"
+            className="w-full h-12 rounded-xl font-bold border-navy text-foreground hover:bg-navy hover:text-primary-foreground transition-all flex items-center justify-center gap-2"
             onClick={() => window.location.reload()}
           >
             Verificar status novamente

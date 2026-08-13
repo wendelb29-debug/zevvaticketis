@@ -132,7 +132,7 @@ function CriarEventoWizard() {
   const SidebarContent = () => (
     <div className="flex flex-col h-full bg-card border-r border-line py-8 font-inter">
       <div className="px-6 mb-12">
-        <Link to="/" className="text-2xl font-manrope font-extrabold text-coral tracking-tighter">
+        <Link to="/" className="text-2xl font-manrope font-extrabold text-primary tracking-tighter">
           ZEVVA <span className="text-foreground">TICKETS</span>
         </Link>
       </div>
@@ -143,7 +143,7 @@ function CriarEventoWizard() {
             key={item.label}
             to={item.href}
             className="flex items-center gap-3 px-4 py-3.5 rounded-xl text-sm font-extrabold transition-all duration-200"
-            activeProps={{ className: "bg-coral text-white shadow-lg shadow-coral/30" }}
+            activeProps={{ className: "bg-primary text-primary-foreground shadow-lg shadow-coral/30" }}
             inactiveProps={{ className: "text-foreground hover:bg-surface-2 hover:text-foreground" }}
           >
             <item.icon className="w-5 h-5" />
@@ -190,7 +190,7 @@ function CriarEventoWizard() {
               </div>
               <div className="space-y-4">
                 <label className="text-sm font-bold text-foreground uppercase tracking-wider flex items-center gap-2">
-                  Categoria & Tema Visual <Sparkles className="w-4 h-4 text-coral" />
+                  Categoria & Tema Visual <Sparkles className="w-4 h-4 text-primary" />
                 </label>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <Select 
@@ -221,7 +221,7 @@ function CriarEventoWizard() {
                     >
                       <div className="flex items-center gap-3">
                         <div 
-                          className="w-10 h-10 rounded-lg flex items-center justify-center text-white"
+                          className="w-10 h-10 rounded-lg flex items-center justify-center text-primary-foreground"
                           style={{ backgroundColor: getThemeByCategory(formData.category).accentColor }}
                         >
                           {React.createElement(getThemeByCategory(formData.category).icon, { className: "w-5 h-5" })}
@@ -231,7 +231,7 @@ function CriarEventoWizard() {
                           <p className="font-bold text-foreground text-xs">{formData.category}</p>
                         </div>
                       </div>
-                      <div className="flex items-center gap-2 text-coral font-extrabold text-[10px] uppercase tracking-widest">
+                      <div className="flex items-center gap-2 text-primary font-extrabold text-[10px] uppercase tracking-widest">
                         <Eye className="w-3.5 h-3.5" /> Ver prévia
                       </div>
                     </div>
@@ -242,7 +242,7 @@ function CriarEventoWizard() {
                 <label className="text-sm font-bold text-foreground uppercase tracking-wider">Imagem principal</label>
                 <div className="border-2 border-dashed border-line rounded-[24px] p-12 text-center group hover:border-coral/50 transition-colors cursor-pointer bg-surface/50">
                   <div className="flex flex-col items-center gap-4">
-                    <div className="w-16 h-16 rounded-full bg-card shadow-sm border border-line flex items-center justify-center text-coral group-hover:scale-110 transition-transform">
+                    <div className="w-16 h-16 rounded-full bg-card shadow-sm border border-line flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
                       <Plus className="w-8 h-8" />
                     </div>
                     <div>
@@ -266,19 +266,19 @@ function CriarEventoWizard() {
                     onClick={() => setFormData((prev: any) => ({ ...prev, event_type: "presencial" }))}
                     className={cn(
                       "h-14 rounded-xl border-2 font-bold flex items-center justify-center gap-2 transition-all",
-                      formData.event_type === "presencial" ? "border-coral bg-coral/5 text-foreground" : "border-line text-muted-foreground hover:bg-surface"
+                      formData.event_type === "presencial" ? "border-coral bg-primary/5 text-foreground" : "border-line text-muted-foreground hover:bg-surface"
                     )}
                   >
-                    <MapPin className={cn("w-5 h-5", formData.event_type === "presencial" ? "text-coral" : "")} /> Presencial
+                    <MapPin className={cn("w-5 h-5", formData.event_type === "presencial" ? "text-primary" : "")} /> Presencial
                   </button>
                   <button 
                     onClick={() => setFormData((prev: any) => ({ ...prev, event_type: "online" }))}
                     className={cn(
                       "h-14 rounded-xl border-2 font-bold flex items-center justify-center gap-2 transition-all",
-                      formData.event_type === "online" ? "border-coral bg-coral/5 text-foreground" : "border-line text-muted-foreground hover:bg-surface"
+                      formData.event_type === "online" ? "border-coral bg-primary/5 text-foreground" : "border-line text-muted-foreground hover:bg-surface"
                     )}
                   >
-                    <Globe className={cn("w-5 h-5", formData.event_type === "online" ? "text-coral" : "")} /> Online
+                    <Globe className={cn("w-5 h-5", formData.event_type === "online" ? "text-primary" : "")} /> Online
                   </button>
                 </div>
               </div>
@@ -372,7 +372,7 @@ function CriarEventoWizard() {
               <h3 className="text-xl font-bold text-foreground">Gerenciamento de Ingressos</h3>
               <Button 
                 onClick={() => setTickets([...tickets, { id: Date.now(), name: "Novo Lote", description: "", price: 0, quantity: 100, sale_start: "", sale_end: "", limit_per_buyer: 5 }])}
-                className="bg-navy text-white font-bold"
+                className="bg-navy text-primary-foreground font-bold"
               >
                 <Plus className="w-4 h-4 mr-2" /> Adicionar ingresso
               </Button>
@@ -485,7 +485,7 @@ function CriarEventoWizard() {
                 />
               </div>
               
-              <div className="flex items-center gap-3 p-6 rounded-2xl bg-coral/5 border border-coral/10">
+              <div className="flex items-center gap-3 p-6 rounded-2xl bg-primary/5 border border-coral/10">
                 <Checkbox 
                   id="featured" 
                   checked={formData.featured}
@@ -524,7 +524,7 @@ function CriarEventoWizard() {
               <div className="grid grid-cols-3 gap-6">
                 <div className="p-4 bg-card rounded-xl border border-line text-center">
                   <p className="text-[10px] font-extrabold text-muted-foreground uppercase tracking-widest mb-1">Status</p>
-                  <Badge variant="outline" className="text-coral border-coral/30 bg-coral/5">{formData.status}</Badge>
+                  <Badge variant="outline" className="text-primary border-coral/30 bg-primary/5">{formData.status}</Badge>
                 </div>
                 <div className="p-4 bg-card rounded-xl border border-line text-center">
                   <p className="text-[10px] font-extrabold text-muted-foreground uppercase tracking-widest mb-1">Visibilidade</p>
@@ -542,7 +542,7 @@ function CriarEventoWizard() {
                   {tickets.map(t => (
                     <div key={t.id} className="flex justify-between items-center p-3 bg-card rounded-lg border border-line">
                       <span className="font-medium text-foreground text-sm">{t.name}</span>
-                      <span className="font-bold text-coral">US$ {t.price.toFixed(2)}</span>
+                      <span className="font-bold text-primary">US$ {t.price.toFixed(2)}</span>
                     </div>
                   ))}
                 </div>
@@ -582,7 +582,7 @@ function CriarEventoWizard() {
                 <SidebarContent />
               </SheetContent>
             </Sheet>
-            <span className="text-xs font-extrabold uppercase tracking-widest text-coral bg-coral/5 px-3 py-1 rounded-full border border-coral/10">
+            <span className="text-xs font-extrabold uppercase tracking-widest text-primary bg-primary/5 px-3 py-1 rounded-full border border-coral/10">
               Área do Produtor
             </span>
           </div>
@@ -590,11 +590,11 @@ function CriarEventoWizard() {
           <div className="flex items-center gap-6">
             <button className="relative p-2 text-muted-foreground hover:text-foreground transition-colors">
               <Bell className="w-5 h-5" />
-              <span className="absolute top-2 right-2 w-2 h-2 bg-coral rounded-full border-2 border-white"></span>
+              <span className="absolute top-2 right-2 w-2 h-2 bg-primary rounded-full border-2 border-white"></span>
             </button>
             <Avatar className="w-10 h-10 border-2 border-surface shadow-sm">
               <AvatarImage src={user?.user_metadata?.avatar_url} />
-              <AvatarFallback className="bg-coral text-white font-bold">U</AvatarFallback>
+              <AvatarFallback className="bg-primary text-primary-foreground font-bold">U</AvatarFallback>
             </Avatar>
           </div>
         </header>
@@ -616,13 +616,13 @@ function CriarEventoWizard() {
                 <div key={s.id} className="flex items-center gap-2 flex-shrink-0">
                   <div className={cn(
                     "flex items-center gap-2 px-4 py-2 rounded-full border transition-all duration-300",
-                    step === s.id ? "bg-navy border-navy text-white shadow-lg shadow-navy/20" : 
-                    step > s.id ? "bg-coral/10 border-coral/20 text-coral" : "bg-card border-line text-muted-foreground"
+                    step === s.id ? "bg-navy border-navy text-primary-foreground shadow-lg shadow-primary/20" : 
+                    step > s.id ? "bg-primary/10 border-coral/20 text-primary" : "bg-card border-line text-muted-foreground"
                   )}>
                     <span className={cn(
                       "w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold border",
                       step === s.id ? "bg-card text-foreground border-white" : 
-                      step > s.id ? "bg-coral text-white border-coral" : "bg-surface text-muted-foreground border-line"
+                      step > s.id ? "bg-primary text-primary-foreground border-coral" : "bg-surface text-muted-foreground border-line"
                     )}>
                       {step > s.id ? "✓" : s.id}
                     </span>
@@ -663,14 +663,14 @@ function CriarEventoWizard() {
                 
                 {step < 5 ? (
                   <Button 
-                    className="h-14 px-10 rounded-xl bg-navy text-white font-bold shadow-lg shadow-navy/20 hover:scale-[1.02] active:scale-[0.98] transition-all"
+                    className="h-14 px-10 rounded-xl bg-navy text-primary-foreground font-bold shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-[0.98] transition-all"
                     onClick={() => setStep(step + 1)}
                   >
                     Próxima etapa <ChevronRight className="w-5 h-5 ml-2" />
                   </Button>
                 ) : (
                   <Button 
-                    className="h-14 px-10 rounded-xl bg-coral text-white font-bold shadow-lg shadow-coral/20 hover:scale-[1.02] active:scale-[0.98] transition-all"
+                    className="h-14 px-10 rounded-xl bg-primary text-primary-foreground font-bold shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-[0.98] transition-all"
                     onClick={async () => {
                       setLoading(true);
                       try {

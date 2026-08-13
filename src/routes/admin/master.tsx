@@ -90,24 +90,24 @@ function MasterAdminPage() {
           <Button variant="outline" className="rounded-xl font-bold border-border">
             <Filter className="w-4 h-4 mr-2" /> Filtros
           </Button>
-          <Button className="bg-navy hover:bg-coral text-white rounded-xl font-bold px-6">
+          <Button className="bg-navy hover:bg-primary text-primary-foreground rounded-xl font-bold px-6">
             Configurações Globais
           </Button>
         </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <Card className="border-none shadow-sm bg-navy text-white rounded-[24px] overflow-hidden relative group">
+        <Card className="border-none shadow-sm bg-navy text-primary-foreground rounded-[24px] overflow-hidden relative group">
           <div className="absolute right-[-20px] top-[-20px] opacity-10 group-hover:scale-110 transition-transform duration-500">
             <Building2 size={120} />
           </div>
           <CardHeader className="pb-2">
-            <CardTitle className="text-xs font-black uppercase tracking-widest text-white/60">Projetos Ativos</CardTitle>
+            <CardTitle className="text-xs font-black uppercase tracking-widest text-primary-foreground/60">Projetos Ativos</CardTitle>
           </CardHeader>
 
           <CardContent>
             <div className="text-4xl font-manrope font-black">{stats?.tenants || 0}</div>
-            <p className="text-xs font-medium text-white/60 mt-2">+12 novos este mês</p>
+            <p className="text-xs font-medium text-primary-foreground/60 mt-2">+12 novos este mês</p>
           </CardContent>
         </Card>
 
@@ -131,18 +131,18 @@ function MasterAdminPage() {
           </CardContent>
         </Card>
 
-        <Card className="border-none shadow-sm bg-coral text-white rounded-[24px] overflow-hidden relative group">
+        <Card className="border-none shadow-sm bg-primary text-primary-foreground rounded-[24px] overflow-hidden relative group">
           <div className="absolute right-[-20px] top-[-20px] opacity-10 group-hover:scale-110 transition-transform duration-500">
             <Ticket size={120} />
           </div>
           <CardHeader className="pb-2">
-            <CardTitle className="text-xs font-black uppercase tracking-widest text-white/60">Receita Plataforma</CardTitle>
+            <CardTitle className="text-xs font-black uppercase tracking-widest text-primary-foreground/60">Receita Plataforma</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-4xl font-manrope font-black">
               {stats?.platformRevenue.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}
             </div>
-            <p className="text-xs font-medium text-white/60 mt-2">Comissões sobre GMV</p>
+            <p className="text-xs font-medium text-primary-foreground/60 mt-2">Comissões sobre GMV</p>
           </CardContent>
         </Card>
 
@@ -186,11 +186,11 @@ function MasterAdminPage() {
                   <tr key={tenant.id} className="hover:bg-muted/50 transition-colors group">
                     <td className="px-8 py-6">
                       <div className="flex items-center gap-4">
-                        <div className="w-12 h-12 bg-navy rounded-2xl flex items-center justify-center text-white font-black text-lg border-2 border-white shadow-sm overflow-hidden">
+                        <div className="w-12 h-12 bg-navy rounded-2xl flex items-center justify-center text-primary-foreground font-black text-lg border-2 border-white shadow-sm overflow-hidden">
                           {tenant.logo ? <img src={tenant.logo} className="w-full h-full object-cover" /> : tenant.nome.substring(0, 2).toUpperCase()}
                         </div>
                         <div>
-                          <p className="font-manrope font-black text-foreground group-hover:text-coral transition-colors">{tenant.nome}</p>
+                          <p className="font-manrope font-black text-foreground group-hover:text-primary transition-colors">{tenant.nome}</p>
                           <p className="text-xs text-slate-400 font-medium tracking-tight">/{tenant.slug}</p>
                         </div>
                       </div>
@@ -232,7 +232,7 @@ function MasterAdminPage() {
                       <Button 
                         variant="ghost" 
                         size="sm" 
-                        className="rounded-xl hover:bg-navy hover:text-white font-bold group"
+                        className="rounded-xl hover:bg-navy hover:text-primary-foreground font-bold group"
                         onClick={() => navigate({ to: `/admin/tenants/${tenant.id}` as any })}
                       >
                         Gerenciar <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />

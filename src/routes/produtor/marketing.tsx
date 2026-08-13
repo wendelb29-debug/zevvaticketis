@@ -48,7 +48,7 @@ function ProjectMarketingPanel() {
           <h1 className="text-3xl font-manrope font-black text-foreground tracking-tighter uppercase">🚀 Central de Marketing</h1>
           <p className="text-sm text-muted-foreground font-medium">Gerencie anúncios, push e campanhas deste projeto.</p>
         </div>
-        <Button className="bg-coral hover:bg-coral/90 text-white gap-2 font-black px-8 h-12 shadow-lg shadow-coral/20 rounded-xl uppercase tracking-widest text-xs">
+        <Button className="bg-primary hover:bg-primary/90 text-primary-foreground gap-2 font-black px-8 h-12 shadow-lg shadow-primary/20 rounded-xl uppercase tracking-widest text-xs">
           <Plus className="w-5 h-5" /> Nova Campanha
         </Button>
       </div>
@@ -76,13 +76,13 @@ function ProjectMarketingPanel() {
 
       <Tabs defaultValue="campanhas" className="w-full">
         <TabsList className="bg-card border border-line p-1 rounded-2xl h-14 shadow-sm mb-8 w-full justify-start overflow-x-auto">
-          <TabsTrigger value="campanhas" className="data-[state=active]:bg-primary data-[state=active]:text-white rounded-xl h-11 px-6 font-black uppercase tracking-widest text-[10px] gap-2 transition-all">
+          <TabsTrigger value="campanhas" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground rounded-xl h-11 px-6 font-black uppercase tracking-widest text-[10px] gap-2 transition-all">
             <Rocket className="w-4 h-4" /> Campanhas
           </TabsTrigger>
-          <TabsTrigger value="push" className="data-[state=active]:bg-primary data-[state=active]:text-white rounded-xl h-11 px-6 font-black uppercase tracking-widest text-[10px] gap-2 transition-all">
+          <TabsTrigger value="push" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground rounded-xl h-11 px-6 font-black uppercase tracking-widest text-[10px] gap-2 transition-all">
             <Smartphone className="w-4 h-4" /> Push Notifications
           </TabsTrigger>
-          <TabsTrigger value="audiencia" className="data-[state=active]:bg-primary data-[state=active]:text-white rounded-xl h-11 px-6 font-black uppercase tracking-widest text-[10px] gap-2 transition-all">
+          <TabsTrigger value="audiencia" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground rounded-xl h-11 px-6 font-black uppercase tracking-widest text-[10px] gap-2 transition-all">
             <Users className="w-4 h-4" /> Audiência
           </TabsTrigger>
         </TabsList>

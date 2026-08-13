@@ -272,7 +272,7 @@ export function WhatsAppIntegration() {
                 />
               </div>
             </div>
-            <Button onClick={handleSaveConnection} className="w-full bg-primary hover:bg-primary/90 text-white font-bold">
+            <Button onClick={handleSaveConnection} className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-bold">
               <Save className="w-4 h-4 mr-2" /> Salvar conexão
             </Button>
           </CardContent>
@@ -335,7 +335,7 @@ export function WhatsAppIntegration() {
               </div>
             </div>
 
-            <Button onClick={handleSaveWebhook} className="w-full bg-primary hover:bg-primary/90 text-white font-bold">
+            <Button onClick={handleSaveWebhook} className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-bold">
               <Save className="w-4 h-4 mr-2" /> Salvar webhook
             </Button>
           </CardContent>
@@ -437,7 +437,7 @@ export function WhatsAppIntegration() {
                 </div>
               </div>
             </div>
-            <Button className="mt-6 bg-navy text-white hover:bg-navy/90 font-bold">
+            <Button className="mt-6 bg-navy text-primary-foreground hover:bg-navy/90 font-bold">
               Salvar preferências de disparo
             </Button>
           </CardContent>
@@ -446,11 +446,11 @@ export function WhatsAppIntegration() {
 
       {/* Numbers and Templates */}
       <Tabs defaultValue="numbers" className="w-full">
-        <TabsList className="bg-white border border-border p-1 h-auto w-full justify-start rounded-xl shadow-sm mb-4">
-          <TabsTrigger value="numbers" className="data-[state=active]:bg-primary data-[state=active]:text-white rounded-lg py-2 px-4 text-xs font-bold">
+        <TabsList className="bg-background border border-border p-1 h-auto w-full justify-start rounded-xl shadow-sm mb-4">
+          <TabsTrigger value="numbers" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground rounded-lg py-2 px-4 text-xs font-bold">
             <Smartphone className="w-3.5 h-3.5 mr-2" /> Números Conectados
           </TabsTrigger>
-          <TabsTrigger value="atendimento" className="data-[state=active]:bg-primary data-[state=active]:text-white rounded-lg py-2 px-4 text-xs font-bold">
+          <TabsTrigger value="atendimento" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground rounded-lg py-2 px-4 text-xs font-bold">
             <MessageSquare className="w-3.5 h-3.5 mr-2" /> Atendimento Vinculados
           </TabsTrigger>
         </TabsList>
@@ -473,8 +473,8 @@ export function WhatsAppIntegration() {
                     <TableCell className="font-bold">{n.number}</TableCell>
                     <TableCell className="text-foreground/80">{n.name}</TableCell>
                     <TableCell>
-                      <Badge className="bg-green-500 text-white border-0 gap-1.5">
-                        <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" /> Online
+                      <Badge className="bg-green-500 text-primary-foreground border-0 gap-1.5">
+                        <span className="w-1.5 h-1.5 rounded-full bg-background animate-pulse" /> Online
                       </Badge>
                     </TableCell>
                     <TableCell className="text-muted-foreground-fg text-xs">{n.lastActivity}</TableCell>
@@ -527,7 +527,7 @@ export function WhatsAppIntegration() {
                       <CardTitle className="text-sm">Criar Novo Template</CardTitle>
                       <CardDescription className="text-xs">Crie templates para serem aprovados pela Meta.</CardDescription>
                     </div>
-                    <Button size="sm" className="bg-primary text-white font-bold h-8">
+                    <Button size="sm" className="bg-primary text-primary-foreground font-bold h-8">
                       <Plus className="w-3.5 h-3.5 mr-1" /> Novo Template
                     </Button>
                   </div>
@@ -611,7 +611,7 @@ export function WhatsAppIntegration() {
                       <CardTitle className="text-sm">Vincular Templates a Eventos</CardTitle>
                       <CardDescription className="text-xs">Gerencie quais templates estão ativos para cada evento específico.</CardDescription>
                     </div>
-                    <Button size="sm" className="bg-primary text-white font-bold h-8">
+                    <Button size="sm" className="bg-primary text-primary-foreground font-bold h-8">
                       <Link className="w-3.5 h-3.5 mr-1" /> Novo Vínculo
                     </Button>
                   </div>

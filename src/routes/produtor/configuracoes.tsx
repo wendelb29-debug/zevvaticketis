@@ -70,7 +70,7 @@ function OrgSettings() {
 
   if (loading) return (
     <div className="flex flex-col items-center justify-center py-20 min-h-[400px]">
-      <Loader2 className="w-8 h-8 animate-spin text-coral" />
+      <Loader2 className="w-8 h-8 animate-spin text-primary" />
       <p className="mt-4 text-[10px] font-black uppercase tracking-widest text-muted-foreground">Carregando configurações...</p>
     </div>
   );
@@ -85,7 +85,7 @@ function OrgSettings() {
         <Button 
           onClick={handleSave}
           disabled={saving}
-          className="bg-navy hover:bg-navy/90 text-white gap-2 font-black px-8 h-12 shadow-lg rounded-xl uppercase tracking-widest text-xs w-full sm:w-auto"
+          className="bg-navy hover:bg-navy/90 text-primary-foreground gap-2 font-black px-8 h-12 shadow-lg rounded-xl uppercase tracking-widest text-xs w-full sm:w-auto"
         >
           {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
           Salvar Alterações
@@ -97,7 +97,7 @@ function OrgSettings() {
           {/* Identidade do Projeto */}
           <section className="bg-card rounded-[32px] border border-line p-8 space-y-8 shadow-sm">
             <div className="flex items-center gap-3">
-              <div className="p-3 bg-coral/10 rounded-2xl text-coral">
+              <div className="p-3 bg-primary/10 rounded-2xl text-primary">
                 <Building2 className="w-6 h-6" />
               </div>
               <h2 className="text-xl font-manrope font-black text-foreground uppercase tracking-tight">Identidade Visual</h2>
@@ -159,7 +159,7 @@ function OrgSettings() {
                   Desconectado
                 </Badge>
               </div>
-              <Button className="w-full bg-navy text-white font-black h-12 rounded-xl uppercase tracking-widest text-[10px]">
+              <Button className="w-full bg-navy text-primary-foreground font-black h-12 rounded-xl uppercase tracking-widest text-[10px]">
                 Configurar Stripe Connect
               </Button>
             </div>
@@ -168,9 +168,9 @@ function OrgSettings() {
 
         <div className="space-y-8">
           {/* Status do Projeto */}
-          <section className="bg-navy rounded-[32px] p-8 text-white space-y-6">
+          <section className="bg-navy rounded-[32px] p-8 text-primary-foreground space-y-6">
             <div className="space-y-2">
-              <p className="text-[10px] font-black uppercase tracking-widest text-white/60">Status do Tenant</p>
+              <p className="text-[10px] font-black uppercase tracking-widest text-primary-foreground/60">Status do Tenant</p>
               <div className="flex items-center gap-2">
                 <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
                 <span className="text-xl font-manrope font-black uppercase tracking-tight">Ativo & Verificado</span>
@@ -178,11 +178,11 @@ function OrgSettings() {
             </div>
             <div className="pt-4 border-t border-white/10 space-y-4">
               <div className="flex justify-between items-center">
-                <span className="text-xs font-medium text-white/60">Plano Atual</span>
-                <Badge className="bg-coral text-white border-none font-black text-[9px] uppercase">Zevva Pro</Badge>
+                <span className="text-xs font-medium text-primary-foreground/60">Plano Atual</span>
+                <Badge className="bg-primary text-primary-foreground border-none font-black text-[9px] uppercase">Zevva Pro</Badge>
               </div>
               <div className="flex justify-between items-center">
-                <span className="text-xs font-medium text-white/60">Membros</span>
+                <span className="text-xs font-medium text-primary-foreground/60">Membros</span>
                 <span className="text-xs font-black">04 / 10</span>
               </div>
             </div>

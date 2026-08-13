@@ -69,7 +69,7 @@ function MyTickets() {
 
   if (loading) return (
     <div className="flex flex-col items-center justify-center py-20 gap-4">
-      <Loader2 className="w-8 h-8 animate-spin text-coral" />
+      <Loader2 className="w-8 h-8 animate-spin text-primary" />
       <p className="text-muted-foreground font-bold uppercase tracking-widest text-[10px]">Carregando seus ingressos...</p>
     </div>
   );
@@ -93,7 +93,7 @@ function MyTickets() {
           </div>
           <Button 
             asChild
-            className="bg-coral hover:bg-coral-dark text-white font-extrabold px-8 rounded-xl"
+            className="bg-primary hover:bg-primary-dark text-primary-foreground font-extrabold px-8 rounded-xl"
           >
             <Link to="/">Explorar Eventos</Link>
           </Button>
@@ -108,7 +108,7 @@ function MyTickets() {
                     {getStatusBadge(ticket.status)}
                  </div>
                  <div className="absolute inset-0 flex items-center justify-center opacity-20">
-                    <Ticket className="w-16 h-16 text-white" />
+                    <Ticket className="w-16 h-16 text-primary-foreground" />
                  </div>
               </div>
 
@@ -116,22 +116,22 @@ function MyTickets() {
               <div className="flex-1 p-6 flex flex-col justify-between gap-4">
                 <div className="space-y-2">
                   <span className="text-[10px] font-extrabold text-muted-foreground uppercase tracking-widest">{ticket.name}</span>
-                  <h3 className="text-xl font-extrabold text-foreground leading-tight group-hover:text-coral transition-colors">{ticket.events?.title}</h3>
+                  <h3 className="text-xl font-extrabold text-foreground leading-tight group-hover:text-primary transition-colors">{ticket.events?.title}</h3>
                   
                   <div className="space-y-1">
                     <div className="flex items-center gap-2 text-sm text-muted-foreground font-medium">
-                      <MapPin className="w-4 h-4 text-coral" />
+                      <MapPin className="w-4 h-4 text-primary" />
                       {ticket.events?.location || `${ticket.events?.city}`}
                     </div>
                     <div className="flex items-center gap-2 text-sm text-muted-foreground font-medium">
-                      <Calendar className="w-4 h-4 text-coral" />
+                      <Calendar className="w-4 h-4 text-primary" />
                       {ticket.events?.start_date ? new Date(ticket.events.start_date).toLocaleDateString('pt-BR') : 'Data a definir'}
                     </div>
                   </div>
                 </div>
 
                 <div className="flex flex-col gap-2 pt-4 border-t border-line/50">
-                  <Button asChild className="w-full bg-navy text-white rounded-xl font-bold h-11">
+                  <Button asChild className="w-full bg-navy text-primary-foreground rounded-xl font-bold h-11">
                     <a href={`/tickets/${ticket.id}`} className="flex items-center justify-center">
                         <ExternalLink className="w-4 h-4 mr-2" /> Ver Ingresso
                     </a>

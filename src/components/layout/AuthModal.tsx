@@ -221,7 +221,7 @@ export function AuthModal({ isOpen, onClose, defaultView = 'login' }: AuthModalP
                     onChange={(e) => setFormData({...formData, senha: e.target.value})} 
                     className="h-12 rounded-[14px] border-border focus:ring-primary"
                   />
-                  <Button disabled={loading} className="w-full h-14 rounded-[16px] bg-primary hover:bg-primary-hover font-extrabold text-white shadow-lg shadow-primary/20">
+                  <Button disabled={loading} className="w-full h-14 rounded-[16px] font-extrabold shadow-lg">
                     {loading ? "Entrando..." : "Entrar"}
                   </Button>
                   <div className="flex flex-col gap-2 pt-1">
@@ -242,7 +242,7 @@ export function AuthModal({ isOpen, onClose, defaultView = 'login' }: AuthModalP
                         if (error) toast.error(error.message);
                         else toast.success("E-mail de confirmação reenviado!");
                       }} 
-                      className="w-full text-center text-[10px] font-bold text-coral hover:text-coral-dark"
+                      className="w-full text-center text-[10px] font-bold text-primary hover:text-primary-dark"
                     >
                       Não chegou o e-mail? Clique aqui para reenviar
                     </button>
@@ -257,10 +257,10 @@ export function AuthModal({ isOpen, onClose, defaultView = 'login' }: AuthModalP
                   onClick={() => setRole('participante')}
                   className={cn(
                     "flex flex-col items-center p-6 rounded-[20px] border-2 transition-all space-y-4 text-center",
-                    role === 'participante' ? "border-coral bg-coral/5" : "border-border hover:border-border"
+                    role === 'participante' ? "border-coral bg-primary/5" : "border-border hover:border-border"
                   )}
                 >
-                  <div className={cn("w-12 h-12 rounded-xl flex items-center justify-center", role === 'participante' ? "bg-coral text-white" : "bg-muted text-slate-400")}>
+                  <div className={cn("w-12 h-12 rounded-xl flex items-center justify-center", role === 'participante' ? "bg-primary text-primary-foreground" : "bg-muted text-slate-400")}>
                     <Ticket className="w-6 h-6" />
                   </div>
                   <div>
@@ -272,10 +272,10 @@ export function AuthModal({ isOpen, onClose, defaultView = 'login' }: AuthModalP
                   onClick={() => setRole('produtor')}
                   className={cn(
                     "flex flex-col items-center p-6 rounded-[20px] border-2 transition-all space-y-4 text-center",
-                    role === 'produtor' ? "border-coral bg-coral/5" : "border-border hover:border-border"
+                    role === 'produtor' ? "border-coral bg-primary/5" : "border-border hover:border-border"
                   )}
                 >
-                  <div className={cn("w-12 h-12 rounded-xl flex items-center justify-center", role === 'produtor' ? "bg-navy text-white" : "bg-muted text-slate-400")}>
+                  <div className={cn("w-12 h-12 rounded-xl flex items-center justify-center", role === 'produtor' ? "bg-navy text-primary-foreground" : "bg-muted text-slate-400")}>
                     <Store className="w-6 h-6" />
                   </div>
                   <div>
@@ -286,7 +286,7 @@ export function AuthModal({ isOpen, onClose, defaultView = 'login' }: AuthModalP
               </div>
               <Button 
                 onClick={() => role ? setStep(2) : toast.error('Selecione seu perfil')}
-                className="w-full h-14 rounded-[16px] bg-navy text-white font-bold flex items-center justify-center gap-2 group"
+                className="w-full h-14 rounded-[16px] font-bold flex items-center justify-center gap-2 group"
               >
                 Próximo passo <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Button>
@@ -302,9 +302,9 @@ export function AuthModal({ isOpen, onClose, defaultView = 'login' }: AuthModalP
 
               {role === 'produtor' && (
                 <div className="space-y-4 pt-4 border-t border-line">
-                  <div className="bg-coral/5 p-3 rounded-xl flex gap-3">
-                    <ShieldCheck className="w-4 h-4 text-coral shrink-0 mt-0.5" />
-                    <p className="text-[10px] text-coral-dark font-medium">Sua organização passará por aprovação.</p>
+                  <div className="bg-primary/5 p-3 rounded-xl flex gap-3">
+                    <ShieldCheck className="w-4 h-4 text-primary shrink-0 mt-0.5" />
+                    <p className="text-[10px] text-primary-dark font-medium">Sua organização passará por aprovação.</p>
                   </div>
                   <Input placeholder="Nome da Organização" value={formData.orgNome} onChange={(e) => setFormData({...formData, orgNome: e.target.value})} className="h-11 rounded-[12px] border-line" required />
                   <div className="grid grid-cols-2 gap-3">
@@ -324,7 +324,7 @@ export function AuthModal({ isOpen, onClose, defaultView = 'login' }: AuthModalP
                 </label>
               </div>
 
-              <Button disabled={loading} className="w-full h-14 rounded-[16px] bg-coral hover:bg-coral-dark text-white font-extrabold uppercase tracking-widest shadow-lg shadow-coral/20">
+              <Button disabled={loading} className="w-full h-14 rounded-[16px] font-extrabold uppercase tracking-widest shadow-lg">
                 {loading ? "Processando..." : (role === 'produtor' ? "Solicitar Aprovação" : "Criar Conta")}
               </Button>
             </form>
@@ -343,7 +343,7 @@ export function AuthModal({ isOpen, onClose, defaultView = 'login' }: AuthModalP
                 setView(view === 'login' ? 'register' : 'login');
                 setStep(1);
               }}
-              className="text-coral hover:text-coral-dark underline decoration-2 underline-offset-4"
+              className="text-primary hover:text-primary-dark underline decoration-2 underline-offset-4"
             >
               {view === 'login' ? "Cadastre-se" : "Entrar"}
             </button>

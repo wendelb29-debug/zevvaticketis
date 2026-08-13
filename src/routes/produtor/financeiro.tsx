@@ -60,7 +60,7 @@ function FinanceiroPage() {
           <Button variant="outline" className="rounded-xl border-line">
             <Calendar className="mr-2 h-4 w-4" /> Últimos 30 dias
           </Button>
-          <Button className="bg-navy text-white hover:bg-navy/90 rounded-xl">
+          <Button className="bg-navy text-primary-foreground hover:bg-navy/90 rounded-xl">
             <Download className="mr-2 h-4 w-4" /> Exportar Relatório
           </Button>
         </div>
@@ -83,7 +83,7 @@ function FinanceiroPage() {
         <Card className="bg-card border-line overflow-hidden">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
             <CardTitle className="text-xs font-black uppercase tracking-widest text-muted-foreground">Comissão Zevva (10%)</CardTitle>
-            <TrendingUp className="h-4 w-4 text-coral" />
+            <TrendingUp className="h-4 w-4 text-primary" />
           </CardHeader>
           <CardContent>
             <div className="text-3xl font-black text-foreground">R$ {stats?.taxas.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}</div>
@@ -91,15 +91,15 @@ function FinanceiroPage() {
           </CardContent>
         </Card>
 
-        <Card className="bg-primary text-white border-none overflow-hidden relative">
+        <Card className="bg-primary text-primary-foreground border-none overflow-hidden relative">
           <div className="absolute top-0 right-0 w-32 h-32 bg-card/10 rounded-full -mr-16 -mt-16 blur-3xl"></div>
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-xs font-black uppercase tracking-widest text-white/60">Saldo a Receber</CardTitle>
-            <Wallet className="h-4 w-4 text-white/60" />
+            <CardTitle className="text-xs font-black uppercase tracking-widest text-primary-foreground/60">Saldo a Receber</CardTitle>
+            <Wallet className="h-4 w-4 text-primary-foreground/60" />
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-black text-white">R$ {stats?.liquido.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}</div>
-            <p className="text-[10px] text-white/60 font-bold mt-1">Previsão de repasse em 07 dias</p>
+            <div className="text-3xl font-black text-primary-foreground">R$ {stats?.liquido.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}</div>
+            <p className="text-[10px] text-primary-foreground/60 font-bold mt-1">Previsão de repasse em 07 dias</p>
           </CardContent>
         </Card>
       </div>
@@ -132,7 +132,7 @@ function FinanceiroPage() {
                     <td className="px-6 py-4 font-medium text-muted-foreground-fg">
                       R$ {Number(venda.valor_bruto || 0).toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
                     </td>
-                    <td className="px-6 py-4 font-medium text-coral">
+                    <td className="px-6 py-4 font-medium text-primary">
                       - R$ {Number(venda.taxa_plataforma || 0).toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
                     </td>
                     <td className="px-6 py-4 text-right font-black text-foreground">

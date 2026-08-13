@@ -76,24 +76,24 @@ function EventDetailsPage() {
         <div className="absolute bottom-8 left-0 right-0 container mx-auto px-4">
           <Button 
             variant="ghost" 
-            className="text-white mb-4 hover:bg-card/10"
+            className="text-primary-foreground mb-4 hover:bg-card/10"
             onClick={() => navigate({ to: "/" })}
           >
             <ArrowLeft className="mr-2 h-4 w-4" /> Voltar
           </Button>
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
             <div className="space-y-4">
-              <Badge className="bg-coral text-white border-none">{event.category}</Badge>
-              <h1 className="text-4xl md:text-5xl font-manrope font-extrabold text-white">
+              <Badge className="bg-primary text-primary-foreground border-none">{event.category}</Badge>
+              <h1 className="text-4xl md:text-5xl font-manrope font-extrabold text-primary-foreground">
                 {event.nome_evento}
               </h1>
-              <div className="flex flex-wrap gap-6 text-white/90">
+              <div className="flex flex-wrap gap-6 text-primary-foreground/90">
                 <div className="flex items-center gap-2">
-                  <Calendar className="h-5 w-5 text-coral" />
+                  <Calendar className="h-5 w-5 text-primary" />
                   <span>{new Date(event.start_date).toLocaleDateString("pt-BR", { dateStyle: 'long' })}</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <MapPin className="h-5 w-5 text-coral" />
+                  <MapPin className="h-5 w-5 text-primary" />
                   <span>{event.city}, {event.location}</span>
                 </div>
               </div>
@@ -165,7 +165,7 @@ function EventDetailsPage() {
                 </div>
                 
                 <Button 
-                  className="w-full py-6 text-lg font-bold bg-primary hover:bg-primary/90 text-white rounded-2xl"
+                  className="w-full py-6 text-lg font-bold bg-primary hover:bg-primary/90 text-primary-foreground rounded-2xl"
                   onClick={handlePurchase}
                 >
                   COMPRAR INGRESSO

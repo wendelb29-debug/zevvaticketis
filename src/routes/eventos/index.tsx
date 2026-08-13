@@ -110,7 +110,7 @@ function EventsListPage() {
             </div>
             <h2 className="text-2xl font-bold">Ops! Algo deu errado.</h2>
             <p className="text-muted-foreground">Não conseguimos carregar os eventos no momento.</p>
-            <Button onClick={() => refetch()} className="bg-primary text-white font-bold">
+            <Button onClick={() => refetch()} className="bg-primary text-primary-foreground font-bold">
               Tentar novamente
             </Button>
           </div>

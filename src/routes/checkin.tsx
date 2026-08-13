@@ -51,8 +51,8 @@ function CheckinErrorComponent() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-muted p-6">
       <div className="max-w-md w-full bg-card rounded-3xl p-8 shadow-xl border border-border text-center space-y-6">
-        <div className="w-20 h-20 bg-coral/10 rounded-full flex items-center justify-center mx-auto">
-          <Building2 className="w-10 h-10 text-coral" />
+        <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mx-auto">
+          <Building2 className="w-10 h-10 text-primary" />
         </div>
         <div className="space-y-2">
           <h2 className="text-2xl font-black text-foreground uppercase tracking-tight">Ops! Algo deu errado</h2>
@@ -62,7 +62,7 @@ function CheckinErrorComponent() {
         </div>
         <Button 
           onClick={() => navigate({ to: "/checkin" })}
-          className="w-full bg-navy hover:bg-navy/90 text-white font-black h-12 rounded-xl transition-all shadow-lg hover:shadow-coral/20"
+          className="w-full bg-navy hover:bg-navy/90 text-primary-foreground font-black h-12 rounded-xl transition-all shadow-lg hover:shadow-primary/20"
         >
           SELEÇÃO DE PROJETO
         </Button>
@@ -125,15 +125,15 @@ function CheckinLayout() {
   ];
 
   const SidebarContent = () => (
-    <div className="flex flex-col h-full bg-navy text-white py-8 font-inter">
+    <div className="flex flex-col h-full bg-navy text-primary-foreground py-8 font-inter">
       <div className={cn("px-6 mb-12 flex items-center gap-3", !isPlatformAdmin && "justify-center")}>
         {isPlatformAdmin && (
-          <Link to="/app" className="p-2.5 hover:bg-card/10 rounded-2xl transition-all text-white/60 hover:text-coral outline-none border border-white/10 bg-card/5 shadow-sm flex-shrink-0" title="Voltar para o Workspace">
+          <Link to="/app" className="p-2.5 hover:bg-card/10 rounded-2xl transition-all text-primary-foreground/60 hover:text-primary outline-none border border-white/10 bg-card/5 shadow-sm flex-shrink-0" title="Voltar para o Workspace">
             <Home className="w-5 h-5" />
           </Link>
         )}
-        <Link to="/" className={cn("text-xl font-manrope font-black text-white tracking-tighter", !isPlatformAdmin && "text-center")}>
-          ZEVVA <span className="text-coral">STAFF</span>
+        <Link to="/" className={cn("text-xl font-manrope font-black text-primary-foreground tracking-tighter", !isPlatformAdmin && "text-center")}>
+          ZEVVA <span className="text-primary">STAFF</span>
         </Link>
       </div>
       
@@ -141,19 +141,19 @@ function CheckinLayout() {
         <div className="mt-6 mx-6 flex items-center gap-3 p-3 bg-card/5 rounded-2xl border border-white/10">
           <Avatar className="w-10 h-10 rounded-xl border border-white/10">
             <AvatarImage src={activeTenant.logo || undefined} />
-            <AvatarFallback className="bg-card/10 text-white text-xs font-black">
+            <AvatarFallback className="bg-card/10 text-primary-foreground text-xs font-black">
               {activeTenant.nome.substring(0, 2).toUpperCase()}
             </AvatarFallback>
           </Avatar>
           <div className="flex-1 min-w-0 text-left">
-            <p className="text-xs font-black text-white truncate">{activeTenant.nome}</p>
-            <p className="text-[10px] text-coral font-bold truncate capitalize">{userRole?.toLowerCase() || 'Operador'}</p>
+            <p className="text-xs font-black text-primary-foreground truncate">{activeTenant.nome}</p>
+            <p className="text-[10px] text-primary font-bold truncate capitalize">{userRole?.toLowerCase() || 'Operador'}</p>
           </div>
           <Button 
             variant="ghost" 
             size="icon" 
             onClick={() => navigate({ to: "/checkin" })} 
-            className="h-8 w-8 text-white/40 hover:text-coral"
+            className="h-8 w-8 text-primary-foreground/40 hover:text-primary"
             title="Trocar Projeto"
           >
             <X className="w-4 h-4" />
@@ -168,8 +168,8 @@ function CheckinLayout() {
             to={item.href as any}
             {...(item.activeOptions ? { activeOptions: item.activeOptions } : {})}
             className="flex items-center gap-3 px-4 py-3.5 rounded-xl text-sm font-bold transition-all duration-200"
-            activeProps={{ className: "bg-card/10 text-coral shadow-sm border border-white/5" }}
-            inactiveProps={{ className: "text-white/60 hover:text-white hover:bg-card/5" }}
+            activeProps={{ className: "bg-card/10 text-primary shadow-sm border border-white/5" }}
+            inactiveProps={{ className: "text-primary-foreground/60 hover:text-primary-foreground hover:bg-card/5" }}
           >
             <item.icon className="w-5 h-5" />
             {item.label}
@@ -205,7 +205,7 @@ function CheckinLayout() {
       <div className="flex-1 flex flex-col min-h-screen">
         <header className="h-16 bg-card border-b border-border sticky top-0 z-40 px-6 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <ShieldCheck className="w-5 h-5 text-coral" />
+            <ShieldCheck className="w-5 h-5 text-primary" />
             <h1 className="text-sm font-black text-foreground uppercase tracking-widest">Controle de Acesso</h1>
           </div>
 

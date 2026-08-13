@@ -165,7 +165,7 @@ const Option = ({ Icon, title, selected, setSelected, open, notifs }: OptionProp
       )}
 
       {notifs && open && (
-        <span className="absolute right-3 flex h-5 w-5 items-center justify-center rounded-full bg-blue-500 dark:bg-blue-600 text-xs text-white font-medium">
+        <span className="absolute right-3 flex h-5 w-5 items-center justify-center rounded-full bg-blue-500 dark:bg-blue-600 text-xs text-primary-foreground font-medium">
           {notifs}
         </span>
       )}

@@ -162,10 +162,10 @@ function HomePage() {
 
           <div className="relative z-10 max-w-7xl mx-auto px-6 w-full">
             <div className="max-w-2xl space-y-8 animate-in fade-in slide-in-from-left-8 duration-700">
-              <h1 className="text-5xl md:text-7xl font-manrope font-extrabold text-white tracking-tight leading-[1.1]">
+              <h1 className="text-5xl md:text-7xl font-manrope font-extrabold text-primary-foreground tracking-tight leading-[1.1]">
                 Encontre experiências que valem a pena viver<span className="text-primary">.</span>
               </h1>
-              <p className="text-xl text-white/70 font-medium max-w-xl leading-relaxed">
+              <p className="text-xl text-primary-foreground/70 font-medium max-w-xl leading-relaxed">
                 Shows, festivais, encontros e eventos perto de você.
               </p>
               <div className="flex flex-wrap gap-4 pt-4">
@@ -181,14 +181,14 @@ function HomePage() {
                       } as any,
                     })
                   }
-                  className="h-14 px-10 bg-primary text-white font-bold rounded-md hover:bg-primary-hover transition-all shadow-xl shadow-primary/20 flex items-center gap-3"
+                  className="h-14 px-10 bg-primary text-primary-foreground font-bold rounded-md hover:bg-primary-hover transition-all shadow-xl shadow-primary/20 flex items-center gap-3"
                 >
                   Explorar eventos
                   <ArrowRight className="w-5 h-5" />
                 </button>
                 <button
                   onClick={() => navigate({ to: "/cadastro" })}
-                  className="h-14 px-10 bg-card/10 backdrop-blur-md border border-white/20 text-white font-bold rounded-md hover:bg-card/20 transition-all"
+                  className="h-14 px-10 bg-card/10 backdrop-blur-md border border-white/20 text-primary-foreground font-bold rounded-md hover:bg-card/20 transition-all"
                 >
                   Criar meu evento
                 </button>
@@ -249,7 +249,7 @@ function HomePage() {
                     } as any,
                   })
                 }
-                className="w-full md:w-auto h-14 px-10 bg-primary text-white font-bold rounded-xl hover:bg-primary-hover transition-all shadow-lg shadow-primary/10"
+                className="w-full md:w-auto h-14 px-10 bg-primary text-primary-foreground font-bold rounded-xl hover:bg-primary-hover transition-all shadow-lg shadow-primary/10"
               >
                 Buscar agora
               </button>
@@ -422,7 +422,7 @@ function HomePage() {
                     <span className="text-xs font-bold text-foreground/60">
                       {course.hours} • {course.mode}
                     </span>
-                    <button className="w-10 h-10 rounded-full bg-surface border border-border flex items-center justify-center group-hover:bg-primary group-hover:text-white group-hover:border-primary transition-all">
+                    <button className="w-10 h-10 rounded-full bg-surface border border-border flex items-center justify-center group-hover:bg-primary group-hover:text-primary-foreground group-hover:border-primary transition-all">
                       <ArrowRight className="w-4 h-4" />
                     </button>
                   </div>
@@ -503,7 +503,7 @@ function HomePage() {
                     </div>
                     <div className="flex items-center justify-between pt-4 border-t border-border">
                       <span className="text-2xl font-black text-primary">{caravan.price}</span>
-                      <button className="h-12 px-8 bg-primary text-white text-sm font-bold hover:bg-primary-hover transition-all rounded-md shadow-lg shadow-primary/10">
+                      <button className="h-12 px-8 bg-primary text-primary-foreground text-sm font-bold hover:bg-primary-hover transition-all rounded-md shadow-lg shadow-primary/10">
                         Saber mais
                       </button>
                     </div>
@@ -564,13 +564,13 @@ function HomePage() {
         <section className="px-6 py-24 bg-dark-surface">
           <div className="max-w-7xl mx-auto">
             <div className="relative p-12 md:p-20 bg-primary rounded-2xl overflow-hidden shadow-2xl">
-              <Zap className="absolute -top-10 -right-10 w-80 h-80 text-white/5 rotate-12" />
+              <Zap className="absolute -top-10 -right-10 w-80 h-80 text-primary-foreground/5 rotate-12" />
               <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                 <div className="space-y-6">
-                  <h2 className="text-4xl md:text-6xl font-manrope font-extrabold text-white leading-tight">
+                  <h2 className="text-4xl md:text-6xl font-manrope font-extrabold text-primary-foreground leading-tight">
                     Quer organizar seu evento na Zevva?
                   </h2>
-                  <p className="text-white/80 text-xl font-medium">
+                  <p className="text-primary-foreground/80 text-xl font-medium">
                     Temos as melhores ferramentas de gestão, vendas e check-in para o seu negócio.
                   </p>
                 </div>
@@ -581,7 +581,7 @@ function HomePage() {
                   >
                     Começar agora
                   </button>
-                  <button className="h-16 px-12 bg-transparent border-2 border-white/30 text-white text-sm font-bold uppercase tracking-widest hover:bg-card/10 transition-all rounded-md">
+                  <button className="h-16 px-12 bg-transparent border-2 border-white/30 text-primary-foreground text-sm font-bold uppercase tracking-widest hover:bg-card/10 transition-all rounded-md">
                     Falar com especialista
                   </button>
                 </div>

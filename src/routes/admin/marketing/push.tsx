@@ -143,19 +143,19 @@ function PushNotificationsPage() {
 
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
         <TabsList className="bg-card border border-line p-1 rounded-2xl h-14 shadow-sm mb-8 w-full justify-start overflow-x-auto">
-          <TabsTrigger value="historico" className="data-[state=active]:bg-primary data-[state=active]:text-white rounded-xl h-11 px-6 font-black uppercase tracking-widest text-[10px] gap-2 transition-all">
+          <TabsTrigger value="historico" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground rounded-xl h-11 px-6 font-black uppercase tracking-widest text-[10px] gap-2 transition-all">
             <History className="w-4 h-4" /> Histórico
           </TabsTrigger>
-          <TabsTrigger value="agendados" className="data-[state=active]:bg-primary data-[state=active]:text-white rounded-xl h-11 px-6 font-black uppercase tracking-widest text-[10px] gap-2 transition-all">
+          <TabsTrigger value="agendados" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground rounded-xl h-11 px-6 font-black uppercase tracking-widest text-[10px] gap-2 transition-all">
             <CalendarDays className="w-4 h-4" /> Agendados
           </TabsTrigger>
-          <TabsTrigger value="novo" className="data-[state=active]:bg-primary data-[state=active]:text-white rounded-xl h-11 px-6 font-black uppercase tracking-widest text-[10px] gap-2 transition-all">
+          <TabsTrigger value="novo" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground rounded-xl h-11 px-6 font-black uppercase tracking-widest text-[10px] gap-2 transition-all">
             <Plus className="w-4 h-4" /> Criar Campanha
           </TabsTrigger>
-          <TabsTrigger value="automacoes" className="data-[state=active]:bg-primary data-[state=active]:text-white rounded-xl h-11 px-6 font-black uppercase tracking-widest text-[10px] gap-2 transition-all">
+          <TabsTrigger value="automacoes" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground rounded-xl h-11 px-6 font-black uppercase tracking-widest text-[10px] gap-2 transition-all">
             <Zap className="w-4 h-4" /> Automações
           </TabsTrigger>
-          <TabsTrigger value="metricas" className="data-[state=active]:bg-primary data-[state=active]:text-white rounded-xl h-11 px-6 font-black uppercase tracking-widest text-[10px] gap-2 transition-all">
+          <TabsTrigger value="metricas" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground rounded-xl h-11 px-6 font-black uppercase tracking-widest text-[10px] gap-2 transition-all">
             <TrendingUp className="w-4 h-4" /> Métricas
           </TabsTrigger>
         </TabsList>
@@ -226,7 +226,7 @@ function PushNotificationsPage() {
                       className="w-full bg-primary/20 group-hover:bg-primary/50 transition-all rounded-t-sm" 
                       style={{ height: `${h * 2}px` }}
                     />
-                    <div className="absolute -top-8 left-1/2 -translate-x-1/2 bg-navy text-white text-[9px] font-bold py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-10">
+                    <div className="absolute -top-8 left-1/2 -translate-x-1/2 bg-navy text-primary-foreground text-[9px] font-bold py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-10">
                       {h * 10} envios
                     </div>
                   </div>
@@ -476,7 +476,7 @@ function PushNotificationsPage() {
                     }
                     setIsConfirming(true);
                   }}
-                  className="flex-1 bg-primary text-white font-black uppercase tracking-widest text-xs h-14 rounded-2xl shadow-xl shadow-primary/30"
+                  className="flex-1 bg-primary text-primary-foreground font-black uppercase tracking-widest text-xs h-14 rounded-2xl shadow-xl shadow-primary/30"
                 >
                   {isScheduling ? <Calendar className="w-5 h-5 mr-2" /> : <Zap className="w-5 h-5 mr-2" />}
                   {isScheduling ? "Agendar Disparo" : "Enviar Agora"}
@@ -486,7 +486,7 @@ function PushNotificationsPage() {
                   onClick={() => setIsScheduling(!isScheduling)}
                   className={cn(
                     "flex-1 border-line font-black uppercase tracking-widest text-xs h-14 rounded-2xl transition-all",
-                    isScheduling ? "bg-navy text-white hover:bg-navy/90" : "bg-card text-foreground hover:bg-surface"
+                    isScheduling ? "bg-navy text-primary-foreground hover:bg-navy/90" : "bg-card text-foreground hover:bg-surface"
                   )}
                 >
                   <CalendarClock className="w-5 h-5 mr-2" /> {isScheduling ? "Cancelar Agendamento" : "Programar Envio"}
@@ -502,19 +502,19 @@ function PushNotificationsPage() {
                   
                   <div className="mt-12 bg-card/10 backdrop-blur-xl rounded-2xl p-4 border border-white/20 animate-in fade-in slide-in-from-top-4 duration-700">
                     <div className="flex gap-3">
-                      <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center text-white shrink-0 shadow-lg shadow-primary/20">
+                      <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center text-primary-foreground shrink-0 shadow-lg shadow-primary/20">
                         <Smartphone className="w-5 h-5" />
                       </div>
                       <div className="min-w-0 flex-1">
-                        <p className="text-[11px] font-black text-white/60 uppercase tracking-widest">Zevva App • Agora</p>
-                        <p className="text-sm font-black text-white mt-1 truncate">{pushContent.title || "Seu ingresso foi confirmado 🎉"}</p>
-                        <p className="text-[11px] font-medium text-white/80 mt-1 line-clamp-2">{pushContent.body || "Olá João, sua entrada para o evento está disponível."}</p>
+                        <p className="text-[11px] font-black text-primary-foreground/60 uppercase tracking-widest">Zevva App • Agora</p>
+                        <p className="text-sm font-black text-primary-foreground mt-1 truncate">{pushContent.title || "Seu ingresso foi confirmado 🎉"}</p>
+                        <p className="text-[11px] font-medium text-primary-foreground/80 mt-1 line-clamp-2">{pushContent.body || "Olá João, sua entrada para o evento está disponível."}</p>
                       </div>
                     </div>
                     {pushContent.buttonText && (
                       <div className="mt-4 pt-4 border-t border-white/10">
                         <div className="w-full py-2 bg-card/20 hover:bg-card/30 rounded-lg text-center transition-colors">
-                          <span className="text-[10px] font-black text-white uppercase tracking-widest">{pushContent.buttonText}</span>
+                          <span className="text-[10px] font-black text-primary-foreground uppercase tracking-widest">{pushContent.buttonText}</span>
                         </div>
                       </div>
                     )}
@@ -523,7 +523,7 @@ function PushNotificationsPage() {
                   
                   <div className="mt-60 space-y-3">
                     <div className="h-0.5 w-1/3 mx-auto bg-card/20 rounded-full" />
-                    <p className="text-center text-[10px] font-medium text-white/40">Zevva Mobile Interface Mockup</p>
+                    <p className="text-center text-[10px] font-medium text-primary-foreground/40">Zevva Mobile Interface Mockup</p>
                   </div>
                 </div>
               </div>
@@ -708,7 +708,7 @@ function PushNotificationsPage() {
                 </Button>
                 <Button 
                   onClick={handleSaveAutomation}
-                  className="flex-1 h-12 rounded-xl font-black uppercase tracking-widest text-xs bg-primary text-white shadow-lg shadow-primary/20"
+                  className="flex-1 h-12 rounded-xl font-black uppercase tracking-widest text-xs bg-primary text-primary-foreground shadow-lg shadow-primary/20"
                 >
                   <Save className="w-4 h-4 mr-2" /> Salvar Automação
                 </Button>
@@ -777,7 +777,7 @@ function PushNotificationsPage() {
                       setIsConfirming(false);
                       setActiveTab(isScheduling ? "agendados" : "historico");
                     }}
-                    className="flex-1 h-12 rounded-2xl font-black uppercase tracking-widest text-xs bg-primary text-white shadow-lg shadow-primary/20"
+                    className="flex-1 h-12 rounded-2xl font-black uppercase tracking-widest text-xs bg-primary text-primary-foreground shadow-lg shadow-primary/20"
                   >
                     Confirmar
                   </Button>

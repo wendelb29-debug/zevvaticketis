@@ -62,7 +62,7 @@ function ProducerEventsPage() {
   if (isLoading) {
     return (
       <div className="min-h-[400px] flex flex-col items-center justify-center gap-4">
-        <Loader2 className="w-8 h-8 animate-spin text-coral" />
+        <Loader2 className="w-8 h-8 animate-spin text-primary" />
         <p className="text-muted-foreground font-bold uppercase tracking-widest text-[10px]">Carregando eventos...</p>
       </div>
     );
@@ -77,7 +77,7 @@ function ProducerEventsPage() {
         </div>
         <Button 
           onClick={() => navigate({ to: "/produtor/novo-evento" })}
-          className="bg-coral hover:bg-coral/90 text-white gap-2 font-black px-8 h-12 shadow-lg shadow-coral/20 rounded-xl uppercase tracking-widest text-xs w-full sm:w-auto"
+          className="bg-primary hover:bg-primary/90 text-primary-foreground gap-2 font-black px-8 h-12 shadow-lg shadow-primary/20 rounded-xl uppercase tracking-widest text-xs w-full sm:w-auto"
         >
           <Plus className="w-5 h-5" /> Novo Evento
         </Button>
@@ -108,7 +108,7 @@ function ProducerEventsPage() {
               <div className="absolute top-4 left-4 flex gap-2">
                 <Badge className={cn(
                   "text-[9px] font-black uppercase tracking-widest px-3 py-1 rounded-full",
-                  event.status === 'publicado' ? "bg-emerald-500 text-white" : "bg-amber-500 text-white"
+                  event.status === 'publicado' ? "bg-emerald-500 text-primary-foreground" : "bg-amber-500 text-primary-foreground"
                 )}>
                   {event.status === 'publicado' ? 'Ativo' : 'Rascunho'}
                 </Badge>
@@ -127,7 +127,7 @@ function ProducerEventsPage() {
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end" className="w-48 rounded-xl p-2 border-line shadow-xl font-inter">
                     <DropdownMenuItem className="flex items-center gap-2 px-2 py-2 rounded-lg text-xs font-bold text-foreground cursor-pointer">
-                      <Edit className="w-4 h-4 text-coral" /> Editar Evento
+                      <Edit className="w-4 h-4 text-primary" /> Editar Evento
                     </DropdownMenuItem>
                     <DropdownMenuItem 
                       onClick={() => navigate({ to: `/eventos/${event.id}` as any })}
@@ -147,11 +147,11 @@ function ProducerEventsPage() {
               <div className="space-y-1">
                 <h3 className="text-xl font-manrope font-black text-foreground leading-tight line-clamp-1">{event.title}</h3>
                 <div className="flex items-center gap-2 text-muted-foreground text-xs font-bold">
-                  <Calendar className="w-3.5 h-3.5 text-coral" />
+                  <Calendar className="w-3.5 h-3.5 text-primary" />
                   {event.start_date ? new Date(event.start_date).toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric' }) : 'Data não definida'}
                 </div>
                 <div className="flex items-center gap-2 text-muted-foreground text-xs font-bold">
-                  <MapPin className="w-3.5 h-3.5 text-coral" />
+                  <MapPin className="w-3.5 h-3.5 text-primary" />
                   {event.city ? `${event.city}${event.location ? `, ${event.location}` : ''}` : 'Local não definido'}
                 </div>
               </div>
@@ -176,7 +176,7 @@ function ProducerEventsPage() {
 
               <Button 
                 onClick={() => navigate({ to: `/produtor/${event.id}/dashboard` as any })}
-                className="w-full bg-navy hover:bg-navy/90 text-white font-black text-[10px] uppercase tracking-widest h-12 rounded-2xl shadow-lg shadow-navy/10"
+                className="w-full bg-navy hover:bg-navy/90 text-primary-foreground font-black text-[10px] uppercase tracking-widest h-12 rounded-2xl shadow-lg shadow-navy/10"
               >
                 Painel de Controle
               </Button>
@@ -195,7 +195,7 @@ function ProducerEventsPage() {
             </div>
             <Button 
               onClick={() => navigate({ to: "/produtor/novo-evento" })}
-              className="bg-coral hover:bg-coral/90 text-white gap-2 font-black px-8 h-12 shadow-lg shadow-coral/20 rounded-xl uppercase tracking-widest text-xs"
+              className="bg-primary hover:bg-primary/90 text-primary-foreground gap-2 font-black px-8 h-12 shadow-lg shadow-primary/20 rounded-xl uppercase tracking-widest text-xs"
             >
               <Plus className="w-5 h-5" /> Criar Primeiro Evento
             </Button>

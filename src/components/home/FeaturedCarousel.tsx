@@ -91,15 +91,15 @@ export function FeaturedCarousel({ events }: FeaturedCarouselProps) {
                 transition={{ delay: 0.3, duration: 0.5 }}
                 className="space-y-6"
               >
-                <div className="inline-flex items-center gap-2 px-3 py-1 bg-primary text-white text-[10px] font-bold uppercase tracking-wider rounded-md shadow-lg shadow-primary/20">
+                <div className="inline-flex items-center gap-2 px-3 py-1 bg-primary text-primary-foreground text-[10px] font-bold uppercase tracking-wider rounded-md shadow-lg shadow-primary/20">
                   Evento em destaque
                 </div>
 
-                <h2 className="text-4xl md:text-6xl font-manrope font-extrabold text-white leading-tight tracking-tight">
+                <h2 className="text-4xl md:text-6xl font-manrope font-extrabold text-primary-foreground leading-tight tracking-tight">
                   {currentEvent?.title}
                 </h2>
 
-                <div className="flex flex-wrap gap-6 text-white/80">
+                <div className="flex flex-wrap gap-6 text-primary-foreground/80">
                   <div className="flex items-center gap-2 text-sm font-medium">
                     <MapPin className="w-4 h-4 text-primary" />
                     {currentEvent?.city || "Destino internacional"}
@@ -129,10 +129,10 @@ export function FeaturedCarousel({ events }: FeaturedCarouselProps) {
                     Garantir minha vaga
                   </button>
                   <div className="flex flex-col">
-                    <span className="text-[10px] font-bold text-white/50 uppercase tracking-widest">
+                    <span className="text-[10px] font-bold text-primary-foreground/50 uppercase tracking-widest">
                       A partir de
                     </span>
-                    <span className="text-2xl font-black text-white">
+                    <span className="text-2xl font-black text-primary-foreground">
                       R$ {currentEvent?.min_price || 0}
                     </span>
                   </div>
@@ -151,7 +151,7 @@ export function FeaturedCarousel({ events }: FeaturedCarouselProps) {
               handleManualInteraction();
               prevSlide();
             }}
-            className="w-12 h-12 rounded-full border border-white/20 bg-card/5 backdrop-blur-md flex items-center justify-center text-white hover:bg-card/20 transition-all"
+            className="w-12 h-12 rounded-full border border-white/20 bg-card/5 backdrop-blur-md flex items-center justify-center text-primary-foreground hover:bg-card/20 transition-all"
           >
             <ChevronLeft className="w-6 h-6" />
           </button>
@@ -160,7 +160,7 @@ export function FeaturedCarousel({ events }: FeaturedCarouselProps) {
               handleManualInteraction();
               nextSlide();
             }}
-            className="w-12 h-12 rounded-full border border-white/20 bg-card/5 backdrop-blur-md flex items-center justify-center text-white hover:bg-card/20 transition-all"
+            className="w-12 h-12 rounded-full border border-white/20 bg-card/5 backdrop-blur-md flex items-center justify-center text-primary-foreground hover:bg-card/20 transition-all"
           >
             <ChevronRight className="w-6 h-6" />
           </button>

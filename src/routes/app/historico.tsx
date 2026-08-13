@@ -61,7 +61,7 @@ function OrderHistory() {
 
   if (loading) return (
     <div className="flex flex-col items-center justify-center py-20">
-      <Loader2 className="w-8 h-8 animate-spin text-coral" />
+      <Loader2 className="w-8 h-8 animate-spin text-primary" />
     </div>
   );
 
@@ -90,7 +90,7 @@ function OrderHistory() {
               <p className="font-bold text-foreground text-xl">Nenhum pedido encontrado</p>
               <p className="text-muted-foreground font-medium">Seus ingressos passados aparecerão aqui.</p>
             </div>
-            <Button asChild className="mt-4 bg-coral hover:bg-coral-dark text-white font-extrabold px-8 rounded-xl h-12">
+            <Button asChild className="mt-4 bg-primary hover:bg-primary-dark text-primary-foreground font-extrabold px-8 rounded-xl h-12">
               <Link to="/">Explorar Eventos</Link>
             </Button>
           </div>
@@ -123,15 +123,15 @@ function OrderHistory() {
                   </div>
                   
                   <div className="flex flex-wrap gap-4 text-xs font-bold text-muted-foreground">
-                    <span className="flex items-center gap-1"><Calendar className="w-3.5 h-3.5 text-coral" /> {new Date(order.events?.start_date).toLocaleDateString()}</span>
-                    <span className="flex items-center gap-1"><MapPin className="w-3.5 h-3.5 text-coral" /> {order.events?.city}</span>
+                    <span className="flex items-center gap-1"><Calendar className="w-3.5 h-3.5 text-primary" /> {new Date(order.events?.start_date).toLocaleDateString()}</span>
+                    <span className="flex items-center gap-1"><MapPin className="w-3.5 h-3.5 text-primary" /> {order.events?.city}</span>
                   </div>
                 </div>
 
                 <div className="w-full sm:w-48 bg-accent/30 p-6 flex flex-col items-center justify-center border-l border-line gap-3">
                   <div className="bg-card p-2 rounded-xl shadow-sm border border-line">
                     {/* Placeholder para QR Code real */}
-                    <div className="w-24 h-24 bg-navy flex items-center justify-center text-white text-[8px] text-center p-2 font-mono">
+                    <div className="w-24 h-24 bg-navy flex items-center justify-center text-primary-foreground text-[8px] text-center p-2 font-mono">
                       {order.qr_code}
                     </div>
                   </div>

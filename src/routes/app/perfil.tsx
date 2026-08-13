@@ -266,7 +266,7 @@ function UserProfile() {
 
   if (loading) return (
     <div className="flex flex-col items-center justify-center py-20">
-      <Loader2 className="w-8 h-8 animate-spin text-coral" />
+      <Loader2 className="w-8 h-8 animate-spin text-primary" />
       <p className="mt-4 text-xs font-bold text-muted-foreground uppercase tracking-widest">Carregando perfil...</p>
     </div>
   );
@@ -290,7 +290,7 @@ function UserProfile() {
         {/* Personal Info */}
         <div className="bg-card rounded-[32px] border border-line p-8 space-y-8 shadow-sm">
           <div className="flex items-center gap-3">
-            <div className="p-3 bg-coral/10 rounded-2xl text-coral">
+            <div className="p-3 bg-primary/10 rounded-2xl text-primary">
               <User className="w-6 h-6" />
             </div>
             <h2 className="text-xl font-manrope font-extrabold text-foreground">Dados Pessoais</h2>
@@ -308,7 +308,7 @@ function UserProfile() {
               <button 
                 onClick={() => fileInputRef.current?.click()}
                 disabled={uploading}
-                className="absolute bottom-1 right-1 w-10 h-10 bg-coral text-white rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-transform disabled:opacity-50"
+                className="absolute bottom-1 right-1 w-10 h-10 bg-primary text-primary-foreground rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-transform disabled:opacity-50"
               >
                 {uploading ? <Loader2 className="w-5 h-5 animate-spin" /> : <Camera className="w-5 h-5" />}
               </button>
@@ -357,7 +357,7 @@ function UserProfile() {
         {/* Notifications Preference */}
         <div className="bg-card rounded-[32px] border border-line p-8 space-y-8 shadow-sm">
           <div className="flex items-center gap-3">
-            <div className="p-3 bg-coral/10 rounded-2xl text-coral">
+            <div className="p-3 bg-primary/10 rounded-2xl text-primary">
               <Bell className="w-6 h-6" />
             </div>
             <h2 className="text-xl font-manrope font-extrabold text-foreground">Notificações</h2>
@@ -495,7 +495,7 @@ function UserProfile() {
           <Button 
             onClick={handleSave}
             disabled={saving}
-            className="bg-coral hover:bg-coral-dark text-white font-extrabold px-12 rounded-xl h-14 shadow-xl shadow-coral/20 transition-all active:scale-95"
+            className="bg-primary hover:bg-primary-dark text-primary-foreground font-extrabold px-12 rounded-xl h-14 shadow-xl shadow-primary/20 transition-all active:scale-95"
           >
             {saving ? <Loader2 className="w-5 h-5 animate-spin" /> : "Salvar Alterações"}
           </Button>
@@ -509,7 +509,7 @@ function NotificationItem({ icon: Icon, title, description }: { icon: any, title
   return (
     <div className="flex items-center justify-between p-4 bg-surface/50 rounded-2xl border border-line/5 hover:border-coral/20 transition-all group">
       <div className="flex items-center gap-4">
-        <div className="p-2.5 bg-navy/5 rounded-xl text-foreground/40 group-hover:text-coral group-hover:bg-coral/10 transition-colors">
+        <div className="p-2.5 bg-navy/5 rounded-xl text-foreground/40 group-hover:text-primary group-hover:bg-primary/10 transition-colors">
           <Icon className="w-5 h-5" />
         </div>
         <div className="space-y-0.5">
@@ -521,10 +521,10 @@ function NotificationItem({ icon: Icon, title, description }: { icon: any, title
         </div>
       </div>
       <div className="flex items-center gap-2">
-        <button className="p-2 bg-navy/5 rounded-lg text-foreground/40 hover:text-coral hover:bg-coral-dark transition-all" title="No app">
+        <button className="p-2 bg-navy/5 rounded-lg text-foreground/40 hover:text-primary hover:bg-primary-dark transition-all" title="No app">
           <Bell className="w-3.5 h-3.5" />
         </button>
-        <button className="p-2 bg-navy/5 rounded-lg text-foreground/40 hover:text-coral hover:bg-coral-dark transition-all" title="E-mail">
+        <button className="p-2 bg-navy/5 rounded-lg text-foreground/40 hover:text-primary hover:bg-primary-dark transition-all" title="E-mail">
           <Mail className="w-3.5 h-3.5" />
         </button>
       </div>

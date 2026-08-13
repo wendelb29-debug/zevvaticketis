@@ -34,7 +34,7 @@ export function EventCard({ event, onToggleFavorite }: EventCardProps) {
             e.preventDefault();
             onToggleFavorite?.(event.id);
           }}
-          className="absolute top-3 right-3 w-9 h-9 rounded-full bg-card/90 backdrop-blur-md border border-border flex items-center justify-center text-foreground hover:bg-primary hover:text-white transition-all z-10"
+          className="absolute top-3 right-3 w-9 h-9 rounded-full bg-card/90 backdrop-blur-md border border-border flex items-center justify-center text-foreground hover:bg-primary hover:text-primary-foreground transition-all z-10"
         >
           <Heart className="w-4 h-4" />
         </button>
@@ -70,7 +70,7 @@ export function EventCard({ event, onToggleFavorite }: EventCardProps) {
             to="/eventos/$id" 
             params={{ id: event.id }}
             search={{ busca: undefined, categoria: undefined, cidade: undefined, data: undefined } as any}
-            className="h-10 px-5 bg-background border border-border flex items-center justify-center rounded-md text-xs font-bold text-foreground hover:bg-primary hover:text-white hover:border-primary transition-all"
+            className="h-10 px-5 bg-background border border-border flex items-center justify-center rounded-md text-xs font-bold text-foreground hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all"
           >
             Ver Detalhes
           </Link>

@@ -72,8 +72,8 @@ function LoginPage() {
   return (
     <div className="min-h-screen bg-surface flex items-center justify-center p-6 font-inter text-foreground">
       <div className="max-w-md w-full space-y-8 bg-card p-10 rounded-[32px] shadow-xl border border-border text-center">
-        <div className="w-16 h-16 bg-coral/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
-          <Lock className="w-8 h-8 text-coral" />
+        <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
+          <Lock className="w-8 h-8 text-primary" />
         </div>
         
         <div className="space-y-2">
@@ -85,7 +85,7 @@ function LoginPage() {
 
         <div className="pt-6 space-y-4">
           <Button 
-            className="w-full h-14 rounded-xl bg-coral hover:bg-coral-dark text-white font-bold text-lg shadow-lg shadow-coral/20"
+            className="w-full h-14 rounded-xl font-bold text-lg shadow-lg"
             onClick={() => openOverlay('auth', 'login')}
           >
             Entrar agora

@@ -584,7 +584,7 @@ function SettingsPage({ session }: { session: any }) {
               </AccordionTrigger>
               <AccordionContent className="px-6 pb-6 pt-2">
                 <div className="flex justify-end mb-4">
-                  <Button onClick={openNewDept} size="sm" className="bg-primary text-white gap-2 font-bold">
+                  <Button onClick={openNewDept} size="sm" className="bg-primary text-primary-foreground gap-2 font-bold">
                     <Plus className="w-4 h-4" /> Criar departamento
                   </Button>
                 </div>
@@ -640,7 +640,7 @@ function SettingsPage({ session }: { session: any }) {
               </AccordionTrigger>
               <AccordionContent className="px-6 pb-6 pt-2">
                 <div className="flex justify-end mb-4">
-                  <Button onClick={() => setIsTagModalOpen(true)} size="sm" className="bg-primary text-white gap-2 font-bold">
+                  <Button onClick={() => setIsTagModalOpen(true)} size="sm" className="bg-primary text-primary-foreground gap-2 font-bold">
                     <Plus className="w-4 h-4" /> Nova Tag
                   </Button>
                 </div>
@@ -900,7 +900,7 @@ function SettingsPage({ session }: { session: any }) {
           </div>
           <DialogFooter className="p-6 bg-accent/10 border-t border-border gap-2">
             <Button variant="outline" onClick={() => { setIsDeptModalOpen(false); resetDeptForm(); }} className="border-border font-bold">Cancelar</Button>
-            <Button disabled={!deptName.trim()} onClick={saveDept} className="bg-primary text-white font-bold">Salvar</Button>
+            <Button disabled={!deptName.trim()} onClick={saveDept} className="bg-primary text-primary-foreground font-bold">Salvar</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
@@ -942,7 +942,7 @@ function SettingsPage({ session }: { session: any }) {
           </div>
           <DialogFooter className="p-6 bg-accent/10 border-t border-border gap-2">
             <Button variant="outline" onClick={() => setIsTagModalOpen(false)} className="border-border font-bold">Cancelar</Button>
-            <Button onClick={() => { setIsTagModalOpen(false); toast.success("Tag salva!"); }} className="bg-primary text-white font-bold">Salvar</Button>
+            <Button onClick={() => { setIsTagModalOpen(false); toast.success("Tag salva!"); }} className="bg-primary text-primary-foreground font-bold">Salvar</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
@@ -985,7 +985,7 @@ function SettingsPage({ session }: { session: any }) {
 
           <DialogFooter className="p-6 bg-accent/10 border-t border-border gap-2">
             <Button variant="outline" onClick={() => setIsTemplateModalOpen(false)} className="border-border font-bold">Cancelar</Button>
-            <Button onClick={() => { setIsTemplateModalOpen(false); toast.success("Template salvo!"); }} className="bg-primary text-white font-bold">Salvar Template</Button>
+            <Button onClick={() => { setIsTemplateModalOpen(false); toast.success("Template salvo!"); }} className="bg-primary text-primary-foreground font-bold">Salvar Template</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
@@ -1043,7 +1043,7 @@ function SettingsPage({ session }: { session: any }) {
                 };
                 setNotificacoesHistory(prev => [newLog, ...prev]);
               }} 
-              className="bg-primary text-white font-bold gap-2"
+              className="bg-primary text-primary-foreground font-bold gap-2"
             >
               <Smartphone className="w-4 h-4" /> Enviar Agora
             </Button>
