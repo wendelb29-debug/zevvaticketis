@@ -74,7 +74,7 @@ export function AccountMenu({ user, onLogout, onNavigate, onOpenAuth }: AccountM
         </DropdownMenuItem>
 
         <DropdownMenuItem 
-          onClick={() => onNavigate('/meu-perfil')}
+          onClick={() => onNavigate('/app/perfil')}
           className="flex items-center gap-3 px-3 py-2.5 text-[10px] font-bold uppercase tracking-widest cursor-pointer rounded-sm hover:bg-background text-foreground-muted hover:text-primary transition-colors focus:bg-background focus:text-primary"
         >
           <User className="w-4 h-4" />
