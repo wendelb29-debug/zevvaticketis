@@ -84,7 +84,7 @@ export function Navbar({ selectedCity }: { selectedCity?: string | null }) {
             <Link
               to="/eventos/categoria/$slug"
               params={{ slug: "caravanas" }}
-              search={{ busca: undefined }}
+              search={{ busca: undefined, categoria: undefined, cidade: undefined, data: undefined } as any}
               className="text-sm font-bold text-foreground-muted hover:text-primary transition-colors"
             >
               Caravanas

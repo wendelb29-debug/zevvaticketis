@@ -143,7 +143,7 @@ function ExplorarEventosPage() {
                     <Link
                       to={group.id === "CURSOS" ? "/cursos" : "/eventos/categoria/$slug"}
                       params={group.id === "CURSOS" ? ({} as any) : { slug: group.slug }}
-                      search={group.id === "CURSOS" ? ({} as any) : { busca: undefined }}
+                      search={group.id === "CURSOS" ? ({} as any) : ({ busca: undefined, categoria: undefined, cidade: undefined, data: undefined } as any)}
 
 
                       className="text-sm font-bold text-primary hover:text-primary-hover transition-colors"
