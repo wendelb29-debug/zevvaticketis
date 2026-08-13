@@ -219,3 +219,57 @@ export const closeAttendance = createServerFn({ method: "POST" })
 
     return attendance;
   });
+
+export const getDepartments = createServerFn({ method: "GET" })
+  .middleware([requireSupabaseAuth])
+  .validator((data: unknown) => z.object({
+    tenantId: z.string().uuid()
+  }).parse(data))
+  .handler(async ({ data }) => {
+    const { data: departments, error } = await supabase
+      .from('whatsapp_departments')
+      .select('*')
+      .eq('tenant_id', data.tenantId)
+      .eq('status', 'active')
+      .order('name');
+
+    if (error) throw error;
+    return departments;
+  });
+
+export const getDepartmentAgents = createServerFn({ method: "GET" })
+  .middleware([requireSupabaseAuth])
+  .validator((data: unknown) => z.object({
+    departmentId: z.string().uuid()
+  }).parse(data))
+  .handler(async ({ data }) => {
+    const { data: members, error } = await supabase
+      .from('whatsapp_department_members')
+      .select('user_id, profiles(full_name, avatar_url, status)')
+      .eq('department_id', data.departmentId);
+
+    if (error) throw error;
+    return members;
+  });
+
+export const transferAttendanceAction = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .validator((data: unknown) => z.object({
+    attendanceId: z.string().uuid(),
+    newDepartmentId: z.string().uuid(),
+    newAgentId: z.string().uuid().optional().nullable(),
+    reason: z.string().min(1),
+    clientMessage: z.string().optional().nullable()
+  }).parse(data))
+  .handler(async ({ data }) => {
+    const { data: result, error } = await supabase.rpc('transfer_attendance', {
+      p_attendance_id: data.attendanceId,
+      p_new_department_id: data.newDepartmentId,
+      p_new_agent_id: data.newAgentId,
+      p_reason: data.reason,
+      p_client_message: data.clientMessage
+    });
+
+    if (error) throw error;
+    return result;
+  });
