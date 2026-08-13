@@ -90,10 +90,10 @@ export function SidebarHistory({ isOpen, onClose, contactId }: SidebarHistoryPro
                               <p className="text-[9px] font-black text-muted-foreground uppercase tracking-widest mb-1.5">Atendente</p>
                               <div className="flex items-center gap-2 bg-card p-2 rounded-xl border border-border w-fit min-w-[160px]">
                                 <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold text-xs uppercase">
-                                  {attendance.profiles?.full_name?.substring(0, 2) || "U"}
+                                  {attendance.agent_id?.substring(0, 2) || "U"}
                                 </div>
                                 <div>
-                                  <p className="text-xs font-bold text-foreground truncate">{attendance.profiles?.full_name || 'Agente Zevva'}</p>
+                                  <p className="text-xs font-bold text-foreground truncate">Agente Zevva</p>
                                   <p className="text-[10px] text-muted-foreground">ID: {attendance.agent_id?.slice(0, 8)}</p>
                                 </div>
                               </div>
