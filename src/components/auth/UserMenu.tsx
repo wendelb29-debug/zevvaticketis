@@ -12,7 +12,8 @@ import {
   LogOut,
   Bell,
   Sliders,
-  Ticket
+  Ticket,
+  Check
 } from "lucide-react";
 import { 
   DropdownMenu, 

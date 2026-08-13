@@ -189,7 +189,7 @@ export function WhatsAppIntegration() {
       </div>
 
       {/* Main Connection Status */}
-      <Card className="border-border shadow-sm overflow-hidden">
+      <Card className="border-border bg-card shadow-sm overflow-hidden">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
           <div className="flex items-center gap-3">
             <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
@@ -222,7 +222,7 @@ export function WhatsAppIntegration() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Cloud API Config */}
-        <Card className="border-border shadow-sm">
+        <Card className="border-border bg-card shadow-sm">
           <CardHeader>
             <CardTitle className="text-md flex items-center gap-2">
               <Layout className="w-4 h-4 text-primary" /> WhatsApp Cloud API (Meta)
@@ -279,7 +279,7 @@ export function WhatsAppIntegration() {
         </Card>
 
         {/* Webhook Config */}
-        <Card className="border-border shadow-sm">
+        <Card className="border-border bg-card shadow-sm">
           <CardHeader>
             <CardTitle className="text-md flex items-center gap-2">
               <Settings2 className="w-4 h-4 text-primary" /> Configuração Webhook
@@ -344,7 +344,7 @@ export function WhatsAppIntegration() {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Diagnostics Card */}
-        <Card className="border-border shadow-sm">
+        <Card className="border-border bg-card shadow-sm">
           <CardHeader>
             <CardTitle className="text-md flex items-center gap-2">
               <Activity className="w-4 h-4 text-primary" /> Diagnóstico da API
