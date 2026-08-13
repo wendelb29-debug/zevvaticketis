@@ -1,10 +1,12 @@
+import { Users, Music, Trees, Plane, BookOpen, Baby } from "lucide-react";
+
 export const CATEGORIES = [
   {
     id: "CONFERENCIAS",
     slug: "conferencias",
     name: "Conferências",
     description: "Grandes encontros e congressos",
-    icon: "Users",
+    icon: Users,
     order: 1,
   },
   {
@@ -12,7 +14,7 @@ export const CATEGORIES = [
     slug: "shows-gospel",
     name: "Shows Gospel",
     description: "Eventos musicais e adoração",
-    icon: "Music",
+    icon: Music,
     order: 2,
   },
   {
@@ -20,7 +22,7 @@ export const CATEGORIES = [
     slug: "retiros",
     name: "Retiros",
     description: "Momentos de pausa e reflexão",
-    icon: "Trees",
+    icon: Trees,
     order: 3,
   },
   {
@@ -28,7 +30,7 @@ export const CATEGORIES = [
     slug: "caravanas",
     name: "Caravanas",
     description: "Viagens e experiências internacionais",
-    icon: "Plane",
+    icon: Plane,
     order: 4,
   },
   {
@@ -36,7 +38,7 @@ export const CATEGORIES = [
     slug: "cursos",
     name: "Cursos e Workshops",
     description: "Aprenda e desenvolva novas habilidades",
-    icon: "BookOpen",
+    icon: BookOpen,
     order: 5,
   },
   {
@@ -44,7 +46,7 @@ export const CATEGORIES = [
     slug: "infantil",
     name: "Infantil",
     description: "Diversão garantida para as crianças",
-    icon: "Baby",
+    icon: Baby,
     order: 6,
   },
 ] as const;
@@ -80,3 +82,4 @@ export function normalizeCategory(value: string | null | undefined): CategoryId 
 
   return mapping[normalized] || null;
 }
+
