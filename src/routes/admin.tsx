@@ -292,7 +292,7 @@ function AdminLayout() {
                       <Link
                         key={child.label}
                         to={child.href as any}
-                        search={child.query as any}
+                        search={(child as any).query}
                         className="block py-2 rounded-lg text-xs font-bold transition-all duration-200 outline-none focus:ring-2 focus:ring-primary focus:text-primary active:scale-[0.98]"
                         activeProps={{ className: "text-primary ring-2 ring-primary/20" }}
                         inactiveProps={{ className: "text-muted-foreground hover:text-foreground hover:bg-accent/30" }}
@@ -317,7 +317,7 @@ function AdminLayout() {
               className={cn(
                 "flex items-center gap-3 py-3.5 rounded-xl text-sm font-extrabold transition-all duration-300 border-2 outline-none focus:ring-2 focus:ring-primary focus:border-primary active:scale-[0.98]",
                 isSidebarCollapsed ? "px-0 justify-center" : (isChat ? "px-4 justify-center" : "px-4"),
-                isChat && "bg-primary text-primary-foreground border-transparent shadow-lg shadow-primary/30"
+                isChat && "bg-[#D94B52] text-white border-transparent shadow-lg shadow-[#D94B52]/30"
               )}
               {...(!isChat ? {
                 activeProps: { className: "border-border bg-transparent text-foreground shadow-none" },
