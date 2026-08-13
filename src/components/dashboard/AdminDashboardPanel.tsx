@@ -168,7 +168,7 @@ export function AdminDashboardPanel() {
         
         <div className="flex items-center gap-3">
           <Select value={period} onValueChange={setPeriod}>
-            <SelectTrigger className="w-[180px] bg-white border-border">
+            <SelectTrigger className="w-[180px] bg-card border-border">
               <Calendar className="w-4 h-4 mr-2" />
               <SelectValue placeholder="Período" />
             </SelectTrigger>
@@ -191,7 +191,7 @@ export function AdminDashboardPanel() {
 
       {/* Main Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <Card className="border-border bg-white shadow-sm hover:shadow-md transition-shadow">
+        <Card className="border-border bg-card shadow-sm hover:shadow-md transition-shadow">
           <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
             <CardTitle className="text-sm font-bold text-muted-foreground-fg">TOTAL DE EVENTOS</CardTitle>
             <Calendar className="w-4 h-4 text-primary" />
@@ -211,7 +211,7 @@ export function AdminDashboardPanel() {
           </CardContent>
         </Card>
 
-        <Card className="border-border bg-white shadow-sm hover:shadow-md transition-shadow">
+        <Card className="border-border bg-card shadow-sm hover:shadow-md transition-shadow">
           <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
             <CardTitle className="text-sm font-bold text-muted-foreground-fg">TOTAL DE USUÁRIOS</CardTitle>
             <Users className="w-4 h-4 text-primary" />
@@ -231,7 +231,7 @@ export function AdminDashboardPanel() {
           </CardContent>
         </Card>
 
-        <Card className="border-border bg-white shadow-sm hover:shadow-md transition-shadow">
+        <Card className="border-border bg-card shadow-sm hover:shadow-md transition-shadow">
           <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
             <CardTitle className="text-sm font-bold text-muted-foreground-fg">VENDAS TOTAIS</CardTitle>
             <Ticket className="w-4 h-4 text-primary" />
@@ -245,7 +245,7 @@ export function AdminDashboardPanel() {
           </CardContent>
         </Card>
 
-        <Card className="border-border bg-white shadow-sm hover:shadow-md transition-shadow">
+        <Card className="border-border bg-card shadow-sm hover:shadow-md transition-shadow">
           <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
             <CardTitle className="text-sm font-bold text-muted-foreground-fg">RECEITA ZEVVA</CardTitle>
             <TrendingUp className="w-4 h-4 text-emerald-500" />
@@ -269,20 +269,20 @@ export function AdminDashboardPanel() {
       </div>
 
       {/* Payout Card */}
-      <Card className="bg-navy text-white border-none shadow-xl">
+      <Card className="bg-sidebar text-foreground border border-border shadow-xl">
         <CardContent className="p-6 flex flex-col md:flex-row items-center justify-between gap-6">
           <div>
-            <p className="text-foreground-lighter/60 text-xs font-bold uppercase tracking-widest">Valor total repassado a produtores</p>
+            <p className="text-muted-foreground text-xs font-bold uppercase tracking-widest">Valor total repassado a produtores</p>
             <h2 className="text-4xl font-manrope font-black mt-1">
               R$ {stats.producerPayout.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
             </h2>
           </div>
-          <div className="bg-white/10 p-4 rounded-2xl flex items-center gap-4 border border-white/5">
+          <div className="bg-primary/10 p-4 rounded-2xl flex items-center gap-4 border border-primary/20">
             <div className="text-right">
-              <p className="text-[10px] text-white/50 uppercase font-bold">Taxa de Conversão Média</p>
-              <p className="text-2xl font-black text-coral">{stats.conversionRate}%</p>
+              <p className="text-[10px] text-muted-foreground uppercase font-bold">Taxa de Conversão Média</p>
+              <p className="text-2xl font-black text-primary">{stats.conversionRate}%</p>
             </div>
-            <div className="w-10 h-10 rounded-full bg-coral/20 flex items-center justify-center text-coral">
+            <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center text-primary">
               <Percent className="w-5 h-5" />
             </div>
           </div>
@@ -291,7 +291,7 @@ export function AdminDashboardPanel() {
 
       {/* Charts Row 1 */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <Card className="border-border bg-white shadow-sm">
+        <Card className="border-border bg-card shadow-sm">
           <CardHeader>
             <CardTitle className="text-lg font-manrope font-bold">Vendas por Período</CardTitle>
           </CardHeader>
@@ -326,7 +326,7 @@ export function AdminDashboardPanel() {
           </CardContent>
         </Card>
 
-        <Card className="border-border bg-white shadow-sm">
+        <Card className="border-border bg-card shadow-sm">
           <CardHeader>
             <CardTitle className="text-lg font-manrope font-bold">Receita da Plataforma</CardTitle>
           </CardHeader>
@@ -358,7 +358,7 @@ export function AdminDashboardPanel() {
 
       {/* Rankings Row */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <Card className="border-border bg-white shadow-sm">
+        <Card className="border-border bg-card shadow-sm">
           <CardHeader className="flex flex-row items-center justify-between">
             <CardTitle className="text-lg font-manrope font-bold">Eventos Mais Vendidos</CardTitle>
             <Button variant="ghost" size="sm" className="text-primary text-xs font-bold">Ver Ranking Completo</Button>
@@ -392,7 +392,7 @@ export function AdminDashboardPanel() {
           </CardContent>
         </Card>
 
-        <Card className="border-border bg-white shadow-sm">
+        <Card className="border-border bg-card shadow-sm">
           <CardHeader>
             <CardTitle className="text-lg font-manrope font-bold">Categorias Mais Rentáveis</CardTitle>
           </CardHeader>
