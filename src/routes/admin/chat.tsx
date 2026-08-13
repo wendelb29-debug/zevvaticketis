@@ -879,7 +879,7 @@ function AdminChatPage() {
                           : "text-muted-foreground hover:text-foreground hover:bg-muted hover:scale-105"
                     )}
                   >
-                    <tool.icon className={cn("w-[18px] h-[18px]", !activeTool === tool.id && tool.color)} />
+                    <tool.icon className={cn("w-[18px] h-[18px]", activeTool !== tool.id && tool.color)} />
                   </button>
                 </div>
               </TooltipTrigger>
