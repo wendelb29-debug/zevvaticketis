@@ -17,143 +17,27 @@
 }
 
 @theme {
-  --font-manrope: "Manrope", sans-serif;
   --font-inter: "Inter", sans-serif;
-  --font-serif: "Instrument Serif", serif;
-
-  --color-coral: #E8604A;
-  --color-coral-dark: #C94733;
-  --color-navy: #14182A;
-  --color-gold: #B8925A;
-  --color-surface: #F7F7F7;
-  --color-line: rgba(0,0,0,0.09);
-  --color-muted: #717171;
-  --color-good: #10B981;
-  --color-error: #EF4444;
+  --font-manrope: "Manrope", sans-serif;
 
   /* Zevva Premium Tokens */
-  --color-background: var(--background);
-  --color-surface-base: var(--surface-base);
-  --color-surface-elevated: var(--surface-elevated);
-  --color-foreground: var(--foreground);
-  --color-foreground-muted: var(--foreground-muted);
-  --color-primary: var(--primary);
-  --color-primary-hover: var(--primary-hover);
-  --color-accent: var(--accent);
-  --color-border: var(--border);
-  --color-border-strong: var(--border-strong);
-  --color-success: var(--success);
-  --color-warning: var(--warning);
-  --color-danger: var(--danger);
-  --color-focus: var(--focus);
-  --color-overlay: var(--overlay);
-
-  /* Legacy Semantic Mappings (for compatibility during transition) */
-  --color-card: var(--surface-base);
-  --color-card-foreground: var(--foreground);
-  --color-popover: var(--surface-elevated);
-  --color-popover-foreground: var(--foreground);
-  --color-primary-foreground: #FFFFFF;
-  --color-secondary: var(--surface-elevated);
-  --color-secondary-foreground: var(--foreground);
-  --color-muted-bg: var(--surface-elevated);
-  --color-muted-fg: var(--foreground-muted);
-  --color-accent-foreground: var(--foreground);
-  --color-input: var(--border);
-  --color-ring: var(--primary);
+  --color-background: #F6F7F8;
+  --color-surface: #FFFFFF;
+  --color-foreground: #17191C;
+  --color-foreground-muted: #62666D;
+  --color-primary: #D94B52;
+  --color-primary-hover: #BE3941;
+  --color-accent: #D94B52;
+  --color-border: #E3E5E8;
+  --color-success: #23865E;
+  --color-warning: #B7791F;
+  --color-danger: #C53D45;
+  --color-dark-surface: #202228;
 
   /* Radius Tokens */
-  --radius-xs: 4px;
-  --radius-sm: 8px;
-  --radius-md: 10px;
-  --radius-lg: 12px;
-  --radius-full: 9999px;
-}
-
-:root {
-  --background: #F7F6F2;
-  --surface-base: #FEFDFB;
-  --surface-elevated: #FFFFFF;
-  --foreground: #171717;
-  --foreground-muted: #686762;
-  --primary: #7A2538;
-  --primary-hover: #641E2E;
-  --accent: #A98554;
-  --border: #E5E1DA;
-  --border-strong: #D1CDC5;
-  --success: #287A55;
-  --warning: #D97706;
-  --danger: #B63C43;
-  --focus: #7A2538;
-  --overlay: rgba(23, 23, 23, 0.4);
-
-  /* WhatsApp Light Fallback */
-  --wa-bg: #efeae2;
-  --wa-sidebar: #ffffff;
-  --wa-agent-bubble: #dcf8c6;
-  --wa-client-bubble: #ffffff;
-  --wa-input-bg: #ffffff;
-  --wa-header-bg: #f0f2f5;
-}
-
-.dark {
-  --background: #121210;
-  --surface-base: #1C1C1A;
-  --surface-elevated: #242422;
-  --foreground: #F7F6F2;
-  --foreground-muted: #A1A19A;
-  --primary: #9B3E52;
-  --primary-hover: #B45268;
-  --accent: #C2A378;
-  --border: #2D2D2A;
-  --border-strong: #3D3D3A;
-  --success: #34A876;
-  --warning: #F59E0B;
-  --danger: #D9535D;
-  --focus: #9B3E52;
-  --overlay: rgba(0, 0, 0, 0.7);
-
-  /* WhatsApp Premium Dark */
-  --wa-bg: #0b141a;
-  --wa-sidebar: #111b21;
-  --wa-agent-bubble: #005c4b;
-  --wa-client-bubble: #202c33;
-  --wa-input-bg: #2a3942;
-  --wa-header-bg: #202c33;
-}
-
-.dark {
-  --background: #121210;
-  --surface-base: #1C1C1A;
-  --surface-elevated: #242422;
-  --foreground: #F7F6F2;
-  --foreground-muted: #A1A19A;
-  --primary: #9B3E52;
-  --primary-hover: #B45268;
-  --accent: #C2A378;
-  --border: #2D2D2A;
-  --border-strong: #3D3D3A;
-  --success: #34A876;
-  --warning: #F59E0B;
-  --danger: #D9535D;
-  --focus: #9B3E52;
-  --overlay: rgba(0, 0, 0, 0.7);
-
-  /* WhatsApp Premium Dark */
-  --wa-bg: #0b141a;
-  --wa-sidebar: #111b21;
-  --wa-agent-bubble: #005c4b;
-  --wa-client-bubble: #202c33;
-  --wa-input-bg: #2a3942;
-  --wa-header-bg: #202c33;
-}
-
-@utility animate-pulse-subtle {
-  animation: pulse-subtle 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-}
-
-@utility ease-spring {
-  transition-timing-function: var(--ease-spring);
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
 }
 
 @layer base {
@@ -165,7 +49,7 @@
   }
   
   h1, h2, h3, h4, h5, h6 {
-    @apply font-serif leading-tight;
+    @apply font-manrope font-bold text-foreground;
   }
 }
 
@@ -174,44 +58,5 @@
 }
 
 .hover-lift:hover {
-  @apply -translate-y-1 shadow-lg;
+  @apply -translate-y-1;
 }
-
-.glass-panel {
-  @apply bg-card/10 backdrop-blur-md border border-border;
-}
-
-.dark-panel {
-  @apply bg-card/95 border border-border;
-}
-
-@keyframes infinite-scroll {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
-}
-
-.animate-infinite-scroll {
-  animation: infinite-scroll 40s linear infinite;
-}
-
-#lovable-badge,
-a[href*="lovable.dev"],
-a[href*="gptengineer"],
-iframe[src*="lovable.dev"],
-div[style*="Edit with Lovable"],
-[id*="lovable-badge"],
-[class*="lovable-badge"] {
-  display: none !important;
-  opacity: 0 !important;
-  visibility: hidden !important;
-  pointer-events: none !important;
-  position: absolute !important;
-  z-index: -9999 !important;
-}
-
-.hero-premium-bg {
-  background-image: linear-gradient(rgba(5, 7, 15, 0.6), rgba(5, 7, 15, 0.6)), url('https://images.unsplash.com/photo-1517457373958-b7bdd4587205?q=80&w=2069&auto=format&fit=crop');
-  background-size: cover;
-  background-position: center;
-}
-
