@@ -224,23 +224,21 @@ function HomePage() {
           
           {loadingFeatured ? (
             <div className="max-w-7xl mx-auto px-6">
-              <Skeleton className="h-[500px] w-full rounded-[40px]" />
+              <Skeleton className="h-[400px] w-full rounded-2xl" />
             </div>
           ) : (
-            <CoverflowCarousel 
-              events={featuredEvents.map(e => ({
-                id: e.id,
-                nome: e.nome_evento || e.nome,
-                cidade: e.cidade || e.location_city,
-                categoria: e.categoria,
-                imagem_url: e.imagem_capa || e.imagem_url,
-                data_inicio: e.data_inicio || e.start_date,
-                slug: e.slug,
-                min_price: e.price_from || (e.ticket_types?.[0]?.valor),
-                producer_name: e.tenants?.nome
-              }))} 
-            />
-
+            <div className="max-w-7xl mx-auto px-6">
+              <FeaturedCarousel 
+                events={featuredEvents.map(e => ({
+                  id: e.id,
+                  title: e.nome_evento || e.nome,
+                  city: e.cidade || e.location_city,
+                  cover_image: e.imagem_capa || e.imagem_url,
+                  start_date: e.data_inicio || e.start_date,
+                  min_price: e.price_from || (e.ticket_types?.[0]?.valor)
+                }))} 
+              />
+            </div>
           )}
         </section>
 
