@@ -70,6 +70,7 @@ import { Route as AdminCheckinIndexRouteImport } from './routes/admin/checkin/in
 import { Route as AdminCheckinScannerRouteImport } from './routes/admin/checkin/scanner'
 import { Route as AdminContatosIndexRouteImport } from './routes/admin/contatos/index'
 import { Route as AdminEmailManagementIndexRouteImport } from './routes/admin/email-management/index'
+import { Route as AdminGruposIndexRouteImport } from './routes/admin/grupos/index'
 import { Route as AdminMarketingIndexRouteImport } from './routes/admin/marketing/index'
 import { Route as AdminMarketingAnunciosRouteImport } from './routes/admin/marketing/anuncios'
 import { Route as AdminMarketingPublicidadeRouteImport } from './routes/admin/marketing/publicidade'
@@ -401,6 +402,11 @@ const AdminEmailManagementIndexRoute =
     path: '/email-management/',
     getParentRoute: () => AdminRoute,
   } as any)
+const AdminGruposIndexRoute = AdminGruposIndexRouteImport.update({
+  id: '/grupos/',
+  path: '/grupos/',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminMarketingIndexRoute = AdminMarketingIndexRouteImport.update({
   id: '/marketing/',
   path: '/marketing/',
@@ -588,6 +594,7 @@ export interface FileRoutesByFullPath {
   '/admin/checkin/': typeof AdminCheckinIndexRoute
   '/admin/contatos/': typeof AdminContatosIndexRoute
   '/admin/email-management/': typeof AdminEmailManagementIndexRoute
+  '/admin/grupos/': typeof AdminGruposIndexRoute
   '/admin/marketing/': typeof AdminMarketingIndexRoute
   '/checkin/$projectId/': typeof CheckinProjectIdIndexRoute
   '/checkin/$projectId/event/$id': typeof CheckinProjectIdEventIdRouteWithChildren
@@ -667,6 +674,7 @@ export interface FileRoutesByTo {
   '/admin/checkin': typeof AdminCheckinIndexRoute
   '/admin/contatos': typeof AdminContatosIndexRoute
   '/admin/email-management': typeof AdminEmailManagementIndexRoute
+  '/admin/grupos': typeof AdminGruposIndexRoute
   '/admin/marketing': typeof AdminMarketingIndexRoute
   '/checkin/$projectId': typeof CheckinProjectIdIndexRoute
   '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
@@ -751,6 +759,7 @@ export interface FileRoutesById {
   '/admin/checkin/': typeof AdminCheckinIndexRoute
   '/admin/contatos/': typeof AdminContatosIndexRoute
   '/admin/email-management/': typeof AdminEmailManagementIndexRoute
+  '/admin/grupos/': typeof AdminGruposIndexRoute
   '/admin/marketing/': typeof AdminMarketingIndexRoute
   '/checkin/$projectId/': typeof CheckinProjectIdIndexRoute
   '/checkin/$projectId/event/$id': typeof CheckinProjectIdEventIdRouteWithChildren
@@ -837,6 +846,7 @@ export interface FileRouteTypes {
     | '/admin/checkin/'
     | '/admin/contatos/'
     | '/admin/email-management/'
+    | '/admin/grupos/'
     | '/admin/marketing/'
     | '/checkin/$projectId/'
     | '/checkin/$projectId/event/$id'
@@ -916,6 +926,7 @@ export interface FileRouteTypes {
     | '/admin/checkin'
     | '/admin/contatos'
     | '/admin/email-management'
+    | '/admin/grupos'
     | '/admin/marketing'
     | '/checkin/$projectId'
     | '/lovable/email/auth/preview'
@@ -999,6 +1010,7 @@ export interface FileRouteTypes {
     | '/admin/checkin/'
     | '/admin/contatos/'
     | '/admin/email-management/'
+    | '/admin/grupos/'
     | '/admin/marketing/'
     | '/checkin/$projectId/'
     | '/checkin/$projectId/event/$id'
@@ -1471,6 +1483,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminEmailManagementIndexRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/grupos/': {
+      id: '/admin/grupos/'
+      path: '/grupos'
+      fullPath: '/admin/grupos/'
+      preLoaderRoute: typeof AdminGruposIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/marketing/': {
       id: '/admin/marketing/'
       path: '/marketing'
@@ -1643,6 +1662,7 @@ interface AdminRouteChildren {
   AdminCheckinIndexRoute: typeof AdminCheckinIndexRoute
   AdminContatosIndexRoute: typeof AdminContatosIndexRoute
   AdminEmailManagementIndexRoute: typeof AdminEmailManagementIndexRoute
+  AdminGruposIndexRoute: typeof AdminGruposIndexRoute
   AdminMarketingIndexRoute: typeof AdminMarketingIndexRoute
 }
 
@@ -1668,6 +1688,7 @@ const AdminRouteChildren: AdminRouteChildren = {
   AdminCheckinIndexRoute: AdminCheckinIndexRoute,
   AdminContatosIndexRoute: AdminContatosIndexRoute,
   AdminEmailManagementIndexRoute: AdminEmailManagementIndexRoute,
+  AdminGruposIndexRoute: AdminGruposIndexRoute,
   AdminMarketingIndexRoute: AdminMarketingIndexRoute,
 }
 
