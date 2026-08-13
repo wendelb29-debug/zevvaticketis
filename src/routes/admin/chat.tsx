@@ -1,5 +1,6 @@
 import { createFileRoute, Link, useNavigate } from '@tanstack/react-router';
 import { useState, useEffect, useRef, useMemo } from 'react';
+import { motion, AnimatePresence } from "framer-motion";
 import { supabase } from "@/integrations/supabase/client";
 import { UserMenu } from "@/components/auth/UserMenu";
 import { useUI } from '@/hooks/use-ui';
