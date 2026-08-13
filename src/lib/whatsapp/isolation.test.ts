@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
-import { supabase } from '../integrations/supabase/client';
+import { supabase } from '../../integrations/supabase/client';
 
 // Mocking Supabase and server context for unit isolation tests
 // Note: This is a conceptual test file as requested by the user for "automating multi-tenant isolation"
