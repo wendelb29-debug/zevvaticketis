@@ -40,12 +40,33 @@ interface UIStore extends UIPreferences {
   updateResolvedTheme: () => void;
 }
 
+export const DEFAULT_LOCALE: SupportedLocale = 'pt-BR';
+
+export function normalizeLocale(value: string | null | undefined): SupportedLocale {
+  if (!value) return DEFAULT_LOCALE;
+  
+  const normalized = value.trim().toLowerCase();
+  
+  const aliases: Record<string, SupportedLocale> = {
+    'pt': 'pt-BR',
+    'pt-br': 'pt-BR',
+    'português': 'pt-BR',
+    'portugues': 'pt-BR',
+    'en': 'en-US',
+    'en-us': 'en-US',
+    'english': 'en-US',
+    'es': 'es-ES',
+    'es-es': 'es-ES',
+    'español': 'es-ES',
+    'espanol': 'es-ES',
+  };
+
+  return aliases[normalized] ?? (['pt-BR', 'en-US', 'es-ES'].includes(value) ? value as SupportedLocale : DEFAULT_LOCALE);
+}
+
 const getBrowserLocale = (): SupportedLocale => {
-  if (typeof window === 'undefined') return 'pt-BR';
-  const lang = navigator.language;
-  if (lang.startsWith('en')) return 'en-US';
-  if (lang.startsWith('es')) return 'es-ES';
-  return 'pt-BR';
+  if (typeof window === 'undefined') return DEFAULT_LOCALE;
+  return normalizeLocale(navigator.language);
 };
 
 const getDeviceId = () => {
@@ -62,7 +83,7 @@ export const useUI = create<UIStore>()(
   persist(
     (set, get) => ({
       // State
-      language: 'pt-BR',
+      language: DEFAULT_LOCALE,
       theme: 'system',
       resolvedTheme: 'light',
       fontSize: 100,
@@ -84,7 +105,8 @@ export const useUI = create<UIStore>()(
 
       // Preference Actions
       setLanguage: async (lang) => {
-        set({ language: lang, isSaving: true });
+        const normalizedLang = normalizeLocale(lang);
+        set({ language: normalizedLang, isSaving: true });
         const { userId, deviceId } = get();
         if (userId) {
           await supabase.from('user_device_preferences').upsert({
@@ -164,7 +186,7 @@ export const useUI = create<UIStore>()(
 
         if (devicePrefs) {
           set({
-            language: devicePrefs.language as SupportedLocale,
+            language: normalizeLocale(devicePrefs.language),
             theme: devicePrefs.theme as ThemePreference,
             fontSize: devicePrefs.font_size,
             timezone: devicePrefs.timezone
@@ -179,7 +201,7 @@ export const useUI = create<UIStore>()(
 
           if (accountPrefs) {
             set({
-              language: accountPrefs.default_language as SupportedLocale,
+              language: normalizeLocale(accountPrefs.default_language),
               theme: accountPrefs.default_theme as ThemePreference,
               fontSize: accountPrefs.default_font_size,
               timezone: accountPrefs.timezone
@@ -191,8 +213,22 @@ export const useUI = create<UIStore>()(
     }),
     {
       name: 'zevva-ui-storage',
+      version: 2,
+      migrate: (persistedState: any, version: number) => {
+        if (version < 2) {
+          return {
+            ...persistedState,
+            language: normalizeLocale(persistedState?.language),
+          };
+        }
+        return persistedState;
+      },
       onRehydrateStorage: () => (state) => {
         if (state) {
+          // Double check the language is normalized after hydration
+          if (state.language) {
+            state.language = normalizeLocale(state.language);
+          }
           state.initialize();
           // Set up broadcast channel for cross-tab sync
           if (typeof window !== 'undefined') {
@@ -200,7 +236,7 @@ export const useUI = create<UIStore>()(
             channel.onmessage = (event) => {
               const { userId, language, theme, fontSize } = event.data;
               if (userId === state.userId) {
-                state.setLanguage(language);
+                state.setLanguage(normalizeLocale(language));
                 state.setTheme(theme);
                 state.setFontSize(fontSize);
               }

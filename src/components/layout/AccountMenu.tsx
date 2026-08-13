@@ -10,6 +10,7 @@ import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useUI } from "@/hooks/use-ui";
 import { translations } from "@/lib/translations";
+import { getTranslations } from "@/lib/i18n-utils";
 import { useAvatarUrl } from "@/lib/avatar";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -23,7 +24,7 @@ interface AccountMenuProps {
 
 export function AccountMenu({ user, onLogout, onNavigate, onOpenAuth }: AccountMenuProps) {
   const { language } = useUI();
-  const t = translations[language] || translations["pt-BR"];
+  const t = getTranslations(language);
 
   const { data: profile } = useQuery({
     queryKey: ["profile", user?.id],

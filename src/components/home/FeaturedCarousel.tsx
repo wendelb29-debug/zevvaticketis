@@ -21,11 +21,12 @@ interface FeaturedCarouselProps {
 
 import { useUI } from "@/hooks/use-ui";
 import { translations } from "@/lib/translations";
+import { getTranslations } from "@/lib/i18n-utils";
 import { formatCurrency, formatDate } from "@/lib/i18n-helpers";
 
 export function FeaturedCarousel({ events }: FeaturedCarouselProps) {
   const { language } = useUI();
-  const t = (translations[language] || translations["pt-BR"]).home;
+  const t = getTranslations(language).home;
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const pauseTimeoutRef = useRef<NodeJS.Timeout | null>(null);

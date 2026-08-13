@@ -29,6 +29,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { useUI } from "@/hooks/use-ui";
 import { translations } from "@/lib/translations";
+import { getTranslations } from "@/lib/i18n-utils";
 import { cn } from "@/lib/utils";
 import { tracking } from "@/lib/tracking";
 import { getFeaturedEvents } from "@/lib/events.functions";
@@ -46,7 +47,7 @@ function HomePage() {
   const [loadingEvents, setLoadingEvents] = useState(true);
   const navigate = useNavigate();
   const { language, setIsHomeSearchVisible, homeSearchTerm, setHomeSearchTerm } = useUI();
-  const t = translations[language].home;
+  const t = getTranslations(language).home;
   const searchRef = useRef<HTMLDivElement>(null);
 
   const fetchFeatured = useServerFn(getFeaturedEvents);
@@ -162,10 +163,10 @@ function HomePage() {
           <div className="relative z-10 max-w-7xl mx-auto px-6 w-full">
             <div className="max-w-2xl space-y-8 animate-in fade-in slide-in-from-left-8 duration-700">
               <h1 className="text-5xl md:text-7xl font-manrope font-extrabold text-primary-foreground tracking-tight leading-[1.1]">
-                {translations[language].home.heroTitle}<span className="text-primary">.</span>
+                {getTranslations(language).home.heroTitle}<span className="text-primary">.</span>
               </h1>
               <p className="text-xl text-primary-foreground/70 font-medium max-w-xl leading-relaxed">
-                {translations[language].home.heroSubtitle}
+                {getTranslations(language).home.heroSubtitle}
               </p>
               <div className="flex flex-wrap gap-4 pt-4">
                 <button
@@ -182,14 +183,14 @@ function HomePage() {
                   }
                   className="h-14 px-10 bg-primary text-primary-foreground font-bold rounded-md hover:bg-primary-hover transition-all shadow-xl shadow-primary/20 flex items-center gap-3"
                 >
-                  {translations[language].home.exploreEvents}
+                  {getTranslations(language).home.exploreEvents}
                   <ArrowRight className="w-5 h-5" />
                 </button>
                 <button
                   onClick={() => navigate({ to: "/cadastro" })}
                   className="h-14 px-10 bg-card/10 backdrop-blur-md border border-white/20 text-primary-foreground font-bold rounded-md hover:bg-card/20 transition-all"
                 >
-                  {translations[language].home.createMyEvent}
+                  {getTranslations(language).home.createMyEvent}
                 </button>
               </div>
             </div>
@@ -205,7 +206,7 @@ function HomePage() {
               <div className="relative flex-1 w-full">
                 <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground h-5 w-5" />
                 <Input
-                  placeholder={translations[language].nav.searchFull}
+                  placeholder={getTranslations(language).nav.searchFull}
                   className="h-14 pl-12 pr-6 text-base rounded-xl border border-border bg-background focus-visible:ring-primary/20 placeholder:text-muted-foreground/50"
                   value={homeSearchTerm}
                   onChange={(e) => setHomeSearchTerm(e.target.value)}
@@ -229,10 +230,10 @@ function HomePage() {
 
               <div className="flex items-center gap-2 px-4 w-full md:w-auto">
                 <button className="h-14 px-6 flex items-center gap-3 text-sm font-bold text-foreground hover:bg-background rounded-xl border border-border transition-colors whitespace-nowrap">
-                  <MapPin className="w-4 h-4 text-primary" /> {translations[language].nav.where}
+                  <MapPin className="w-4 h-4 text-primary" /> {getTranslations(language).nav.where}
                 </button>
                 <button className="h-14 px-6 flex items-center gap-3 text-sm font-bold text-foreground hover:bg-background rounded-xl border border-border transition-colors whitespace-nowrap">
-                  <Calendar className="w-4 h-4 text-primary" /> {translations[language].nav.when}
+                  <Calendar className="w-4 h-4 text-primary" /> {getTranslations(language).nav.when}
                 </button>
               </div>
 
@@ -250,7 +251,7 @@ function HomePage() {
                 }
                 className="w-full md:w-auto h-14 px-10 bg-primary text-primary-foreground font-bold rounded-xl hover:bg-primary-hover transition-all shadow-lg shadow-primary/10"
               >
-                {translations[language].nav.search}
+                {getTranslations(language).nav.search}
               </button>
             </div>
           </div>
@@ -263,10 +264,10 @@ function HomePage() {
               <div className="space-y-3">
                 <div className="h-1 w-12 bg-primary rounded-full" />
                 <h2 className="text-3xl md:text-4xl font-manrope font-extrabold text-foreground tracking-tight">
-                  {translations[language].home.featured}
+                  {getTranslations(language).home.featured}
                 </h2>
                 <p className="text-muted-foreground font-medium text-lg max-w-xl">
-                  {translations[language].home.featuredSubtitle}
+                  {getTranslations(language).home.featuredSubtitle}
                 </p>
               </div>
             </div>
@@ -296,10 +297,10 @@ function HomePage() {
           <div className="max-w-7xl mx-auto space-y-16">
             <div className="flex flex-col items-center text-center space-y-4 max-w-2xl mx-auto">
               <h2 className="text-3xl md:text-4xl font-manrope font-extrabold text-foreground tracking-tight">
-                {translations[language].home.categories}
+                {getTranslations(language).home.categories}
               </h2>
               <p className="text-muted-foreground font-medium text-lg">
-                {translations[language].home.categoriesSubtitle}
+                {getTranslations(language).home.categoriesSubtitle}
               </p>
             </div>
             <CategoryGrid />
@@ -312,10 +313,10 @@ function HomePage() {
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
               <div className="space-y-4">
                 <span className="text-[10px] font-bold text-primary uppercase tracking-[0.2em]">
-                  {translations[language].home.suggestedSubtitle}
+                  {getTranslations(language).home.suggestedSubtitle}
                 </span>
                 <h2 className="text-3xl md:text-4xl font-manrope font-extrabold text-foreground tracking-tight">
-                  {translations[language].home.suggested}
+                  {getTranslations(language).home.suggested}
                 </h2>
               </div>
             </div>
@@ -334,10 +335,10 @@ function HomePage() {
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
               <div className="space-y-4 max-w-2xl">
                 <span className="text-[10px] font-bold text-primary uppercase tracking-[0.2em]">
-                  {translations[language].home.upcomingSubtitle}
+                  {getTranslations(language).home.upcomingSubtitle}
                 </span>
                 <h2 className="text-3xl md:text-4xl font-manrope font-extrabold text-foreground tracking-tight">
-                  {translations[language].home.upcoming}
+                  {getTranslations(language).home.upcoming}
                 </h2>
               </div>
               <Link
@@ -352,7 +353,7 @@ function HomePage() {
                 }
                 className="flex items-center gap-2 text-sm font-bold text-primary hover:text-primary-hover transition-colors"
               >
-                {translations[language].nav.agenda} <ArrowRight className="w-3 h-3" />
+                {getTranslations(language).nav.agenda} <ArrowRight className="w-3 h-3" />
               </Link>
             </div>
 
@@ -380,10 +381,10 @@ function HomePage() {
           <div className="max-w-7xl mx-auto space-y-16">
             <div className="flex flex-col items-center text-center space-y-4 max-w-3xl mx-auto">
               <h2 className="text-3xl md:text-5xl font-manrope font-extrabold text-foreground tracking-tight">
-                {translations[language].home.coursesTitle}
+                {getTranslations(language).home.coursesTitle}
               </h2>
               <p className="text-muted-foreground font-medium text-lg">
-                {translations[language].home.coursesSubtitle}
+                {getTranslations(language).home.coursesSubtitle}
               </p>
             </div>
 
