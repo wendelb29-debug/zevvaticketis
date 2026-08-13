@@ -72,7 +72,7 @@ export function CheckinStats() {
   }, []);
 
   if (loading) {
-    return <div className="p-10 text-center font-inter text-muted">Carregando indicadores de check-in...</div>;
+    return <div className="p-10 text-center font-inter text-muted-foreground">Carregando indicadores de check-in...</div>;
   }
 
   return (
