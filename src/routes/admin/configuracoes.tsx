@@ -250,7 +250,7 @@ function AuditoriaTab() {
 }
 
 
-function SettingsPage({ session }: { session: any }) {
+function SettingsPage({ session, activeTenantId }: { session: any, activeTenantId: string | null }) {
   const search = useSearch({ from: "/admin/configuracoes" }) as any;
   const [activeTab, setActiveTab] = useState(search?.tab === "team" ? "ADMIN" : "atendimento");
 
