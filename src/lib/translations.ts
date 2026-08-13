@@ -10,11 +10,7 @@ export const translations = {
       organizer: "Organizador",
       login: "Entrar",
       searchPlaceholder: "O que você está buscando?",
-      createEvent: "Criar Evento",
-      searchFull: "O que você está buscando?",
-      where: "Onde?",
-      when: "Quando?",
-      search: "Buscar"
+      createEvent: "Criar Evento"
     },
     home: {
       featuredLabel: "Destaque",
@@ -27,7 +23,16 @@ export const translations = {
       heroSubtitle: "A plataforma premium para os melhores eventos, caravanas e cursos internacionais.",
       exploreEvents: "Explorar Eventos",
       createMyEvent: "Criar meu Evento",
-      featured: "Próximas experiências"
+      featured: "Próximas experiências",
+      featuredSubtitle: "As melhores experiências ao redor do mundo.",
+      categories: "Categorias",
+      categoriesSubtitle: "Encontre o que você procura.",
+      suggested: "Sugestões para você",
+      suggestedSubtitle: "Baseado no seu perfil.",
+      searchFull: "O que você está buscando?",
+      where: "Onde?",
+      when: "Quando?",
+      search: "Buscar"
     },
     footer: {
       about: "Sobre a Zevva",
@@ -43,7 +48,10 @@ export const translations = {
       terms: "Termos",
       privacy: "Privacidade",
       refund: "Reembolso",
-      producerPanel: "Painel do Produtor"
+      producerPanel: "Painel do Produtor",
+      explore: "Explorar",
+      courses: "Cursos",
+      caravans: "Caravanas"
     }
   },
   "en-US": {
@@ -55,11 +63,7 @@ export const translations = {
       organizer: "Organizer",
       login: "Login",
       searchPlaceholder: "What are you looking for?",
-      createEvent: "Create Event",
-      searchFull: "What are you looking for?",
-      where: "Where?",
-      when: "When?",
-      search: "Search"
+      createEvent: "Create Event"
     },
     home: {
       featuredLabel: "Featured",
@@ -72,7 +76,16 @@ export const translations = {
       heroSubtitle: "The premium platform for the best international events, caravans, and courses.",
       exploreEvents: "Explore Events",
       createMyEvent: "Create my Event",
-      featured: "Upcoming experiences"
+      featured: "Upcoming experiences",
+      featuredSubtitle: "The best experiences around the world.",
+      categories: "Categories",
+      categoriesSubtitle: "Find what you are looking for.",
+      suggested: "Suggestions for you",
+      suggestedSubtitle: "Based on your profile.",
+      searchFull: "What are you looking for?",
+      where: "Where?",
+      when: "When?",
+      search: "Search"
     },
     footer: {
       about: "About Zevva",
@@ -88,7 +101,10 @@ export const translations = {
       terms: "Terms",
       privacy: "Privacy",
       refund: "Refund",
-      producerPanel: "Producer Panel"
+      producerPanel: "Producer Panel",
+      explore: "Explore",
+      courses: "Courses",
+      caravans: "Caravans"
     }
   },
   "es-ES": {
@@ -100,11 +116,7 @@ export const translations = {
       organizer: "Organizador",
       login: "Acceder",
       searchPlaceholder: "¿Qué estás buscando?",
-      createEvent: "Crear Evento",
-      searchFull: "¿Qué estás buscando?",
-      where: "¿Dónde?",
-      when: "¿Cuándo?",
-      search: "Buscar"
+      createEvent: "Crear Evento"
     },
     home: {
       featuredLabel: "Destacado",
@@ -117,17 +129,35 @@ export const translations = {
       heroSubtitle: "La plataforma premium para os melhores eventos, caravanas e cursos internacionais.",
       exploreEvents: "Explorar Eventos",
       createMyEvent: "Crear mi Evento",
-      featured: "Próximas experiencias"
+      featured: "Próximas experiencias",
+      featuredSubtitle: "Las mejores experiencias alrededor del mundo.",
+      categories: "Categorías",
+      categoriesSubtitle: "Encuentra lo que buscas.",
+      suggested: "Sugerencias para ti",
+      suggestedSubtitle: "Basado en tu perfil.",
+      searchFull: "¿Qué estás buscando?",
+      where: "¿Dónde?",
+      when: "¿Cuándo?",
+      search: "Buscar"
     },
     footer: {
       about: "Sobre Zevva",
-      aboutText: "Zevva es la plataforma premium para la gestión de eventos internacionales, caravanas y cursos.",
+      description: "Zevva es la plataforma premium para la gestión de eventos internacionales, caravanas y cursos.",
       platform: "Plataforma",
       help: "Ayuda",
       newsletter: "Boletín",
       newsletterPlaceholder: "Tu mejor correo",
       subscribe: "Suscribirse",
-      rights: "Zevva. Todos los derechos reservados."
+      rights: "Zevva. Todos los derechos reservados.",
+      support: "Soporte",
+      helpCenter: "Centro de Ayuda",
+      terms: "Términos",
+      privacy: "Privacidad",
+      refund: "Reembolso",
+      producerPanel: "Panel del Productor",
+      explore: "Explorar",
+      courses: "Cursos",
+      caravans: "Caravanas"
     }
   }
 } as const;
