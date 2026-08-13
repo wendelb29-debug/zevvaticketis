@@ -166,6 +166,7 @@ export const getWhatsAppIntegrationStatus = createServerFn({ method: "GET" })
   });
 
 export const getWhatsAppMessages = createServerFn({ method: "GET" })
+  .middleware([requireSupabaseAuth])
   .inputValidator((data) => z.object({
     contactId: z.string().uuid()
   }).parse(data))
