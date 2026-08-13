@@ -565,7 +565,7 @@ export function AdminDashboardBI() {
 
 function BIStatCard({ title, value, icon: Icon, subMetrics, className }: any) {
   return (
-    <Card className={cn("border-border bg-white shadow-sm hover:shadow-lg transition-all border-b-4 border-b-primary/20", className)}>
+    <Card className={cn("border border-border bg-card text-card-foreground shadow-sm hover:shadow-lg transition-all border-b-4 border-b-primary/30", className)}>
 
       <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
         <CardTitle className="text-[10px] font-black text-muted-foreground-fg uppercase tracking-widest">{title}</CardTitle>
