@@ -75,7 +75,7 @@ export const createContactGroup = createServerFn({ method: "POST" })
       .insert({
         tenant_id: data.tenantId,
         name: data.name,
-        description: data.description,
+        description: data.description ?? null,
         color: data.color || '#E35B62'
       })
       .select()
