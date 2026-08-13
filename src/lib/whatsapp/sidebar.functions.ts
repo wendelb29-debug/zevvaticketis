@@ -197,7 +197,7 @@ export const closeAttendance = createServerFn({ method: "POST" })
       .update({
         status: 'closed',
         closure_reason: data.reason,
-        internal_notes: data.notes,
+        internal_notes: data.notes ?? null,
         closed_at: new Date().toISOString()
       })
       .eq('id', data.attendanceId)
