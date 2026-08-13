@@ -22,7 +22,7 @@ export function SalesCardPicker({ isOpen, onClose, onSelect }: SalesCardPickerPr
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="bg-white border-border sm:max-w-md">
+      <DialogContent className="bg-card border-border sm:max-w-md">
         <DialogHeader>
           <DialogTitle className="text-foreground dark:text-white uppercase font-black tracking-tighter">Gerar Proposta de Venda</DialogTitle>
         </DialogHeader>
@@ -41,10 +41,10 @@ export function SalesCardPicker({ isOpen, onClose, onSelect }: SalesCardPickerPr
               <button
                 key={t.id}
                 onClick={() => onSelect(t)}
-                className="w-full flex items-center justify-between p-4 rounded-2xl bg-white hover:bg-primary/5 border border-border hover:border-primary/30 transition-all group"
+                className="w-full flex items-center justify-between p-4 rounded-2xl bg-card hover:bg-primary/5 border border-border hover:border-primary/30 transition-all group"
               >
                 <div className="flex items-center gap-3 text-left">
-                  <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center text-primary border border-border group-hover:bg-primary group-hover:text-white transition-colors">
+                  <div className="w-10 h-10 rounded-xl bg-card flex items-center justify-center text-primary border border-border group-hover:bg-primary group-hover:text-white transition-colors">
                     <Ticket className="w-5 h-5" />
                   </div>
                   <div>

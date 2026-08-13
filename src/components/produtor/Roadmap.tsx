@@ -112,7 +112,7 @@ export function Roadmap() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {waves.map((wave) => (
-          <Card key={wave.id} className={`border-none shadow-soft hover-lift ${wave.status === 'Concluído' ? 'bg-emerald-50/50' : 'bg-white'}`}>
+          <Card key={wave.id} className={`border-none shadow-soft hover-lift ${wave.status === 'Concluído' ? 'bg-emerald-50/50' : 'bg-card'}`}>
             <CardHeader className="pb-3">
               <div className="flex justify-between items-start mb-2">
                 <Badge 

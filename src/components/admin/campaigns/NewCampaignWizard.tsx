@@ -94,12 +94,12 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-6xl p-0 overflow-hidden bg-card border border-border text-[#0F172A] rounded-2xl max-h-[95vh] flex flex-col">
+      <DialogContent className="max-w-6xl p-0 overflow-hidden bg-card border border-border text-foreground rounded-2xl max-h-[95vh] flex flex-col">
         <DialogHeader className="p-0 border-b border-border bg-card relative">
           <div className="flex items-center justify-between px-8 py-6">
             <div className="flex flex-col">
-              <DialogTitle className="text-xl font-manrope font-extrabold text-[#0F172A]">Nova Campanha</DialogTitle>
-              <p className="text-sm text-[#64748B] mt-0.5">Configure seu envio WhatsApp ou E-mail</p>
+              <DialogTitle className="text-xl font-manrope font-extrabold text-foreground">Nova Campanha</DialogTitle>
+              <p className="text-sm text-muted-foreground mt-0.5">Configure seu envio WhatsApp ou E-mail</p>
             </div>
             
             <div className="flex items-center gap-6 xl:gap-12 flex-1 justify-center overflow-x-auto no-scrollbar mx-4 py-2">
@@ -126,14 +126,14 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
                 >
                   <div className={cn(
                     "w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold transition-all border-2",
-                    step === s.number ? "bg-[#F06452] text-white border-[#F06452] shadow-sm" : 
-                    step > s.number ? "bg-card text-[#F06452] border-[#F06452]" : "bg-card text-[#0F172A] border-[#E5E7EB]"
+                    step === s.number ? "bg-primary text-white border-primary shadow-sm" : 
+                    step > s.number ? "bg-card text-primary border-primary" : "bg-card text-foreground border-[#E5E7EB]"
                   )}>
                     {step > s.number ? <Check className="w-4 h-4" /> : s.number}
                   </div>
                   <span className={cn(
                     "text-[10px] font-extrabold uppercase tracking-widest hidden xl:inline",
-                    step === s.number ? "text-[#F06452]" : "text-[#0F172A]"
+                    step === s.number ? "text-primary" : "text-foreground"
                   )}>{s.label}</span>
                   {s.number < 5 && (
                     <div className="absolute -right-7 top-1/2 -translate-y-1/2 w-4 h-[1px] bg-[#E5E7EB]" />
@@ -147,14 +147,14 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
                 variant="outline"
                 onClick={prevStep}
                 disabled={step === 1}
-                className="border-[#E5E7EB] text-[#0F172A] hover:bg-muted font-bold px-6 h-11 rounded-xl"
+                className="border-[#E5E7EB] text-foreground hover:bg-muted font-bold px-6 h-11 rounded-xl"
               >
                 Voltar
               </Button>
               <Button 
                 onClick={nextStep}
                 disabled={!canGoNext || step === 5}
-                className="bg-[#F06452] hover:bg-[#D95342] text-white font-bold px-8 h-11 rounded-xl shadow-lg shadow-[#F06452]/20"
+                className="bg-primary hover:bg-[#D95342] text-white font-bold px-8 h-11 rounded-xl shadow-lg shadow-[#F06452]/20"
               >
                 Continuar
               </Button>
@@ -169,42 +169,42 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
             <div className="grid grid-cols-1 lg:grid-cols-[400px_1fr] gap-12 animate-in fade-in slide-in-from-bottom-4 duration-500">
               <div className="space-y-8">
                 <div>
-                  <h2 className="text-xl font-manrope font-extrabold text-[#0F172A] uppercase tracking-tight">Dados da campanha</h2>
-                  <p className="text-sm text-[#64748B] mt-1">Defina o nome e os canais de envio da sua campanha</p>
+                  <h2 className="text-xl font-manrope font-extrabold text-foreground uppercase tracking-tight">Dados da campanha</h2>
+                  <p className="text-sm text-muted-foreground mt-1">Defina o nome e os canais de envio da sua campanha</p>
                 </div>
 
                 <div className="space-y-6">
                   <div className="space-y-2">
-                    <Label className="text-xs font-black text-[#0F172A] uppercase tracking-widest">Nome da campanha <span className="text-[#F06452]">*</span></Label>
+                    <Label className="text-xs font-black text-foreground uppercase tracking-widest">Nome da campanha <span className="text-primary">*</span></Label>
                     <Input 
                       placeholder="Ex: Show Ana Carolina - Lembrete" 
                       value={campaignName}
                       onChange={(e) => setCampaignName(e.target.value)}
-                      className="bg-card border-[#E5E7EB] text-[#0F172A] h-12 rounded-xl focus-visible:ring-[#F06452]"
+                      className="bg-card border-[#E5E7EB] text-foreground h-12 rounded-xl focus-visible:ring-[#F06452]"
                     />
                   </div>
 
                   <div className="space-y-3">
-                    <Label className="text-xs font-black text-[#0F172A] uppercase tracking-widest">Escolha o canal <span className="text-[#F06452]">*</span></Label>
+                    <Label className="text-xs font-black text-foreground uppercase tracking-widest">Escolha o canal <span className="text-primary">*</span></Label>
                     <div className="grid grid-cols-1 gap-4">
                       <button 
                         onClick={() => setChannelType("gupshup")}
                         className={cn(
                           "flex items-center p-5 rounded-2xl border-2 transition-all duration-300 gap-4 group text-left",
                           channelType === "gupshup" 
-                            ? "bg-[#FDF0ED] border-[#F06452] shadow-sm" 
-                            : "bg-card border-[#E5E7EB] hover:border-[#F06452]/30"
+                            ? "bg-primary/10 border-primary shadow-sm" 
+                            : "bg-card border-[#E5E7EB] hover:border-primary/30"
                         )}
                       >
                         <div className={cn(
                           "w-12 h-12 rounded-xl flex items-center justify-center transition-colors",
-                          channelType === "gupshup" ? "bg-[#F06452] text-white" : "bg-slate-100 text-[#64748B] group-hover:bg-[#FDF0ED] group-hover:text-[#F06452]"
+                          channelType === "gupshup" ? "bg-primary text-white" : "bg-muted text-muted-foreground group-hover:bg-primary/10 group-hover:text-primary"
                         )}>
                           <MessageSquare className="w-6 h-6" />
                         </div>
                         <div className="flex-1">
-                          <p className={cn("text-sm font-bold", channelType === "gupshup" ? "text-[#F06452]" : "text-[#0F172A]")}>Enviar pelo WhatsApp</p>
-                          <p className="text-[11px] text-[#64748B] font-medium">Envie mensagens para clientes e participantes.</p>
+                          <p className={cn("text-sm font-bold", channelType === "gupshup" ? "text-primary" : "text-foreground")}>Enviar pelo WhatsApp</p>
+                          <p className="text-[11px] text-muted-foreground font-medium">Envie mensagens para clientes e participantes.</p>
                         </div>
                       </button>
                       
@@ -213,28 +213,28 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
                         className={cn(
                           "flex items-center p-5 rounded-2xl border-2 transition-all duration-300 gap-4 group text-left",
                           channelType === "email" 
-                            ? "bg-[#FDF0ED] border-[#F06452] shadow-sm" 
-                            : "bg-card border-[#E5E7EB] hover:border-[#F06452]/30"
+                            ? "bg-primary/10 border-primary shadow-sm" 
+                            : "bg-card border-[#E5E7EB] hover:border-primary/30"
                         )}
                       >
                         <div className={cn(
                           "w-12 h-12 rounded-xl flex items-center justify-center transition-colors",
-                          channelType === "email" ? "bg-[#F06452] text-white" : "bg-slate-100 text-[#64748B] group-hover:bg-[#FDF0ED] group-hover:text-[#F06452]"
+                          channelType === "email" ? "bg-primary text-white" : "bg-muted text-muted-foreground group-hover:bg-primary/10 group-hover:text-primary"
                         )}>
                           <Mail className="w-6 h-6" />
                         </div>
                         <div className="flex-1">
-                          <p className={cn("text-sm font-bold", channelType === "email" ? "text-[#F06452]" : "text-[#0F172A]")}>Enviar por E-mail</p>
-                          <p className="text-[11px] text-[#64748B] font-medium">Crie campanhas profissionais.</p>
+                          <p className={cn("text-sm font-bold", channelType === "email" ? "text-primary" : "text-foreground")}>Enviar por E-mail</p>
+                          <p className="text-[11px] text-muted-foreground font-medium">Crie campanhas profissionais.</p>
                         </div>
                       </button>
                     </div>
                   </div>
 
                   <div className="space-y-2">
-                    <Label className="text-xs font-black text-[#0F172A] uppercase tracking-widest">Canal de saída <span className="text-[#F06452]">*</span></Label>
+                    <Label className="text-xs font-black text-foreground uppercase tracking-widest">Canal de saída <span className="text-primary">*</span></Label>
                     <Select value={channel} onValueChange={setChannel}>
-                      <SelectTrigger className="bg-card border-[#E5E7EB] text-[#0F172A] h-12 rounded-xl">
+                      <SelectTrigger className="bg-card border-[#E5E7EB] text-foreground h-12 rounded-xl">
                         <SelectValue placeholder="Selecione o canal" />
                       </SelectTrigger>
                       <SelectContent className="bg-card border-[#E5E7EB]">
@@ -249,30 +249,30 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
               <div className="bg-muted rounded-3xl flex items-center justify-center p-12 border border-[#E5E7EB]">
                 <div className="max-w-md w-full text-center space-y-8">
                   <div className="flex justify-center">
-                    <div className="bg-[#FDF0ED] p-5 rounded-[2rem]">
-                      <div className="bg-[#F06452] text-white p-4 rounded-2xl shadow-xl shadow-[#F06452]/20">
+                    <div className="bg-primary/10 p-5 rounded-[2rem]">
+                      <div className="bg-primary text-white p-4 rounded-2xl shadow-xl shadow-[#F06452]/20">
                         {channelType === "email" ? <Mail className="w-10 h-10" /> : <MessageSquare className="w-10 h-10" />}
                       </div>
                     </div>
                   </div>
                   <div className="space-y-3">
-                    <div className="inline-block px-4 py-1.5 bg-[#FDF0ED] text-[#F06452] text-[11px] font-black rounded-full border border-[#F06452]/10 uppercase tracking-[0.1em]">
+                    <div className="inline-block px-4 py-1.5 bg-primary/10 text-primary text-[11px] font-black rounded-full border border-primary/10 uppercase tracking-[0.1em]">
                       Zevva Campaigns
                     </div>
-                    <h3 className="text-2xl font-manrope font-extrabold text-[#0F172A]">Crie mensagens premium</h3>
-                    <p className="text-sm text-[#64748B] leading-relaxed">Personalize cada disparo e aumente sua conversão com a tecnologia Zevva.</p>
+                    <h3 className="text-2xl font-manrope font-extrabold text-foreground">Crie mensagens premium</h3>
+                    <p className="text-sm text-muted-foreground leading-relaxed">Personalize cada disparo e aumente sua conversão com a tecnologia Zevva.</p>
                   </div>
                   
                   <div className="bg-card rounded-2xl p-6 border border-[#E5E7EB] shadow-2xl relative overflow-hidden group">
-                    <div className="absolute top-0 left-0 w-1.5 h-full bg-[#F06452]" />
+                    <div className="absolute top-0 left-0 w-1.5 h-full bg-primary" />
                     <div className="space-y-4 text-left">
-                      <div className="bg-muted text-[#0F172A] px-4 py-2.5 rounded-xl text-sm font-bold inline-block border border-[#E5E7EB]">
-                        Olá <span className="text-[#F06452]">{"{{"}nome{"}}"}</span>! 👋
+                      <div className="bg-muted text-foreground px-4 py-2.5 rounded-xl text-sm font-bold inline-block border border-[#E5E7EB]">
+                        Olá <span className="text-primary">{"{{"}nome{"}}"}</span>! 👋
                       </div>
-                      <div className="bg-muted rounded-xl aspect-[16/9] flex items-center justify-center border border-dashed border-[#E5E7EB] group-hover:bg-slate-100 transition-colors">
+                      <div className="bg-muted rounded-xl aspect-[16/9] flex items-center justify-center border border-dashed border-[#E5E7EB] group-hover:bg-muted transition-colors">
                         <div className="text-center space-y-2">
                           <ImageIcon className="w-10 h-10 text-slate-300 mx-auto" />
-                          <p className="text-[10px] text-[#64748B] font-black uppercase tracking-[0.2em]">Sua Imagem Aqui</p>
+                          <p className="text-[10px] text-muted-foreground font-black uppercase tracking-[0.2em]">Sua Imagem Aqui</p>
                         </div>
                       </div>
                     </div>
@@ -287,13 +287,13 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
             <div className="grid grid-cols-1 lg:grid-cols-[400px_1fr] gap-12 animate-in fade-in slide-in-from-bottom-4 duration-500">
               <div className="space-y-8">
                 <div>
-                  <h2 className="text-xl font-manrope font-extrabold text-[#0F172A] uppercase tracking-tight">Público Alvo</h2>
-                  <p className="text-sm text-[#64748B] mt-1">Selecione o público que receberá as mensagens da sua campanha</p>
+                  <h2 className="text-xl font-manrope font-extrabold text-foreground uppercase tracking-tight">Público Alvo</h2>
+                  <p className="text-sm text-muted-foreground mt-1">Selecione o público que receberá as mensagens da sua campanha</p>
                 </div>
 
                 <div className="space-y-4">
                   <div className="space-y-3">
-                    <Label className="text-xs font-black text-[#0F172A] uppercase tracking-widest">Origem dos contatos</Label>
+                    <Label className="text-xs font-black text-foreground uppercase tracking-widest">Origem dos contatos</Label>
                     
                     <div className="space-y-3">
                       {[
@@ -307,23 +307,23 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
                           className={cn(
                             "p-5 rounded-2xl border transition-all duration-300 cursor-pointer flex items-center gap-4 group",
                             publicType === item.id 
-                              ? "bg-[#FDF0ED] border-[#F06452] shadow-sm" 
-                              : "bg-card border-[#E5E7EB] hover:border-[#F06452]/30"
+                              ? "bg-primary/10 border-primary shadow-sm" 
+                              : "bg-card border-[#E5E7EB] hover:border-primary/30"
                           )}
                         >
                           <div className={cn(
                             "w-12 h-12 rounded-xl flex items-center justify-center transition-colors",
-                            publicType === item.id ? "bg-[#F06452] text-white" : "bg-slate-100 text-[#64748B] group-hover:bg-[#FDF0ED] group-hover:text-[#F06452]"
+                            publicType === item.id ? "bg-primary text-white" : "bg-muted text-muted-foreground group-hover:bg-primary/10 group-hover:text-primary"
                           )}>
                             <item.icon className="w-6 h-6" />
                           </div>
                           <div className="flex-1">
-                            <p className={cn("text-sm font-bold", publicType === item.id ? "text-[#F06452]" : "text-[#0F172A]")}>{item.label}</p>
-                            <p className="text-[11px] text-[#64748B] font-medium">{item.desc}</p>
+                            <p className={cn("text-sm font-bold", publicType === item.id ? "text-primary" : "text-foreground")}>{item.label}</p>
+                            <p className="text-[11px] text-muted-foreground font-medium">{item.desc}</p>
                           </div>
                           <div className={cn(
                             "w-5 h-5 rounded-full border-2 flex items-center justify-center",
-                            publicType === item.id ? "border-[#F06452] bg-[#F06452]" : "border-[#E5E7EB]"
+                            publicType === item.id ? "border-primary bg-primary" : "border-[#E5E7EB]"
                           )}>
                             {publicType === item.id && <Check className="w-3 h-3 text-white" />}
                           </div>
@@ -340,19 +340,19 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
                   <div className="h-full flex flex-col space-y-6">
                     <div className="grid grid-cols-2 gap-6">
                       <div className="space-y-4">
-                        <Label className="text-xs font-black text-[#0F172A] uppercase tracking-widest">DDI padrão</Label>
+                        <Label className="text-xs font-black text-foreground uppercase tracking-widest">DDI padrão</Label>
                         <div className="bg-card p-4 rounded-xl border border-[#E5E7EB] flex items-center gap-3 shadow-sm">
                            <span className="text-2xl">🇧🇷</span>
-                           <span className="text-sm font-bold text-[#0F172A]">Brasil (+55)</span>
-                           <ChevronDown className="w-4 h-4 ml-auto text-[#64748B]" />
+                           <span className="text-sm font-bold text-foreground">Brasil (+55)</span>
+                           <ChevronDown className="w-4 h-4 ml-auto text-muted-foreground" />
                         </div>
                       </div>
                       <div className="space-y-4">
-                        <Label className="text-xs font-black text-[#0F172A] uppercase tracking-widest">Ações</Label>
+                        <Label className="text-xs font-black text-foreground uppercase tracking-widest">Ações</Label>
                         <div className="flex gap-3">
                           <Button 
                             variant="outline" 
-                            className="flex-1 border-dashed border-[#F06452]/40 text-[#F06452] hover:bg-[#FDF0ED] h-14 rounded-xl font-bold"
+                            className="flex-1 border-dashed border-primary/40 text-primary hover:bg-primary/10 h-14 rounded-xl font-bold"
                             onClick={() => {
                               setUploadedFile(null);
                               setCsvPreview([]);
@@ -366,7 +366,7 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
 
                     {!uploadedFile ? (
                       <div className="flex-1 flex flex-col items-center justify-center">
-                        <div className="w-full max-w-xl aspect-[16/7] border-2 border-dashed border-[#F06452]/20 rounded-3xl flex flex-col items-center justify-center gap-4 bg-card hover:bg-[#FDF0ED] hover:border-[#F06452]/40 transition-all cursor-pointer group shadow-sm relative">
+                        <div className="w-full max-w-xl aspect-[16/7] border-2 border-dashed border-primary/20 rounded-3xl flex flex-col items-center justify-center gap-4 bg-card hover:bg-primary/10 hover:border-primary/40 transition-all cursor-pointer group shadow-sm relative">
                           <input 
                             type="file" 
                             accept=".csv, .xlsx" 
@@ -384,15 +384,15 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
                               }
                             }}
                           />
-                          <div className="w-16 h-16 rounded-2xl bg-[#FDF0ED] flex items-center justify-center group-hover:scale-110 transition-transform shadow-sm">
-                            <Plus className="w-8 h-8 text-[#F06452]" />
+                          <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center group-hover:scale-110 transition-transform shadow-sm">
+                            <Plus className="w-8 h-8 text-primary" />
                           </div>
                           <div className="text-center space-y-1">
-                            <p className="text-lg font-manrope font-extrabold text-[#0F172A]">Importar arquivo</p>
-                            <p className="text-sm text-[#64748B] font-medium">Nessa parte poder arrastar pra cá o arquivo ou clicar pra abrir somente arquivos CSV ou XLSX do computador</p>
+                            <p className="text-lg font-manrope font-extrabold text-foreground">Importar arquivo</p>
+                            <p className="text-sm text-muted-foreground font-medium">Nessa parte poder arrastar pra cá o arquivo ou clicar pra abrir somente arquivos CSV ou XLSX do computador</p>
                             <div className="flex gap-2 justify-center mt-4">
-                               <span className="px-3 py-1 bg-slate-100 text-[10px] font-black text-[#64748B] rounded-lg">CSV</span>
-                               <span className="px-3 py-1 bg-slate-100 text-[10px] font-black text-[#64748B] rounded-lg">XLSX</span>
+                               <span className="px-3 py-1 bg-muted text-[10px] font-black text-muted-foreground rounded-lg">CSV</span>
+                               <span className="px-3 py-1 bg-muted text-[10px] font-black text-muted-foreground rounded-lg">XLSX</span>
                             </div>
                           </div>
                         </div>
@@ -401,12 +401,12 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
                       <div className="flex-1 bg-card rounded-2xl border border-[#E5E7EB] shadow-sm overflow-hidden flex flex-col">
                         <div className="p-4 border-b border-[#E5E7EB] bg-muted flex items-center justify-between">
                           <div className="flex items-center gap-3">
-                            <div className="p-2 bg-[#FDF0ED] rounded-lg">
-                              <FileText className="w-4 h-4 text-[#F06452]" />
+                            <div className="p-2 bg-primary/10 rounded-lg">
+                              <FileText className="w-4 h-4 text-primary" />
                             </div>
                             <div>
-                              <p className="text-sm font-bold text-[#0F172A]">{uploadedFile.name}</p>
-                              <p className="text-[10px] text-[#64748B] font-medium">{(uploadedFile.size / 1024).toFixed(1)} KB • {csvPreview.length - 1} contatos encontrados</p>
+                              <p className="text-sm font-bold text-foreground">{uploadedFile.name}</p>
+                              <p className="text-[10px] text-muted-foreground font-medium">{(uploadedFile.size / 1024).toFixed(1)} KB • {csvPreview.length - 1} contatos encontrados</p>
                             </div>
                           </div>
                           <div className="flex items-center gap-2 px-3 py-1.5 bg-green-50 text-green-600 rounded-full border border-green-100 text-[10px] font-black uppercase tracking-wider">
@@ -423,9 +423,9 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
                           <table className="w-full text-left border-collapse">
                             <thead className="sticky top-0 bg-muted z-10">
                               <tr>
-                                <th className="p-4 border-b border-[#E5E7EB] text-[10px] font-black text-[#64748B] uppercase tracking-widest w-12 text-center">#</th>
+                                <th className="p-4 border-b border-[#E5E7EB] text-[10px] font-black text-muted-foreground uppercase tracking-widest w-12 text-center">#</th>
                                 {csvPreview[0]?.map((header, i) => (
-                                  <th key={i} className="p-4 border-b border-[#E5E7EB] text-[10px] font-black text-[#0F172A] uppercase tracking-widest">{header}</th>
+                                  <th key={i} className="p-4 border-b border-[#E5E7EB] text-[10px] font-black text-foreground uppercase tracking-widest">{header}</th>
                                 ))}
                               </tr>
                             </thead>
@@ -433,12 +433,12 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
                               {csvPreview.slice(1).map((row, rowIndex) => (
                                 <tr key={rowIndex} className="border-b border-[#E5E7EB] hover:bg-muted/80 transition-colors">
                                   <td className="p-4 text-center">
-                                    <div className="w-4 h-4 rounded-full border border-[#F06452] flex items-center justify-center mx-auto">
-                                      <div className="w-2 h-2 rounded-full bg-[#F06452]" />
+                                    <div className="w-4 h-4 rounded-full border border-primary flex items-center justify-center mx-auto">
+                                      <div className="w-2 h-2 rounded-full bg-primary" />
                                     </div>
                                   </td>
                                   {row.map((cell, cellIndex) => (
-                                    <td key={cellIndex} className="p-4 text-sm font-medium text-[#0F172A] truncate max-w-[200px]">{cell}</td>
+                                    <td key={cellIndex} className="p-4 text-sm font-medium text-foreground truncate max-w-[200px]">{cell}</td>
                                   ))}
                                 </tr>
                               ))}
@@ -557,10 +557,10 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
               </div>
 
               <div className="p-5 bg-muted border border-[#E5E7EB] rounded-2xl flex items-center gap-4">
-                <AlertCircle className="w-6 h-6 text-[#F06452]" />
-                <p className="text-xs font-semibold text-[#0F172A] leading-relaxed">
+                <AlertCircle className="w-6 h-6 text-primary" />
+                <p className="text-xs font-semibold text-foreground leading-relaxed">
                   Exibindo as 3 primeiras linhas do arquivo para você estabelecer o vínculo visual entre as colunas e os campos. 
-                  É obrigatório ter pelo menos uma coluna mapeada como <span className="font-bold text-[#F06452]">Telefone</span>.
+                  É obrigatório ter pelo menos uma coluna mapeada como <span className="font-bold text-primary">Telefone</span>.
                 </p>
               </div>
 
@@ -572,11 +572,11 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
                         <th key={i} className="p-6 border-b border-[#E5E7EB] bg-muted/50">
                           <div className="space-y-4">
                             <div className="flex items-center justify-between">
-                              <span className="text-xs font-black text-[#0F172A] uppercase tracking-widest">{header}</span>
+                              <span className="text-xs font-black text-foreground uppercase tracking-widest">{header}</span>
                               <Button 
                                 variant="ghost" 
                                 size="icon" 
-                                className="h-7 w-7 text-[#64748B] hover:text-[#F06452] hover:bg-[#FDF0ED] transition-colors rounded-lg"
+                                className="h-7 w-7 text-muted-foreground hover:text-primary hover:bg-primary/10 transition-colors rounded-lg"
                                 onClick={() => removeColumn(i)}
                               >
                                 <Trash2 className="w-4 h-4" />
@@ -599,7 +599,7 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
                                 <Check className="w-3.5 h-3.5" /> Mapeado
                               </div>
                             ) : (
-                              <div className="bg-[#FDF0ED] text-[#F06452] px-3 py-1.5 rounded-lg border border-[#F06452]/10 text-[10px] font-black uppercase tracking-tight">
+                              <div className="bg-primary/10 text-primary px-3 py-1.5 rounded-lg border border-primary/10 text-[10px] font-black uppercase tracking-tight">
                                 Variável: {header.toLowerCase()}
                               </div>
                             )}
@@ -612,7 +612,7 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
                     {csvPreview.slice(1, 4).map((row, rowIndex) => (
                       <tr key={rowIndex} className="border-b border-[#E5E7EB] hover:bg-muted transition-colors">
                         {row.map((cell, cellIndex) => (
-                          <td key={cellIndex} className="p-6 text-sm font-medium text-[#64748B] italic truncate max-w-[200px]">
+                          <td key={cellIndex} className="p-6 text-sm font-medium text-muted-foreground italic truncate max-w-[200px]">
                             {cell}
                           </td>
                         ))}
@@ -628,12 +628,12 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
             <div className="grid grid-cols-1 lg:grid-cols-[400px_1fr] gap-12 animate-in fade-in slide-in-from-bottom-4 duration-500">
               <div className="space-y-8">
                 <div>
-                  <h2 className="text-xl font-manrope font-extrabold text-[#0F172A] uppercase tracking-tight">Conteúdo</h2>
-                  <p className="text-sm text-[#64748B] mt-1">Definição do conteúdo a ser enviado</p>
+                  <h2 className="text-xl font-manrope font-extrabold text-foreground uppercase tracking-tight">Conteúdo</h2>
+                  <p className="text-sm text-muted-foreground mt-1">Definição do conteúdo a ser enviado</p>
                 </div>
 
                 <div className="space-y-4">
-                  <Label className="text-xs font-black text-[#0F172A] uppercase tracking-widest">Tipo de conteúdo</Label>
+                  <Label className="text-xs font-black text-foreground uppercase tracking-widest">Tipo de conteúdo</Label>
                   <div className="space-y-3">
                     {[
                       { id: "mensagem", label: "Criar mensagem", desc: "Selecione o template a enviar e configure as variáveis e ações de botões.", icon: MessageSquare, badge: "NEW" },
@@ -645,26 +645,26 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
                         className={cn(
                           "p-5 rounded-2xl border transition-all duration-300 cursor-pointer flex items-center gap-4 group",
                           contentType === item.id 
-                            ? "bg-[#FDF0ED] border-[#F06452] shadow-sm" 
-                            : "bg-card border-[#E5E7EB] hover:border-[#F06452]/30"
+                            ? "bg-primary/10 border-primary shadow-sm" 
+                            : "bg-card border-[#E5E7EB] hover:border-primary/30"
                         )}
                       >
                         <div className={cn(
                           "w-12 h-12 rounded-xl flex items-center justify-center transition-colors",
-                          contentType === item.id ? "bg-[#F06452] text-white" : "bg-slate-100 text-[#64748B] group-hover:bg-[#FDF0ED] group-hover:text-[#F06452]"
+                          contentType === item.id ? "bg-primary text-white" : "bg-muted text-muted-foreground group-hover:bg-primary/10 group-hover:text-primary"
                         )}>
                           <item.icon className="w-6 h-6" />
                         </div>
                         <div className="flex-1">
                           <div className="flex items-center gap-2">
-                            <p className={cn("text-sm font-bold", contentType === item.id ? "text-[#F06452]" : "text-[#0F172A]")}>{item.label}</p>
-                            {item.badge && <span className="bg-[#F06452] text-white text-[8px] px-1.5 py-0.5 rounded-md font-black">{item.badge}</span>}
+                            <p className={cn("text-sm font-bold", contentType === item.id ? "text-primary" : "text-foreground")}>{item.label}</p>
+                            {item.badge && <span className="bg-primary text-white text-[8px] px-1.5 py-0.5 rounded-md font-black">{item.badge}</span>}
                           </div>
-                          <p className="text-[11px] text-[#64748B] font-medium leading-tight mt-0.5">{item.desc}</p>
+                          <p className="text-[11px] text-muted-foreground font-medium leading-tight mt-0.5">{item.desc}</p>
                         </div>
                         <div className={cn(
                           "w-5 h-5 rounded-full border-2 flex items-center justify-center",
-                          contentType === item.id ? "border-[#F06452] bg-[#F06452]" : "border-[#E5E7EB]"
+                          contentType === item.id ? "border-primary bg-primary" : "border-[#E5E7EB]"
                         )}>
                           {contentType === item.id && <Check className="w-3 h-3 text-white" />}
                         </div>
@@ -681,11 +681,11 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
                       <div className="bg-card border border-[#E5E7EB] rounded-2xl shadow-xl overflow-hidden">
                         <div className="p-4 border-b border-[#E5E7EB] bg-muted flex items-center justify-between">
                           <div className="flex gap-2">
-                            <Button variant="ghost" size="sm" className="h-9 w-9 p-0 text-[#64748B] hover:text-[#F06452] hover:bg-[#FDF0ED]">
+                            <Button variant="ghost" size="sm" className="h-9 w-9 p-0 text-muted-foreground hover:text-primary hover:bg-primary/10">
                               <Smile className="w-5 h-5" />
                             </Button>
                             <label className="cursor-pointer">
-                              <div className="h-9 w-9 flex items-center justify-center text-[#64748B] hover:text-[#F06452] hover:bg-[#FDF0ED] rounded-md transition-colors">
+                              <div className="h-9 w-9 flex items-center justify-center text-muted-foreground hover:text-primary hover:bg-primary/10 rounded-md transition-colors">
                                 <ImageIcon className="w-5 h-5" />
                               </div>
                               <input 
@@ -709,7 +709,7 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
                                 key={v} 
                                 variant="outline" 
                                 size="sm" 
-                                className="h-7 px-3 text-[10px] font-black uppercase border-[#F06452]/20 text-[#F06452] hover:bg-[#FDF0ED] rounded-lg"
+                                className="h-7 px-3 text-[10px] font-black uppercase border-primary/20 text-primary hover:bg-primary/10 rounded-lg"
                                 onClick={() => setMessageText(prev => prev + `{{${v}}}`)}
                               >
                                 {"{{"}{v}{"}}"}
@@ -719,16 +719,16 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
                         </div>
                         <textarea 
                           placeholder="Escreva sua mensagem aqui..."
-                          className="w-full min-h-[250px] p-6 text-[#0F172A] focus:outline-none resize-none leading-relaxed text-sm bg-card"
+                          className="w-full min-h-[250px] p-6 text-foreground focus:outline-none resize-none leading-relaxed text-sm bg-card"
                           value={messageText}
                           onChange={(e) => setMessageText(e.target.value)}
                         />
                         <div className="p-4 border-t border-[#E5E7EB] bg-muted flex justify-between items-center">
-                          <p className="text-[10px] text-[#64748B] font-black uppercase tracking-widest">Aprox. {messageText.length} caracteres</p>
+                          <p className="text-[10px] text-muted-foreground font-black uppercase tracking-widest">Aprox. {messageText.length} caracteres</p>
                           <Button 
                             variant="outline" 
                             size="sm" 
-                            className="border-[#E5E7EB] text-[#0F172A] hover:bg-card font-bold h-9 rounded-xl"
+                            className="border-[#E5E7EB] text-foreground hover:bg-card font-bold h-9 rounded-xl"
                             onClick={() => setCtaButtons(prev => [...prev, { id: crypto.randomUUID(), label: "Clique aqui" }])}
                           >
                             <Plus className="w-4 h-4 mr-2" /> Botão CTA
@@ -738,7 +738,7 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
                       
                       {ctaButtons.length > 0 && (
                         <div className="space-y-3">
-                          <Label className="text-[10px] font-black text-[#0F172A] uppercase tracking-widest">Botões CTA</Label>
+                          <Label className="text-[10px] font-black text-foreground uppercase tracking-widest">Botões CTA</Label>
                           {ctaButtons.map((btn) => (
                             <div key={btn.id} className="flex gap-2">
                               <Input 
@@ -749,7 +749,7 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
                               <Button 
                                 variant="ghost" 
                                 size="icon" 
-                                className="text-muted-foreground-fg hover:text-[#F06452]"
+                                className="text-muted-foreground-fg hover:text-primary"
                                 onClick={() => setCtaButtons(prev => prev.filter(b => b.id !== btn.id))}
                               >
                                 <Trash2 className="w-4 h-4" />
@@ -819,13 +819,13 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
                 ) : (
                   <div className="space-y-8">
                     <div>
-                      <h3 className="text-lg font-manrope font-extrabold text-[#0F172A]">Selecione o Departamento</h3>
-                      <p className="text-sm text-[#64748B] mt-1">Escolha o setor responsável por este disparo.</p>
+                      <h3 className="text-lg font-manrope font-extrabold text-foreground">Selecione o Departamento</h3>
+                      <p className="text-sm text-muted-foreground mt-1">Escolha o setor responsável por este disparo.</p>
                     </div>
                     
                     <div className="space-y-5">
                       <div className="space-y-2">
-                        <Label className="text-xs font-black text-[#0F172A] uppercase tracking-widest">Departamento <span className="text-[#F06452]">*</span></Label>
+                        <Label className="text-xs font-black text-foreground uppercase tracking-widest">Departamento <span className="text-primary">*</span></Label>
                         <Select>
                           <SelectTrigger className="bg-card border-[#E5E7EB] h-12 rounded-xl focus:ring-[#F06452]">
                             <SelectValue placeholder="Selecione um departamento" />
@@ -838,9 +838,9 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
                         </Select>
                       </div>
 
-                      <div className="p-5 bg-[#FDF0ED] border border-dashed border-[#F06452]/20 rounded-2xl flex gap-4">
-                        <HelpCircle className="w-6 h-6 text-[#F06452] shrink-0" />
-                        <p className="text-xs text-[#0F172A] font-semibold leading-relaxed">
+                      <div className="p-5 bg-primary/10 border border-dashed border-primary/20 rounded-2xl flex gap-4">
+                        <HelpCircle className="w-6 h-6 text-primary shrink-0" />
+                        <p className="text-xs text-foreground font-semibold leading-relaxed">
                           As respostas deste disparo serão direcionadas automaticamente para os usuários vinculados a este departamento.
                         </p>
                       </div>
@@ -855,32 +855,32 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
             <div className="animate-in fade-in slide-in-from-bottom-4 duration-500 space-y-8">
               <div className="flex items-center justify-between">
                 <div className="space-y-1">
-                  <h2 className="text-xl font-manrope font-extrabold text-[#0F172A] uppercase tracking-tight">Configurações</h2>
-                  <p className="text-sm text-[#64748B]">Configurações adicionais para o envio</p>
+                  <h2 className="text-xl font-manrope font-extrabold text-foreground uppercase tracking-tight">Configurações</h2>
+                  <p className="text-sm text-muted-foreground">Configurações adicionais para o envio</p>
                 </div>
               </div>
 
-              <div className="bg-[#FDF0ED] border border-[#F06452]/20 rounded-2xl p-5 flex items-center gap-4">
-                <div className="bg-[#F06452] p-2.5 rounded-xl shadow-lg shadow-[#F06452]/20">
+              <div className="bg-primary/10 border border-primary/20 rounded-2xl p-5 flex items-center gap-4">
+                <div className="bg-primary p-2.5 rounded-xl shadow-lg shadow-[#F06452]/20">
                   <Rocket className="w-5 h-5 text-white" />
                 </div>
-                <div className="flex-1 text-sm text-[#0F172A]">
-                  <span className="text-[#64748B]">Hoje este envio dispara </span>
-                  <span className="font-black text-[#F06452]">50 contatos por vez</span>
-                  <span className="text-[#64748B]">, com pausa de </span>
-                  <span className="font-black text-[#F06452]">10 min entre lotes</span>
-                  <span className="text-[#64748B]"> — cerca de </span>
-                  <span className="font-black text-[#F06452]">300 mensagens por hora</span>
-                  <span className="text-[#64748B]">, somente das </span>
-                  <span className="font-black text-[#F06452]">00:00 às 23:59</span>
-                  <span className="text-[#64748B]">.</span>
+                <div className="flex-1 text-sm text-foreground">
+                  <span className="text-muted-foreground">Hoje este envio dispara </span>
+                  <span className="font-black text-primary">50 contatos por vez</span>
+                  <span className="text-muted-foreground">, com pausa de </span>
+                  <span className="font-black text-primary">10 min entre lotes</span>
+                  <span className="text-muted-foreground"> — cerca de </span>
+                  <span className="font-black text-primary">300 mensagens por hora</span>
+                  <span className="text-muted-foreground">, somente das </span>
+                  <span className="font-black text-primary">00:00 às 23:59</span>
+                  <span className="text-muted-foreground">.</span>
                 </div>
               </div>
 
               <div className="space-y-4">
                 <div className="space-y-1">
-                  <Label className="text-xs font-black text-[#0F172A] uppercase tracking-widest">Com que rapidez enviar?</Label>
-                  <p className="text-[11px] text-[#64748B] font-medium">Quanto mais rápido, maior a chance das mensagens serem marcadas como spam.</p>
+                  <Label className="text-xs font-black text-foreground uppercase tracking-widest">Com que rapidez enviar?</Label>
+                  <p className="text-[11px] text-muted-foreground font-medium">Quanto mais rápido, maior a chance das mensagens serem marcadas como spam.</p>
                 </div>
                 
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
@@ -895,20 +895,20 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
                       onClick={() => setSendingSpeed(item.id)}
                       className={cn(
                         "p-5 rounded-2xl border-2 transition-all cursor-pointer flex flex-col gap-4 relative group",
-                        sendingSpeed === item.id ? "bg-[#FDF0ED] border-[#F06452] shadow-sm" : "bg-card border-[#E5E7EB] hover:border-[#F06452]/30"
+                        sendingSpeed === item.id ? "bg-primary/10 border-primary shadow-sm" : "bg-card border-[#E5E7EB] hover:border-primary/30"
                       )}
                     >
                       <div className="flex items-center justify-between">
                         <span className="text-2xl">{item.icon}</span>
-                        {sendingSpeed === item.id && <div className="w-5 h-5 rounded-full bg-[#F06452] flex items-center justify-center shadow-md shadow-[#F06452]/20"><Check className="w-3 h-3 text-white" /></div>}
+                        {sendingSpeed === item.id && <div className="w-5 h-5 rounded-full bg-primary flex items-center justify-center shadow-md shadow-[#F06452]/20"><Check className="w-3 h-3 text-white" /></div>}
                       </div>
                       <div className="space-y-1">
-                        <p className={cn("text-sm font-bold", sendingSpeed === item.id ? "text-[#F06452]" : "text-[#0F172A]")}>{item.label}</p>
-                        <p className="text-[10px] font-black text-[#0F172A]/70 uppercase tracking-tight">{item.speed}</p>
+                        <p className={cn("text-sm font-bold", sendingSpeed === item.id ? "text-primary" : "text-foreground")}>{item.label}</p>
+                        <p className="text-[10px] font-black text-foreground/70 uppercase tracking-tight">{item.speed}</p>
                       </div>
-                      <div className="h-1.5 w-full bg-slate-100 relative overflow-hidden rounded-full">
+                      <div className="h-1.5 w-full bg-muted relative overflow-hidden rounded-full">
                         <div className={cn(
-                          "absolute top-0 left-0 h-full bg-[#F06452] transition-all duration-700 ease-in-out",
+                          "absolute top-0 left-0 h-full bg-primary transition-all duration-700 ease-in-out",
                           item.id === "lento" ? "w-1/4" : item.id === "medio" ? "w-2/4" : item.id === "rapido" ? "w-full" : "w-0"
                         )} />
                       </div>
@@ -917,7 +917,7 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
                           "text-[9px] px-2 py-0.5 rounded-md font-black uppercase tracking-tight",
                           item.id === "rapido" ? "bg-amber-100 text-amber-600" : "bg-green-100 text-green-600"
                         )}>{item.risk}</span>
-                        {item.recommended && <span className="bg-[#F06452] text-white text-[9px] px-2 py-0.5 rounded-md font-black uppercase tracking-tight">Recomendado</span>}
+                        {item.recommended && <span className="bg-primary text-white text-[9px] px-2 py-0.5 rounded-md font-black uppercase tracking-tight">Recomendado</span>}
                       </div>
                     </div>
                   ))}
@@ -927,21 +927,21 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 <div className="bg-card rounded-[2rem] border border-[#E5E7EB] p-8 space-y-6 shadow-xl shadow-slate-200/50">
                   <div className="flex items-center gap-4">
-                    <div className="bg-slate-100 p-2.5 rounded-xl"><Users className="w-5 h-5 text-[#0F172A]" /></div>
+                    <div className="bg-muted p-2.5 rounded-xl"><Users className="w-5 h-5 text-foreground" /></div>
                     <div className="space-y-0.5">
-                      <h4 className="text-sm font-black text-[#0F172A] uppercase tracking-tight">Envio em lotes</h4>
-                      <p className="text-[11px] text-[#64748B] leading-tight font-medium">O sistema manda um grupo, pausa e continua. Mais natural.</p>
+                      <h4 className="text-sm font-black text-foreground uppercase tracking-tight">Envio em lotes</h4>
+                      <p className="text-[11px] text-muted-foreground leading-tight font-medium">O sistema manda um grupo, pausa e continua. Mais natural.</p>
                     </div>
                   </div>
 
                   <div className="bg-muted rounded-2xl p-5 flex gap-4 overflow-x-auto no-scrollbar border border-[#E5E7EB]">
                     {[1, 2, 3].map(i => (
                       <div key={i} className="min-w-[150px] bg-card border border-[#E5E7EB] rounded-xl p-4 text-center space-y-2 shadow-sm">
-                        <p className="text-[10px] font-black text-[#F06452] uppercase tracking-widest">Lote {i}</p>
-                        <p className="text-sm font-black text-[#0F172A]">50 contatos</p>
+                        <p className="text-[10px] font-black text-primary uppercase tracking-widest">Lote {i}</p>
+                        <p className="text-sm font-black text-foreground">50 contatos</p>
                         <div className="flex items-center justify-center gap-2 pt-2 border-t border-slate-50">
-                          <Clock className="w-3.5 h-3.5 text-[#64748B]" />
-                          <span className="text-[11px] font-bold text-[#64748B]">10 min</span>
+                          <Clock className="w-3.5 h-3.5 text-muted-foreground" />
+                          <span className="text-[11px] font-bold text-muted-foreground">10 min</span>
                         </div>
                       </div>
                     ))}
@@ -949,90 +949,90 @@ export function NewCampaignWizard({ open, onOpenChange }: NewCampaignWizardProps
 
                   <div className="grid grid-cols-2 gap-5">
                     <div className="space-y-2">
-                      <Label className="text-xs font-black text-[#0F172A] uppercase tracking-widest">Contatos / Lote</Label>
+                      <Label className="text-xs font-black text-foreground uppercase tracking-widest">Contatos / Lote</Label>
                       <Input 
                         type="number" 
                         value={contactsPerBatch}
                         onChange={(e) => setContactsPerBatch(Number(e.target.value))}
-                        className="bg-card border-[#E5E7EB] h-12 rounded-xl font-bold text-[#0F172A] focus:ring-[#F06452]"
+                        className="bg-card border-[#E5E7EB] h-12 rounded-xl font-bold text-foreground focus:ring-[#F06452]"
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label className="text-xs font-black text-[#0F172A] uppercase tracking-widest">Pausa (minutos)</Label>
+                      <Label className="text-xs font-black text-foreground uppercase tracking-widest">Pausa (minutos)</Label>
                       <Input 
                         type="number" 
                         value={intervalBetweenBatches}
                         onChange={(e) => setIntervalBetweenBatches(Number(e.target.value))}
-                        className="bg-card border-[#E5E7EB] h-12 rounded-xl font-bold text-[#0F172A] focus:ring-[#F06452]"
+                        className="bg-card border-[#E5E7EB] h-12 rounded-xl font-bold text-foreground focus:ring-[#F06452]"
                       />
                     </div>
                   </div>
 
-                  <div className="bg-[#FDF0ED] text-[#F06452] p-4 rounded-xl flex items-center gap-3 border border-[#F06452]/10">
+                  <div className="bg-primary/10 text-primary p-4 rounded-xl flex items-center gap-3 border border-primary/10">
                     <Clock className="w-5 h-5" />
                     <p className="text-[10px] font-black uppercase tracking-tight">Fuso horário: America/Sao Paulo</p>
                   </div>
 
                   <div className="pt-6 border-t border-[#E5E7EB] flex items-center justify-between">
                     <div className="flex items-center gap-4">
-                      <div className="bg-slate-100 p-2.5 rounded-xl"><Calendar className="w-5 h-5 text-[#0F172A]" /></div>
+                      <div className="bg-muted p-2.5 rounded-xl"><Calendar className="w-5 h-5 text-foreground" /></div>
                       <div className="space-y-0.5">
-                        <h4 className="text-sm font-black text-[#0F172A] uppercase tracking-tight">Agendar início?</h4>
-                        <p className="text-[11px] text-[#64748B] leading-tight font-medium">Define quando a campanha deve começar.</p>
+                        <h4 className="text-sm font-black text-foreground uppercase tracking-tight">Agendar início?</h4>
+                        <p className="text-[11px] text-muted-foreground leading-tight font-medium">Define quando a campanha deve começar.</p>
                       </div>
                     </div>
-                    <Switch checked={isScheduled} onCheckedChange={setIsScheduled} className="data-[state=checked]:bg-[#F06452]" />
+                    <Switch checked={isScheduled} onCheckedChange={setIsScheduled} className="data-[state=checked]:bg-primary" />
                   </div>
                 </div>
 
                 <div className="bg-card rounded-[2rem] border border-[#E5E7EB] p-8 space-y-6 shadow-xl shadow-slate-200/50 flex flex-col">
                   <div className="flex items-center gap-4">
-                    <div className="bg-slate-100 p-2.5 rounded-xl"><Clock className="w-5 h-5 text-[#0F172A]" /></div>
+                    <div className="bg-muted p-2.5 rounded-xl"><Clock className="w-5 h-5 text-foreground" /></div>
                     <div className="space-y-0.5">
-                      <h4 className="text-sm font-black text-[#0F172A] uppercase tracking-tight">Horário permitido</h4>
-                      <p className="text-[11px] text-[#64748B] leading-tight font-medium">Fora dessa faixa o envio pausa e volta no dia seguinte.</p>
+                      <h4 className="text-sm font-black text-foreground uppercase tracking-tight">Horário permitido</h4>
+                      <p className="text-[11px] text-muted-foreground leading-tight font-medium">Fora dessa faixa o envio pausa e volta no dia seguinte.</p>
                     </div>
                   </div>
 
                   <div className="flex-1 flex flex-col justify-center py-6">
-                    <div className="relative h-2 w-full mb-10 bg-slate-100 rounded-full">
-                      <div className="absolute top-0 left-0 w-full h-full bg-[#F06452]/20 rounded-full" />
+                    <div className="relative h-2 w-full mb-10 bg-muted rounded-full">
+                      <div className="absolute top-0 left-0 w-full h-full bg-primary/20 rounded-full" />
                       {[0, 6, 12, 18, 24].map(h => (
                         <div key={h} className="absolute top-1/2 -translate-y-1/2 flex flex-col items-center gap-2" style={{ left: `${(h / 24) * 100}%` }}>
-                          <div className="w-3 h-3 rounded-full bg-card border-2 border-[#F06452] shadow-sm" />
-                          <span className="text-[11px] font-black text-[#64748B] mt-5">{h}h</span>
+                          <div className="w-3 h-3 rounded-full bg-card border-2 border-primary shadow-sm" />
+                          <span className="text-[11px] font-black text-muted-foreground mt-5">{h}h</span>
                         </div>
                       ))}
                     </div>
 
                     <div className="flex items-center gap-8 justify-center mt-6">
                       <div className="space-y-2">
-                        <Label className="text-xs font-black text-[#0F172A] uppercase tracking-widest">Começa às</Label>
+                        <Label className="text-xs font-black text-foreground uppercase tracking-widest">Começa às</Label>
                         <div className="flex items-center gap-3">
                           <Input 
                             value={startTime}
                             onChange={(e) => setStartTime(e.target.value)}
-                            className="w-28 bg-card border-[#E5E7EB] h-12 rounded-xl font-bold text-[#0F172A] text-center focus:ring-[#F06452]"
+                            className="w-28 bg-card border-[#E5E7EB] h-12 rounded-xl font-bold text-foreground text-center focus:ring-[#F06452]"
                           />
-                          <Clock className="w-5 h-5 text-[#64748B]" />
+                          <Clock className="w-5 h-5 text-muted-foreground" />
                         </div>
                       </div>
                       <div className="space-y-2">
-                        <Label className="text-xs font-black text-[#0F172A] uppercase tracking-widest">Para às</Label>
+                        <Label className="text-xs font-black text-foreground uppercase tracking-widest">Para às</Label>
                         <div className="flex items-center gap-3">
                           <Input 
                             value={endTime}
                             onChange={(e) => setEndTime(e.target.value)}
-                            className="w-28 bg-card border-[#E5E7EB] h-12 rounded-xl font-bold text-[#0F172A] text-center focus:ring-[#F06452]"
+                            className="w-28 bg-card border-[#E5E7EB] h-12 rounded-xl font-bold text-foreground text-center focus:ring-[#F06452]"
                           />
-                          <Clock className="w-5 h-5 text-[#64748B]" />
+                          <Clock className="w-5 h-5 text-muted-foreground" />
                         </div>
                       </div>
                     </div>
                   </div>
 
                   <Button 
-                    className="w-full bg-[#F06452] hover:bg-[#D95342] text-white font-black h-16 rounded-[1.25rem] shadow-2xl shadow-[#F06452]/30 text-lg uppercase tracking-widest mt-auto transition-all transform active:scale-[0.98]"
+                    className="w-full bg-primary hover:bg-[#D95342] text-white font-black h-16 rounded-[1.25rem] shadow-2xl shadow-[#F06452]/30 text-lg uppercase tracking-widest mt-auto transition-all transform active:scale-[0.98]"
                     onClick={() => onOpenChange(false)}
                   >
                     <Rocket className="w-6 h-6 mr-3" /> Iniciar Envio Agora

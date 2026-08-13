@@ -176,14 +176,14 @@ export function ScannerComponent() {
                 <input 
                   type="text" 
                   placeholder="Código do ingresso manual..."
-                  className="w-full pl-10 pr-4 h-12 bg-white rounded-xl border border-line focus:ring-2 focus:ring-primary/20 outline-none font-bold text-sm"
+                  className="w-full pl-10 pr-4 h-12 bg-card rounded-xl border border-line focus:ring-2 focus:ring-primary/20 outline-none font-bold text-sm"
                   value={manualCode}
                   onChange={(e) => setManualCode(e.target.value)}
                 />
               </div>
               <Button 
                 variant="outline" 
-                className="h-12 px-6 rounded-xl border-line text-foreground font-bold hover:bg-white"
+                className="h-12 px-6 rounded-xl border-line text-foreground font-bold hover:bg-card"
                 onClick={() => handleScan(manualCode)}
               >
                 Validar
@@ -196,7 +196,7 @@ export function ScannerComponent() {
         <div className="space-y-6">
           <Card className={cn(
             "border-2 transition-all duration-500 rounded-[32px] overflow-hidden shadow-xl min-h-[400px] flex flex-col",
-            !scannedResult ? "border-line bg-white" : 
+            !scannedResult ? "border-line bg-card" : 
             scannedResult.success ? "border-emerald-500 bg-emerald-50/30" : "border-red-500 bg-red-50/30"
           )}>
             {!scannedResult ? (
@@ -283,7 +283,7 @@ export function ScannerComponent() {
 function ResultItem({ label, value, icon: Icon }: any) {
   return (
     <div className="flex gap-4 items-center">
-      <div className="w-12 h-12 rounded-2xl bg-white shadow-sm border border-emerald-500/10 flex items-center justify-center text-emerald-600">
+      <div className="w-12 h-12 rounded-2xl bg-card shadow-sm border border-emerald-500/10 flex items-center justify-center text-emerald-600">
         <Icon className="w-6 h-6" />
       </div>
       <div>
