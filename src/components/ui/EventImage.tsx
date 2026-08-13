@@ -4,7 +4,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { ImageOff } from "lucide-react";
 
 interface EventImageProps extends Omit<React.ImgHTMLAttributes<HTMLImageElement>, 'src'> {
-  src?: string | null;
+  src?: string | null | undefined;
   alt: string;
   className?: string;
   containerClassName?: string;
