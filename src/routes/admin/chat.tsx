@@ -221,7 +221,7 @@ function AdminChatPage() {
     }
 
     return sorted;
-  }, [contactsData, sortBy]);
+  }, [contactsData, sortBy, activeTab]);
 
   const messages = useMemo(() => {
     if (!messagesData) return [];
