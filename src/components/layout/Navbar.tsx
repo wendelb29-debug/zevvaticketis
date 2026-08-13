@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { Link, useNavigate, useSearch } from "@tanstack/react-router";
+import { useState, useEffect, useRef } from "react";
+import { Link, useNavigate, useLocation } from "@tanstack/react-router";
 import { MapPin, Search, Ticket, Globe, Menu } from "lucide-react";
 import { AccountMenu } from "./AccountMenu";
 import { useUI } from "@/hooks/use-ui";
@@ -17,8 +17,10 @@ interface NavbarProps {
 export function Navbar({ selectedCity }: { selectedCity?: string | null }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [user, setUser] = useState<any>(null);
-  const { openOverlay, activeOverlay, language, setLanguage } = useUI();
+  const { openOverlay, activeOverlay, language, setLanguage, isHomeSearchVisible, homeSearchTerm, setHomeSearchTerm } = useUI();
   const navigate = useNavigate();
+  const location = useLocation();
+  const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -109,12 +111,28 @@ export function Navbar({ selectedCity }: { selectedCity?: string | null }) {
 
         {/* Search & Actions */}
         <div className="flex items-center gap-6">
-          {isScrolled && (
-            <div className="hidden md:flex items-center animate-in fade-in slide-in-from-right-4 duration-500">
+          {(!isHomeSearchVisible || location.pathname !== "/") && isScrolled && (
+            <div className="hidden md:flex items-center animate-in fade-in slide-in-from-right-1.5 duration-200">
               <div className="relative w-64">
                 <input
+                  ref={inputRef}
                   type="text"
                   placeholder="Buscar..."
+                  value={homeSearchTerm}
+                  onChange={(e) => setHomeSearchTerm(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      navigate({
+                        to: "/eventos",
+                        search: {
+                          busca: homeSearchTerm,
+                          categoria: undefined,
+                          cidade: undefined,
+                          data: undefined,
+                        } as any,
+                      });
+                    }
+                  }}
                   className="w-full bg-background h-10 pl-10 pr-4 rounded-sm text-xs border border-border focus:border-border-strong outline-none text-foreground font-medium transition-all"
                 />
                 <Search className="absolute left-3.5 top-3 w-3.5 h-3.5 text-foreground-muted" />

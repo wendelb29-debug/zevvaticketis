@@ -1,5 +1,5 @@
 import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   Search,
   TrendingUp,
@@ -44,10 +44,10 @@ function HomePage() {
   const [events, setEvents] = useState<any[]>([]);
   const [loadingFeatured, setLoadingFeatured] = useState(true);
   const [loadingEvents, setLoadingEvents] = useState(true);
-  const [searchTerm, setSearchTerm] = useState("");
   const navigate = useNavigate();
-  const { language } = useUI();
+  const { language, setIsHomeSearchVisible, homeSearchTerm, setHomeSearchTerm } = useUI();
   const t = translations[language].home;
+  const searchRef = useRef<HTMLDivElement>(null);
 
   const fetchFeatured = useServerFn(getFeaturedEvents);
 
@@ -81,7 +81,7 @@ function HomePage() {
   }, [fetchFeatured]);
 
   const filteredEvents = events.filter((event: any) => {
-    const q = searchTerm.toLowerCase();
+    const q = homeSearchTerm.toLowerCase();
     const name = (event.title ?? event.nome ?? "").toLowerCase();
     const city = (event.city ?? event.cidade ?? "").toLowerCase();
     return name.includes(q) || city.includes(q);
@@ -122,6 +122,21 @@ function HomePage() {
       toast.error("Erro ao favoritar evento");
     }
   };
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsHomeSearchVisible(entry.isIntersecting);
+      },
+      { threshold: 0.1, rootMargin: "-80px 0px 0px 0px" }
+    );
+
+    if (searchRef.current) {
+      observer.observe(searchRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, [setIsHomeSearchVisible]);
 
   return (
     <div
@@ -182,7 +197,7 @@ function HomePage() {
         {/* City Ticker removed for clean modern look */}
 
         {/* Minimalist Search */}
-        <section className="relative -mt-12 z-20 px-6">
+        <section ref={searchRef} className="relative -mt-12 z-20 px-6">
           <div className="max-w-5xl mx-auto bg-surface p-4 rounded-2xl shadow-2xl border border-border">
             <div className="flex flex-col md:flex-row items-center gap-4">
               <div className="relative flex-1 w-full">
@@ -190,14 +205,14 @@ function HomePage() {
                 <Input
                   placeholder="Qual evento você está procurando?"
                   className="h-14 pl-12 pr-6 text-base rounded-xl border border-border bg-background focus-visible:ring-primary/20 placeholder:text-foreground-muted/50"
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
+                  value={homeSearchTerm}
+                  onChange={(e) => setHomeSearchTerm(e.target.value)}
                   onKeyDown={(e) => {
                     if (e.key === "Enter") {
                       navigate({
                         to: "/eventos",
                         search: {
-                          busca: searchTerm,
+                          busca: homeSearchTerm,
                           categoria: undefined,
                           cidade: undefined,
                           data: undefined,
@@ -224,7 +239,7 @@ function HomePage() {
                   navigate({
                     to: "/eventos",
                     search: {
-                      busca: searchTerm,
+                      busca: homeSearchTerm,
                       categoria: undefined,
                       cidade: undefined,
                       data: undefined,
