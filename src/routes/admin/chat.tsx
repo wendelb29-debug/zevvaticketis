@@ -299,7 +299,7 @@ function AdminChatPage() {
     <TooltipProvider>
       <div className="flex flex-col h-screen bg-background text-foreground overflow-hidden font-inter transition-colors duration-300">
         {/* Header Fixo */}
-        <header className="h-16 flex items-center justify-between px-6 border-b border-border bg-card shrink-0 z-10 shadow-sm">
+        <header className="h-16 flex items-center justify-between px-6 border-b border-border bg-card shrink-0 z-10 shadow-md">
           <div className="flex items-center gap-8">
             <div className="flex items-center gap-4">
               <Link 
@@ -408,7 +408,7 @@ function AdminChatPage() {
           </div>
 
           <div className="p-4 space-y-4">
-            <div className="flex p-1 bg-card rounded-full border border-border">
+            <div className="flex p-1 bg-muted rounded-full border border-border">
               <button 
                 onClick={() => setActiveTab('atendimento')}
                 className={cn(
@@ -1150,7 +1150,7 @@ function AdminChatPage() {
               <div className="space-y-2">
                 <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Tipo de transferência</Label>
                 <Select defaultValue="agent">
-                  <SelectTrigger className="bg-card border-none text-xs h-11">
+                  <SelectTrigger className="bg-muted border-border text-xs h-11">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent className="bg-popover border-border text-foreground">
@@ -1162,7 +1162,7 @@ function AdminChatPage() {
               <div className="space-y-2">
                 <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Destinatário</Label>
                 <Select>
-                  <SelectTrigger className="bg-card border-none text-xs h-11">
+                  <SelectTrigger className="bg-muted border-border text-xs h-11">
                     <SelectValue placeholder="Selecione um agente" />
                   </SelectTrigger>
                   <SelectContent className="bg-popover border-border text-foreground">
@@ -1175,7 +1175,7 @@ function AdminChatPage() {
             <div className="space-y-2">
               <Label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Motivo da transferência</Label>
               <textarea 
-                className="w-full bg-card border-none p-4 rounded-xl text-xs text-foreground placeholder:text-muted-foreground outline-none min-h-[100px] resize-none"
+                className="w-full bg-muted border border-border p-4 rounded-xl text-xs text-foreground placeholder:text-muted-foreground outline-none min-h-[100px] resize-none"
                 placeholder="Explique o motivo da transferência..."
               />
             </div>
@@ -1190,7 +1190,7 @@ function AdminChatPage() {
       <style>{`
         .chat-container {
           background-image: none !important;
-          background-color: var(--background) !important;
+          background-color: var(--color-background) !important;
         }
         .custom-scrollbar::-webkit-scrollbar { width: 4px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
