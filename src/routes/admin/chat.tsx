@@ -154,7 +154,7 @@ function AdminChatPage() {
   }, [selectedContactId, activeTenant?.id]);
 
   const markAsReadMutation = useMutation({
-    mutationFn: (contactId: string) => markMessagesAsRead({ data: { contactId } }),
+    mutationFn: (contactId: string) => markMessagesAsRead({ data: { contactId, tenantId: activeTenant?.id } }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['whatsapp-contacts', activeTenant?.id] });
     }
