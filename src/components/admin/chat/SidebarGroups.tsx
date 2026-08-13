@@ -115,7 +115,7 @@ export function SidebarGroups({ isOpen, onClose, contactId, tenantId }: SidebarG
                       className="flex-1 text-sm font-medium cursor-pointer flex items-center justify-between"
                     >
                       <span>{group.name}</span>
-                      <div className="w-3 h-3 rounded-full" style={{ backgroundColor: group.color }} />
+                      <div className="w-3 h-3 rounded-full" style={{ backgroundColor: group.color || '#E35B62' }} />
                     </label>
                   </div>
                 ))}
