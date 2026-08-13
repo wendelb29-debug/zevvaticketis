@@ -119,7 +119,7 @@ export function Navbar({ selectedCity }: { selectedCity?: string | null }) {
 
         {/* Search & Actions */}
         <div className="flex items-center gap-6">
-          {(!isHomeSearchVisible || location.pathname !== "/") && isScrolled && (
+          {isScrolled && (
             <div className="hidden md:flex items-center animate-in fade-in slide-in-from-right-1.5 duration-200">
               <div className="relative w-64">
                 <input
