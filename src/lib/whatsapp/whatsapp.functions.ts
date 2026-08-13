@@ -111,17 +111,30 @@ export const getWhatsAppIntegrationStatus = createServerFn({ method: "GET" })
   .inputValidator((data) => z.object({
     tenantId: z.string().uuid().optional()
   }).parse(data))
-  .handler(async ({ data }) => {
+  .handler(async ({ data, context }) => {
     if (!data.tenantId) return { status: 'offline', details: 'No tenant selected' };
 
     // Check whatsapp_integrations (Meta API)
     const { data: integration, error: integrationError } = await supabase
       .from('whatsapp_integrations')
-      .select('status, updated_at')
+      .select('id, status, updated_at')
       .eq('project_id', data.tenantId)
       .maybeSingle();
 
     if (integrationError) throw integrationError;
+
+    // Log connection check for auditing
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    if (integration?.status !== 'active') {
+       await supabaseAdmin.from('audit_logs').insert({
+        admin_id: context.userId,
+        acao: 'check_whatsapp_connection_failure',
+        alvo_tipo: 'whatsapp_integration',
+        alvo_id: integration?.id || 'none',
+        categoria: 'System',
+        payload: { tenantId: data.tenantId, status: integration?.status || 'missing' }
+      });
+    }
 
     // Check UAZAPI instances if no Meta API or if status is not active
     // This is a simplified check for connection "health"
