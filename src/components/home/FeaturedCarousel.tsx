@@ -108,7 +108,7 @@ export function FeaturedCarousel({ events }: FeaturedCarouselProps) {
 
                 <div className="flex items-center gap-8 pt-4">
                   <button 
-                    onClick={() => navigate({ to: '/eventos', search: { id: currentEvent?.id, categoria: undefined } as any })}
+                    onClick={() => navigate({ to: '/eventos/$id', params: { id: currentEvent?.id } })}
                     className="h-14 px-10 bg-white text-dark-surface text-sm font-bold uppercase tracking-widest hover:bg-white/90 transition-all rounded-md shadow-2xl"
                   >
                     Garantir minha vaga

@@ -151,7 +151,7 @@ function HomePage() {
               </p>
               <div className="flex flex-wrap gap-4 pt-4">
                 <button 
-                  onClick={() => navigate({ to: '/eventos', search: { id: undefined, categoria: undefined } as any })}
+                  onClick={() => navigate({ to: '/eventos', search: { busca: undefined, categoria: undefined, cidade: undefined, data: undefined } as any })}
                   className="h-14 px-10 bg-primary text-white font-bold rounded-md hover:bg-primary-hover transition-all shadow-xl shadow-primary/20 flex items-center gap-3"
                 >
                   Explorar eventos
@@ -182,6 +182,11 @@ function HomePage() {
                   className="h-14 pl-12 pr-6 text-base rounded-xl border border-border bg-background focus-visible:ring-primary/20 placeholder:text-foreground-muted/50"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      navigate({ to: '/eventos', search: { busca: searchTerm, categoria: undefined, cidade: undefined, data: undefined } as any });
+                    }
+                  }}
                 />
               </div>
               
@@ -196,7 +201,10 @@ function HomePage() {
                 </button>
               </div>
 
-              <button className="w-full md:w-auto h-14 px-10 bg-primary text-white font-bold rounded-xl hover:bg-primary-hover transition-all shadow-lg shadow-primary/10">
+              <button 
+                onClick={() => navigate({ to: '/eventos', search: { busca: searchTerm, categoria: undefined, cidade: undefined, data: undefined } as any })}
+                className="w-full md:w-auto h-14 px-10 bg-primary text-white font-bold rounded-xl hover:bg-primary-hover transition-all shadow-lg shadow-primary/10"
+              >
                 Buscar agora
               </button>
             </div>
@@ -291,7 +299,7 @@ function HomePage() {
               </div>
               <Link 
                 to="/eventos" 
-                search={{ categoria: undefined, id: undefined }}
+                search={{ categoria: undefined, busca: undefined, cidade: undefined, data: undefined } as any}
                 className="flex items-center gap-2 text-sm font-bold text-primary hover:text-primary-hover transition-colors"
               >
                 Ver Agenda Completa <ArrowRight className="w-3 h-3" />
