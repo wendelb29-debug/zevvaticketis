@@ -175,7 +175,26 @@ function AdminChatPage() {
   const contacts = useMemo(() => {
     if (!contactsData) return [];
     
-    let sorted = [...contactsData].map(c => {
+    // Filtro cliente por status de atendimento (Em Atendimento vs Espera)
+    // Para simplificar agora, vamos usar a direção da última mensagem
+    // Inbound sem resposta recente = Espera. Outbound recente = Atendimento.
+    let filtered = [...contactsData];
+    
+    if (activeTab === 'espera') {
+      filtered = filtered.filter(c => {
+        const msgs = (c.whatsapp_messages as any[]) || [];
+        const lastMsg = msgs[msgs.length - 1];
+        return lastMsg?.direction === 'inbound';
+      });
+    } else {
+      filtered = filtered.filter(c => {
+        const msgs = (c.whatsapp_messages as any[]) || [];
+        const lastMsg = msgs[msgs.length - 1];
+        return !lastMsg || lastMsg?.direction === 'outbound';
+      });
+    }
+
+    let sorted = filtered.map(c => {
       const msgs = (c.whatsapp_messages as any[]) || [];
       const lastMsg = msgs[msgs.length - 1];
       
