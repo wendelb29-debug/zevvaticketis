@@ -1226,7 +1226,7 @@ function AdminChatPage() {
       <SidebarTransfer 
         isOpen={isTransferDialogOpen} 
         onClose={() => setIsTransferDialogOpen(false)}
-        contactId={selectedContactId || ''}
+        contactId={selectedAttendanceId || selectedContactId || ''}
         tenantId={activeTenant?.id || ''}
       />
 
