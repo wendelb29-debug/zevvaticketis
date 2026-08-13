@@ -25,11 +25,16 @@ export function Navbar({ selectedCity }: { selectedCity?: string | null }) {
   useEffect(() => {
     const handleScroll = () => {
       const scrollPos = window.scrollY || document.documentElement.scrollTop;
-      setIsScrolled(scrollPos > 20);
+      setIsScrolled(scrollPos > 10);
     };
     handleScroll();
     window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
+    // Also check on a small interval for cases where scroll events might be missed or suppressed
+    const interval = setInterval(handleScroll, 500);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      clearInterval(interval);
+    };
   }, []);
 
   useEffect(() => {
