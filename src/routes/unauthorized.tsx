@@ -92,7 +92,7 @@ function UnauthorizedPage() {
 
         <div className="pt-6">
           <Link to={details.actionHref as any}>
-            <Button className="w-full h-14 rounded-xl bg-navy hover:bg-navy/90 text-white font-bold text-lg shadow-lg shadow-navy/20 flex items-center justify-center gap-2">
+            <Button className="w-full h-14 rounded-xl font-bold text-lg shadow-lg">
               <ArrowLeft className="w-5 h-5" />
               {details.actionLabel}
             </Button>
