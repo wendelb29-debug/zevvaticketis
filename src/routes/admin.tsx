@@ -462,13 +462,27 @@ function AdminLayout() {
 
   return (
     <div className="flex min-h-dvh bg-background font-inter overflow-x-hidden relative">
-      <aside className="sticky top-0 h-dvh shrink-0 z-40">
+      {/* Sidebar Desktop */}
+      <aside className="sticky top-0 h-dvh shrink-0 z-40 hidden md:block">
         <SidebarContent />
       </aside>
       
       <main className="min-w-0 flex-1 flex flex-col">
-        <header className="h-16 border-b border-border bg-card/80 backdrop-blur-md flex items-center justify-between px-8 sticky top-0 z-30 shrink-0">
+        <header className="h-16 border-b border-border bg-card/80 backdrop-blur-md flex items-center justify-between px-4 md:px-8 sticky top-0 z-30 shrink-0">
           <div className="flex items-center gap-4">
+            {/* Mobile Navigation */}
+            <div className="md:hidden">
+              <Sheet>
+                <SheetTrigger asChild>
+                  <button className="p-2 hover:bg-accent rounded-lg transition-all text-foreground outline-none border border-border">
+                    <Menu className="w-5 h-5" />
+                  </button>
+                </SheetTrigger>
+                <SheetContent side="left" className="p-0 w-72 bg-card border-r-border">
+                  <SidebarContent />
+                </SheetContent>
+              </Sheet>
+            </div>
             <GlobalBreadcrumb />
           </div>
           <div className="flex items-center gap-3">
