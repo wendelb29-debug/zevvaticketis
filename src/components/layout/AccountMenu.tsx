@@ -17,7 +17,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 interface AccountMenuProps {
   user: any;
-  onLogout: () => void;
+  onLogout: () => Promise<void>;
   onNavigate: (path: string) => void;
   onOpenAuth: () => void;
 }

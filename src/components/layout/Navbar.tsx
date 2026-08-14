@@ -161,6 +161,7 @@ export function Navbar({ selectedCity }: { selectedCity?: string | null }) {
                       onClick={(e) => {
                         e.stopPropagation();
                         setLanguage(lang.id as any);
+                        closeOverlay();
                       }}
                       className={cn(
                         "w-full text-left px-3 py-2 rounded-md text-xs font-bold transition-all",

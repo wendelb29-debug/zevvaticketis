@@ -187,7 +187,7 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
-  const { activeOverlay, authView, closeOverlay, language: rawLanguage, theme, fontSize, userId: storeUserId } = useUI() as any;
+  const { activeOverlay, authView, closeOverlay, language: rawLanguage, theme, fontSize, userId: storeUserId, logout: uiLogout } = useUI() as any;
   const language = normalizeLocale(rawLanguage);
   const router = useRouter();
   const location = useLocation();
@@ -205,6 +205,7 @@ function RootComponent() {
         useUI.getState().syncWithBackend(session.user.id);
       } else if (storeUserId) {
         useUI.getState().syncWithBackend(null);
+      }
     });
 
     return () => {
@@ -304,6 +305,16 @@ function RootComponent() {
           defaultView={authView}
         />
         
+        <AccountMenu
+          user={session?.user}
+          onLogout={async () => {
+            await supabase.auth.signOut();
+            await uiLogout();
+          }}
+          onNavigate={(path) => router.navigate({ to: path as any })}
+          onOpenAuth={() => useUI.getState().openOverlay("auth", "login")}
+        />
+
         <LocationModal 
           isOpen={activeOverlay === 'location'}
           onClose={closeOverlay}

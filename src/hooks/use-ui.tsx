@@ -35,6 +35,7 @@ interface UIStore extends UIPreferences {
   setFontSize: (size: number) => Promise<void>;
   setIsHomeSearchVisible: (visible: boolean) => void;
   setHomeSearchTerm: (term: string) => void;
+  logout: () => Promise<void>;
   
   // Internal/Sync Actions
   initialize: () => Promise<void>;
@@ -84,6 +85,16 @@ export const useUI = create<UIStore>()(
       closeOverlay: () => set({ activeOverlay: null }),
       setIsHomeSearchVisible: (visible) => set({ isHomeSearchVisible: visible }),
       setHomeSearchTerm: (term) => set({ homeSearchTerm: term }),
+      logout: async () => {
+        set({ 
+          userId: null,
+          language: getBrowserLocale(),
+          theme: 'system',
+          fontSize: 100,
+          timezone: null
+        });
+        get().updateResolvedTheme();
+      },
 
       // Preference Actions
       setLanguage: async (lang) => {
