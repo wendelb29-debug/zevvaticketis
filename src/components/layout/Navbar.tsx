@@ -18,7 +18,7 @@ interface NavbarProps {
 export function Navbar({ selectedCity }: { selectedCity?: string | null }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [user, setUser] = useState<any>(null);
-  const { openOverlay, activeOverlay, language, setLanguage, isHomeSearchVisible, homeSearchTerm, setHomeSearchTerm } = useUI();
+  const { openOverlay, activeOverlay, closeOverlay, language, setLanguage, isHomeSearchVisible, homeSearchTerm, setHomeSearchTerm } = useUI();
   const navigate = useNavigate();
   const location = useLocation();
   const inputRef = useRef<HTMLInputElement>(null);
@@ -179,7 +179,7 @@ export function Navbar({ selectedCity }: { selectedCity?: string | null }) {
 
             <AccountMenu
               user={user}
-              onLogout={() => supabase.auth.signOut()}
+              onLogout={async () => { await supabase.auth.signOut(); }}
               onNavigate={(path) => navigate({ to: path as any })}
               onOpenAuth={() => openOverlay("auth", "login")}
             />

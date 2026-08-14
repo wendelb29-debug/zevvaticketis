@@ -1,9 +1,130 @@
 export type SupportedLocale = 'pt-BR' | 'en-US' | 'es-ES';
 export type ThemePreference = 'light' | 'dark' | 'system';
+
+export type NavSchema = {
+  explore: string;
+  caravans: string;
+  courses: string;
+  plans: string;
+  organizer: string;
+  login: string;
+  searchPlaceholder: string;
+  createEvent: string;
+  searchFull: string;
+  where: string;
+  when: string;
+  search: string;
+  agenda: string;
+  profile: string;
+  logout: string;
+};
+
+export type NavigationSchema = {
+  chat: string;
+  masterConsole: string;
+  dashboard: string;
+  contacts: string;
+  allContacts: string;
+  customerGroups: string;
+  checkin: string;
+  generalPanel: string;
+  reports: string;
+  globalMonitor: string;
+  plans: string;
+  countriesAndCurrencies: string;
+  marketing: string;
+  ads: string;
+  advertising: string;
+  pushNotifications: string;
+  massOutreach: string;
+  createNew: string;
+  outreach: string;
+  emails: string;
+  templates: string;
+  gmailInbox: string;
+  settings: string;
+  language: string;
+};
+
+export type CommonSchema = {
+  save: string;
+  cancel: string;
+  loading: string;
+  error: string;
+  success: string;
+  back: string;
+};
+
+export type HomeSchema = {
+  featuredLabel: string;
+  ensureSpot: string;
+  from: string;
+  free: string;
+  toDefine: string;
+  checkTickets: string;
+  heroTitle: string;
+  heroSubtitle: string;
+  exploreEvents: string;
+  createMyEvent: string;
+  featured: string;
+  featuredSubtitle: string;
+  categories: string;
+  categoriesSubtitle: string;
+  suggested: string;
+  suggestedSubtitle: string;
+  upcoming: string;
+  upcomingSubtitle: string;
+  coursesTitle: string;
+  coursesSubtitle: string;
+  caravansTitle: string;
+  caravansSubtitle: string;
+  benefitsTitle: string;
+  benefitsSubtitle: string;
+  benefitSecurePayment: string;
+  benefitSecurePaymentDesc: string;
+  benefitSupport: string;
+  benefitSupportDesc: string;
+  benefitDigitalTicket: string;
+  benefitDigitalTicketDesc: string;
+  organizerTitle: string;
+  organizerSubtitle: string;
+  organizerStart: string;
+  organizerTalk: string;
+  faqTitle: string;
+  faq1Question: string;
+  faq1Answer: string;
+  faq2Question: string;
+  faq2Answer: string;
+  faq3Question: string;
+  faq3Answer: string;
+  faq4Question: string;
+  faq4Answer: string;
+};
+
+export type FooterSchema = {
+  about: string;
+  description: string;
+  platform: string;
+  help: string;
+  newsletter: string;
+  newsletterPlaceholder: string;
+  subscribe: string;
+  rights: string;
+  support: string;
+  helpCenter: string;
+  terms: string;
+  privacy: string;
+  refund: string;
+  producerPanel: string;
+  explore: string;
+  courses: string;
+  caravans: string;
+};
+
 export type TranslationSchema = {
-  nav: Record<string, string>;
-  navigation: Record<string, string>;
-  home: Record<string, string>;
-  footer: Record<string, string>;
-  common: Record<string, string>;
+  nav: NavSchema;
+  navigation: NavigationSchema;
+  home: HomeSchema;
+  footer: FooterSchema;
+  common: CommonSchema;
 };

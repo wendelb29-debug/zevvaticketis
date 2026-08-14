@@ -311,7 +311,7 @@ function RootComponent() {
             await supabase.auth.signOut();
             await uiLogout();
           }}
-          onNavigate={(path) => router.navigate({ to: path as any })}
+          onNavigate={(path: string) => router.navigate({ to: path as any })}
           onOpenAuth={() => useUI.getState().openOverlay("auth", "login")}
         />
 
