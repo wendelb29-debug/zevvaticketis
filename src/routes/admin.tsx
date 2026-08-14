@@ -483,7 +483,7 @@ function AdminLayout() {
         </header>
 
         <div className={cn(
-          "flex-1 p-6 transition-all duration-300",
+          "flex-1 transition-all duration-300",
           isTransitioning ? "opacity-0 translate-y-2" : "opacity-100 translate-y-0"
         )}>
           <Outlet />
