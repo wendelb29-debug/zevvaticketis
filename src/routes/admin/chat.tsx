@@ -351,8 +351,9 @@ function AdminChatPage() {
                     </div>
                     <p className="text-[10px] text-muted-foreground">
                       {integrationStatus?.status === 'online' 
-                        ? "Sua integração com o WhatsApp está funcionando normalmente e pronta para enviar/receber mensagens." 
-                        : "Detectamos uma falha na conexão com o WhatsApp. eu rastrear quando algo não estiver interligado. Adicionar testes automatizados de isolamento multi-tenant para garantir que mensagens e estado de leitura nunca vazem ou fiquem desinterligados."}
+                        ? "Sua integração com o WhatsApp está funcionando normalmente." 
+                        : "Detectamos uma falha na conexão com o WhatsApp. Verifique as configurações de instância."}
+
                     </p>
                     {integrationStatus?.status !== 'online' && (
                       <Button 
