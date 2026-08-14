@@ -429,6 +429,25 @@ function AdminLayout() {
           {isSidebarCollapsed ? (
             <Tooltip>
               <TooltipTrigger asChild>
+                <div className="flex items-center justify-center w-full h-full">
+                  <SettingsIcon className="w-5 h-5 shrink-0" />
+                </div>
+              </TooltipTrigger>
+              <TooltipContent side="right">
+                <p className="font-black uppercase tracking-widest text-[10px]">{nav['settings'] || "Configurações"}</p>
+              </TooltipContent>
+            </Tooltip>
+          ) : (
+            <>
+              <SettingsIcon className="w-5 h-5 shrink-0 text-muted-foreground" />
+              <span className="truncate">{nav['settings'] || "Configurações"}</span>
+            </>
+          )}
+        </Link>
+      </div>
+
+            <Tooltip>
+              <TooltipTrigger asChild>
                 <button 
                   className="flex items-center justify-center w-full h-full outline-none focus:ring-2 focus:ring-primary rounded-lg transition-all"
                   aria-label={nav['settings'] || "Configurações"}
