@@ -658,7 +658,7 @@ function AdminChatPage() {
         </Dialog>
 
         {/* 4. ÁREA DA CONVERSA */}
-        <div className="flex-1 flex flex-col bg-background dark:bg-wa-bg shrink-0 relative">
+        <div className="flex-1 flex flex-col bg-background dark:bg-wa-bg min-w-0 relative">
           {selectedContactId ? (
             <>
               {/* Cabeçalho da Conversa */}
