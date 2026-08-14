@@ -18,6 +18,7 @@ import { supabase } from "@/integrations/supabase/client";
 import "@/i18n/config";
 import { useTranslation } from "react-i18next";
 import i18next from "i18next";
+import { normalizeLocale } from "@/lib/i18n/locales";
 
 
 
