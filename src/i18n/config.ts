@@ -61,6 +61,7 @@ i18n
   .init({
     resources,
     fallbackLng: 'pt-BR',
+    defaultNS: 'translation',
     ns: ['navigation', 'nav', 'home', 'footer', 'common'],
     defaultNS: 'common',
     interpolation: {

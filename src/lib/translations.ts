@@ -143,6 +143,14 @@ export const translations = {
       settings: "Settings",
       language: "Language"
     },
+    common: {
+      save: "Save",
+      cancel: "Cancel",
+      loading: "Loading...",
+      error: "Error",
+      success: "Success",
+      back: "Back"
+    },
     home: {
       featuredLabel: "Featured",
       ensureSpot: "Book Now",
@@ -230,6 +238,14 @@ export const translations = {
       gmailInbox: "Bandeja de Gmail",
       settings: "Configuración",
       language: "Idioma"
+    },
+    common: {
+      save: "Guardar",
+      cancel: "Cancelar",
+      loading: "Cargando...",
+      error: "Error",
+      success: "Éxito",
+      back: "Volver"
     },
     home: {
       featuredLabel: "Destacado",
