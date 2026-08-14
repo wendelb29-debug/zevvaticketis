@@ -90,7 +90,15 @@ export const translations = {
       organizerSubtitle: "Temos as melhores ferramentas de gestão, vendas e check-in para o seu negócio.",
       organizerStart: "Começar agora",
       organizerTalk: "Falar com especialista",
-      faqTitle: "Dúvidas frequentes"
+      faqTitle: "Dúvidas frequentes",
+      faq1Question: "Como funcionam as caravanas internacionais?",
+      faq1Answer: "Nossas caravanas são pacotes completos que incluem passagem, hospedagem, roteiro guiado e acesso a eventos. Tudo é gerenciado através da nossa plataforma com total segurança.",
+      faq2Question: "Posso pagar com cartão de crédito internacional?",
+      faq2Answer: "Sim! Aceitamos cartões de crédito internacionais, Apple Pay, Google Pay e também Pix com cotação atualizada em tempo real para sua comodidade.",
+      faq3Question: "Como recebo meu ingresso após a compra?",
+      faq3Answer: "Imediatamente após a confirmação do pagamento, seu ingresso digital com QR Code estará disponível na seção 'Meus Ingressos' da sua conta Zevva.",
+      faq4Question: "É seguro comprar na Zevva Tickets?",
+      faq4Answer: "Sim. Utilizamos tecnologia de ponta para processamento de pagamentos e criptografia de dados, garantindo que sua experiênca seja 100% protegida."
     },
     footer: {
       about: "Sobre a Zevva",
@@ -199,7 +207,15 @@ export const translations = {
       organizerSubtitle: "We have the best management, sales and check-in tools for your business.",
       organizerStart: "Start now",
       organizerTalk: "Talk to specialist",
-      faqTitle: "Frequently asked questions"
+      faqTitle: "Frequently asked questions",
+      faq1Question: "How do international caravans work?",
+      faq1Answer: "Our caravans are complete packages that include airfare, accommodation, guided itinerary, and event access. Everything is managed through our platform with total security.",
+      faq2Question: "Can I pay with an international credit card?",
+      faq2Answer: "Yes! We accept international credit cards, Apple Pay, Google Pay, and also Pix with real-time updated rates for your convenience.",
+      faq3Question: "How do I receive my ticket after purchase?",
+      faq3Answer: "Immediately after payment confirmation, your digital ticket with a QR Code will be available in the 'My Tickets' section of your Zevva account.",
+      faq4Question: "Is it safe to buy on Zevva Tickets?",
+      faq4Answer: "Yes. We use cutting-edge technology for payment processing and data encryption, ensuring your experience is 100% protected."
     },
     footer: {
       about: "About Zevva",
@@ -308,7 +324,15 @@ export const translations = {
       organizerSubtitle: "Tenemos las mejores herramientas de gestión, ventas y check-in para tu negocio.",
       organizerStart: "Empezar ahora",
       organizerTalk: "Hablar con especialista",
-      faqTitle: "Preguntas frecuentes"
+      faqTitle: "Preguntas frecuentes",
+      faq1Question: "¿Cómo funcionan las caravanas internacionales?",
+      faq1Answer: "Nuestras caravanas son paquetes completos que incluyen pasaje aéreo, alojamiento, itinerario guiado y acceso a eventos. Todo se gestiona a través de nuestra plataforma con total seguridad.",
+      faq2Question: "¿Puedo pagar con tarjeta de crédito internacional?",
+      faq2Answer: "¡Sí! Aceptamos tarjetas de crédito internacionales, Apple Pay, Google Pay y también Pix con cotización actualizada en tiempo real para su comodidad.",
+      faq3Question: "¿Cómo recibo mi entrada después de la compra?",
+      faq3Answer: "Inmediatamente después de la confirmación del pago, su entrada digital con código QR estará disponible en la sección 'Mis Entradas' de su cuenta Zevva.",
+      faq4Question: "¿Es seguro comprar en Zevva Tickets?",
+      faq4Answer: "Sí. Utilizamos tecnología de punta para el procesamiento de pagos y el cifrado de datos, garantizando que su experiencia esté 100% protegida."
     },
     footer: {
       about: "Sobre Zevva",
