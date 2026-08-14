@@ -156,13 +156,8 @@ export function AdminDashboardBI() {
         revenue: c.sales_attribution?.reduce((acc: number, curr: any) => acc + (Number(curr.amount) || 0), 0) || 0
       })) || []);
 
-      setFunnelData([
-        { step: "Visitantes", val: 100 },
-        { step: "Visualizou Evento", val: 65 },
-        { step: "Checkout", val: 25 },
-        { step: "Pagamento", val: 12 },
-        { step: "Conversão", val: 8 }
-      ]);
+      setFunnelData([]); // TODO: Implement real funnel data from analytics/logs
+
 
       
     } catch (error) {
