@@ -461,11 +461,13 @@ function AdminLayout() {
   );
 
   return (
-    <div className="min-h-screen flex bg-background">
-      <SidebarContent />
+    <div className="min-h-dvh flex bg-background font-inter overflow-x-hidden relative">
+      <aside className="h-dvh sticky top-0 z-40 shrink-0">
+        <SidebarContent />
+      </aside>
       
-      <main className="flex-1 flex flex-col h-screen overflow-hidden">
-        <header className="h-16 border-b border-border bg-card/80 backdrop-blur-md flex items-center justify-between px-8 shrink-0">
+      <main className="flex-1 min-w-0 flex flex-col">
+        <header className="h-16 border-b border-border bg-card/80 backdrop-blur-md flex items-center justify-between px-8 sticky top-0 z-30 shrink-0">
           <div className="flex items-center gap-4">
             <GlobalBreadcrumb />
           </div>
@@ -481,7 +483,7 @@ function AdminLayout() {
         </header>
 
         <div className={cn(
-          "flex-1 overflow-y-auto bg-[#F6F7F8] dark:bg-[#0A0A0B] transition-all duration-300",
+          "flex-1 p-6 transition-all duration-300",
           isTransitioning ? "opacity-0 translate-y-2" : "opacity-100 translate-y-0"
         )}>
           <Outlet />
