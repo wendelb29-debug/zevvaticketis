@@ -306,15 +306,6 @@ function RootComponent() {
           defaultView={authView}
         />
         
-        <AccountMenu
-          user={session?.user}
-          onLogout={async () => {
-            await supabase.auth.signOut();
-            await uiLogout();
-          }}
-          onNavigate={(path: string) => router.navigate({ to: path as any })}
-          onOpenAuth={() => useUI.getState().openOverlay("auth", "login")}
-        />
 
         <LocationModal 
           isOpen={activeOverlay === 'location'}
