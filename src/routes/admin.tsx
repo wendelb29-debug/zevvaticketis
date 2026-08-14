@@ -213,17 +213,20 @@ function AdminLayout() {
     return null;
   }
 
-  const SidebarContent = () => (
-    <TooltipProvider>
-      <div className={cn(
-        "flex h-dvh min-h-0 flex-col bg-card border-r border-border transition-all duration-300 ease-in-out",
-        isSidebarCollapsed ? "w-20" : "w-72"
-      )}>
-        {/* Cabeçalho: shrink-0 */}
+  const SidebarContent = ({ forceExpanded = false }: { forceExpanded?: boolean }) => {
+    const effectiveCollapsed = forceExpanded ? false : isSidebarCollapsed;
+    
+    return (
+      <TooltipProvider>
         <div className={cn(
-          "shrink-0 px-6 py-8 flex items-center justify-between gap-2", 
-          isSidebarCollapsed && "px-4 justify-center flex-col gap-4"
+          "flex h-dvh min-h-0 flex-col bg-card border-r border-border transition-all duration-300 ease-in-out",
+          effectiveCollapsed ? "w-20" : "w-72"
         )}>
+          {/* Cabeçalho: shrink-0 */}
+          <div className={cn(
+            "shrink-0 px-6 py-8 flex items-center justify-between gap-2", 
+            effectiveCollapsed && "px-4 justify-center flex-col gap-4"
+          )}>
           <Tooltip>
             <TooltipTrigger asChild>
               <Link 
