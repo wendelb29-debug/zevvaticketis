@@ -482,7 +482,7 @@ function UserProfile() {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <Button variant="outline" className="h-14 rounded-xl font-bold border-border hover:bg-card transition-all active:scale-95">
+            <Button variant="outline" onClick={handleUpdatePassword} className="h-14 rounded-xl font-bold border-border hover:bg-card transition-all active:scale-95">
               <Lock className="w-4 h-4 mr-2" /> Alterar Senha
             </Button>
             <Button variant="outline" className="h-14 rounded-xl font-bold border-border hover:bg-card transition-all active:scale-95">
