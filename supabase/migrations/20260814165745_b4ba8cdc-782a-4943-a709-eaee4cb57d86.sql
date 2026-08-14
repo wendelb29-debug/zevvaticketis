@@ -1,0 +1,1 @@
+DELETE FROM public.events WHERE slug IN ('caravana-israel-2024', 'congresso-lideranca-2024', 'workshop-fotografia-digital', 'show-musica-ao-vivo'); DELETE FROM public.tenants WHERE slug IN ('zevva-produtor-demo', 'igreja-batista-central', 'fotografia-pro-events');
