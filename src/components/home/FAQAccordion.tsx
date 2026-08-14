@@ -1,4 +1,4 @@
-import {
+import { 
   Accordion,
   AccordionContent,
   AccordionItem,
@@ -13,20 +13,20 @@ export function FAQAccordion() {
 
   const faqs = [
     {
-      question: t.faq1Question || "Como funcionam as caravanas internacionais?",
-      answer: t.faq1Answer || "Nossas caravanas são pacotes completos que incluem passagem, hospedagem, roteiro guiado e acesso a eventos. Tudo é gerenciado através da nossa plataforma com total segurança."
+      question: t['faq1Question'] || "Como funcionam as caravanas internacionais?",
+      answer: t['faq1Answer'] || "Nossas caravanas são pacotes completos que incluem passagem, hospedagem, roteiro guiado e acesso a eventos. Tudo é gerenciado através da nossa plataforma com total segurança."
     },
     {
-      question: t.faq2Question || "Posso pagar com cartão de crédito internacional?",
-      answer: t.faq2Answer || "Sim! Aceitamos cartões de crédito internacionais, Apple Pay, Google Pay e também Pix com cotação atualizada em tempo real para sua comodidade."
+      question: t['faq2Question'] || "Posso pagar com cartão de crédito internacional?",
+      answer: t['faq2Answer'] || "Sim! Aceitamos cartões de crédito internacionais, Apple Pay, Google Pay e também Pix com cotação atualizada em tempo real para sua comodidade."
     },
     {
-      question: t.faq3Question || "Como recebo meu ingresso após a compra?",
-      answer: t.faq3Answer || "Imediatamente após a confirmação do pagamento, seu ingresso digital com QR Code estará disponível na seção 'Meus Ingressos' da sua conta Zevva."
+      question: t['faq3Question'] || "Como recebo meu ingresso após a compra?",
+      answer: t['faq3Answer'] || "Imediatamente após a confirmação do pagamento, seu ingresso digital com QR Code estará disponível na seção 'Meus Ingressos' da sua conta Zevva."
     },
     {
-      question: t.faq4Question || "É seguro comprar na Zevva Tickets?",
-      answer: t.faq4Answer || "Sim. Utilizamos tecnologia de ponta para processamento de pagamentos e criptografia de dados, garantindo que sua experiênca seja 100% protegida."
+      question: t['faq4Question'] || "É seguro comprar na Zevva Tickets?",
+      answer: t['faq4Answer'] || "Sim. Utilizamos tecnologia de ponta para processamento de pagamentos e criptografia de dados, garantindo que sua experiênca seja 100% protegida."
     }
   ];
 

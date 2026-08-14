@@ -20,7 +20,6 @@ interface FeaturedCarouselProps {
 }
 
 import { useUI } from "@/hooks/use-ui";
-import { translations } from "@/lib/translations";
 import { getTranslations } from "@/lib/i18n-utils";
 import { formatCurrency, formatDate } from "@/lib/i18n-helpers";
 
@@ -60,13 +59,13 @@ export function FeaturedCarousel({ events }: FeaturedCarouselProps) {
   const currentEvent = events[currentIndex];
 
   const displayDate = (dateStr: string | null) => {
-    if (!dateStr) return t.toDefine;
+    if (!dateStr) return t['toDefine'];
     return formatDate(dateStr, language);
   };
 
   const displayPrice = (price: number | null) => {
-    if (price === null || price === undefined) return t.checkTickets;
-    if (price === 0) return t.free;
+    if (price === null || price === undefined) return t['checkTickets'];
+    if (price === 0) return t['free'];
     return formatCurrency(price, 'BRL', language);
   };
 
@@ -105,7 +104,7 @@ export function FeaturedCarousel({ events }: FeaturedCarouselProps) {
                 className="space-y-6"
               >
                 <div className="inline-flex items-center gap-2 px-3 py-1 bg-primary text-primary-foreground text-[10px] font-bold uppercase tracking-wider rounded-md shadow-lg shadow-primary/20">
-                  {t.featuredLabel}
+                  {t['featuredLabel']}
                 </div>
 
                 <h2 className="text-4xl md:text-6xl font-manrope font-extrabold text-primary-foreground leading-tight tracking-tight">
@@ -134,13 +133,13 @@ export function FeaturedCarousel({ events }: FeaturedCarouselProps) {
                     }
                     className="h-14 px-10 bg-primary text-primary-foreground text-sm font-bold uppercase tracking-widest hover:bg-primary-hover transition-all rounded-md shadow-2xl flex items-center gap-2"
                   >
-                    {t.ensureSpot}
+                    {t['ensureSpot']}
                     <ArrowRight className="w-4 h-4" />
                   </button>
                   <div className="flex flex-col">
                     <span className="text-[10px] font-bold text-white/65 uppercase tracking-widest flex items-center gap-1.5">
                       <Ticket className="w-3 h-3 text-primary" />
-                      {currentEvent?.min_price === 0 ? t.free : t.from}
+                      {currentEvent?.min_price === 0 ? t['free'] : t['from']}
                     </span>
                     <span className="text-2xl font-black text-white">
                       {displayPrice(currentEvent?.min_price ?? null)}
