@@ -460,8 +460,9 @@ function AdminLayout() {
           />
         </div>
       </div>
-    </TooltipProvider>
-  );
+      </TooltipProvider>
+    );
+  };
 
   return (
     <div className="flex min-h-dvh bg-background font-inter overflow-x-hidden relative">
