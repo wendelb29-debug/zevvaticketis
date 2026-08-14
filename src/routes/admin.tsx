@@ -430,7 +430,7 @@ function AdminLayout() {
             <Tooltip>
               <TooltipTrigger asChild>
                 <div className="flex items-center justify-center w-full h-full">
-                  <SettingsIcon className="w-5 h-5 shrink-0" />
+                  <Settings className="w-5 h-5 shrink-0" />
                 </div>
               </TooltipTrigger>
               <TooltipContent side="right">
@@ -439,7 +439,7 @@ function AdminLayout() {
             </Tooltip>
           ) : (
             <>
-              <SettingsIcon className="w-5 h-5 shrink-0 text-muted-foreground" />
+              <Settings className="w-5 h-5 shrink-0 text-muted-foreground" />
               <span className="truncate">{nav['settings'] || "Configurações"}</span>
             </>
           )}
