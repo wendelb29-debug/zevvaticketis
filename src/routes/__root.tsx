@@ -15,9 +15,7 @@ import { LocationModal } from "@/components/home/LocationModal";
 import { ZevvaLoadingScreen } from "@/components/layout/ZevvaLoadingScreen";
 import { TenantProvider } from "@/hooks/use-tenants";
 import { supabase } from "@/integrations/supabase/client";
-import "@/i18n/config";
-import { useTranslation } from "react-i18next";
-import i18next from "i18next";
+import { i18nInstance, i18nReady } from "@/i18n/config";
 import { normalizeLocale } from "@/lib/i18n/locales";
 
 
@@ -118,10 +116,25 @@ function RootShell({ children }: { children: ReactNode }) {
   const language = normalizeLocale(rawLanguage);
 
   useEffect(() => {
-    if (language) {
-      i18next.changeLanguage(language);
-      document.documentElement.lang = language;
+    let active = true;
+    
+    async function applyLanguage() {
+      await i18nReady;
+      if (!active) return;
+
+      const locale = normalizeLocale(language);
+      if (i18nInstance.language !== locale) {
+        await i18nInstance.changeLanguage(locale);
+      }
+      document.documentElement.lang = locale;
     }
+
+    applyLanguage().catch(err => {
+      console.error("Failed to apply language", err);
+      document.documentElement.lang = 'pt-BR';
+    });
+
+    return () => { active = false; };
   }, [language]);
 
   return (
@@ -131,16 +144,6 @@ function RootShell({ children }: { children: ReactNode }) {
         <script
           dangerouslySetInnerHTML={{
             __html: `
-              window.normalizeLocale = function(value) {
-                if (!value) return 'pt-BR';
-                const normalized = value.trim().toLowerCase();
-                const aliases = {
-                  'pt': 'pt-BR', 'pt-br': 'pt-BR', 'português': 'pt-BR', 'portugues': 'pt-BR',
-                  'en': 'en-US', 'en-us': 'en-US', 'english': 'en-US',
-                  'es': 'es-ES', 'es-es': 'es-ES', 'español': 'es-ES', 'espanol': 'es-ES'
-                };
-                return aliases[normalized] || (['pt-BR', 'en-US', 'es-ES'].includes(value) ? value : 'pt-BR');
-              };
               (function() {
                 try {
                   const storage = localStorage.getItem('zevva-ui-storage');
@@ -184,7 +187,7 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
-  const { activeOverlay, authView, closeOverlay, language: rawLanguage, theme, fontSize } = useUI() as any;
+  const { activeOverlay, authView, closeOverlay, language: rawLanguage, theme, fontSize, userId: storeUserId } = useUI() as any;
   const language = normalizeLocale(rawLanguage);
   const router = useRouter();
   const location = useLocation();
@@ -200,7 +203,8 @@ function RootComponent() {
       setSession(session);
       if (session) {
         useUI.getState().syncWithBackend(session.user.id);
-      }
+      } else if (storeUserId) {
+        useUI.getState().syncWithBackend(null);
     });
 
     return () => {
