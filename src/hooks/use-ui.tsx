@@ -5,8 +5,6 @@ import { supabase } from '@/integrations/supabase/client';
 export { type SupportedLocale, type ThemePreference } from "@/lib/i18n/types";
 import { type SupportedLocale, type ThemePreference } from "@/lib/i18n/types";
 
-
-
 export interface UIPreferences {
   language: SupportedLocale;
   theme: ThemePreference;
@@ -45,7 +43,6 @@ interface UIStore extends UIPreferences {
 
 import { DEFAULT_LOCALE, normalizeLocale } from "@/lib/i18n/locales";
 export { DEFAULT_LOCALE, normalizeLocale };
-
 
 const getBrowserLocale = (): SupportedLocale => {
   if (typeof window === 'undefined') return DEFAULT_LOCALE;
@@ -115,8 +112,6 @@ export const useUI = create<UIStore>()(
           }
         } catch (error) {
           console.error("Failed to save language preference:", error);
-          // Rollback local state if backend failed and we have a previous value? 
-          // For now just stop saving state
         } finally {
           set({ isSaving: false, activeOverlay: null });
         }
@@ -185,7 +180,6 @@ export const useUI = create<UIStore>()(
 
       syncWithBackend: async (userId) => {
         if (!userId) {
-          // Reset to anonymous state but keep deviceId
           set({ 
             userId: null,
             language: getBrowserLocale(),
@@ -201,8 +195,7 @@ export const useUI = create<UIStore>()(
         set({ userId });
         
         try {
-          // Try to get device-specific prefs
-          const { data: devicePrefs, error: deviceError } = await supabase
+          const { data: devicePrefs } = await supabase
             .from('user_device_preferences')
             .select('*')
             .eq('user_id', userId)
@@ -217,8 +210,7 @@ export const useUI = create<UIStore>()(
               timezone: devicePrefs.timezone
             });
           } else {
-            // Fallback to account defaults
-            const { data: accountPrefs, error: accountError } = await supabase
+            const { data: accountPrefs } = await supabase
               .from('user_preferences')
               .select('*')
               .eq('user_id', userId)
@@ -254,25 +246,19 @@ export const useUI = create<UIStore>()(
       },
       onRehydrateStorage: () => (state) => {
         if (state) {
-          // Double check the language is normalized after hydration
           if (state.language) {
             state.language = normalizeLocale(state.language);
           }
           state.initialize();
-          // Set up broadcast channel for cross-tab sync
+          
           if (typeof window !== 'undefined') {
             const channel = new BroadcastChannel('zevva-ui-preferences');
             channel.onmessage = (event) => {
               const { userId: remoteUserId, language, theme, fontSize } = event.data;
-              // Only apply if it's the same user (or both are logged out)
               if (remoteUserId === state.userId) {
                 const normalized = normalizeLocale(language);
-                const currentState = (get as any)();
-                
-                // Avoid redundant updates
-                if (currentState.language !== normalized || currentState.theme !== theme || currentState.fontSize !== fontSize) {
-                  (set as any)({ 
-
+                if (state.language !== normalized || state.theme !== theme || state.fontSize !== fontSize) {
+                  useUI.setState({ 
                     language: normalized, 
                     theme: theme as ThemePreference, 
                     fontSize 
@@ -282,7 +268,6 @@ export const useUI = create<UIStore>()(
               }
             };
             
-            // Override setters to broadcast
             const originalSetLanguage = state.setLanguage;
             state.setLanguage = async (l) => {
               await originalSetLanguage(l);
