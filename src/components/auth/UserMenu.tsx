@@ -124,12 +124,6 @@ export function UserMenu({ user, onLogout, onNavigate, agentStatus, onStatusChan
               <ChevronDown className="w-4 h-4 text-muted-foreground group-hover:text-foreground transition-colors shrink-0" />
             </>
           )}
-          {isChat && (
-            <div className={cn(
-              "absolute -top-0.5 -right-0.5 w-3 h-3 rounded-full border-2 border-card",
-              agentStatus === 'online' ? "bg-green-500" : agentStatus === 'busy' ? "bg-amber-500" : "bg-foreground/20"
-            )} />
-          )}
         </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-64 mt-2 rounded-xl p-0 border-border shadow-2xl font-inter overflow-hidden bg-popover/95 backdrop-blur-md">
