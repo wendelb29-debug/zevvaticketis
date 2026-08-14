@@ -75,6 +75,7 @@ import { Route as AdminMarketingIndexRouteImport } from './routes/admin/marketin
 import { Route as AdminMarketingAnunciosRouteImport } from './routes/admin/marketing/anuncios'
 import { Route as AdminMarketingPublicidadeRouteImport } from './routes/admin/marketing/publicidade'
 import { Route as AdminMarketingPushRouteImport } from './routes/admin/marketing/push'
+import { Route as ApiPublicStripeWebhookRouteImport } from './routes/api/public/stripe-webhook'
 import { Route as ApiPublicUazapiWebhookRouteImport } from './routes/api/public/uazapi-webhook'
 import { Route as CheckinProjectIdIndexRouteImport } from './routes/checkin/$projectId.index'
 import { Route as CheckinProjectIdHistoricoRouteImport } from './routes/checkin/$projectId.historico'
@@ -429,6 +430,11 @@ const AdminMarketingPushRoute = AdminMarketingPushRouteImport.update({
   path: '/marketing/push',
   getParentRoute: () => AdminRoute,
 } as any)
+const ApiPublicStripeWebhookRoute = ApiPublicStripeWebhookRouteImport.update({
+  id: '/api/public/stripe-webhook',
+  path: '/api/public/stripe-webhook',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiPublicUazapiWebhookRoute = ApiPublicUazapiWebhookRouteImport.update({
   id: '/api/public/uazapi-webhook',
   path: '/api/public/uazapi-webhook',
@@ -589,6 +595,7 @@ export interface FileRoutesByFullPath {
   '/admin/marketing/anuncios': typeof AdminMarketingAnunciosRoute
   '/admin/marketing/publicidade': typeof AdminMarketingPublicidadeRoute
   '/admin/marketing/push': typeof AdminMarketingPushRoute
+  '/api/public/stripe-webhook': typeof ApiPublicStripeWebhookRoute
   '/api/public/uazapi-webhook': typeof ApiPublicUazapiWebhookRoute
   '/checkin/$projectId/historico': typeof CheckinProjectIdHistoricoRoute
   '/checkin/$projectId/presenca': typeof CheckinProjectIdPresencaRoute
@@ -670,6 +677,7 @@ export interface FileRoutesByTo {
   '/admin/marketing/anuncios': typeof AdminMarketingAnunciosRoute
   '/admin/marketing/publicidade': typeof AdminMarketingPublicidadeRoute
   '/admin/marketing/push': typeof AdminMarketingPushRoute
+  '/api/public/stripe-webhook': typeof ApiPublicStripeWebhookRoute
   '/api/public/uazapi-webhook': typeof ApiPublicUazapiWebhookRoute
   '/checkin/$projectId/historico': typeof CheckinProjectIdHistoricoRoute
   '/checkin/$projectId/presenca': typeof CheckinProjectIdPresencaRoute
@@ -756,6 +764,7 @@ export interface FileRoutesById {
   '/admin/marketing/anuncios': typeof AdminMarketingAnunciosRoute
   '/admin/marketing/publicidade': typeof AdminMarketingPublicidadeRoute
   '/admin/marketing/push': typeof AdminMarketingPushRoute
+  '/api/public/stripe-webhook': typeof ApiPublicStripeWebhookRoute
   '/api/public/uazapi-webhook': typeof ApiPublicUazapiWebhookRoute
   '/checkin/$projectId/historico': typeof CheckinProjectIdHistoricoRoute
   '/checkin/$projectId/presenca': typeof CheckinProjectIdPresencaRoute
@@ -844,6 +853,7 @@ export interface FileRouteTypes {
     | '/admin/marketing/anuncios'
     | '/admin/marketing/publicidade'
     | '/admin/marketing/push'
+    | '/api/public/stripe-webhook'
     | '/api/public/uazapi-webhook'
     | '/checkin/$projectId/historico'
     | '/checkin/$projectId/presenca'
@@ -925,6 +935,7 @@ export interface FileRouteTypes {
     | '/admin/marketing/anuncios'
     | '/admin/marketing/publicidade'
     | '/admin/marketing/push'
+    | '/api/public/stripe-webhook'
     | '/api/public/uazapi-webhook'
     | '/checkin/$projectId/historico'
     | '/checkin/$projectId/presenca'
@@ -1010,6 +1021,7 @@ export interface FileRouteTypes {
     | '/admin/marketing/anuncios'
     | '/admin/marketing/publicidade'
     | '/admin/marketing/push'
+    | '/api/public/stripe-webhook'
     | '/api/public/uazapi-webhook'
     | '/checkin/$projectId/historico'
     | '/checkin/$projectId/presenca'
@@ -1059,6 +1071,7 @@ export interface RootRouteChildren {
   TicketsIndexRoute: typeof TicketsIndexRoute
   DotlovableOauthConsentRoute: typeof DotlovableOauthConsentRoute
   Char91DotmcpChar93InvokeToolToolRoute: typeof Char91DotmcpChar93InvokeToolToolRoute
+  ApiPublicStripeWebhookRoute: typeof ApiPublicStripeWebhookRoute
   ApiPublicUazapiWebhookRoute: typeof ApiPublicUazapiWebhookRoute
   OauthGoogleReturnRoute: typeof OauthGoogleReturnRoute
   LovableEmailAuthPreviewRoute: typeof LovableEmailAuthPreviewRoute
@@ -1530,6 +1543,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminMarketingPushRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/api/public/stripe-webhook': {
+      id: '/api/public/stripe-webhook'
+      path: '/api/public/stripe-webhook'
+      fullPath: '/api/public/stripe-webhook'
+      preLoaderRoute: typeof ApiPublicStripeWebhookRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/uazapi-webhook': {
       id: '/api/public/uazapi-webhook'
       path: '/api/public/uazapi-webhook'
@@ -1864,6 +1884,7 @@ const rootRouteChildren: RootRouteChildren = {
   TicketsIndexRoute: TicketsIndexRoute,
   DotlovableOauthConsentRoute: DotlovableOauthConsentRoute,
   Char91DotmcpChar93InvokeToolToolRoute: Char91DotmcpChar93InvokeToolToolRoute,
+  ApiPublicStripeWebhookRoute: ApiPublicStripeWebhookRoute,
   ApiPublicUazapiWebhookRoute: ApiPublicUazapiWebhookRoute,
   OauthGoogleReturnRoute: OauthGoogleReturnRoute,
   LovableEmailAuthPreviewRoute: LovableEmailAuthPreviewRoute,

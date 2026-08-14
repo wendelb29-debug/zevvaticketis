@@ -1283,6 +1283,8 @@ export type Database = {
           pais_id: string | null
           rua: string | null
           telefone: string | null
+          two_factor_enabled: boolean | null
+          two_factor_secret: string | null
         }
         Insert: {
           avatar_url?: string | null
@@ -1304,6 +1306,8 @@ export type Database = {
           pais_id?: string | null
           rua?: string | null
           telefone?: string | null
+          two_factor_enabled?: boolean | null
+          two_factor_secret?: string | null
         }
         Update: {
           avatar_url?: string | null
@@ -1325,6 +1329,8 @@ export type Database = {
           pais_id?: string | null
           rua?: string | null
           telefone?: string | null
+          two_factor_enabled?: boolean | null
+          two_factor_secret?: string | null
         }
         Relationships: [
           {
@@ -1605,6 +1611,36 @@ export type Database = {
           },
         ]
       }
+      stripe_webhooks: {
+        Row: {
+          created_at: string | null
+          error_message: string | null
+          event_type: string
+          id: string
+          payload: Json
+          processed_at: string | null
+          status: string
+        }
+        Insert: {
+          created_at?: string | null
+          error_message?: string | null
+          event_type: string
+          id: string
+          payload: Json
+          processed_at?: string | null
+          status?: string
+        }
+        Update: {
+          created_at?: string | null
+          error_message?: string | null
+          event_type?: string
+          id?: string
+          payload?: Json
+          processed_at?: string | null
+          status?: string
+        }
+        Relationships: []
+      }
       team_invites: {
         Row: {
           accepted_at: string | null
@@ -1780,6 +1816,7 @@ export type Database = {
           ordem: number | null
           quantidade: number
           quantidade_vendida: number | null
+          stock_version: number | null
           taxa: number | null
           valor: number
         }
@@ -1800,6 +1837,7 @@ export type Database = {
           ordem?: number | null
           quantidade: number
           quantidade_vendida?: number | null
+          stock_version?: number | null
           taxa?: number | null
           valor: number
         }
@@ -1820,6 +1858,7 @@ export type Database = {
           ordem?: number | null
           quantidade?: number
           quantidade_vendida?: number | null
+          stock_version?: number | null
           taxa?: number | null
           valor?: number
         }
@@ -2756,6 +2795,7 @@ export type Database = {
     Functions: {
       check_admin_internal: { Args: { _user_id: string }; Returns: boolean }
       check_is_platform_admin: { Args: { _user_id: string }; Returns: boolean }
+      check_user_is_admin: { Args: { _user_id: string }; Returns: boolean }
       ensure_producer_organization_admin: {
         Args: { _uid: string }
         Returns: Json
@@ -2787,6 +2827,10 @@ export type Database = {
       promote_to_platform_admin: {
         Args: { target_email: string }
         Returns: Json
+      }
+      reserve_tickets: {
+        Args: { _quantity: number; _ticket_type_id: string }
+        Returns: boolean
       }
       sync_legacy_roles: { Args: never; Returns: undefined }
       transfer_attendance: {
