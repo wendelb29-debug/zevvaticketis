@@ -18,6 +18,7 @@ import { supabase } from "@/integrations/supabase/client";
 import "@/i18n/config";
 import { useTranslation } from "react-i18next";
 import i18next from "i18next";
+import { normalizeLocale } from "@/lib/i18n/locales";
 
 
 
@@ -113,7 +114,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
 function RootShell({ children }: { children: ReactNode }) {
   const { language: rawLanguage, theme, resolvedTheme } = useUI();
-  const language = (typeof window !== 'undefined' ? (window as any).normalizeLocale?.(rawLanguage) : rawLanguage) || rawLanguage;
+  // Safe normalization
+  const language = normalizeLocale(rawLanguage);
 
   useEffect(() => {
     if (language) {
@@ -123,7 +125,7 @@ function RootShell({ children }: { children: ReactNode }) {
   }, [language]);
 
   return (
-    <html lang={language} data-theme={theme}>
+    <html lang="pt-BR" data-theme="light">
       <head>
         <HeadContent />
         <script
@@ -183,7 +185,7 @@ function RootShell({ children }: { children: ReactNode }) {
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   const { activeOverlay, authView, closeOverlay, language: rawLanguage, theme, fontSize } = useUI() as any;
-  const language = (typeof window !== 'undefined' ? (window as any).normalizeLocale?.(rawLanguage) : rawLanguage) || rawLanguage;
+  const language = normalizeLocale(rawLanguage);
   const router = useRouter();
   const location = useLocation();
   const [isNavigating, setIsNavigating] = useState(false);

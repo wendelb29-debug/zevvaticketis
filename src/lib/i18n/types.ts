@@ -5,4 +5,5 @@ export type TranslationSchema = {
   navigation: any;
   home: any;
   footer: any;
+  common: any;
 };

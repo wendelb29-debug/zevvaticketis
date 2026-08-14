@@ -519,10 +519,10 @@ function HomePage() {
           <div className="max-w-7xl mx-auto space-y-16">
             <div className="text-center space-y-4 max-w-2xl mx-auto">
               <h2 className="text-3xl md:text-5xl font-manrope font-extrabold text-foreground tracking-tight">
-                Vantagens de comprar na Zevva
+                {getTranslations(language).home.benefitsTitle}
               </h2>
               <p className="text-muted-foreground font-medium text-lg">
-                Sua segurança e experiência são nossa prioridade.
+                {getTranslations(language).home.benefitsSubtitle}
               </p>
             </div>
 
@@ -531,9 +531,9 @@ function HomePage() {
                 <div className="w-16 h-16 bg-primary/5 text-primary rounded-full flex items-center justify-center mx-auto border border-primary/10">
                   <ShieldCheck className="w-8 h-8" />
                 </div>
-                <h3 className="text-xl font-bold">Pagamento Seguro</h3>
+                <h3 className="text-xl font-bold">{getTranslations(language).home.benefitSecurePayment}</h3>
                 <p className="text-muted-foreground text-sm leading-relaxed">
-                  Transações criptografadas e suporte a diversos métodos de pagamento.
+                  {getTranslations(language).home.benefitSecurePaymentDesc}
                 </p>
               </div>
 
@@ -541,9 +541,9 @@ function HomePage() {
                 <div className="w-16 h-16 bg-primary/5 text-primary rounded-full flex items-center justify-center mx-auto border border-primary/10">
                   <Globe className="w-8 h-8" />
                 </div>
-                <h3 className="text-xl font-bold">Suporte Dedicado</h3>
+                <h3 className="text-xl font-bold">{getTranslations(language).home.benefitSupport}</h3>
                 <p className="text-muted-foreground text-sm leading-relaxed">
-                  Time pronto para ajudar em todas as etapas da sua jornada.
+                  {getTranslations(language).home.benefitSupportDesc}
                 </p>
               </div>
 
@@ -551,9 +551,9 @@ function HomePage() {
                 <div className="w-16 h-16 bg-primary/5 text-primary rounded-full flex items-center justify-center mx-auto border border-primary/10">
                   <Zap className="w-8 h-8" />
                 </div>
-                <h3 className="text-xl font-bold">Ingresso Digital</h3>
+                <h3 className="text-xl font-bold">{getTranslations(language).home.benefitDigitalTicket}</h3>
                 <p className="text-muted-foreground text-sm leading-relaxed">
-                  Acesse seus ingressos instantaneamente em qualquer dispositivo.
+                  {getTranslations(language).home.benefitDigitalTicketDesc}
                 </p>
               </div>
             </div>
@@ -568,10 +568,10 @@ function HomePage() {
               <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                 <div className="space-y-6">
                   <h2 className="text-4xl md:text-6xl font-manrope font-extrabold text-primary-foreground leading-tight">
-                    Quer organizar seu evento na Zevva?
+                    {getTranslations(language).home.organizerTitle}
                   </h2>
                   <p className="text-primary-foreground/80 text-xl font-medium">
-                    Temos as melhores ferramentas de gestão, vendas e check-in para o seu negócio.
+                    {getTranslations(language).home.organizerSubtitle}
                   </p>
                 </div>
                 <div className="flex flex-col sm:flex-row gap-4 lg:justify-end">
@@ -579,10 +579,10 @@ function HomePage() {
                     onClick={() => navigate({ to: "/cadastro" })}
                     className="h-16 px-12 bg-card text-primary text-sm font-bold uppercase tracking-widest hover:bg-card/90 transition-all rounded-md shadow-xl"
                   >
-                    Começar agora
+                    {getTranslations(language).home.organizerStart}
                   </button>
                   <button className="h-16 px-12 bg-transparent border-2 border-white/30 text-primary-foreground text-sm font-bold uppercase tracking-widest hover:bg-card/10 transition-all rounded-md">
-                    Falar com especialista
+                    {getTranslations(language).home.organizerTalk}
                   </button>
                 </div>
               </div>
@@ -596,7 +596,7 @@ function HomePage() {
           <div className="max-w-3xl mx-auto space-y-12">
             <div className="text-center space-y-4">
               <h2 className="text-3xl md:text-5xl font-manrope font-extrabold text-foreground tracking-tight">
-                Dúvidas frequentes
+                {getTranslations(language).home.faqTitle}
               </h2>
             </div>
             <FAQAccordion />
