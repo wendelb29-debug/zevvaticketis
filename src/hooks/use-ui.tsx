@@ -35,6 +35,7 @@ interface UIStore extends UIPreferences {
   setFontSize: (size: number) => Promise<void>;
   setIsHomeSearchVisible: (visible: boolean) => void;
   setHomeSearchTerm: (term: string) => void;
+  logout: () => Promise<void>;
   
   // Internal/Sync Actions
   initialize: () => Promise<void>;
@@ -84,38 +85,67 @@ export const useUI = create<UIStore>()(
       closeOverlay: () => set({ activeOverlay: null }),
       setIsHomeSearchVisible: (visible) => set({ isHomeSearchVisible: visible }),
       setHomeSearchTerm: (term) => set({ homeSearchTerm: term }),
+      logout: async () => {
+        set({ 
+          userId: null,
+          language: getBrowserLocale(),
+          theme: 'system',
+          fontSize: 100,
+          timezone: null
+        });
+        get().updateResolvedTheme();
+      },
 
       // Preference Actions
       setLanguage: async (lang) => {
         const normalizedLang = normalizeLocale(lang);
         set({ language: normalizedLang, isSaving: true });
         const { userId, deviceId } = get();
-        if (userId) {
-          await supabase.from('user_device_preferences').upsert({
-            user_id: userId,
-            device_id: deviceId,
-            language: lang,
-            theme: get().theme,
-            font_size: get().fontSize
-          });
+        
+        try {
+          if (userId) {
+            const { error } = await supabase.from('user_device_preferences').upsert({
+              user_id: userId,
+              device_id: deviceId,
+              language: normalizedLang,
+              theme: get().theme,
+              font_size: get().fontSize
+            });
+            if (error) throw error;
+          }
+        } catch (error) {
+          console.error("Failed to save language preference:", error);
+          // Rollback local state if backend failed and we have a previous value? 
+          // For now just stop saving state
+        } finally {
+          set({ isSaving: false, activeOverlay: null });
         }
-        set({ isSaving: false, activeOverlay: null });
       },
 
       setTheme: async (theme) => {
-        set({ theme, isSaving: true });
+        const validThemes: ThemePreference[] = ['light', 'dark', 'system'];
+        const validatedTheme = validThemes.includes(theme) ? theme : 'system';
+        
+        set({ theme: validatedTheme, isSaving: true });
         get().updateResolvedTheme();
         const { userId, deviceId } = get();
-        if (userId) {
-          await supabase.from('user_device_preferences').upsert({
-            user_id: userId,
-            device_id: deviceId,
-            language: get().language,
-            theme: theme,
-            font_size: get().fontSize
-          });
+        
+        try {
+          if (userId) {
+            const { error } = await supabase.from('user_device_preferences').upsert({
+              user_id: userId,
+              device_id: deviceId,
+              language: get().language,
+              theme: validatedTheme,
+              font_size: get().fontSize
+            });
+            if (error) throw error;
+          }
+        } catch (error) {
+          console.error("Failed to save theme preference:", error);
+        } finally {
+          set({ isSaving: false });
         }
-        set({ isSaving: false });
       },
 
       setFontSize: async (size) => {
@@ -154,43 +184,60 @@ export const useUI = create<UIStore>()(
       },
 
       syncWithBackend: async (userId) => {
-        if (!userId) return;
-        const deviceId = get().deviceId;
-        
-        // Try to get device-specific prefs
-        const { data: devicePrefs } = await supabase
-          .from('user_device_preferences')
-          .select('*')
-          .eq('user_id', userId)
-          .eq('device_id', deviceId)
-          .single();
-
-
-        if (devicePrefs) {
-          set({
-            language: normalizeLocale(devicePrefs.language),
-            theme: devicePrefs.theme as ThemePreference,
-            fontSize: devicePrefs.font_size,
-            timezone: devicePrefs.timezone
+        if (!userId) {
+          // Reset to anonymous state but keep deviceId
+          set({ 
+            userId: null,
+            language: getBrowserLocale(),
+            theme: 'system',
+            fontSize: 100,
+            timezone: null
           });
-        } else {
-          // Fallback to account defaults
-          const { data: accountPrefs } = await supabase
-            .from('user_preferences')
+          get().updateResolvedTheme();
+          return;
+        }
+
+        const deviceId = get().deviceId;
+        set({ userId });
+        
+        try {
+          // Try to get device-specific prefs
+          const { data: devicePrefs, error: deviceError } = await supabase
+            .from('user_device_preferences')
             .select('*')
             .eq('user_id', userId)
-            .single();
+            .eq('device_id', deviceId)
+            .maybeSingle();
 
-          if (accountPrefs) {
+          if (devicePrefs) {
             set({
-              language: normalizeLocale(accountPrefs.default_language),
-              theme: accountPrefs.default_theme as ThemePreference,
-              fontSize: accountPrefs.default_font_size,
-              timezone: accountPrefs.timezone
+              language: normalizeLocale(devicePrefs.language),
+              theme: devicePrefs.theme as ThemePreference,
+              fontSize: devicePrefs.font_size,
+              timezone: devicePrefs.timezone
             });
+          } else {
+            // Fallback to account defaults
+            const { data: accountPrefs, error: accountError } = await supabase
+              .from('user_preferences')
+              .select('*')
+              .eq('user_id', userId)
+              .maybeSingle();
+
+            if (accountPrefs) {
+              set({
+                language: normalizeLocale(accountPrefs.default_language),
+                theme: accountPrefs.default_theme as ThemePreference,
+                fontSize: accountPrefs.default_font_size,
+                timezone: accountPrefs.timezone
+              });
+            }
           }
+        } catch (error) {
+          console.error("Sync error:", error);
+        } finally {
+          get().updateResolvedTheme();
         }
-        get().updateResolvedTheme();
       }
     }),
     {
@@ -216,12 +263,42 @@ export const useUI = create<UIStore>()(
           if (typeof window !== 'undefined') {
             const channel = new BroadcastChannel('zevva-ui-preferences');
             channel.onmessage = (event) => {
-              const { userId, language, theme, fontSize } = event.data;
-              if (userId === state.userId) {
-                state.setLanguage(normalizeLocale(language));
-                state.setTheme(theme);
-                state.setFontSize(fontSize);
+              const { userId: remoteUserId, language, theme, fontSize } = event.data;
+              // Only apply if it's the same user (or both are logged out)
+              if (remoteUserId === state.userId) {
+                const normalized = normalizeLocale(language);
+                const currentState = (get as any)();
+                
+                // Avoid redundant updates
+                if (currentState.language !== normalized || currentState.theme !== theme || currentState.fontSize !== fontSize) {
+                  (set as any)({ 
+
+                    language: normalized, 
+                    theme: theme as ThemePreference, 
+                    fontSize 
+                  });
+                  state.updateResolvedTheme();
+                }
               }
+            };
+            
+            // Override setters to broadcast
+            const originalSetLanguage = state.setLanguage;
+            state.setLanguage = async (l) => {
+              await originalSetLanguage(l);
+              channel.postMessage({ userId: state.userId, language: normalizeLocale(l), theme: state.theme, fontSize: state.fontSize });
+            };
+            
+            const originalSetTheme = state.setTheme;
+            state.setTheme = async (t) => {
+              await originalSetTheme(t);
+              channel.postMessage({ userId: state.userId, language: state.language, theme: t, fontSize: state.fontSize });
+            };
+
+            const originalSetFontSize = state.setFontSize;
+            state.setFontSize = async (s) => {
+              await originalSetFontSize(s);
+              channel.postMessage({ userId: state.userId, language: state.language, theme: state.theme, fontSize: s });
             };
           }
         }

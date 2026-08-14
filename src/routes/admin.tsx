@@ -92,7 +92,7 @@ function AdminLayout() {
   const navigate = useNavigate();
   const location = useLocation();
   const { theme, setTheme, language: rawLanguage, setLanguage, isSaving } = useUI();
-  const language = (typeof window !== 'undefined' ? (window as any).normalizeLocale?.(rawLanguage) : rawLanguage) || rawLanguage;
+  const language = rawLanguage;
   const t = getTranslations(language);
   const { logout } = useTenants();
   const [openGroup, setOpenGroup] = useState<string | null>(null);
@@ -131,60 +131,62 @@ function AdminLayout() {
     navigate({ to: "/" });
   };
 
+  const nav = t.navigation;
+
   const menuItems = [
-    { label: t.navigation?.chat || "Chat", icon: MessageSquare, href: "/admin/chat" },
-    { label: t.navigation?.masterConsole || "Master Console", icon: Building2, href: "/admin/master" },
-    { label: t.navigation?.dashboard || "Dashboard", icon: LayoutDashboard, href: "/admin", activeOptions: { exact: true } },
+    { label: nav['chat'] || "Chat", icon: MessageSquare, href: "/admin/chat" },
+    { label: nav['masterConsole'] || "Master Console", icon: Building2, href: "/admin/master" },
+    { label: nav['dashboard'] || "Dashboard", icon: LayoutDashboard, href: "/admin", activeOptions: { exact: true } },
     { 
-      label: t.navigation?.contacts || "Contatos", 
+      label: nav['contacts'] || "Contatos", 
       icon: Users, 
       children: [
-        { label: t.navigation?.allContacts || "Todos os Contatos", href: "/admin/contatos" },
-        { label: t.navigation?.customerGroups || "Grupos de Clientes", href: "/admin/grupos" },
+        { label: nav['allContacts'] || "Todos os Contatos", href: "/admin/contatos" },
+        { label: nav['customerGroups'] || "Grupos de Clientes", href: "/admin/grupos" },
       ]
     },
     { 
-      label: t.navigation?.checkin || "Check-in", 
+      label: nav['checkin'] || "Check-in", 
       icon: CheckSquare, 
       children: [
-        { label: t.navigation?.generalPanel || "Painel Geral", href: "/admin/checkin" },
-        { label: t.navigation?.reports || "Relatórios", href: "/admin/checkin", query: { tab: "reports" } },
-        { label: t.navigation?.globalMonitor || "Monitor Global", href: "/admin/checkin-monitor" },
+        { label: nav['generalPanel'] || "Painel Geral", href: "/admin/checkin" },
+        { label: nav['reports'] || "Relatórios", href: "/admin/checkin", query: { tab: "reports" } },
+        { label: nav['globalMonitor'] || "Monitor Global", href: "/admin/checkin-monitor" },
       ]
     },
 
     { 
-      label: t.navigation?.plans || "Planos", 
+      label: nav['plans'] || "Planos", 
       icon: CreditCard, 
       children: [
-        { label: t.navigation?.plans || "Planos", href: "/admin/planos" },
-        { label: t.navigation?.countriesAndCurrencies || "Países e Moedas", href: "/admin/paises-moedas" },
+        { label: nav['plans'] || "Planos", href: "/admin/planos" },
+        { label: nav['countriesAndCurrencies'] || "Países e Moedas", href: "/admin/paises-moedas" },
       ]
     },
     { 
-      label: t.navigation?.marketing || "Marketing", 
+      label: nav['marketing'] || "Marketing", 
       icon: Megaphone, 
       children: [
-        { label: t.navigation?.ads || "Anúncios", href: "/admin/marketing/anuncios" },
-        { label: t.navigation?.advertising || "Publicidade", href: "/admin/marketing/publicidade" },
-        { label: t.navigation?.pushNotifications || "Push Notifications", href: "/admin/marketing/push" },
+        { label: nav['ads'] || "Anúncios", href: "/admin/marketing/anuncios" },
+        { label: nav['advertising'] || "Publicidade", href: "/admin/marketing/publicidade" },
+        { label: nav['pushNotifications'] || "Push Notifications", href: "/admin/marketing/push" },
       ]
     },
     { 
-      label: t.navigation?.massOutreach || "Envios Massivos", 
+      label: nav['massOutreach'] || "Envios Massivos", 
       icon: Rocket, 
       children: [
-        { label: t.navigation?.createNew || "Criar novo", href: "/admin/envios-massivos", query: { wizard: "true" } },
-        { label: t.navigation?.outreach || "Envios", href: "/admin/envios-massivos" },
+        { label: nav['createNew'] || "Criar novo", href: "/admin/envios-massivos", query: { wizard: "true" } },
+        { label: nav['outreach'] || "Envios", href: "/admin/envios-massivos" },
       ]
     },
     { 
-      label: t.navigation?.emails || "E-mails", 
+      label: nav['emails'] || "E-mails", 
       icon: Mail, 
       children: [
-        { label: t.navigation?.dashboard || "Dashboard", href: "/admin/email-management" },
-        { label: t.navigation?.templates || "Templates", href: "/admin/email-templates" },
-        { label: t.navigation?.gmailInbox || "Gmail Inbox", href: "/admin/emails" },
+        { label: nav['dashboard'] || "Dashboard", href: "/admin/email-management" },
+        { label: nav['templates'] || "Templates", href: "/admin/email-templates" },
+        { label: nav['gmailInbox'] || "Gmail Inbox", href: "/admin/emails" },
       ]
     },
   ];
@@ -206,7 +208,6 @@ function AdminLayout() {
   }
   
   if (isAdmin === false) {
-    // This state shouldn't be reached due to beforeLoad, but kept as safety
     return null;
   }
 
@@ -306,7 +307,7 @@ function AdminLayout() {
             );
           }
 
-          const isChat = item.label === "Chat";
+          const isChat = item.label === nav['chat'];
 
           return (
             <Link
@@ -378,7 +379,7 @@ function AdminLayout() {
               ) : (
                 <>
                   <Globe className="w-5 h-5 shrink-0 text-muted-foreground" />
-                  <span className="truncate flex-1 text-left">{t.navigation?.language || "Idioma"}</span>
+                  <span className="truncate flex-1 text-left">{nav['language'] || "Idioma"}</span>
                   <span className="text-[10px] bg-accent px-1.5 py-0.5 rounded-md font-bold uppercase tracking-tighter">
                     {language.split('-')[0]}
                   </span>
@@ -430,7 +431,7 @@ function AdminLayout() {
               <TooltipTrigger asChild>
                 <button 
                   className="flex items-center justify-center w-full h-full outline-none focus:ring-2 focus:ring-primary rounded-lg transition-all"
-                  aria-label={t.navigation?.settings || "Configurações"}
+                  aria-label={nav['settings'] || "Configurações"}
                   onClick={(e) => {
                     e.preventDefault();
                     navigate({ to: "/admin/configuracoes" as any });
@@ -446,63 +447,51 @@ function AdminLayout() {
           ) : (
             <>
               <Settings className="w-5 h-5 shrink-0" />
-              <span className="truncate">Configurações</span>
+              <span className="truncate">{nav['settings'] || "Configurações"}</span>
             </>
           )}
         </Link>
       </div>
 
-
+      <div className="px-4 pb-4">
+        <UserMenu 
+          user={user} 
+          isSidebarCollapsed={isSidebarCollapsed} 
+          onLogout={handleLogout}
+          onNavigate={(path) => navigate({ to: path as any })}
+        />
       </div>
+    </div>
     </TooltipProvider>
   );
 
   return (
-    <div className="min-h-screen bg-background flex text-foreground">
-      {/* Desktop Sidebar */}
-      {location.pathname !== "/admin/chat" && (
-        <aside className={cn(
-          "hidden lg:block h-screen sticky top-0 transition-all duration-300 ease-in-out",
-          isSidebarCollapsed ? "w-20" : "w-72"
+    <div className="min-h-screen flex bg-background">
+      <SidebarContent />
+      
+      <main className="flex-1 flex flex-col h-screen overflow-hidden">
+        <header className="h-16 border-b border-border bg-card/80 backdrop-blur-md flex items-center justify-between px-8 shrink-0">
+          <div className="flex items-center gap-4">
+            <GlobalBreadcrumb />
+          </div>
+          <div className="flex items-center gap-3">
+            <NotificationBell />
+            <button
+              onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+              className="w-10 h-10 flex items-center justify-center rounded-xl border border-border hover:bg-accent transition-all text-muted-foreground hover:text-primary"
+            >
+              {theme === 'dark' ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+            </button>
+          </div>
+        </header>
+
+        <div className={cn(
+          "flex-1 overflow-y-auto bg-[#F6F7F8] dark:bg-[#0A0A0B] transition-all duration-300",
+          isTransitioning ? "opacity-0 translate-y-2" : "opacity-100 translate-y-0"
         )}>
-          <SidebarContent />
-        </aside>
-      )}
-
-      <div className="flex-1 flex flex-col min-h-screen relative">
-        {location.pathname !== "/admin/chat" && (
-          <header className="h-20 bg-card/80 backdrop-blur-md border-b border-border sticky top-0 z-40 px-6 sm:px-10 flex items-center justify-between font-inter">
-            <div className="flex items-center gap-4 min-w-0 overflow-x-auto scrollbar-hide">
-              <GlobalBreadcrumb />
-            </div>
-
-            <div className="flex items-center gap-3 sm:gap-6">
-              <NotificationBell />
-              {user && (
-                <UserMenu 
-                  user={user}
-                  onLogout={handleLogout}
-                  onNavigate={(path) => navigate({ to: path as any })}
-                />
-              )}
-            </div>
-          </header>
-        )}
-
-        <main className={cn(
-          "p-6 sm:p-10 transition-opacity duration-300",
-          location.pathname === "/admin/chat" && "p-0 sm:p-0",
-          isTransitioning ? "opacity-0" : "opacity-100"
-        )}>
-          {isTransitioning ? (
-            <div className="w-full h-full flex items-center justify-center py-20">
-               <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin" />
-            </div>
-          ) : (
-            <Outlet />
-          )}
-        </main>
-      </div>
+          <Outlet />
+        </div>
+      </main>
     </div>
   );
 }

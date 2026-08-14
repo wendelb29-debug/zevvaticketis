@@ -1,8 +1,7 @@
-import { type SupportedLocale } from "./i18n/types";
+import { type SupportedLocale, type TranslationSchema } from "./i18n/types";
 import { type ThemePreference } from "@/hooks/use-ui";
 
-
-export const translations = {
+export const translations: Record<SupportedLocale, TranslationSchema> = {
   "pt-BR": {
     nav: {
       explore: "Explorar",
