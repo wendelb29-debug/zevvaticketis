@@ -658,7 +658,7 @@ function AdminChatPage() {
         </Dialog>
 
         {/* 4. ÁREA DA CONVERSA */}
-        <div className="flex-1 flex flex-col bg-background dark:bg-wa-bg shrink-0 relative">
+        <div className="flex-1 flex flex-col bg-background dark:bg-wa-bg min-w-0 relative">
           {selectedContactId ? (
             <>
               {/* Cabeçalho da Conversa */}
@@ -846,7 +846,7 @@ function AdminChatPage() {
         </div>
 
         {/* 9. BARRA VERTICAL DE AÇÕES (52px) */}
-        <div className="w-[52px] border-l border-border bg-card flex flex-col items-center py-4 gap-4 z-20 shadow-[-4px_0_12px_rgba(0,0,0,0.05)] md:flex tablet:w-auto tablet:flex-row tablet:h-auto tablet:bottom-0 tablet:left-0 tablet:right-0 tablet:border-t tablet:border-l-0 tablet:justify-around tablet:py-2 tablet:px-4 mobile:flex-row mobile:justify-around">
+        <div className="w-[52px] border-l border-border bg-card flex flex-col items-center py-4 gap-4 z-20 shadow-[-4px_0_12px_rgba(0,0,0,0.05)] md:flex tablet:w-auto tablet:flex-row tablet:h-auto tablet:bottom-0 tablet:left-0 tablet:right-0 tablet:border-t tablet:border-l-0 tablet:justify-around tablet:py-2 tablet:px-4 mobile:flex-row mobile:justify-around shrink-0">
           {[
             { id: 'finish', icon: CheckCircle2, label: 'Finalizar atendimento', color: 'text-green-500' },
             { id: 'transfer', icon: Share2, label: 'Transferir atendimento', disabled: !selectedContactId || selectedContact?.status === 'finalized' },
