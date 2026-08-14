@@ -195,7 +195,7 @@ export function AdminDashboardBI() {
   };
 
   return (
-    <div className="space-y-8 px-4 md:px-8">
+    <div className="space-y-8 px-4 md:px-8 pt-6 pb-6">
       {/* 1. Dashboard Executivo Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div>
