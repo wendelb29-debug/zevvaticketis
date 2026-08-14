@@ -194,9 +194,16 @@
 
   * {
     @apply border-border;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
   }
+
+  *::-webkit-scrollbar {
+    display: none; /* Chrome, Safari and Opera */
+  }
+
   body {
-    @apply font-inter bg-background text-foreground antialiased;
+    @apply font-inter bg-background text-foreground antialiased overflow-x-hidden;
   }
   
   h1, h2, h3, h4, h5, h6 {
