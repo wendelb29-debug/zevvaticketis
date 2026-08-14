@@ -101,22 +101,35 @@ export function UserMenu({ user, onLogout, onNavigate, agentStatus, onStatusChan
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <button className="flex items-center gap-2 p-1 rounded-full hover:bg-primary/5 transition-all outline-none group border border-transparent hover:border-border">
-          <Avatar className="h-8 w-8 border-2 border-card shadow-sm ring-1 ring-border">
+        <button className={cn(
+          "flex items-center gap-2 p-1 rounded-xl hover:bg-primary/5 transition-all outline-none group border border-transparent hover:border-border w-full",
+          isSidebarCollapsed && "justify-center px-0"
+        )}>
+          <Avatar className="h-8 w-8 border-2 border-card shadow-sm ring-1 ring-border shrink-0">
             <AvatarImage src={avatarUrl} className="object-cover" />
             <AvatarFallback className="bg-foreground text-background text-[10px] font-extrabold">
               {initials}
             </AvatarFallback>
           </Avatar>
+          {!isSidebarCollapsed && (
+            <>
+              <div className="flex flex-col items-start flex-1 min-w-0">
+                <p className="text-xs font-extrabold text-foreground truncate w-full text-left">
+                  {user?.user_metadata?.nome || user?.email?.split('@')[0]}
+                </p>
+                <p className="text-[10px] text-muted-foreground font-medium truncate w-full text-left">
+                  {role?.label || 'Participante'}
+                </p>
+              </div>
+              <ChevronDown className="w-4 h-4 text-muted-foreground group-hover:text-foreground transition-colors shrink-0" />
+            </>
+          )}
           {isChat && (
             <div className={cn(
               "absolute -top-0.5 -right-0.5 w-3 h-3 rounded-full border-2 border-card",
               agentStatus === 'online' ? "bg-green-500" : agentStatus === 'busy' ? "bg-amber-500" : "bg-foreground/20"
             )} />
           )}
-          <div className="flex items-center gap-1">
-             <ChevronDown className="w-4 h-4 text-muted-foreground group-hover:text-foreground transition-colors" />
-          </div>
         </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-64 mt-2 rounded-xl p-0 border-border shadow-2xl font-inter overflow-hidden bg-popover/95 backdrop-blur-md">
