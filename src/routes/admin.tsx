@@ -258,7 +258,7 @@ function AdminLayout() {
         </Tooltip>
       </div>
       
-      <nav className="flex-1 space-y-1 px-4 overflow-y-auto custom-scrollbar">
+      <nav className="flex-1 space-y-1 px-4 overflow-y-auto no-scrollbar">
         {menuItems.map((item, index) => {
           const isGroup = !!item.children;
           const isOpen = openGroup === item.label;
