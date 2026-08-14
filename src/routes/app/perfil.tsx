@@ -463,10 +463,14 @@ function UserProfile() {
               </div>
               <Switch />
             </div>
-            <div className="p-4 bg-navy/5 rounded-xl border border-navy/10">
-              <p className="text-xs text-foreground font-bold leading-relaxed">
+            <div className="p-4 bg-navy/5 rounded-xl border border-navy/10 space-y-3">
+              <div className="flex items-center justify-between">
+                <p className="text-xs text-foreground font-bold">Solicitar meus dados (LGPD)</p>
+                <Button variant="outline" size="sm" className="h-8 text-[10px] font-bold uppercase">Exportar JSON</Button>
+              </div>
+              <p className="text-[10px] text-muted-foreground font-medium leading-relaxed">
                 Seus dados são processados de acordo com a nossa Política de Privacidade. 
-                Você pode solicitar a exportação ou exclusão total dos seus dados a qualquer momento via suporte.
+                Você pode solicitar a exportação ou exclusão total dos seus dados a qualquer momento.
               </p>
             </div>
           </div>
