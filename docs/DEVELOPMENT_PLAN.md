@@ -109,6 +109,21 @@ profiles
 
 ---
 
+## Fase 1 — MVP comercial
+
+Fase focada em converter a plataforma em um motor comercial real.
+1. Gateway real com Pix e cartão.
+2. Webhooks e idempotência.
+3. Controle transacional de estoque.
+4. Pedidos, pagamentos, cancelamentos e reembolsos.
+5. Cadastro completo de eventos e ingressos.
+6. Dashboard e relatórios com dados reais.
+7. Notificações transacionais.
+8. LGPD operacional.
+9. Segurança e 2FA.
+
+---
+
 ## Wave 2 — Cadastro completo de eventos
 
 ```
