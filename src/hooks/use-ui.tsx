@@ -267,10 +267,10 @@ export const useUI = create<UIStore>()(
               // Only apply if it's the same user (or both are logged out)
               if (remoteUserId === state.userId) {
                 const normalized = normalizeLocale(language);
-                const current = get();
+                const currentState = get();
                 
                 // Avoid redundant updates
-                if (current.language !== normalized || current.theme !== theme || current.fontSize !== fontSize) {
+                if (currentState.language !== normalized || currentState.theme !== theme || currentState.fontSize !== fontSize) {
                   set({ 
                     language: normalized, 
                     theme: theme as ThemePreference, 

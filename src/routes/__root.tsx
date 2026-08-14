@@ -13,6 +13,7 @@ import { AuthModal } from "@/components/layout/AuthModal";
 import { useUI } from "@/hooks/use-ui";
 import { LocationModal } from "@/components/home/LocationModal";
 import { ZevvaLoadingScreen } from "@/components/layout/ZevvaLoadingScreen";
+import { AccountMenu } from "@/components/layout/AccountMenu";
 import { TenantProvider } from "@/hooks/use-tenants";
 import { supabase } from "@/integrations/supabase/client";
 import { i18nInstance, i18nReady } from "@/i18n/config";
