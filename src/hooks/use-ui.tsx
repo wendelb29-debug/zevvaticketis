@@ -2,7 +2,9 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { supabase } from '@/integrations/supabase/client';
 
+export { type SupportedLocale, type ThemePreference } from "@/lib/i18n/types";
 import { type SupportedLocale, type ThemePreference } from "@/lib/i18n/types";
+
 
 
 export interface UIPreferences {
