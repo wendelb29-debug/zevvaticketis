@@ -194,12 +194,23 @@
 
   * {
     @apply border-border;
-    scrollbar-width: none !important; /* Firefox */
-    -ms-overflow-style: none !important; /* IE and Edge */
+    scrollbar-width: none !important;
   }
 
   *::-webkit-scrollbar {
-    display: none !important; /* Chrome, Safari and Opera */
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+  }
+
+  .no-scrollbar {
+    scrollbar-width: none !important;
+  }
+  
+  .no-scrollbar::-webkit-scrollbar {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
   }
 
   body {
