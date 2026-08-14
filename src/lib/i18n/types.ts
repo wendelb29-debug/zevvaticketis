@@ -1,3 +1,8 @@
-import { translations } from "../translations";
 export type SupportedLocale = 'pt-BR' | 'en-US' | 'es-ES';
-export type TranslationSchema = typeof translations["pt-BR"];
+export type ThemePreference = 'light' | 'dark' | 'system';
+export type TranslationSchema = {
+  nav: any;
+  navigation: any;
+  home: any;
+  footer: any;
+};

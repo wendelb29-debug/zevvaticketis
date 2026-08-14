@@ -40,7 +40,7 @@ import {
   DropdownMenuItem, 
   DropdownMenuTrigger 
 } from "@/components/ui/dropdown-menu";
-import { type SupportedLocale } from "@/hooks/use-ui";
+import { type SupportedLocale } from "@/lib/i18n/types";
 
 export const Route = createFileRoute("/admin")({
   beforeLoad: async () => {
