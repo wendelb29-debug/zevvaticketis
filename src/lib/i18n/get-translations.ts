@@ -9,5 +9,12 @@ import { type TranslationSchema } from "./types";
 export function getTranslations(lang: unknown): TranslationSchema {
   const locale = normalizeLocale(lang);
   
-  return translations[locale];
+  const selectedTranslations = translations[locale];
+  
+  if (!selectedTranslations) {
+    console.warn(`Translation for ${locale} not found, falling back to ${DEFAULT_LOCALE}`);
+    return translations[DEFAULT_LOCALE];
+  }
+
+  return selectedTranslations;
 }

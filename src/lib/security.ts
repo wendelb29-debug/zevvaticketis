@@ -54,10 +54,11 @@ export async function validateUserTenantAccess(
 ): Promise<SecurityValidation> {
   // 1. Validate platform admin server-side
   const { data: platformAdmin } = await supabase
-    .from("platform_admins")
+    .from("platform_admins" as any)
     .select("id")
-    .eq("user_id", userId)
+    .eq("id", userId)
     .maybeSingle();
+
 
   if (platformAdmin) {
     // Platform admins are authorized for all tenant actions

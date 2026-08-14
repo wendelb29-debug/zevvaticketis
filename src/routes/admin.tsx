@@ -429,29 +429,32 @@ function AdminLayout() {
           {isSidebarCollapsed ? (
             <Tooltip>
               <TooltipTrigger asChild>
-                <button 
-                  className="flex items-center justify-center w-full h-full outline-none focus:ring-2 focus:ring-primary rounded-lg transition-all"
-                  aria-label={nav['settings'] || "Configurações"}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    navigate({ to: "/admin/configuracoes" as any });
-                  }}
-                >
+                <div className="flex items-center justify-center w-full h-full">
                   <Settings className="w-5 h-5 shrink-0" />
-                </button>
+                </div>
               </TooltipTrigger>
               <TooltipContent side="right">
-                <p className="font-black uppercase tracking-widest text-[10px]">Configurações</p>
+                <p className="font-black uppercase tracking-widest text-[10px]">{nav['settings'] || "Configurações"}</p>
               </TooltipContent>
             </Tooltip>
           ) : (
             <>
-              <Settings className="w-5 h-5 shrink-0" />
+              <Settings className="w-5 h-5 shrink-0 text-muted-foreground" />
               <span className="truncate">{nav['settings'] || "Configurações"}</span>
             </>
           )}
         </Link>
       </div>
+
+      <div className="px-4 pb-4">
+        <UserMenu 
+          user={user} 
+          isSidebarCollapsed={isSidebarCollapsed} 
+          onLogout={handleLogout}
+          onNavigate={(path) => navigate({ to: path as any })}
+        />
+      </div>
+
 
       <div className="px-4 pb-4">
         <UserMenu 
