@@ -124,13 +124,14 @@ export function AdminDashboardBI() {
       const averageTicket = quantity > 0 ? gross / quantity : 0;
 
       // 3. Tickets & Checkins
-      let ticketsQuery = supabase.from("tickets").select("*");
+      let ticketsQuery = supabase.from("tickets").select("id, status, event_id");
       if (filters.eventId !== "all") ticketsQuery = ticketsQuery.eq("event_id", filters.eventId);
+      
       const { data: ticketsData } = await ticketsQuery;
       
-      const sold = ticketsData?.filter(t => t.status === "vendido" || t.status === "utilizado").length || 0;
-      const available = ticketsData?.filter(t => t.status === "disponivel").length || 0;
-      const used = ticketsData?.filter(t => t.status === "utilizado").length || 0;
+      const sold = ticketsData?.filter(t => t.status === "valido" || t.status === "presente").length || 0;
+      const available = 0; // Calculado no produtor
+      const used = ticketsData?.filter(t => t.status === "presente").length || 0;
 
       setStats({
         totalEvents: { active, closed: (eventsData?.length || 0) - active, upcoming },
