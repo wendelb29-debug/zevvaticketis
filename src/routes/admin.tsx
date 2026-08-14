@@ -446,14 +446,16 @@ function AdminLayout() {
         </Link>
       </div>
 
-      <div className="px-4 pb-4">
-        <UserMenu 
-          user={user} 
-          isSidebarCollapsed={isSidebarCollapsed} 
-          onLogout={handleLogout}
-          onNavigate={(path) => navigate({ to: path as any })}
-        />
-      </div>
+      {!isSidebarCollapsed && (
+        <div className="px-4 pb-4">
+          <UserMenu 
+            user={user} 
+            isSidebarCollapsed={isSidebarCollapsed} 
+            onLogout={handleLogout}
+            onNavigate={(path) => navigate({ to: path as any })}
+          />
+        </div>
+      )}
     </div>
     </TooltipProvider>
   );
