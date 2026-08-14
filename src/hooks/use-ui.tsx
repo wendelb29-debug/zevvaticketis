@@ -2,8 +2,10 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { supabase } from '@/integrations/supabase/client';
 
-export type SupportedLocale = 'pt-BR' | 'en-US' | 'es-ES';
-export type ThemePreference = 'light' | 'dark' | 'system';
+export { type SupportedLocale, type ThemePreference } from "@/lib/i18n/types";
+import { type SupportedLocale, type ThemePreference } from "@/lib/i18n/types";
+
+
 
 export interface UIPreferences {
   language: SupportedLocale;
@@ -40,29 +42,9 @@ interface UIStore extends UIPreferences {
   updateResolvedTheme: () => void;
 }
 
-export const DEFAULT_LOCALE: SupportedLocale = 'pt-BR';
+import { DEFAULT_LOCALE, normalizeLocale } from "@/lib/i18n/locales";
+export { DEFAULT_LOCALE, normalizeLocale };
 
-export function normalizeLocale(value: string | null | undefined): SupportedLocale {
-  if (!value) return DEFAULT_LOCALE;
-  
-  const normalized = value.trim().toLowerCase();
-  
-  const aliases: Record<string, SupportedLocale> = {
-    'pt': 'pt-BR',
-    'pt-br': 'pt-BR',
-    'português': 'pt-BR',
-    'portugues': 'pt-BR',
-    'en': 'en-US',
-    'en-us': 'en-US',
-    'english': 'en-US',
-    'es': 'es-ES',
-    'es-es': 'es-ES',
-    'español': 'es-ES',
-    'espanol': 'es-ES',
-  };
-
-  return aliases[normalized] ?? (['pt-BR', 'en-US', 'es-ES'].includes(value) ? value as SupportedLocale : DEFAULT_LOCALE);
-}
 
 const getBrowserLocale = (): SupportedLocale => {
   if (typeof window === 'undefined') return DEFAULT_LOCALE;

@@ -1,4 +1,4 @@
-import { type SupportedLocale } from "@/hooks/use-ui";
+import { type SupportedLocale } from "@/lib/i18n/types";
 
 export const formatCurrency = (amount: number, currency: string = 'BRL', locale: SupportedLocale = 'pt-BR') => {
   return new Intl.NumberFormat(locale, {
