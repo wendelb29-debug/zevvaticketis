@@ -1,4 +1,6 @@
-import { type SupportedLocale, type ThemePreference } from "@/hooks/use-ui";
+import { type SupportedLocale } from "./i18n/types";
+import { type ThemePreference } from "@/hooks/use-ui";
+
 
 export const translations = {
   "pt-BR": {
@@ -267,5 +269,5 @@ export const translations = {
   }
 } as const;
 
-export type TranslationSchema = typeof translations["pt-BR"];
-export type TranslationKeys = typeof translations;
+// Tipos movidos para src/lib/i18n/types.ts para evitar circularidade
+

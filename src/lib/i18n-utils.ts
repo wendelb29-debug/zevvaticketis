@@ -1,26 +1,4 @@
-import { translations, type TranslationSchema } from "./translations";
-import { normalizeLocale, DEFAULT_LOCALE, type SupportedLocale } from "@/hooks/use-ui";
+export * from "./i18n/locales";
+export * from "./i18n/get-translations";
+export * from "./i18n/types";
 
-/**
- * Padrão canônico para acesso a traduções.
- * Evita erros de 'undefined' ao tentar acessar idiomas inexistentes ou mal formatados.
- */
-export function getTranslations(lang: string | null | undefined) {
-  const locale = normalizeLocale(lang);
-  
-  // console.debug({
-  //   requested: lang,
-  //   resolved: locale,
-  //   available: Object.keys(translations)
-  // });
-
-  return (translations[locale as SupportedLocale] || translations[DEFAULT_LOCALE]) as TranslationSchema;
-}
-
-/**
- * Verifica se um idioma possui traduções mínimas carregadas.
- */
-export function hasLanguageSomeTranslations(locale: string | null | undefined): boolean {
-  const normalized = normalizeLocale(locale);
-  return Boolean(translations[normalized as SupportedLocale]);
-}
