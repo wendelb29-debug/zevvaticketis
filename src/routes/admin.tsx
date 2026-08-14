@@ -33,7 +33,6 @@ import {
   Check,
   Menu
 } from "lucide-react";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { 
@@ -43,6 +42,7 @@ import {
   DropdownMenuTrigger 
 } from "@/components/ui/dropdown-menu";
 import { type SupportedLocale } from "@/lib/i18n/types";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
 export const Route = createFileRoute("/admin")({
   beforeLoad: async () => {
@@ -227,239 +227,239 @@ function AdminLayout() {
             "shrink-0 px-6 py-8 flex items-center justify-between gap-2", 
             effectiveCollapsed && "px-4 justify-center flex-col gap-4"
           )}>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Link 
-                to="/app" 
-                className={cn(
-                  "p-2 hover:bg-accent rounded-lg transition-all text-muted-foreground hover:text-primary outline-none active:scale-95 border border-border bg-card",
-                  isSidebarCollapsed ? "w-10 h-10 flex items-center justify-center" : ""
-                )}
-              >
-                <Home className="w-5 h-5" />
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Link 
+                  to="/app" 
+                  className={cn(
+                    "p-2 hover:bg-accent rounded-lg transition-all text-muted-foreground hover:text-primary outline-none active:scale-95 border border-border bg-card",
+                    effectiveCollapsed ? "w-10 h-10 flex items-center justify-center" : ""
+                  )}
+                >
+                  <Home className="w-5 h-5" />
+                </Link>
+              </TooltipTrigger>
+              <TooltipContent side="right">
+                <p className="font-black uppercase tracking-widest text-[10px]">Meus Projetos (Workspace)</p>
+              </TooltipContent>
+            </Tooltip>
+
+            {!effectiveCollapsed && (
+              <Link to="/" className="text-xl font-manrope font-extrabold text-primary tracking-tighter flex-1 truncate">
+                ZEVVA <span className="text-foreground">ADMIN</span>
               </Link>
-            </TooltipTrigger>
-            <TooltipContent side="right">
-              <p className="font-black uppercase tracking-widest text-[10px]">Meus Projetos (Workspace)</p>
-            </TooltipContent>
-          </Tooltip>
+            )}
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <button 
+                  onClick={toggleSidebar}
+                  className="p-2 hover:bg-accent focus:bg-accent focus:ring-2 focus:ring-primary rounded-lg transition-all text-foreground outline-none active:scale-95"
+                  aria-label={effectiveCollapsed ? "Expandir barra lateral" : "Recolher barra lateral"}
+                >
+                  {effectiveCollapsed ? <PanelLeftOpen className="w-5 h-5" /> : <PanelLeftClose className="w-5 h-5" />}
+                </button>
+              </TooltipTrigger>
+              <TooltipContent side="right">
+                <p className="font-black uppercase tracking-widest text-[10px]">
+                  {effectiveCollapsed ? "Expandir" : "Recolher"}
+                </p>
+              </TooltipContent>
+            </Tooltip>
+          </div>
+          
+          {/* Navegação: min-h-0 flex-1 overflow-y-auto */}
+          <nav className="min-h-0 flex-1 space-y-1 px-4 overflow-y-auto no-scrollbar py-2">
+            {menuItems.map((item, index) => {
+              const isGroup = !!item.children;
+              const isOpen = openGroup === item.label;
+              const hasActiveChild = item.children?.some(child => location.pathname === child.href);
 
-          {!isSidebarCollapsed && (
-            <Link to="/" className="text-xl font-manrope font-extrabold text-primary tracking-tighter flex-1 truncate">
-              ZEVVA <span className="text-foreground">ADMIN</span>
-            </Link>
-          )}
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <button 
-                onClick={toggleSidebar}
-                className="p-2 hover:bg-accent focus:bg-accent focus:ring-2 focus:ring-primary rounded-lg transition-all text-foreground outline-none active:scale-95"
-                aria-label={isSidebarCollapsed ? "Expandir barra lateral" : "Recolher barra lateral"}
-              >
-                {isSidebarCollapsed ? <PanelLeftOpen className="w-5 h-5" /> : <PanelLeftClose className="w-5 h-5" />}
-              </button>
-            </TooltipTrigger>
-            <TooltipContent side="right">
-              <p className="font-black uppercase tracking-widest text-[10px]">
-                {isSidebarCollapsed ? "Expandir" : "Recolher"}
-              </p>
-            </TooltipContent>
-          </Tooltip>
-        </div>
-        
-        {/* Navegação: min-h-0 flex-1 overflow-y-auto */}
-        <nav className="min-h-0 flex-1 space-y-1 px-4 overflow-y-auto no-scrollbar py-2">
-          {menuItems.map((item, index) => {
-            const isGroup = !!item.children;
-            const isOpen = openGroup === item.label;
-            const hasActiveChild = item.children?.some(child => location.pathname === child.href);
-
-            if (isGroup && !isSidebarCollapsed) {
-              return (
-                <div key={item.label} className="space-y-1">
-                  <button
-                    onClick={() => setOpenGroup(isOpen ? null : item.label)}
-                    onKeyDown={(e) => {
-                      if (e.key === 'Enter' || e.key === ' ') {
-                        e.preventDefault();
-                        setOpenGroup(isOpen ? null : item.label);
-                      }
-                    }}
-                    className={cn(
-                      "w-full flex items-center justify-between py-3.5 px-4 rounded-xl text-sm font-extrabold transition-all duration-300 border-2 outline-none focus:ring-2 focus:ring-primary focus:border-primary active:scale-[0.98]",
-                      hasActiveChild ? "border-border bg-transparent text-foreground" : "border-transparent text-foreground hover:bg-accent/50"
+              if (isGroup && !effectiveCollapsed) {
+                return (
+                  <div key={item.label} className="space-y-1">
+                    <button
+                      onClick={() => setOpenGroup(isOpen ? null : item.label)}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                          e.preventDefault();
+                          setOpenGroup(isOpen ? null : item.label);
+                        }
+                      }}
+                      className={cn(
+                        "w-full flex items-center justify-between py-3.5 px-4 rounded-xl text-sm font-extrabold transition-all duration-300 border-2 outline-none focus:ring-2 focus:ring-primary focus:border-primary active:scale-[0.98]",
+                        hasActiveChild ? "border-border bg-transparent text-foreground" : "border-transparent text-foreground hover:bg-accent/50"
+                      )}
+                    >
+                      <div className="flex items-center gap-3">
+                        <item.icon className="w-5 h-5 shrink-0" />
+                        <span className="truncate">{item.label}</span>
+                      </div>
+                      <ChevronDown className={cn("w-4 h-4 transition-transform duration-200", isOpen && "rotate-180")} />
+                    </button>
+                    
+                    {isOpen && (
+                      <div className="pl-11 space-y-1">
+                        {item.children?.map((child) => (
+                          <Link
+                            key={child.label}
+                            to={child.href as any}
+                            search={(child as any).query}
+                            className="block py-2 rounded-lg text-xs font-bold transition-all duration-200 outline-none focus:ring-2 focus:ring-primary focus:text-primary active:scale-[0.98]"
+                            activeProps={{ className: "text-primary ring-2 ring-primary/20" }}
+                            inactiveProps={{ className: "text-muted-foreground hover:text-foreground hover:bg-accent/30" }}
+                          >
+                            {child.label}
+                          </Link>
+                        ))}
+                      </div>
                     )}
-                  >
-                    <div className="flex items-center gap-3">
+                  </div>
+                );
+              }
+
+              const isChat = item.label === nav['chat'];
+
+              return (
+                <Link
+                  key={item.label}
+                  to={item.href as any}
+                  tabIndex={effectiveCollapsed ? -1 : 0}
+                  {...(item.activeOptions ? { activeOptions: item.activeOptions } : {})}
+                  className={cn(
+                    "flex items-center gap-3 py-3.5 rounded-xl text-sm font-extrabold transition-all duration-300 border-2 outline-none focus:ring-2 focus:ring-primary focus:border-primary active:scale-[0.98]",
+                    effectiveCollapsed ? "px-0 justify-center" : (isChat ? "px-4 justify-center" : "px-4"),
+                    isChat && "bg-[#D94B52] text-white border-transparent shadow-lg shadow-[#D94B52]/30"
+                  )}
+                  {...(!isChat ? {
+                    activeProps: { className: "border-border bg-transparent text-foreground shadow-none" },
+                    inactiveProps: { className: "border-transparent text-foreground hover:bg-accent/50" }
+                  } : {})}
+                >
+                  {effectiveCollapsed ? (
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <button 
+                          className="flex items-center justify-center w-full h-full outline-none focus:ring-2 focus:ring-primary rounded-lg transition-all"
+                          aria-label={item.label}
+                          onClick={(e) => {
+                            e.preventDefault();
+                            navigate({ to: item.href as any });
+                          }}
+                        >
+                          <item.icon className="w-5 h-5 shrink-0" />
+                        </button>
+                      </TooltipTrigger>
+                      <TooltipContent side="right">
+                        <p className="font-black uppercase tracking-widest text-[10px]">{item.label}</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  ) : (
+                    <>
                       <item.icon className="w-5 h-5 shrink-0" />
                       <span className="truncate">{item.label}</span>
-                    </div>
-                    <ChevronDown className={cn("w-4 h-4 transition-transform duration-200", isOpen && "rotate-180")} />
-                  </button>
-                  
-                  {isOpen && (
-                    <div className="pl-11 space-y-1">
-                      {item.children?.map((child) => (
-                        <Link
-                          key={child.label}
-                          to={child.href as any}
-                          search={(child as any).query}
-                          className="block py-2 rounded-lg text-xs font-bold transition-all duration-200 outline-none focus:ring-2 focus:ring-primary focus:text-primary active:scale-[0.98]"
-                          activeProps={{ className: "text-primary ring-2 ring-primary/20" }}
-                          inactiveProps={{ className: "text-muted-foreground hover:text-foreground hover:bg-accent/30" }}
-                        >
-                          {child.label}
-                        </Link>
-                      ))}
-                    </div>
+                    </>
                   )}
-                </div>
+                </Link>
               );
-            }
+            })}
+          </nav>
 
-            const isChat = item.label === nav['chat'];
+          {/* Rodapé: shrink-0 border-t border-border bg-card */}
+          <div className="shrink-0 border-t border-border bg-card p-4 space-y-2">
+            {/* Idioma */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button
+                  className={cn(
+                    "w-full flex items-center gap-3 py-3 px-4 rounded-xl text-sm font-extrabold transition-all duration-300 border-2 border-border bg-card text-foreground hover:bg-accent outline-none focus:ring-2 focus:ring-primary focus:border-primary active:scale-[0.98]",
+                    effectiveCollapsed && "px-0 justify-center"
+                  )}
+                >
+                  {effectiveCollapsed ? (
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <div className="flex items-center justify-center w-full h-full">
+                          <Globe className="w-5 h-5 shrink-0" />
+                        </div>
+                      </TooltipTrigger>
+                      <TooltipContent side="right">
+                        <p className="font-black uppercase tracking-widest text-[10px]">
+                          {language === 'pt-BR' ? 'Português' : language === 'en-US' ? 'English' : 'Español'}
+                        </p>
+                      </TooltipContent>
+                    </Tooltip>
+                  ) : (
+                    <>
+                      <Globe className="w-5 h-5 shrink-0 text-muted-foreground" />
+                      <span className="truncate flex-1 text-left">{nav['language'] || "Idioma"}</span>
+                      <span className="text-[10px] bg-accent px-1.5 py-0.5 rounded-md font-bold uppercase tracking-tighter">
+                        {language.split('-')[0]}
+                      </span>
+                    </>
+                  )}
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent side={effectiveCollapsed ? "right" : "top"} align={effectiveCollapsed ? "start" : "center"} className="w-48 p-1.5 rounded-xl border-border shadow-2xl font-inter bg-popover/95 backdrop-blur-md">
+                <DropdownMenuItem 
+                  onClick={() => setLanguage('pt-BR')}
+                  className={cn("flex items-center justify-between gap-2 px-3 py-2 rounded-lg text-xs font-bold cursor-pointer", language === 'pt-BR' ? "bg-primary text-primary-foreground" : "text-foreground hover:bg-primary/5")}
+                >
+                  Português (Brasil)
+                  {language === 'pt-BR' && <Check className="w-3.5 h-3.5" />}
+                </DropdownMenuItem>
+                <DropdownMenuItem 
+                  onClick={() => setLanguage('en-US')}
+                  className={cn("flex items-center justify-between gap-2 px-3 py-2 rounded-lg text-xs font-bold cursor-pointer", language === 'en-US' ? "bg-primary text-primary-foreground" : "text-foreground hover:bg-primary/5")}
+                >
+                  English
+                  {language === 'en-US' && <Check className="w-3.5 h-3.5" />}
+                </DropdownMenuItem>
+                <DropdownMenuItem 
+                  onClick={() => setLanguage('es-ES')}
+                  className={cn("flex items-center justify-between gap-2 px-3 py-2 rounded-lg text-xs font-bold cursor-pointer", language === 'es-ES' ? "bg-primary text-primary-foreground" : "text-foreground hover:bg-primary/5")}
+                >
+                  Español
+                  {language === 'es-ES' && <Check className="w-3.5 h-3.5" />}
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
 
-            return (
-              <Link
-                key={item.label}
-                to={item.href as any}
-                tabIndex={isSidebarCollapsed ? -1 : 0}
-                {...(item.activeOptions ? { activeOptions: item.activeOptions } : {})}
-                className={cn(
-                  "flex items-center gap-3 py-3.5 rounded-xl text-sm font-extrabold transition-all duration-300 border-2 outline-none focus:ring-2 focus:ring-primary focus:border-primary active:scale-[0.98]",
-                  isSidebarCollapsed ? "px-0 justify-center" : (isChat ? "px-4 justify-center" : "px-4"),
-                  isChat && "bg-[#D94B52] text-white border-transparent shadow-lg shadow-[#D94B52]/30"
-                )}
-                {...(!isChat ? {
-                  activeProps: { className: "border-border bg-transparent text-foreground shadow-none" },
-                  inactiveProps: { className: "border-transparent text-foreground hover:bg-accent/50" }
-                } : {})}
-              >
-                {isSidebarCollapsed ? (
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <button 
-                        className="flex items-center justify-center w-full h-full outline-none focus:ring-2 focus:ring-primary rounded-lg transition-all"
-                        aria-label={item.label}
-                        onClick={(e) => {
-                          e.preventDefault();
-                          navigate({ to: item.href as any });
-                        }}
-                      >
-                        <item.icon className="w-5 h-5 shrink-0" />
-                      </button>
-                    </TooltipTrigger>
-                    <TooltipContent side="right">
-                      <p className="font-black uppercase tracking-widest text-[10px]">{item.label}</p>
-                    </TooltipContent>
-                  </Tooltip>
-                ) : (
-                  <>
-                    <item.icon className="w-5 h-5 shrink-0" />
-                    <span className="truncate">{item.label}</span>
-                  </>
-                )}
-              </Link>
-            );
-          })}
-        </nav>
+            {/* Configurações */}
+            <Link
+              to="/admin/configuracoes"
+              className={cn(
+                "w-full flex items-center gap-3 py-3 px-4 rounded-xl text-sm font-extrabold transition-all duration-300 border-2 border-border bg-card text-foreground hover:bg-accent outline-none focus:ring-2 focus:ring-primary focus:border-primary active:scale-[0.98]",
+                effectiveCollapsed && "px-0 justify-center"
+              )}
+            >
+              {effectiveCollapsed ? (
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <div className="flex items-center justify-center w-full h-full">
+                      <Settings className="w-5 h-5 shrink-0" />
+                    </div>
+                  </TooltipTrigger>
+                  <TooltipContent side="right">
+                    <p className="font-black uppercase tracking-widest text-[10px]">{nav['settings'] || "Configurações"}</p>
+                  </TooltipContent>
+                </Tooltip>
+              ) : (
+                <>
+                  <Settings className="w-5 h-5 shrink-0 text-muted-foreground" />
+                  <span className="truncate">{nav['settings'] || "Configurações"}</span>
+                </>
+              )}
+            </Link>
 
-        {/* Rodapé: shrink-0 border-t border-border bg-card */}
-        <div className="shrink-0 border-t border-border bg-card p-4 space-y-2">
-          {/* Idioma */}
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <button
-                className={cn(
-                  "w-full flex items-center gap-3 py-3 px-4 rounded-xl text-sm font-extrabold transition-all duration-300 border-2 border-border bg-card text-foreground hover:bg-accent outline-none focus:ring-2 focus:ring-primary focus:border-primary active:scale-[0.98]",
-                  isSidebarCollapsed && "px-0 justify-center"
-                )}
-              >
-                {isSidebarCollapsed ? (
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <div className="flex items-center justify-center w-full h-full">
-                        <Globe className="w-5 h-5 shrink-0" />
-                      </div>
-                    </TooltipTrigger>
-                    <TooltipContent side="right">
-                      <p className="font-black uppercase tracking-widest text-[10px]">
-                        {language === 'pt-BR' ? 'Português' : language === 'en-US' ? 'English' : 'Español'}
-                      </p>
-                    </TooltipContent>
-                  </Tooltip>
-                ) : (
-                  <>
-                    <Globe className="w-5 h-5 shrink-0 text-muted-foreground" />
-                    <span className="truncate flex-1 text-left">{nav['language'] || "Idioma"}</span>
-                    <span className="text-[10px] bg-accent px-1.5 py-0.5 rounded-md font-bold uppercase tracking-tighter">
-                      {language.split('-')[0]}
-                    </span>
-                  </>
-                )}
-              </button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent side={isSidebarCollapsed ? "right" : "top"} align={isSidebarCollapsed ? "start" : "center"} className="w-48 p-1.5 rounded-xl border-border shadow-2xl font-inter bg-popover/95 backdrop-blur-md">
-              <DropdownMenuItem 
-                onClick={() => setLanguage('pt-BR')}
-                className={cn("flex items-center justify-between gap-2 px-3 py-2 rounded-lg text-xs font-bold cursor-pointer", language === 'pt-BR' ? "bg-primary text-primary-foreground" : "text-foreground hover:bg-primary/5")}
-              >
-                Português (Brasil)
-                {language === 'pt-BR' && <Check className="w-3.5 h-3.5" />}
-              </DropdownMenuItem>
-              <DropdownMenuItem 
-                onClick={() => setLanguage('en-US')}
-                className={cn("flex items-center justify-between gap-2 px-3 py-2 rounded-lg text-xs font-bold cursor-pointer", language === 'en-US' ? "bg-primary text-primary-foreground" : "text-foreground hover:bg-primary/5")}
-              >
-                English
-                {language === 'en-US' && <Check className="w-3.5 h-3.5" />}
-              </DropdownMenuItem>
-              <DropdownMenuItem 
-                onClick={() => setLanguage('es-ES')}
-                className={cn("flex items-center justify-between gap-2 px-3 py-2 rounded-lg text-xs font-bold cursor-pointer", language === 'es-ES' ? "bg-primary text-primary-foreground" : "text-foreground hover:bg-primary/5")}
-              >
-                Español
-                {language === 'es-ES' && <Check className="w-3.5 h-3.5" />}
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-
-          {/* Configurações */}
-          <Link
-            to="/admin/configuracoes"
-            className={cn(
-              "w-full flex items-center gap-3 py-3 px-4 rounded-xl text-sm font-extrabold transition-all duration-300 border-2 border-border bg-card text-foreground hover:bg-accent outline-none focus:ring-2 focus:ring-primary focus:border-primary active:scale-[0.98]",
-              isSidebarCollapsed && "px-0 justify-center"
-            )}
-          >
-            {isSidebarCollapsed ? (
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <div className="flex items-center justify-center w-full h-full">
-                    <Settings className="w-5 h-5 shrink-0" />
-                  </div>
-                </TooltipTrigger>
-                <TooltipContent side="right">
-                  <p className="font-black uppercase tracking-widest text-[10px]">{nav['settings'] || "Configurações"}</p>
-                </TooltipContent>
-              </Tooltip>
-            ) : (
-              <>
-                <Settings className="w-5 h-5 shrink-0 text-muted-foreground" />
-                <span className="truncate">{nav['settings'] || "Configurações"}</span>
-              </>
-            )}
-          </Link>
-
-          {/* Perfil do Usuário */}
-          <UserMenu 
-            user={user} 
-            isSidebarCollapsed={isSidebarCollapsed} 
-            onLogout={handleLogout}
-            onNavigate={(path) => navigate({ to: path as any })}
-          />
+            {/* Perfil do Usuário */}
+            <UserMenu 
+              user={user} 
+              isSidebarCollapsed={effectiveCollapsed} 
+              onLogout={handleLogout}
+              onNavigate={(path) => navigate({ to: path as any })}
+            />
+          </div>
         </div>
-      </div>
       </TooltipProvider>
     );
   };
@@ -483,7 +483,7 @@ function AdminLayout() {
                   </button>
                 </SheetTrigger>
                 <SheetContent side="left" className="p-0 w-72 bg-card border-r-border">
-                  <SidebarContent />
+                  <SidebarContent forceExpanded={true} />
                 </SheetContent>
               </Sheet>
             </div>
