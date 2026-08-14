@@ -47,6 +47,14 @@ export const translations = {
       settings: "Configurações",
       language: "Idioma"
     },
+    common: {
+      save: "Salvar",
+      cancel: "Cancelar",
+      loading: "Carregando...",
+      error: "Erro",
+      success: "Sucesso",
+      back: "Voltar"
+    },
     home: {
       featuredLabel: "Destaque",
       ensureSpot: "Garantir Vaga",
