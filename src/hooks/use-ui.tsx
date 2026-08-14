@@ -3,7 +3,7 @@ import { persist } from 'zustand/middleware';
 import { supabase } from '@/integrations/supabase/client';
 
 import { type SupportedLocale, type ThemePreference } from "@/lib/i18n/types";
-export type ThemePreference = 'light' | 'dark' | 'system';
+
 
 export interface UIPreferences {
   language: SupportedLocale;
