@@ -40,9 +40,10 @@ interface UserMenuProps {
   agentStatus?: 'online' | 'busy' | 'offline';
   onStatusChange?: (status: 'online' | 'busy' | 'offline') => void;
   onOpenSettings?: () => void;
+  isSidebarCollapsed?: boolean;
 }
 
-export function UserMenu({ user, onLogout, onNavigate, agentStatus, onStatusChange, onOpenSettings }: UserMenuProps) {
+export function UserMenu({ user, onLogout, onNavigate, agentStatus, onStatusChange, onOpenSettings, isSidebarCollapsed }: UserMenuProps) {
   const [role, setRole] = useState<{ label: string; color: string } | null>(null);
   const { theme, setTheme, fontSize, setFontSize } = useUI();
   const location = useLocation();

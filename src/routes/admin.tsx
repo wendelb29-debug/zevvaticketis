@@ -458,6 +458,7 @@ function AdminLayout() {
           user={user} 
           isSidebarCollapsed={isSidebarCollapsed} 
           onLogout={handleLogout}
+          onNavigate={(path) => navigate({ to: path as any })}
         />
       </div>
     </div>
