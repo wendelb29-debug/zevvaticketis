@@ -109,7 +109,7 @@ profiles
 
 ---
 
-## Fase 1 — MVP comercial
+## Fase 1 — MVP Comercial (Em Execução)
 
 Fase focada em converter a plataforma em um motor comercial real.
 1. Gateway real com Pix e cartão.
@@ -121,6 +121,33 @@ Fase focada em converter a plataforma em um motor comercial real.
 7. Notificações transacionais.
 8. LGPD operacional.
 9. Segurança e 2FA.
+
+---
+
+## Fase 2 — Crescimento
+
+Fase focada em escala, marketing e ferramentas avançadas de gestão.
+1. **Cupons:** Sistema flexível de descontos.
+2. **Afiliados:** Portal de promotores e comissões.
+3. **Certificados:** Emissão automática de certificados.
+4. **CRM Completo:** Segmentação e histórico de clientes.
+5. **Automação:** Régua de comunicação WhatsApp/E-mail.
+6. **Financeiro:** Repasses automáticos e conciliação bancária.
+7. **Caravanas:** Gestão completa de logística e veículos.
+
+---
+
+## Fase 3 — Ecossistema
+
+Transformação da plataforma em um hub completo de serviços e comunidade.
+1. **Carteira Multimoeda:** Gestão global de saldos.
+2. **Área de Membros:** Cursos e conteúdos exclusivos.
+3. **Loja:** Venda de produtos oficiais.
+4. **Doações:** Módulo filantrópico.
+5. **Palestrantes & Voluntários:** Gestão de escalas e staff.
+6. **API Pública:** Integrações com sistemas externos.
+7. **Apps Móveis:** Experiência nativa iOS/Android.
+8. **Networking:** Ferramentas de interação entre participantes.
 
 ---
 
