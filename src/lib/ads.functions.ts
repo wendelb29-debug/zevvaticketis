@@ -8,7 +8,7 @@ const logAdEventSchema = z.object({
   campaignId: z.string().uuid(),
   creativeId: z.string().uuid(),
   eventType: z.enum(['eligible', 'served', 'impression', 'click', 'minimize', 'close', 'swipe_dismiss']),
-  metadata: z.record(z.any()).optional(),
+  metadata: z.record(z.string(), z.any()).optional(),
   pagePath: z.string().optional(),
   deviceHash: z.string().optional(),
   sessionId: z.string().optional()
@@ -19,8 +19,8 @@ const logAdEventSchema = z.object({
  */
 export const logAdEvent = createServerFn({ method: "POST" })
   .validator((data: any) => logAdEventSchema.parse(data))
-
   .handler(async ({ data }) => {
+
     const { error } = await supabase
       .from("ad_metrics")
       .insert({
@@ -52,8 +52,8 @@ const getEligibleAdsSchema = z.object({
  */
 export const getEligibleAds = createServerFn({ method: "GET" })
   .validator((data: any) => getEligibleAdsSchema.parse(data))
-
   .handler(async ({ data }) => {
+
     // Current time for filter
     const now = new Date().toISOString();
     
