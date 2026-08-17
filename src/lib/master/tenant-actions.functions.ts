@@ -8,9 +8,9 @@ export const updateTenantIdentity = createServerFn({ method: "POST" })
     updates: z.object({
       nome: z.string().optional(),
       slug: z.string().optional(),
-      documento: z.string().nullable().optional(),
-      telefone: z.string().nullable().optional(),
-      logo: z.string().nullable().optional(),
+      documento: z.string().nullish(),
+      telefone: z.string().nullish(),
+      logo: z.string().nullish(),
     })
   }).parse(data))
   .handler(async ({ data: { id, updates } }) => {
@@ -19,7 +19,7 @@ export const updateTenantIdentity = createServerFn({ method: "POST" })
     
     const { error } = await supabaseAdmin
       .from("tenants")
-      .update(updates)
+      .update(updates as any)
       .eq("id", id);
       
     if (error) throw error;
