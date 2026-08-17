@@ -191,6 +191,7 @@ function ProdutorLayout() {
   const allMenuItems = [
     { label: "Dashboard", icon: LayoutDashboard, href: "/produtor", activeOptions: { exact: true }, permission: "DASHBOARD" },
     { label: "Eventos", icon: FileText, href: "/produtor/eventos", permission: "EVENTOS" },
+    { label: "Gestão de ingressos", icon: Ticket, href: "/produtor/gestao-ingressos", permission: "INGRESSOS" },
     { label: "Marketing", icon: Globe, href: "/produtor/marketing", permission: "MARKETING" },
     { label: "Participantes", icon: Users, href: "/produtor/participantes", permission: "PARTICIPANTES" },
     { label: "Check-in", icon: ShieldCheck, href: "/produtor/checkin", permission: "CHECKIN" },
