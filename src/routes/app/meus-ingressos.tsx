@@ -18,7 +18,7 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/app/meus-ingressos")({
   beforeLoad: async () => {
     const { data: { session } } = await supabase.auth.getSession();
-    if (!session) throw redirect({ to: "/auth" });
+    if (!session) throw redirect({ to: "/login" });
   },
   component: MeusIngressos,
 });
