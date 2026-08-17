@@ -85,7 +85,7 @@ function MasterAdminPage() {
   const handleClearFilters = () => {
     navigate({
       search: () => ({ page: 1 }),
-    });
+    } as any);
     setLocalSearch("");
   };
 
