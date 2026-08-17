@@ -45,6 +45,7 @@ export function AdsDashboard() {
 
   // Process data for chart (grouped by date)
   const chartData = metrics?.reduce((acc: any[], metric) => {
+    if (!metric.occurred_at) return acc;
     const date = new Date(metric.occurred_at).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' });
     const existing = acc.find(a => a.name === date);
     if (existing) {
@@ -58,7 +59,8 @@ export function AdsDashboard() {
       });
     }
     return acc;
-  }, []).slice(-7); // Last 7 days
+  }, []).slice(-7) || [];
+
 
   return (
     <div className="space-y-8">
@@ -100,7 +102,7 @@ export function AdsDashboard() {
           </div>
           <div className="h-[300px] w-full">
             <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={chartData}>
+              <LineChart data={chartData || []}>
                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#E2E8F0" />
                 <XAxis dataKey="name" stroke="#94A3B8" fontSize={10} tickLine={false} axisLine={false} />
                 <YAxis stroke="#94A3B8" fontSize={10} tickLine={false} axisLine={false} />
@@ -124,7 +126,7 @@ export function AdsDashboard() {
           </div>
           <div className="h-[300px] w-full">
             <ResponsiveContainer width="100%" height="100%">
-              <RechartsBarChart data={chartData}>
+              <RechartsBarChart data={chartData || []}>
                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#E2E8F0" />
                 <XAxis dataKey="name" stroke="#94A3B8" fontSize={10} tickLine={false} axisLine={false} />
                 <YAxis stroke="#94A3B8" fontSize={10} tickLine={false} axisLine={false} />

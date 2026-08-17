@@ -46,8 +46,9 @@ export function AdvertiserList() {
 
   const filtered = advertisers?.filter(a => 
     a.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    a.contact_email?.toLowerCase().includes(searchTerm.toLowerCase())
+    a.email?.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
 
   return (
     <div className="space-y-4">
@@ -90,18 +91,19 @@ export function AdvertiserList() {
                     </div>
                     <div>
                       <p className="font-bold text-foreground text-sm">{adv.name}</p>
-                      {adv.website_url && (
-                        <a href={adv.website_url} target="_blank" className="text-[10px] text-primary hover:underline flex items-center gap-1">
-                          <Globe className="h-2 w-2" /> {adv.website_url.replace(/^https?:\/\//, '')}
+                      {adv.website && (
+                        <a href={adv.website} target="_blank" className="text-[10px] text-primary hover:underline flex items-center gap-1">
+                          <Globe className="h-2 w-2" /> {adv.website.replace(/^https?:\/\//, '')}
                         </a>
                       )}
+
                     </div>
                   </div>
                 </td>
                 <td className="px-6 py-4">
                   <div className="flex flex-col gap-1">
                     <span className="text-xs font-medium text-foreground/70 flex items-center gap-1">
-                      <Mail className="h-3 w-3" /> {adv.contact_email || 'N/A'}
+                      <Mail className="h-3 w-3" /> {adv.email || 'N/A'}
                     </span>
                   </div>
                 </td>
