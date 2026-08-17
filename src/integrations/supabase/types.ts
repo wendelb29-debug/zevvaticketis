@@ -663,6 +663,9 @@ export type Database = {
           id: string
           metadata: Json | null
           operator_id: string | null
+          tenant_id: string | null
+          ticket_id: string | null
+          token_hash: string | null
         }
         Insert: {
           action: string
@@ -671,6 +674,9 @@ export type Database = {
           id?: string
           metadata?: Json | null
           operator_id?: string | null
+          tenant_id?: string | null
+          ticket_id?: string | null
+          token_hash?: string | null
         }
         Update: {
           action?: string
@@ -679,6 +685,9 @@ export type Database = {
           id?: string
           metadata?: Json | null
           operator_id?: string | null
+          tenant_id?: string | null
+          ticket_id?: string | null
+          token_hash?: string | null
         }
         Relationships: [
           {
