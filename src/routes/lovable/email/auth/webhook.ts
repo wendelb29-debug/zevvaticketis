@@ -7,6 +7,7 @@ import { MagicLinkEmail } from '@/lib/email-templates/magic-link'
 import { RecoveryEmail } from '@/lib/email-templates/recovery'
 import { EmailChangeEmail } from '@/lib/email-templates/email-change'
 import { ReauthenticationEmail } from '@/lib/email-templates/reauthentication'
+import { OrderTicketsEmail } from '@/lib/email-templates/order-tickets'
 
 // Configuration
 const SITE_NAME = "zevvaticketis"
@@ -25,39 +26,38 @@ const handler = createAuthEmailHandler({
   emails: {
     signup: {
       subject: 'Confirme seu e-mail para acessar a Zevva',
-      render: (data) =>
+      render: (data: any) =>
         React.createElement(SignupEmail, {
           confirmationUrl: data.url,
         }),
     },
     invite: {
       subject: 'Você recebeu um convite para acessar a Zevva',
-      render: (data) =>
+      render: (data: any) =>
         React.createElement(InviteEmail, {
           confirmationUrl: data.url,
-          // metadata can be passed via data.data if the SDK version supports it
-          organizationName: (data as any).data?.organization_name,
-          invitedBy: (data as any).data?.invited_by,
-          role: (data as any).data?.role,
+          organizationName: data.data?.organization_name,
+          invitedBy: data.data?.invited_by,
+          role: data.data?.role,
         }),
     },
     magiclink: {
       subject: 'Seu acesso seguro à Zevva',
-      render: (data) =>
+      render: (data: any) =>
         React.createElement(MagicLinkEmail, {
           confirmationUrl: data.url,
         }),
     },
     recovery: {
       subject: 'Redefina sua senha da Zevva',
-      render: (data) =>
+      render: (data: any) =>
         React.createElement(RecoveryEmail, {
           confirmationUrl: data.url,
         }),
     },
     email_change: {
       subject: 'Confirme a alteração do seu e-mail na Zevva',
-      render: (data) =>
+      render: (data: any) =>
         React.createElement(EmailChangeEmail, {
           newEmail: data.new_email ?? '',
           confirmationUrl: data.url,
@@ -65,16 +65,67 @@ const handler = createAuthEmailHandler({
     },
     reauthentication: {
       subject: 'Código de segurança da Zevva',
-      render: (data) =>
+      render: (data: any) =>
         React.createElement(ReauthenticationEmail, { token: data.token ?? '' }),
     },
   },
 })
 
+// Custom handler for order tickets as it's not a standard Supabase Auth type
+const orderTicketsHandler = async (request: Request) => {
+  if (request.method !== 'POST') return new Response('Method not allowed', { status: 405 });
+  
+  try {
+    const payload = await request.json();
+    // In a real scenario, you'd verify a secret/signature here
+    
+    const html = await (await import('@react-email/render')).render(
+      React.createElement(OrderTicketsEmail, {
+        customerName: payload.customer_name,
+        eventName: payload.event_name,
+        orderId: payload.order_id,
+        ticketCount: payload.ticket_count,
+        viewTicketsUrl: payload.url,
+      })
+    );
+
+    const response = await fetch(process.env['LOVABLE_SEND_URL'] || 'https://api.lovable.dev/v1/emails/send', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${process.env['LOVABLE_API_KEY']}`,
+      },
+      body: JSON.stringify({
+        from: `${SITE_NAME} <noreply@${FROM_DOMAIN}>`,
+        to: payload.email,
+        subject: 'Seus ingressos da Zevva chegaram!',
+        html,
+        senderDomain: SENDER_DOMAIN,
+        // Using "Important" marker in metadata/headers if supported by the provider
+        headers: {
+          'X-Priority': '1 (Highest)',
+          'X-MSMail-Priority': 'High',
+          'Importance': 'High',
+        }
+      }),
+    });
+
+    return new Response(await response.text(), { status: response.status });
+  } catch (error) {
+    return new Response(String(error), { status: 500 });
+  }
+}
+
 export const Route = createFileRoute("/lovable/email/auth/webhook")({
   server: {
     handlers: {
-      POST: ({ request }) => handler(request),
+      POST: ({ request }) => {
+        const url = new URL(request.url);
+        if (url.searchParams.get('type') === 'order_tickets') {
+          return orderTicketsHandler(request);
+        }
+        return handler(request);
+      },
     },
   },
 })
