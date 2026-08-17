@@ -25,14 +25,14 @@ const handler = createAuthEmailHandler({
   sendUrl: process.env['LOVABLE_SEND_URL'],
   emails: {
     signup: {
-      subject: 'Confirme seu e-mail para acessar a Zevva',
+      subject: '🚨 IMPORTANTE: Confirme seu e-mail na Zevva',
       render: (data: any) =>
         React.createElement(SignupEmail, {
           confirmationUrl: data.url,
         }),
     },
     invite: {
-      subject: 'Você recebeu um convite para acessar a Zevva',
+      subject: '🚀 Convite Especial: Você foi convidado para a Zevva',
       render: (data: any) =>
         React.createElement(InviteEmail, {
           confirmationUrl: data.url,
@@ -42,21 +42,21 @@ const handler = createAuthEmailHandler({
         }),
     },
     magiclink: {
-      subject: 'Seu acesso seguro à Zevva',
+      subject: '🔐 Acesso Rápido: Entre na sua conta Zevva',
       render: (data: any) =>
         React.createElement(MagicLinkEmail, {
           confirmationUrl: data.url,
         }),
     },
     recovery: {
-      subject: 'Redefina sua senha da Zevva',
+      subject: '🔑 Redefinição de Senha: Crie sua nova senha na Zevva',
       render: (data: any) =>
         React.createElement(RecoveryEmail, {
           confirmationUrl: data.url,
         }),
     },
     email_change: {
-      subject: 'Confirme a alteração do seu e-mail na Zevva',
+      subject: '📧 Atenção: Confirme seu novo e-mail na Zevva',
       render: (data: any) =>
         React.createElement(EmailChangeEmail, {
           newEmail: data.new_email ?? '',
@@ -64,7 +64,7 @@ const handler = createAuthEmailHandler({
         }),
     },
     reauthentication: {
-      subject: 'Código de segurança da Zevva',
+      subject: '🛡️ Segurança: Seu código de verificação Zevva',
       render: (data: any) =>
         React.createElement(ReauthenticationEmail, { token: data.token ?? '' }),
     },
@@ -98,7 +98,7 @@ const orderTicketsHandler = async (request: Request) => {
       body: JSON.stringify({
         from: `${SITE_NAME} <noreply@${FROM_DOMAIN}>`,
         to: payload.email,
-        subject: 'Seus ingressos da Zevva chegaram!',
+        subject: `🎟️ Ingressos Disponíveis: ${payload.event_name || 'Seus ingressos'} chegaram!`,
         html,
         senderDomain: SENDER_DOMAIN,
         // Using "Important" marker in metadata/headers if supported by the provider

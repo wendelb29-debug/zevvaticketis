@@ -27,7 +27,7 @@ const TEMPLATES: TemplateItem[] = [
   {
     id: 'signup',
     name: 'Confirmação de Inscrição',
-    subject: 'Confirme seu e-mail para acessar a Zevva',
+    subject: '🚨 IMPORTANTE: Confirme seu e-mail na Zevva',
     component: SignupEmail,
     props: { confirmationUrl: `${SAMPLE_PROJECT_URL}/auth/callback?type=signup` },
     variable: '{{ .ConfirmationURL }}'
@@ -35,7 +35,7 @@ const TEMPLATES: TemplateItem[] = [
   {
     id: 'recovery',
     name: 'Redefinição de Senha',
-    subject: 'Redefina sua senha da Zevva',
+    subject: '🔑 Redefinição de Senha: Crie sua nova senha na Zevva',
     component: RecoveryEmail,
     props: { confirmationUrl: `${SAMPLE_PROJECT_URL}/auth/callback?type=recovery` },
     variable: '{{ .ConfirmationURL }}'
@@ -43,7 +43,7 @@ const TEMPLATES: TemplateItem[] = [
   {
     id: 'invite',
     name: 'Convite',
-    subject: 'Você recebeu um convite para acessar a Zevva',
+    subject: '🚀 Convite Especial: Você foi convidado para a Zevva',
     component: InviteEmail,
     props: { 
       confirmationUrl: `${SAMPLE_PROJECT_URL}/auth/callback?type=invite`,
@@ -56,7 +56,7 @@ const TEMPLATES: TemplateItem[] = [
   {
     id: 'magiclink',
     name: 'Link Mágico',
-    subject: 'Seu acesso seguro à Zevva',
+    subject: '🔐 Acesso Rápido: Entre na sua conta Zevva',
     component: MagicLinkEmail,
     props: { confirmationUrl: `${SAMPLE_PROJECT_URL}/auth/callback?type=magiclink` },
     variable: '{{ .ConfirmationURL }}'
@@ -64,7 +64,7 @@ const TEMPLATES: TemplateItem[] = [
   {
     id: 'email_change',
     name: 'Alteração de E-mail',
-    subject: 'Confirme a alteração do seu e-mail na Zevva',
+    subject: '📧 Atenção: Confirme seu novo e-mail na Zevva',
     component: EmailChangeEmail,
     props: { 
       newEmail: 'novo@email.com',
@@ -75,7 +75,7 @@ const TEMPLATES: TemplateItem[] = [
   {
     id: 'reauthentication',
     name: 'Reautenticação',
-    subject: 'Código de segurança da Zevva',
+    subject: '🛡️ Segurança: Seu código de verificação Zevva',
     component: ReauthenticationEmail,
     props: { token: '123456' },
     variable: '{{ .Token }}'
@@ -83,7 +83,7 @@ const TEMPLATES: TemplateItem[] = [
   {
     id: 'order_tickets',
     name: 'Entrega de Ingressos',
-    subject: 'Seus ingressos para o evento chegaram!',
+    subject: '🎟️ Ingressos Disponíveis: Seus ingressos para o evento chegaram!',
     component: OrderTicketsEmail,
     props: { 
       customerName: 'Wendel Bonfim',
