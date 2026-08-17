@@ -254,6 +254,75 @@ function AuditoriaTab() {
   return <AuditoriaPanel />;
 }
 
+function GlobalSectionForm({ 
+  section, 
+  defaultValues, 
+  render 
+}: { 
+  section: string, 
+  defaultValues: any, 
+  render: (values: any, update: (v: any) => void) => React.ReactNode 
+}) {
+  const [values, setValues] = useState(defaultValues);
+  const [reason, setReason] = useState("");
+  const updateSettings = useServerFn(updateGlobalPlatformSettings);
+  const [isPending, setIsPending] = useState(false);
+
+  const handleSave = async () => {
+    if (!reason || reason.length < 5) {
+      toast.error("Por favor, forneça uma justificativa válida.");
+      return;
+    }
+
+    setIsPending(true);
+    try {
+      await updateSettings({
+        data: {
+          section,
+          changes: values,
+          reason
+        }
+      });
+      toast.success(`Configurações de ${section} atualizadas com sucesso!`);
+      setReason("");
+    } catch (error: any) {
+      toast.error(`Erro ao atualizar: ${error.message}`);
+    } finally {
+      setIsPending(false);
+    }
+  };
+
+  const updateValues = (newValues: any) => {
+    setValues((prev: any) => ({ ...prev, ...newValues }));
+  };
+
+  return (
+    <div className="space-y-8">
+      {render(values, updateValues)}
+      
+      <div className="mt-8 pt-8 border-t border-border/50 space-y-4">
+        <div className="space-y-2">
+          <Label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Justificativa da Alteração (Obrigatório)</Label>
+          <Textarea 
+            placeholder="Descreva o motivo desta alteração para fins de auditoria..." 
+            className="rounded-xl min-h-[80px] bg-muted/20"
+            value={reason}
+            onChange={e => setReason(e.target.value)}
+          />
+        </div>
+        <div className="flex justify-end">
+          <Button 
+            onClick={handleSave}
+            disabled={isPending}
+            className="bg-navy hover:bg-navy/90 text-white rounded-xl font-black px-8 shadow-lg shadow-navy/20 active:scale-95 transition-all"
+          >
+            {isPending ? "Processando..." : "Salvar Alterações"}
+          </Button>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 function SettingsPage({ session, activeTenantId }: { session: any, activeTenantId: string | null }) {
   const search = useSearch({ from: "/admin/configuracoes" }) as any;
