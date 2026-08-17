@@ -100,7 +100,7 @@ export const listTenantsPaginated = createServerFn({ method: "GET" })
       `, { count: "exact" });
 
     if (search) {
-      query = query.or(`nome.ilike.%${search}%,slug.ilike.%${search}%`);
+      query = query.or(`nome.ilike.%${search}%,slug.ilike.%${search}%,email_contato.ilike.%${search}%,nome_proprietario.ilike.%${search}%,id.eq.${search},dominio_personalizado.ilike.%${search}%`);
     }
     if (status) {
       query = query.eq('status', status);
