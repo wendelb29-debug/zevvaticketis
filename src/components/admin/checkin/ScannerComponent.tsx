@@ -46,8 +46,9 @@ export function ScannerComponent() {
   });
 
   useEffect(() => {
-    if (events && events.length > 0 && !selectedEventId) {
-      setSelectedEventId(events[0].id);
+    const firstEventId = events?.[0]?.id;
+    if (events && events.length > 0 && !selectedEventId && firstEventId) {
+      setSelectedEventId(firstEventId);
     }
   }, [events, selectedEventId]);
 
