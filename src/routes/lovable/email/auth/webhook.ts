@@ -24,53 +24,47 @@ const handler = createAuthEmailHandler({
   sendUrl: process.env['LOVABLE_SEND_URL'],
   emails: {
     signup: {
-      subject: 'Confirm your email',
+      subject: 'Confirme seu e-mail para acessar a Zevva',
       render: (data) =>
         React.createElement(SignupEmail, {
-          siteName: SITE_NAME,
-          siteUrl: SITE_URL,
-          recipient: data.email,
           confirmationUrl: data.url,
         }),
     },
     invite: {
-      subject: "You've been invited",
+      subject: 'Você recebeu um convite para acessar a Zevva',
       render: (data) =>
         React.createElement(InviteEmail, {
-          siteName: SITE_NAME,
-          siteUrl: SITE_URL,
           confirmationUrl: data.url,
+          // metadata can be passed via data.data if configured in Supabase
+          organizationName: (data.data as any)?.organization_name,
+          invitedBy: (data.data as any)?.invited_by,
+          role: (data.data as any)?.role,
         }),
     },
     magiclink: {
-      subject: 'Your login link',
+      subject: 'Seu acesso seguro à Zevva',
       render: (data) =>
         React.createElement(MagicLinkEmail, {
-          siteName: SITE_NAME,
           confirmationUrl: data.url,
         }),
     },
     recovery: {
-      subject: 'Reset your password',
+      subject: 'Redefina sua senha da Zevva',
       render: (data) =>
         React.createElement(RecoveryEmail, {
-          siteName: SITE_NAME,
           confirmationUrl: data.url,
         }),
     },
     email_change: {
-      subject: 'Confirm your new email',
+      subject: 'Confirme a alteração do seu e-mail na Zevva',
       render: (data) =>
         React.createElement(EmailChangeEmail, {
-          siteName: SITE_NAME,
-          oldEmail: data.old_email ?? '',
-          email: data.email,
           newEmail: data.new_email ?? '',
           confirmationUrl: data.url,
         }),
     },
     reauthentication: {
-      subject: 'Your verification code',
+      subject: 'Código de segurança da Zevva',
       render: (data) =>
         React.createElement(ReauthenticationEmail, { token: data.token ?? '' }),
     },
