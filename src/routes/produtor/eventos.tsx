@@ -12,7 +12,8 @@ import {
   Trash2,
   ExternalLink,
   Loader2,
-  FileText
+  FileText,
+  Ticket
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
