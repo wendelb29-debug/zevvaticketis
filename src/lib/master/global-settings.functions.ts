@@ -12,7 +12,7 @@ export const updateGlobalPlatformSettings = createServerFn({ method: "POST" })
   .validator((data: unknown) => globalSettingsUpdateSchema.parse(data))
   .handler(async ({ data, context }) => {
     // 1. Verify Authentication & Platform Admin Status
-    const supabase = context.supabase;
+    const supabase = (context as any).supabase;
     if (!supabase) throw new Error("Supabase context is missing");
 
     const { data: { user } } = await supabase.auth.getUser();
