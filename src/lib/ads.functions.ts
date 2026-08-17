@@ -18,7 +18,7 @@ const logAdEventSchema = z.object({
  * Logs an ad event (impression, click, etc.)
  */
 export const logAdEvent = createServerFn({ method: "POST" })
-  .inputValidator(logAdEventSchema)
+  .validator((data: unknown) => logAdEventSchema.parse(data))
   .handler(async ({ data }) => {
     const { error } = await supabase
       .from("ad_metrics")
@@ -50,7 +50,7 @@ const getEligibleAdsSchema = z.object({
  * Fetches eligible ads for the current context (home page)
  */
 export const getEligibleAds = createServerFn({ method: "GET" })
-  .inputValidator(getEligibleAdsSchema)
+  .validator((data: unknown) => getEligibleAdsSchema.parse(data))
   .handler(async ({ data }) => {
     // Current time for filter
     const now = new Date().toISOString();
