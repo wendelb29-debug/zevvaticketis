@@ -3117,8 +3117,8 @@ export type Database = {
         Args: {
           _event_id: string
           _operator_id: string
+          _raw_token: string
           _tenant_id: string
-          _token_hash: string
         }
         Returns: Json
       }
