@@ -79,6 +79,7 @@ import { Route as AdminMarketingIndexRouteImport } from './routes/admin/marketin
 import { Route as AdminMarketingAnunciosRouteImport } from './routes/admin/marketing/anuncios'
 import { Route as AdminMarketingPublicidadeRouteImport } from './routes/admin/marketing/publicidade'
 import { Route as AdminMarketingPushRouteImport } from './routes/admin/marketing/push'
+import { Route as AdminTenantsIdRouteImport } from './routes/admin/tenants/$id'
 import { Route as ApiPublicStripeWebhookRouteImport } from './routes/api/public/stripe-webhook'
 import { Route as ApiPublicUazapiWebhookRouteImport } from './routes/api/public/uazapi-webhook'
 import { Route as CheckinProjectIdIndexRouteImport } from './routes/checkin/$projectId.index'
@@ -455,6 +456,11 @@ const AdminMarketingPushRoute = AdminMarketingPushRouteImport.update({
   path: '/marketing/push',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminTenantsIdRoute = AdminTenantsIdRouteImport.update({
+  id: '/tenants/$id',
+  path: '/tenants/$id',
+  getParentRoute: () => AdminRoute,
+} as any)
 const ApiPublicStripeWebhookRoute = ApiPublicStripeWebhookRouteImport.update({
   id: '/api/public/stripe-webhook',
   path: '/api/public/stripe-webhook',
@@ -629,6 +635,7 @@ export interface FileRoutesByFullPath {
   '/admin/marketing/anuncios': typeof AdminMarketingAnunciosRoute
   '/admin/marketing/publicidade': typeof AdminMarketingPublicidadeRoute
   '/admin/marketing/push': typeof AdminMarketingPushRoute
+  '/admin/tenants/$id': typeof AdminTenantsIdRoute
   '/api/public/stripe-webhook': typeof ApiPublicStripeWebhookRoute
   '/api/public/uazapi-webhook': typeof ApiPublicUazapiWebhookRoute
   '/checkin/$projectId/historico': typeof CheckinProjectIdHistoricoRoute
@@ -716,6 +723,7 @@ export interface FileRoutesByTo {
   '/admin/marketing/anuncios': typeof AdminMarketingAnunciosRoute
   '/admin/marketing/publicidade': typeof AdminMarketingPublicidadeRoute
   '/admin/marketing/push': typeof AdminMarketingPushRoute
+  '/admin/tenants/$id': typeof AdminTenantsIdRoute
   '/api/public/stripe-webhook': typeof ApiPublicStripeWebhookRoute
   '/api/public/uazapi-webhook': typeof ApiPublicUazapiWebhookRoute
   '/checkin/$projectId/historico': typeof CheckinProjectIdHistoricoRoute
@@ -808,6 +816,7 @@ export interface FileRoutesById {
   '/admin/marketing/anuncios': typeof AdminMarketingAnunciosRoute
   '/admin/marketing/publicidade': typeof AdminMarketingPublicidadeRoute
   '/admin/marketing/push': typeof AdminMarketingPushRoute
+  '/admin/tenants/$id': typeof AdminTenantsIdRoute
   '/api/public/stripe-webhook': typeof ApiPublicStripeWebhookRoute
   '/api/public/uazapi-webhook': typeof ApiPublicUazapiWebhookRoute
   '/checkin/$projectId/historico': typeof CheckinProjectIdHistoricoRoute
@@ -902,6 +911,7 @@ export interface FileRouteTypes {
     | '/admin/marketing/anuncios'
     | '/admin/marketing/publicidade'
     | '/admin/marketing/push'
+    | '/admin/tenants/$id'
     | '/api/public/stripe-webhook'
     | '/api/public/uazapi-webhook'
     | '/checkin/$projectId/historico'
@@ -989,6 +999,7 @@ export interface FileRouteTypes {
     | '/admin/marketing/anuncios'
     | '/admin/marketing/publicidade'
     | '/admin/marketing/push'
+    | '/admin/tenants/$id'
     | '/api/public/stripe-webhook'
     | '/api/public/uazapi-webhook'
     | '/checkin/$projectId/historico'
@@ -1080,6 +1091,7 @@ export interface FileRouteTypes {
     | '/admin/marketing/anuncios'
     | '/admin/marketing/publicidade'
     | '/admin/marketing/push'
+    | '/admin/tenants/$id'
     | '/api/public/stripe-webhook'
     | '/api/public/uazapi-webhook'
     | '/checkin/$projectId/historico'
@@ -1631,6 +1643,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminMarketingPushRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/tenants/$id': {
+      id: '/admin/tenants/$id'
+      path: '/tenants/$id'
+      fullPath: '/admin/tenants/$id'
+      preLoaderRoute: typeof AdminTenantsIdRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/api/public/stripe-webhook': {
       id: '/api/public/stripe-webhook'
       path: '/api/public/stripe-webhook'
@@ -1806,6 +1825,7 @@ interface AdminRouteChildren {
   AdminMarketingAnunciosRoute: typeof AdminMarketingAnunciosRoute
   AdminMarketingPublicidadeRoute: typeof AdminMarketingPublicidadeRoute
   AdminMarketingPushRoute: typeof AdminMarketingPushRoute
+  AdminTenantsIdRoute: typeof AdminTenantsIdRoute
   AdminCheckinIndexRoute: typeof AdminCheckinIndexRoute
   AdminContatosIndexRoute: typeof AdminContatosIndexRoute
   AdminEmailManagementIndexRoute: typeof AdminEmailManagementIndexRoute
@@ -1834,6 +1854,7 @@ const AdminRouteChildren: AdminRouteChildren = {
   AdminMarketingAnunciosRoute: AdminMarketingAnunciosRoute,
   AdminMarketingPublicidadeRoute: AdminMarketingPublicidadeRoute,
   AdminMarketingPushRoute: AdminMarketingPushRoute,
+  AdminTenantsIdRoute: AdminTenantsIdRoute,
   AdminCheckinIndexRoute: AdminCheckinIndexRoute,
   AdminContatosIndexRoute: AdminContatosIndexRoute,
   AdminEmailManagementIndexRoute: AdminEmailManagementIndexRoute,
