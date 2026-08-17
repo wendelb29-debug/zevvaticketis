@@ -24,12 +24,12 @@ import { useDebounce } from "@/hooks/use-debounce";
 
 export const Route = createFileRoute("/admin/master")({
   validateSearch: (search: Record<string, unknown>) => ({
-    page: Number(search.page) || 1,
-    search: (search.search as string) || "",
-    status: (search.status as string) || undefined,
-    plan: (search.plan as string) || undefined,
-    hasSales: search.hasSales === 'true',
-    hasEvents: search.hasEvents === 'true',
+    page: Number(search['page']) || 1,
+    search: (search['search'] as string) || "",
+    status: (search['status'] as string) || undefined,
+    plan: (search['plan'] as string) || undefined,
+    hasSales: search['hasSales'] === 'true',
+    hasEvents: search['hasEvents'] === 'true',
   }),
   component: MasterAdminPage,
 });
