@@ -32,7 +32,7 @@ function ProducerTicketsPage() {
   if (isLoading) return <div className="p-20 text-center"><Loader2 className="w-8 h-8 animate-spin mx-auto text-primary" /></div>;
 
   const total = tickets?.length || 0;
-  const utilized = tickets?.filter(t => t.status === 'utilizado' || t.status === 'checked_in').length || 0;
+  const utilized = tickets?.filter(t => t.status === 'utilizado' || t.status === 'presente' || t.status === 'checked_in').length || 0;
   const valid = tickets?.filter(t => t.status === 'valido' || t.status === 'ativo' || t.status === 'pago').length || 0;
 
 
