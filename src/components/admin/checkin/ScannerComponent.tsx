@@ -30,7 +30,6 @@ export function ScannerComponent() {
   const [manualCode, setManualCode] = useState("");
   const [isValidating, setIsValidating] = useState(false);
   const [selectedEventId, setSelectedEventId] = useState<string | null>(null);
-  const videoRef = useRef<HTMLVideoElement>(null);
 
   const { data: events, isLoading: loadingEvents } = useQuery({
     queryKey: ["tenant-events-for-checkin", activeTenant?.id],
@@ -69,7 +68,7 @@ export function ScannerComponent() {
 
       const { data, error } = await supabase.rpc('process_ticket_checkin', {
         _token_hash: tokenHash,
-        _event_id: selectedEventId as string,
+        _event_id: selectedEventId,
         _operator_id: user.id,
         _tenant_id: activeTenant.id
       });
@@ -144,7 +143,7 @@ export function ScannerComponent() {
                 <DropdownMenuContent align="end" className="w-[280px] rounded-xl">
                   {loadingEvents ? (
                     <DropdownMenuItem disabled>Carregando eventos...</DropdownMenuItem>
-                  ) : events?.length === 0 ? (
+                  ) : (events?.length ?? 0) === 0 ? (
                     <DropdownMenuItem disabled>Nenhum evento encontrado</DropdownMenuItem>
                   ) : (
                     events?.map((e) => (
