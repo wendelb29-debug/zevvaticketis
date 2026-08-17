@@ -31,8 +31,13 @@ function ParticipantesPage() {
         .order("created_at", { ascending: false });
       
       if (error) throw error;
-      return data;
-
+      
+      // Map legacy/string statuses to canonical check-in statuses for the UI
+      return data.map(t => ({
+        ...t,
+        displayStatus: t.status === 'utilizado' || t.status === 'presente' ? 'Utilizado' : 'Válido',
+        isUtilized: t.status === 'utilizado' || t.status === 'presente'
+      }));
     }
   });
 
@@ -80,9 +85,11 @@ function ParticipantesPage() {
                 <td className="px-6 py-4">
                   <span className={cn(
                     "text-[10px] font-black uppercase px-2 py-1 rounded-full",
-                    ticket.status === 'ativo' ? "bg-green-100 text-green-700" : "bg-muted text-muted-foreground"
+                    ticket.isUtilized 
+                      ? "bg-blue-100 text-blue-700" 
+                      : "bg-green-100 text-green-700"
                   )}>
-                    {ticket.status === 'ativo' ? 'Válido' : 'Utilizado'}
+                    {ticket.displayStatus}
                   </span>
                 </td>
                 <td className="px-6 py-4 text-right text-muted-foreground font-medium">

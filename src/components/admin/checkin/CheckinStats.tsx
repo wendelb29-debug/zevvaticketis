@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "@tanstack/react-router";
 import { supabase } from "@/integrations/supabase/client";
+import { useTenants } from "@/hooks/use-tenants";
 import { 
   Ticket, 
   Users, 
@@ -42,34 +43,88 @@ import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 
 export function CheckinStats() {
+  const { activeTenant } = useTenants();
   const [loading, setLoading] = useState(true);
   const [stats, setStats] = useState({
-    totalSold: 10000,
-    totalCheckins: 8500,
-    totalPresent: 8500,
-    totalMissing: 1500,
-    presenceRate: 85,
-    absenceRate: 15
+    totalSold: 0,
+    totalCheckins: 0,
+    totalPresent: 0,
+    totalMissing: 0,
+    presenceRate: 0,
+    absenceRate: 0
   });
 
-  const [campaignData, setCampaignData] = useState([
-    { name: "Instagram Festival", sold: 500, checkins: 430, missing: 70, rate: 86 },
-    { name: "Facebook Ads", sold: 800, checkins: 600, missing: 200, rate: 75 },
-    { name: "Email Marketing", sold: 200, checkins: 190, missing: 10, rate: 95 }
-  ]);
-
-  const [adData, setAdData] = useState([
-    { name: "Festival Jovem Instagram", campaign: "Instagram Festival", sold: 300, checkins: 260, missing: 40, conv: 86.6 },
-    { name: "Trip Promo FB", campaign: "Facebook Ads", sold: 400, checkins: 310, missing: 90, conv: 77.5 }
-  ]);
+  const [campaignData, setCampaignData] = useState<any[]>([]);
+  const [adData, setAdData] = useState<any[]>([]);
 
   useEffect(() => {
-    // Simulando carregamento de dados reais
-    const timer = setTimeout(() => {
+    if (activeTenant) {
+      fetchCheckinStats();
+    }
+  }, [activeTenant]);
+
+  async function fetchCheckinStats() {
+    setLoading(true);
+    try {
+      // 1. Get stats for all events of this tenant
+      const { data: eventsData } = await supabase
+        .from("events")
+        .select("id, title")
+        .eq("tenant_id", activeTenant!.id);
+
+      const eventIds = eventsData?.map(e => e.id) || [];
+      
+      if (eventIds.length === 0) {
+        setLoading(false);
+        return;
+      }
+
+      // 2. Fetch ticket stats
+      const { data: tickets } = await supabase
+        .from("tickets")
+        .select("id, status")
+        .in("event_id", eventIds);
+
+      const totalSold = tickets?.length || 0;
+      const totalCheckins = tickets?.filter(t => t.status === 'utilizado' || t.status === 'presente').length || 0;
+      const totalMissing = totalSold - totalCheckins;
+      const presenceRate = totalSold > 0 ? Math.round((totalCheckins / totalSold) * 100) : 0;
+
+      setStats({
+        totalSold,
+        totalCheckins,
+        totalPresent: totalCheckins,
+        totalMissing,
+        presenceRate,
+        absenceRate: 100 - presenceRate
+      });
+
+      // 3. Marketing attribution stats (joining with campaigns)
+      const { data: campaigns } = await supabase
+        .from("campaigns")
+        .select(`
+          name, 
+          sales_attribution!inner(count),
+          checkin_attribution:sales_attribution(count)
+        `)
+        .eq("tenant_id", activeTenant!.id);
+
+      // Note: checkin_attribution would need a more complex join or server function for exact accuracy
+      // This is a placeholder for the UI logic until Phase 4 (Advanced BI)
+      setCampaignData(campaigns?.map(c => ({
+        name: c.name,
+        sold: (c as any).sales_attribution?.[0]?.count || 0,
+        checkins: 0, // Needs attribution logic fix in Phase 4
+        missing: (c as any).sales_attribution?.[0]?.count || 0,
+        rate: 0
+      })) || []);
+
+    } catch (error) {
+      console.error("Error fetching checkin stats:", error);
+    } finally {
       setLoading(false);
-    }, 1000);
-    return () => clearTimeout(timer);
-  }, []);
+    }
+  }
 
   if (loading) {
     return <div className="p-10 text-center font-inter text-muted-foreground">Carregando indicadores de check-in...</div>;

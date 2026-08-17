@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { 
   Camera, 
@@ -11,13 +11,16 @@ import {
   RefreshCw,
   Search,
   Maximize2,
-  Loader2
+  Loader2,
+  ChevronDown
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import { useTenants } from "@/hooks/use-tenants";
+import { useQuery } from "@tanstack/react-query";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 
 export function ScannerComponent() {
   const { activeTenant } = useTenants();
@@ -26,75 +29,75 @@ export function ScannerComponent() {
   const [lastCheckins, setLastCheckins] = useState<any[]>([]);
   const [manualCode, setManualCode] = useState("");
   const [isValidating, setIsValidating] = useState(false);
-  const videoRef = useRef<HTMLVideoElement>(null);
+  const [selectedEventId, setSelectedEventId] = useState<string | null>(null);
 
-  const handleScan = async (code: string) => {
-    if (!code) return;
+  const { data: events, isLoading: loadingEvents } = useQuery({
+    queryKey: ["tenant-events-for-checkin", activeTenant?.id],
+    enabled: !!activeTenant,
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("events")
+        .select("id, title")
+        .eq("tenant_id", activeTenant?.id as string)
+        .order("start_date", { ascending: false });
+      if (error) throw error;
+      return data;
+    }
+  });
+
+  useEffect(() => {
+    const firstEventId = events?.[0]?.id;
+    if (events && events.length > 0 && !selectedEventId && firstEventId) {
+      setSelectedEventId(firstEventId);
+    }
+  }, [events, selectedEventId]);
+
+  const selectedEvent = events?.find(e => e.id === selectedEventId);
+
+  const handleScan = async (tokenHash: string) => {
+    if (!tokenHash || !activeTenant?.id || !selectedEventId) {
+      if (!selectedEventId) toast.error("Selecione um evento primeiro.");
+      return;
+    }
+    
     setIsScanning(false);
     setIsValidating(true);
     
     try {
-      const { data: ticket, error: ticketError } = await (supabase
-        .from("tickets")
-        .select(`
-          *,
-          events(title),
-          ticket_types(nome),
-          profiles:owner_id(nome_completo)
-        `)
-        .or(`id.eq.${code},share_token.eq.${code}`)
-        .eq("tenant_id", activeTenant?.id || "")
-        .maybeSingle() as any);
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) throw new Error("Usuário não autenticado.");
 
-      if (ticketError) throw ticketError;
-
-      if (!ticket) {
-        setScannedResult({
-          success: false,
-          error: "Ingresso não encontrado",
-          reason: "O código informado não pertence a nenhum ingresso válido deste projeto."
-        });
-        toast.error("Ingresso não encontrado");
-        return;
-      }
-
-      if (ticket.checked_in_at) {
-        setScannedResult({
-          success: false,
-          error: "Ingresso já utilizado",
-          reason: `Este ingresso foi validado em ${new Date(ticket.checked_in_at).toLocaleString('pt-BR')}.`
-        });
-        toast.error("Ingresso já utilizado");
-        return;
-      }
-
-      const { error: checkinError } = await supabase
-        .from("tickets")
-        .update({
-          checked_in_at: new Date().toISOString(),
-          status: 'utilizado'
-        })
-        .eq("id", ticket.id);
-
-      if (checkinError) throw checkinError;
-
-      await supabase.from("checkin_records").insert({
-        ticket_id: ticket.id,
-        event_id: ticket.event_id,
-        tenant_id: activeTenant?.id || null,
-        status: 'success'
+      const { data, error } = await supabase.rpc('process_ticket_checkin', {
+        _token_hash: tokenHash,
+        _event_id: selectedEventId as string,
+        _operator_id: user.id,
+        _tenant_id: activeTenant.id
       });
+
+      if (error) throw error;
+      
+      const resultData = data as any;
+      if (!resultData || !resultData.success) {
+        setScannedResult({
+          success: false,
+          error: resultData?.message || "Erro desconhecido",
+          reason: resultData?.code === 'ALREADY_USED' 
+            ? `Validado em ${new Date(resultData?.checked_in_at).toLocaleString('pt-BR')}`
+            : resultData?.message
+        });
+        toast.error(resultData?.message || "Erro na validação");
+        return;
+      }
 
       const result = {
         success: true,
-        participantName: (ticket as any).profiles?.nome_completo || "Participante",
-        eventTitle: (ticket as any).events?.title || "Evento",
-        ticketType: (ticket as any).ticket_types?.nome || "Ingresso",
-        ticketNumber: ticket.id.slice(0, 8).toUpperCase(),
+        participantName: resultData.attendee_name || "Participante",
+        eventTitle: selectedEvent?.title || "Evento", 
+        ticketType: resultData.ticket_type || "Ingresso",
+        ticketNumber: tokenHash.slice(0, 8).toUpperCase(),
         checkinTime: new Date().toLocaleTimeString()
       };
 
-      
       setScannedResult(result);
       setLastCheckins(prev => [result, ...prev].slice(0, 5));
       toast.success("Entrada liberada!");
@@ -126,10 +129,38 @@ export function ScannerComponent() {
         {/* Scanner Control */}
         <Card className="border-border shadow-xl overflow-hidden rounded-[32px]">
           <CardHeader className="bg-navy text-primary-foreground pb-8">
-            <CardTitle className="text-xl font-manrope font-black flex items-center gap-3">
-              <Camera className="w-6 h-6 text-primary" /> Scanner de Ingresso
-            </CardTitle>
-            <p className="text-foreground-foreground/60 text-xs font-bold uppercase tracking-wider">Câmera em tempo real</p>
+            <div className="flex items-center justify-between gap-4">
+              <CardTitle className="text-xl font-manrope font-black flex items-center gap-3">
+                <Camera className="w-6 h-6 text-primary" /> Scanner de Ingresso
+              </CardTitle>
+              
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="outline" size="sm" className="bg-white/10 border-white/20 text-white hover:bg-white/20 h-9 px-4 rounded-xl font-bold transition-all">
+                    {selectedEvent ? selectedEvent.title.substring(0, 20) + (selectedEvent.title.length > 20 ? '...' : '') : "Selecionar Evento"}
+                    <ChevronDown className="ml-2 w-4 h-4" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-[280px] rounded-xl">
+                  {loadingEvents ? (
+                    <DropdownMenuItem disabled>Carregando eventos...</DropdownMenuItem>
+                  ) : (events?.length ?? 0) === 0 ? (
+                    <DropdownMenuItem disabled>Nenhum evento encontrado</DropdownMenuItem>
+                  ) : (
+                    events?.map((e) => (
+                      <DropdownMenuItem 
+                        key={e.id} 
+                        className={cn("font-bold text-xs uppercase py-3", selectedEventId === e.id && "bg-accent text-primary")}
+                        onClick={() => setSelectedEventId(e.id)}
+                      >
+                        {e.title}
+                      </DropdownMenuItem>
+                    ))
+                  )}
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
+            <p className="text-foreground-foreground/60 text-xs font-bold uppercase tracking-wider mt-2">Câmera em tempo real • Validando em: <span className="text-primary">{selectedEvent?.title || '---'}</span></p>
           </CardHeader>
           <CardContent className="p-0 relative bg-black aspect-square flex flex-col items-center justify-center">
             {isScanning ? (
@@ -142,10 +173,11 @@ export function ScannerComponent() {
                    <div className="absolute bottom-0 right-0 w-8 h-8 border-b-4 border-r-4 border-white rounded-br-lg" />
                 </div>
                 <div className="w-full h-full bg-slate-900 flex items-center justify-center text-primary-foreground/20">
-                   <RefreshCw className="w-12 h-12 animate-spin" />
+                   {isValidating ? <Loader2 className="w-12 h-12 animate-spin text-primary" /> : <RefreshCw className="w-12 h-12 animate-spin" />}
                 </div>
                 <Button 
                   onClick={toggleScanner}
+                  disabled={isValidating}
                   className="absolute bottom-6 left-1/2 -translate-x-1/2 z-30 bg-red-500 hover:bg-red-600 rounded-xl px-8 h-12 font-bold shadow-lg"
                 >
                   Parar Scanner
