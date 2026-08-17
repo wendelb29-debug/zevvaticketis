@@ -3,9 +3,10 @@ import { Badge } from "@/components/ui/badge";
 import { 
   TrendingUp, Ticket, Users, Wallet, 
   BarChart3, CheckCircle2, ShieldCheck, 
-  AlertTriangle 
+  AlertTriangle, ArrowUpRight, Activity
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { MasterMetricCard } from "@/components/admin/master/MasterMetricCard";
 
 interface TenantOverviewProps {
   stats: any;
@@ -17,79 +18,90 @@ export function TenantOverview({ stats, tenant }: TenantOverviewProps) {
 
   const healthScore = tenant.status === 'aprovado' ? 'Saudável' : 'Atenção';
   
-  const indicators = [
-    { label: "GMV Total", value: stats.financeiro.gmv, icon: Wallet, format: 'currency' },
-    { label: "Receita Zevva", value: stats.financeiro.revenue, icon: TrendingUp, format: 'currency' },
-    { label: "Ingressos Emitidos", value: stats.ingressos.emitidos, icon: Ticket },
-    { label: "Check-ins", value: stats.ingressos.utilizados, icon: CheckCircle2 },
-    { label: "Eventos", value: stats.eventos.total, icon: BarChart3 },
-    { label: "Membros Equipe", value: stats.equipe.total, icon: Users },
-  ];
-
   return (
     <div className="space-y-6">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4">
-        {indicators.map((item, i) => (
-          <Card key={i} className="rounded-[20px] border-border/50 shadow-sm overflow-hidden group hover:border-navy/20 transition-all active:scale-[0.98]">
-            <CardHeader className="p-4 pb-0 flex flex-row items-center justify-between space-y-0">
-              <span className="text-[10px] font-black uppercase tracking-[0.1em] text-muted-foreground/70">
-                {item.label}
-              </span>
-              <item.icon className="w-3.5 h-3.5 text-muted-foreground/40 group-hover:text-navy transition-colors" />
-            </CardHeader>
-            <CardContent className="p-4 pt-1">
-              <div className="text-xl font-manrope font-black text-foreground">
-                {item.format === 'currency' 
-                  ? item.value.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })
-                  : item.value.toLocaleString("pt-BR")}
-              </div>
-            </CardContent>
-          </Card>
-        ))}
+        <MasterMetricCard 
+          title="GMV Total" 
+          value={stats.financeiro.gmv.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}
+          icon={Wallet}
+        />
+        <MasterMetricCard 
+          title="Receita Zevva" 
+          value={stats.financeiro.revenue.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}
+          icon={TrendingUp}
+        />
+        <MasterMetricCard 
+          title="Ingressos" 
+          value={stats.ingressos.emitidos.toLocaleString("pt-BR")}
+          description={`${stats.ingressos.utilizados.toLocaleString("pt-BR")} check-ins`}
+          icon={Ticket}
+        />
+        <MasterMetricCard 
+          title="Eventos" 
+          value={stats.eventos.total.toLocaleString("pt-BR")}
+          icon={BarChart3}
+        />
+        <MasterMetricCard 
+          title="Equipe" 
+          value={stats.equipe.total.toLocaleString("pt-BR")}
+          icon={Users}
+        />
+        <MasterMetricCard 
+          title="Saúde" 
+          value={healthScore}
+          variant={tenant.status === 'aprovado' ? "default" : "primary"}
+          icon={ShieldCheck}
+        />
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <Card className="lg:col-span-1 rounded-[28px] border-border/50 shadow-sm">
-          <CardHeader className="p-6 pb-0">
-            <CardTitle className="text-xs font-black uppercase tracking-[0.2em] text-muted-foreground flex items-center gap-2">
-              <ShieldCheck className="w-4 h-4 text-emerald-500" />
-              Saúde do Projeto
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+        <Card className="lg:col-span-1 rounded-xl border-border shadow-sm bg-card overflow-hidden">
+          <CardHeader className="px-5 py-4 border-b border-border bg-muted/20">
+            <CardTitle className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground flex items-center justify-between">
+              Status Operacional
+              <Activity className="w-3.5 h-3.5" />
             </CardTitle>
           </CardHeader>
-          <CardContent className="p-6 space-y-6">
-            <div className="flex flex-col items-center justify-center py-6 border-b border-border/40">
-              <div className={cn(
-                "w-16 h-16 rounded-3xl flex items-center justify-center mb-3 shadow-lg",
-                tenant.status === 'aprovado' ? "bg-emerald-500/10 text-emerald-500" : "bg-amber-500/10 text-amber-500"
-              )}>
-                {tenant.status === 'aprovado' ? <ShieldCheck size={32} /> : <AlertTriangle size={32} />}
-              </div>
-              <div className="text-lg font-black font-manrope">{healthScore}</div>
-              <p className="text-xs text-muted-foreground font-medium text-center max-w-[200px] mt-1">
-                Ambiente operacional sem incidentes críticos registrados.
-              </p>
-            </div>
-
+          <CardContent className="p-5 space-y-5">
             <div className="space-y-4">
               <HealthItem label="Domínio" status="Verificado" />
               <HealthItem label="Integrações" status="100% Online" />
               <HealthItem label="Pagamento" status="Em Dia" />
               <HealthItem label="Webhooks" status="Saudável" />
             </div>
+            
+            <div className="pt-4 border-t border-border mt-4">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-bold text-foreground">Plano Atual</span>
+                <Badge variant="outline" className="rounded-lg font-bold text-[10px] uppercase border-navy/20">{tenant.plan || 'Free'}</Badge>
+              </div>
+              <div className="mt-3 bg-muted/30 rounded-lg p-3">
+                <div className="flex justify-between text-[10px] font-bold text-muted-foreground uppercase mb-1">
+                  <span>Uso de Recursos</span>
+                  <span>45%</span>
+                </div>
+                <div className="w-full h-1.5 bg-border rounded-full overflow-hidden">
+                  <div className="h-full bg-primary w-[45%]" />
+                </div>
+              </div>
+            </div>
           </CardContent>
         </Card>
 
-        <Card className="lg:col-span-2 rounded-[28px] border-border/50 shadow-sm">
-          <CardHeader className="p-6 pb-0">
-            <CardTitle className="text-xs font-black uppercase tracking-[0.2em] text-muted-foreground">
-              Desempenho Comercial (Últimos 30 dias)
+        <Card className="lg:col-span-3 rounded-xl border-border shadow-sm bg-card overflow-hidden">
+          <CardHeader className="px-5 py-4 border-b border-border bg-muted/20">
+            <CardTitle className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground flex items-center justify-between">
+              Volume de Vendas (Últimos 30 dias)
+              <TrendingUp className="w-3.5 h-3.5 text-emerald-500" />
             </CardTitle>
           </CardHeader>
           <CardContent className="p-6">
-            <div className="h-[300px] flex items-center justify-center border border-dashed border-border/60 rounded-[24px] bg-muted/20">
-              <div className="flex flex-col items-center gap-2">
+            <div className="h-[240px] flex items-center justify-center border border-dashed border-border rounded-xl bg-muted/10">
+              <div className="flex flex-col items-center gap-2 text-center max-w-[200px]">
                 <BarChart3 className="w-8 h-8 text-muted-foreground/30" />
-                <span className="text-xs font-black uppercase tracking-widest text-muted-foreground/50">Gráfico em Processamento</span>
+                <p className="text-[11px] font-bold uppercase tracking-widest text-muted-foreground/50">Módulo de Gráficos em Manutenção</p>
+                <p className="text-[10px] text-muted-foreground/40 font-medium">Os dados reais estão sendo processados para exibição em série temporal.</p>
               </div>
             </div>
           </CardContent>
@@ -101,11 +113,13 @@ export function TenantOverview({ stats, tenant }: TenantOverviewProps) {
 
 function HealthItem({ label, status }: { label: string; status: string }) {
   return (
-    <div className="flex justify-between items-center text-sm">
-      <span className="font-bold text-muted-foreground/80">{label}</span>
-      <Badge variant="outline" className="bg-emerald-500/5 text-emerald-600 font-bold border-none text-[10px] uppercase">
+    <div className="flex justify-between items-center text-xs">
+      <span className="font-bold text-muted-foreground/70">{label}</span>
+      <div className="flex items-center gap-1.5 text-emerald-600 font-bold">
+        <div className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
         {status}
-      </Badge>
+      </div>
     </div>
   );
 }
+
