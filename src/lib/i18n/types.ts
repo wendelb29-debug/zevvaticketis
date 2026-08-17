@@ -45,7 +45,10 @@ export type NavigationSchema = {
   gmailInbox: string;
   settings: string;
   language: string;
+  ticketManagement: string;
+  globalTicketManagement: string;
 };
+
 
 export type CommonSchema = {
   save: string;

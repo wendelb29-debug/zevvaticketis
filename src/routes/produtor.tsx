@@ -206,6 +206,7 @@ function ProdutorLayout() {
     !item.permission || hasPermission(item.permission)
   );
 
+
   const SidebarContent = () => (
     <div className="flex flex-col h-full bg-card border-r border-border py-8 font-inter">
       <div className={cn("px-6 mb-12 flex items-center gap-3", !isAdmin && "justify-center")}>
