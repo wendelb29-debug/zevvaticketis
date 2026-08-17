@@ -38,7 +38,7 @@ export function ScannerComponent() {
       const { data, error } = await supabase
         .from("events")
         .select("id, title")
-        .eq("tenant_id", activeTenant?.id)
+        .eq("tenant_id", activeTenant?.id as string)
         .order("start_date", { ascending: false });
       if (error) throw error;
       return data;
@@ -68,7 +68,7 @@ export function ScannerComponent() {
 
       const { data, error } = await supabase.rpc('process_ticket_checkin', {
         _token_hash: tokenHash,
-        _event_id: selectedEventId,
+        _event_id: selectedEventId as string,
         _operator_id: user.id,
         _tenant_id: activeTenant.id
       });
