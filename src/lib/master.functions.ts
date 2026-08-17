@@ -6,6 +6,23 @@ const filterSchema = z.object({
   search: z.string().optional(),
   status: z.string().optional(),
   plan: z.string().optional(),
+  country: z.string().optional(),
+  currency: z.string().optional(),
+  createdAtStart: z.string().optional(),
+  createdAtEnd: z.string().optional(),
+  owner: z.string().optional(),
+  hasEvents: z.boolean().optional(),
+  hasSales: z.boolean().optional(),
+  nearLimit: z.boolean().optional(),
+  aboveLimit: z.boolean().optional(),
+  minUsers: z.number().optional(),
+  maxUsers: z.number().optional(),
+  minEvents: z.number().optional(),
+  maxEvents: z.number().optional(),
+  minGmv: z.number().optional(),
+  maxGmv: z.number().optional(),
+  minRevenue: z.number().optional(),
+  maxRevenue: z.number().optional(),
   page: z.number().default(1),
   pageSize: z.number().default(20),
   orderBy: z.string().default('created_at'),
@@ -100,8 +117,15 @@ export const listTenantsPaginated = createServerFn({ method: "GET" })
       `, { count: "exact" });
 
     if (search) {
-      query = query.or(`nome.ilike.%${search}%,slug.ilike.%${search}%`);
+      query = query.or(`nome.ilike.%${search}%,slug.ilike.%${search}%,email_contato.ilike.%${search}%,nome_proprietario.ilike.%${search}%,id.eq.${search},dominio_personalizado.ilike.%${search}%`);
     }
+    
+    if (input.country) query = query.eq('pais_id', input.country);
+    if (input.currency) query = query.eq('moeda_padrao_id', input.currency);
+    if (input.createdAtStart) query = query.gte('created_at', input.createdAtStart);
+    if (input.createdAtEnd) query = query.lte('created_at', input.createdAtEnd);
+    if (input.owner) query = query.eq('owner_id' as any, input.owner);
+
     if (status) {
       query = query.eq('status', status);
     }

@@ -32,7 +32,7 @@ export function TenantHeader({ tenant }: TenantHeaderProps) {
       <Button 
         variant="ghost" 
         className="w-fit gap-2 -ml-2 text-muted-foreground hover:text-foreground transition-colors"
-        onClick={() => navigate({ to: "/admin/master" })}
+        onClick={() => navigate({ to: "/admin/master" as any, search: { page: 1 } as any })}
       >
         <ArrowLeft className="w-4 h-4" /> Voltar ao Master Console
       </Button>

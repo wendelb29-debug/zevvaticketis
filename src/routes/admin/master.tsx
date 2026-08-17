@@ -1,4 +1,4 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, useNavigate, useSearch } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -15,52 +15,122 @@ import {
   TrendingUp,
   LayoutDashboard
 } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { getGlobalStats, listTenantsPaginated } from "@/lib/master.functions";
 import { useServerFn } from "@tanstack/react-start";
 import { cn } from "@/lib/utils";
+import { MasterFilters } from "@/components/admin/master/MasterFilters";
+import { useDebounce } from "@/hooks/use-debounce";
 
 export const Route = createFileRoute("/admin/master")({
+  validateSearch: (search: Record<string, unknown>) => ({
+    page: Number(search['page']) || 1,
+    search: (search['search'] as string) || "",
+    status: (search['status'] as string) || undefined,
+    plan: (search['plan'] as string) || undefined,
+    hasSales: search['hasSales'] === 'true',
+    hasEvents: search['hasEvents'] === 'true',
+  }),
   component: MasterAdminPage,
 });
 
 function MasterAdminPage() {
   const navigate = useNavigate();
+  const searchParams = useSearch({ from: "/admin/master" }) as any;
   const getStats = useServerFn(getGlobalStats);
   const getTenants = useServerFn(listTenantsPaginated);
   
-  const [page, setPage] = useState(1);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [period, setPeriod] = useState<any>("30d");
+  const [filterOpen, setFilterOpen] = useState(false);
+  const [localSearch, setLocalSearch] = useState(searchParams.search || "");
+  const debouncedSearch = useDebounce(localSearch, 400);
+
+  // Sync debounced search to URL
+  useEffect(() => {
+    navigate({
+      search: (prev: any) => ({ ...prev, search: debouncedSearch, page: 1 }),
+      replace: true,
+    } as any);
+  }, [debouncedSearch, navigate]);
 
   const { data: stats, isLoading: statsLoading } = useQuery({
-    queryKey: ["master-stats", period],
-    queryFn: () => getStats({ data: { period } }),
+    queryKey: ["master-stats"],
+    queryFn: () => getStats({ data: { period: '30d' } }),
   });
 
   const { data: tenantsResult, isLoading: tenantsLoading } = useQuery({
-    queryKey: ["master-tenants", page, searchTerm],
-    queryFn: () => getTenants({ data: { page, search: searchTerm } }),
+    queryKey: ["master-tenants", searchParams],
+    queryFn: () => getTenants({ data: { 
+      page: searchParams.page, 
+      search: searchParams.search,
+      status: searchParams.status,
+      plan: searchParams.plan,
+      hasSales: searchParams.hasSales,
+      hasEvents: searchParams.hasEvents,
+    } } as any),
   });
+
+  const activeFiltersCount = [
+    searchParams.status,
+    searchParams.plan,
+    searchParams.hasSales,
+    searchParams.hasEvents,
+  ].filter(Boolean).length;
+
+  const handleApplyFilters = (newFilters: any) => {
+    navigate({
+      search: (prev: any) => ({ ...prev, ...newFilters, page: 1 }),
+    } as any);
+  };
+
+  const handleClearFilters = () => {
+    navigate({
+      search: () => ({ page: 1 }),
+    } as any);
+    setLocalSearch("");
+  };
 
   const isLoading = statsLoading || tenantsLoading;
 
   return (
     <div className="space-y-8 pb-10 font-inter max-w-[1600px] mx-auto">
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-        <div>
+      <div className="flex flex-col gap-6 xl:flex-row xl:items-center xl:justify-between px-4 sm:px-0">
+        <div className="space-y-1">
           <h1 className="text-4xl font-manrope font-black text-foreground tracking-tight">Master Console</h1>
           <p className="text-muted-foreground font-medium">Gestão global da plataforma: Projetos e GMV.</p>
         </div>
-        <div className="flex gap-3">
-          <Button variant="outline" className="rounded-xl font-bold border-border shadow-sm">
-            <Filter className="w-4 h-4 mr-2" /> Filtros
+        <div className="flex w-full flex-col gap-3 sm:flex-row xl:w-auto">
+          <Button 
+            variant="outline" 
+            className={cn(
+              "flex-1 sm:flex-none rounded-xl font-bold border-border shadow-sm transition-all",
+              activeFiltersCount > 0 && "bg-navy/5 border-navy/20 text-navy"
+            )}
+            onClick={() => setFilterOpen(true)}
+          >
+            <Filter className="w-4 h-4 mr-2" /> 
+            Filtros
+            {activeFiltersCount > 0 && (
+              <Badge className="ml-2 bg-navy text-white h-5 min-w-5 flex items-center justify-center rounded-full p-0 text-[10px]">
+                {activeFiltersCount}
+              </Badge>
+            )}
           </Button>
-          <Button className="bg-navy hover:bg-navy/90 text-primary-foreground rounded-xl font-bold px-6 shadow-md">
+          <Button 
+            className="flex-1 sm:flex-none bg-navy hover:bg-navy/90 text-primary-foreground rounded-xl font-black px-8 shadow-lg shadow-navy/20 uppercase tracking-widest text-[10px] h-10 transition-all active:scale-95"
+            onClick={() => navigate({ to: "/admin/configuracoes" as any, search: { tab: "global" } as any })}
+          >
             Configurações Globais
           </Button>
         </div>
       </div>
+
+      <MasterFilters 
+        open={filterOpen}
+        onOpenChange={setFilterOpen}
+        filters={searchParams}
+        onApply={handleApplyFilters}
+        onClear={handleClearFilters}
+      />
 
       {/* KPI Cards Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -132,8 +202,8 @@ function MasterAdminPage() {
               <Input 
                 placeholder="Buscar ambiente ou slug..." 
                 className="pl-10 rounded-xl border-border bg-secondary/50"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
+                value={localSearch}
+                onChange={(e) => setLocalSearch(e.target.value)}
               />
             </div>
           </div>
@@ -235,6 +305,29 @@ function MasterAdminPage() {
           </div>
         </CardContent>
       </Card>
+      {tenantsResult && tenantsResult.totalPages > 1 && (
+        <div className="flex items-center justify-center gap-2 mt-8">
+          <Button
+            variant="outline"
+            disabled={searchParams.page <= 1}
+            onClick={() => navigate({ search: (prev: any) => ({ ...prev, page: prev.page - 1 }) } as any)}
+            className="rounded-xl font-bold"
+          >
+            Anterior
+          </Button>
+          <span className="text-sm font-black text-muted-foreground px-4">
+            Página {searchParams.page} de {tenantsResult.totalPages}
+          </span>
+          <Button
+            variant="outline"
+            disabled={searchParams.page >= tenantsResult.totalPages}
+            onClick={() => navigate({ search: (prev: any) => ({ ...prev, page: prev.page + 1 }) } as any)}
+            className="rounded-xl font-bold"
+          >
+            Próxima
+          </Button>
+        </div>
+      )}
     </div>
   );
 }

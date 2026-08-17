@@ -1,6 +1,6 @@
 import { createFileRoute, useNavigate, useSearch } from "@tanstack/react-router";
 import { supabase } from "@/integrations/supabase/client";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -10,7 +10,8 @@ import { Switch } from "@/components/ui/switch";
 import { 
   Users, Settings, Shield, Clock, Tag, MessageSquare, Workflow, Plus, 
   Edit2, Trash2, X, Zap, Ticket, Calendar, Globe, Bell, 
-  Layers, Lock, Database, Smartphone, Sliders, Search, ListChecks, History, PieChart
+  Layers, Lock, Database, Smartphone, Sliders, Search, ListChecks, History, PieChart, 
+  CreditCard, ShieldCheck, Mail, AlertTriangle, Scale, Hammer, Box
 } from "lucide-react";
 
 import { toast } from "sonner";
@@ -23,6 +24,10 @@ import { AuditoriaPanel } from "@/components/admin/AuditoriaPanel";
 import { WhatsAppIntegration } from "@/components/admin/WhatsAppIntegration";
 import { useQuery } from "@tanstack/react-query";
 import { PermissionsRolesManager } from "@/components/admin/PermissionsRolesManager";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
+import { useServerFn } from "@tanstack/react-start";
+import { updateGlobalPlatformSettings } from "@/lib/master/global-settings.functions";
 
 
 export const Route = createFileRoute("/admin/configuracoes")({
@@ -249,14 +254,83 @@ function AuditoriaTab() {
   return <AuditoriaPanel />;
 }
 
+function GlobalSectionForm({ 
+  section, 
+  defaultValues = {}, 
+  render 
+}: { 
+  section: string, 
+  defaultValues?: any, 
+  render: (values: any, update: (v: any) => void) => React.ReactNode 
+}) {
+  const [values, setValues] = useState(defaultValues);
+  const [reason, setReason] = useState("");
+  const updateSettings = useServerFn(updateGlobalPlatformSettings);
+  const [isPending, setIsPending] = useState(false);
+
+  const handleSave = async () => {
+    if (!reason || reason.length < 5) {
+      toast.error("Por favor, forneça uma justificativa válida.");
+      return;
+    }
+
+    setIsPending(true);
+    try {
+      await updateSettings({
+        data: {
+          section,
+          changes: values,
+          reason
+        }
+      });
+      toast.success(`Configurações de ${section} atualizadas com sucesso!`);
+      setReason("");
+    } catch (error: any) {
+      toast.error(`Erro ao atualizar: ${error.message}`);
+    } finally {
+      setIsPending(false);
+    }
+  };
+
+  const updateValues = (newValues: any) => {
+    setValues((prev: any) => ({ ...prev, ...newValues }));
+  };
+
+  return (
+    <div className="space-y-8">
+      {render(values, updateValues)}
+      
+      <div className="mt-8 pt-8 border-t border-border/50 space-y-4">
+        <div className="space-y-2">
+          <Label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Justificativa da Alteração (Obrigatório)</Label>
+          <Textarea 
+            placeholder="Descreva o motivo desta alteração para fins de auditoria..." 
+            className="rounded-xl min-h-[80px] bg-muted/20"
+            value={reason}
+            onChange={e => setReason(e.target.value)}
+          />
+        </div>
+        <div className="flex justify-end">
+          <Button 
+            onClick={handleSave}
+            disabled={isPending}
+            className="bg-navy hover:bg-navy/90 text-white rounded-xl font-black px-8 shadow-lg shadow-navy/20 active:scale-95 transition-all"
+          >
+            {isPending ? "Processando..." : "Salvar Alterações"}
+          </Button>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 function SettingsPage({ session, activeTenantId }: { session: any, activeTenantId: string | null }) {
   const search = useSearch({ from: "/admin/configuracoes" }) as any;
-  const [activeTab, setActiveTab] = useState(search?.tab === "team" ? "ADMIN" : "atendimento");
+  const [activeTab, setActiveTab] = useState(search?.tab || "atendimento");
 
   useEffect(() => {
-    if (search?.tab === "team") {
-      setActiveTab("ADMIN");
+    if (search?.tab) {
+      setActiveTab(search.tab);
     }
   }, [search?.tab]);
   const [isDeptModalOpen, setIsDeptModalOpen] = useState(false);
@@ -418,6 +492,9 @@ function SettingsPage({ session, activeTenantId }: { session: any, activeTenantI
           </TabsTrigger>
           <TabsTrigger value="sistema" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground rounded-lg py-2.5 px-6 flex items-center gap-2 text-sm font-bold transition-all">
             <Settings className="w-4 h-4" /> Sistema
+          </TabsTrigger>
+          <TabsTrigger value="global" className="data-[state=active]:bg-navy data-[state=active]:text-white rounded-lg py-2.5 px-6 flex items-center gap-2 text-sm font-bold transition-all border border-navy/20">
+            <Globe className="w-4 h-4" /> Global Platform
           </TabsTrigger>
           <TabsTrigger value="auditoria" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground rounded-lg py-2.5 px-6 flex items-center gap-2 text-sm font-bold transition-all">
             <History className="w-4 h-4" /> Auditoria
@@ -1257,8 +1334,464 @@ function SettingsPage({ session, activeTenantId }: { session: any, activeTenantI
         </DialogContent>
       </Dialog>
       
-      <TabsContent value="permissoes" className="space-y-4 focus-visible:outline-none outline-none">
-        {activeTenantId && <PermissionsRolesManager tenantId={activeTenantId} />}
+
+      <TabsContent value="global" className="space-y-6 focus-visible:outline-none outline-none">
+        <div className="bg-navy rounded-[32px] p-10 text-white relative overflow-hidden shadow-2xl mb-8">
+          <div className="absolute right-[-40px] top-[-40px] opacity-10 rotate-12">
+            <Globe size={240} />
+          </div>
+          <div className="relative z-10 space-y-4 max-w-2xl">
+            <Badge className="bg-coral text-white font-black px-4 py-1.5 rounded-full text-[10px] uppercase tracking-[0.2em] shadow-lg shadow-coral/20">
+              Master Control
+            </Badge>
+            <h2 className="text-4xl font-manrope font-black tracking-tight">Configurações Globais da Plataforma</h2>
+            <p className="text-white/70 font-medium text-lg leading-relaxed">
+              Gestão centralizada de parâmetros, taxas, limites e segurança de toda a infraestrutura Zevva.
+            </p>
+          </div>
+        </div>
+
+        <Accordion type="single" collapsible className="w-full space-y-4 pb-20">
+          {/* 1. Plataforma */}
+          <AccordionItem value="global-plataforma" className="border-border bg-card rounded-[24px] overflow-hidden shadow-sm border">
+            <AccordionTrigger className="px-8 py-6 font-bold text-xl hover:no-underline hover:bg-accent/50 transition-all">
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 bg-navy/5 rounded-2xl flex items-center justify-center text-navy shrink-0">
+                  <Globe className="w-6 h-6" />
+                </div>
+                <div className="text-left">
+                  <p className="font-manrope font-black tracking-tight">Plataforma</p>
+                  <p className="text-xs text-muted-foreground font-medium">Identidade, domínios e localização padrão.</p>
+                </div>
+              </div>
+            </AccordionTrigger>
+            <AccordionContent className="px-8 pb-8 pt-4">
+              <GlobalSectionForm 
+                section="plataforma" 
+                defaultValues={{
+                  name: "Zevva Tickets",
+                  domain: "zevvatickets.com",
+                  locale: "pt",
+                  maintenance: false
+                }}
+                render={(values, update) => (
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div className="space-y-6">
+                      <div className="space-y-2">
+                        <Label className="text-xs font-black uppercase tracking-widest">Nome da Plataforma</Label>
+                        <Input 
+                          value={values.name} 
+                          onChange={e => update({ name: e.target.value })}
+                          className="rounded-xl" 
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <Label className="text-xs font-black uppercase tracking-widest">Domínio Principal</Label>
+                        <Input 
+                          value={values.domain} 
+                          onChange={e => update({ domain: e.target.value })}
+                          className="rounded-xl" 
+                        />
+                      </div>
+                    </div>
+                    <div className="space-y-6">
+                      <div className="space-y-2">
+                        <Label className="text-xs font-black uppercase tracking-widest">Idioma Padrão</Label>
+                        <Select value={values.locale} onValueChange={v => update({ locale: v })}>
+                          <SelectTrigger className="rounded-xl">
+                            <SelectValue />
+                          </SelectTrigger>
+                          <SelectContent className="rounded-xl">
+                            <SelectItem value="pt">Português (Brasil)</SelectItem>
+                            <SelectItem value="en">English</SelectItem>
+                            <SelectItem value="es">Español</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                      <div className="flex items-center justify-between p-4 bg-muted/30 rounded-2xl border border-border/50">
+                        <div>
+                          <Label className="font-bold">Modo Manutenção</Label>
+                          <p className="text-xs text-muted-foreground">Bloqueia acesso público à plataforma.</p>
+                        </div>
+                        <Switch 
+                          checked={values.maintenance} 
+                          onCheckedChange={v => update({ maintenance: v })}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                )}
+              />
+            </AccordionContent>
+          </AccordionItem>
+
+          {/* 2. Taxas e Financeiro */}
+          <AccordionItem value="global-financeiro" className="border-border bg-card rounded-[24px] overflow-hidden shadow-sm border">
+            <AccordionTrigger className="px-8 py-6 font-bold text-xl hover:no-underline hover:bg-accent/50 transition-all">
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 bg-emerald-500/10 rounded-2xl flex items-center justify-center text-emerald-600 shrink-0">
+                  <CreditCard className="w-6 h-6" />
+                </div>
+                <div className="text-left">
+                  <p className="font-manrope font-black tracking-tight">Taxas e Financeiro</p>
+                  <p className="text-xs text-muted-foreground font-medium">Comissões, prazos e políticas globais.</p>
+                </div>
+              </div>
+            </AccordionTrigger>
+            <AccordionContent className="px-8 pb-8 pt-4">
+              <GlobalSectionForm
+                section="financeiro"
+                render={(values, update) => (
+                  <div className="space-y-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div className="space-y-2">
+                        <Label className="text-xs font-black uppercase tracking-widest">Taxa Percentual Padrão (%)</Label>
+                        <Input type="number" value={values.fee_percent || 10} onChange={e => update({ fee_percent: parseFloat(e.target.value) })} className="rounded-xl" />
+                      </div>
+                      <div className="space-y-2">
+                        <Label className="text-xs font-black uppercase tracking-widest">Taxa Fixa Padrão (R$)</Label>
+                        <Input type="number" value={values.fee_fixed || 2.50} onChange={e => update({ fee_fixed: parseFloat(e.target.value) })} className="rounded-xl" />
+                      </div>
+                      <div className="space-y-2">
+                        <Label className="text-xs font-black uppercase tracking-widest">Prazo de Repasse (Dias)</Label>
+                        <Input type="number" value={values.repass_days || 2} onChange={e => update({ repass_days: parseInt(e.target.value) })} className="rounded-xl" />
+                      </div>
+                      <div className="space-y-2">
+                        <Label className="text-xs font-black uppercase tracking-widest">Valor Mínimo Saque (R$)</Label>
+                        <Input type="number" value={values.min_withdrawal || 50.00} onChange={e => update({ min_withdrawal: parseFloat(e.target.value) })} className="rounded-xl" />
+                      </div>
+                    </div>
+                    
+                    <div className="p-6 bg-amber-500/5 rounded-2xl border border-amber-500/10 flex gap-4">
+                      <AlertTriangle className="w-6 h-6 text-amber-500 shrink-0" />
+                      <div>
+                        <p className="text-sm font-bold text-amber-700">Atenção Crítica</p>
+                        <p className="text-xs text-amber-600 font-medium leading-relaxed">
+                          Alterações financeiras globais não afetam pedidos retroativamente. 
+                          Uma auditoria será gerada para cada mudança.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              />
+            </AccordionContent>
+
+          </AccordionItem>
+
+          {/* 3. Segurança */}
+          <AccordionItem value="global-seguranca" className="border-border bg-card rounded-[24px] overflow-hidden shadow-sm border">
+            <AccordionTrigger className="px-8 py-6 font-bold text-xl hover:no-underline hover:bg-accent/50 transition-all">
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 bg-rose-500/10 rounded-2xl flex items-center justify-center text-rose-600 shrink-0">
+                  <ShieldCheck className="w-6 h-6" />
+                </div>
+                <div className="text-left">
+                  <p className="font-manrope font-black tracking-tight">Segurança</p>
+                  <p className="text-xs text-muted-foreground font-medium">MFA, sessões, rate-limiting e CAPTCHA.</p>
+                </div>
+              </div>
+            </AccordionTrigger>
+            <AccordionContent className="px-8 pb-8 pt-4">
+              <GlobalSectionForm
+                section="seguranca"
+                render={(values, update) => (
+                  <div className="space-y-4">
+                    {[
+                      { key: "mfa_required", label: "MFA Obrigatório para Admins", desc: "Exige 2FA para todos os membros administrativos da plataforma." },
+                      { key: "captcha_enabled", label: "CAPTCHA em Cadastros", desc: "Proteção contra bots em novas contas." },
+                      { key: "suspicious_alerts", label: "Alertas de Login Suspeito", desc: "Notifica administradores sobre acessos de novas origens." },
+                    ].map((item) => (
+                      <div key={item.key} className="flex items-center justify-between p-4 bg-muted/30 rounded-2xl border border-border/50">
+                        <div>
+                          <Label className="font-bold">{item.label}</Label>
+                          <p className="text-[11px] text-muted-foreground">{item.desc}</p>
+                        </div>
+                        <Switch 
+                          checked={values[item.key] ?? false} 
+                          onCheckedChange={v => update({ [item.key]: v })} 
+                        />
+                      </div>
+                    ))}
+                  </div>
+                )}
+              />
+            </AccordionContent>
+
+          </AccordionItem>
+
+          {/* Outras seções resumidas conforme solicitação */}
+          {/* 4. Planos */}
+          <AccordionItem value="global-planos" className="border-border bg-card rounded-[24px] overflow-hidden shadow-sm border">
+            <AccordionTrigger className="px-8 py-6 font-bold text-xl hover:no-underline hover:bg-accent/50 transition-all">
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 bg-blue-500/10 text-blue-600">
+                  <Box className="w-6 h-6" />
+                </div>
+                <div className="text-left">
+                  <p className="font-manrope font-black tracking-tight">Planos e Limites Padrão</p>
+                  <p className="text-xs text-muted-foreground font-medium">Configure as quotas e restrições dos planos de assinatura.</p>
+                </div>
+              </div>
+            </AccordionTrigger>
+            <AccordionContent className="px-8 pb-8 pt-4">
+              <GlobalSectionForm
+                section="planos"
+                render={(values, update) => (
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="space-y-2">
+                      <Label className="font-bold">Eventos por Mês (Plano Start)</Label>
+                      <Input type="number" value={values.events_limit_start || 2} onChange={e => update({ events_limit_start: parseInt(e.target.value) })} />
+                    </div>
+                    <div className="space-y-2">
+                      <Label className="font-bold">Taxa Transacional (Start)</Label>
+                      <Input type="text" value={values.fee_start || "10%"} onChange={e => update({ fee_start: e.target.value })} />
+                    </div>
+                    <div className="space-y-2">
+                      <Label className="font-bold">Armazenamento (GB)</Label>
+                      <Input type="number" value={values.storage_limit_gb || 5} onChange={e => update({ storage_limit_gb: parseInt(e.target.value) })} />
+                    </div>
+                    <div className="flex items-center justify-between p-4 bg-muted/30 rounded-2xl border border-border/50">
+                      <Label className="font-bold">Permitir Whitelabel em todos?</Label>
+                      <Switch checked={values.global_whitelabel || false} onCheckedChange={c => update({ global_whitelabel: c })} />
+                    </div>
+                  </div>
+                )}
+              />
+            </AccordionContent>
+          </AccordionItem>
+
+          {/* 5. Eventos */}
+          <AccordionItem value="global-eventos" className="border-border bg-card rounded-[24px] overflow-hidden shadow-sm border">
+            <AccordionTrigger className="px-8 py-6 font-bold text-xl hover:no-underline hover:bg-accent/50 transition-all">
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 bg-purple-500/10 text-purple-600">
+                  <Calendar className="w-6 h-6" />
+                </div>
+                <div className="text-left">
+                  <p className="font-manrope font-black tracking-tight">Eventos e Aprovações</p>
+                  <p className="text-xs text-muted-foreground font-medium">Regras para publicação e moderação de eventos.</p>
+                </div>
+              </div>
+            </AccordionTrigger>
+            <AccordionContent className="px-8 pb-8 pt-4">
+              <GlobalSectionForm
+                section="eventos"
+                render={(values, update) => (
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="flex items-center justify-between p-4 bg-muted/30 rounded-2xl border border-border/50">
+                      <Label className="font-bold">Aprovação Manual Obrigatória</Label>
+                      <Switch checked={values.require_approval || false} onCheckedChange={c => update({ require_approval: c })} />
+                    </div>
+                    <div className="space-y-2">
+                      <Label className="font-bold">Prazo de Análise (Horas)</Label>
+                      <Input type="number" value={values.review_window_hours || 24} onChange={e => update({ review_window_hours: parseInt(e.target.value) })} />
+                    </div>
+                    <div className="flex items-center justify-between p-4 bg-muted/30 rounded-2xl border border-border/50">
+                      <Label className="font-bold">Permitir Eventos Gratuitos</Label>
+                      <Switch checked={values.allow_free_events ?? true} onCheckedChange={c => update({ allow_free_events: c })} />
+                    </div>
+                    <div className="space-y-2">
+                      <Label className="font-bold">Máx. Imagens por Galeria</Label>
+                      <Input type="number" value={values.max_gallery_images || 10} onChange={e => update({ max_gallery_images: parseInt(e.target.value) })} />
+                    </div>
+                  </div>
+                )}
+              />
+            </AccordionContent>
+          </AccordionItem>
+
+          {/* 6. Ingressos */}
+          <AccordionItem value="global-ingressos" className="border-border bg-card rounded-[24px] overflow-hidden shadow-sm border">
+            <AccordionTrigger className="px-8 py-6 font-bold text-xl hover:no-underline hover:bg-accent/50 transition-all">
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 bg-orange-500/10 text-orange-600">
+                  <Ticket className="w-6 h-6" />
+                </div>
+                <div className="text-left">
+                  <p className="font-manrope font-black tracking-tight">Ingressos e Emissão</p>
+                  <p className="text-xs text-muted-foreground font-medium">Parametrização do motor de tickets da Zevva.</p>
+                </div>
+              </div>
+            </AccordionTrigger>
+            <AccordionContent className="px-8 pb-8 pt-4">
+              <GlobalSectionForm
+                section="ingressos"
+                render={(values, update) => (
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="space-y-2">
+                      <Label className="font-bold">Expiração da Reserva (Minutos)</Label>
+                      <Input type="number" value={values.reservation_expiry_minutes || 15} onChange={e => update({ reservation_expiry_minutes: parseInt(e.target.value) })} />
+                    </div>
+                    <div className="space-y-2">
+                      <Label className="font-bold">Tamanho Mín. QR Code (px)</Label>
+                      <Input type="number" value={values.qr_min_size || 256} onChange={e => update({ qr_min_size: parseInt(e.target.value) })} />
+                    </div>
+                    <div className="flex items-center justify-between p-4 bg-muted/30 rounded-2xl border border-border/50">
+                      <Label className="font-bold">Exibir Hash SHA-256 no Ticket</Label>
+                      <Switch checked={values.show_sha256 || false} onCheckedChange={c => update({ show_sha256: c })} />
+                    </div>
+                    <div className="flex items-center justify-between p-4 bg-muted/30 rounded-2xl border border-border/50">
+                      <Label className="font-bold">PDF em Alta Resolução</Label>
+                      <Switch checked={values.pdf_high_res || true} onCheckedChange={c => update({ pdf_high_res: c })} />
+                    </div>
+                  </div>
+                )}
+              />
+            </AccordionContent>
+          </AccordionItem>
+
+          {/* 7. Check-in */}
+          <AccordionItem value="global-checkin" className="border-border bg-card rounded-[24px] overflow-hidden shadow-sm border">
+            <AccordionTrigger className="px-8 py-6 font-bold text-xl hover:no-underline hover:bg-accent/50 transition-all">
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 bg-cyan-500/10 text-cyan-600">
+                  <ListChecks className="w-6 h-6" />
+                </div>
+                <div className="text-left">
+                  <p className="font-manrope font-black tracking-tight">Check-in e Validação</p>
+                  <p className="text-xs text-muted-foreground font-medium">Controles para o ambiente de validação física.</p>
+                </div>
+              </div>
+            </AccordionTrigger>
+            <AccordionContent className="px-8 pb-8 pt-4">
+              <GlobalSectionForm
+                section="checkin"
+                render={(values, update) => (
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="flex items-center justify-between p-4 bg-muted/30 rounded-2xl border border-border/50">
+                      <Label className="font-bold">Habilitar Scanner Offline</Label>
+                      <Switch checked={values.offline_scan || false} onCheckedChange={c => update({ offline_scan: c })} />
+                    </div>
+                    <div className="space-y-2">
+                      <Label className="font-bold">Intervalo de Sincro (ms)</Label>
+                      <Input type="number" value={values.sync_interval_ms || 5000} onChange={e => update({ sync_interval_ms: parseInt(e.target.value) })} />
+                    </div>
+                    <div className="flex items-center justify-between p-4 bg-muted/30 rounded-2xl border border-border/50">
+                      <Label className="font-bold">Vibrar no Sucesso</Label>
+                      <Switch checked={values.vibrate_on_success || true} onCheckedChange={c => update({ vibrate_on_success: c })} />
+                    </div>
+                  </div>
+                )}
+              />
+            </AccordionContent>
+          </AccordionItem>
+
+          {/* 8. Comunicação */}
+          <AccordionItem value="global-comunicacao" className="border-border bg-card rounded-[24px] overflow-hidden shadow-sm border">
+            <AccordionTrigger className="px-8 py-6 font-bold text-xl hover:no-underline hover:bg-accent/50 transition-all">
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 bg-indigo-500/10 text-indigo-600">
+                  <Mail className="w-6 h-6" />
+                </div>
+                <div className="text-left">
+                  <p className="font-manrope font-black tracking-tight">Comunicação e SMTP</p>
+                  <p className="text-xs text-muted-foreground font-medium">Configurações de disparos de e-mail e WhatsApp.</p>
+                </div>
+              </div>
+            </AccordionTrigger>
+            <AccordionContent className="px-8 pb-8 pt-4">
+              <GlobalSectionForm
+                section="comunicacao"
+                render={(values, update) => (
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="space-y-2">
+                      <Label className="font-bold">Sender Name Padrão</Label>
+                      <Input value={values.default_sender_name || "Zevva Tickets"} onChange={e => update({ default_sender_name: e.target.value })} />
+                    </div>
+                    <div className="space-y-2">
+                      <Label className="font-bold">Provider WhatsApp</Label>
+                      <Select value={values.wa_provider || "meta"} onValueChange={v => update({ wa_provider: v })}>
+                        <SelectTrigger><SelectValue /></SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="meta">Meta Cloud API</SelectItem>
+                          <SelectItem value="uazapi">UAZAPI</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div className="flex items-center justify-between p-4 bg-muted/30 rounded-2xl border border-border/50">
+                      <Label className="font-bold">Prioridade Alta nos Ingressos</Label>
+                      <Switch checked={values.high_priority_tickets || true} onCheckedChange={c => update({ high_priority_tickets: c })} />
+                    </div>
+                  </div>
+                )}
+              />
+            </AccordionContent>
+          </AccordionItem>
+
+          {/* 9. LGPD */}
+          <AccordionItem value="global-lgpd" className="border-border bg-card rounded-[24px] overflow-hidden shadow-sm border">
+            <AccordionTrigger className="px-8 py-6 font-bold text-xl hover:no-underline hover:bg-accent/50 transition-all">
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 bg-teal-500/10 text-teal-600">
+                  <Scale className="w-6 h-6" />
+                </div>
+                <div className="text-left">
+                  <p className="font-manrope font-black tracking-tight">LGPD e Retenção</p>
+                  <p className="text-xs text-muted-foreground font-medium">Políticas de privacidade e expurgo de dados.</p>
+                </div>
+              </div>
+            </AccordionTrigger>
+            <AccordionContent className="px-8 pb-8 pt-4">
+              <GlobalSectionForm
+                section="lgpd"
+                render={(values, update) => (
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="space-y-2">
+                      <Label className="font-bold">Retenção de Logs (Dias)</Label>
+                      <Input type="number" value={values.log_retention_days || 365} onChange={e => update({ log_retention_days: parseInt(e.target.value) })} />
+                    </div>
+                    <div className="flex items-center justify-between p-4 bg-muted/30 rounded-2xl border border-border/50">
+                      <Label className="font-bold">Anonimizar ao Excluir</Label>
+                      <Switch checked={values.anonymize_on_delete || true} onCheckedChange={c => update({ anonymize_on_delete: c })} />
+                    </div>
+                    <div className="flex items-center justify-between p-4 bg-muted/30 rounded-2xl border border-border/50">
+                      <Label className="font-bold">Aceite de Termos Obrigatório</Label>
+                      <Switch checked={values.terms_required || true} onCheckedChange={c => update({ terms_required: c })} />
+                    </div>
+                  </div>
+                )}
+              />
+            </AccordionContent>
+          </AccordionItem>
+
+          {/* 10. Manutenção */}
+          <AccordionItem value="global-manutencao" className="border-border bg-card rounded-[24px] overflow-hidden shadow-sm border">
+            <AccordionTrigger className="px-8 py-6 font-bold text-xl hover:no-underline hover:bg-accent/50 transition-all">
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 bg-amber-500/10 text-amber-600">
+                  <Hammer className="w-6 h-6" />
+                </div>
+                <div className="text-left">
+                  <p className="font-manrope font-black tracking-tight">Manutenção e Emergência</p>
+                  <p className="text-xs text-muted-foreground font-medium">Controles de infraestrutura e avisos de sistema.</p>
+                </div>
+              </div>
+            </AccordionTrigger>
+            <AccordionContent className="px-8 pb-8 pt-4">
+              <GlobalSectionForm
+                section="manutencao"
+                render={(values, update) => (
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="flex items-center justify-between p-4 bg-muted/30 rounded-2xl border border-border/50">
+                      <Label className="font-bold">Modo Manutenção Global</Label>
+                      <Switch checked={values.maintenance_mode || false} onCheckedChange={c => update({ maintenance_mode: c })} />
+                    </div>
+                    <div className="space-y-2">
+                      <Label className="font-bold">Mensagem de Aviso</Label>
+                      <Input value={values.maintenance_msg || ""} placeholder="Ex: Voltamos em breve..." onChange={e => update({ maintenance_msg: e.target.value })} />
+                    </div>
+                    <div className="flex items-center justify-between p-4 bg-muted/30 rounded-2xl border border-border/50">
+                      <Label className="font-bold">Bloquear Acesso Admin</Label>
+                      <Switch checked={values.lock_admin || false} onCheckedChange={c => update({ lock_admin: c })} />
+                    </div>
+                  </div>
+                )}
+              />
+            </AccordionContent>
+          </AccordionItem>
+
+        </Accordion>
       </TabsContent>
 
 
