@@ -17,15 +17,18 @@ function ProducerTicketsPage() {
     queryKey: ["producer-tickets", activeTenant?.id],
     queryFn: async () => {
       if (!activeTenant) return [];
-      const { data } = await supabase
+      const { data, error } = await supabase
         .from("tickets")
         .select(`
           *,
           events!inner(title),
-          profiles:owner_id(nome_completo, email, telefone)
+          profiles:owner_id(nome_completo, email, telefone),
+          ticket_types(nome)
         `)
-        .eq("tenant_id", activeTenant.id);
+        .eq("tenant_id", activeTenant.id)
+        .order("created_at", { ascending: false });
       
+      if (error) throw error;
       return data;
     }
   });
@@ -51,10 +54,11 @@ function ProducerTicketsPage() {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>Participante</TableHead>
-              <TableHead>Evento</TableHead>
-              <TableHead>Status</TableHead>
-              <TableHead>Data Compra</TableHead>
+              <TableHead className="text-[10px] font-black uppercase">Participante</TableHead>
+              <TableHead className="text-[10px] font-black uppercase">Evento</TableHead>
+              <TableHead className="text-[10px] font-black uppercase">Tipo</TableHead>
+              <TableHead className="text-[10px] font-black uppercase">Status</TableHead>
+              <TableHead className="text-[10px] font-black uppercase">Data</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -64,7 +68,8 @@ function ProducerTicketsPage() {
                   <p className="font-bold">{(ticket.profiles as any)?.nome_completo || "N/A"}</p>
                   <p className="text-xs text-muted-foreground">{(ticket.profiles as any)?.email || "N/A"}</p>
                 </TableCell>
-                <TableCell className="font-medium">{(ticket.events as any)?.title}</TableCell>
+                <TableCell className="font-bold text-foreground">{(ticket.events as any)?.title}</TableCell>
+                <TableCell className="font-medium">{(ticket.ticket_types as any)?.nome || '---'}</TableCell>
                 <TableCell>
                   <span className={cn(
                     "px-2 py-1 rounded-full text-[10px] font-black uppercase",
