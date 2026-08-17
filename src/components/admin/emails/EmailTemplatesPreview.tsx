@@ -5,6 +5,7 @@ import { InviteEmail } from '@/lib/email-templates/invite';
 import { MagicLinkEmail } from '@/lib/email-templates/magic-link';
 import { EmailChangeEmail } from '@/lib/email-templates/email-change';
 import { ReauthenticationEmail } from '@/lib/email-templates/reauthentication';
+import { OrderTicketsEmail } from '@/lib/email-templates/order-tickets';
 import { render } from '@react-email/render';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -78,6 +79,20 @@ const TEMPLATES: TemplateItem[] = [
     component: ReauthenticationEmail,
     props: { token: '123456' },
     variable: '{{ .Token }}'
+  },
+  {
+    id: 'order_tickets',
+    name: 'Entrega de Ingressos',
+    subject: 'Seus ingressos para o evento chegaram!',
+    component: OrderTicketsEmail,
+    props: { 
+      customerName: 'Wendel Bonfim',
+      eventName: 'Zevva Summer Festival 2026',
+      orderId: 'ZEV-88291',
+      ticketCount: 2,
+      viewTicketsUrl: `${SAMPLE_PROJECT_URL}/meus-ingressos`
+    },
+    variable: '{{ .CustomerName }}, {{ .EventName }}, {{ .OrderId }}, {{ .TicketsUrl }}'
   }
 ];
 

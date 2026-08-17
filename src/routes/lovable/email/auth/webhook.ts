@@ -7,6 +7,7 @@ import { MagicLinkEmail } from '@/lib/email-templates/magic-link'
 import { RecoveryEmail } from '@/lib/email-templates/recovery'
 import { EmailChangeEmail } from '@/lib/email-templates/email-change'
 import { ReauthenticationEmail } from '@/lib/email-templates/reauthentication'
+import { OrderTicketsEmail } from '@/lib/email-templates/order-tickets'
 
 // Configuration
 const SITE_NAME = "zevvaticketis"
@@ -67,6 +68,17 @@ const handler = createAuthEmailHandler({
       subject: 'Código de segurança da Zevva',
       render: (data) =>
         React.createElement(ReauthenticationEmail, { token: data.token ?? '' }),
+    },
+    order_tickets: {
+      subject: 'Seus ingressos da Zevva chegaram!',
+      render: (data) =>
+        React.createElement(OrderTicketsEmail, {
+          customerName: (data as any).data?.customer_name,
+          eventName: (data as any).data?.event_name,
+          orderId: (data as any).data?.order_id,
+          ticketCount: (data as any).data?.ticket_count,
+          viewTicketsUrl: data.url,
+        }),
     },
   },
 })
