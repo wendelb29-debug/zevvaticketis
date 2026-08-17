@@ -52,7 +52,6 @@ const getEligibleAdsSchema = z.object({
 export const getEligibleAds = createServerFn({ method: "GET" })
   .validator((data: unknown) => getEligibleAdsSchema.parse(data))
   .handler(async ({ data }) => {
-    const limit = data.limit;
     // Current time for filter
     const now = new Date().toISOString();
     
@@ -72,7 +71,7 @@ export const getEligibleAds = createServerFn({ method: "GET" })
     if (!campaigns || campaigns.length === 0) return [];
 
     // Simple priority-based rotation for now
-    return campaigns.slice(0, limit).map(c => ({
+    return campaigns.slice(0, data.limit).map(c => ({
       ...c,
       creative: c.ad_creatives?.[0] || null
     })).filter(c => c.creative !== null);

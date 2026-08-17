@@ -19,6 +19,9 @@ import {
 import { Input } from "@/components/ui/input";
 import { Navbar } from "@/components/layout/Navbar";
 import { FeaturedCarousel } from "@/components/home/FeaturedCarousel";
+import { FloatingSponsoredAd } from "@/components/home/FloatingSponsoredAd";
+import { getEligibleAds } from "@/lib/ads.functions";
+
 // CoverflowCarousel removido em favor do FeaturedCarousel moderno
 import { EventCard } from "@/components/home/EventCard";
 import { CategoryGrid } from "@/components/home/CategoryGrid";
