@@ -68,34 +68,50 @@ function CheckoutPage() {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) throw new Error("Usuário não autenticado");
 
-      // 1. Create Order
+      // 1. Create Order with correct columns
       const { data: order, error: orderError } = await supabase
-        .from("orders" as any)
+        .from("orders")
         .insert({
-          usuario_id: user.id,
-          evento_id: id,
-          valor_produtos: selectedTicket.valor,
+          buyer_id: user.id,
+          event_id: id,
+          tenant_id: event.tenant_id,
+          valor_bruto: selectedTicket.valor,
           taxa_plataforma: platformFee,
-          valor_total: totalAmount,
-          status: 'pago' // Simulating instant approval for MVP
+          status: 'pago', // Simulating approval
+          forma_pagamento: 'pix'
         })
         .select()
         .single();
 
       if (orderError) throw orderError;
 
-      // 2. Generate Ticket with QR Code
-      const ticketCode = `ZEVVA-${Math.random().toString(36).substring(2, 10).toUpperCase()}`;
+      // 2. Generate Cryptographic Token
+      // Use Web Crypto for real entropy
+      const array = new Uint8Array(32);
+      window.crypto.getRandomValues(array);
+      const rawToken = Array.from(array, byte => byte.toString(16).padStart(2, '0')).join('');
+      
+      // Hash the token for storage
+      const msgBuffer = new TextEncoder().encode(rawToken);
+      const hashBuffer = await window.crypto.subtle.digest('SHA-256', msgBuffer);
+      const tokenHash = Array.from(new Uint8Array(hashBuffer), b => b.toString(16).padStart(2, '0')).join('');
+
+      // 3. Create Ticket with correct columns and token_hash
       const { error: ticketError } = await supabase
-        .from("tickets" as any)
+        .from("tickets")
         .insert({
-          order_id: (order as any).id,
-          evento_id: id,
-          usuario_id: user.id,
+          order_id: order.id,
+          event_id: id,
+          owner_id: user.id,
+          tenant_id: event.tenant_id,
           ticket_type_id: selectedTicketId,
-          codigo_unico: ticketCode,
-          qr_code: ticketCode,
-          status: 'ativo'
+          name: selectedTicket.nome,
+          price: selectedTicket.valor,
+          attendee_name: formData.nome,
+          attendee_email: formData.email,
+          qr_code: rawToken, // We store raw for the QR, but compare hash in DB
+          token_hash: tokenHash,
+          status: 'valido'
         });
 
       if (ticketError) throw ticketError;
