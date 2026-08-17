@@ -175,89 +175,75 @@ function ScannerPage() {
     setStatus('idle');
   };
 
-  const processCheckin = async (code: string) => {
+  const processCheckin = async (tokenHash: string) => {
     if (!eventId) return;
 
     const { data: { user: operator } } = await supabase.auth.getUser();
-    const now = DateTime.now();
+    if (!operator) return;
 
-    // OFFLINE MODE
+    // OFFLINE MODE - Disabled as per requirements (Phase 1)
     if (!isOnline) {
-      addToQueue({
-        code,
-        eventId,
-        operatorId: operator?.id || '',
-        timestamp: now.toISO(),
-        tenantId: event?.tenant_id || projectId
-      });
-      
-      setScannedResult({ 
-        success: true, 
-        message: "ENFILEIRADO (OFFLINE)", 
-        offline: true,
-        ticket: { qr_code: code } 
-      });
-      setStatus('success');
+      toast.error("O check-in exige conexão com o servidor nesta etapa.");
+      resumeScanning();
       return;
     }
 
     try {
-      const { data: ticket, error: ticketError } = await supabase
-        .from("tickets")
-        .select("*, events(title), profiles:owner_id(full_name)")
-        .eq("qr_code", code)
-        .eq("event_id", eventId)
-        .maybeSingle();
+      // Use the secure RPC for atomic validation and check-in
+      const { data, error } = await supabase.rpc('process_ticket_checkin', {
+        _token_hash: tokenHash,
+        _event_id: eventId,
+        _operator_id: operator.id,
+        _tenant_id: event?.tenant_id || projectId
+      });
 
-      if (ticketError) throw ticketError;
+      if (error) throw error;
       
-      if (!ticket) {
-        setScannedResult({ success: false, message: "INGRESSO INVÁLIDO" });
-        await logRecord('falha', null, operator?.id, code);
-        return;
-      }
-
-      if (ticket.status === 'utilizado') {
-        setScannedResult({ success: false, message: "JÁ UTILIZADO", ticket });
-        await logRecord('falha', ticket.id, operator?.id, code);
+      const resultData = data as any;
+      
+      if (!resultData || !resultData.success) {
+        setScannedResult({ 
+          success: false, 
+          message: resultData?.message || "ERRO NA VALIDAÇÃO",
+          reason: resultData?.code === 'ALREADY_USED' 
+            ? `Validado em ${new Date(resultData.checked_in_at).toLocaleString('pt-BR')}`
+            : resultData?.message
+        });
+        toast.error(resultData?.message || "Ingresso inválido.");
+        setStatus('error');
         return;
       }
 
       // Success logic
-      const { error: updateError } = await supabase
-        .from("tickets")
-        .update({ 
-            status: 'utilizado',
-            checked_in_at: now.toISO()
-        } as any)
-        .eq("id", ticket.id);
-
-      if (updateError) throw updateError;
-
-      await logRecord('sucesso', ticket.id, operator?.id, code);
-      
       setStats(prev => ({ ...prev, checkedIn: prev.checkedIn + 1 }));
-      setScannedResult({ success: true, message: "LIBERADO", ticket });
+      setScannedResult({ 
+        success: true, 
+        message: "LIBERADO", 
+        ticket: { 
+          name: resultData.attendee_name, 
+          ticket_type: resultData.ticket_type,
+          qr_code: tokenHash 
+        } 
+      });
       setStatus('success');
       toast.success("Check-in realizado!");
       
-    } catch (err) {
+      // Update history
+      const now = DateTime.now();
+      const newRecord = {
+        id: crypto.randomUUID(),
+        status: 'sucesso',
+        checkin_time: now.toFormat('HH:mm:ss'),
+        checkin_date: now.toISODate(),
+        profiles: { full_name: 'Você' },
+        tickets: { name: resultData.attendee_name, qr_code: tokenHash }
+      };
+      setScanHistory(prev => [newRecord, ...prev].slice(0, 5));
+      
+    } catch (err: any) {
       console.error(err);
-      // Fallback to offline queue if server error (network issue)
-      addToQueue({
-        code,
-        eventId,
-        operatorId: operator?.id || '',
-        timestamp: now.toISO(),
-        tenantId: event?.tenant_id || projectId
-      });
-      setScannedResult({ 
-        success: true, 
-        message: "ENFILEIRADO (ERRO SYNC)", 
-        offline: true,
-        ticket: { qr_code: code } 
-      });
-      setStatus('success');
+      toast.error("Erro ao processar check-in: " + (err.message || "Erro desconhecido"));
+      setStatus('error');
     }
   };
 
