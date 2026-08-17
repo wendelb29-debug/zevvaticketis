@@ -69,7 +69,7 @@ export function ScannerComponent() {
 
       const { data, error } = await supabase.rpc('process_ticket_checkin', {
         _token_hash: tokenHash,
-        _event_id: selectedEventId,
+        _event_id: selectedEventId!,
         _operator_id: user.id,
         _tenant_id: activeTenant.id
       });
@@ -173,10 +173,11 @@ export function ScannerComponent() {
                    <div className="absolute bottom-0 right-0 w-8 h-8 border-b-4 border-r-4 border-white rounded-br-lg" />
                 </div>
                 <div className="w-full h-full bg-slate-900 flex items-center justify-center text-primary-foreground/20">
-                   <RefreshCw className="w-12 h-12 animate-spin" />
+                   {isValidating ? <Loader2 className="w-12 h-12 animate-spin text-primary" /> : <RefreshCw className="w-12 h-12 animate-spin" />}
                 </div>
                 <Button 
                   onClick={toggleScanner}
+                  disabled={isValidating}
                   className="absolute bottom-6 left-1/2 -translate-x-1/2 z-30 bg-red-500 hover:bg-red-600 rounded-xl px-8 h-12 font-bold shadow-lg"
                 >
                   Parar Scanner
