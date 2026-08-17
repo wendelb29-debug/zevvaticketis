@@ -10,7 +10,7 @@ import { ReauthenticationEmail } from '@/lib/email-templates/reauthentication'
 import { OrderTicketsEmail } from '@/lib/email-templates/order-tickets'
 
 // Configuration
-const SITE_NAME = "zevvaticketis"
+const SITE_NAME = "Zevva"
 const SENDER_DOMAIN = "notify.zevvatickets.com"
 const ROOT_DOMAIN = "zevvatickets.com"
 const FROM_DOMAIN = "zevvatickets.com"
