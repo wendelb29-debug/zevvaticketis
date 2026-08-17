@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { 
   Camera, 
@@ -11,13 +11,16 @@ import {
   RefreshCw,
   Search,
   Maximize2,
-  Loader2
+  Loader2,
+  ChevronDown
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import { useTenants } from "@/hooks/use-tenants";
+import { useQuery } from "@tanstack/react-query";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 
 export function ScannerComponent() {
   const { activeTenant } = useTenants();
@@ -26,10 +29,37 @@ export function ScannerComponent() {
   const [lastCheckins, setLastCheckins] = useState<any[]>([]);
   const [manualCode, setManualCode] = useState("");
   const [isValidating, setIsValidating] = useState(false);
+  const [selectedEventId, setSelectedEventId] = useState<string | null>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
 
+  const { data: events, isLoading: loadingEvents } = useQuery({
+    queryKey: ["tenant-events-for-checkin", activeTenant?.id],
+    enabled: !!activeTenant,
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("events")
+        .select("id, title")
+        .eq("tenant_id", activeTenant?.id)
+        .order("start_date", { ascending: false });
+      if (error) throw error;
+      return data;
+    }
+  });
+
+  useEffect(() => {
+    if (events && events.length > 0 && !selectedEventId) {
+      setSelectedEventId(events[0].id);
+    }
+  }, [events, selectedEventId]);
+
+  const selectedEvent = events?.find(e => e.id === selectedEventId);
+
   const handleScan = async (tokenHash: string) => {
-    if (!tokenHash || !activeTenant?.id) return;
+    if (!tokenHash || !activeTenant?.id || !selectedEventId) {
+      if (!selectedEventId) toast.error("Selecione um evento primeiro.");
+      return;
+    }
+    
     setIsScanning(false);
     setIsValidating(true);
     
@@ -39,7 +69,7 @@ export function ScannerComponent() {
 
       const { data, error } = await supabase.rpc('process_ticket_checkin', {
         _token_hash: tokenHash,
-        _event_id: "00000000-0000-0000-0000-000000000000", // TODO: Operador deve selecionar evento primeiro
+        _event_id: selectedEventId,
         _operator_id: user.id,
         _tenant_id: activeTenant.id
       });
@@ -62,7 +92,7 @@ export function ScannerComponent() {
       const result = {
         success: true,
         participantName: resultData.attendee_name || "Participante",
-        eventTitle: "Evento Selecionado", 
+        eventTitle: selectedEvent?.title || "Evento", 
         ticketType: resultData.ticket_type || "Ingresso",
         ticketNumber: tokenHash.slice(0, 8).toUpperCase(),
         checkinTime: new Date().toLocaleTimeString()
@@ -99,10 +129,38 @@ export function ScannerComponent() {
         {/* Scanner Control */}
         <Card className="border-border shadow-xl overflow-hidden rounded-[32px]">
           <CardHeader className="bg-navy text-primary-foreground pb-8">
-            <CardTitle className="text-xl font-manrope font-black flex items-center gap-3">
-              <Camera className="w-6 h-6 text-primary" /> Scanner de Ingresso
-            </CardTitle>
-            <p className="text-foreground-foreground/60 text-xs font-bold uppercase tracking-wider">Câmera em tempo real</p>
+            <div className="flex items-center justify-between gap-4">
+              <CardTitle className="text-xl font-manrope font-black flex items-center gap-3">
+                <Camera className="w-6 h-6 text-primary" /> Scanner de Ingresso
+              </CardTitle>
+              
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="outline" size="sm" className="bg-white/10 border-white/20 text-white hover:bg-white/20 h-9 px-4 rounded-xl font-bold transition-all">
+                    {selectedEvent ? selectedEvent.title.substring(0, 20) + (selectedEvent.title.length > 20 ? '...' : '') : "Selecionar Evento"}
+                    <ChevronDown className="ml-2 w-4 h-4" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-[280px] rounded-xl">
+                  {loadingEvents ? (
+                    <DropdownMenuItem disabled>Carregando eventos...</DropdownMenuItem>
+                  ) : events?.length === 0 ? (
+                    <DropdownMenuItem disabled>Nenhum evento encontrado</DropdownMenuItem>
+                  ) : (
+                    events?.map((e) => (
+                      <DropdownMenuItem 
+                        key={e.id} 
+                        className={cn("font-bold text-xs uppercase py-3", selectedEventId === e.id && "bg-accent text-primary")}
+                        onClick={() => setSelectedEventId(e.id)}
+                      >
+                        {e.title}
+                      </DropdownMenuItem>
+                    ))
+                  )}
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
+            <p className="text-foreground-foreground/60 text-xs font-bold uppercase tracking-wider mt-2">Câmera em tempo real • Validando em: <span className="text-primary">{selectedEvent?.title || '---'}</span></p>
           </CardHeader>
           <CardContent className="p-0 relative bg-black aspect-square flex flex-col items-center justify-center">
             {isScanning ? (
