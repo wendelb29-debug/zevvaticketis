@@ -118,15 +118,14 @@ export const listTenantsPaginated = createServerFn({ method: "GET" })
 
     if (search) {
       query = query.or(`nome.ilike.%${search}%,slug.ilike.%${search}%,email_contato.ilike.%${search}%,nome_proprietario.ilike.%${search}%,id.eq.${search},dominio_personalizado.ilike.%${search}%`);
+    }
+    
     if (input.country) query = query.eq('pais_id', input.country);
     if (input.currency) query = query.eq('moeda_padrao_id', input.currency);
     if (input.createdAtStart) query = query.gte('created_at', input.createdAtStart);
     if (input.createdAtEnd) query = query.lte('created_at', input.createdAtEnd);
     if (input.owner) query = query.eq('owner_id', input.owner);
 
-    // Filter by boolean flags or numeric ranges if needed (simplified for common fields)
-    // Note: Complex filters like "hasSales" would normally require subqueries or joined aggregations in Postgres
-    // For this prototype, we'll implement the direct column filters.
     if (status) {
       query = query.eq('status', status);
     }
