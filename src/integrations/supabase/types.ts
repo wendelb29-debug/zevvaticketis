@@ -283,6 +283,13 @@ export type Database = {
             referencedRelation: "ad_campaigns"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "ad_creatives_campaign_id_fkey"
+            columns: ["campaign_id"]
+            isOneToOne: false
+            referencedRelation: "ad_campaigns_public"
+            referencedColumns: ["id"]
+          },
         ]
       }
       ad_metrics: {
@@ -328,6 +335,13 @@ export type Database = {
             columns: ["campaign_id"]
             isOneToOne: false
             referencedRelation: "ad_campaigns"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "ad_metrics_campaign_id_fkey"
+            columns: ["campaign_id"]
+            isOneToOne: false
+            referencedRelation: "ad_campaigns_public"
             referencedColumns: ["id"]
           },
           {
@@ -3079,7 +3093,60 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      ad_campaigns_public: {
+        Row: {
+          advertiser_id: string | null
+          end_at: string | null
+          frequency_cap: Json | null
+          id: string | null
+          name: string | null
+          organization_id: string | null
+          priority: number | null
+          start_at: string | null
+          targeting: Json | null
+          timezone: string | null
+        }
+        Insert: {
+          advertiser_id?: string | null
+          end_at?: string | null
+          frequency_cap?: Json | null
+          id?: string | null
+          name?: string | null
+          organization_id?: string | null
+          priority?: number | null
+          start_at?: string | null
+          targeting?: Json | null
+          timezone?: string | null
+        }
+        Update: {
+          advertiser_id?: string | null
+          end_at?: string | null
+          frequency_cap?: Json | null
+          id?: string | null
+          name?: string | null
+          organization_id?: string | null
+          priority?: number | null
+          start_at?: string | null
+          targeting?: Json | null
+          timezone?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ad_campaigns_advertiser_id_fkey"
+            columns: ["advertiser_id"]
+            isOneToOne: false
+            referencedRelation: "ad_advertisers"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "ad_campaigns_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "tenants"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Functions: {
       check_admin_internal: { Args: { _user_id: string }; Returns: boolean }
