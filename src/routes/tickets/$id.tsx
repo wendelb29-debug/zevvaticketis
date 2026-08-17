@@ -38,20 +38,48 @@ function TicketDetail() {
     }
   });
 
-  const downloadPDF = () => {
+  const downloadPDF = async () => {
     if (!ticket) return;
+    
+    // Import dynamically to avoid SSR issues if any
+    const { jsPDF } = await import("jspdf");
     const doc = new jsPDF();
+    
+    // Header
+    doc.setFillColor(217, 75, 82); // Zevva Coral
+    doc.rect(0, 0, 210, 30, 'F');
+    doc.setTextColor(255, 255, 255);
     doc.setFontSize(22);
-    doc.text("ZEVVA TICKETS", 14, 20);
-    doc.setFontSize(16);
-    doc.text((ticket.events as any)?.title || "Evento", 14, 35);
+    doc.text("ZEVVA TICKETS", 105, 20, { align: 'center' });
+    
+    // Content
+    doc.setTextColor(30, 41, 59);
+    doc.setFontSize(18);
+    doc.text((ticket.events as any)?.title?.toUpperCase() || "EVENTO", 14, 45);
+    
     doc.setFontSize(12);
-    doc.text(`Participante: ${(ticket.profiles as any)?.nome_completo || "Convidado"}`, 14, 45);
-    doc.text(`Data: ${(ticket.events as any)?.start_date ? new Date((ticket.events as any).start_date).toLocaleDateString("pt-BR") : "N/A"}`, 14, 55);
-    doc.text(`Local: ${(ticket.events as any)?.location || "N/A"}`, 14, 65);
-    doc.text(`Código: ${ticket.qr_code || ticket.id.slice(0, 8)}`, 14, 75);
-    doc.text(`Status: ${ticket.status === "utilizado" ? "UTILIZADO" : "VÁLIDO"}`, 14, 85);
-    doc.save(`ingresso-${ticket.id}.pdf`);
+    doc.text(`Participante: ${ticket.attendee_name || (ticket.profiles as any)?.nome_completo || "Convidado"}`, 14, 55);
+    doc.text(`Data: ${(ticket.events as any)?.start_date ? new Date((ticket.events as any).start_date).toLocaleDateString("pt-BR") : "N/A"}`, 14, 62);
+    doc.text(`Local: ${(ticket.events as any)?.location || "N/A"}`, 14, 69);
+    doc.text(`Tipo: ${ticket.name || "Ingresso"}`, 14, 76);
+    
+    // Status Badge
+    const isUsed = ticket.status === "utilizado";
+    doc.setFillColor(isUsed ? 251 : 209, isUsed ? 191 : 250, isUsed ? 36 : 229);
+    doc.roundedRect(14, 82, 30, 8, 2, 2, 'F');
+    doc.setTextColor(isUsed ? 146 : 6, isUsed ? 64 : 95, isUsed ? 14 : 70);
+    doc.setFontSize(8);
+    doc.text(isUsed ? "UTILIZADO" : "VÁLIDO", 29, 87, { align: 'center' });
+
+    // QR Code Placeholder for PDF
+    // In a real implementation we would render the QR to a canvas and addImage
+    doc.setDrawColor(200, 200, 200);
+    doc.rect(75, 100, 60, 60);
+    doc.setTextColor(150, 150, 150);
+    doc.setFontSize(8);
+    doc.text("Apresente o QR Code original no aplicativo", 105, 165, { align: 'center' });
+    
+    doc.save(`ingresso-zevva-${ticket.id.slice(0, 8)}.pdf`);
   };
 
   const shareWhatsApp = () => {
