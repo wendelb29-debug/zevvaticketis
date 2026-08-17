@@ -36,7 +36,7 @@ export const Route = createFileRoute("/admin/master")({
 
 function MasterAdminPage() {
   const navigate = useNavigate();
-  const searchParams = useSearch({ from: "/admin/master" });
+  const searchParams = useSearch({ from: "/admin/master" }) as any;
   const getStats = useServerFn(getGlobalStats);
   const getTenants = useServerFn(listTenantsPaginated);
   
@@ -49,7 +49,7 @@ function MasterAdminPage() {
     navigate({
       search: (prev: any) => ({ ...prev, search: debouncedSearch, page: 1 }),
       replace: true,
-    });
+    } as any);
   }, [debouncedSearch, navigate]);
 
   const { data: stats, isLoading: statsLoading } = useQuery({
@@ -66,7 +66,7 @@ function MasterAdminPage() {
       plan: searchParams.plan,
       hasSales: searchParams.hasSales,
       hasEvents: searchParams.hasEvents,
-    } }),
+    } } as any),
   });
 
   const activeFiltersCount = [
@@ -79,7 +79,7 @@ function MasterAdminPage() {
   const handleApplyFilters = (newFilters: any) => {
     navigate({
       search: (prev: any) => ({ ...prev, ...newFilters, page: 1 }),
-    });
+    } as any);
   };
 
   const handleClearFilters = () => {
