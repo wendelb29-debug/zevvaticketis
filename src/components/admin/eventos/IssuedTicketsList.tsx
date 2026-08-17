@@ -48,8 +48,7 @@ export function IssuedTicketsList({ eventId }: IssuedTicketsListProps) {
       const { data, error } = await supabase
         .from("tickets")
         .select(`
-          *,
-          type:ticket_types(id, nome, valor)
+          *
         `)
         .eq("event_id", eventId)
         .order("created_at", { ascending: false });
@@ -125,7 +124,7 @@ export function IssuedTicketsList({ eventId }: IssuedTicketsListProps) {
                 </TableCell>
                 <TableCell>
                   <div>
-                    <p className="font-bold text-foreground leading-none mb-1">{ticket.type?.nome}</p>
+                    <p className="font-bold text-foreground leading-none mb-1">{ticket.name || "Ingresso"}</p>
                     <p className="text-[10px] font-mono text-muted-foreground uppercase">{ticket.token_hash?.substring(0, 16)}...</p>
                   </div>
                 </TableCell>
