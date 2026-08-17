@@ -1514,34 +1514,276 @@ function SettingsPage({ session, activeTenantId }: { session: any, activeTenantI
           </AccordionItem>
 
           {/* Outras seções resumidas conforme solicitação */}
-          {[
-            { id: "plano", label: "Planos e Limites Padrão", icon: Box, color: "text-blue-600", bg: "bg-blue-500/10" },
-            { id: "eventos", label: "Eventos e Aprovações", icon: Calendar, color: "text-purple-600", bg: "bg-purple-500/10" },
-            { id: "ingressos", label: "Ingressos", icon: Ticket, color: "text-orange-600", bg: "bg-orange-500/10" },
-            { id: "checkin", label: "Check-in", icon: ListChecks, color: "text-cyan-600", bg: "bg-cyan-500/10" },
-            { id: "comunicacao", label: "Comunicação", icon: Mail, color: "text-indigo-600", bg: "bg-indigo-500/10" },
-            { id: "lgpd", label: "LGPD e Retenção", icon: Scale, color: "text-teal-600", bg: "bg-teal-500/10" },
-            { id: "manutencao", label: "Manutenção", icon: Hammer, color: "text-amber-600", bg: "bg-amber-500/10" },
-          ].map((item) => (
-            <AccordionItem key={item.id} value={`global-${item.id}`} className="border-border bg-card rounded-[24px] overflow-hidden shadow-sm border opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition-all">
-              <AccordionTrigger className="px-8 py-6 font-bold text-xl hover:no-underline hover:bg-accent/50 transition-all">
-                <div className="flex items-center gap-4">
-                  <div className={cn("w-12 h-12 rounded-2xl flex items-center justify-center shrink-0", item.bg, item.color)}>
-                    <item.icon className="w-6 h-6" />
-                  </div>
-                  <div className="text-left">
-                    <p className="font-manrope font-black tracking-tight">{item.label}</p>
-                    <p className="text-xs text-muted-foreground font-medium">Módulo de {item.label} em integração.</p>
-                  </div>
+          {/* 4. Planos */}
+          <AccordionItem value="global-planos" className="border-border bg-card rounded-[24px] overflow-hidden shadow-sm border">
+            <AccordionTrigger className="px-8 py-6 font-bold text-xl hover:no-underline hover:bg-accent/50 transition-all">
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 bg-blue-500/10 text-blue-600">
+                  <Box className="w-6 h-6" />
                 </div>
-              </AccordionTrigger>
-              <AccordionContent className="px-8 pb-8 pt-4">
-                <div className="p-12 text-center bg-muted/20 rounded-[32px] border border-dashed border-border">
-                  <p className="text-sm font-black uppercase tracking-widest text-muted-foreground/40">Módulo em Desenvolvimento</p>
+                <div className="text-left">
+                  <p className="font-manrope font-black tracking-tight">Planos e Limites Padrão</p>
+                  <p className="text-xs text-muted-foreground font-medium">Configure as quotas e restrições dos planos de assinatura.</p>
                 </div>
-              </AccordionContent>
-            </AccordionItem>
-          ))}
+              </div>
+            </AccordionTrigger>
+            <AccordionContent className="px-8 pb-8 pt-4">
+              <GlobalSectionForm
+                section="planos"
+                render={(values, update) => (
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="space-y-2">
+                      <Label className="font-bold">Eventos por Mês (Plano Start)</Label>
+                      <Input type="number" value={values.events_limit_start || 2} onChange={e => update({ events_limit_start: parseInt(e.target.value) })} />
+                    </div>
+                    <div className="space-y-2">
+                      <Label className="font-bold">Taxa Transacional (Start)</Label>
+                      <Input type="text" value={values.fee_start || "10%"} onChange={e => update({ fee_start: e.target.value })} />
+                    </div>
+                    <div className="space-y-2">
+                      <Label className="font-bold">Armazenamento (GB)</Label>
+                      <Input type="number" value={values.storage_limit_gb || 5} onChange={e => update({ storage_limit_gb: parseInt(e.target.value) })} />
+                    </div>
+                    <div className="flex items-center justify-between p-4 bg-muted/30 rounded-2xl border border-border/50">
+                      <Label className="font-bold">Permitir Whitelabel em todos?</Label>
+                      <Switch checked={values.global_whitelabel || false} onCheckedChange={c => update({ global_whitelabel: c })} />
+                    </div>
+                  </div>
+                )}
+              />
+            </AccordionContent>
+          </AccordionItem>
+
+          {/* 5. Eventos */}
+          <AccordionItem value="global-eventos" className="border-border bg-card rounded-[24px] overflow-hidden shadow-sm border">
+            <AccordionTrigger className="px-8 py-6 font-bold text-xl hover:no-underline hover:bg-accent/50 transition-all">
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 bg-purple-500/10 text-purple-600">
+                  <Calendar className="w-6 h-6" />
+                </div>
+                <div className="text-left">
+                  <p className="font-manrope font-black tracking-tight">Eventos e Aprovações</p>
+                  <p className="text-xs text-muted-foreground font-medium">Regras para publicação e moderação de eventos.</p>
+                </div>
+              </div>
+            </AccordionTrigger>
+            <AccordionContent className="px-8 pb-8 pt-4">
+              <GlobalSectionForm
+                section="eventos"
+                render={(values, update) => (
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="flex items-center justify-between p-4 bg-muted/30 rounded-2xl border border-border/50">
+                      <Label className="font-bold">Aprovação Manual Obrigatória</Label>
+                      <Switch checked={values.require_approval || false} onCheckedChange={c => update({ require_approval: c })} />
+                    </div>
+                    <div className="space-y-2">
+                      <Label className="font-bold">Prazo de Análise (Horas)</Label>
+                      <Input type="number" value={values.review_window_hours || 24} onChange={e => update({ review_window_hours: parseInt(e.target.value) })} />
+                    </div>
+                    <div className="flex items-center justify-between p-4 bg-muted/30 rounded-2xl border border-border/50">
+                      <Label className="font-bold">Permitir Eventos Gratuitos</Label>
+                      <Switch checked={values.allow_free_events ?? true} onCheckedChange={c => update({ allow_free_events: c })} />
+                    </div>
+                    <div className="space-y-2">
+                      <Label className="font-bold">Máx. Imagens por Galeria</Label>
+                      <Input type="number" value={values.max_gallery_images || 10} onChange={e => update({ max_gallery_images: parseInt(e.target.value) })} />
+                    </div>
+                  </div>
+                )}
+              />
+            </AccordionContent>
+          </AccordionItem>
+
+          {/* 6. Ingressos */}
+          <AccordionItem value="global-ingressos" className="border-border bg-card rounded-[24px] overflow-hidden shadow-sm border">
+            <AccordionTrigger className="px-8 py-6 font-bold text-xl hover:no-underline hover:bg-accent/50 transition-all">
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 bg-orange-500/10 text-orange-600">
+                  <Ticket className="w-6 h-6" />
+                </div>
+                <div className="text-left">
+                  <p className="font-manrope font-black tracking-tight">Ingressos e Emissão</p>
+                  <p className="text-xs text-muted-foreground font-medium">Parametrização do motor de tickets da Zevva.</p>
+                </div>
+              </div>
+            </AccordionTrigger>
+            <AccordionContent className="px-8 pb-8 pt-4">
+              <GlobalSectionForm
+                section="ingressos"
+                render={(values, update) => (
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="space-y-2">
+                      <Label className="font-bold">Expiração da Reserva (Minutos)</Label>
+                      <Input type="number" value={values.reservation_expiry_minutes || 15} onChange={e => update({ reservation_expiry_minutes: parseInt(e.target.value) })} />
+                    </div>
+                    <div className="space-y-2">
+                      <Label className="font-bold">Tamanho Mín. QR Code (px)</Label>
+                      <Input type="number" value={values.qr_min_size || 256} onChange={e => update({ qr_min_size: parseInt(e.target.value) })} />
+                    </div>
+                    <div className="flex items-center justify-between p-4 bg-muted/30 rounded-2xl border border-border/50">
+                      <Label className="font-bold">Exibir Hash SHA-256 no Ticket</Label>
+                      <Switch checked={values.show_sha256 || false} onCheckedChange={c => update({ show_sha256: c })} />
+                    </div>
+                    <div className="flex items-center justify-between p-4 bg-muted/30 rounded-2xl border border-border/50">
+                      <Label className="font-bold">PDF em Alta Resolução</Label>
+                      <Switch checked={values.pdf_high_res || true} onCheckedChange={c => update({ pdf_high_res: c })} />
+                    </div>
+                  </div>
+                )}
+              />
+            </AccordionContent>
+          </AccordionItem>
+
+          {/* 7. Check-in */}
+          <AccordionItem value="global-checkin" className="border-border bg-card rounded-[24px] overflow-hidden shadow-sm border">
+            <AccordionTrigger className="px-8 py-6 font-bold text-xl hover:no-underline hover:bg-accent/50 transition-all">
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 bg-cyan-500/10 text-cyan-600">
+                  <ListChecks className="w-6 h-6" />
+                </div>
+                <div className="text-left">
+                  <p className="font-manrope font-black tracking-tight">Check-in e Validação</p>
+                  <p className="text-xs text-muted-foreground font-medium">Controles para o ambiente de validação física.</p>
+                </div>
+              </div>
+            </AccordionTrigger>
+            <AccordionContent className="px-8 pb-8 pt-4">
+              <GlobalSectionForm
+                section="checkin"
+                render={(values, update) => (
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="flex items-center justify-between p-4 bg-muted/30 rounded-2xl border border-border/50">
+                      <Label className="font-bold">Habilitar Scanner Offline</Label>
+                      <Switch checked={values.offline_scan || false} onCheckedChange={c => update({ offline_scan: c })} />
+                    </div>
+                    <div className="space-y-2">
+                      <Label className="font-bold">Intervalo de Sincro (ms)</Label>
+                      <Input type="number" value={values.sync_interval_ms || 5000} onChange={e => update({ sync_interval_ms: parseInt(e.target.value) })} />
+                    </div>
+                    <div className="flex items-center justify-between p-4 bg-muted/30 rounded-2xl border border-border/50">
+                      <Label className="font-bold">Vibrar no Sucesso</Label>
+                      <Switch checked={values.vibrate_on_success || true} onCheckedChange={c => update({ vibrate_on_success: c })} />
+                    </div>
+                  </div>
+                )}
+              />
+            </AccordionContent>
+          </AccordionItem>
+
+          {/* 8. Comunicação */}
+          <AccordionItem value="global-comunicacao" className="border-border bg-card rounded-[24px] overflow-hidden shadow-sm border">
+            <AccordionTrigger className="px-8 py-6 font-bold text-xl hover:no-underline hover:bg-accent/50 transition-all">
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 bg-indigo-500/10 text-indigo-600">
+                  <Mail className="w-6 h-6" />
+                </div>
+                <div className="text-left">
+                  <p className="font-manrope font-black tracking-tight">Comunicação e SMTP</p>
+                  <p className="text-xs text-muted-foreground font-medium">Configurações de disparos de e-mail e WhatsApp.</p>
+                </div>
+              </div>
+            </AccordionTrigger>
+            <AccordionContent className="px-8 pb-8 pt-4">
+              <GlobalSectionForm
+                section="comunicacao"
+                render={(values, update) => (
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="space-y-2">
+                      <Label className="font-bold">Sender Name Padrão</Label>
+                      <Input value={values.default_sender_name || "Zevva Tickets"} onChange={e => update({ default_sender_name: e.target.value })} />
+                    </div>
+                    <div className="space-y-2">
+                      <Label className="font-bold">Provider WhatsApp</Label>
+                      <Select value={values.wa_provider || "meta"} onValueChange={v => update({ wa_provider: v })}>
+                        <SelectTrigger><SelectValue /></SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="meta">Meta Cloud API</SelectItem>
+                          <SelectItem value="uazapi">UAZAPI</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div className="flex items-center justify-between p-4 bg-muted/30 rounded-2xl border border-border/50">
+                      <Label className="font-bold">Prioridade Alta nos Ingressos</Label>
+                      <Switch checked={values.high_priority_tickets || true} onCheckedChange={c => update({ high_priority_tickets: c })} />
+                    </div>
+                  </div>
+                )}
+              />
+            </AccordionContent>
+          </AccordionItem>
+
+          {/* 9. LGPD */}
+          <AccordionItem value="global-lgpd" className="border-border bg-card rounded-[24px] overflow-hidden shadow-sm border">
+            <AccordionTrigger className="px-8 py-6 font-bold text-xl hover:no-underline hover:bg-accent/50 transition-all">
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 bg-teal-500/10 text-teal-600">
+                  <Scale className="w-6 h-6" />
+                </div>
+                <div className="text-left">
+                  <p className="font-manrope font-black tracking-tight">LGPD e Retenção</p>
+                  <p className="text-xs text-muted-foreground font-medium">Políticas de privacidade e expurgo de dados.</p>
+                </div>
+              </div>
+            </AccordionTrigger>
+            <AccordionContent className="px-8 pb-8 pt-4">
+              <GlobalSectionForm
+                section="lgpd"
+                render={(values, update) => (
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="space-y-2">
+                      <Label className="font-bold">Retenção de Logs (Dias)</Label>
+                      <Input type="number" value={values.log_retention_days || 365} onChange={e => update({ log_retention_days: parseInt(e.target.value) })} />
+                    </div>
+                    <div className="flex items-center justify-between p-4 bg-muted/30 rounded-2xl border border-border/50">
+                      <Label className="font-bold">Anonimizar ao Excluir</Label>
+                      <Switch checked={values.anonymize_on_delete || true} onCheckedChange={c => update({ anonymize_on_delete: c })} />
+                    </div>
+                    <div className="flex items-center justify-between p-4 bg-muted/30 rounded-2xl border border-border/50">
+                      <Label className="font-bold">Aceite de Termos Obrigatório</Label>
+                      <Switch checked={values.terms_required || true} onCheckedChange={c => update({ terms_required: c })} />
+                    </div>
+                  </div>
+                )}
+              />
+            </AccordionContent>
+          </AccordionItem>
+
+          {/* 10. Manutenção */}
+          <AccordionItem value="global-manutencao" className="border-border bg-card rounded-[24px] overflow-hidden shadow-sm border">
+            <AccordionTrigger className="px-8 py-6 font-bold text-xl hover:no-underline hover:bg-accent/50 transition-all">
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 bg-amber-500/10 text-amber-600">
+                  <Hammer className="w-6 h-6" />
+                </div>
+                <div className="text-left">
+                  <p className="font-manrope font-black tracking-tight">Manutenção e Emergência</p>
+                  <p className="text-xs text-muted-foreground font-medium">Controles de infraestrutura e avisos de sistema.</p>
+                </div>
+              </div>
+            </AccordionTrigger>
+            <AccordionContent className="px-8 pb-8 pt-4">
+              <GlobalSectionForm
+                section="manutencao"
+                render={(values, update) => (
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="flex items-center justify-between p-4 bg-muted/30 rounded-2xl border border-border/50">
+                      <Label className="font-bold">Modo Manutenção Global</Label>
+                      <Switch checked={values.maintenance_mode || false} onCheckedChange={c => update({ maintenance_mode: c })} />
+                    </div>
+                    <div className="space-y-2">
+                      <Label className="font-bold">Mensagem de Aviso</Label>
+                      <Input value={values.maintenance_msg || ""} placeholder="Ex: Voltamos em breve..." onChange={e => update({ maintenance_msg: e.target.value })} />
+                    </div>
+                    <div className="flex items-center justify-between p-4 bg-muted/30 rounded-2xl border border-border/50">
+                      <Label className="font-bold">Bloquear Acesso Admin</Label>
+                      <Switch checked={values.lock_admin || false} onCheckedChange={c => update({ lock_admin: c })} />
+                    </div>
+                  </div>
+                )}
+              />
+            </AccordionContent>
+          </AccordionItem>
+
         </Accordion>
       </TabsContent>
 
