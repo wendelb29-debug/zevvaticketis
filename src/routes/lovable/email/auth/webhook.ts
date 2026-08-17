@@ -35,10 +35,10 @@ const handler = createAuthEmailHandler({
       render: (data) =>
         React.createElement(InviteEmail, {
           confirmationUrl: data.url,
-          // metadata can be passed via data.data if configured in Supabase
-          organizationName: (data.data as any)?.organization_name,
-          invitedBy: (data.data as any)?.invited_by,
-          role: (data.data as any)?.role,
+          // metadata can be passed via data.data if the SDK version supports it
+          organizationName: (data as any).data?.organization_name,
+          invitedBy: (data as any).data?.invited_by,
+          role: (data as any).data?.role,
         }),
     },
     magiclink: {
