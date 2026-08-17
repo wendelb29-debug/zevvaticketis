@@ -2,24 +2,30 @@ import { IssuedTicketsList } from "@/components/admin/eventos/IssuedTicketsList"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Ticket, Users, CheckCircle2, XCircle, BarChart3 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useUI } from "@/hooks/use-ui";
+import { getTranslations } from "@/lib/i18n-utils";
 
 interface Props {
   scope: "producer" | "platform-admin";
   tenantId?: string | undefined;
 }
 
-
 export function TicketManagementDashboard({ scope, tenantId }: Props) {
+  const { language } = useUI();
+  const t = getTranslations(language);
+  const nav = t.navigation;
   const isGlobal = scope === "platform-admin";
 
   return (
     <div className="space-y-8 animate-in fade-in duration-500">
       <div className="space-y-2">
         <h1 className="text-4xl font-manrope font-black text-foreground tracking-tighter uppercase">
-          {isGlobal ? "🎟️ Gestão Global de Ingressos" : "🎟️ Gestão de Ingressos"}
+          {isGlobal ? nav.globalTicketManagement : nav.ticketManagement}
         </h1>
         <p className="text-muted-foreground font-medium text-lg">
-          {isGlobal ? "Visão administrativa de todos os ingressos emitidos na plataforma Zevva." : "Gerencie os ingressos emitidos pela sua organização."}
+          {isGlobal 
+            ? (language === 'pt-BR' ? "Visão administrativa de todos os ingressos emitidos na plataforma Zevva." : "Administrative view of all tickets issued on the Zevva platform.") 
+            : (language === 'pt-BR' ? "Gerencie os ingressos emitidos pela sua organização." : "Manage tickets issued by your organization.")}
         </p>
       </div>
 
