@@ -74,6 +74,271 @@ export type Database = {
         }
         Relationships: []
       }
+      ad_advertisers: {
+        Row: {
+          company_name: string | null
+          created_at: string | null
+          email: string | null
+          id: string
+          logo_url: string | null
+          name: string
+          notes: string | null
+          organization_id: string
+          phone: string | null
+          status: string
+          tax_id: string | null
+          updated_at: string | null
+          website: string | null
+          whatsapp: string | null
+        }
+        Insert: {
+          company_name?: string | null
+          created_at?: string | null
+          email?: string | null
+          id?: string
+          logo_url?: string | null
+          name: string
+          notes?: string | null
+          organization_id: string
+          phone?: string | null
+          status?: string
+          tax_id?: string | null
+          updated_at?: string | null
+          website?: string | null
+          whatsapp?: string | null
+        }
+        Update: {
+          company_name?: string | null
+          created_at?: string | null
+          email?: string | null
+          id?: string
+          logo_url?: string | null
+          name?: string
+          notes?: string | null
+          organization_id?: string
+          phone?: string | null
+          status?: string
+          tax_id?: string | null
+          updated_at?: string | null
+          website?: string | null
+          whatsapp?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ad_advertisers_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "tenants"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      ad_campaigns: {
+        Row: {
+          advertiser_id: string
+          approved_at: string | null
+          approved_by: string | null
+          billing_model: string
+          budget_contracted: number | null
+          budget_paid: number | null
+          click_limit: number | null
+          created_at: string | null
+          created_by: string | null
+          end_at: string
+          frequency_cap: Json | null
+          id: string
+          impression_limit: number | null
+          internal_notes: string | null
+          name: string
+          organization_id: string
+          priority: number | null
+          rejection_reason: string | null
+          start_at: string
+          status: string
+          targeting: Json | null
+          timezone: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          advertiser_id: string
+          approved_at?: string | null
+          approved_by?: string | null
+          billing_model?: string
+          budget_contracted?: number | null
+          budget_paid?: number | null
+          click_limit?: number | null
+          created_at?: string | null
+          created_by?: string | null
+          end_at: string
+          frequency_cap?: Json | null
+          id?: string
+          impression_limit?: number | null
+          internal_notes?: string | null
+          name: string
+          organization_id: string
+          priority?: number | null
+          rejection_reason?: string | null
+          start_at: string
+          status?: string
+          targeting?: Json | null
+          timezone?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          advertiser_id?: string
+          approved_at?: string | null
+          approved_by?: string | null
+          billing_model?: string
+          budget_contracted?: number | null
+          budget_paid?: number | null
+          click_limit?: number | null
+          created_at?: string | null
+          created_by?: string | null
+          end_at?: string
+          frequency_cap?: Json | null
+          id?: string
+          impression_limit?: number | null
+          internal_notes?: string | null
+          name?: string
+          organization_id?: string
+          priority?: number | null
+          rejection_reason?: string | null
+          start_at?: string
+          status?: string
+          targeting?: Json | null
+          timezone?: string | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ad_campaigns_advertiser_id_fkey"
+            columns: ["advertiser_id"]
+            isOneToOne: false
+            referencedRelation: "ad_advertisers"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "ad_campaigns_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "tenants"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      ad_creatives: {
+        Row: {
+          alt_text: string | null
+          campaign_id: string
+          created_at: string | null
+          cta_label: string | null
+          description: string | null
+          destination_url: string
+          id: string
+          image_desktop_url: string
+          image_mobile_url: string | null
+          status: string | null
+          title: string
+          updated_at: string | null
+          utm_params: Json | null
+          version: number | null
+        }
+        Insert: {
+          alt_text?: string | null
+          campaign_id: string
+          created_at?: string | null
+          cta_label?: string | null
+          description?: string | null
+          destination_url: string
+          id?: string
+          image_desktop_url: string
+          image_mobile_url?: string | null
+          status?: string | null
+          title: string
+          updated_at?: string | null
+          utm_params?: Json | null
+          version?: number | null
+        }
+        Update: {
+          alt_text?: string | null
+          campaign_id?: string
+          created_at?: string | null
+          cta_label?: string | null
+          description?: string | null
+          destination_url?: string
+          id?: string
+          image_desktop_url?: string
+          image_mobile_url?: string | null
+          status?: string | null
+          title?: string
+          updated_at?: string | null
+          utm_params?: Json | null
+          version?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ad_creatives_campaign_id_fkey"
+            columns: ["campaign_id"]
+            isOneToOne: false
+            referencedRelation: "ad_campaigns"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      ad_metrics: {
+        Row: {
+          campaign_id: string
+          creative_id: string
+          device_hash: string | null
+          event_type: string
+          id: string
+          metadata: Json | null
+          occurred_at: string | null
+          organization_id: string
+          page_path: string | null
+          session_id: string | null
+        }
+        Insert: {
+          campaign_id: string
+          creative_id: string
+          device_hash?: string | null
+          event_type: string
+          id?: string
+          metadata?: Json | null
+          occurred_at?: string | null
+          organization_id: string
+          page_path?: string | null
+          session_id?: string | null
+        }
+        Update: {
+          campaign_id?: string
+          creative_id?: string
+          device_hash?: string | null
+          event_type?: string
+          id?: string
+          metadata?: Json | null
+          occurred_at?: string | null
+          organization_id?: string
+          page_path?: string | null
+          session_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ad_metrics_campaign_id_fkey"
+            columns: ["campaign_id"]
+            isOneToOne: false
+            referencedRelation: "ad_campaigns"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "ad_metrics_creative_id_fkey"
+            columns: ["creative_id"]
+            isOneToOne: false
+            referencedRelation: "ad_creatives"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       ads: {
         Row: {
           ad_type: string | null

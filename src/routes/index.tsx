@@ -19,6 +19,11 @@ import {
 import { Input } from "@/components/ui/input";
 import { Navbar } from "@/components/layout/Navbar";
 import { FeaturedCarousel } from "@/components/home/FeaturedCarousel";
+import { FloatingSponsoredAd } from "@/components/home/FloatingSponsoredAd";
+import { getEligibleAds } from "@/lib/ads.functions";
+import { useSuspenseQuery } from "@tanstack/react-query";
+
+
 // CoverflowCarousel removido em favor do FeaturedCarousel moderno
 import { EventCard } from "@/components/home/EventCard";
 import { CategoryGrid } from "@/components/home/CategoryGrid";
@@ -605,6 +610,22 @@ function HomePage() {
       </main>
 
       <Footer />
+      
+      {/* Sponsored Ads Engine */}
+      <AdsManager />
     </div>
   );
 }
+
+function AdsManager() {
+  const fetchAds = useServerFn(getEligibleAds);
+  const { data: ads } = useSuspenseQuery({
+    queryKey: ['eligible-ads'],
+    queryFn: () => fetchAds({ data: { limit: 1 } })
+  });
+
+  if (!ads || ads.length === 0) return null;
+
+  return <FloatingSponsoredAd ad={ads[0] as any} />;
+}
+
