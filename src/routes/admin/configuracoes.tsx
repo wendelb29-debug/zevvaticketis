@@ -255,11 +255,11 @@ function AuditoriaTab() {
 
 function SettingsPage({ session, activeTenantId }: { session: any, activeTenantId: string | null }) {
   const search = useSearch({ from: "/admin/configuracoes" }) as any;
-  const [activeTab, setActiveTab] = useState(search?.tab === "team" ? "ADMIN" : "atendimento");
+  const [activeTab, setActiveTab] = useState(search?.tab || "atendimento");
 
   useEffect(() => {
-    if (search?.tab === "team") {
-      setActiveTab("ADMIN");
+    if (search?.tab) {
+      setActiveTab(search.tab);
     }
   }, [search?.tab]);
   const [isDeptModalOpen, setIsDeptModalOpen] = useState(false);
