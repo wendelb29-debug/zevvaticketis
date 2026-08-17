@@ -38,10 +38,11 @@ import { cn } from "@/lib/utils";
 interface IssuedTicketsListProps {
   eventId: string;
   scope?: "producer" | "platform-admin";
-  tenantId?: string;
+  tenantId?: string | undefined;
 }
 
 export function IssuedTicketsList({ eventId, scope = "producer", tenantId }: IssuedTicketsListProps) {
+
 
   const [searchTerm, setSearchTerm] = useState("");
 
