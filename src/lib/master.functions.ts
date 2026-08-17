@@ -1,8 +1,20 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
+import { supabase } from "@/integrations/supabase/client";
+
+async function requirePlatformAdmin() {
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) throw new Response('Não autenticado', { status: 401 });
+  
+  const { data: isAdmin, error } = await supabase.rpc('check_is_platform_admin', { _user_id: user.id });
+  if (error || !isAdmin) throw new Response('Acesso negado', { status: 403 });
+  
+  return user.id;
+}
 
 const filterSchema = z.object({
+
   search: z.string().optional(),
   status: z.string().optional(),
   plan: z.string().optional(),
@@ -17,6 +29,8 @@ const periodSchema = z.enum(['hoje', '7d', '30d', 'mes_atual', 'mes_anterior', '
 export const getGlobalStats = createServerFn({ method: "GET" })
   .validator((data) => z.object({ period: periodSchema.optional().default('30d') }).parse(data))
   .handler(async ({ data: input }) => {
+    await requirePlatformAdmin();
+
     // 1. Verify Platform Admin (Security validation is handled by route but we check here too)
     // In a real app we might use a middleware like requirePlatformAdmin
     
@@ -92,6 +106,8 @@ export const getGlobalStats = createServerFn({ method: "GET" })
 export const listTenantsPaginated = createServerFn({ method: "GET" })
   .validator((data) => filterSchema.parse(data))
   .handler(async ({ data: input }) => {
+    await requirePlatformAdmin();
+
     const { search, status, plan, page, pageSize, orderBy, orderDir } = input;
     const from = (page - 1) * pageSize;
     const to = from + pageSize - 1;
