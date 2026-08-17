@@ -983,6 +983,7 @@ export type Database = {
           start_date: string | null
           status: string | null
           tenant_id: string | null
+          ticket_design_config: Json | null
           title: string
         }
         Insert: {
@@ -1006,6 +1007,7 @@ export type Database = {
           start_date?: string | null
           status?: string | null
           tenant_id?: string | null
+          ticket_design_config?: Json | null
           title: string
         }
         Update: {
@@ -1029,6 +1031,7 @@ export type Database = {
           start_date?: string | null
           status?: string | null
           tenant_id?: string | null
+          ticket_design_config?: Json | null
           title?: string
         }
         Relationships: [
@@ -1882,9 +1885,12 @@ export type Database = {
       tickets: {
         Row: {
           attendance_source: string | null
+          attendee_email: string | null
+          attendee_name: string | null
           checked_in_at: string | null
           created_at: string | null
           description: string | null
+          design_config: Json | null
           event_id: string
           id: string
           name: string
@@ -1899,12 +1905,16 @@ export type Database = {
           status: string | null
           tenant_id: string | null
           ticket_type_id: string | null
+          token_hash: string | null
         }
         Insert: {
           attendance_source?: string | null
+          attendee_email?: string | null
+          attendee_name?: string | null
           checked_in_at?: string | null
           created_at?: string | null
           description?: string | null
+          design_config?: Json | null
           event_id: string
           id?: string
           name: string
@@ -1919,12 +1929,16 @@ export type Database = {
           status?: string | null
           tenant_id?: string | null
           ticket_type_id?: string | null
+          token_hash?: string | null
         }
         Update: {
           attendance_source?: string | null
+          attendee_email?: string | null
+          attendee_name?: string | null
           checked_in_at?: string | null
           created_at?: string | null
           description?: string | null
+          design_config?: Json | null
           event_id?: string
           id?: string
           name?: string
@@ -1939,6 +1953,7 @@ export type Database = {
           status?: string | null
           tenant_id?: string | null
           ticket_type_id?: string | null
+          token_hash?: string | null
         }
         Relationships: [
           {
@@ -2824,6 +2839,15 @@ export type Database = {
         Returns: undefined
       }
       normalize_phone: { Args: { p_phone: string }; Returns: string }
+      process_ticket_checkin: {
+        Args: {
+          _event_id: string
+          _operator_id: string
+          _tenant_id: string
+          _token_hash: string
+        }
+        Returns: Json
+      }
       promote_to_platform_admin: {
         Args: { target_email: string }
         Returns: Json
