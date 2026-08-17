@@ -1439,43 +1439,44 @@ function SettingsPage({ session, activeTenantId }: { session: any, activeTenantI
               </div>
             </AccordionTrigger>
             <AccordionContent className="px-8 pb-8 pt-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div className="space-y-6">
-                  <div className="space-y-2">
-                    <Label className="text-xs font-black uppercase tracking-widest">Taxa Percentual Padrão (%)</Label>
-                    <Input type="number" defaultValue="10" className="rounded-xl" />
+              <GlobalSectionForm
+                section="financeiro"
+                render={(values, update) => (
+                  <div className="space-y-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div className="space-y-2">
+                        <Label className="text-xs font-black uppercase tracking-widest">Taxa Percentual Padrão (%)</Label>
+                        <Input type="number" value={values.fee_percent || 10} onChange={e => update({ fee_percent: parseFloat(e.target.value) })} className="rounded-xl" />
+                      </div>
+                      <div className="space-y-2">
+                        <Label className="text-xs font-black uppercase tracking-widest">Taxa Fixa Padrão (R$)</Label>
+                        <Input type="number" value={values.fee_fixed || 2.50} onChange={e => update({ fee_fixed: parseFloat(e.target.value) })} className="rounded-xl" />
+                      </div>
+                      <div className="space-y-2">
+                        <Label className="text-xs font-black uppercase tracking-widest">Prazo de Repasse (Dias)</Label>
+                        <Input type="number" value={values.repass_days || 2} onChange={e => update({ repass_days: parseInt(e.target.value) })} className="rounded-xl" />
+                      </div>
+                      <div className="space-y-2">
+                        <Label className="text-xs font-black uppercase tracking-widest">Valor Mínimo Saque (R$)</Label>
+                        <Input type="number" value={values.min_withdrawal || 50.00} onChange={e => update({ min_withdrawal: parseFloat(e.target.value) })} className="rounded-xl" />
+                      </div>
+                    </div>
+                    
+                    <div className="p-6 bg-amber-500/5 rounded-2xl border border-amber-500/10 flex gap-4">
+                      <AlertTriangle className="w-6 h-6 text-amber-500 shrink-0" />
+                      <div>
+                        <p className="text-sm font-bold text-amber-700">Atenção Crítica</p>
+                        <p className="text-xs text-amber-600 font-medium leading-relaxed">
+                          Alterações financeiras globais não afetam pedidos retroativamente. 
+                          Uma auditoria será gerada para cada mudança.
+                        </p>
+                      </div>
+                    </div>
                   </div>
-                  <div className="space-y-2">
-                    <Label className="text-xs font-black uppercase tracking-widest">Taxa Fixa Padrão (R$)</Label>
-                    <Input type="number" defaultValue="2.50" className="rounded-xl" />
-                  </div>
-                </div>
-                <div className="space-y-6">
-                  <div className="space-y-2">
-                    <Label className="text-xs font-black uppercase tracking-widest">Prazo de Repasse (Dias)</Label>
-                    <Input type="number" defaultValue="2" className="rounded-xl" />
-                  </div>
-                  <div className="space-y-2">
-                    <Label className="text-xs font-black uppercase tracking-widest">Valor Mínimo Saque (R$)</Label>
-                    <Input type="number" defaultValue="50.00" className="rounded-xl" />
-                  </div>
-                </div>
-              </div>
-              <div className="mt-8 p-6 bg-amber-500/5 rounded-2xl border border-amber-500/10 flex gap-4">
-                <AlertTriangle className="w-6 h-6 text-amber-500 shrink-0" />
-                <div>
-                  <p className="text-sm font-bold text-amber-700">Atenção Crítica</p>
-                  <p className="text-xs text-amber-600 font-medium leading-relaxed">
-                    Alterações financeiras globais exigem justificativa e não afetam pedidos retroativamente. 
-                    Uma auditoria será gerada para cada mudança.
-                  </p>
-                </div>
-              </div>
-              <div className="mt-8 pt-8 border-t border-border/50 flex flex-col sm:flex-row gap-4">
-                <Textarea placeholder="Justificativa obrigatória para a alteração..." className="rounded-xl" />
-                <Button className="bg-navy hover:bg-navy/90 text-white rounded-xl font-black px-8 self-end">Confirmar e Aplicar</Button>
-              </div>
+                )}
+              />
             </AccordionContent>
+
           </AccordionItem>
 
           {/* 3. Segurança */}
