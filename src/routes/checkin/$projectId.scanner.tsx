@@ -126,11 +126,9 @@ function ScannerPage() {
   }, [eventId, projectId, navigate]);
 
   const startScanner = async () => {
-    if (!canActivate) {
-      toast.error("Acesso negado: Somente gestores podem ativar o scanner.");
-      return;
-    }
-
+    // Phase 1: Removing role restriction from start button for operational speed. 
+    // The RPC handle the final permission check before checkin logic.
+    
     setStatus('starting');
     setErrorMessage(null);
 
@@ -138,7 +136,11 @@ function ScannerPage() {
       const html5QrCode = new Html5Qrcode(scannerContainerId);
       html5QrCodeRef.current = html5QrCode;
 
-      const config = { fps: 10, qrbox: { width: 250, height: 250 } };
+      const config = { 
+        fps: 20, // Increased for snappier scanning
+        qrbox: { width: 250, height: 250 },
+        aspectRatio: 1.0
+      };
 
       await html5QrCode.start(
         { facingMode: "environment" },
@@ -270,6 +272,7 @@ function ScannerPage() {
 
   const resumeScanning = () => {
     setScannedResult(null);
+    setErrorMessage(null);
     setStatus('scanning');
     if (html5QrCodeRef.current) {
       html5QrCodeRef.current.resume();
@@ -377,9 +380,7 @@ function ScannerPage() {
                   >
                     <Zap className="w-4 h-4 mr-2" /> Ativar Scanner
                   </Button>
-                  {!canActivate && (
-                    <p className="text-[9px] text-red-400 font-bold uppercase">Apenas gestores</p>
-                  )}
+                  <p className="text-[9px] text-primary/40 font-bold uppercase">Scanner seguro Zevva</p>
               </div>
            )}
 
