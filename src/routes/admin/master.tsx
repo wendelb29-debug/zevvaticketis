@@ -117,7 +117,7 @@ function MasterAdminPage() {
           </Button>
           <Button 
             className="flex-1 sm:flex-none bg-navy hover:bg-navy/90 text-primary-foreground rounded-xl font-black px-8 shadow-lg shadow-navy/20 uppercase tracking-widest text-[10px] h-10 transition-all active:scale-95"
-            onClick={() => navigate({ to: "/admin/configuracoes" as any, search: { tab: "global" } })}
+            onClick={() => navigate({ to: "/admin/configuracoes" as any, search: { tab: "global" } as any })}
           >
             Configurações Globais
           </Button>
