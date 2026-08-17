@@ -103,7 +103,7 @@ function HealthItem({ label, status }: { label: string; status: string }) {
   return (
     <div className="flex justify-between items-center text-sm">
       <span className="font-bold text-muted-foreground/80">{label}</span>
-      <Badge variant="ghost" className="bg-emerald-500/5 text-emerald-600 font-bold border-none text-[10px] uppercase">
+      <Badge variant="outline" className="bg-emerald-500/5 text-emerald-600 font-bold border-none text-[10px] uppercase">
         {status}
       </Badge>
     </div>
