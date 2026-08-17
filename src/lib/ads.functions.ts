@@ -56,15 +56,11 @@ export const getEligibleAds = createServerFn({ method: "GET" })
 
     // Current time for filter
     const now = new Date().toISOString();
-    
-    // Select active campaigns
-    const { data: campaigns, error: campaignError } = await supabase
-      .from("ad_campaigns")
-      .select(`
-        *,
-        ad_creatives (*)
-      `)
-      .eq("status", "ativa")
+
+    // Select active campaigns from the public-safe view (no financial data)
+    const { data: campaigns, error: campaignError } = await (supabase as any)
+      .from("ad_campaigns_public")
+      .select("*")
       .lte("start_at", now)
       .gte("end_at", now)
       .order("priority", { ascending: false });
@@ -72,9 +68,20 @@ export const getEligibleAds = createServerFn({ method: "GET" })
     if (campaignError) throw campaignError;
     if (!campaigns || campaigns.length === 0) return [];
 
-    // Simple priority-based rotation for now
-    return campaigns.slice(0, data.limit).map(c => ({
-      ...c,
-      creative: c.ad_creatives?.[0] || null
-    })).filter(c => c.creative !== null);
+    const selected = campaigns.slice(0, data.limit);
+
+    const { data: creatives, error: creativeError } = await supabase
+      .from("ad_creatives")
+      .select("*")
+      .in("campaign_id", selected.map((c: any) => c.id));
+
+    if (creativeError) throw creativeError;
+
+    return selected
+      .map((c: any) => ({
+        ...c,
+        creative: creatives?.find((cr: any) => cr.campaign_id === c.id) || null
+      }))
+      .filter((c: any) => c.creative !== null);
   });
+
