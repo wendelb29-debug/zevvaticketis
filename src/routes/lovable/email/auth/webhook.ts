@@ -97,7 +97,7 @@ const orderTicketsHandler = async (request: Request) => {
         'Authorization': `Bearer ${process.env['LOVABLE_API_KEY']}`,
       },
       body: JSON.stringify({
-        from: `${SITE_NAME} <noreply@${FROM_DOMAIN}>`,
+        from: `"${SITE_NAME}" <noreply@${FROM_DOMAIN}>`,
         to: payload.email,
         subject: `🎟️ Ingressos Disponíveis: ${payload.event_name || 'Seus ingressos'} chegaram!`,
         html,
