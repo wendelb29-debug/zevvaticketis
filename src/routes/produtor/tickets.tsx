@@ -3,7 +3,9 @@ import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Loader2 } from "lucide-react";
+import { Loader2, Send } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
 import { useTenants } from "@/hooks/use-tenants";
 import { cn } from "@/lib/utils";
 
@@ -59,6 +61,7 @@ function ProducerTicketsPage() {
               <TableHead className="text-[10px] font-black uppercase">Tipo</TableHead>
               <TableHead className="text-[10px] font-black uppercase">Status</TableHead>
               <TableHead className="text-[10px] font-black uppercase">Data</TableHead>
+              <TableHead className="text-[10px] font-black uppercase text-center">Ações</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -81,6 +84,37 @@ function ProducerTicketsPage() {
                     </span>
                 </TableCell>
                 <TableCell>{new Date(ticket.created_at || "").toLocaleDateString("pt-BR")}</TableCell>
+                <TableCell className="text-center">
+                  <Button
+                    size="sm"
+                    variant="ghost"
+                    className="h-8 w-8 p-0 text-muted-foreground hover:text-primary"
+                    title="Reenviar por E-mail"
+                    onClick={() => {
+                      toast.promise(
+                        fetch('/lovable/email/auth/webhook?type=order_tickets', {
+                          method: 'POST',
+                          headers: { 'Content-Type': 'application/json' },
+                          body: JSON.stringify({
+                            email: (ticket.profiles as any)?.email,
+                            customer_name: (ticket.profiles as any)?.nome_completo,
+                            event_name: (ticket.events as any)?.title,
+                            order_id: ticket.id.substring(0, 8).toUpperCase(),
+                            ticket_count: 1,
+                            url: `${window.location.origin}/meus-ingressos`
+                          })
+                        }),
+                        {
+                          loading: 'Reenviando e-mail...',
+                          success: 'Ingressos reenviados com sucesso!',
+                          error: 'Falha no reenvio.'
+                        }
+                      );
+                    }}
+                  >
+                    <Send className="h-4 w-4" />
+                  </Button>
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
