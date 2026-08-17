@@ -10,7 +10,7 @@ const globalSettingsUpdateSchema = z.object({
 
 export const updateGlobalPlatformSettings = createServerFn({ method: "POST" })
   .validator((data: unknown) => {
-     return globalSettingsUpdateSchema.parse(data);
+    return globalSettingsUpdateSchema.parse(data);
   })
   .handler(async ({ data, context }) => {
     // 1. Verify Authentication & Platform Admin Status
