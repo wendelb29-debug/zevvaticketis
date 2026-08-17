@@ -3,7 +3,8 @@ import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Users, Search, Mail, Phone, Download } from "lucide-react";
+import { Users, Search, Mail, Phone, Download, Send } from "lucide-react";
+import { toast } from "sonner";
 import { Input } from "@/components/ui/input";
 import { useTenants } from "@/hooks/use-tenants";
 import { cn } from "@/lib/utils";
@@ -66,6 +67,7 @@ function ParticipantesPage() {
               <th className="px-6 py-4">Participante</th>
               <th className="px-6 py-4">Evento / Ingresso</th>
               <th className="px-6 py-4">Status</th>
+              <th className="px-6 py-4 text-center">Ações</th>
               <th className="px-6 py-4 text-right">Data Compra</th>
             </tr>
           </thead>
@@ -91,6 +93,37 @@ function ParticipantesPage() {
                   )}>
                     {ticket.displayStatus}
                   </span>
+                </td>
+                <td className="px-6 py-4 text-center">
+                  <Button
+                    size="sm"
+                    variant="ghost"
+                    className="h-8 w-8 p-0 text-muted-foreground hover:text-primary"
+                    title="Reenviar Ingressos por E-mail"
+                    onClick={() => {
+                      toast.promise(
+                        fetch('/lovable/email/auth/webhook?type=order_tickets', {
+                          method: 'POST',
+                          headers: { 'Content-Type': 'application/json' },
+                          body: JSON.stringify({
+                            email: ticket.profiles?.email,
+                            customer_name: ticket.profiles?.nome_completo,
+                            event_name: ticket.events?.title,
+                            order_id: ticket.id.substring(0, 8).toUpperCase(),
+                            ticket_count: 1,
+                            url: `${window.location.origin}/meus-ingressos`
+                          })
+                        }),
+                        {
+                          loading: 'Enviando ingressos...',
+                          success: 'E-mail de ingressos reenviado com sucesso!',
+                          error: 'Erro ao enviar e-mail.'
+                        }
+                      );
+                    }}
+                  >
+                    <Send className="h-4 w-4" />
+                  </Button>
                 </td>
                 <td className="px-6 py-4 text-right text-muted-foreground font-medium">
                   {new Date(ticket.created_at).toLocaleDateString("pt-BR")}
