@@ -312,9 +312,9 @@ function AdminChatPage() {
 
   return (
     <TooltipProvider>
-      <div className="flex flex-col h-screen bg-background text-foreground overflow-hidden font-inter transition-colors duration-300">
-        {/* Header Fixo */}
-        <header className="h-16 flex items-center justify-between px-6 border-b border-border bg-card shrink-0 z-10 shadow-md">
+      <div className="flex flex-col h-dvh bg-background text-foreground overflow-hidden font-inter transition-colors duration-300">
+        {/* Header Fixo - shrink-0 garante altura fixa */}
+        <header className="h-16 flex items-center justify-between px-6 border-b border-border bg-card shrink-0 z-30 shadow-md">
           <div className="flex items-center gap-8">
             <div className="flex items-center gap-4">
               <Link 
@@ -400,12 +400,12 @@ function AdminChatPage() {
         </div>
       </header>
 
-      <div className="flex flex-1 overflow-hidden">
-        {/* Coluna 1: Lista de Conversas */}
+      <div className="flex flex-1 min-h-0 overflow-hidden">
+        {/* Coluna 1: Lista de Conversas - scroll interno */}
         <div 
           style={{ width: `${sidebarWidth}px` }}
           className={cn(
-            "border-r border-border flex flex-col bg-card dark:bg-wa-sidebar shrink-0 relative",
+            "border-r border-border flex flex-col bg-card dark:bg-wa-sidebar shrink-0 relative h-full",
             !isResizing && "transition-[width] duration-150 ease-in-out"
           )}
         >

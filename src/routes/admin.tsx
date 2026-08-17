@@ -219,7 +219,7 @@ function AdminLayout() {
     return (
       <TooltipProvider>
         <div className={cn(
-          "flex h-dvh min-h-0 flex-col bg-card border-r border-border transition-all duration-300 ease-in-out",
+          "flex h-dvh min-h-0 flex-col bg-card border-r border-border transition-all duration-300 ease-in-out sticky top-0 left-0",
           effectiveCollapsed ? "w-20" : "w-72"
         )}>
           {/* Cabeçalho: shrink-0 */}
@@ -466,12 +466,13 @@ function AdminLayout() {
 
   return (
     <div className="flex min-h-dvh bg-background font-inter overflow-x-hidden relative">
-      {/* Sidebar Desktop */}
+      {/* Sidebar Desktop: fixo na esquerda enquanto a página rola */}
       <aside className="sticky top-0 h-dvh shrink-0 z-40 hidden md:block">
         <SidebarContent />
       </aside>
       
       <main className="min-w-0 flex-1 flex flex-col">
+        {/* Header fixo no topo da área de conteúdo */}
         <header className="h-16 border-b border-border bg-card/80 backdrop-blur-md flex items-center justify-between px-4 md:px-8 sticky top-0 z-30 shrink-0">
           <div className="flex items-center gap-4">
             {/* Mobile Navigation */}
@@ -500,6 +501,7 @@ function AdminLayout() {
           </div>
         </header>
 
+        {/* Área de conteúdo: rola naturalmente com a página */}
         <div className={cn(
           "flex-1 transition-all duration-300",
           isTransitioning ? "opacity-0 translate-y-2" : "opacity-100 translate-y-0"
