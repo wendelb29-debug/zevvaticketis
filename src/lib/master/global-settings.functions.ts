@@ -8,9 +8,7 @@ const globalSettingsUpdateSchema = z.object({
 });
 
 export const updateGlobalPlatformSettings = createServerFn({ method: "POST" })
-  .validator((data: unknown) => {
-    return globalSettingsUpdateSchema.parse(data);
-  })
+  .validator((data: unknown) => globalSettingsUpdateSchema.parse(data))
   .handler(async ({ data, context }) => {
     const { auditLog } = await import("@/lib/security.server");
     const supabase = (context as any).supabase;
