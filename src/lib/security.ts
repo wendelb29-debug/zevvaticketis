@@ -18,7 +18,18 @@ export type TenantAction =
   | 'acessar_financeiro'
   | 'gerenciar_marketing'
   | 'operar_checkin'
-  | 'administrar_checkin';
+  | 'administrar_checkin'
+  | 'master.view'
+  | 'master.manage_projects'
+  | 'master.change_plan'
+  | 'master.manage_limits'
+  | 'master.suspend_project'
+  | 'master.view_financial'
+  | 'master.view_security'
+  | 'master.view_audit'
+  | 'master.support_access'
+  | 'master.manage_global_settings';
+
 
 /**
  * Security validation result.
@@ -33,7 +44,7 @@ export interface SecurityValidation {
 /**
  * Mapping of actions to allowed roles.
  */
-const ACTION_PERMISSIONS: Record<TenantAction, TenantRole[]> = {
+const ACTION_PERMISSIONS: Partial<Record<TenantAction, TenantRole[]>> = {
   criar_evento: ['OWNER', 'ADMIN', 'MANAGER'],
   convidar_equipe: ['OWNER', 'ADMIN'],
   gerenciar_participantes: ['OWNER', 'ADMIN', 'MANAGER', 'CHECKIN_MANAGER'],
@@ -42,6 +53,7 @@ const ACTION_PERMISSIONS: Record<TenantAction, TenantRole[]> = {
   operar_checkin: ['OWNER', 'ADMIN', 'CHECKIN_MANAGER', 'CHECKIN_SUPERVISOR', 'CHECKIN_OPERATOR'],
   administrar_checkin: ['OWNER', 'ADMIN', 'CHECKIN_MANAGER', 'CHECKIN_SUPERVISOR'],
 };
+
 
 /**
  * Validates if a user has access to a tenant and permission to perform an action.
@@ -88,7 +100,7 @@ export async function validateUserTenantAccess(
   if (Array.isArray(action)) {
     requiredRoles = action;
   } else if (action) {
-    requiredRoles = ACTION_PERMISSIONS[action];
+    requiredRoles = ACTION_PERMISSIONS[action] || [];
   } else {
     // Default to at least being a member
     return { authorized: true, role: userRole, isPlatformAdmin: false };
