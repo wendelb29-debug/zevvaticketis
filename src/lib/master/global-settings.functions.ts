@@ -50,6 +50,7 @@ export const updateGlobalPlatformSettings = createServerFn({ method: "POST" })
 
     if (updateError) throw updateError;
 
+    // Fixed: Audit log now matches the signature in security.server.ts (single object argument)
     await auditLog({
       action: "PLATFORM_SETTINGS_UPDATE",
       entity_type: "platform",
