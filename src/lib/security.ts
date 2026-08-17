@@ -100,7 +100,7 @@ export async function validateUserTenantAccess(
   if (Array.isArray(action)) {
     requiredRoles = action;
   } else if (action) {
-    requiredRoles = ACTION_PERMISSIONS[action];
+    requiredRoles = ACTION_PERMISSIONS[action] || [];
   } else {
     // Default to at least being a member
     return { authorized: true, role: userRole, isPlatformAdmin: false };
