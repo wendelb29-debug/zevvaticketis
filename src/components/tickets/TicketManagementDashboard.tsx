@@ -50,8 +50,9 @@ export function TicketManagementDashboard({ scope, tenantId }: Props) {
           <CardDescription>Filtre e gerencie ingressos do {isGlobal ? "sistema" : "seu tenant"}.</CardDescription>
         </CardHeader>
         <CardContent className="px-8 py-8">
-          <IssuedTicketsList eventId="" />
+          <IssuedTicketsList eventId="" scope={scope} tenantId={tenantId} />
         </CardContent>
+
       </Card>
     </div>
   );

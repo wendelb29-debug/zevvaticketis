@@ -37,23 +37,34 @@ import { cn } from "@/lib/utils";
 
 interface IssuedTicketsListProps {
   eventId: string;
+  scope?: "producer" | "platform-admin";
+  tenantId?: string;
 }
 
-export function IssuedTicketsList({ eventId }: IssuedTicketsListProps) {
+export function IssuedTicketsList({ eventId, scope = "producer", tenantId }: IssuedTicketsListProps) {
+
   const [searchTerm, setSearchTerm] = useState("");
 
   const { data: tickets, isLoading } = useQuery({
-    queryKey: ["issued-tickets", eventId || 'all'],
+    queryKey: ["issued-tickets", eventId || 'all', scope, tenantId],
+
     queryFn: async () => {
       let query = supabase
         .from("tickets")
         .select(`
-          *
+          *,
+          events (
+            title,
+            tenant_id
+          )
         `);
       
       if (eventId) {
         query = query.eq("event_id", eventId);
+      } else if (scope === "producer" && tenantId) {
+        query = query.eq("tenant_id", tenantId);
       }
+
       
       const { data, error } = await query.order("created_at", { ascending: false });
       
@@ -104,16 +115,23 @@ export function IssuedTicketsList({ eventId }: IssuedTicketsListProps) {
           <TableHeader>
             <TableRow className="hover:bg-transparent border-border">
               <TableHead className="h-14 font-black text-[10px] uppercase tracking-widest text-muted-foreground pl-8">Participante</TableHead>
+              {scope === "platform-admin" && (
+                <TableHead className="h-14 font-black text-[10px] uppercase tracking-widest text-muted-foreground">Org / Evento</TableHead>
+              )}
+              {scope === "producer" && !eventId && (
+                <TableHead className="h-14 font-black text-[10px] uppercase tracking-widest text-muted-foreground">Evento</TableHead>
+              )}
               <TableHead className="h-14 font-black text-[10px] uppercase tracking-widest text-muted-foreground">Ingresso</TableHead>
               <TableHead className="h-14 font-black text-[10px] uppercase tracking-widest text-muted-foreground text-center">Status</TableHead>
               <TableHead className="h-14 font-black text-[10px] uppercase tracking-widest text-muted-foreground">Check-in</TableHead>
               <TableHead className="h-14 font-black text-[10px] uppercase tracking-widest text-muted-foreground text-right pr-8">Ações</TableHead>
+
             </TableRow>
           </TableHeader>
           <TableBody>
             {filteredTickets?.map((ticket) => (
               <TableRow key={ticket.id} className="hover:bg-accent/5 border-border">
-                <TableCell className="py-4 pl-8">
+                <TableCell>
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 rounded-xl bg-accent flex items-center justify-center text-brand font-black text-sm border border-brand/5">
                       {ticket.attendee_name?.charAt(0) || "P"}
@@ -126,7 +144,18 @@ export function IssuedTicketsList({ eventId }: IssuedTicketsListProps) {
                     </div>
                   </div>
                 </TableCell>
+                {(scope === "platform-admin" || (scope === "producer" && !eventId)) && (
+                  <TableCell>
+                    <p className="font-bold text-foreground leading-none mb-1">{(ticket.events as any)?.title}</p>
+                    {scope === "platform-admin" && (
+                      <p className="text-[9px] font-black text-muted-foreground uppercase tracking-widest">
+                        Tenant ID: {ticket.tenant_id?.substring(0, 8)}...
+                      </p>
+                    )}
+                  </TableCell>
+                )}
                 <TableCell>
+
                   <div>
                     <p className="font-bold text-foreground leading-none mb-1">{ticket.name || "Ingresso"}</p>
                     <p className="text-[10px] font-mono text-muted-foreground uppercase">{ticket.token_hash?.substring(0, 16)}...</p>
