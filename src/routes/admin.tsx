@@ -13,6 +13,7 @@ import {
   Users, 
   CreditCard, 
   Settings,
+  MailWarning,
   ChevronLeft,
   ChevronRight,
   ChevronDown,
@@ -188,6 +189,7 @@ function AdminLayout() {
       children: [
         { label: nav['dashboard'] || "Dashboard", href: "/admin/email-management" },
         { label: nav['templates'] || "Templates", href: "/admin/email-templates" },
+        { label: "Templates de Autenticação", href: "/admin/emails/templates" },
         { label: nav['gmailInbox'] || "Gmail Inbox", href: "/admin/emails" },
       ]
     },
