@@ -193,7 +193,7 @@ function ScannerPage() {
     try {
       // Use the secure RPC for atomic validation and check-in
       const { data, error } = await supabase.rpc('process_ticket_checkin', {
-        _token_hash: tokenHash,
+        _raw_token: tokenHash,
         _event_id: eventId,
         _operator_id: operator.id,
         _tenant_id: event?.tenant_id || projectId
