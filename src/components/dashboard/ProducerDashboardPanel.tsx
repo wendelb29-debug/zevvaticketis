@@ -131,7 +131,7 @@ export function ProducerDashboardPanel() {
         <div className="flex gap-2">
 
           <Button asChild variant="outline" className="border-navy text-foreground gap-2 px-6 rounded-xl font-bold">
-            <Link to="/produtor/tickets">
+            <Link to={`/produtor/${activeTenant?.id}/tickets` as any}>
               <Ticket className="w-5 h-5" /> Ver Ingressos
             </Link>
           </Button>

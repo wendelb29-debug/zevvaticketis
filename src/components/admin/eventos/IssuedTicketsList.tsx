@@ -43,15 +43,19 @@ export function IssuedTicketsList({ eventId }: IssuedTicketsListProps) {
   const [searchTerm, setSearchTerm] = useState("");
 
   const { data: tickets, isLoading } = useQuery({
-    queryKey: ["issued-tickets", eventId],
+    queryKey: ["issued-tickets", eventId || 'all'],
     queryFn: async () => {
-      const { data, error } = await supabase
+      let query = supabase
         .from("tickets")
         .select(`
           *
-        `)
-        .eq("event_id", eventId)
-        .order("created_at", { ascending: false });
+        `);
+      
+      if (eventId) {
+        query = query.eq("event_id", eventId);
+      }
+      
+      const { data, error } = await query.order("created_at", { ascending: false });
       
       if (error) throw error;
       return data;

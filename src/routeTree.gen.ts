@@ -87,6 +87,7 @@ import { Route as EventosIdCheckoutRouteImport } from './routes/eventos/$id.chec
 import { Route as EventosCategoriaSlugRouteImport } from './routes/eventos/categoria/$slug'
 import { Route as OauthGoogleReturnRouteImport } from './routes/oauth/google/return'
 import { Route as ProdutorIdDashboardRouteImport } from './routes/produtor/$id.dashboard'
+import { Route as ProdutorIdTicketsRouteImport } from './routes/produtor/$id.tickets'
 import { Route as AdminContatosIdIndexRouteImport } from './routes/admin/contatos/$id/index'
 import { Route as CheckinProjectIdEventIdRouteImport } from './routes/checkin/$projectId.event.$id'
 import { Route as LovableEmailAuthPreviewRouteImport } from './routes/lovable/email/auth/preview'
@@ -494,6 +495,11 @@ const ProdutorIdDashboardRoute = ProdutorIdDashboardRouteImport.update({
   path: '/$id/dashboard',
   getParentRoute: () => ProdutorRoute,
 } as any)
+const ProdutorIdTicketsRoute = ProdutorIdTicketsRouteImport.update({
+  id: '/$id/tickets',
+  path: '/$id/tickets',
+  getParentRoute: () => ProdutorRoute,
+} as any)
 const AdminContatosIdIndexRoute = AdminContatosIdIndexRouteImport.update({
   id: '/contatos/$id/',
   path: '/contatos/$id/',
@@ -618,6 +624,7 @@ export interface FileRoutesByFullPath {
   '/eventos/categoria/$slug': typeof EventosCategoriaSlugRoute
   '/oauth/google/return': typeof OauthGoogleReturnRoute
   '/produtor/$id/dashboard': typeof ProdutorIdDashboardRoute
+  '/produtor/$id/tickets': typeof ProdutorIdTicketsRoute
   '/admin/checkin/': typeof AdminCheckinIndexRoute
   '/admin/contatos/': typeof AdminContatosIndexRoute
   '/admin/email-management/': typeof AdminEmailManagementIndexRoute
@@ -702,6 +709,7 @@ export interface FileRoutesByTo {
   '/eventos/categoria/$slug': typeof EventosCategoriaSlugRoute
   '/oauth/google/return': typeof OauthGoogleReturnRoute
   '/produtor/$id/dashboard': typeof ProdutorIdDashboardRoute
+  '/produtor/$id/tickets': typeof ProdutorIdTicketsRoute
   '/admin/checkin': typeof AdminCheckinIndexRoute
   '/admin/contatos': typeof AdminContatosIndexRoute
   '/admin/email-management': typeof AdminEmailManagementIndexRoute
@@ -791,6 +799,7 @@ export interface FileRoutesById {
   '/eventos/categoria/$slug': typeof EventosCategoriaSlugRoute
   '/oauth/google/return': typeof OauthGoogleReturnRoute
   '/produtor/$id/dashboard': typeof ProdutorIdDashboardRoute
+  '/produtor/$id/tickets': typeof ProdutorIdTicketsRoute
   '/admin/checkin/': typeof AdminCheckinIndexRoute
   '/admin/contatos/': typeof AdminContatosIndexRoute
   '/admin/email-management/': typeof AdminEmailManagementIndexRoute
@@ -882,6 +891,7 @@ export interface FileRouteTypes {
     | '/eventos/categoria/$slug'
     | '/oauth/google/return'
     | '/produtor/$id/dashboard'
+    | '/produtor/$id/tickets'
     | '/admin/checkin/'
     | '/admin/contatos/'
     | '/admin/email-management/'
@@ -966,6 +976,7 @@ export interface FileRouteTypes {
     | '/eventos/categoria/$slug'
     | '/oauth/google/return'
     | '/produtor/$id/dashboard'
+    | '/produtor/$id/tickets'
     | '/admin/checkin'
     | '/admin/contatos'
     | '/admin/email-management'
@@ -1054,6 +1065,7 @@ export interface FileRouteTypes {
     | '/eventos/categoria/$slug'
     | '/oauth/google/return'
     | '/produtor/$id/dashboard'
+    | '/produtor/$id/tickets'
     | '/admin/checkin/'
     | '/admin/contatos/'
     | '/admin/email-management/'
@@ -1651,6 +1663,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProdutorIdDashboardRouteImport
       parentRoute: typeof ProdutorRoute
     }
+    '/produtor/$id/tickets': {
+      id: '/produtor/$id/tickets'
+      path: '/$id/tickets'
+      fullPath: '/produtor/$id/tickets'
+      preLoaderRoute: typeof ProdutorIdTicketsRouteImport
+      parentRoute: typeof ProdutorRoute
+    }
     '/admin/contatos/$id/': {
       id: '/admin/contatos/$id/'
       path: '/contatos/$id'
@@ -1887,6 +1906,7 @@ interface ProdutorRouteChildren {
   ProdutorTicketsRoute: typeof ProdutorTicketsRoute
   ProdutorIndexRoute: typeof ProdutorIndexRoute
   ProdutorIdDashboardRoute: typeof ProdutorIdDashboardRoute
+  ProdutorIdTicketsRoute: typeof ProdutorIdTicketsRoute
 }
 
 const ProdutorRouteChildren: ProdutorRouteChildren = {
@@ -1905,6 +1925,7 @@ const ProdutorRouteChildren: ProdutorRouteChildren = {
   ProdutorTicketsRoute: ProdutorTicketsRoute,
   ProdutorIndexRoute: ProdutorIndexRoute,
   ProdutorIdDashboardRoute: ProdutorIdDashboardRoute,
+  ProdutorIdTicketsRoute: ProdutorIdTicketsRoute,
 }
 
 const ProdutorRouteWithChildren = ProdutorRoute._addFileChildren(
