@@ -1,6 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { supabase } from "@/integrations/supabase/client";
+import type { Json } from "@/integrations/supabase/types";
 
 /**
  * Logs an ad event (impression, click, etc.)
@@ -24,7 +25,7 @@ export const logAdEvent = createServerFn({ method: "POST" })
         campaign_id: data.campaignId,
         creative_id: data.creativeId,
         event_type: data.eventType,
-        metadata: data.metadata || {},
+        metadata: (data.metadata as unknown as Json) || {},
         page_path: data.pagePath || '/',
         device_hash: data.deviceHash,
         session_id: data.sessionId,
@@ -47,6 +48,9 @@ export const getEligibleAds = createServerFn({ method: "GET" })
     limit: z.number().default(1)
   }).optional().default({ limit: 1 }))
   .handler(async ({ data }) => {
+    // Correct way to access validated input in TanStack Start v1
+    const { limit } = data;
+    
     // Current time for filter
     const now = new Date().toISOString();
     
@@ -67,7 +71,7 @@ export const getEligibleAds = createServerFn({ method: "GET" })
 
     // Simple priority-based rotation for now
     // Future: Add frequency cap and sophisticated targeting
-    return campaigns.slice(0, data.limit).map(c => ({
+    return campaigns.slice(0, limit).map(c => ({
       ...c,
       creative: c.ad_creatives?.[0] || null
     })).filter(c => c.creative !== null);
