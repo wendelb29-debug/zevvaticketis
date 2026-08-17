@@ -850,6 +850,7 @@ function AdminChatPage() {
           {[
             { id: 'finish', icon: CheckCircle2, label: 'Finalizar atendimento', color: 'text-green-500' },
             { id: 'transfer', icon: Share2, label: 'Transferir atendimento', disabled: !selectedContactId || selectedContact?.status === 'finalized' },
+            { id: 'send-tickets', icon: ShoppingCart, label: 'Enviar Ingressos (PDF)', color: 'text-primary' },
             { id: 'groups', icon: Users, label: 'Grupos do cliente' },
             { id: 'files', icon: Paperclip, label: 'Arquivos' },
             { id: 'history', icon: History, label: 'Histórico' },
@@ -868,6 +869,31 @@ function AdminChatPage() {
                       if (tool.disabled) return;
                       if (tool.id === 'finish') setIsFinishDialogOpen(true);
                       else if (tool.id === 'transfer') setIsTransferDialogOpen(true);
+                      else if (tool.id === 'send-tickets') {
+                        if (selectedContact) {
+                          toast.promise(
+                            fetch('/lovable/email/auth/webhook?type=order_tickets', {
+                              method: 'POST',
+                              headers: { 'Content-Type': 'application/json' },
+                              body: JSON.stringify({
+                                email: selectedContact.email || 'cliente@exemplo.com',
+                                customer_name: selectedContact.name || selectedContact.phone,
+                                event_name: 'Zevva Tickets Event',
+                                order_id: 'ZEV-' + Math.floor(Math.random() * 90000 + 10000),
+                                ticket_count: 1,
+                                url: `${window.location.origin}/meus-ingressos`
+                              })
+                            }),
+                            {
+                              loading: 'Enviando ingressos (PDF/Importante)...',
+                              success: 'Ingressos enviados com sucesso!',
+                              error: 'Erro ao enviar ingressos.'
+                            }
+                          );
+                        } else {
+                          toast.error("Selecione um contato para enviar os ingressos.");
+                        }
+                      }
                       else setActiveTool(activeTool === tool.id ? null as any : tool.id as any);
                     }}
                     disabled={tool.disabled}
