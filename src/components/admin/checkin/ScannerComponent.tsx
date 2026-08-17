@@ -46,7 +46,7 @@ export function ScannerComponent() {
   });
 
   useEffect(() => {
-    if (events && (events?.length ?? 0) > 0 && !selectedEventId) {
+    if (events && events.length > 0 && !selectedEventId) {
       setSelectedEventId(events[0].id);
     }
   }, [events, selectedEventId]);
