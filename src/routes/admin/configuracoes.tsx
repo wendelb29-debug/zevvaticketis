@@ -256,11 +256,11 @@ function AuditoriaTab() {
 
 function GlobalSectionForm({ 
   section, 
-  defaultValues, 
+  defaultValues = {}, 
   render 
 }: { 
   section: string, 
-  defaultValues: any, 
+  defaultValues?: any, 
   render: (values: any, update: (v: any) => void) => React.ReactNode 
 }) {
   const [values, setValues] = useState(defaultValues);
