@@ -41,6 +41,7 @@ import { Route as AdminProdutoresRouteImport } from './routes/admin/produtores'
 import { Route as AdminUsuariosRouteImport } from './routes/admin/usuarios'
 import { Route as AppIndexRouteImport } from './routes/app/index'
 import { Route as AppHistoricoRouteImport } from './routes/app/historico'
+import { Route as AppMeusIngressosRouteImport } from './routes/app/meus-ingressos'
 import { Route as AppPerfilRouteImport } from './routes/app/perfil'
 import { Route as AuthCallbackRouteImport } from './routes/auth/callback'
 import { Route as CheckinIndexRouteImport } from './routes/checkin/index'
@@ -256,6 +257,11 @@ const AppIndexRoute = AppIndexRouteImport.update({
 const AppHistoricoRoute = AppHistoricoRouteImport.update({
   id: '/historico',
   path: '/historico',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppMeusIngressosRoute = AppMeusIngressosRouteImport.update({
+  id: '/meus-ingressos',
+  path: '/meus-ingressos',
   getParentRoute: () => AppRoute,
 } as any)
 const AppPerfilRoute = AppPerfilRouteImport.update({
@@ -570,6 +576,7 @@ export interface FileRoutesByFullPath {
   '/admin/produtores': typeof AdminProdutoresRoute
   '/admin/usuarios': typeof AdminUsuariosRoute
   '/app/historico': typeof AppHistoricoRoute
+  '/app/meus-ingressos': typeof AppMeusIngressosRoute
   '/app/perfil': typeof AppPerfilRoute
   '/auth/callback': typeof AuthCallbackRoute
   '/eventos/$id': typeof EventosIdRouteWithChildren
@@ -653,6 +660,7 @@ export interface FileRoutesByTo {
   '/admin/produtores': typeof AdminProdutoresRoute
   '/admin/usuarios': typeof AdminUsuariosRoute
   '/app/historico': typeof AppHistoricoRoute
+  '/app/meus-ingressos': typeof AppMeusIngressosRoute
   '/app/perfil': typeof AppPerfilRoute
   '/auth/callback': typeof AuthCallbackRoute
   '/eventos/$id': typeof EventosIdRouteWithChildren
@@ -741,6 +749,7 @@ export interface FileRoutesById {
   '/admin/produtores': typeof AdminProdutoresRoute
   '/admin/usuarios': typeof AdminUsuariosRoute
   '/app/historico': typeof AppHistoricoRoute
+  '/app/meus-ingressos': typeof AppMeusIngressosRoute
   '/app/perfil': typeof AppPerfilRoute
   '/auth/callback': typeof AuthCallbackRoute
   '/eventos/$id': typeof EventosIdRouteWithChildren
@@ -831,6 +840,7 @@ export interface FileRouteTypes {
     | '/admin/produtores'
     | '/admin/usuarios'
     | '/app/historico'
+    | '/app/meus-ingressos'
     | '/app/perfil'
     | '/auth/callback'
     | '/eventos/$id'
@@ -914,6 +924,7 @@ export interface FileRouteTypes {
     | '/admin/produtores'
     | '/admin/usuarios'
     | '/app/historico'
+    | '/app/meus-ingressos'
     | '/app/perfil'
     | '/auth/callback'
     | '/eventos/$id'
@@ -1001,6 +1012,7 @@ export interface FileRouteTypes {
     | '/admin/produtores'
     | '/admin/usuarios'
     | '/app/historico'
+    | '/app/meus-ingressos'
     | '/app/perfil'
     | '/auth/callback'
     | '/eventos/$id'
@@ -1315,6 +1327,13 @@ declare module '@tanstack/react-router' {
       path: '/historico'
       fullPath: '/app/historico'
       preLoaderRoute: typeof AppHistoricoRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/meus-ingressos': {
+      id: '/app/meus-ingressos'
+      path: '/meus-ingressos'
+      fullPath: '/app/meus-ingressos'
+      preLoaderRoute: typeof AppMeusIngressosRouteImport
       parentRoute: typeof AppRoute
     }
     '/app/perfil': {
@@ -1768,12 +1787,14 @@ const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
 
 interface AppRouteChildren {
   AppHistoricoRoute: typeof AppHistoricoRoute
+  AppMeusIngressosRoute: typeof AppMeusIngressosRoute
   AppPerfilRoute: typeof AppPerfilRoute
   AppIndexRoute: typeof AppIndexRoute
 }
 
 const AppRouteChildren: AppRouteChildren = {
   AppHistoricoRoute: AppHistoricoRoute,
+  AppMeusIngressosRoute: AppMeusIngressosRoute,
   AppPerfilRoute: AppPerfilRoute,
   AppIndexRoute: AppIndexRoute,
 }
