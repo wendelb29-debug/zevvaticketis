@@ -35,6 +35,13 @@ export type NavigationSchema = {
   participants?: string;
   financial?: string;
   team?: string;
+  ticketManagement: string;
+  globalTicketManagement: string;
+
+  events?: string;
+  participants?: string;
+  financial?: string;
+  team?: string;
 
   plans: string;
   countriesAndCurrencies: string;
