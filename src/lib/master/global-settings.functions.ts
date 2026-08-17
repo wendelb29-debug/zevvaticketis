@@ -4,7 +4,7 @@ import { z } from "zod";
 const globalSettingsUpdateSchema = z.object({
   section: z.string(),
   changes: z.record(z.any()),
-  reason: z.string().min(5, "Justificativa muito curta"),
+  reason: z.string().min(5),
 });
 
 export const updateGlobalPlatformSettings = createServerFn({ method: "POST" })
