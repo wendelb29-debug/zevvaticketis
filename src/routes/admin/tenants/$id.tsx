@@ -8,7 +8,7 @@ import { TenantActivityFeed } from "@/components/admin/tenant/TenantActivityFeed
 import { Tabs, TabsContent } from "@/components/ui/tabs";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { History, LayoutDashboard, Globe, CreditCard, Users, Ticket, BarChart3, CheckCircle2, Megaphone, Settings, Lock } from "lucide-react";
+import { History, LayoutDashboard as DashboardIcon, Globe, CreditCard, Users, Ticket, BarChart3, CheckCircle2, Megaphone as MarketingIcon, Settings, Lock } from "lucide-react";
 import { z } from "zod";
 
 const searchSchema = z.object({
@@ -50,7 +50,7 @@ function TenantManagementPage() {
   }
 
   const TABS_CONFIG = [
-    { id: "geral", label: "Visão Geral", icon: LayoutDashboard },
+    { id: "geral", label: "Visão Geral", icon: DashboardIcon },
     { id: "identidade", label: "Identidade e Domínio", icon: Globe },
     { id: "plano", label: "Plano e Limites", icon: CreditCard },
     { id: "equipe", label: "Equipe e Usuários", icon: Users },
@@ -58,7 +58,7 @@ function TenantManagementPage() {
     { id: "ingressos", label: "Ingressos", icon: Ticket },
     { id: "financeiro", label: "Pedidos e Financeiro", icon: BarChart3 },
     { id: "checkin", label: "Check-in", icon: CheckCircle2 },
-    { id: "marketing", label: "Marketing", icon: Megaphone },
+    { id: "marketing", label: "Marketing", icon: MarketingIcon },
     { id: "integracoes", label: "Integrações", icon: Settings },
     { id: "seguranca", label: "Segurança", icon: Lock },
     { id: "auditoria", label: "Auditoria", icon: History },
