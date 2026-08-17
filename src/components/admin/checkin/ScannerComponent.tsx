@@ -28,73 +28,45 @@ export function ScannerComponent() {
   const [isValidating, setIsValidating] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
 
-  const handleScan = async (code: string) => {
-    if (!code) return;
+  const handleScan = async (tokenHash: string) => {
+    if (!tokenHash || !activeTenant?.id) return;
     setIsScanning(false);
     setIsValidating(true);
     
     try {
-      const { data: ticket, error: ticketError } = await (supabase
-        .from("tickets")
-        .select(`
-          *,
-          events(title),
-          ticket_types(nome),
-          profiles:owner_id(nome_completo)
-        `)
-        .or(`id.eq.${code},share_token.eq.${code}`)
-        .eq("tenant_id", activeTenant?.id || "")
-        .maybeSingle() as any);
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) throw new Error("Usuário não autenticado.");
 
-      if (ticketError) throw ticketError;
-
-      if (!ticket) {
-        setScannedResult({
-          success: false,
-          error: "Ingresso não encontrado",
-          reason: "O código informado não pertence a nenhum ingresso válido deste projeto."
-        });
-        toast.error("Ingresso não encontrado");
-        return;
-      }
-
-      if (ticket.checked_in_at) {
-        setScannedResult({
-          success: false,
-          error: "Ingresso já utilizado",
-          reason: `Este ingresso foi validado em ${new Date(ticket.checked_in_at).toLocaleString('pt-BR')}.`
-        });
-        toast.error("Ingresso já utilizado");
-        return;
-      }
-
-      const { error: checkinError } = await supabase
-        .from("tickets")
-        .update({
-          checked_in_at: new Date().toISOString(),
-          status: 'utilizado'
-        })
-        .eq("id", ticket.id);
-
-      if (checkinError) throw checkinError;
-
-      await supabase.from("checkin_records").insert({
-        ticket_id: ticket.id,
-        event_id: ticket.event_id,
-        tenant_id: activeTenant?.id || null,
-        status: 'success'
+      const { data, error } = await supabase.rpc('process_ticket_checkin', {
+        _token_hash: tokenHash,
+        _event_id: "00000000-0000-0000-0000-000000000000", // TODO: Operador deve selecionar evento primeiro
+        _operator_id: user.id,
+        _tenant_id: activeTenant.id
       });
+
+      if (error) throw error;
+
+      if (!data.success) {
+        setScannedResult({
+          success: false,
+          error: data.message,
+          reason: data.code === 'ALREADY_USED' 
+            ? `Validado em ${new Date(data.checked_in_at).toLocaleString('pt-BR')}`
+            : data.message
+        });
+        toast.error(data.message);
+        return;
+      }
 
       const result = {
         success: true,
-        participantName: (ticket as any).profiles?.nome_completo || "Participante",
-        eventTitle: (ticket as any).events?.title || "Evento",
-        ticketType: (ticket as any).ticket_types?.nome || "Ingresso",
-        ticketNumber: ticket.id.slice(0, 8).toUpperCase(),
+        participantName: data.attendee_name || "Participante",
+        eventTitle: "Evento Selecionado", // TODO: Buscar do estado do evento
+        ticketType: data.ticket_type || "Ingresso",
+        ticketNumber: tokenHash.slice(0, 8).toUpperCase(),
         checkinTime: new Date().toLocaleTimeString()
       };
 
-      
       setScannedResult(result);
       setLastCheckins(prev => [result, ...prev].slice(0, 5));
       toast.success("Entrada liberada!");
