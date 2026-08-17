@@ -1267,6 +1267,197 @@ function SettingsPage({ session, activeTenantId }: { session: any, activeTenantI
         {activeTenantId && <PermissionsRolesManager tenantId={activeTenantId} />}
       </TabsContent>
 
+      <TabsContent value="global" className="space-y-6 focus-visible:outline-none outline-none">
+        <div className="bg-navy rounded-[32px] p-10 text-white relative overflow-hidden shadow-2xl mb-8">
+          <div className="absolute right-[-40px] top-[-40px] opacity-10 rotate-12">
+            <Globe size={240} />
+          </div>
+          <div className="relative z-10 space-y-4 max-w-2xl">
+            <Badge className="bg-coral text-white font-black px-4 py-1.5 rounded-full text-[10px] uppercase tracking-[0.2em] shadow-lg shadow-coral/20">
+              Master Control
+            </Badge>
+            <h2 className="text-4xl font-manrope font-black tracking-tight">Configurações Globais da Plataforma</h2>
+            <p className="text-white/70 font-medium text-lg leading-relaxed">
+              Gestão centralizada de parâmetros, taxas, limites e segurança de toda a infraestrutura Zevva.
+            </p>
+          </div>
+        </div>
+
+        <Accordion type="single" collapsible className="w-full space-y-4 pb-20">
+          {/* 1. Plataforma */}
+          <AccordionItem value="global-plataforma" className="border-border bg-card rounded-[24px] overflow-hidden shadow-sm border">
+            <AccordionTrigger className="px-8 py-6 font-bold text-xl hover:no-underline hover:bg-accent/50 transition-all">
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 bg-navy/5 rounded-2xl flex items-center justify-center text-navy shrink-0">
+                  <Globe className="w-6 h-6" />
+                </div>
+                <div className="text-left">
+                  <p className="font-manrope font-black tracking-tight">Plataforma</p>
+                  <p className="text-xs text-muted-foreground font-medium">Identidade, domínios e localização padrão.</p>
+                </div>
+              </div>
+            </AccordionTrigger>
+            <AccordionContent className="px-8 pb-8 pt-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div className="space-y-6">
+                  <div className="space-y-2">
+                    <Label className="text-xs font-black uppercase tracking-widest">Nome da Plataforma</Label>
+                    <Input defaultValue="Zevva Tickets" className="rounded-xl" />
+                  </div>
+                  <div className="space-y-2">
+                    <Label className="text-xs font-black uppercase tracking-widest">Domínio Principal</Label>
+                    <Input defaultValue="zevvatickets.com" className="rounded-xl" />
+                  </div>
+                </div>
+                <div className="space-y-6">
+                  <div className="space-y-2">
+                    <Label className="text-xs font-black uppercase tracking-widest">Idioma Padrão</Label>
+                    <Select defaultValue="pt">
+                      <SelectTrigger className="rounded-xl">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent className="rounded-xl">
+                        <SelectItem value="pt">Português (Brasil)</SelectItem>
+                        <SelectItem value="en">English</SelectItem>
+                        <SelectItem value="es">Español</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="flex items-center justify-between p-4 bg-muted/30 rounded-2xl border border-border/50">
+                    <div>
+                      <Label className="font-bold">Modo Manutenção</Label>
+                      <p className="text-xs text-muted-foreground">Bloqueia acesso público à plataforma.</p>
+                    </div>
+                    <Switch />
+                  </div>
+                </div>
+              </div>
+              <div className="mt-8 pt-8 border-t border-border/50 flex justify-end">
+                <Button className="bg-navy hover:bg-navy/90 text-white rounded-xl font-black px-8">Salvar Alterações</Button>
+              </div>
+            </AccordionContent>
+          </AccordionItem>
+
+          {/* 2. Taxas e Financeiro */}
+          <AccordionItem value="global-financeiro" className="border-border bg-card rounded-[24px] overflow-hidden shadow-sm border">
+            <AccordionTrigger className="px-8 py-6 font-bold text-xl hover:no-underline hover:bg-accent/50 transition-all">
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 bg-emerald-500/10 rounded-2xl flex items-center justify-center text-emerald-600 shrink-0">
+                  <CreditCard className="w-6 h-6" />
+                </div>
+                <div className="text-left">
+                  <p className="font-manrope font-black tracking-tight">Taxas e Financeiro</p>
+                  <p className="text-xs text-muted-foreground font-medium">Comissões, prazos e políticas globais.</p>
+                </div>
+              </div>
+            </AccordionTrigger>
+            <AccordionContent className="px-8 pb-8 pt-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div className="space-y-6">
+                  <div className="space-y-2">
+                    <Label className="text-xs font-black uppercase tracking-widest">Taxa Percentual Padrão (%)</Label>
+                    <Input type="number" defaultValue="10" className="rounded-xl" />
+                  </div>
+                  <div className="space-y-2">
+                    <Label className="text-xs font-black uppercase tracking-widest">Taxa Fixa Padrão (R$)</Label>
+                    <Input type="number" defaultValue="2.50" className="rounded-xl" />
+                  </div>
+                </div>
+                <div className="space-y-6">
+                  <div className="space-y-2">
+                    <Label className="text-xs font-black uppercase tracking-widest">Prazo de Repasse (Dias)</Label>
+                    <Input type="number" defaultValue="2" className="rounded-xl" />
+                  </div>
+                  <div className="space-y-2">
+                    <Label className="text-xs font-black uppercase tracking-widest">Valor Mínimo Saque (R$)</Label>
+                    <Input type="number" defaultValue="50.00" className="rounded-xl" />
+                  </div>
+                </div>
+              </div>
+              <div className="mt-8 p-6 bg-amber-500/5 rounded-2xl border border-amber-500/10 flex gap-4">
+                <AlertTriangle className="w-6 h-6 text-amber-500 shrink-0" />
+                <div>
+                  <p className="text-sm font-bold text-amber-700">Atenção Crítica</p>
+                  <p className="text-xs text-amber-600 font-medium leading-relaxed">
+                    Alterações financeiras globais exigem justificativa e não afetam pedidos retroativamente. 
+                    Uma auditoria será gerada para cada mudança.
+                  </p>
+                </div>
+              </div>
+              <div className="mt-8 pt-8 border-t border-border/50 flex flex-col sm:flex-row gap-4">
+                <Textarea placeholder="Justificativa obrigatória para a alteração..." className="rounded-xl" />
+                <Button className="bg-navy hover:bg-navy/90 text-white rounded-xl font-black px-8 self-end">Confirmar e Aplicar</Button>
+              </div>
+            </AccordionContent>
+          </AccordionItem>
+
+          {/* 3. Segurança */}
+          <AccordionItem value="global-seguranca" className="border-border bg-card rounded-[24px] overflow-hidden shadow-sm border">
+            <AccordionTrigger className="px-8 py-6 font-bold text-xl hover:no-underline hover:bg-accent/50 transition-all">
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 bg-rose-500/10 rounded-2xl flex items-center justify-center text-rose-600 shrink-0">
+                  <ShieldCheck className="w-6 h-6" />
+                </div>
+                <div className="text-left">
+                  <p className="font-manrope font-black tracking-tight">Segurança</p>
+                  <p className="text-xs text-muted-foreground font-medium">MFA, sessões, rate-limiting e CAPTCHA.</p>
+                </div>
+              </div>
+            </AccordionTrigger>
+            <AccordionContent className="px-8 pb-8 pt-4">
+               <div className="space-y-4">
+                  {[
+                    { label: "MFA Obrigatório para Admins", desc: "Exige 2FA para todos os membros administrativos da plataforma." },
+                    { label: "CAPTCHA em Cadastros", desc: "Proteção contra bots em novas contas." },
+                    { label: "Alertas de Login Suspeito", desc: "Notifica administradores sobre acessos de novas origens." },
+                  ].map((item, idx) => (
+                    <div key={idx} className="flex items-center justify-between p-4 bg-muted/30 rounded-2xl border border-border/50">
+                      <div>
+                        <Label className="font-bold">{item.label}</Label>
+                        <p className="text-[11px] text-muted-foreground">{item.desc}</p>
+                      </div>
+                      <Switch defaultChecked={idx === 0} />
+                    </div>
+                  ))}
+               </div>
+               <div className="mt-8 pt-8 border-t border-border/50 flex justify-end">
+                <Button className="bg-navy hover:bg-navy/90 text-white rounded-xl font-black px-8">Atualizar Políticas</Button>
+              </div>
+            </AccordionContent>
+          </AccordionItem>
+
+          {/* Outras seções resumidas conforme solicitação */}
+          {[
+            { id: "plano", label: "Planos e Limites Padrão", icon: Box, color: "text-blue-600", bg: "bg-blue-500/10" },
+            { id: "eventos", label: "Eventos e Aprovações", icon: Calendar, color: "text-purple-600", bg: "bg-purple-500/10" },
+            { id: "ingressos", label: "Ingressos", icon: Ticket, color: "text-orange-600", bg: "bg-orange-500/10" },
+            { id: "checkin", label: "Check-in", icon: ListChecks, color: "text-cyan-600", bg: "bg-cyan-500/10" },
+            { id: "comunicacao", label: "Comunicação", icon: Mail, color: "text-indigo-600", bg: "bg-indigo-500/10" },
+            { id: "lgpd", label: "LGPD e Retenção", icon: Scale, color: "text-teal-600", bg: "bg-teal-500/10" },
+            { id: "manutencao", label: "Manutenção", icon: Hammer, color: "text-amber-600", bg: "bg-amber-500/10" },
+          ].map((item) => (
+            <AccordionItem key={item.id} value={`global-${item.id}`} className="border-border bg-card rounded-[24px] overflow-hidden shadow-sm border opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition-all">
+              <AccordionTrigger className="px-8 py-6 font-bold text-xl hover:no-underline hover:bg-accent/50 transition-all">
+                <div className="flex items-center gap-4">
+                  <div className={cn("w-12 h-12 rounded-2xl flex items-center justify-center shrink-0", item.bg, item.color)}>
+                    <item.icon className="w-6 h-6" />
+                  </div>
+                  <div className="text-left">
+                    <p className="font-manrope font-black tracking-tight">{item.label}</p>
+                    <p className="text-xs text-muted-foreground font-medium">Módulo de {item.label} em integração.</p>
+                  </div>
+                </div>
+              </AccordionTrigger>
+              <AccordionContent className="px-8 pb-8 pt-4">
+                <div className="p-12 text-center bg-muted/20 rounded-[32px] border border-dashed border-border">
+                  <p className="text-sm font-black uppercase tracking-widest text-muted-foreground/40">Módulo em Desenvolvimento</p>
+                </div>
+              </AccordionContent>
+            </AccordionItem>
+          ))}
+        </Accordion>
+      </TabsContent>
+
 
     </div>
   );
