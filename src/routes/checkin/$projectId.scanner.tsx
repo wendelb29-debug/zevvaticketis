@@ -1,3 +1,4 @@
+import { processTicketCheckin } from "@/lib/checkin.functions";
 import { createFileRoute, useSearch, useNavigate, useParams } from "@tanstack/react-router";
 import { supabase } from "@/integrations/supabase/client";
 import { useEffect, useState, useRef } from "react";

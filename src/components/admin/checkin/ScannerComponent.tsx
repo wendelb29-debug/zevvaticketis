@@ -1,3 +1,4 @@
+import { processTicketCheckin } from "@/lib/checkin.functions";
 import { useState, useRef, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { 
