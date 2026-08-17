@@ -40,10 +40,10 @@ export const suspendTenant = createServerFn({ method: "POST" })
     
     // Registrar na auditoria
     await supabaseAdmin.from("audit_logs").insert({
-      resource_id: id,
-      resource_type: "tenant",
-      action: "suspend",
-      // admin_id precisa ser injetado via middleware de auth se disponível
+      alvo_id: id,
+      alvo_tipo: "tenant",
+      acao: "suspend",
+      categoria: "seguranca"
     });
     
     return { success: true };
