@@ -34,6 +34,7 @@ import { Route as AdminConfiguracoesRouteImport } from './routes/admin/configura
 import { Route as AdminEmailTemplatesRouteImport } from './routes/admin/email-templates'
 import { Route as AdminEmailsRouteImport } from './routes/admin/emails'
 import { Route as AdminEnviosMassivosRouteImport } from './routes/admin/envios-massivos'
+import { Route as AdminIngressosRouteImport } from './routes/admin/ingressos'
 import { Route as AdminMasterRouteImport } from './routes/admin/master'
 import { Route as AdminPaisesMoedasRouteImport } from './routes/admin/paises-moedas'
 import { Route as AdminPlanosRouteImport } from './routes/admin/planos'
@@ -57,6 +58,7 @@ import { Route as ProdutorEmailManagementRouteImport } from './routes/produtor/e
 import { Route as ProdutorEquipeRouteImport } from './routes/produtor/equipe'
 import { Route as ProdutorEventosRouteImport } from './routes/produtor/eventos'
 import { Route as ProdutorFinanceiroRouteImport } from './routes/produtor/financeiro'
+import { Route as ProdutorGestaoIngressosRouteImport } from './routes/produtor/gestao-ingressos'
 import { Route as ProdutorIngressosRouteImport } from './routes/produtor/ingressos'
 import { Route as ProdutorMarketingRouteImport } from './routes/produtor/marketing'
 import { Route as ProdutorNovoEventoRouteImport } from './routes/produtor/novo-evento'
@@ -225,6 +227,11 @@ const AdminEnviosMassivosRoute = AdminEnviosMassivosRouteImport.update({
   path: '/envios-massivos',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminIngressosRoute = AdminIngressosRouteImport.update({
+  id: '/ingressos',
+  path: '/ingressos',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminMasterRoute = AdminMasterRouteImport.update({
   id: '/master',
   path: '/master',
@@ -338,6 +345,11 @@ const ProdutorEventosRoute = ProdutorEventosRouteImport.update({
 const ProdutorFinanceiroRoute = ProdutorFinanceiroRouteImport.update({
   id: '/financeiro',
   path: '/financeiro',
+  getParentRoute: () => ProdutorRoute,
+} as any)
+const ProdutorGestaoIngressosRoute = ProdutorGestaoIngressosRouteImport.update({
+  id: '/gestao-ingressos',
+  path: '/gestao-ingressos',
   getParentRoute: () => ProdutorRoute,
 } as any)
 const ProdutorIngressosRoute = ProdutorIngressosRouteImport.update({
@@ -576,6 +588,7 @@ export interface FileRoutesByFullPath {
   '/admin/email-templates': typeof AdminEmailTemplatesRoute
   '/admin/emails': typeof AdminEmailsRouteWithChildren
   '/admin/envios-massivos': typeof AdminEnviosMassivosRoute
+  '/admin/ingressos': typeof AdminIngressosRoute
   '/admin/master': typeof AdminMasterRoute
   '/admin/paises-moedas': typeof AdminPaisesMoedasRoute
   '/admin/planos': typeof AdminPlanosRoute
@@ -594,6 +607,7 @@ export interface FileRoutesByFullPath {
   '/produtor/equipe': typeof ProdutorEquipeRoute
   '/produtor/eventos': typeof ProdutorEventosRoute
   '/produtor/financeiro': typeof ProdutorFinanceiroRoute
+  '/produtor/gestao-ingressos': typeof ProdutorGestaoIngressosRoute
   '/produtor/ingressos': typeof ProdutorIngressosRoute
   '/produtor/marketing': typeof ProdutorMarketingRoute
   '/produtor/novo-evento': typeof ProdutorNovoEventoRoute
@@ -661,6 +675,7 @@ export interface FileRoutesByTo {
   '/admin/email-templates': typeof AdminEmailTemplatesRoute
   '/admin/emails': typeof AdminEmailsRouteWithChildren
   '/admin/envios-massivos': typeof AdminEnviosMassivosRoute
+  '/admin/ingressos': typeof AdminIngressosRoute
   '/admin/master': typeof AdminMasterRoute
   '/admin/paises-moedas': typeof AdminPaisesMoedasRoute
   '/admin/planos': typeof AdminPlanosRoute
@@ -679,6 +694,7 @@ export interface FileRoutesByTo {
   '/produtor/equipe': typeof ProdutorEquipeRoute
   '/produtor/eventos': typeof ProdutorEventosRoute
   '/produtor/financeiro': typeof ProdutorFinanceiroRoute
+  '/produtor/gestao-ingressos': typeof ProdutorGestaoIngressosRoute
   '/produtor/ingressos': typeof ProdutorIngressosRoute
   '/produtor/marketing': typeof ProdutorMarketingRoute
   '/produtor/novo-evento': typeof ProdutorNovoEventoRoute
@@ -751,6 +767,7 @@ export interface FileRoutesById {
   '/admin/email-templates': typeof AdminEmailTemplatesRoute
   '/admin/emails': typeof AdminEmailsRouteWithChildren
   '/admin/envios-massivos': typeof AdminEnviosMassivosRoute
+  '/admin/ingressos': typeof AdminIngressosRoute
   '/admin/master': typeof AdminMasterRoute
   '/admin/paises-moedas': typeof AdminPaisesMoedasRoute
   '/admin/planos': typeof AdminPlanosRoute
@@ -769,6 +786,7 @@ export interface FileRoutesById {
   '/produtor/equipe': typeof ProdutorEquipeRoute
   '/produtor/eventos': typeof ProdutorEventosRoute
   '/produtor/financeiro': typeof ProdutorFinanceiroRoute
+  '/produtor/gestao-ingressos': typeof ProdutorGestaoIngressosRoute
   '/produtor/ingressos': typeof ProdutorIngressosRoute
   '/produtor/marketing': typeof ProdutorMarketingRoute
   '/produtor/novo-evento': typeof ProdutorNovoEventoRoute
@@ -843,6 +861,7 @@ export interface FileRouteTypes {
     | '/admin/email-templates'
     | '/admin/emails'
     | '/admin/envios-massivos'
+    | '/admin/ingressos'
     | '/admin/master'
     | '/admin/paises-moedas'
     | '/admin/planos'
@@ -861,6 +880,7 @@ export interface FileRouteTypes {
     | '/produtor/equipe'
     | '/produtor/eventos'
     | '/produtor/financeiro'
+    | '/produtor/gestao-ingressos'
     | '/produtor/ingressos'
     | '/produtor/marketing'
     | '/produtor/novo-evento'
@@ -928,6 +948,7 @@ export interface FileRouteTypes {
     | '/admin/email-templates'
     | '/admin/emails'
     | '/admin/envios-massivos'
+    | '/admin/ingressos'
     | '/admin/master'
     | '/admin/paises-moedas'
     | '/admin/planos'
@@ -946,6 +967,7 @@ export interface FileRouteTypes {
     | '/produtor/equipe'
     | '/produtor/eventos'
     | '/produtor/financeiro'
+    | '/produtor/gestao-ingressos'
     | '/produtor/ingressos'
     | '/produtor/marketing'
     | '/produtor/novo-evento'
@@ -1017,6 +1039,7 @@ export interface FileRouteTypes {
     | '/admin/email-templates'
     | '/admin/emails'
     | '/admin/envios-massivos'
+    | '/admin/ingressos'
     | '/admin/master'
     | '/admin/paises-moedas'
     | '/admin/planos'
@@ -1035,6 +1058,7 @@ export interface FileRouteTypes {
     | '/produtor/equipe'
     | '/produtor/eventos'
     | '/produtor/financeiro'
+    | '/produtor/gestao-ingressos'
     | '/produtor/ingressos'
     | '/produtor/marketing'
     | '/produtor/novo-evento'
@@ -1292,6 +1316,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminEnviosMassivosRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/ingressos': {
+      id: '/admin/ingressos'
+      path: '/ingressos'
+      fullPath: '/admin/ingressos'
+      preLoaderRoute: typeof AdminIngressosRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/master': {
       id: '/admin/master'
       path: '/master'
@@ -1451,6 +1482,13 @@ declare module '@tanstack/react-router' {
       path: '/financeiro'
       fullPath: '/produtor/financeiro'
       preLoaderRoute: typeof ProdutorFinanceiroRouteImport
+      parentRoute: typeof ProdutorRoute
+    }
+    '/produtor/gestao-ingressos': {
+      id: '/produtor/gestao-ingressos'
+      path: '/gestao-ingressos'
+      fullPath: '/produtor/gestao-ingressos'
+      preLoaderRoute: typeof ProdutorGestaoIngressosRouteImport
       parentRoute: typeof ProdutorRoute
     }
     '/produtor/ingressos': {
@@ -1757,6 +1795,7 @@ interface AdminRouteChildren {
   AdminEmailTemplatesRoute: typeof AdminEmailTemplatesRoute
   AdminEmailsRoute: typeof AdminEmailsRouteWithChildren
   AdminEnviosMassivosRoute: typeof AdminEnviosMassivosRoute
+  AdminIngressosRoute: typeof AdminIngressosRoute
   AdminMasterRoute: typeof AdminMasterRoute
   AdminPaisesMoedasRoute: typeof AdminPaisesMoedasRoute
   AdminPlanosRoute: typeof AdminPlanosRoute
@@ -1784,6 +1823,7 @@ const AdminRouteChildren: AdminRouteChildren = {
   AdminEmailTemplatesRoute: AdminEmailTemplatesRoute,
   AdminEmailsRoute: AdminEmailsRouteWithChildren,
   AdminEnviosMassivosRoute: AdminEnviosMassivosRoute,
+  AdminIngressosRoute: AdminIngressosRoute,
   AdminMasterRoute: AdminMasterRoute,
   AdminPaisesMoedasRoute: AdminPaisesMoedasRoute,
   AdminPlanosRoute: AdminPlanosRoute,
@@ -1898,6 +1938,7 @@ interface ProdutorRouteChildren {
   ProdutorEquipeRoute: typeof ProdutorEquipeRoute
   ProdutorEventosRoute: typeof ProdutorEventosRoute
   ProdutorFinanceiroRoute: typeof ProdutorFinanceiroRoute
+  ProdutorGestaoIngressosRoute: typeof ProdutorGestaoIngressosRoute
   ProdutorIngressosRoute: typeof ProdutorIngressosRoute
   ProdutorMarketingRoute: typeof ProdutorMarketingRoute
   ProdutorNovoEventoRoute: typeof ProdutorNovoEventoRoute
@@ -1917,6 +1958,7 @@ const ProdutorRouteChildren: ProdutorRouteChildren = {
   ProdutorEquipeRoute: ProdutorEquipeRoute,
   ProdutorEventosRoute: ProdutorEventosRoute,
   ProdutorFinanceiroRoute: ProdutorFinanceiroRoute,
+  ProdutorGestaoIngressosRoute: ProdutorGestaoIngressosRoute,
   ProdutorIngressosRoute: ProdutorIngressosRoute,
   ProdutorMarketingRoute: ProdutorMarketingRoute,
   ProdutorNovoEventoRoute: ProdutorNovoEventoRoute,
