@@ -34,6 +34,8 @@ import {
   DropdownMenuTrigger 
 } from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
+import { useUI } from "@/hooks/use-ui";
+import { getTranslations } from "@/lib/i18n-utils";
 
 interface IssuedTicketsListProps {
   eventId: string;
@@ -43,7 +45,9 @@ interface IssuedTicketsListProps {
 
 export function IssuedTicketsList({ eventId, scope = "producer", tenantId }: IssuedTicketsListProps) {
 
-
+  const { language } = useUI();
+  const t = getTranslations(language);
+  const common = t.common;
   const [searchTerm, setSearchTerm] = useState("");
 
   const { data: tickets, isLoading } = useQuery({
@@ -84,7 +88,7 @@ export function IssuedTicketsList({ eventId, scope = "producer", tenantId }: Iss
     return (
       <div className="flex flex-col items-center justify-center py-20 gap-4">
         <Loader2 className="w-8 h-8 animate-spin text-brand" />
-        <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Carregando Ingressos Emitidos...</p>
+        <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">{common.loading}</p>
       </div>
     );
   }
@@ -95,7 +99,7 @@ export function IssuedTicketsList({ eventId, scope = "producer", tenantId }: Iss
         <div className="relative flex-1 w-full">
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground w-4 h-4" />
           <Input 
-            placeholder="Buscar por nome, e-mail ou código..." 
+            placeholder={language === 'pt-BR' ? "Buscar por nome, e-mail ou código..." : "Search by name, email or code..."} 
             className="pl-11 h-12 rounded-2xl border-border bg-accent/10"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
