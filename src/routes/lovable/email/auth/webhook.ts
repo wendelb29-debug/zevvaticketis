@@ -15,6 +15,7 @@ const SENDER_DOMAIN = "notify.zevvatickets.com"
 const ROOT_DOMAIN = "zevvatickets.com"
 const FROM_DOMAIN = "zevvatickets.com"
 const SITE_URL = `https://${ROOT_DOMAIN}`
+const AVATAR_URL = "https://zevvaticketis.lovable.app/__l5e/assets-v1/805035f5-9a45-4f5a-9347-40d03cbea352/zevva-avatar.png"
 
 // The SDK handler owns verification, dispatch, and retry semantics; this file
 // owns only the email decisions: subjects, templates, and per-type props.
