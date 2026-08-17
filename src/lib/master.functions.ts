@@ -15,8 +15,8 @@ const filterSchema = z.object({
 const periodSchema = z.enum(['hoje', '7d', '30d', 'mes_atual', 'mes_anterior', 'personalizado']);
 
 export const getGlobalStats = createServerFn({ method: "GET" })
-  .input(z.object({ period: periodSchema.optional().default('30d') }))
-  .handler(async ({ input }) => {
+  .validator((data) => z.object({ period: periodSchema.optional().default('30d') }).parse(data))
+  .handler(async ({ data: input }) => {
     // 1. Verify Platform Admin (Security validation is handled by route but we check here too)
     // In a real app we might use a middleware like requirePlatformAdmin
     
@@ -90,8 +90,8 @@ export const getGlobalStats = createServerFn({ method: "GET" })
   });
 
 export const listTenantsPaginated = createServerFn({ method: "GET" })
-  .input(filterSchema)
-  .handler(async ({ input }) => {
+  .validator((data) => filterSchema.parse(data))
+  .handler(async ({ data: input }) => {
     const { search, status, plan, page, pageSize, orderBy, orderDir } = input;
     const from = (page - 1) * pageSize;
     const to = from + pageSize - 1;
