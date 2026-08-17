@@ -92,13 +92,16 @@ export function FloatingSponsoredAd({ ad }: FloatingSponsoredAdProps) {
 
   const handleLogEvent = (type: 'impression' | 'click' | 'minimize' | 'close' | 'swipe_dismiss') => {
     logEvent({
-      organizationId: ad.organization_id,
-      campaignId: ad.id,
-      creativeId: ad.creative.id,
-      eventType: type,
-      pagePath: window.location.pathname,
-      sessionId: sessionStorage.getItem('zevva_session_id') || undefined
+      data: {
+        organizationId: ad.organization_id,
+        campaignId: ad.id,
+        creativeId: ad.creative.id,
+        eventType: type,
+        pagePath: window.location.pathname,
+        sessionId: sessionStorage.getItem('zevva_session_id') || undefined
+      }
     }).catch(console.error);
+
   };
 
   const handleClose = (e: React.MouseEvent) => {
