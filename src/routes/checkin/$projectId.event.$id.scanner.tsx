@@ -54,84 +54,69 @@ function ScannerPage() {
     loadEvent();
   }, [eventId]);
 
-  const handleManualCheckin = async (code: string) => {
-    const { data: { user: operator } } = await supabase.auth.getUser();
-    const now = DateTime.now();
+  const handleManualCheckin = async (tokenHash: string) => {
+    if (!eventId) return;
 
-    // OFFLINE PERSISTENCE
+    const { data: { user: operator } } = await supabase.auth.getUser();
+    if (!operator) return;
+
+    // OFFLINE MODE - Disabled for Phase 1 security hardening
     if (!isOnline) {
-      addToQueue({
-        code,
-        eventId,
-        operatorId: operator?.id || '',
-        timestamp: now.toISO()!,
-        tenantId: event?.tenant_id || projectId
-      });
-      
-      setScannedResult({ 
-        success: true, 
-        message: "ENFILEIRADO (OFFLINE)", 
-        offline: true,
-        ticket: { qr_code: code } 
-      });
+      toast.error("O check-in exige conexão com o servidor.");
       return;
     }
 
     try {
-      const { data: ticket, error: ticketError } = await supabase
-        .from("tickets")
-        .select("*, profiles:owner_id(full_name)")
-        .eq("qr_code", code)
-        .eq("event_id", eventId)
-        .maybeSingle();
-
-      if (ticketError) throw ticketError;
-
-      if (!ticket) {
-        setScannedResult({ success: false, message: "INGRESSO NÃO ENCONTRADO" });
-        await logRecord('falha', null, operator?.id, code);
-        return;
-      }
-
-      if (ticket.status === 'utilizado') {
-        setScannedResult({ success: false, message: "INGRESSO JÁ UTILIZADO", ticket });
-        await logRecord('falha', ticket.id, operator?.id, code);
-        return;
-      }
-
-      // Update ticket status
-      const { error: updateError } = await supabase
-        .from("tickets")
-        .update({ 
-            status: 'utilizado',
-            checked_in_at: now.toISO()
-        } as any)
-        .eq("id", ticket.id);
-
-      if (updateError) throw updateError;
-
-      // Log record
-      await logRecord('sucesso', ticket.id, operator?.id, code);
-
-      setScannedResult({ success: true, message: "ENTRADA LIBERADA", ticket });
-      toast.success("Check-in realizado!");
-      
-    } catch (err) {
-      console.error(err);
-      // Fallback to offline queue if server error
-      addToQueue({
-        code,
-        eventId,
-        operatorId: operator?.id || '',
-        timestamp: now.toISO()!,
-        tenantId: event?.tenant_id || projectId
+      // Use the secure RPC for atomic validation and check-in
+      const { data, error } = await supabase.rpc('process_ticket_checkin', {
+        _token_hash: tokenHash,
+        _event_id: eventId,
+        _operator_id: operator.id,
+        _tenant_id: event?.tenant_id || projectId
       });
+
+      if (error) throw error;
+      
+      const resultData = data as any;
+      
+      if (!resultData || !resultData.success) {
+        setScannedResult({ 
+          success: false, 
+          message: resultData?.message || "ERRO NA VALIDAÇÃO",
+          reason: resultData?.code === 'ALREADY_USED' 
+            ? `Validado em ${new Date(resultData.checked_in_at).toLocaleString('pt-BR')}`
+            : resultData?.message
+        });
+        toast.error(resultData?.message || "Ingresso inválido.");
+        return;
+      }
+
+      // Success logic
       setScannedResult({ 
         success: true, 
-        message: "ENFILEIRADO (ERRO SYNC)", 
-        offline: true,
-        ticket: { qr_code: code } 
+        message: "LIBERADO", 
+        ticket: { 
+          profiles: { full_name: resultData.attendee_name }, 
+          qr_code: tokenHash 
+        } 
       });
+      toast.success("Check-in realizado!");
+      
+      // Update history locally for immediate feedback
+      const now = DateTime.now();
+      const newRecord = {
+        id: crypto.randomUUID(),
+        status: 'sucesso',
+        checkin_time: now.toFormat('HH:mm:ss'),
+        checkin_date: now.toISODate(),
+        profiles: { full_name: 'Você' },
+        tickets: { name: resultData.attendee_name, qr_code: tokenHash }
+      };
+      setScanHistory(prev => [newRecord, ...prev].slice(0, 5));
+      
+    } catch (err: any) {
+      console.error(err);
+      toast.error("Erro ao processar check-in: " + (err.message || "Erro desconhecido"));
     }
   };
 
@@ -201,7 +186,7 @@ function ScannerPage() {
       </div>
 
       <div className="relative aspect-square rounded-[32px] overflow-hidden bg-navy shadow-2xl border-4 border-white">
-        {!isScanning ? (
+        {(!isScanning && !scannedResult) ? (
           <div className="absolute inset-0 flex flex-col items-center justify-center text-primary-foreground p-8 text-center space-y-6">
             <div className="w-24 h-24 bg-primary/20 rounded-full flex items-center justify-center border-2 border-coral/30 animate-pulse">
               <QrCode className="w-12 h-12 text-primary" />
@@ -217,7 +202,7 @@ function ScannerPage() {
               <Zap className="w-4 h-4 mr-2" /> Ativar Scanner
             </Button>
           </div>
-        ) : (
+        ) : isScanning ? (
           <div className="absolute inset-0 bg-black flex items-center justify-center">
              <div className="w-64 h-64 border-2 border-coral rounded-2xl relative">
                 <div className="absolute inset-x-0 top-0 h-0.5 bg-primary shadow-[0_0_15px_rgba(240,84,84,0.8)] animate-scan" />
@@ -230,7 +215,7 @@ function ScannerPage() {
                 Cancelar
              </Button>
           </div>
-        )}
+        ) : null}
       </div>
 
       {!scannedResult && (
