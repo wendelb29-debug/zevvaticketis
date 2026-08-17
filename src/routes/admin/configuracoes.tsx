@@ -10,7 +10,8 @@ import { Switch } from "@/components/ui/switch";
 import { 
   Users, Settings, Shield, Clock, Tag, MessageSquare, Workflow, Plus, 
   Edit2, Trash2, X, Zap, Ticket, Calendar, Globe, Bell, 
-  Layers, Lock, Database, Smartphone, Sliders, Search, ListChecks, History, PieChart
+  Layers, Lock, Database, Smartphone, Sliders, Search, ListChecks, History, PieChart, 
+  CreditCard, ShieldCheck, Mail, AlertTriangle, Scale, Hammer, Box
 } from "lucide-react";
 
 import { toast } from "sonner";
@@ -23,6 +24,8 @@ import { AuditoriaPanel } from "@/components/admin/AuditoriaPanel";
 import { WhatsAppIntegration } from "@/components/admin/WhatsAppIntegration";
 import { useQuery } from "@tanstack/react-query";
 import { PermissionsRolesManager } from "@/components/admin/PermissionsRolesManager";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
 
 
 export const Route = createFileRoute("/admin/configuracoes")({
