@@ -45,24 +45,25 @@ export function ScannerComponent() {
       });
 
       if (error) throw error;
-
-      if (!data.success) {
+      
+      const resultData = data as any;
+      if (!resultData || !resultData.success) {
         setScannedResult({
           success: false,
-          error: data.message,
-          reason: data.code === 'ALREADY_USED' 
-            ? `Validado em ${new Date(data.checked_in_at).toLocaleString('pt-BR')}`
-            : data.message
+          error: resultData?.message || "Erro desconhecido",
+          reason: resultData?.code === 'ALREADY_USED' 
+            ? `Validado em ${new Date(resultData.checked_in_at).toLocaleString('pt-BR')}`
+            : resultData?.message
         });
-        toast.error(data.message);
+        toast.error(resultData?.message || "Erro na validação");
         return;
       }
 
       const result = {
         success: true,
-        participantName: data.attendee_name || "Participante",
-        eventTitle: "Evento Selecionado", // TODO: Buscar do estado do evento
-        ticketType: data.ticket_type || "Ingresso",
+        participantName: resultData.attendee_name || "Participante",
+        eventTitle: "Evento Selecionado", 
+        ticketType: resultData.ticket_type || "Ingresso",
         ticketNumber: tokenHash.slice(0, 8).toUpperCase(),
         checkinTime: new Date().toLocaleTimeString()
       };
