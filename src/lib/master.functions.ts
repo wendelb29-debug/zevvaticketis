@@ -31,8 +31,8 @@ const periodSchema = z.enum(['hoje', '7d', '30d', 'mes_atual', 'mes_anterior', '
 
 export const getGlobalStats = createServerFn({ method: "GET" })
   .validator((data) => z.object({ period: periodSchema.optional().default('30d') }).parse(data))
-  .handler(async ({ data: input, request }) => {
-    // Validation would happen here using request cookies/headers
+  .handler(async ({ data: input }) => {
+
 
 
     // 1. Verify Platform Admin (Security validation is handled by route but we check here too)
@@ -109,8 +109,8 @@ export const getGlobalStats = createServerFn({ method: "GET" })
 
 export const listTenantsPaginated = createServerFn({ method: "GET" })
   .validator((data) => filterSchema.parse(data))
-  .handler(async ({ data: input, request }) => {
-    // Validation here
+  .handler(async ({ data: input }) => {
+
 
 
     const { search, status, plan, page, pageSize, orderBy, orderDir } = input;
