@@ -32,8 +32,10 @@ import {
   Globe,
   Languages,
   Check,
-  Menu
+  Menu,
+  Ticket
 } from "lucide-react";
+
 import { cn } from "@/lib/utils";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { 
