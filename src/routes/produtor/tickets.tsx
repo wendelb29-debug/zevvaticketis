@@ -5,6 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Loader2 } from "lucide-react";
 import { useTenants } from "@/hooks/use-tenants";
+import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/produtor/tickets")({
   component: ProducerTicketsPage,
