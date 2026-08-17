@@ -25,8 +25,7 @@ function ParticipantesPage() {
         .select(`
           *,
           profiles:owner_id(nome_completo, email, telefone),
-          events(title),
-          ticket_types(nome)
+          events(title)
         `)
         .eq("tenant_id", activeTenant?.id || "")
         .order("created_at", { ascending: false });
@@ -82,7 +81,7 @@ function ParticipantesPage() {
                 </td>
                 <td className="px-6 py-4">
                   <div className="font-bold text-foreground">{ticket.events?.title}</div>
-                  <div className="text-xs text-primary font-bold">{ticket.ticket_types?.nome}</div>
+                  <div className="text-xs text-primary font-bold">{ticket.name || "Ingresso"}</div>
                 </td>
                 <td className="px-6 py-4">
                   <span className={cn(
