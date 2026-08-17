@@ -333,6 +333,17 @@ function SettingsPage({ session, activeTenantId }: { session: any, activeTenantI
       setActiveTab(search.tab);
     }
   }, [search?.tab]);
+
+  const navigate = useNavigate();
+  const handleTabChange = (val: string) => {
+    setActiveTab(val);
+    navigate({
+      to: "/admin/configuracoes" as any,
+      search: { tab: val } as any,
+      replace: true
+    });
+  };
+
   const [isDeptModalOpen, setIsDeptModalOpen] = useState(false);
   const [isTagModalOpen, setIsTagModalOpen] = useState(false);
   const [deptName, setDeptName] = useState("");

@@ -97,7 +97,8 @@ export const getGlobalStats = createServerFn({ method: "GET" })
         revenue,
         pendingOrders
 
-      }
+      },
+      lastUpdate: new Date().toISOString()
     };
   });
 
