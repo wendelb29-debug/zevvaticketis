@@ -2,7 +2,10 @@ import { createFileRoute, Outlet, redirect, useNavigate, Link } from "@tanstack/
 import { supabase } from "@/integrations/supabase/client";
 import { useEffect, useState } from "react";
 import { UserMenu } from "@/components/auth/UserMenu";
+import { useUI } from "@/hooks/use-ui";
+import { getTranslations } from "@/lib/i18n-utils";
 import { 
+
   LayoutDashboard, 
   User as UserIcon, 
   Globe, 
@@ -187,18 +190,22 @@ function ProdutorLayout() {
   }
 
   const { hasPermission } = useTenants();
+  const { language } = useUI(); // Assumi que useUI está disponível via import se necessário, mas produtor.tsx já tem imports similares
+  const t = getTranslations(language);
+  const nav = t.navigation;
 
   const allMenuItems = [
-    { label: "Dashboard", icon: LayoutDashboard, href: "/produtor", activeOptions: { exact: true }, permission: "DASHBOARD" },
-    { label: "Eventos", icon: FileText, href: "/produtor/eventos", permission: "EVENTOS" },
-    { label: "Gestão de ingressos", icon: Ticket, href: "/produtor/gestao-ingressos", permission: "INGRESSOS" },
-    { label: "Marketing", icon: Globe, href: "/produtor/marketing", permission: "MARKETING" },
-    { label: "Participantes", icon: Users, href: "/produtor/participantes", permission: "PARTICIPANTES" },
-    { label: "Check-in", icon: ShieldCheck, href: "/produtor/checkin", permission: "CHECKIN" },
-    { label: "Financeiro", icon: BarChart3, href: "/produtor/financeiro", permission: "FINANCEIRO" },
-    { label: "Equipe", icon: UserPlus, href: "/produtor/equipe", permission: "EQUIPE" },
-    { label: "Configurações", icon: SettingsIcon, href: "/produtor/configuracoes", permission: "CONFIGURACOES" },
+    { label: nav.dashboard, icon: LayoutDashboard, href: "/produtor", activeOptions: { exact: true }, permission: "DASHBOARD" },
+    { label: nav.events || "Eventos", icon: FileText, href: "/produtor/eventos", permission: "EVENTOS" },
+    { label: nav.ticketManagement, icon: Ticket, href: "/produtor/gestao-ingressos", permission: "INGRESSOS" },
+    { label: nav.marketing, icon: Globe, href: "/produtor/marketing", permission: "MARKETING" },
+    { label: nav.participants || "Participantes", icon: Users, href: "/produtor/participantes", permission: "PARTICIPANTES" },
+    { label: nav.checkin, icon: ShieldCheck, href: "/produtor/checkin", permission: "CHECKIN" },
+    { label: nav.financial || "Financeiro", icon: BarChart3, href: "/produtor/financeiro", permission: "FINANCEIRO" },
+    { label: nav.team || "Equipe", icon: UserPlus, href: "/produtor/equipe", permission: "EQUIPE" },
+    { label: nav.settings, icon: SettingsIcon, href: "/produtor/configuracoes", permission: "CONFIGURACOES" },
   ];
+
 
 
 

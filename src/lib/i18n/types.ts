@@ -31,6 +31,11 @@ export type NavigationSchema = {
   generalPanel: string;
   reports: string;
   globalMonitor: string;
+  events?: string;
+  participants?: string;
+  financial?: string;
+  team?: string;
+
   plans: string;
   countriesAndCurrencies: string;
   marketing: string;
