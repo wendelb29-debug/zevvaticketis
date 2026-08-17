@@ -18,7 +18,8 @@ export const translations: Record<SupportedLocale, TranslationSchema> = {
       search: "Buscar",
       agenda: "Agenda Completa",
       profile: "Meu Perfil",
-      logout: "Sair"
+      logout: "Sair",
+      myTickets: "Meus Ingressos"
     },
     navigation: {
       chat: "Chat",
@@ -135,7 +136,8 @@ export const translations: Record<SupportedLocale, TranslationSchema> = {
       search: "Search",
       agenda: "Full Agenda",
       profile: "My Profile",
-      logout: "Logout"
+      logout: "Logout",
+      myTickets: "My Tickets"
     },
     navigation: {
       chat: "Chat",
@@ -252,7 +254,8 @@ export const translations: Record<SupportedLocale, TranslationSchema> = {
       search: "Buscar",
       agenda: "Agenda Completa",
       profile: "Mi Perfil",
-      logout: "Cerrar Sesión"
+      logout: "Cerrar Sesión",
+      myTickets: "Mis Entradas"
     },
     navigation: {
       chat: "Chat",

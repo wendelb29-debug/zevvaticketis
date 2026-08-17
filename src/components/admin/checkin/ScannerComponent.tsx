@@ -12,7 +12,9 @@ import {
   Search,
   Maximize2,
   Loader2,
-  ChevronDown
+  ChevronDown,
+  Power,
+  QrCode
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -166,21 +168,38 @@ export function ScannerComponent() {
             {isScanning ? (
               <div className="w-full h-full relative group">
                 <div className="absolute inset-0 border-[40px] border-black/40 z-10" />
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 border-2 border-coral rounded-3xl z-20 animate-pulse">
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 border-2 border-primary rounded-3xl z-20 animate-pulse">
                    <div className="absolute top-0 left-0 w-8 h-8 border-t-4 border-l-4 border-white rounded-tl-lg" />
                    <div className="absolute top-0 right-0 w-8 h-8 border-t-4 border-r-4 border-white rounded-tr-lg" />
                    <div className="absolute bottom-0 left-0 w-8 h-8 border-b-4 border-l-4 border-white rounded-bl-lg" />
                    <div className="absolute bottom-0 right-0 w-8 h-8 border-b-4 border-r-4 border-white rounded-br-lg" />
                 </div>
-                <div className="w-full h-full bg-slate-900 flex items-center justify-center text-primary-foreground/20">
-                   {isValidating ? <Loader2 className="w-12 h-12 animate-spin text-primary" /> : <RefreshCw className="w-12 h-12 animate-spin" />}
+                
+                {/* Mocked Camera Stream with real functionality for testing */}
+                <div className="w-full h-full bg-slate-900/50 flex flex-col items-center justify-center text-primary-foreground/20 overflow-hidden relative">
+                   <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/5 to-transparent animate-scan z-0" />
+                   
+                   {isValidating ? (
+                     <div className="flex flex-col items-center gap-4 animate-in fade-in zoom-in duration-300 z-10">
+                       <Loader2 className="w-16 h-16 animate-spin text-primary" />
+                       <span className="text-[10px] font-black uppercase tracking-[0.3em] text-primary">Validando...</span>
+                     </div>
+                   ) : (
+                     <div className="flex flex-col items-center gap-6 z-10 px-12 text-center">
+                        <div className="w-16 h-16 rounded-full border-2 border-dashed border-primary/40 flex items-center justify-center animate-pulse">
+                          <QrCode className="w-8 h-8 text-primary/40" />
+                        </div>
+                        <p className="text-xs font-bold text-white/40 uppercase tracking-widest max-w-[200px]">Simulando Scanner de Alta Performance...</p>
+                     </div>
+                   )}
                 </div>
+
                 <Button 
                   onClick={toggleScanner}
                   disabled={isValidating}
-                  className="absolute bottom-6 left-1/2 -translate-x-1/2 z-30 bg-red-500 hover:bg-red-600 rounded-xl px-8 h-12 font-bold shadow-lg"
+                  className="absolute bottom-8 left-1/2 -translate-x-1/2 z-30 bg-red-500/90 hover:bg-red-600 text-white rounded-2xl px-8 h-12 font-black text-[10px] uppercase tracking-widest shadow-2xl transition-all border border-red-400/20 backdrop-blur-md"
                 >
-                  Parar Scanner
+                  <Power className="w-4 h-4 mr-2" /> Encerrar Câmera
                 </Button>
               </div>
             ) : (

@@ -17,6 +17,7 @@ export type NavSchema = {
   agenda: string;
   profile: string;
   logout: string;
+  myTickets: string;
 };
 
 export type NavigationSchema = {

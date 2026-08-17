@@ -12,7 +12,8 @@ import {
   Trash2,
   ExternalLink,
   Loader2,
-  FileText
+  FileText,
+  Ticket
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -174,12 +175,22 @@ function ProducerEventsPage() {
                 </div>
               </div>
 
-              <Button 
-                onClick={() => navigate({ to: `/produtor/${event.id}/dashboard` as any })}
-                className="w-full bg-navy hover:bg-navy/90 text-primary-foreground font-black text-[10px] uppercase tracking-widest h-12 rounded-2xl shadow-lg shadow-navy/10"
-              >
-                Painel de Controle
-              </Button>
+              <div className="flex gap-2">
+                <Button 
+                  onClick={() => navigate({ to: `/produtor/${event.id}/dashboard` as any })}
+                  className="flex-1 bg-navy hover:bg-navy/90 text-primary-foreground font-black text-[10px] uppercase tracking-widest h-12 rounded-2xl shadow-lg shadow-navy/10"
+                >
+                  Dashboard
+                </Button>
+                <Button 
+                  variant="outline"
+                  onClick={() => navigate({ to: `/produtor/${activeTenant?.id}/tickets` as any })}
+                  className="w-12 border-border text-muted-foreground hover:text-brand hover:border-brand/30 h-12 rounded-2xl transition-all"
+                  title="Ingressos Emitidos"
+                >
+                  <Ticket className="w-4 h-4" />
+                </Button>
+              </div>
             </CardContent>
           </Card>
         ))}

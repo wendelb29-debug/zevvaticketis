@@ -1,9 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Ticket, Plus, Edit2, Trash2 } from "lucide-react";
+import { Ticket, Plus, Edit2, Trash2, ArrowRight } from "lucide-react";
+import { Link } from "@tanstack/react-router";
 import { useTenants } from "@/hooks/use-tenants";
 
 
@@ -42,11 +43,16 @@ function IngressosPage() {
 
   return (
     <div className="container mx-auto py-8 space-y-8 font-inter">
-      <div className="flex justify-between items-center">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
         <div>
-          <h1 className="text-3xl font-manrope font-extrabold text-foreground">Ingressos do Projeto</h1>
+          <h1 className="text-3xl font-manrope font-extrabold text-foreground tracking-tighter uppercase">🎟️ Tipos de Ingressos</h1>
           <p className="text-muted-foreground font-medium">Controle lotes, preços e disponibilidade do ambiente selecionado.</p>
         </div>
+        <Button asChild className="bg-navy hover:bg-navy/90 text-primary-foreground gap-2 px-6 rounded-xl font-bold">
+          <Link to={`/produtor/${activeTenant?.id}/tickets` as any}>
+            Gerenciar Emissões <ArrowRight className="w-4 h-4" />
+          </Link>
+        </Button>
       </div>
 
       <div className="grid gap-6">
