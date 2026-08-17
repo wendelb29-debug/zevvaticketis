@@ -70,6 +70,7 @@ import { Route as AdminCheckinIndexRouteImport } from './routes/admin/checkin/in
 import { Route as AdminCheckinScannerRouteImport } from './routes/admin/checkin/scanner'
 import { Route as AdminContatosIndexRouteImport } from './routes/admin/contatos/index'
 import { Route as AdminEmailManagementIndexRouteImport } from './routes/admin/email-management/index'
+import { Route as AdminEmailsTemplatesRouteImport } from './routes/admin/emails/templates'
 import { Route as AdminGruposIndexRouteImport } from './routes/admin/grupos/index'
 import { Route as AdminMarketingIndexRouteImport } from './routes/admin/marketing/index'
 import { Route as AdminMarketingAnunciosRouteImport } from './routes/admin/marketing/anuncios'
@@ -404,6 +405,11 @@ const AdminEmailManagementIndexRoute =
     path: '/email-management/',
     getParentRoute: () => AdminRoute,
   } as any)
+const AdminEmailsTemplatesRoute = AdminEmailsTemplatesRouteImport.update({
+  id: '/templates',
+  path: '/templates',
+  getParentRoute: () => AdminEmailsRoute,
+} as any)
 const AdminGruposIndexRoute = AdminGruposIndexRouteImport.update({
   id: '/grupos/',
   path: '/grupos/',
@@ -556,7 +562,7 @@ export interface FileRoutesByFullPath {
   '/admin/checkin-monitor': typeof AdminCheckinMonitorRoute
   '/admin/configuracoes': typeof AdminConfiguracoesRoute
   '/admin/email-templates': typeof AdminEmailTemplatesRoute
-  '/admin/emails': typeof AdminEmailsRoute
+  '/admin/emails': typeof AdminEmailsRouteWithChildren
   '/admin/envios-massivos': typeof AdminEnviosMassivosRoute
   '/admin/master': typeof AdminMasterRoute
   '/admin/paises-moedas': typeof AdminPaisesMoedasRoute
@@ -592,6 +598,7 @@ export interface FileRoutesByFullPath {
   '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
   '/admin/checkin/scanner': typeof AdminCheckinScannerRoute
+  '/admin/emails/templates': typeof AdminEmailsTemplatesRoute
   '/admin/marketing/anuncios': typeof AdminMarketingAnunciosRoute
   '/admin/marketing/publicidade': typeof AdminMarketingPublicidadeRoute
   '/admin/marketing/push': typeof AdminMarketingPushRoute
@@ -638,7 +645,7 @@ export interface FileRoutesByTo {
   '/admin/checkin-monitor': typeof AdminCheckinMonitorRoute
   '/admin/configuracoes': typeof AdminConfiguracoesRoute
   '/admin/email-templates': typeof AdminEmailTemplatesRoute
-  '/admin/emails': typeof AdminEmailsRoute
+  '/admin/emails': typeof AdminEmailsRouteWithChildren
   '/admin/envios-massivos': typeof AdminEnviosMassivosRoute
   '/admin/master': typeof AdminMasterRoute
   '/admin/paises-moedas': typeof AdminPaisesMoedasRoute
@@ -674,6 +681,7 @@ export interface FileRoutesByTo {
   '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
   '/admin/checkin/scanner': typeof AdminCheckinScannerRoute
+  '/admin/emails/templates': typeof AdminEmailsTemplatesRoute
   '/admin/marketing/anuncios': typeof AdminMarketingAnunciosRoute
   '/admin/marketing/publicidade': typeof AdminMarketingPublicidadeRoute
   '/admin/marketing/push': typeof AdminMarketingPushRoute
@@ -725,7 +733,7 @@ export interface FileRoutesById {
   '/admin/checkin-monitor': typeof AdminCheckinMonitorRoute
   '/admin/configuracoes': typeof AdminConfiguracoesRoute
   '/admin/email-templates': typeof AdminEmailTemplatesRoute
-  '/admin/emails': typeof AdminEmailsRoute
+  '/admin/emails': typeof AdminEmailsRouteWithChildren
   '/admin/envios-massivos': typeof AdminEnviosMassivosRoute
   '/admin/master': typeof AdminMasterRoute
   '/admin/paises-moedas': typeof AdminPaisesMoedasRoute
@@ -761,6 +769,7 @@ export interface FileRoutesById {
   '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
   '/admin/checkin/scanner': typeof AdminCheckinScannerRoute
+  '/admin/emails/templates': typeof AdminEmailsTemplatesRoute
   '/admin/marketing/anuncios': typeof AdminMarketingAnunciosRoute
   '/admin/marketing/publicidade': typeof AdminMarketingPublicidadeRoute
   '/admin/marketing/push': typeof AdminMarketingPushRoute
@@ -850,6 +859,7 @@ export interface FileRouteTypes {
     | '/.lovable/oauth/consent'
     | '/.mcp/invoke-tool/$tool'
     | '/admin/checkin/scanner'
+    | '/admin/emails/templates'
     | '/admin/marketing/anuncios'
     | '/admin/marketing/publicidade'
     | '/admin/marketing/push'
@@ -932,6 +942,7 @@ export interface FileRouteTypes {
     | '/.lovable/oauth/consent'
     | '/.mcp/invoke-tool/$tool'
     | '/admin/checkin/scanner'
+    | '/admin/emails/templates'
     | '/admin/marketing/anuncios'
     | '/admin/marketing/publicidade'
     | '/admin/marketing/push'
@@ -1018,6 +1029,7 @@ export interface FileRouteTypes {
     | '/.lovable/oauth/consent'
     | '/.mcp/invoke-tool/$tool'
     | '/admin/checkin/scanner'
+    | '/admin/emails/templates'
     | '/admin/marketing/anuncios'
     | '/admin/marketing/publicidade'
     | '/admin/marketing/push'
@@ -1508,6 +1520,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminEmailManagementIndexRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/emails/templates': {
+      id: '/admin/emails/templates'
+      path: '/templates'
+      fullPath: '/admin/emails/templates'
+      preLoaderRoute: typeof AdminEmailsTemplatesRouteImport
+      parentRoute: typeof AdminEmailsRoute
+    }
     '/admin/grupos/': {
       id: '/admin/grupos/'
       path: '/grupos'
@@ -1679,6 +1698,18 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface AdminEmailsRouteChildren {
+  AdminEmailsTemplatesRoute: typeof AdminEmailsTemplatesRoute
+}
+
+const AdminEmailsRouteChildren: AdminEmailsRouteChildren = {
+  AdminEmailsTemplatesRoute: AdminEmailsTemplatesRoute,
+}
+
+const AdminEmailsRouteWithChildren = AdminEmailsRoute._addFileChildren(
+  AdminEmailsRouteChildren,
+)
+
 interface AdminRouteChildren {
   AdminAprovacoesRoute: typeof AdminAprovacoesRoute
   AdminAuditoriaRoute: typeof AdminAuditoriaRoute
@@ -1686,7 +1717,7 @@ interface AdminRouteChildren {
   AdminCheckinMonitorRoute: typeof AdminCheckinMonitorRoute
   AdminConfiguracoesRoute: typeof AdminConfiguracoesRoute
   AdminEmailTemplatesRoute: typeof AdminEmailTemplatesRoute
-  AdminEmailsRoute: typeof AdminEmailsRoute
+  AdminEmailsRoute: typeof AdminEmailsRouteWithChildren
   AdminEnviosMassivosRoute: typeof AdminEnviosMassivosRoute
   AdminMasterRoute: typeof AdminMasterRoute
   AdminPaisesMoedasRoute: typeof AdminPaisesMoedasRoute
@@ -1713,7 +1744,7 @@ const AdminRouteChildren: AdminRouteChildren = {
   AdminCheckinMonitorRoute: AdminCheckinMonitorRoute,
   AdminConfiguracoesRoute: AdminConfiguracoesRoute,
   AdminEmailTemplatesRoute: AdminEmailTemplatesRoute,
-  AdminEmailsRoute: AdminEmailsRoute,
+  AdminEmailsRoute: AdminEmailsRouteWithChildren,
   AdminEnviosMassivosRoute: AdminEnviosMassivosRoute,
   AdminMasterRoute: AdminMasterRoute,
   AdminPaisesMoedasRoute: AdminPaisesMoedasRoute,
