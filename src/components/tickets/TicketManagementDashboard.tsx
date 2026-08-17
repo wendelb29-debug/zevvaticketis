@@ -5,8 +5,9 @@ import { cn } from "@/lib/utils";
 
 interface Props {
   scope: "producer" | "platform-admin";
-  tenantId?: string;
+  tenantId?: string | undefined;
 }
+
 
 export function TicketManagementDashboard({ scope, tenantId }: Props) {
   const isGlobal = scope === "platform-admin";
