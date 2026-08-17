@@ -8,12 +8,15 @@ import {
   MapPin,
   QrCode,
   Download,
-  AlertCircle
+  AlertCircle,
+  History
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
+import { DigitalTicket } from "@/components/tickets/DigitalTicket";
+import { GlobalBreadcrumb } from "@/components/layout/GlobalBreadcrumb";
 
 export const Route = createFileRoute("/app/meus-ingressos")({
   beforeLoad: async () => {
