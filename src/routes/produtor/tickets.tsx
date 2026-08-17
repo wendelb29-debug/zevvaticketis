@@ -73,12 +73,12 @@ function ProducerTicketsPage() {
                 <TableCell>
                   <span className={cn(
                     "px-2 py-1 rounded-full text-[10px] font-black uppercase",
-                    (ticket.status === 'utilizado' || ticket.status === 'presente') 
-                      ? "bg-blue-100 text-blue-700" 
-                      : "bg-green-100 text-green-700"
-                  )}>
-                    {ticket.status === 'utilizado' || ticket.status === 'presente' ? 'Utilizado' : 'Válido'}
-                  </span>
+                      (ticket.status === 'utilizado' || ticket.status === 'presente') 
+                        ? "bg-emerald-100 text-emerald-700" 
+                        : "bg-amber-100 text-amber-700"
+                    )}>
+                      {ticket.status === 'utilizado' || ticket.status === 'presente' ? 'Utilizado' : 'Válido'}
+                    </span>
                 </TableCell>
                 <TableCell>{new Date(ticket.created_at || "").toLocaleDateString("pt-BR")}</TableCell>
               </TableRow>

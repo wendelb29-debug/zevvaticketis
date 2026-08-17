@@ -82,7 +82,7 @@ export function ScannerComponent() {
           success: false,
           error: resultData?.message || "Erro desconhecido",
           reason: resultData?.code === 'ALREADY_USED' 
-            ? `Validado em ${new Date(resultData.checked_in_at).toLocaleString('pt-BR')}`
+            ? `Validado em ${new Date(resultData?.checked_in_at).toLocaleString('pt-BR')}`
             : resultData?.message
         });
         toast.error(resultData?.message || "Erro na validação");
