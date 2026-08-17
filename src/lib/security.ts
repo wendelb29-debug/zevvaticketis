@@ -44,7 +44,7 @@ export interface SecurityValidation {
 /**
  * Mapping of actions to allowed roles.
  */
-const ACTION_PERMISSIONS: Record<TenantAction, TenantRole[]> = {
+const ACTION_PERMISSIONS: Partial<Record<TenantAction, TenantRole[]>> = {
   criar_evento: ['OWNER', 'ADMIN', 'MANAGER'],
   convidar_equipe: ['OWNER', 'ADMIN'],
   gerenciar_participantes: ['OWNER', 'ADMIN', 'MANAGER', 'CHECKIN_MANAGER'],
@@ -53,6 +53,7 @@ const ACTION_PERMISSIONS: Record<TenantAction, TenantRole[]> = {
   operar_checkin: ['OWNER', 'ADMIN', 'CHECKIN_MANAGER', 'CHECKIN_SUPERVISOR', 'CHECKIN_OPERATOR'],
   administrar_checkin: ['OWNER', 'ADMIN', 'CHECKIN_MANAGER', 'CHECKIN_SUPERVISOR'],
 };
+
 
 /**
  * Validates if a user has access to a tenant and permission to perform an action.
