@@ -310,7 +310,7 @@ function MasterAdminPage() {
           <Button
             variant="outline"
             disabled={searchParams.page <= 1}
-            onClick={() => navigate({ search: (prev: any) => ({ ...prev, page: prev.page - 1 }) })}
+            onClick={() => navigate({ search: (prev: any) => ({ ...prev, page: prev.page - 1 }) } as any)}
             className="rounded-xl font-bold"
           >
             Anterior
