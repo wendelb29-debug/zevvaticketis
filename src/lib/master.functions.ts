@@ -124,7 +124,7 @@ export const listTenantsPaginated = createServerFn({ method: "GET" })
     if (input.currency) query = query.eq('moeda_padrao_id', input.currency);
     if (input.createdAtStart) query = query.gte('created_at', input.createdAtStart);
     if (input.createdAtEnd) query = query.lte('created_at', input.createdAtEnd);
-    if (input.owner) query = query.eq('owner_id', input.owner);
+    if (input.owner) query = query.eq('owner_id' as any, input.owner);
 
     if (status) {
       query = query.eq('status', status);
