@@ -38,8 +38,11 @@ export function TenantTabs() {
     if (el) {
       el.addEventListener('scroll', checkScroll);
       checkScroll();
-      return () => el.removeEventListener('scroll', checkScroll);
+      return () => {
+        el.removeEventListener('scroll', checkScroll);
+      };
     }
+    return undefined;
   }, []);
 
   return (
