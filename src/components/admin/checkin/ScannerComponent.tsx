@@ -69,7 +69,7 @@ export function ScannerComponent() {
 
       const { data, error } = await supabase.rpc('process_ticket_checkin', {
         _token_hash: tokenHash,
-        _event_id: selectedEventId!,
+        _event_id: selectedEventId as string,
         _operator_id: user.id,
         _tenant_id: activeTenant.id
       });
