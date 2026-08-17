@@ -422,6 +422,9 @@ function SettingsPage({ session, activeTenantId }: { session: any, activeTenantI
           <TabsTrigger value="sistema" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground rounded-lg py-2.5 px-6 flex items-center gap-2 text-sm font-bold transition-all">
             <Settings className="w-4 h-4" /> Sistema
           </TabsTrigger>
+          <TabsTrigger value="global" className="data-[state=active]:bg-navy data-[state=active]:text-white rounded-lg py-2.5 px-6 flex items-center gap-2 text-sm font-bold transition-all border border-navy/20">
+            <Globe className="w-4 h-4" /> Global Platform
+          </TabsTrigger>
           <TabsTrigger value="auditoria" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground rounded-lg py-2.5 px-6 flex items-center gap-2 text-sm font-bold transition-all">
             <History className="w-4 h-4" /> Auditoria
           </TabsTrigger>
