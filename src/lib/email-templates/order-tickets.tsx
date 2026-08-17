@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Heading, Text, Button, Link, Section } from '@react-email/components'
+import { Heading, Text, Button, Link, Section, Img } from '@react-email/components'
 import { EmailLayout, styles } from './Layout'
 
 interface OrderTicketsEmailProps {
@@ -8,6 +8,7 @@ interface OrderTicketsEmailProps {
   orderId: string;
   ticketCount: number;
   viewTicketsUrl: string;
+  eventImageUrl?: string;
 }
 
 export const OrderTicketsEmail = ({
@@ -15,7 +16,8 @@ export const OrderTicketsEmail = ({
   eventName = 'Evento Zevva',
   orderId = 'ORD-0000',
   ticketCount = 1,
-  viewTicketsUrl = '#'
+  viewTicketsUrl = '#',
+  eventImageUrl
 }: OrderTicketsEmailProps) => (
   <EmailLayout previewText={`Seus ingressos para ${eventName} chegaram!`}>
     <Heading style={styles.h1}>Seus Ingressos Chegaram!</Heading>
@@ -27,6 +29,17 @@ export const OrderTicketsEmail = ({
     <Text style={styles.text}>
       Sua compra foi finalizada com sucesso e seus ingressos para o evento <strong>{eventName}</strong> já estão disponíveis.
     </Text>
+
+    {eventImageUrl && (
+      <Section style={imageContainer}>
+        <Img
+          src={eventImageUrl}
+          alt={eventName}
+          width="520"
+          style={eventImage}
+        />
+      </Section>
+    )}
 
     <Section style={orderInfoCard}>
       <Text style={orderInfoTitle}>Detalhes do Pedido</Text>
@@ -42,7 +55,7 @@ export const OrderTicketsEmail = ({
     </Text>
 
     <Button style={styles.button} href={viewTicketsUrl}>
-      Acessar Meus Ingressos
+      Acessar Meus Ingressos (PDF/QR)
     </Button>
 
     <Text style={styles.linkAlternative}>
@@ -60,6 +73,16 @@ export const OrderTicketsEmail = ({
     </Text>
   </EmailLayout>
 )
+
+const imageContainer = {
+  marginBottom: '24px',
+  textAlign: 'center' as const,
+};
+
+const eventImage = {
+  borderRadius: '8px',
+  maxWidth: '100%',
+};
 
 const orderInfoCard = {
   backgroundColor: '#F9F9FB',
