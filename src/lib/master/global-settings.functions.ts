@@ -1,6 +1,5 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
-import { auditLog } from "@/lib/security.server";
 
 const globalSettingsUpdateSchema = z.object({
   section: z.string(),
@@ -13,7 +12,7 @@ export const updateGlobalPlatformSettings = createServerFn({ method: "POST" })
     return globalSettingsUpdateSchema.parse(data);
   })
   .handler(async ({ data, context }) => {
-    // 1. Verify Authentication & Platform Admin Status
+    const { auditLog } = await import("@/lib/security.server");
     const supabase = (context as any).supabase;
     if (!supabase) throw new Error("Supabase context is missing");
 
@@ -26,7 +25,6 @@ export const updateGlobalPlatformSettings = createServerFn({ method: "POST" })
 
     if (!isAdmin) throw new Error("Forbidden: Requiere privilegios de administrador global");
 
-    // 2. Section Allowlist
     const allowedSections = [
       "plataforma", "financeiro", "planos", "eventos", 
       "ingressos", "checkin", "comunicacao", "seguranca", 
@@ -37,14 +35,12 @@ export const updateGlobalPlatformSettings = createServerFn({ method: "POST" })
       throw new Error(`Seção inválida: ${data.section}`);
     }
 
-    // 3. Fetch Previous State for Audit
     const { data: prevData } = await supabase
       .from('platform_settings')
       .select('*')
       .eq('section', data.section)
       .single();
 
-    // 4. Atomic Update
     const { error: updateError } = await supabase
       .from('platform_settings')
       .upsert({
@@ -56,7 +52,6 @@ export const updateGlobalPlatformSettings = createServerFn({ method: "POST" })
 
     if (updateError) throw updateError;
 
-    // 5. Create Audit Trail
     await auditLog({
       action: "PLATFORM_SETTINGS_UPDATE",
       entity_type: "platform",
