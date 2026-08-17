@@ -2,10 +2,13 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Filter, Search } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Filter, Search, Building2, Users, Ticket, ArrowRight } from "lucide-react";
 import { useState } from "react";
 import { getGlobalStats, listTenantsPaginated } from "@/lib/master.functions";
 import { useServerFn } from "@tanstack/react-start";
+import { cn } from "@/lib/utils";
+
 
 export const Route = createFileRoute("/admin/master")({
   component: MasterAdminPage,
@@ -63,7 +66,7 @@ function MasterAdminPage() {
         <CardHeader className="flex flex-row justify-between items-center p-6">
           <CardTitle>Projetos</CardTitle>
           <div className="flex gap-2">
-            <Input placeholder="Buscar..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
+            <Input placeholder="Buscar..." value={searchTerm} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchTerm(e.target.value)} />
             <Button variant="outline"><Filter className="w-4 h-4 mr-2" /> Filtros</Button>
           </div>
         </CardHeader>
