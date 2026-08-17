@@ -10,6 +10,8 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Button } from "@/components/ui/button";
 import { History, LayoutDashboard as DashboardIcon, Globe, CreditCard, Users, Ticket, BarChart3, CheckCircle2, Megaphone as MarketingIcon, Settings, Lock } from "lucide-react";
 import { z } from "zod";
+import { useState } from "react";
+import { SuspendTenantDialog } from "@/components/admin/tenant/SuspendTenantDialog";
 
 const searchSchema = z.object({
   tab: z.string().optional().default("geral"),

@@ -1,9 +1,18 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Copy, ExternalLink, ShieldAlert } from "lucide-react";
+import { ArrowLeft, Copy, ExternalLink, ShieldAlert, MoreHorizontal } from "lucide-react";
 import { useNavigate } from "@tanstack/react-router";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
+import { useState } from "react";
+import { SuspendTenantDialog } from "./SuspendTenantDialog";
+import { 
+  DropdownMenu, 
+  DropdownMenuContent, 
+  DropdownMenuItem, 
+  DropdownMenuSeparator, 
+  DropdownMenuTrigger 
+} from "@/components/ui/dropdown-menu";
 
 interface TenantHeaderProps {
   tenant: any;
@@ -11,6 +20,7 @@ interface TenantHeaderProps {
 
 export function TenantHeader({ tenant }: TenantHeaderProps) {
   const navigate = useNavigate();
+  const [suspendDialogOpen, setSuspendDialogOpen] = useState(false);
 
   const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text);
@@ -72,15 +82,38 @@ export function TenantHeader({ tenant }: TenantHeaderProps) {
           <Button 
             variant="outline" 
             className="flex-1 md:flex-none rounded-xl font-bold text-rose-500 border-rose-500/20 hover:bg-rose-500/5 hover:border-rose-500/40 transition-all gap-2"
+            onClick={() => setSuspendDialogOpen(true)}
           >
             <ShieldAlert className="w-4 h-4" />
             {tenant.status === 'suspenso' ? 'Reativar Projeto' : 'Suspender Projeto'}
           </Button>
-          <Button className="flex-1 md:flex-none bg-navy hover:bg-navy/90 text-primary-foreground rounded-xl font-black px-6 shadow-lg shadow-navy/20 uppercase tracking-widest text-xs h-10 transition-all active:scale-95">
-            Ações do Sistema
-          </Button>
+          
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button className="flex-1 md:flex-none bg-navy hover:bg-navy/90 text-primary-foreground rounded-xl font-black px-6 shadow-lg shadow-navy/20 uppercase tracking-widest text-[10px] h-10 transition-all active:scale-95 gap-2">
+                Ações do Sistema
+                <MoreHorizontal className="w-4 h-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="rounded-2xl w-56 border-border/50 shadow-xl">
+              <DropdownMenuItem className="rounded-xl font-bold text-xs uppercase tracking-widest py-3">Editar Projeto</DropdownMenuItem>
+              <DropdownMenuItem className="rounded-xl font-bold text-xs uppercase tracking-widest py-3">Alterar Plano</DropdownMenuItem>
+              <DropdownMenuItem className="rounded-xl font-bold text-xs uppercase tracking-widest py-3">Configurar Limites</DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem className="rounded-xl font-bold text-xs uppercase tracking-widest py-3">Iniciar Modo Suporte</DropdownMenuItem>
+              <DropdownMenuItem className="rounded-xl font-bold text-xs uppercase tracking-widest py-3">Revogar Sessões</DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem className="rounded-xl font-bold text-xs uppercase tracking-widest py-3 text-rose-500 focus:text-rose-500">Arquivar Projeto</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
       </div>
+
+      <SuspendTenantDialog 
+        tenant={tenant}
+        open={suspendDialogOpen}
+        onOpenChange={setSuspendDialogOpen}
+      />
     </div>
   );
 }

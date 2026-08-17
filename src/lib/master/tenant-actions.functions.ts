@@ -8,10 +8,9 @@ export const updateTenantIdentity = createServerFn({ method: "POST" })
     updates: z.object({
       nome: z.string().optional(),
       slug: z.string().optional(),
-      razao_social: z.string().optional(),
-      documento: z.string().optional(),
-      email_contato: z.string().optional(),
-      telefone_contato: z.string().optional(),
+      documento: z.string().nullable().optional(),
+      telefone: z.string().nullable().optional(),
+      logo: z.string().nullable().optional(),
     })
   }).parse(data))
   .handler(async ({ data: { id, updates } }) => {
