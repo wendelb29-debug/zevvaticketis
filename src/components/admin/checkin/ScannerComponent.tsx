@@ -69,16 +69,16 @@ export function ScannerComponent() {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) throw new Error("Usuário não autenticado.");
 
-      const { data, error } = await supabase.rpc('process_ticket_checkin', {
-        _raw_token: tokenHash,
-        _event_id: selectedEventId as string,
-        _operator_id: user.id,
-        _tenant_id: activeTenant.id
+      const data = await processTicketCheckin({
+        data: {
+          rawToken: tokenHash,
+          eventId: selectedEventId as string,
+          tenantId: activeTenant.id,
+        },
       });
 
-      if (error) throw error;
-      
       const resultData = data as any;
+
       if (!resultData || !resultData.success) {
         setScannedResult({
           success: false,
