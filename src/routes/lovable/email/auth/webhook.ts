@@ -15,12 +15,13 @@ const SENDER_DOMAIN = "notify.zevvatickets.com"
 const ROOT_DOMAIN = "zevvatickets.com"
 const FROM_DOMAIN = "zevvatickets.com"
 const SITE_URL = `https://${ROOT_DOMAIN}`
+const AVATAR_URL = "https://zevvaticketis.lovable.app/__l5e/assets-v1/805035f5-9a45-4f5a-9347-40d03cbea352/zevva-avatar.png"
 
 // The SDK handler owns verification, dispatch, and retry semantics; this file
 // owns only the email decisions: subjects, templates, and per-type props.
 const handler = createAuthEmailHandler({
   apiKey: process.env['LOVABLE_API_KEY']!,
-  from: `${SITE_NAME} <noreply@${FROM_DOMAIN}>`,
+  from: `"${SITE_NAME}" <noreply@${FROM_DOMAIN}>`,
   senderDomain: SENDER_DOMAIN,
   sendUrl: process.env['LOVABLE_SEND_URL'],
   emails: {
@@ -96,7 +97,7 @@ const orderTicketsHandler = async (request: Request) => {
         'Authorization': `Bearer ${process.env['LOVABLE_API_KEY']}`,
       },
       body: JSON.stringify({
-        from: `${SITE_NAME} <noreply@${FROM_DOMAIN}>`,
+        from: `"${SITE_NAME}" <noreply@${FROM_DOMAIN}>`,
         to: payload.email,
         subject: `🎟️ Ingressos Disponíveis: ${payload.event_name || 'Seus ingressos'} chegaram!`,
         html,

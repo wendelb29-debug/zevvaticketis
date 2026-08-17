@@ -17,7 +17,7 @@ interface EmailLayoutProps {
   previewText: string
 }
 
-const LOGO_URL = "https://zevvaticketis.lovable.app/__l5e/assets-v1/74d44c87-d422-4b6d-9b77-81e827b742e7/zevva-logo-red.png"
+const LOGO_URL = "https://zevvaticketis.lovable.app/__l5e/assets-v1/805035f5-9a45-4f5a-9347-40d03cbea352/zevva-avatar.png"
 const BRAND_CORAL = "#D94B52"
 
 export const EmailLayout = ({ children, previewText }: EmailLayoutProps) => (
