@@ -219,7 +219,7 @@ function AdminLayout() {
     return (
       <TooltipProvider>
         <div className={cn(
-          "flex h-dvh min-h-0 flex-col bg-card border-r border-border transition-all duration-300 ease-in-out",
+          "flex h-dvh min-h-0 flex-col bg-card border-r border-border transition-all duration-300 ease-in-out sticky top-0 left-0",
           effectiveCollapsed ? "w-20" : "w-72"
         )}>
           {/* Cabeçalho: shrink-0 */}
