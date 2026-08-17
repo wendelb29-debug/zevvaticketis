@@ -105,6 +105,3 @@ function TenantManagementPage() {
   );
 }
 
-// Helper icons for tabs
-const LayoutDashboard = (props: any) => <Activity {...props} />;
-const Megaphone = (props: any) => <Users {...props} />; // Fallback icon
