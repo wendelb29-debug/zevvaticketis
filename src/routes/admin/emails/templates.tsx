@@ -8,13 +8,21 @@ import { ReauthenticationEmail } from '@/lib/email-templates/reauthentication';
 import { render } from '@react-email/render';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Copy, Monitor, Smartphone, ExternalLink, CheckCircle2 } from 'lucide-react';
+import { Copy, Monitor, Smartphone, CheckCircle2 } from 'lucide-react';
 import { toast } from 'sonner';
 
 const SAMPLE_PROJECT_URL = "https://zevvaticketis.lovable.app";
 
-const TEMPLATES = [
+type TemplateItem = {
+  id: string;
+  name: string;
+  subject: string;
+  component: React.ComponentType<any>;
+  props: any;
+  variable: string;
+};
+
+const TEMPLATES: TemplateItem[] = [
   {
     id: 'signup',
     name: 'Confirmação de Inscrição',
