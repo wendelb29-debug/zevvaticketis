@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "@tanstack/react-router";
 import { supabase } from "@/integrations/supabase/client";
+import { useTenants } from "@/hooks/use-tenants";
 import { 
   Ticket, 
   Users, 
