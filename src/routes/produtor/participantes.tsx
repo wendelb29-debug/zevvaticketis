@@ -111,7 +111,7 @@ function ParticipantesPage() {
                             event_name: ticket.events?.title,
                             order_id: ticket.id.substring(0, 8).toUpperCase(),
                             ticket_count: 1,
-                            url: `${window.location.origin}/meus-ingressos`
+                            url: `${window.location.origin}/app/meus-ingressos`
                           })
                         }),
                         {
