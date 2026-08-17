@@ -18,7 +18,18 @@ export type TenantAction =
   | 'acessar_financeiro'
   | 'gerenciar_marketing'
   | 'operar_checkin'
-  | 'administrar_checkin';
+  | 'administrar_checkin'
+  | 'master.view'
+  | 'master.manage_projects'
+  | 'master.change_plan'
+  | 'master.manage_limits'
+  | 'master.suspend_project'
+  | 'master.view_financial'
+  | 'master.view_security'
+  | 'master.view_audit'
+  | 'master.support_access'
+  | 'master.manage_global_settings';
+
 
 /**
  * Security validation result.
