@@ -5,7 +5,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { User, LogOut, LayoutDashboard, ChevronDown } from "lucide-react";
+import { User, LogOut, LayoutDashboard, ChevronDown, Ticket } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useUI } from "@/hooks/use-ui";
@@ -83,6 +83,14 @@ export function AccountMenu({ user, onLogout, onNavigate, onOpenAuth }: AccountM
         >
           <LayoutDashboard className="w-4 h-4" />
           {t.footer['producerPanel']}
+        </DropdownMenuItem>
+
+        <DropdownMenuItem
+          onClick={() => onNavigate("/app/meus-ingressos")}
+          className="flex items-center gap-3 px-3 py-2.5 text-[10px] font-bold uppercase tracking-widest cursor-pointer rounded-sm hover:bg-background text-muted-foreground hover:text-primary transition-colors focus:bg-background focus:text-primary"
+        >
+          <Ticket className="w-4 h-4" />
+          {t.nav['myTickets'] || "Meus Ingressos"}
         </DropdownMenuItem>
 
         <DropdownMenuItem
