@@ -32,8 +32,10 @@ import {
   Globe,
   Languages,
   Check,
-  Menu
+  Menu,
+  Ticket
 } from "lucide-react";
+
 import { cn } from "@/lib/utils";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { 
@@ -140,6 +142,9 @@ function AdminLayout() {
     { label: nav['chat'] || "Chat", icon: MessageSquare, href: "/admin/chat" },
     { label: nav['masterConsole'] || "Master Console", icon: Building2, href: "/admin/master" },
     { label: nav['dashboard'] || "Dashboard", icon: LayoutDashboard, href: "/admin", activeOptions: { exact: true } },
+    { label: nav.globalTicketManagement, icon: Ticket, href: "/admin/ingressos" },
+
+
     { 
       label: nav['contacts'] || "Contatos", 
       icon: Users, 

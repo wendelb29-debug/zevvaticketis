@@ -31,6 +31,12 @@ export type NavigationSchema = {
   generalPanel: string;
   reports: string;
   globalMonitor: string;
+  events?: string;
+  participants?: string;
+  financial?: string;
+  team?: string;
+  ticketManagement: string;
+  globalTicketManagement: string;
   plans: string;
   countriesAndCurrencies: string;
   marketing: string;
@@ -46,6 +52,7 @@ export type NavigationSchema = {
   settings: string;
   language: string;
 };
+
 
 export type CommonSchema = {
   save: string;
