@@ -37,12 +37,6 @@ export type NavigationSchema = {
   team?: string;
   ticketManagement: string;
   globalTicketManagement: string;
-
-  events?: string;
-  participants?: string;
-  financial?: string;
-  team?: string;
-
   plans: string;
   countriesAndCurrencies: string;
   marketing: string;
@@ -57,8 +51,6 @@ export type NavigationSchema = {
   gmailInbox: string;
   settings: string;
   language: string;
-  ticketManagement: string;
-  globalTicketManagement: string;
 };
 
 
