@@ -219,7 +219,7 @@ function AdminLayout() {
     return (
       <TooltipProvider>
         <div className={cn(
-          "flex h-dvh min-h-0 flex-col bg-card border-r border-border transition-all duration-300 ease-in-out sticky top-0 left-0",
+          "flex h-dvh min-h-0 flex-col bg-card",
           effectiveCollapsed ? "w-20" : "w-72"
         )}>
           {/* Cabeçalho: shrink-0 */}
@@ -465,50 +465,61 @@ function AdminLayout() {
   };
 
   return (
-    <div className="flex min-h-dvh bg-background font-inter overflow-x-hidden relative">
-      {/* Sidebar Desktop: fixo na esquerda enquanto a página rola */}
-      <aside className="sticky top-0 h-dvh shrink-0 z-40 hidden md:block">
+    <div className="min-h-dvh bg-background font-inter overflow-x-hidden relative">
+      {/* Sidebar Desktop: fixa via CSS fixed */}
+      <aside 
+        className={cn(
+          "fixed inset-y-0 left-0 z-40 hidden lg:flex lg:flex-col overflow-hidden border-r border-border bg-card transition-all duration-300 ease-in-out",
+          isSidebarCollapsed ? "w-20" : "w-72"
+        )}
+      >
         <SidebarContent />
       </aside>
       
-      <main className="min-w-0 flex-1 flex flex-col">
-        {/* Header fixo no topo da área de conteúdo */}
-        <header className="h-16 border-b border-border bg-card/80 backdrop-blur-md flex items-center justify-between px-4 md:px-8 sticky top-0 z-30 shrink-0">
-          <div className="flex items-center gap-4">
-            {/* Mobile Navigation */}
-            <div className="md:hidden">
-              <Sheet>
-                <SheetTrigger asChild>
-                  <button className="p-2 hover:bg-accent rounded-lg transition-all text-foreground outline-none border border-border">
-                    <Menu className="w-5 h-5" />
-                  </button>
-                </SheetTrigger>
-                <SheetContent side="left" className="p-0 w-72 bg-card border-r-border">
-                  <SidebarContent forceExpanded={true} />
-                </SheetContent>
-              </Sheet>
+      {/* Área principal: compensa a largura da sidebar fixa */}
+      <div className={cn(
+        "min-w-0 transition-all duration-300 ease-in-out",
+        isSidebarCollapsed ? "lg:pl-20" : "lg:pl-72"
+      )}>
+        <main className="min-w-0 flex flex-col">
+          {/* Header sticky no topo da área de conteúdo */}
+          <header className="h-16 border-b border-border bg-card/80 backdrop-blur-md flex items-center justify-between px-4 md:px-8 sticky top-0 z-30 shrink-0">
+            <div className="flex items-center gap-4">
+              {/* Mobile Navigation */}
+              <div className="lg:hidden">
+                <Sheet>
+                  <SheetTrigger asChild>
+                    <button className="p-2 hover:bg-accent rounded-lg transition-all text-foreground outline-none border border-border">
+                      <Menu className="w-5 h-5" />
+                    </button>
+                  </SheetTrigger>
+                  <SheetContent side="left" className="p-0 w-72 bg-card border-r-border">
+                    <SidebarContent forceExpanded={true} />
+                  </SheetContent>
+                </Sheet>
+              </div>
+              <GlobalBreadcrumb />
             </div>
-            <GlobalBreadcrumb />
-          </div>
-          <div className="flex items-center gap-3">
-            <NotificationBell />
-            <button
-              onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-              className="w-10 h-10 flex items-center justify-center rounded-xl border border-border hover:bg-accent transition-all text-muted-foreground hover:text-primary"
-            >
-              {theme === 'dark' ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
-            </button>
-          </div>
-        </header>
+            <div className="flex items-center gap-3">
+              <NotificationBell />
+              <button
+                onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+                className="w-10 h-10 flex items-center justify-center rounded-xl border border-border hover:bg-accent transition-all text-muted-foreground hover:text-primary"
+              >
+                {theme === 'dark' ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+              </button>
+            </div>
+          </header>
 
-        {/* Área de conteúdo: rola naturalmente com a página */}
-        <div className={cn(
-          "flex-1 transition-all duration-300",
-          isTransitioning ? "opacity-0 translate-y-2" : "opacity-100 translate-y-0"
-        )}>
-          <Outlet />
-        </div>
-      </main>
+          {/* Área de conteúdo: rola com o body */}
+          <div className={cn(
+            "flex-1 transition-all duration-300",
+            isTransitioning ? "opacity-0 translate-y-2" : "opacity-100 translate-y-0"
+          )}>
+            <Outlet />
+          </div>
+        </main>
+      </div>
     </div>
   );
 }
