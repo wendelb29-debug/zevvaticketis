@@ -53,14 +53,16 @@ const getEligibleAdsSchema = z.object({
 export const getEligibleAds = createServerFn({ method: "GET" })
   .validator((data: any) => getEligibleAdsSchema.parse(data))
   .handler(async ({ data }) => {
+    // Server-side privileged read: only non-sensitive columns are projected.
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
 
     // Current time for filter
     const now = new Date().toISOString();
 
-    // Select active campaigns from the public-safe view (no financial data)
-    const { data: campaigns, error: campaignError } = await (supabase as any)
-      .from("ad_campaigns_public")
-      .select("*")
+    const { data: campaigns, error: campaignError } = await (supabaseAdmin as any)
+      .from("ad_campaigns")
+      .select("id, organization_id, advertiser_id, name, status, priority, start_at, end_at, timezone, targeting, frequency_cap")
+      .eq("status", "ativa")
       .lte("start_at", now)
       .gte("end_at", now)
       .order("priority", { ascending: false });
@@ -70,12 +72,14 @@ export const getEligibleAds = createServerFn({ method: "GET" })
 
     const selected = campaigns.slice(0, data.limit);
 
-    const { data: creatives, error: creativeError } = await supabase
+    const { data: creatives, error: creativeError } = await (supabaseAdmin as any)
       .from("ad_creatives")
       .select("*")
+      .eq("status", "ativo")
       .in("campaign_id", selected.map((c: any) => c.id));
 
     if (creativeError) throw creativeError;
+
 
     return selected
       .map((c: any) => ({
