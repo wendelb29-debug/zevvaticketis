@@ -26,6 +26,8 @@ import { useQuery } from "@tanstack/react-query";
 import { PermissionsRolesManager } from "@/components/admin/PermissionsRolesManager";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import { useServerFn } from "@tanstack/react-start";
+import { updateGlobalPlatformSettings } from "@/lib/master/global-settings.functions";
 
 
 export const Route = createFileRoute("/admin/configuracoes")({
