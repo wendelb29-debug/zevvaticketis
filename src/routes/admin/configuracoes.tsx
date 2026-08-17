@@ -1300,43 +1300,62 @@ function SettingsPage({ session, activeTenantId }: { session: any, activeTenantI
               </div>
             </AccordionTrigger>
             <AccordionContent className="px-8 pb-8 pt-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div className="space-y-6">
-                  <div className="space-y-2">
-                    <Label className="text-xs font-black uppercase tracking-widest">Nome da Plataforma</Label>
-                    <Input defaultValue="Zevva Tickets" className="rounded-xl" />
-                  </div>
-                  <div className="space-y-2">
-                    <Label className="text-xs font-black uppercase tracking-widest">Domínio Principal</Label>
-                    <Input defaultValue="zevvatickets.com" className="rounded-xl" />
-                  </div>
-                </div>
-                <div className="space-y-6">
-                  <div className="space-y-2">
-                    <Label className="text-xs font-black uppercase tracking-widest">Idioma Padrão</Label>
-                    <Select defaultValue="pt">
-                      <SelectTrigger className="rounded-xl">
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent className="rounded-xl">
-                        <SelectItem value="pt">Português (Brasil)</SelectItem>
-                        <SelectItem value="en">English</SelectItem>
-                        <SelectItem value="es">Español</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <div className="flex items-center justify-between p-4 bg-muted/30 rounded-2xl border border-border/50">
-                    <div>
-                      <Label className="font-bold">Modo Manutenção</Label>
-                      <p className="text-xs text-muted-foreground">Bloqueia acesso público à plataforma.</p>
+              <GlobalSectionForm 
+                section="plataforma" 
+                defaultValues={{
+                  name: "Zevva Tickets",
+                  domain: "zevvatickets.com",
+                  locale: "pt",
+                  maintenance: false
+                }}
+                render={(values, update) => (
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div className="space-y-6">
+                      <div className="space-y-2">
+                        <Label className="text-xs font-black uppercase tracking-widest">Nome da Plataforma</Label>
+                        <Input 
+                          value={values.name} 
+                          onChange={e => update({ name: e.target.value })}
+                          className="rounded-xl" 
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <Label className="text-xs font-black uppercase tracking-widest">Domínio Principal</Label>
+                        <Input 
+                          value={values.domain} 
+                          onChange={e => update({ domain: e.target.value })}
+                          className="rounded-xl" 
+                        />
+                      </div>
                     </div>
-                    <Switch />
+                    <div className="space-y-6">
+                      <div className="space-y-2">
+                        <Label className="text-xs font-black uppercase tracking-widest">Idioma Padrão</Label>
+                        <Select value={values.locale} onValueChange={v => update({ locale: v })}>
+                          <SelectTrigger className="rounded-xl">
+                            <SelectValue />
+                          </SelectTrigger>
+                          <SelectContent className="rounded-xl">
+                            <SelectItem value="pt">Português (Brasil)</SelectItem>
+                            <SelectItem value="en">English</SelectItem>
+                            <SelectItem value="es">Español</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                      <div className="flex items-center justify-between p-4 bg-muted/30 rounded-2xl border border-border/50">
+                        <div>
+                          <Label className="font-bold">Modo Manutenção</Label>
+                          <p className="text-xs text-muted-foreground">Bloqueia acesso público à plataforma.</p>
+                        </div>
+                        <Switch 
+                          checked={values.maintenance} 
+                          onCheckedChange={v => update({ maintenance: v })}
+                        />
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
-              <div className="mt-8 pt-8 border-t border-border/50 flex justify-end">
-                <Button className="bg-navy hover:bg-navy/90 text-white rounded-xl font-black px-8">Salvar Alterações</Button>
-              </div>
+                )}
+              />
             </AccordionContent>
           </AccordionItem>
 

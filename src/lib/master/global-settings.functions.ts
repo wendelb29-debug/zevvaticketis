@@ -1,6 +1,5 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
-import { supabaseAdmin } from "@/integrations/supabase/client.server";
 import { auditLog } from "@/lib/security.server";
 
 const globalSettingsUpdateSchema = z.object({
@@ -10,19 +9,22 @@ const globalSettingsUpdateSchema = z.object({
 });
 
 export const updateGlobalPlatformSettings = createServerFn({ method: "POST" })
-  .inputValidator((data) => globalSettingsUpdateSchema.parse(data))
+  .validator((data: unknown) => globalSettingsUpdateSchema.parse(data))
   .handler(async ({ data, context }) => {
     // 1. Verify Authentication & Platform Admin Status
-    const { data: { user } } = await context.supabase.auth.getUser();
+    const supabase = context.supabase;
+    if (!supabase) throw new Error("Supabase context is missing");
+
+    const { data: { user } } = await supabase.auth.getUser();
     if (!user) throw new Error("Unauthorized");
 
-    const { data: isAdmin } = await context.supabase.rpc('check_is_platform_admin', {
+    const { data: isAdmin } = await supabase.rpc('check_is_platform_admin', {
       _user_id: user.id
     });
 
     if (!isAdmin) throw new Error("Forbidden: Requiere privilegios de administrador global");
 
-    // 2. Section Allowlist & Validation Logic
+    // 2. Section Allowlist
     const allowedSections = [
       "plataforma", "financeiro", "planos", "eventos", 
       "ingressos", "checkin", "comunicacao", "seguranca", 
@@ -34,15 +36,14 @@ export const updateGlobalPlatformSettings = createServerFn({ method: "POST" })
     }
 
     // 3. Fetch Previous State for Audit
-    // Note: We use a dedicated table for global config or meta-data
-    const { data: prevData } = await context.supabase
+    const { data: prevData } = await supabase
       .from('platform_settings')
       .select('*')
       .eq('section', data.section)
       .single();
 
     // 4. Atomic Update
-    const { error: updateError } = await context.supabase
+    const { error: updateError } = await supabase
       .from('platform_settings')
       .upsert({
         section: data.section,
@@ -58,7 +59,7 @@ export const updateGlobalPlatformSettings = createServerFn({ method: "POST" })
       action: "PLATFORM_SETTINGS_UPDATE",
       entity_type: "platform",
       entity_id: "global",
-      tenant_id: null, // Global action
+      tenant_id: null,
       actor_id: user.id,
       details: {
         section: data.section,
