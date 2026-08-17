@@ -1493,25 +1493,31 @@ function SettingsPage({ session, activeTenantId }: { session: any, activeTenantI
               </div>
             </AccordionTrigger>
             <AccordionContent className="px-8 pb-8 pt-4">
-               <div className="space-y-4">
-                  {[
-                    { label: "MFA Obrigatório para Admins", desc: "Exige 2FA para todos os membros administrativos da plataforma." },
-                    { label: "CAPTCHA em Cadastros", desc: "Proteção contra bots em novas contas." },
-                    { label: "Alertas de Login Suspeito", desc: "Notifica administradores sobre acessos de novas origens." },
-                  ].map((item, idx) => (
-                    <div key={idx} className="flex items-center justify-between p-4 bg-muted/30 rounded-2xl border border-border/50">
-                      <div>
-                        <Label className="font-bold">{item.label}</Label>
-                        <p className="text-[11px] text-muted-foreground">{item.desc}</p>
+              <GlobalSectionForm
+                section="seguranca"
+                render={(values, update) => (
+                  <div className="space-y-4">
+                    {[
+                      { key: "mfa_required", label: "MFA Obrigatório para Admins", desc: "Exige 2FA para todos os membros administrativos da plataforma." },
+                      { key: "captcha_enabled", label: "CAPTCHA em Cadastros", desc: "Proteção contra bots em novas contas." },
+                      { key: "suspicious_alerts", label: "Alertas de Login Suspeito", desc: "Notifica administradores sobre acessos de novas origens." },
+                    ].map((item) => (
+                      <div key={item.key} className="flex items-center justify-between p-4 bg-muted/30 rounded-2xl border border-border/50">
+                        <div>
+                          <Label className="font-bold">{item.label}</Label>
+                          <p className="text-[11px] text-muted-foreground">{item.desc}</p>
+                        </div>
+                        <Switch 
+                          checked={values[item.key] ?? false} 
+                          onCheckedChange={v => update({ [item.key]: v })} 
+                        />
                       </div>
-                      <Switch defaultChecked={idx === 0} />
-                    </div>
-                  ))}
-               </div>
-               <div className="mt-8 pt-8 border-t border-border/50 flex justify-end">
-                <Button className="bg-navy hover:bg-navy/90 text-white rounded-xl font-black px-8">Atualizar Políticas</Button>
-              </div>
+                    ))}
+                  </div>
+                )}
+              />
             </AccordionContent>
+
           </AccordionItem>
 
           {/* Outras seções resumidas conforme solicitação */}
