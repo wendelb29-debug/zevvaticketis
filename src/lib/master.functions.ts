@@ -57,6 +57,8 @@ export const getGlobalStats = createServerFn({ method: "GET" })
 
     const gmv = ordersData?.reduce((acc, curr) => acc + (Number(curr.valor_bruto) || 0), 0) || 0;
     const revenue = ordersData?.reduce((acc, curr) => acc + (Number(curr.taxa_plataforma) || 0), 0) || 0;
+    const pendingOrders = ordersData?.filter(o => o.status === 'pendente').length || 0;
+
 
     return {
       tenants: {
@@ -76,6 +78,8 @@ export const getGlobalStats = createServerFn({ method: "GET" })
       financial: {
         gmv,
         revenue,
+        pendingOrders
+
       }
     };
   });
@@ -105,7 +109,7 @@ export const listTenantsPaginated = createServerFn({ method: "GET" })
       query = query.eq('plan', plan);
     }
 
-    const { data, count, error } = await query
+    const { data, count, error } = await (query as any)
       .order(orderBy, { ascending: orderDir === 'asc' })
       .range(from, to);
 
