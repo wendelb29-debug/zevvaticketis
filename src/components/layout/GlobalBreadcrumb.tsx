@@ -1,76 +1,56 @@
-import { Link, useLocation } from "@tanstack/react-router";
-import { ChevronRight } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { Link, useLocation, useParams } from "@tanstack/react-router";
+import { ChevronRight, Home } from "lucide-react";
+import { useTenantAdminDetails } from "@/hooks/admin/use-tenant-admin-details";
 
-const labelMap: Record<string, string> = {
-  admin: "Admin",
-  app: "Zevva",
-  perfil: "Meu Perfil",
-  chat: "Chat",
-  dashboard: "Dashboard",
-  usuarios: "Usuários",
-  planos: "Planos",
-  marketing: "Marketing",
-  auditoria: "Auditoria",
-  checkin: "Check-in",
-  aprovacoes: "Aprovações",
-  produtores: "Produtores",
-  paises: "Países",
-  emails: "E-mails",
-  configuracoes: "Configurações",
-  atendimento: "Atendimento",
-  departamentos: "Departamentos",
-  sla: "SLA",
-  eventos: "Eventos",
-  ingressos: "Meus Ingressos",
-  historico: "Histórico",
-};
-
-export function GlobalBreadcrumb({ className }: { className?: string }) {
+export function GlobalBreadcrumb() {
   const location = useLocation();
-  const pathnames = location.pathname.split("/").filter(Boolean);
-
-  if (pathnames.length === 0) return null;
-
-  const crumbs = pathnames.map((name, index) => ({
-    label: labelMap[name.toLowerCase()] ?? name.charAt(0).toUpperCase() + name.slice(1),
-    href: "/" + pathnames.slice(0, index + 1).join("/"),
-    isLast: index === pathnames.length - 1,
-  }));
-
-  const rootHref = pathnames[0] === "admin" ? "/admin" : "/";
+  const params = useParams({ strict: false }) as any;
+  const pathnames = location.pathname.split("/").filter((x) => x);
+  
+  // Fetch tenant details if we are on a tenant-specific page
+  const { data: tenantResult } = useTenantAdminDetails();
+  const tenantName = tenantResult?.found ? tenantResult.tenant.nome : null;
 
   return (
-    <nav
-      aria-label="Breadcrumb"
-      className={cn("flex items-center gap-2 text-sm font-inter whitespace-nowrap", className)}
-    >
-      <Link
-        to={rootHref}
-        className="hidden sm:inline text-foreground/70 hover:text-primary font-semibold transition-colors"
+    <nav className="flex items-center text-xs font-bold uppercase tracking-widest text-muted-foreground/60">
+      <Link 
+        to="/" 
+        className="hover:text-foreground transition-colors flex-shrink-0 flex items-center gap-1.5"
       >
-        Início
+        <Home className="w-3 h-3" />
       </Link>
-      <span className="sm:hidden text-muted-foreground font-semibold">...</span>
+      
+      {pathnames.map((value, index) => {
+        const last = index === pathnames.length - 1;
+        const to = `/${pathnames.slice(0, index + 1).join("/")}`;
+        
+        // Custom labels for specific path parts
+        let label = value;
+        if (value === "admin") label = "Zevva Admin";
+        if (value === "master") label = "Master Console";
+        if (value === "tenants") label = "Projetos";
+        
+        // If the value matches the current tenant ID, show the name instead
+        if (params.id && value === params.id && tenantName) {
+          label = tenantName;
+        }
 
-      {crumbs.map((crumb) => (
-        <div
-          key={crumb.href}
-          className={cn("items-center gap-2", crumb.isLast ? "flex" : "hidden sm:flex")}
-        >
-          <ChevronRight className="w-4 h-4 text-muted-foreground/40 shrink-0" />
-          {crumb.isLast ? (
-            <span className="text-foreground font-extrabold tracking-tight">{crumb.label}</span>
-          ) : (
-            <Link
-              to={crumb.href as any}
-              className="text-foreground/70 hover:text-primary font-semibold transition-colors"
-            >
-              {crumb.label}
-            </Link>
-          )}
-        </div>
-      ))}
+        return (
+          <div key={to} className="flex items-center">
+            <ChevronRight className="w-3 h-3 mx-2 opacity-20 flex-shrink-0" />
+            {last ? (
+              <span className="text-foreground font-black truncate">{label}</span>
+            ) : (
+              <Link 
+                to={to as any} 
+                className="hover:text-foreground transition-colors truncate"
+              >
+                {label}
+              </Link>
+            )}
+          </div>
+        );
+      })}
     </nav>
   );
 }

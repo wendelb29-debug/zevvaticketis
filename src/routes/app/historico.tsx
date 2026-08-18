@@ -67,7 +67,7 @@ function OrderHistory() {
 
   return (
     <div className="space-y-10 font-inter max-w-4xl mx-auto pb-20 pt-6">
-      <GlobalBreadcrumb className="py-4" />
+      <div className="py-4"><GlobalBreadcrumb /></div>
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div className="space-y-1">
           <h1 className="text-3xl font-manrope font-extrabold text-foreground">Meus Ingressos</h1>

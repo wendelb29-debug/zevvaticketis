@@ -3191,6 +3191,7 @@ export type Database = {
         Args: { _uid: string }
         Returns: Json
       }
+      get_master_tenant_details: { Args: { _tenant_id: string }; Returns: Json }
       get_user_tenants: { Args: never; Returns: string[] }
       has_role:
         | {

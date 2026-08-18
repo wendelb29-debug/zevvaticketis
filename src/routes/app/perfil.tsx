@@ -280,7 +280,7 @@ function UserProfile() {
         onClose={() => setCropSrc(null)}
         onConfirm={handleCroppedUpload}
       />
-      <GlobalBreadcrumb className="py-4" />
+      <div className="py-4"><GlobalBreadcrumb /></div>
       <div className="space-y-1">
         <h1 className="text-3xl font-manrope font-extrabold text-foreground">Meu Perfil</h1>
         <p className="text-muted-foreground font-medium">Gerencie suas informações pessoais e preferências.</p>
