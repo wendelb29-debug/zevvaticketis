@@ -254,7 +254,10 @@ function MasterAdminPage() {
                           variant="outline" 
                           size="sm" 
                           className="h-8 rounded-lg font-bold text-xs"
-                          onClick={() => navigate({ to: `/admin/tenants/${tenant.id}` as any })}
+                          onClick={() => navigate({ 
+                            to: "/admin/tenants/$id",
+                            params: { id: tenant.id }
+                          })}
                         >
                           Gerenciar
                         </Button>

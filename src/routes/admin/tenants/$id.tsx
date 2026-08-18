@@ -25,8 +25,30 @@ export const Route = createFileRoute("/admin/tenants/$id")({
 function TenantManagementPage() {
   const { id } = useParams({ from: "/admin/tenants/$id" });
   const { tab } = useSearch({ from: "/admin/tenants/$id" });
-  const { data: tenant, isLoading: isTenantLoading, error: tenantError } = useTenantAdminDetails();
+  const { data: result, isLoading: isTenantLoading, error: tenantError } = useTenantAdminDetails();
   const { stats, activities } = useTenantAdminStats(id);
+
+  const isValidUuid = (uuid: string) => {
+    const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+    return uuidRegex.test(uuid);
+  };
+
+  if (!isValidUuid(id)) {
+    return (
+      <div className="p-20 text-center">
+        <div className="w-20 h-20 bg-amber-500/10 text-amber-500 rounded-3xl mx-auto mb-6 flex items-center justify-center">
+          <Settings size={40} />
+        </div>
+        <h2 className="text-2xl font-manrope font-black text-foreground mb-2">Endereço Inválido</h2>
+        <p className="text-muted-foreground max-w-md mx-auto mb-6">
+          O identificador do projeto fornecido não é um UUID válido.
+        </p>
+        <Button variant="outline" onClick={() => window.history.back()}>
+          Voltar ao Master Console
+        </Button>
+      </div>
+    );
+  }
 
   if (isTenantLoading) {
     return (
@@ -37,19 +59,31 @@ function TenantManagementPage() {
     );
   }
 
-  if (tenantError || !tenant) {
+  if (tenantError || !result?.found) {
+    const errorCode = result?.code || "UNKNOWN_ERROR";
+    const errorMessage = errorCode === "FORBIDDEN" 
+      ? "Você não possui permissão para acessar este projeto." 
+      : "O projeto solicitado não foi encontrado ou foi removido.";
+
     return (
       <div className="p-20 text-center">
         <div className="w-20 h-20 bg-rose-500/10 text-rose-500 rounded-3xl mx-auto mb-6 flex items-center justify-center">
           <Settings size={40} />
         </div>
-        <h2 className="text-2xl font-manrope font-black text-foreground mb-2">Projeto Não Encontrado (404)</h2>
-        <p className="text-muted-foreground max-w-md mx-auto">
-          O ID fornecido não corresponde a nenhum projeto registrado ou você não possui permissão para acessá-lo.
+        <h2 className="text-2xl font-manrope font-black text-foreground mb-2">
+          {errorCode === "FORBIDDEN" ? "Acesso Negado" : "Projeto Não Encontrado"}
+        </h2>
+        <p className="text-muted-foreground max-w-md mx-auto mb-6">
+          {errorMessage}
         </p>
+        <Button variant="outline" onClick={() => window.history.back()}>
+          Voltar ao Master Console
+        </Button>
       </div>
     );
   }
+
+  const tenant = result.tenant;
 
   const TABS_CONFIG = [
     { id: "geral", label: "Visão Geral", icon: DashboardIcon },

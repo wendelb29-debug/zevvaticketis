@@ -5,21 +5,20 @@ import { supabaseAdmin } from "@/integrations/supabase/client.server";
 export const getTenantDetails = createServerFn({ method: "GET" })
   .validator((data) => z.object({ id: z.string() }).parse(data))
   .handler(async ({ data: { id } }) => {
-    // Apenas admins globais podem acessar detalhes de qualquer tenant
-    // Validação de permissão será feita na chamada do RPC
-    const { data, error } = await supabaseAdmin
-      .from("tenants")
-      .select(`
-        *,
-        owner:profiles!tenants_owner_id_fkey(nome, email),
-        member_count:tenant_members(count),
-        event_count:events(count)
-      `)
-      .eq("id", id)
-      .single();
+    const { data, error } = await supabaseAdmin.rpc("get_master_tenant_details", {
+      _tenant_id: id
+    });
 
-    if (error) throw error;
-    return data;
+    if (error) {
+      console.error("Error calling get_master_tenant_details:", error);
+      throw error;
+    }
+
+    return data as {
+      found: boolean;
+      code?: string;
+      tenant?: any;
+    };
   });
 
 export const suspendTenant = createServerFn({ method: "POST" })
