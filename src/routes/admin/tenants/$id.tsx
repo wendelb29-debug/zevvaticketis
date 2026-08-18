@@ -1,4 +1,4 @@
-import { createFileRoute, useParams, useSearch } from "@tanstack/react-router";
+import { createFileRoute, useParams, useSearch, Link } from "@tanstack/react-router";
 import { useTenantAdminDetails } from "@/hooks/admin/use-tenant-admin-details";
 import { useTenantAdminStats } from "@/hooks/admin/use-tenant-admin-stats";
 import { TenantHeader } from "@/components/admin/tenant/TenantHeader";
@@ -19,6 +19,18 @@ const searchSchema = z.object({
 
 export const Route = createFileRoute("/admin/tenants/$id")({
   validateSearch: (search) => searchSchema.parse(search),
+  head: (ctx) => {
+    const tenantName = (ctx.loaderData as any)?.tenant?.nome || "Projeto";
+    return [
+      { title: `Zevva Master | ${tenantName}` },
+      { name: "description", content: `Gestão administrativa global do projeto ${tenantName}.` },
+    ];
+  },
+  loader: async ({ params }) => {
+    // We add a minimal loader just to pass data to head() if possible, 
+    // but the actual data is handled by React Query in the component.
+    return { id: params.id };
+  },
   component: TenantManagementPage,
 });
 
@@ -43,8 +55,8 @@ function TenantManagementPage() {
         <p className="text-muted-foreground max-w-md mx-auto mb-6">
           O identificador do projeto fornecido não é um UUID válido.
         </p>
-        <Button variant="outline" onClick={() => window.history.back()}>
-          Voltar ao Master Console
+        <Button variant="outline" asChild>
+          <Link to="/admin/master">Voltar ao Master Console</Link>
         </Button>
       </div>
     );
@@ -76,8 +88,8 @@ function TenantManagementPage() {
         <p className="text-muted-foreground max-w-md mx-auto mb-6">
           {errorMessage}
         </p>
-        <Button variant="outline" onClick={() => window.history.back()}>
-          Voltar ao Master Console
+        <Button variant="outline" asChild>
+          <Link to="/admin/master">Voltar ao Master Console</Link>
         </Button>
       </div>
     );
