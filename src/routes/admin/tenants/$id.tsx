@@ -14,17 +14,18 @@ import { useState } from "react";
 import { SuspendTenantDialog } from "@/components/admin/tenant/SuspendTenantDialog";
 
 const searchSchema = z.object({
-  tab: z.string().optional().default("geral"),
+  tab: z.string().catch("geral"),
 });
 
 export const Route = createFileRoute("/admin/tenants/$id")({
   validateSearch: (search) => searchSchema.parse(search),
   head: (ctx) => {
-    const tenantName = (ctx.loaderData as any)?.tenant?.nome || "Projeto";
-    return [
-      { title: `Zevva Master | ${tenantName}` },
-      { name: "description", content: `Gestão administrativa global do projeto ${tenantName}.` },
-    ];
+    return {
+      meta: [
+        { title: `Zevva Master | ${(ctx.loaderData as any)?.tenant?.nome || "Projeto"}` },
+        { name: "description", content: "Gestão administrativa global do projeto." },
+      ],
+    };
   },
   loader: async ({ params }) => {
     // We add a minimal loader just to pass data to head() if possible, 
@@ -56,7 +57,7 @@ function TenantManagementPage() {
           O identificador do projeto fornecido não é um UUID válido.
         </p>
         <Button variant="outline" asChild>
-          <Link to="/admin/master">Voltar ao Master Console</Link>
+          <Link to="/admin/master" search={{}}>Voltar ao Master Console</Link>
         </Button>
       </div>
     );
@@ -89,7 +90,7 @@ function TenantManagementPage() {
           {errorMessage}
         </p>
         <Button variant="outline" asChild>
-          <Link to="/admin/master">Voltar ao Master Console</Link>
+          <Link to="/admin/master" search={{}}>Voltar ao Master Console</Link>
         </Button>
       </div>
     );
