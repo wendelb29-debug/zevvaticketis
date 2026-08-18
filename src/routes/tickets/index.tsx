@@ -76,7 +76,7 @@ function MyTickets() {
 
   return (
     <div className="max-w-7xl mx-auto px-6 py-8 space-y-8 font-inter">
-      <GlobalBreadcrumb className="py-4" />
+      <div className="py-4"><GlobalBreadcrumb /></div>
       <div className="flex flex-col gap-2">
         <h1 className="text-3xl font-manrope font-extrabold text-foreground">Meus Ingressos</h1>
         <p className="text-muted-foreground font-medium">Gerencie suas reservas e acesse seus QR codes.</p>
