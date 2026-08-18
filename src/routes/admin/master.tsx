@@ -256,7 +256,8 @@ function MasterAdminPage() {
                           className="h-8 rounded-lg font-bold text-xs"
                           onClick={() => navigate({ 
                             to: "/admin/tenants/$id",
-                            params: { id: tenant.id }
+                            params: { id: tenant.id },
+                            search: { tab: "geral" }
                           })}
                         >
                           Gerenciar
