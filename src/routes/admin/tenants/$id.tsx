@@ -57,7 +57,7 @@ function TenantManagementPage() {
           O identificador do projeto fornecido não é um UUID válido.
         </p>
         <Button variant="outline" asChild>
-          <Link to="/admin/master" search={{}}>Voltar ao Master Console</Link>
+          <Link to="/admin/master" search={{ page: 1, search: "" }}>Voltar ao Master Console</Link>
         </Button>
       </div>
     );
@@ -90,7 +90,7 @@ function TenantManagementPage() {
           {errorMessage}
         </p>
         <Button variant="outline" asChild>
-          <Link to="/admin/master" search={{}}>Voltar ao Master Console</Link>
+          <Link to="/admin/master" search={{ page: 1, search: "" }}>Voltar ao Master Console</Link>
         </Button>
       </div>
     );
