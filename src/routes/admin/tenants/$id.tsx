@@ -107,13 +107,14 @@ function TenantManagementPage() {
 
         <div className="min-h-[600px]">
           <TabsContent value="geral" className="space-y-8 outline-none">
-            <TenantOverview tenant={tenant} stats={stats as any} />
+            <TenantOverview tenant={tenant} stats={stats.data as any} />
             <div className="grid grid-cols-1 xl:grid-cols-3 gap-8">
               <div className="xl:col-span-2">
-                <TenantActivityFeed activities={activities || []} />
+                <TenantActivityFeed activities={activities.data || []} />
               </div>
             </div>
           </TabsContent>
+
 
           <TabsContent value="dashboard">
              <div className="bg-card p-8 rounded-[40px] border border-border/50 shadow-sm min-h-[600px]">
