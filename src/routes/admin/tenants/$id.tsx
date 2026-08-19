@@ -1,4 +1,4 @@
-import { createFileRoute, useParams, useSearch, Link } from "@tanstack/react-router";
+import { createFileRoute, useParams, useSearch, Link, useNavigate } from "@tanstack/react-router";
 import { useTenantAdminDetails } from "@/hooks/admin/use-tenant-admin-details";
 import { useTenantAdminStats } from "@/hooks/admin/use-tenant-admin-stats";
 import { TenantHeader } from "@/components/admin/tenant/TenantHeader";
