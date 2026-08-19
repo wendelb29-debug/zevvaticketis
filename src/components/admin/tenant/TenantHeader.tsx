@@ -21,6 +21,8 @@ interface TenantHeaderProps {
 
 export function TenantHeader({ tenant }: TenantHeaderProps) {
   const navigate = useNavigate();
+  const displayName: string = tenant?.name ?? tenant?.nome ?? "Projeto";
+  const tenantId: string = tenant?.id ?? "";
   const [suspendDialogOpen, setSuspendDialogOpen] = useState(false);
 
   const copyToClipboard = (text: string) => {
@@ -43,23 +45,23 @@ export function TenantHeader({ tenant }: TenantHeaderProps) {
           
           <div className="flex items-center gap-4">
             <div className="w-12 h-12 bg-navy rounded-xl flex items-center justify-center text-primary-foreground font-bold text-lg border border-white/10 shadow-md overflow-hidden shrink-0">
-              {tenant.logo_url ? <img src={tenant.logo_url} className="w-full h-full object-cover" /> : tenant.name.substring(0, 2).toUpperCase()}
+              {tenant?.logo_url ?? tenant?.logo ? <img src={tenant?.logo_url ?? tenant?.logo} className="w-full h-full object-cover" /> : displayName.substring(0, 2).toUpperCase()}
             </div>
             <div className="space-y-0.5">
               <div className="flex items-center gap-3">
-                <h1 className="text-2xl font-manrope font-bold text-foreground tracking-tight leading-none">{tenant.name}</h1>
-                <MasterStatusBadge status={tenant.status} />
+                <h1 className="text-2xl font-manrope font-bold text-foreground tracking-tight leading-none">{displayName}</h1>
+                <MasterStatusBadge status={tenant?.status} />
               </div>
               <div className="flex items-center gap-3 text-xs font-medium text-muted-foreground">
                 <span className="flex items-center gap-1.5 hover:text-foreground transition-colors cursor-default">
-                  /{tenant.slug}
+                  /{tenant?.slug ?? "-"}
                 </span>
                 <span className="w-1 h-1 bg-border rounded-full" />
                 <button 
-                  onClick={() => copyToClipboard(tenant.id)}
+                  onClick={() => copyToClipboard(tenantId)}
                   className="flex items-center gap-1.5 hover:text-foreground transition-colors group"
                 >
-                  ID: {tenant.id.substring(0, 8)}...
+                  ID: {tenantId.substring(0, 8)}...
                   <Copy className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
                 </button>
               </div>
@@ -75,7 +77,7 @@ export function TenantHeader({ tenant }: TenantHeaderProps) {
             onClick={() => setSuspendDialogOpen(true)}
           >
             <ShieldAlert className="w-3.5 h-3.5" />
-            {tenant.status === 'suspenso' ? 'Reativar' : 'Suspender'}
+            {tenant?.status === 'suspenso' ? 'Reativar' : 'Suspender'}
           </Button>
           
           <DropdownMenu>
