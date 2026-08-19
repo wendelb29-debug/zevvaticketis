@@ -8,7 +8,8 @@ import { TenantActivityFeed } from "@/components/admin/tenant/TenantActivityFeed
 import { Tabs, TabsContent } from "@/components/ui/tabs";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { History, LayoutDashboard as DashboardIcon, Globe, CreditCard, Users, Ticket, BarChart3, CheckCircle2, Megaphone as MarketingIcon, Settings, Lock, Copy } from "lucide-react";
+import { History, LayoutDashboard as DashboardIcon, Globe, CreditCard, Users, Ticket, BarChart3, CheckCircle2, Megaphone as MarketingIcon, Settings, Lock, Copy, Eye } from "lucide-react";
+import { ProducerDashboardPanel } from "@/components/dashboard/ProducerDashboardPanel";
 import { z } from "zod";
 import { useState } from "react";
 import { MasterStatusBadge } from "@/components/admin/master/MasterStatusBadge";
