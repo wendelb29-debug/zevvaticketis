@@ -8,13 +8,23 @@ import { TenantActivityFeed } from "@/components/admin/tenant/TenantActivityFeed
 import { Tabs, TabsContent } from "@/components/ui/tabs";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { History, LayoutDashboard as DashboardIcon, Globe, CreditCard, Users, Ticket, BarChart3, CheckCircle2, Megaphone as MarketingIcon, Settings, Lock, Copy } from "lucide-react";
+import { History, LayoutDashboard as DashboardIcon, Globe, CreditCard, Users, Ticket, BarChart3, CheckCircle2, Megaphone as MarketingIcon, Settings, Lock, Copy, Eye } from "lucide-react";
 import { z } from "zod";
 import { useState } from "react";
 import { MasterStatusBadge } from "@/components/admin/master/MasterStatusBadge";
 import { toast } from "sonner";
-
 import { SuspendTenantDialog } from "@/components/admin/tenant/SuspendTenantDialog";
+import { ProducerDashboardPanel } from "@/components/dashboard/ProducerDashboardPanel";
+
+// Importações dos módulos do produtor para reutilização
+import { TeamManagement } from "@/components/admin/tenant/tabs/TeamManagement";
+import { EventsList } from "@/components/admin/tenant/tabs/EventsList";
+import { FinanceiroView } from "@/components/admin/tenant/tabs/FinanceiroView";
+import { IngressosList } from "@/components/admin/tenant/tabs/IngressosList";
+import { MarketingPanel } from "@/components/admin/tenant/tabs/MarketingPanel";
+import { OrgSettings } from "@/components/admin/tenant/tabs/OrgSettings";
+import { TicketManagementDashboard } from "@/components/tickets/TicketManagementDashboard";
+import { CheckinStats } from "@/components/admin/checkin/CheckinStats";
 
 const searchSchema = z.object({
   tab: z.string().catch("geral"),
@@ -31,8 +41,6 @@ export const Route = createFileRoute("/admin/tenants/$id")({
     };
   },
   loader: async ({ params }) => {
-    // We add a minimal loader just to pass data to head() if possible, 
-    // but the actual data is handled by React Query in the component.
     return { id: params.id };
   },
   component: TenantManagementPage,
@@ -41,109 +49,80 @@ export const Route = createFileRoute("/admin/tenants/$id")({
 function TenantManagementPage() {
   const navigate = useNavigate();
   const { id } = useParams({ from: "/admin/tenants/$id" });
-  const { tab } = useSearch({ from: "/admin/tenants/$id" });
+  const { tab } = useSearch({ from: "/admin/tenants/$id" }) as any;
   const { data: result, isLoading: isTenantLoading, error: tenantError } = useTenantAdminDetails(id);
 
   const { stats, activities } = useTenantAdminStats(id);
 
-  const isValidUuid = (uuid: string) => {
-    const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
-    return uuidRegex.test(uuid);
-  };
-
-  if (!isValidUuid(id)) {
-    return (
-      <div className="p-20 text-center">
-        <div className="w-20 h-20 bg-amber-500/10 text-amber-500 rounded-3xl mx-auto mb-6 flex items-center justify-center">
-          <Settings size={40} />
-        </div>
-        <h2 className="text-2xl font-manrope font-black text-foreground mb-2">Endereço Inválido</h2>
-        <p className="text-muted-foreground max-w-md mx-auto mb-6">
-          O identificador do projeto fornecido não é um UUID válido.
-        </p>
-        <Button variant="outline" asChild>
-          <Link to="/admin/master" search={{ page: 1, search: "", status: undefined, plan: undefined, hasSales: false, hasEvents: false }}>Voltar ao Master Console</Link>
-        </Button>
-      </div>
-    );
-  }
-
-  if (isTenantLoading) {
-    return (
-      <div className="p-20 text-center animate-pulse">
-        <div className="w-20 h-20 bg-muted rounded-3xl mx-auto mb-6" />
-        <p className="text-sm font-black uppercase tracking-widest text-muted-foreground">Carregando Projeto...</p>
-      </div>
-    );
-  }
-
-  if (tenantError || !result?.found) {
-    const errorCode = result?.code || "UNKNOWN_ERROR";
-    const errorMessage = errorCode === "FORBIDDEN" 
-      ? "Você não possui permissão para acessar este projeto." 
-      : "O projeto solicitado não foi encontrado ou foi removido.";
-
-    return (
-      <div className="p-20 text-center">
-        <div className="w-20 h-20 bg-rose-500/10 text-rose-500 rounded-3xl mx-auto mb-6 flex items-center justify-center">
-          <Settings size={40} />
-        </div>
-        <h2 className="text-2xl font-manrope font-black text-foreground mb-2">
-          {errorCode === "FORBIDDEN" ? "Acesso Negado" : "Projeto Não Encontrado"}
-        </h2>
-        <p className="text-muted-foreground max-w-md mx-auto mb-6">
-          {errorMessage}
-        </p>
-        <Button variant="outline" asChild>
-          <Link to="/admin/master" search={{ page: 1, search: "", status: undefined, plan: undefined, hasSales: false, hasEvents: false }}>Voltar ao Master Console</Link>
-        </Button>
-      </div>
-    );
-  }
-
-  const tenant = result.tenant;
-
   const TABS_CONFIG = [
     { id: "geral", label: "Visão Geral", icon: DashboardIcon },
-    { id: "identidade", label: "Identidade e Domínio", icon: Globe },
+    { id: "dashboard", label: "Painel Produtor", icon: Eye },
+    { id: "identidade", label: "Identidade", icon: Globe },
     { id: "plano", label: "Plano e Limites", icon: CreditCard },
-    { id: "equipe", label: "Equipe e Usuários", icon: Users },
+    { id: "equipe", label: "Equipe", icon: Users },
     { id: "eventos", label: "Eventos", icon: Ticket },
+    { id: "financeiro", label: "Financeiro", icon: BarChart3 },
     { id: "ingressos", label: "Ingressos", icon: Ticket },
-    { id: "financeiro", label: "Pedidos e Financeiro", icon: BarChart3 },
+    { id: "gestao-ingressos", label: "Gestão Emissões", icon: Ticket },
     { id: "checkin", label: "Check-in", icon: CheckCircle2 },
     { id: "marketing", label: "Marketing", icon: MarketingIcon },
-    { id: "integracoes", label: "Integrações", icon: Settings },
-    { id: "seguranca", label: "Segurança", icon: Lock },
+    { id: "configuracoes", label: "Configurações", icon: Settings },
     { id: "auditoria", label: "Auditoria", icon: History },
   ];
 
+  if (isTenantLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-[400px]">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+      </div>
+    );
+  }
+
+  if (tenantError || !result?.success) {
+    return (
+      <div className="p-8 text-center bg-card rounded-[32px] border border-border">
+        <h2 className="text-xl font-bold text-destructive">Erro ao carregar projeto</h2>
+        <p className="text-muted-foreground mt-2">{result?.code || "ID Inválido ou não encontrado"}</p>
+        <Button variant="outline" className="mt-6" onClick={() => navigate({ to: "/admin/master", search: { page: 1, search: "" } } as any)}>
+          Voltar para Master Console
+        </Button>
+      </div>
+    );
+  }
+
+  const { tenant } = result;
+
   return (
-    <div className="space-y-8 pb-10 font-inter max-w-[1600px] mx-auto px-4">
+    <div className="space-y-8 animate-in fade-in duration-500 max-w-[1600px] mx-auto pb-20">
       <TenantHeader tenant={tenant} />
 
       <Tabs 
         value={tab} 
-        className="w-full" 
-        onValueChange={(v) => {
-          navigate({
-            to: Route.fullPath,
-            params: { id },
-            search: (prev) => ({ ...prev, tab: v }),
-          });
-        }}
+        onValueChange={(val) => navigate({ search: (prev: any) => ({ ...prev, tab: val }) } as any)}
+        className="space-y-8"
       >
+        <div className="bg-white/50 backdrop-blur-sm p-2 rounded-[32px] border border-border/50 shadow-sm sticky top-4 z-30">
+          <TenantTabs />
+        </div>
 
-        <TenantTabs />
-
-        <div className="mt-8">
-          <TabsContent value="geral" className="space-y-6">
-            <TenantOverview stats={tenant.usage} tenant={tenant} />
-            <TenantActivityFeed activities={activities.data || []} />
+        <div className="min-h-[600px]">
+          <TabsContent value="geral" className="space-y-8 outline-none">
+            <TenantOverview tenant={tenant} stats={stats.data as any} />
+            <div className="grid grid-cols-1 xl:grid-cols-3 gap-8">
+              <div className="xl:col-span-2">
+                <TenantActivityFeed activities={activities.data || []} />
+              </div>
+            </div>
           </TabsContent>
-          
+
+
+          <TabsContent value="dashboard">
+             <div className="bg-card p-8 rounded-[40px] border border-border/50 shadow-sm min-h-[600px]">
+                <ProducerDashboardPanel />
+             </div>
+          </TabsContent>
+
           <TabsContent value="identidade">
-            {/* Real implementation of identity tab */}
             <Card className="rounded-[40px] border-border/50 shadow-xl bg-white/50 backdrop-blur-sm overflow-hidden p-12">
                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                   <InfoItem label="Nome do Projeto" value={tenant.name} />
@@ -159,7 +138,55 @@ function TenantManagementPage() {
             </Card>
           </TabsContent>
 
-          {TABS_CONFIG.slice(2).map(tabConfig => (
+          <TabsContent value="equipe">
+             <div className="bg-card p-8 rounded-[40px] border border-border/50 shadow-sm min-h-[600px]">
+                <TeamManagement tenantId={tenant.id} />
+             </div>
+          </TabsContent>
+
+          <TabsContent value="eventos">
+             <div className="bg-card p-8 rounded-[40px] border border-border/50 shadow-sm min-h-[600px]">
+                <EventsList tenantId={tenant.id} />
+             </div>
+          </TabsContent>
+
+          <TabsContent value="financeiro">
+             <div className="bg-card p-8 rounded-[40px] border border-border/50 shadow-sm min-h-[600px]">
+                <FinanceiroView tenantId={tenant.id} />
+             </div>
+          </TabsContent>
+
+          <TabsContent value="ingressos">
+             <div className="bg-card p-8 rounded-[40px] border border-border/50 shadow-sm min-h-[600px]">
+                <IngressosList tenantId={tenant.id} />
+             </div>
+          </TabsContent>
+
+          <TabsContent value="gestao-ingressos">
+             <div className="bg-card p-8 rounded-[40px] border border-border/50 shadow-sm min-h-[600px]">
+                <TicketManagementDashboard scope="producer" tenantId={tenant.id} />
+             </div>
+          </TabsContent>
+
+          <TabsContent value="checkin">
+             <div className="bg-card p-8 rounded-[40px] border border-border/50 shadow-sm min-h-[600px]">
+                <CheckinStats />
+             </div>
+          </TabsContent>
+
+          <TabsContent value="marketing">
+             <div className="bg-card p-8 rounded-[40px] border border-border/50 shadow-sm min-h-[600px]">
+                <MarketingPanel tenantId={tenant.id} />
+             </div>
+          </TabsContent>
+
+          <TabsContent value="configuracoes">
+             <div className="bg-card p-8 rounded-[40px] border border-border/50 shadow-sm min-h-[600px]">
+                <OrgSettings tenantId={tenant.id} />
+             </div>
+          </TabsContent>
+
+          {TABS_CONFIG.filter(t => !["geral", "dashboard", "identidade", "equipe", "eventos", "financeiro", "ingressos", "gestao-ingressos", "checkin", "marketing", "configuracoes"].includes(t.id)).map(tabConfig => (
             <TabsContent key={tabConfig.id} value={tabConfig.id}>
               <Card className="rounded-[40px] border-border/50 shadow-xl shadow-slate-200/40 overflow-hidden bg-white/50 backdrop-blur-sm">
                 <CardHeader className="p-16 border-b border-border/40 text-center">
@@ -209,5 +236,3 @@ function InfoItem({ label, value, copyable, isStatus }: { label: string; value: 
     </div>
   );
 }
-
-
