@@ -1,7 +1,7 @@
 import React from 'react';
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Megaphone, Target, BarChart3, TrendingUp, Users, ArrowRight, Loader2, Zap } from "lucide-react";
 
@@ -12,8 +12,14 @@ export function MarketingPanel({ tenantId }: { tenantId: string }) {
     queryFn: async () => {
       const { data, error } = await supabase
         .from("ad_campaigns")
-        .select("*")
-        .eq("tenant_id", tenantId)
+        .select(`
+          *,
+          ad_creatives (
+            title,
+            image_desktop_url
+          )
+        `)
+        .eq("organization_id", tenantId)
         .order("created_at", { ascending: false });
       
       if (error) throw error;
@@ -66,36 +72,39 @@ export function MarketingPanel({ tenantId }: { tenantId: string }) {
       <div className="space-y-6">
         <h2 className="text-xl font-manrope font-black text-navy uppercase tracking-tight">Campanhas Zevva Ads</h2>
         <div className="grid gap-6">
-          {ads?.map((ad: any) => (
-            <Card key={ad.id} className="bg-card border-border overflow-hidden rounded-[32px] hover:border-primary/40 transition-all group shadow-sm">
-              <CardContent className="p-8 flex flex-col md:flex-row md:items-center gap-8">
-                <div className="w-24 h-16 rounded-2xl bg-muted/40 overflow-hidden shrink-0 border border-border/50 group-hover:scale-105 transition-transform">
-                  {ad.image_url ? (
-                    <img src={ad.image_url} alt={ad.title} className="w-full h-full object-cover" />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center text-muted-foreground/30">
-                      <Megaphone className="w-6 h-6" />
+          {ads?.map((ad: any) => {
+            const creative = ad.ad_creatives?.[0];
+            return (
+              <Card key={ad.id} className="bg-card border-border overflow-hidden rounded-[32px] hover:border-primary/40 transition-all group shadow-sm">
+                <CardContent className="p-8 flex flex-col md:flex-row md:items-center gap-8">
+                  <div className="w-24 h-16 rounded-2xl bg-muted/40 overflow-hidden shrink-0 border border-border/50 group-hover:scale-105 transition-transform">
+                    {creative?.image_desktop_url ? (
+                      <img src={creative.image_desktop_url} alt={creative.title} className="w-full h-full object-cover" />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center text-muted-foreground/30">
+                        <Megaphone className="w-6 h-6" />
+                      </div>
+                    )}
+                  </div>
+                  <div className="flex-grow space-y-2">
+                    <div className="flex items-center gap-3">
+                       <h3 className="text-lg font-black text-navy">{ad.name}</h3>
+                       <span className={`text-[8px] font-black uppercase px-2 py-0.5 rounded-full border ${ad.status === 'ativo' ? 'bg-emerald-50 text-emerald-600 border-emerald-100' : 'bg-muted text-muted-foreground border-border'}`}>
+                          {ad.status}
+                       </span>
                     </div>
-                  )}
-                </div>
-                <div className="flex-grow space-y-2">
-                  <div className="flex items-center gap-3">
-                     <h3 className="text-lg font-black text-navy">{ad.title}</h3>
-                     <span className={`text-[8px] font-black uppercase px-2 py-0.5 rounded-full border ${ad.status === 'ativo' ? 'bg-emerald-50 text-emerald-600 border-emerald-100' : 'bg-muted text-muted-foreground border-border'}`}>
-                        {ad.status}
-                     </span>
+                    <div className="flex gap-6 text-[11px] font-bold text-muted-foreground">
+                      <span className="flex items-center gap-1.5"><Target className="w-3.5 h-3.5" /> {ad.impression_limit || 0} Limite Imp.</span>
+                      <span className="flex items-center gap-1.5"><BarChart3 className="w-3.5 h-3.5" /> {ad.click_limit || 0} Limite Cliques</span>
+                    </div>
                   </div>
-                  <div className="flex gap-6 text-[11px] font-bold text-muted-foreground">
-                    <span className="flex items-center gap-1.5"><Target className="w-3.5 h-3.5" /> {ad.impressions || 0} Impressões</span>
-                    <span className="flex items-center gap-1.5"><BarChart3 className="w-3.5 h-3.5" /> {ad.clicks || 0} Cliques</span>
-                  </div>
-                </div>
-                <Button variant="ghost" size="icon" className="h-10 w-10 rounded-xl text-muted-foreground hover:text-navy hover:bg-navy/5 transition-all">
-                  <ArrowRight className="w-4 h-4" />
-                </Button>
-              </CardContent>
-            </Card>
-          ))}
+                  <Button variant="ghost" size="icon" className="h-10 w-10 rounded-xl text-muted-foreground hover:text-navy hover:bg-navy/5 transition-all">
+                    <ArrowRight className="w-4 h-4" />
+                  </Button>
+                </CardContent>
+              </Card>
+            );
+          })}
 
           {ads?.length === 0 && (
             <div className="text-center py-20 bg-muted/20 rounded-[40px] border border-dashed border-border/60">
