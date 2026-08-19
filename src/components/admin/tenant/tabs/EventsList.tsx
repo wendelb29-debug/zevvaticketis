@@ -1,0 +1,1 @@
+import React from 'react'; export function EventsList({ tenantId }: { tenantId: string }) { return <div>Events List</div>; }

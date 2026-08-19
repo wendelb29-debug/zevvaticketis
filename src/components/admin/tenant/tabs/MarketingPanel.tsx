@@ -1,0 +1,1 @@
+import React from 'react'; export function MarketingPanel({ tenantId }: { tenantId: string }) { return <div>Marketing Panel</div>; }

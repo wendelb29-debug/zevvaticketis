@@ -1,0 +1,1 @@
+import React from 'react'; export function OrgSettings({ tenantId }: { tenantId: string }) { return <div>Org Settings</div>; }

@@ -1,0 +1,1 @@
+import React from 'react'; export function IngressosList({ tenantId }: { tenantId: string }) { return <div>Ingressos List</div>; }

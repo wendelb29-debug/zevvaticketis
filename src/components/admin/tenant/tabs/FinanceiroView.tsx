@@ -1,0 +1,1 @@
+import React from 'react'; export function FinanceiroView({ tenantId }: { tenantId: string }) { return <div>Financeiro View</div>; }
