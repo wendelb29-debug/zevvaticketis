@@ -193,10 +193,6 @@ function ProdutorLayout() {
     );
   }
 
-  const { hasPermission } = useTenants();
-  const { language } = useUI(); // Assumi que useUI está disponível via import se necessário, mas produtor.tsx já tem imports similares
-  const t = getTranslations(language);
-  const nav = t.navigation;
 
   const allMenuItems = [
     { label: nav.dashboard, icon: LayoutDashboard, href: "/produtor", activeOptions: { exact: true }, permission: "DASHBOARD" },
