@@ -1,4 +1,4 @@
-import { createFileRoute, useParams, useSearch, Link } from "@tanstack/react-router";
+import { createFileRoute, useParams, useSearch, Link, useNavigate } from "@tanstack/react-router";
 import { useTenantAdminDetails } from "@/hooks/admin/use-tenant-admin-details";
 import { useTenantAdminStats } from "@/hooks/admin/use-tenant-admin-stats";
 import { TenantHeader } from "@/components/admin/tenant/TenantHeader";
@@ -8,9 +8,12 @@ import { TenantActivityFeed } from "@/components/admin/tenant/TenantActivityFeed
 import { Tabs, TabsContent } from "@/components/ui/tabs";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { History, LayoutDashboard as DashboardIcon, Globe, CreditCard, Users, Ticket, BarChart3, CheckCircle2, Megaphone as MarketingIcon, Settings, Lock } from "lucide-react";
+import { History, LayoutDashboard as DashboardIcon, Globe, CreditCard, Users, Ticket, BarChart3, CheckCircle2, Megaphone as MarketingIcon, Settings, Lock, Copy } from "lucide-react";
 import { z } from "zod";
 import { useState } from "react";
+import { MasterStatusBadge } from "@/components/admin/master/MasterStatusBadge";
+import { toast } from "sonner";
+
 import { SuspendTenantDialog } from "@/components/admin/tenant/SuspendTenantDialog";
 
 const searchSchema = z.object({
@@ -36,9 +39,11 @@ export const Route = createFileRoute("/admin/tenants/$id")({
 });
 
 function TenantManagementPage() {
+  const navigate = useNavigate();
   const { id } = useParams({ from: "/admin/tenants/$id" });
   const { tab } = useSearch({ from: "/admin/tenants/$id" });
   const { data: result, isLoading: isTenantLoading, error: tenantError } = useTenantAdminDetails(id);
+
   const { stats, activities } = useTenantAdminStats(id);
 
   const isValidUuid = (uuid: string) => {
@@ -117,18 +122,44 @@ function TenantManagementPage() {
     <div className="space-y-8 pb-10 font-inter max-w-[1600px] mx-auto px-4">
       <TenantHeader tenant={tenant} />
 
-      <Tabs value={tab} className="w-full" onValueChange={(v) => {
-        window.history.pushState(null, "", `${window.location.pathname}?tab=${v}`);
-      }}>
+      <Tabs 
+        value={tab} 
+        className="w-full" 
+        onValueChange={(v) => {
+          navigate({
+            to: Route.fullPath,
+            params: { id },
+            search: (prev) => ({ ...prev, tab: v }),
+          });
+        }}
+      >
+
         <TenantTabs />
 
         <div className="mt-8">
           <TabsContent value="geral" className="space-y-6">
-            <TenantOverview stats={stats.data} tenant={tenant} />
+            <TenantOverview stats={tenant.usage} tenant={tenant} />
             <TenantActivityFeed activities={activities.data || []} />
           </TabsContent>
           
-          {TABS_CONFIG.slice(1).map(tabConfig => (
+          <TabsContent value="identidade">
+            {/* Real implementation of identity tab */}
+            <Card className="rounded-[40px] border-border/50 shadow-xl bg-white/50 backdrop-blur-sm overflow-hidden p-12">
+               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                  <InfoItem label="Nome do Projeto" value={tenant.name} />
+                  <InfoItem label="Slug" value={`/${tenant.slug}`} />
+                  <InfoItem label="Status" value={tenant.status} isStatus />
+                  <InfoItem label="ID" value={tenant.id} copyable />
+                  <InfoItem label="Data de Cadastro" value={new Date(tenant.created_at).toLocaleDateString("pt-BR")} />
+                  <InfoItem label="Domínio" value={tenant.domain || "Não configurado"} />
+                  <InfoItem label="País" value="Brasil" />
+                  <InfoItem label="Moeda" value="BRL" />
+                  <InfoItem label="Idioma" value="Português (BR)" />
+               </div>
+            </Card>
+          </TabsContent>
+
+          {TABS_CONFIG.slice(2).map(tabConfig => (
             <TabsContent key={tabConfig.id} value={tabConfig.id}>
               <Card className="rounded-[40px] border-border/50 shadow-xl shadow-slate-200/40 overflow-hidden bg-white/50 backdrop-blur-sm">
                 <CardHeader className="p-16 border-b border-border/40 text-center">
@@ -153,4 +184,30 @@ function TenantManagementPage() {
     </div>
   );
 }
+
+function InfoItem({ label, value, copyable, isStatus }: { label: string; value: string; copyable?: boolean; isStatus?: boolean }) {
+  const copy = () => {
+    navigator.clipboard.writeText(value);
+    toast.success("Copiado!");
+  };
+
+  return (
+    <div className="space-y-1.5">
+      <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60">{label}</p>
+      <div className="flex items-center gap-2">
+        {isStatus ? (
+          <MasterStatusBadge status={value} />
+        ) : (
+          <p className="text-sm font-bold text-navy">{value}</p>
+        )}
+        {copyable && (
+          <Button variant="ghost" size="icon" className="h-6 w-6" onClick={copy}>
+            <Copy className="w-3 h-3" />
+          </Button>
+        )}
+      </div>
+    </div>
+  );
+}
+
 

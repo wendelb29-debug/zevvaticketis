@@ -43,11 +43,11 @@ export function TenantHeader({ tenant }: TenantHeaderProps) {
           
           <div className="flex items-center gap-4">
             <div className="w-12 h-12 bg-navy rounded-xl flex items-center justify-center text-primary-foreground font-bold text-lg border border-white/10 shadow-md overflow-hidden shrink-0">
-              {tenant.logo ? <img src={tenant.logo} className="w-full h-full object-cover" /> : tenant.nome.substring(0, 2).toUpperCase()}
+              {tenant.logo_url ? <img src={tenant.logo_url} className="w-full h-full object-cover" /> : tenant.name.substring(0, 2).toUpperCase()}
             </div>
             <div className="space-y-0.5">
               <div className="flex items-center gap-3">
-                <h1 className="text-2xl font-manrope font-bold text-foreground tracking-tight leading-none">{tenant.nome}</h1>
+                <h1 className="text-2xl font-manrope font-bold text-foreground tracking-tight leading-none">{tenant.name}</h1>
                 <MasterStatusBadge status={tenant.status} />
               </div>
               <div className="flex items-center gap-3 text-xs font-medium text-muted-foreground">
@@ -111,7 +111,7 @@ export function TenantHeader({ tenant }: TenantHeaderProps) {
         </div>
         <div className="flex items-center gap-1.5">
           <span className="text-foreground/40">Proprietário:</span>
-          <span className="text-foreground">{tenant.owner?.nome || 'N/A'}</span>
+          <span className="text-foreground">{tenant.owner?.nome || tenant.owner?.name || 'N/A'}</span>
         </div>
         <div className="flex items-center gap-1.5">
           <span className="text-foreground/40">Criado em:</span>
