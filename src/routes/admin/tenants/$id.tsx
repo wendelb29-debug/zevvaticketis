@@ -105,12 +105,13 @@ function TenantManagementPage() {
 
   const TABS_CONFIG = [
     { id: "geral", label: "Visão Geral", icon: DashboardIcon },
-    { id: "identidade", label: "Identidade e Domínio", icon: Globe },
+    { id: "dashboard", label: "Painel Produtor", icon: DashboardIcon },
+    { id: "identidade", label: "Identidade", icon: Globe },
     { id: "plano", label: "Plano e Limites", icon: CreditCard },
-    { id: "equipe", label: "Equipe e Usuários", icon: Users },
+    { id: "equipe", label: "Equipe", icon: Users },
     { id: "eventos", label: "Eventos", icon: Ticket },
+    { id: "financeiro", label: "Financeiro", icon: BarChart3 },
     { id: "ingressos", label: "Ingressos", icon: Ticket },
-    { id: "financeiro", label: "Pedidos e Financeiro", icon: BarChart3 },
     { id: "checkin", label: "Check-in", icon: CheckCircle2 },
     { id: "marketing", label: "Marketing", icon: MarketingIcon },
     { id: "integracoes", label: "Integrações", icon: Settings },
@@ -142,6 +143,12 @@ function TenantManagementPage() {
             <TenantActivityFeed activities={activities.data || []} />
           </TabsContent>
           
+          <TabsContent value="dashboard">
+             <div className="bg-card p-8 rounded-[40px] border border-border/50 shadow-sm min-h-[600px]">
+                <ProducerDashboardPanel />
+             </div>
+          </TabsContent>
+
           <TabsContent value="identidade">
             {/* Real implementation of identity tab */}
             <Card className="rounded-[40px] border-border/50 shadow-xl bg-white/50 backdrop-blur-sm overflow-hidden p-12">
