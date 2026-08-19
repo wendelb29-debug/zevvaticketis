@@ -23,28 +23,29 @@ export function TenantOverview({ stats, tenant }: TenantOverviewProps) {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4">
         <MasterMetricCard 
           title="GMV Total" 
-          value={stats.financeiro.gmv.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}
+          value={stats.gmv.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}
           icon={Wallet}
         />
         <MasterMetricCard 
           title="Receita Zevva" 
-          value={stats.financeiro.revenue.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}
+          value={stats.revenue.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}
           icon={TrendingUp}
         />
         <MasterMetricCard 
           title="Ingressos" 
-          value={stats.ingressos.emitidos.toLocaleString("pt-BR")}
-          description={`${stats.ingressos.utilizados.toLocaleString("pt-BR")} check-ins`}
+          value={stats.tickets.toLocaleString("pt-BR")}
+          description="Check-ins realizados"
+
           icon={Ticket}
         />
         <MasterMetricCard 
           title="Eventos" 
-          value={stats.eventos.total.toLocaleString("pt-BR")}
+          value={stats.events.toLocaleString("pt-BR")}
           icon={BarChart3}
         />
         <MasterMetricCard 
           title="Equipe" 
-          value={stats.equipe.total.toLocaleString("pt-BR")}
+          value={stats.members.toLocaleString("pt-BR")}
           icon={Users}
         />
         <MasterMetricCard 
