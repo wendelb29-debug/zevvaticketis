@@ -819,6 +819,32 @@ export type Database = {
         }
         Relationships: []
       }
+      email_account_secrets: {
+        Row: {
+          account_id: string
+          oauth_tokens: Json | null
+          updated_at: string
+        }
+        Insert: {
+          account_id: string
+          oauth_tokens?: Json | null
+          updated_at?: string
+        }
+        Update: {
+          account_id?: string
+          oauth_tokens?: Json | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "email_account_secrets_account_id_fkey"
+            columns: ["account_id"]
+            isOneToOne: true
+            referencedRelation: "email_accounts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       email_accounts: {
         Row: {
           created_at: string | null
@@ -826,7 +852,6 @@ export type Database = {
           email_address: string | null
           id: string
           last_synced_at: string | null
-          oauth_tokens: Json | null
           provider: string | null
           status: string | null
           status_message: string | null
@@ -838,7 +863,6 @@ export type Database = {
           email_address?: string | null
           id?: string
           last_synced_at?: string | null
-          oauth_tokens?: Json | null
           provider?: string | null
           status?: string | null
           status_message?: string | null
@@ -850,7 +874,6 @@ export type Database = {
           email_address?: string | null
           id?: string
           last_synced_at?: string | null
-          oauth_tokens?: Json | null
           provider?: string | null
           status?: string | null
           status_message?: string | null
@@ -858,9 +881,37 @@ export type Database = {
         }
         Relationships: []
       }
+      email_integration_secrets: {
+        Row: {
+          access_token: string | null
+          integration_id: string
+          refresh_token: string | null
+          updated_at: string
+        }
+        Insert: {
+          access_token?: string | null
+          integration_id: string
+          refresh_token?: string | null
+          updated_at?: string
+        }
+        Update: {
+          access_token?: string | null
+          integration_id?: string
+          refresh_token?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "email_integration_secrets_integration_id_fkey"
+            columns: ["integration_id"]
+            isOneToOne: true
+            referencedRelation: "email_integrations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       email_integrations: {
         Row: {
-          access_token: string
           created_at: string | null
           display_name: string | null
           email_address: string
@@ -868,12 +919,10 @@ export type Database = {
           id: string
           photo_url: string | null
           provider: string
-          refresh_token: string | null
           updated_at: string | null
           user_id: string
         }
         Insert: {
-          access_token: string
           created_at?: string | null
           display_name?: string | null
           email_address: string
@@ -881,12 +930,10 @@ export type Database = {
           id?: string
           photo_url?: string | null
           provider?: string
-          refresh_token?: string | null
           updated_at?: string | null
           user_id: string
         }
         Update: {
-          access_token?: string
           created_at?: string | null
           display_name?: string | null
           email_address?: string
@@ -894,7 +941,6 @@ export type Database = {
           id?: string
           photo_url?: string | null
           provider?: string
-          refresh_token?: string | null
           updated_at?: string | null
           user_id?: string
         }
@@ -1575,7 +1621,6 @@ export type Database = {
           rua: string | null
           telefone: string | null
           two_factor_enabled: boolean | null
-          two_factor_secret: string | null
         }
         Insert: {
           avatar_url?: string | null
@@ -1598,7 +1643,6 @@ export type Database = {
           rua?: string | null
           telefone?: string | null
           two_factor_enabled?: boolean | null
-          two_factor_secret?: string | null
         }
         Update: {
           avatar_url?: string | null
@@ -1621,7 +1665,6 @@ export type Database = {
           rua?: string | null
           telefone?: string | null
           two_factor_enabled?: boolean | null
-          two_factor_secret?: string | null
         }
         Relationships: [
           {
@@ -2463,6 +2506,24 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      user_2fa_secrets: {
+        Row: {
+          two_factor_secret: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          two_factor_secret?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          two_factor_secret?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
       }
       user_device_preferences: {
         Row: {
