@@ -127,7 +127,11 @@ function ProdutorLayout() {
     }
   }, [activeTenant, tenantsLoading]);
 
-  const { logout } = useTenants();
+  const { logout, hasPermission } = useTenants();
+  const { language } = useUI();
+  const t = getTranslations(language);
+  const nav = t.navigation;
+
 
   const handleLogout = async () => {
     await logout();
