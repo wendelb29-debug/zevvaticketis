@@ -21,7 +21,6 @@ import { TeamManagement } from "@/components/admin/tenant/tabs/TeamManagement";
 import { EventsList } from "@/components/admin/tenant/tabs/EventsList";
 import { FinanceiroView } from "@/components/admin/tenant/tabs/FinanceiroView";
 import { IngressosList } from "@/components/admin/tenant/tabs/IngressosList";
-import { ParticipantsList } from "@/components/admin/tenant/tabs/ParticipantsList";
 import { MarketingPanel } from "@/components/admin/tenant/tabs/MarketingPanel";
 import { OrgSettings } from "@/components/admin/tenant/tabs/OrgSettings";
 import { TicketManagementDashboard } from "@/components/tickets/TicketManagementDashboard";
@@ -50,7 +49,7 @@ export const Route = createFileRoute("/admin/tenants/$id")({
 function TenantManagementPage() {
   const navigate = useNavigate();
   const { id } = useParams({ from: "/admin/tenants/$id" });
-  const { tab } = useSearch({ from: "/admin/tenants/$id" });
+  const { tab } = useSearch({ from: "/admin/tenants/$id" }) as any;
   const { data: result, isLoading: isTenantLoading, error: tenantError } = useTenantAdminDetails(id);
 
   const { stats, activities } = useTenantAdminStats(id);
@@ -67,10 +66,8 @@ function TenantManagementPage() {
     { id: "gestao-ingressos", label: "Gestão Emissões", icon: Ticket },
     { id: "checkin", label: "Check-in", icon: CheckCircle2 },
     { id: "marketing", label: "Marketing", icon: MarketingIcon },
-    { id: "integracoes", label: "Integrações", icon: Settings },
-    { id: "seguranca", label: "Segurança", icon: Lock },
-    { id: "auditoria", label: "Auditoria", icon: History },
     { id: "configuracoes", label: "Configurações", icon: Settings },
+    { id: "auditoria", label: "Auditoria", icon: History },
   ];
 
   if (isTenantLoading) {
@@ -86,7 +83,7 @@ function TenantManagementPage() {
       <div className="p-8 text-center bg-card rounded-[32px] border border-border">
         <h2 className="text-xl font-bold text-destructive">Erro ao carregar projeto</h2>
         <p className="text-muted-foreground mt-2">{result?.code || "ID Inválido ou não encontrado"}</p>
-        <Button variant="outline" className="mt-6" onClick={() => navigate({ to: "/admin/master", search: {} })}>
+        <Button variant="outline" className="mt-6" onClick={() => navigate({ to: "/admin/master", search: { page: 1, search: "" } } as any)}>
           Voltar para Master Console
         </Button>
       </div>
@@ -101,7 +98,7 @@ function TenantManagementPage() {
 
       <Tabs 
         value={tab} 
-        onValueChange={(val) => navigate({ search: { tab: val } })}
+        onValueChange={(val) => navigate({ search: (prev: any) => ({ ...prev, tab: val }) } as any)}
         className="space-y-8"
       >
         <div className="bg-white/50 backdrop-blur-sm p-2 rounded-[32px] border border-border/50 shadow-sm sticky top-4 z-30">
@@ -110,10 +107,10 @@ function TenantManagementPage() {
 
         <div className="min-h-[600px]">
           <TabsContent value="geral" className="space-y-8 outline-none">
-            <TenantOverview tenant={tenant} stats={stats} />
+            <TenantOverview tenant={tenant} stats={stats as any} />
             <div className="grid grid-cols-1 xl:grid-cols-3 gap-8">
               <div className="xl:col-span-2">
-                <TenantActivityFeed activities={activities} />
+                <TenantActivityFeed activities={activities || []} />
               </div>
             </div>
           </TabsContent>
@@ -172,7 +169,7 @@ function TenantManagementPage() {
 
           <TabsContent value="checkin">
              <div className="bg-card p-8 rounded-[40px] border border-border/50 shadow-sm min-h-[600px]">
-                <CheckinStats tenantId={tenant.id} />
+                <CheckinStats />
              </div>
           </TabsContent>
 
