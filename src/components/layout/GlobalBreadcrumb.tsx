@@ -7,8 +7,11 @@ export function GlobalBreadcrumb() {
   const params = useParams({ strict: false }) as any;
   const pathnames = location.pathname.split("/").filter((x) => x);
   
-  // Fetch tenant details if we are on a tenant-specific page
-  const { data: tenantResult } = useTenantAdminDetails();
+  // Fetch tenant details only on the master tenant management route
+  const isTenantRoute = location.pathname.startsWith("/admin/tenants/");
+  const { data: tenantResult } = useTenantAdminDetails(
+    isTenantRoute ? params.id : undefined,
+  );
   const tenantName = tenantResult?.found ? tenantResult.tenant.nome : null;
 
   return (
