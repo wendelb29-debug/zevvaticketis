@@ -5,20 +5,26 @@ import { supabaseAdmin } from "@/integrations/supabase/client.server";
 export const getTenantDetails = createServerFn({ method: "GET" })
   .validator((data) => z.object({ id: z.string() }).parse(data))
   .handler(async ({ data: { id } }) => {
-    const { data, error } = await supabaseAdmin.rpc("get_master_tenant_details", {
-      _tenant_id: id
-    });
+    try {
+      const { data, error } = await supabaseAdmin.rpc("get_master_tenant_details", {
+        _tenant_id: id
+      });
 
-    if (error) {
-      console.error("Error calling get_master_tenant_details:", error);
-      throw error;
+      if (error) {
+        console.error("RPC Error:", error);
+        return { found: false, code: "QUERY_ERROR", success: false };
+      }
+
+      return data as {
+        found: boolean;
+        success: boolean;
+        code?: string;
+        tenant?: any;
+      };
+    } catch (err) {
+      console.error("Execution Error:", err);
+      return { found: false, code: "QUERY_ERROR", success: false };
     }
-
-    return data as {
-      found: boolean;
-      code?: string;
-      tenant?: any;
-    };
   });
 
 export const suspendTenant = createServerFn({ method: "POST" })

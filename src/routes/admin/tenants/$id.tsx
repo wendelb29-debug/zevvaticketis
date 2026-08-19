@@ -38,7 +38,7 @@ export const Route = createFileRoute("/admin/tenants/$id")({
 function TenantManagementPage() {
   const { id } = useParams({ from: "/admin/tenants/$id" });
   const { tab } = useSearch({ from: "/admin/tenants/$id" });
-  const { data: result, isLoading: isTenantLoading, error: tenantError } = useTenantAdminDetails();
+  const { data: result, isLoading: isTenantLoading, error: tenantError } = useTenantAdminDetails(id);
   const { stats, activities } = useTenantAdminStats(id);
 
   const isValidUuid = (uuid: string) => {
