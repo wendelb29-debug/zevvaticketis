@@ -127,10 +127,13 @@ function TenantManagementPage() {
         className="w-full" 
         onValueChange={(v) => {
           navigate({
-            search: (prev: any) => ({ ...prev, tab: v }),
+            to: Route.fullPath,
+            params: { id },
+            search: (prev) => ({ ...prev, tab: v }),
           });
         }}
       >
+
         <TenantTabs />
 
         <div className="mt-8">

@@ -42,10 +42,7 @@ export const getGlobalStats = createServerFn({ method: "GET" })
     const [
       { count: tenantsTotal },
       { count: tenantsNewMonth },
-      { count: tenantsPrevMonth },
       { count: usersTotal },
-      { count: usersNewMonth },
-      { count: usersPrevMonth },
       { count: eventsTotal },
       { count: eventsPublished },
       { data: ordersData }
@@ -53,16 +50,8 @@ export const getGlobalStats = createServerFn({ method: "GET" })
       supabaseAdmin.from("tenants").select("*", { count: "exact", head: true }),
       supabaseAdmin.from("tenants").select("*", { count: "exact", head: true })
         .gte('created_at', startOfCurrentMonth.toISOString()),
-      supabaseAdmin.from("tenants").select("*", { count: "exact", head: true })
-        .gte('created_at', startOfPrevMonth.toISOString())
-        .lte('created_at', endOfPrevMonth.toISOString()),
       
       supabaseAdmin.from("profiles").select("*", { count: "exact", head: true }),
-      supabaseAdmin.from("profiles").select("*", { count: "exact", head: true })
-        .gte('created_at', startOfCurrentMonth.toISOString()),
-      supabaseAdmin.from("profiles").select("*", { count: "exact", head: true })
-        .gte('created_at', startOfPrevMonth.toISOString())
-        .lte('created_at', endOfPrevMonth.toISOString()),
       
       supabaseAdmin.from("events").select("*", { count: "exact", head: true }),
       supabaseAdmin.from("events").select("*", { count: "exact", head: true })
@@ -71,6 +60,7 @@ export const getGlobalStats = createServerFn({ method: "GET" })
       supabaseAdmin.from("orders").select("valor_bruto, taxa_plataforma, status")
         .eq("status", "pago")
     ]);
+
 
     const gmv = ordersData?.reduce((acc, curr) => acc + (Number(curr.valor_bruto) || 0), 0) || 0;
     const revenue = ordersData?.reduce((acc, curr) => acc + (Number(curr.taxa_plataforma) || 0), 0) || 0;
@@ -81,13 +71,12 @@ export const getGlobalStats = createServerFn({ method: "GET" })
       tenants: {
         total: tenantsTotal || 0,
         newThisMonth: tenantsNewMonth || 0,
-        prevMonth: tenantsPrevMonth || 0,
       },
       users: {
         total: usersTotal || 0,
-        newThisMonth: usersNewMonth || 0,
-        prevMonth: usersPrevMonth || 0,
+        newThisMonth: 0,
       },
+
       events: {
         total: eventsTotal || 0,
         published: eventsPublished || 0,
