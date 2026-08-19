@@ -45,7 +45,7 @@ export function TenantHeader({ tenant }: TenantHeaderProps) {
           
           <div className="flex items-center gap-4">
             <div className="w-12 h-12 bg-navy rounded-xl flex items-center justify-center text-primary-foreground font-bold text-lg border border-white/10 shadow-md overflow-hidden shrink-0">
-              {tenant.logo_url ? <img src={tenant.logo_url} className="w-full h-full object-cover" /> : displayName.substring(0, 2).toUpperCase()}
+              {tenant?.logo_url ?? tenant?.logo ? <img src={tenant?.logo_url ?? tenant?.logo} className="w-full h-full object-cover" /> : displayName.substring(0, 2).toUpperCase()}
             </div>
             <div className="space-y-0.5">
               <div className="flex items-center gap-3">
