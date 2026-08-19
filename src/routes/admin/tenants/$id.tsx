@@ -86,7 +86,7 @@ function TenantManagementPage() {
       <div className="p-8 text-center bg-card rounded-[32px] border border-border">
         <h2 className="text-xl font-bold text-destructive">Erro ao carregar projeto</h2>
         <p className="text-muted-foreground mt-2">{result?.code || "ID Inválido ou não encontrado"}</p>
-        <Button variant="outline" className="mt-6" onClick={() => navigate({ to: "/admin/master" })}>
+        <Button variant="outline" className="mt-6" onClick={() => navigate({ to: "/admin/master", search: {} })}>
           Voltar para Master Console
         </Button>
       </div>
@@ -101,11 +101,11 @@ function TenantManagementPage() {
 
       <Tabs 
         value={tab} 
-        onValueChange={(val) => navigate({ search: (prev) => ({ ...prev, tab: val }) })}
+        onValueChange={(val) => navigate({ search: { tab: val } })}
         className="space-y-8"
       >
         <div className="bg-white/50 backdrop-blur-sm p-2 rounded-[32px] border border-border/50 shadow-sm sticky top-4 z-30">
-          <TenantTabs tabs={TABS_CONFIG} activeTab={tab} />
+          <TenantTabs />
         </div>
 
         <div className="min-h-[600px]">
