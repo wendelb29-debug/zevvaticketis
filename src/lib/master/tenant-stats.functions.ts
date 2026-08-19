@@ -36,14 +36,25 @@ export const getTenantActivities = createServerFn({ method: "GET" })
   .handler(async ({ data: { tenantId, limit } }) => {
     const { data, error } = await supabaseAdmin
       .from("audit_logs")
-      .select(`
-        *,
-        admin:profiles!audit_logs_admin_id_fkey(nome, email)
-      `)
+      .select("*")
       .or(`alvo_id.eq.${tenantId},payload->>tenant_id.eq.${tenantId}`)
       .order("created_at", { ascending: false })
       .limit(limit);
 
     if (error) throw error;
-    return data;
+
+    const adminIds = [...new Set((data ?? []).map((l: any) => l.admin_id).filter(Boolean))];
+    let profilesMap: Record<string, { nome: string | null; email: string | null }> = {};
+    if (adminIds.length > 0) {
+      const { data: profiles } = await supabaseAdmin
+        .from("profiles")
+        .select("id, nome, email")
+        .in("id", adminIds as string[]);
+      profilesMap = Object.fromEntries((profiles ?? []).map((p: any) => [p.id, { nome: p.nome, email: p.email }]));
+    }
+
+    return (data ?? []).map((log: any) => ({
+      ...log,
+      admin: log.admin_id ? profilesMap[log.admin_id] ?? null : null,
+    }));
   });
